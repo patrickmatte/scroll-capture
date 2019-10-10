@@ -1,0 +1,26 @@
+spacers-view {
+	font-size: 2rem;
+	padding: 3rem;
+	display: block;
+
+	.spacer {
+		height: 500px;
+
+		.label {
+			margin-bottom: 1em;
+		}
+
+		button {
+
+		}
+	}
+}
+
+.screen-capture-scenario-container {
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}

@@ -1,0 +1,57 @@
+{
+	"name": "living-wt-wildlife.ca",
+	"version": "1.2.4",
+	"author": "Patrick MAtte <patrick.mattek@akqa.com>",
+	"description": "Build script that uses webpack-dev-server to compile twig templates to static html, using Sass for CSS.",
+	"scripts": {
+		"clean": "rm -rf build/",
+		"dev": "cross-env NODE_ENV=development webpack-dev-server --progress --open --history-api-fallback",
+		"prebuild": "npm run clean && mkdirp build && ncp ./src/assets ./build/assets && ncp ./src/favicon.png ./build/favicon.png",
+		"build": "cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
+	},
+	"browserslist": "> 1%, last 2 versions, IE 11",
+	"babel": {
+		"sourceMaps": true,
+		"presets": [
+			"env"
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "ssh://git@git.firstborn.com:8443/scm/dew/dew-ice-2018.git"
+	},
+	"devDependencies": {
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-polyfill": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-es2015": "^6.24.1",
+		"copy-webpack-plugin": "^4.6.0",
+		"cross-env": "^5.1.1",
+		"css-loader": "^1.0.0",
+		"dotenv-webpack": "^1.5.4",
+		"es6-eventhub": "^1.0.3",
+		"extract-text-webpack-plugin": "^3.0.2",
+		"file-loader": "^1.1.5",
+		"glob": "^7.1.2",
+		"html-webpack-plugin": "^2.30.1",
+		"json-loader": "^0.5.7",
+		"mkdirp": "^0.5.1",
+		"ncp": "^2.0.0",
+		"node-sass": "^4.11.0",
+		"raw-loader": "^0.5.1",
+		"sass-loader": "^4.1.1",
+		"sass-resources-loader": "1.2.1",
+		"size-limit": "^0.21.1",
+		"source-map-loader": "^0.2.3",
+		"style-loader": "^0.19.0",
+		"twig": "^1.10.5",
+		"twig-loader": "^0.3.1",
+		"url-loader": "^0.6.2",
+		"webpack": "^3.10.0",
+		"webpack-dev-server": "^2.11.5"
+	},
+	"dependencies": {
+		"mustache": "^2.3.0"
+	}
+}

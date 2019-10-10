@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Screen Capture Scenario</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="description" content=""/>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body is="main" data-test="[[isTest]]">
+    <spacers-view data-provider="spacers">
+        <template>
+            <div class="spacer spacer-[[index]]" is="ui-component">
+                <div class="label" is="ui-text">Spacer [[index]]</div>
+                <button onclick="console.log('click inline', this)" is="ui-component">Click Me</button>
+            </div>
+        </template>
+    </spacers-view>
+    <div class="screen-capture-scenario-container" is="ui-component"></div>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+</html>

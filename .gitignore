@@ -1,0 +1,8 @@
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+Thumbs.db
+build
+node_modules
+.idea
