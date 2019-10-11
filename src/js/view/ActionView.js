@@ -5,6 +5,7 @@ export default class ActionView extends UIComponent {
 
 	constructor(element) {
 		super(element);
+		this.title = this.element.querySelector(".title");
 	}
 
 	get scope() {
@@ -20,7 +21,7 @@ export default class ActionView extends UIComponent {
 				this.element.parentNode.component.dataProvider.remove(this.model);
 			}, 500);
 		};
-		this.appendChild(deleteButton);
+		this.title.appendChild(deleteButton);
 	}
 
 }

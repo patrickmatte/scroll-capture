@@ -1,17 +1,22 @@
 screen-capture-scenario {
-	width: 375px;
-	background-color: #282828;
+	width: 37.5em;
+	background-color: #000000;
 	color: #ffffff;
 	display: flex;
 	flex-direction: column;
 	user-select: none;
 	font-size: 1.2rem;
 	line-height: 1;
+	margin: 0;
+
+	.window.main-window {
+		margin: 1rem;
+	}
 
 	.row {
 		width: 100%;
 		display: flex;
-		padding: 3rem;
+		padding: 2rem 1rem;
 		justify-content: flex-start;
 		align-items: center;
 	}
@@ -19,9 +24,9 @@ screen-capture-scenario {
 	button {
 		padding: 0.5em 1em;
 		font-weight: bold;
-		border-radius: 0.5em;
-		background-color: rgba(255,255,255,0.1);
-		margin-left: 0.5rem;
+		border-radius: 0.25rem;
+		background-color: rgba(0,0,0,0.1);
+		//margin-left: 0.5rem;
 		white-space: nowrap;
 		line-height: 1;
 
@@ -32,27 +37,22 @@ screen-capture-scenario {
 	.select {
 		width: 100%;
 		height: 100%;
-		background-color: rgba(255,255,255,0.1);
-		border-radius: 0.5em;
+		background-color: rgba(0,0,0,0.1);
+		border-radius: 0.25rem;
 		font-size: 1em;
-		margin-left: 0.5rem;
 		display: inline-block;
 		line-height: 1;
-
-		&:first-child {
-			margin-left: 0;
-		}
 
 		&:after {
 			content: "";
 			position: absolute;
-			top: calc(50% - 0.25em);
+			top: calc(50% - 0.2em);
 			right: 0.6em;
 			width: 0;
 			height: 0;
 			border-left: 0.4em solid transparent;
 			border-right: 0.4em solid transparent;
-			border-top: 0.5em solid #fff;
+			border-top: 0.45em solid #fff;
 		}
 
 		select {
@@ -67,63 +67,149 @@ screen-capture-scenario {
 			height: 100%;
 			font: inherit;
 			line-height: 1;
+
+			option {
+				line-height: 1;
+			}
 		}
 	}
 
 	header {
-		width: 100%;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-
-		&:after {
-			content: "";
-			display: block;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 1px;
-			background-color: rgba(255,255,255, 0.1);
-		}
+		font-size: 1.4rem;
+		font-weight: 700;
 
 		.title {
-			font-size: 1.6rem;
-			font-weight: 700;
-			flex-grow: 1;
-			flex-shrink: 0;
 		}
 
 		button[is="start-button"] {
-			font-size: 1.6rem;
-			padding: 0.5em 1em;
+			text-align: right;
+			line-height: 1;
+			background-color: transparent;
+			border-radius: 0.25rem 0.25rem 0 0;
+			padding: 1rem 1rem 0.5rem 1rem;
+			opacity: 0.5;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+
+	.window {
+		padding: 0;
+		border-radius: 0.25rem;
+		background-color: rgba(255,255,255, 0.1);
+		margin: 1rem 0;
+
+		.title {
 			font-weight: bold;
-			border-radius: 0.5em;
+			font-size: 1em;
+			display: flex;
+			justify-content: space-between;
+
+			span {
+				background-color: rgba(255,255,255,0.1);
+				border-radius: 0.25rem 0.25rem 0 0;
+				padding: 1rem 1rem 0.5rem 1rem;
+			}
+		}
+
+		.fields {
+			padding: 1rem;
 			background-color: rgba(255,255,255,0.1);
-			flex-grow: 0;
+			border-radius: 0 0.25rem 0.25rem 0.25rem;
+
+			//&:after {
+			//	content: "";
+			//	display: block;
+			//	position: absolute;
+			//	bottom: 0;
+			//	left: 0;
+			//	width: 100%;
+			//	height: 1px;
+			//	background-color: rgba(255,255,255, 0.1);
+			//}
+		}
+
+		.field-group {
+			display: flex;
+			margin-bottom: 0.5rem;
+
+			&:last-child {
+				margin-bottom: 0rem;
+			}
+
+			.field {
+				margin-right: 2rem;
+				margin-bottom: 0rem;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+
+		.field {
+			display: flex;
+			flex-grow: 1;
 			flex-shrink: 1;
+			margin-bottom: 0.5rem;
+			align-items: center;
+			border-radius: 0.25rem;
+
+			&:last-child {
+				margin-bottom: 0rem;
+			}
+
+			.label {
+				width: 6rem;
+				flex-shrink: 0;
+				flex-grow: 0;
+				white-space: nowrap;
+				text-align: left;
+				//padding-left: 0.5rem;
+			}
+
+			input, textarea {
+				width: 50%;
+				flex-shrink: 0;
+				flex-grow: 1;
+				color: #fff;
+				padding: 0.5rem;
+				background-color: rgba(0,0,0,0.1);
+				border-radius: 0.25rem;
+				font-size: 1em;
+				line-height: 1;
+				max-width: 100%;
+			}
+
+			.select {
+				width: 50%;
+				flex-shrink: 0;
+				flex-grow: 1;
+			}
+
+			.unit {
+				width: 3rem;
+				flex-shrink: 0;
+				flex-grow: 0;
+				padding-left: 0.5rem;
+			}
 		}
 	}
 
 	actions-view {
 		width: 100%;
-		flex-grow: 1;
-		flex-shrink: 0;
-		display: block;
 
 		action-view {
-			padding: 2rem 3rem;
 			display: block;
 
-			&:after {
-				content: "";
-				display: block;
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height: 1px;
-				background-color: rgba(255,255,255, 0.1);
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
 			}
 
 			&.deleted {
@@ -133,71 +219,33 @@ screen-capture-scenario {
 			}
 
 			button.delete-button {
-				position: absolute;
-				top: 0;
-				right: 0;
+				text-align: right;
 				line-height: 1;
-				border-radius: 0em 0em 0em 0.5em;
-			}
+				background-color: transparent;
+				border-radius: 0.25rem 0.25rem 0 0;
+				padding: 1rem 1rem 0.5rem 1rem;
+				opacity: 0.5;
+				text-transform: uppercase;
+				font-weight: 700;
 
-			.title {
-				font-weight: bold;
-				font-size: 1em;
-				margin-bottom: 1em;
-			}
-
-			.field-group {
-				display: flex;
-
-				.field {
-					margin-right: 3rem;
-
-					&:last-child {
-						margin-right: 0;
-					}
+				&:hover {
+					opacity: 1;
 				}
 			}
-
-			.field {
-				display: flex;
-				flex-grow: 1;
-				flex-shrink: 1;
-				margin-bottom: 0.5rem;
-				align-items: center;
-
-				.label {
-					flex-shrink: 1;
-					flex-grow: 0;
-					white-space: nowrap;
-				}
-
-				input, textarea {
-					width: 8rem;
-					flex-shrink: 0;
-					flex-grow: 1;
-					color: #fff;
-					padding: 0.5em;
-					background-color: rgba(255,255,255,0.1);
-					border-radius: 0.5em;
-					font-size: 1em;
-				}
-
-				span ~ input,
-				span ~ textarea {
-					margin-left: 0.5em;
-				}
-
-
-
-				.unit {
-					margin-left: 0.5em;
-				}
-			}
-
 		}
 	}
 
 	footer {
+		font-weight: 700;
 
+		.window {
+			.fields {
+				background-color: rgba(0,0,0,0.1);
+			}
+		}
+
+		.add-button {
+			margin-left: 0.5rem;
+		}
 	}
 }

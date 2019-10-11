@@ -13,6 +13,7 @@ export default class ActionMouseEvent extends Action {
 		this.x = new NumberData(x);
 		this.y = new NumberData(y);
 		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu");
+		this.eventTypes.selectedItem.value = this.eventTypes.value[0];
 	}
 
 	clone() {
@@ -32,6 +33,7 @@ export default class ActionMouseEvent extends Action {
 		let target = document.querySelector(this.cssSelector.value);
 		let point = localToGlobal(target, document.body, new Point(this.x.value - window.scrollX, this.y.value - window.scrollY));
 		let element = document.elementFromPoint(point.x, point.y);
+		console.log("this.eventTypes.selectedItem.value", this.eventTypes.selectedItem.value);
 		let event = new MouseEvent(this.eventTypes.selectedItem.value, {
 			bubbles: true,
 			cancelable: true,

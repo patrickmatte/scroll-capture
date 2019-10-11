@@ -89,7 +89,7 @@ export default class UIList extends UIComponent {
 	_addElements(array, index = 0) {
 		for (let i = 0; i < array.length; i++) {
 			let data = array[i];
-			let scope = new Scope(data, this.scope, index, array.length);
+			let scope = new Scope(data, this.scope, index + i, array.length);
 			let template = this.getTemplateForModel(data);
 			if (!template) {
 				throw new Error("UIList component for " + this.element.outerHTML + " returned no template");

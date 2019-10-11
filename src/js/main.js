@@ -13,7 +13,6 @@ import UIImage from "./tsunami/components/UIImage";
 import * as tsunami from "./tsunami/tsunami";
 import Mustache from "mustache";
 import {importTemplate} from "./tsunami/tsunami";
-import template from "../templates/screen-capture-scenario.mustache";
 import {loadJSON} from "./tsunami/load";
 import UIToggle from "./tsunami/components/UIToggle";
 import Model, {model} from "./model/Model";
@@ -61,7 +60,7 @@ export default class Main extends UIComponent {
 
 		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
 
-		this.screenCaptureScenario = importTemplate(template, model);
+		this.screenCaptureScenario = importTemplate(ScreenCaptureScenario.template, model);
 	}
 
 	init() {
