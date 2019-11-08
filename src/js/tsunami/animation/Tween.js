@@ -45,7 +45,7 @@ export default class Tween extends EventDispatcher {
 	}
 
 	static get CHANGE() {
-		return "update";
+		return "change";
 	}
 
 	start() {
@@ -106,11 +106,11 @@ export default class Tween extends EventDispatcher {
 				let tweenProp = this.tweenProps[i];
 				tweenProp.calculate(tweenTime, this.duration);
 			}
-			let changeEvent = {type:Tween.UPDATE, target:this, currentTarget:this};
+			let updateEvent = {type:Tween.UPDATE, target:this, currentTarget:this};
 			if (this.updateHandler) {
-				this.updateHandler(changeEvent);
+				this.updateHandler(updateEvent);
 			}
-			this.dispatchEvent(changeEvent);
+			this.dispatchEvent(updateEvent);
 		}
 	}
 

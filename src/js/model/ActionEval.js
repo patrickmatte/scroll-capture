@@ -4,7 +4,7 @@ import StringData from "../tsunami/data/StringData";
 export default class ActionEval extends Action {
 
 	constructor(code = 'alert("test");') {
-		super("ActionEval", "Eval Code");
+		super("ActionEval", "Eval");
 		this.code = new StringData(code);
 	}
 

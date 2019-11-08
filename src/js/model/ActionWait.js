@@ -5,7 +5,7 @@ import NumberData from "../tsunami/data/NumberData";
 export default class ActionWait extends Action {
 
 	constructor(timeout = 0.25) {
-		super("ActionWait", "Wait");
+		super("ActionWait", "Pause");
 		this.timeout = new NumberData(timeout);
 	}
 

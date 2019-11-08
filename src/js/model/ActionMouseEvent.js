@@ -8,7 +8,7 @@ import ArrayData from "../tsunami/data/ArrayData";
 export default class ActionMouseEvent extends Action {
 
 	constructor(eventType = "click", cssSelector = "body", x = 0, y = 0) {
-		super("ActionMouseEvent", "Dispatch a MouseEvent");
+		super("ActionMouseEvent", "MouseEvent");
 		this.cssSelector = new StringData(cssSelector);
 		this.x = new NumberData(x);
 		this.y = new NumberData(y);
@@ -33,7 +33,7 @@ export default class ActionMouseEvent extends Action {
 		let target = document.querySelector(this.cssSelector.value);
 		let point = localToGlobal(target, document.body, new Point(this.x.value - window.scrollX, this.y.value - window.scrollY));
 		let element = document.elementFromPoint(point.x, point.y);
-		console.log("this.eventTypes.selectedItem.value", this.eventTypes.selectedItem.value);
+		// console.log("this.eventTypes.selectedItem.value", this.eventTypes.selectedItem.value);
 		let event = new MouseEvent(this.eventTypes.selectedItem.value, {
 			bubbles: true,
 			cancelable: true,

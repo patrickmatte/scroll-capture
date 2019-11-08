@@ -16,24 +16,30 @@ let htmlTemplate = `
 	<div class="window main-window">
 		<header>
 			<div class="title">
-				<span is="ui-text">Screen Capture Scenario</span>
+				<span is="ui-text">Screen Capture Pro</span>
 				<button is="start-button" data-model=".">Start</button>
 			</div>
 		</header>
 		<div class="fields">
 			<actions-view data-provider="actions" is="ui-list">
-				<template data-type="ActionScrollToPosition">
+				<template data-type="ActionScrollWindow">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
 							<span is="ui-text">[[item.name]]</span>
 						</div>
 						<div class="fields">
+							<div class="field">
+								<span class="label">units:</span>
+								<div class="select">
+									<select data-provider="item.units" data-model="item.units.selectedItem" is="ui-select"></select>
+								</div>
+							</div>
 							<div class="field-group">
 								<div class="field">
-									<span class="label">x:</span><input type="text" data-model="item.x" is="ui-input"/><span class="unit">px</span>
+									<span class="label">x:</span><input type="text" data-model="item.unitX" is="ui-input"/><span class="unit" is="ui-text">[[item.units.selectedItem]]</span>
 								</div>
 								<div class="field">
-									<span class="label">y:</span><input type="text" data-model="item.y" is="ui-input"/><span class="unit">px</span>
+									<span class="label">y:</span><input type="text" data-model="item.unitY" is="ui-input"/><span class="unit" is="ui-text">[[item.units.selectedItem]]</span>
 								</div>
 							</div>
 							<div class="field-group">
@@ -61,7 +67,7 @@ let htmlTemplate = `
 						</div>
 					</action-view>
 				</template>
-				<template data-type="ActionScrollToBottom">
+				<template data-type="ActionSwipe">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
 							<span is="ui-text">[[item.name]]</span>
@@ -149,6 +155,9 @@ let htmlTemplate = `
 			</actions-view>
 			<footer>
 				<div class="window">
+					<div class="title">
+						<span>Add an action</span>
+					</div>
 					<div class="fields">
 						<div class="field">
 							<div class="select">

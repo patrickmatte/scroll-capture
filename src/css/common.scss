@@ -2,7 +2,6 @@ html {
 	line-height: 1;
 	font-size: 10px;
 	width: 100%;
-	height: 100%;
 	font-family: Helvetica, Arial, SansSerif;
 }
 
@@ -11,7 +10,8 @@ body {
 	color: #000000;
 
 	&[data-test="false"] {
-		width: 375px;
-		height: 500px;
+		width: 37.5rem;
+		background-color: #000000;
+		color: #ffffff;
 	}
 }

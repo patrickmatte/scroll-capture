@@ -1,5 +1,5 @@
 screen-capture-scenario {
-	width: 37.5em;
+	width: 37.5rem;
 	background-color: #000000;
 	color: #ffffff;
 	display: flex;
@@ -171,7 +171,7 @@ screen-capture-scenario {
 			}
 
 			input, textarea {
-				width: 50%;
+				width: 40%;
 				flex-shrink: 0;
 				flex-grow: 1;
 				color: #fff;
@@ -239,9 +239,7 @@ screen-capture-scenario {
 		font-weight: 700;
 
 		.window {
-			.fields {
-				background-color: rgba(0,0,0,0.1);
-			}
+			background-color: rgba(0,0,0,0.1);
 		}
 
 		.add-button {

@@ -4,9 +4,7 @@
 	"author": "Patrick MAtte <patrick.mattek@akqa.com>",
 	"description": "Build script that uses webpack-dev-server to compile twig templates to static html, using Sass for CSS.",
 	"scripts": {
-		"clean": "rm -rf build/",
 		"dev": "cross-env NODE_ENV=development webpack-dev-server --progress --open --history-api-fallback",
-		"prebuild": "npm run clean && mkdirp build && ncp ./src/assets ./build/assets && ncp ./src/favicon.png ./build/favicon.png",
 		"build": "cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
 	},
 	"browserslist": "> 1%, last 2 versions, IE 11",
@@ -52,6 +50,7 @@
 		"webpack-dev-server": "^2.11.5"
 	},
 	"dependencies": {
-		"mustache": "^2.3.0"
+		"mustache": "^2.3.0",
+		"three": "^0.109.0"
 	}
 }

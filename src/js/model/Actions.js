@@ -1,10 +1,10 @@
 import ArrayData from "../tsunami/data/ArrayData";
-import ActionScrollToPosition from "./ActionScrollToPosition";
+import ActionScrollWindow from "./ActionScrollWindow";
 import ActionWait from "./ActionWait";
-import ActionScrollToBottom from "./ActionScrollToBottom";
 import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
 import Action from "./Action";
+import ActionSwipe from "./ActionSwipe";
 
 export default class Actions extends ArrayData {
 
@@ -16,13 +16,13 @@ export default class Actions extends ArrayData {
 
 		this.types = new ArrayData();
 		this.types.value = [
-			new Action("", "Add an action"),
-			new ActionWait(),
-			new ActionScrollToPosition(),
-			new ActionScrollToBottom(),
+			new ActionScrollWindow(),
 			new ActionMouseEvent(),
+			new ActionSwipe(),
+			new ActionWait(),
 			new ActionEval()
 		];
+		this.types.selectedItem.value = this.types.value[0];
 	}
 
 	addSelectedType() {
