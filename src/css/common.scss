@@ -8,10 +8,4 @@ html {
 body {
 	background-color: #ffffff;
 	color: #000000;
-
-	&[data-test="false"] {
-		width: 37.5rem;
-		background-color: #000000;
-		color: #ffffff;
-	}
 }

@@ -8,7 +8,7 @@ export default class UIList extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		this.template = `<li><span>{{item}}</span></li>`;
+		this.template = `<li><span is="ui-text">[[item]]</span></li>`;
 		this.templates = {};
 		this._provider = [];
 		this._providerChange = this._providerChange.bind(this);

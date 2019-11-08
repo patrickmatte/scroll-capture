@@ -1,18 +1,19 @@
 const path = require("path");
 const webpack = require("webpack");
-//const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-
 const ENV = process.env.NODE_ENV || "development";
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 	context: path.resolve(__dirname, "src"),
 	devtool: `[name].${ENV == "development" ? "inline-source-map" : "none"}`,
 	entry: {
-		main: ["./js/main.js", "./css/main.scss"],
+		main: ["./js/main.js"],
+		style: ["./css/main.scss"],
 		content: ["./js/content.js"],
+		test: ["./js/test.js"],
 	},
 	output: {
 		path: path.resolve(__dirname, "build"),
@@ -21,65 +22,61 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js|x?$/,
-				exclude: /node_modules/,
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components|build)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['env']
+					}
+				}
+			},
+			{
+				test: /\.(sa|sc|c)ss$/,
 				use: [
 					{
-						loader: "babel-loader",
-						options: { presets: ["es2015"] },
+						loader: MiniCssExtractPlugin.loader,
+						options: {
+							hmr: process.env.NODE_ENV === 'development',
+							publicPath:"./",
+						},
 					},
+					'css-loader',
+					'sass-loader'
 				],
 			},
 			{
-				test: /\.(s*)css$/,
-				use: ExtractTextPlugin.extract({
-					fallback: "style-loader",
-					use: [
-						{
-							loader: "css-loader",
-							options: {
-								importLoaders: 0, // 0 => no loaders (default); 1 => postcss-loader; 2 => postcss-loader, sass-loader
-							},
-						},
-
-						"sass-loader",
-					],
-					publicPath:"./",
-				}),
-			},
-
-			{
-				test: /\.json$/,
-				use: "json-loader?name=data/[name].[ext]",
+				test: /\.(tpl.html|twig)$/,
+				exclude: /node_modules/,
+				use: "twig-loader"
 			},
 			{
 				test: /\.(xml|txt|md|hbs|mustache)$/,
-				use: "raw-loader",
+				use: "raw-loader"
 			},
 			{
 				test: /\.(woff2?|ttf|eot)(\?.*)?$/i,
-				use: "file-loader?name=assets/fonts/[name].[ext]",
+				use: "file-loader?name=assets/fonts/[name].[ext]"
 			},
 			{
 				test: /\.(svg|jpe?g|png|gif)(\?.*)?$/i,
-				use: "file-loader?name=assets/images/[name].[ext]",
+				use: "file-loader?name=assets/images/[name].[ext]"
 			},
 		],
 	},
-
 	plugins: [
-		new ExtractTextPlugin({
-			filename: "style.css",
-			allChunks: true,
+		new MiniCssExtractPlugin({
+			// Options similar to the same options in webpackOptions.output
+			// all options are optional
+			filename: '[name].css',
+			chunkFilename: '[id].css',
+			ignoreOrder: false, // Enable to remove warnings about conflicting order
 		}),
 		new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify(ENV) }),
 		new webpack.DefinePlugin({ "process.env.BUILD_TIMESTAMP": new Date().getTime() }),
 		new Dotenv({
 			path: "./.env",
 		}),
-		new CopyWebpackPlugin([{ from: "index.html", to: "index.html" }]),
-		new CopyWebpackPlugin([{ from: "manifest.json", to: "manifest.json" }]),
-		new CopyWebpackPlugin([{ from: "background.js", to: "background.js" }]),
 	],
 
 	stats: { colors: true },
@@ -99,6 +96,6 @@ module.exports = {
 		host: process.env.HOST || "0.0.0.0",
 		disableHostCheck: true,
 		publicPath: "/",
-		contentBase: "./src",
+		contentBase: "./build",
 	},
 };

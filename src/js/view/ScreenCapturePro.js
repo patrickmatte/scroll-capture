@@ -2,17 +2,44 @@ import UIComponent from "../tsunami/components/UIComponent";
 import * as tsunami from "../tsunami/tsunami";
 import StartButton from "./StartButton";
 import ActionView from "./ActionView";
+import Clock, {clock} from "../tsunami/animation/Clock";
 
-export default class ScreenCaptureScenario extends UIComponent {
+export default class ScreenCapturePro extends UIComponent {
 
-	static get template() {
-		return htmlTemplate;
+	constructor(element) {
+		super(element);
+
+		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
+
+		window.addEventListener("resize", this.resizeHandler.bind(this));
+		this.resizeHandler();
+	}
+
+	clockTick(event) {
+		let animationData = {
+			time: clock.time
+		};
+
+		this.animationFrame(animationData);
+	}
+
+	resizeHandler(event) {
+		let rectangle = this.getRect();
+		// model.windowHeight.value = rectangle.height;
+
+		rectangle.orientation = rectangle.width > rectangle.height ? "landscape" : "portrait";
+
+		if (rectangle.orientation != this.windowSize.orientation) {
+			this.orientationChange(rectangle.orientation);
+		}
+
+		this.windowResize(rectangle);
 	}
 
 }
 
-let htmlTemplate = `
-<screen-capture-scenario>
+ScreenCapturePro.template = `
+<screen-capture-pro>
 	<div class="window main-window">
 		<header>
 			<div class="title">
@@ -174,7 +201,8 @@ let htmlTemplate = `
 			</footer>
 		</div>
 	</div>
-</screen-capture-scenario>`;
+</screen-capture-pro>
+`;
 
 tsunami.define("start-button", StartButton);
 tsunami.define("action-view", ActionView);

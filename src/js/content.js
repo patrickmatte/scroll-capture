@@ -9,14 +9,12 @@ let actions = new Actions();
 // });
 //
 
-export function startActions(json) {
+window.startActions = function(json) {
 	let object = JSON.parse(json);
 	actions.deserialize(object);
 	actions.selectedIndex.value = 0;
 	triggerAction();
-}
-
-window.startActions = startActions;
+};
 
 function triggerAction() {
 	let action = actions.selectedItem.value;
