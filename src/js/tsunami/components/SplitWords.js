@@ -1,11 +1,12 @@
 import * as tsunami from "../tsunami";
 import SplitLetters from "./SplitLetters";
-import List2 from "./List2";
+import UIList from "./UIList";
 
-export default class SplitWords extends List2 {
+export default class SplitWords extends UIList {
 
 	constructor(element) {
 		super(element);
+		this.alsoShowChildren = true;
 		this.wordTemplate = `<span class="word" is="ui-component">{{item}}</span>`;
 		this.spaceTemplate = `<span class="space">&nbsp;</span>`;
 		this.showChildrenDelay = 25;

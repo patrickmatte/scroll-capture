@@ -2,6 +2,7 @@ import UIComponent from "./UIComponent";
 import {destroyElements, evalProperty, importTemplate} from "../tsunami";
 import ArrayData from "../data/ArrayData";
 import Data from "../data/Data";
+import BaseEvent from "../events";
 import Scope from "../Scope";
 
 export default class UIList extends UIComponent {
@@ -36,12 +37,11 @@ export default class UIList extends UIComponent {
 	}
 
 	set scope(value) {
-		this._scope = value;
+		super.scope = value;
 		let dataProvider = this.element.getAttribute("data-provider");
 		if (dataProvider) {
 			this.dataProvider = evalProperty(dataProvider, value);
 		}
-		super.scope = value;
 	}
 
 	get dataProvider() {
@@ -104,6 +104,7 @@ export default class UIList extends UIComponent {
 				UIComponent.callElementAdded(element);
 			}
 		}
+		this.dispatchEvent(new BaseEvent("listChange", array));
 	}
 
 	getModelType(model) {
