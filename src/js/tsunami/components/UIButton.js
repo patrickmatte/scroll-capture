@@ -22,10 +22,7 @@ export default class UIButton extends UIComponent {
     	let click = this.element.getAttribute("data-click");
     	if(click) {
     		this.onRelease = () => {
-				console.log("onRelease click", click);
-				console.log("onRelease this.scope", this.scope);
     			let method = evalProperty(click, this.scope);
-				console.log("method", method);
 				method();
 			}
 		}
