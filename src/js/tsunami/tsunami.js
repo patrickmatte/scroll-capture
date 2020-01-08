@@ -1,26 +1,12 @@
-export function evalProperty(path, scope, debug) {
-	if (debug) {
-		console.log("$$$$$$ evalProperty", "path", path, "scope", scope);
-	}
-	if(path == ".") {
-		return scope;
-	}
+export function evalProperty(path, scope) {
 	let array = path.split(".");
 	let object = scope;
-	if (debug) {
-		console.log("array", array);
-		console.log("object", object);
-	}
 	while(array.length > 0) {
 		let name = array.shift();
 		let arr = name.split("[");
 		for (let i = 0; i < arr.length; i++) {
 			let prop = arr[i].split("]")[0];
 			object = object[prop];
-			if (debug) {
-				console.log("prop", prop);
-				console.log("object", object);
-			}
 			if (object == null) {
 				console.log("Error! The reference " + prop + " in " + path + " is undefined");
 			}
@@ -114,7 +100,7 @@ for(let i = 0; i < 5; i++) {
 // 	return child;
 // }
 
-export function importTemplate(template, scope) {
+export function importTemplate(template, scope, debug) {
 	let child;
 	if (window.renderTemplate) {
 		template = window.renderTemplate(template, scope);
@@ -125,7 +111,6 @@ export function importTemplate(template, scope) {
 	if(factory.children.length > 0) {
 		child = factory.children.item(0);
 	}
-	// scope.element = child;
 	applyDirectives(child, scope);
 	return child;
 }

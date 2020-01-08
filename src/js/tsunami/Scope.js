@@ -1,13 +1,28 @@
 export default class Scope {
 
-	constructor(item, parent = null, index = NaN, length = NaN) {
-		this.item = item;
+	constructor(data, parent = null, index = NaN, length = NaN) {
+		this.data = data;
 		this.parent = parent;
 		this.index = index;
 		if(!isNaN(index)) {
 			this.index1 = index + 1;
 		}
 		this.length = length;
+	}
+
+	get root() {
+		let root = this;
+		let scope = this;
+		while(scope) {
+			scope = scope.parent;
+			if(scope) {
+				root = scope;
+			}
+		}
+	}
+
+	toString() {
+		return "Scope" + " " + this.parent;
 	}
 
 }
