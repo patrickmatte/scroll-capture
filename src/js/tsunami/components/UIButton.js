@@ -21,9 +21,9 @@ export default class UIButton extends UIComponent {
     	super.scope = value;
     	let click = this.element.getAttribute("data-click");
     	if(click) {
-    		this.onRelease = () => {
+    		this.onRelease = (event) => {
     			let method = evalProperty(click, this.scope);
-				method();
+				method(event);
 			}
 		}
 	}
