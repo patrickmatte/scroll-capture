@@ -4,25 +4,25 @@ import {evalProperty} from "../tsunami";
 
 export default class UIButton extends UIComponent {
 
-    constructor(element) {
-        super(element);
-        this.onRelease = () => {};
+	constructor(element) {
+		super(element);
+		this.onRelease = () => {};
 		this.clickHandler = this.clickHandler.bind(this);
 		this.pressHandler = this.pressHandler.bind(this);
 		this.element.addEventListener(events.click, this.clickHandler);
 		this.element.addEventListener(events.mousedown, this.pressHandler);
-    }
-
-    get scope() {
-    	return super.scope;
 	}
 
-    set scope(value) {
-    	super.scope = value;
-    	let click = this.element.getAttribute("data-click");
-    	if(click) {
-    		this.onRelease = (event) => {
-    			let method = evalProperty(click, this.scope);
+	get scope() {
+		return super.scope;
+	}
+
+	set scope(value) {
+		super.scope = value;
+		let click = this.element.getAttribute("data-click");
+		if(click) {
+			this.onRelease = (event) => {
+				let method = evalProperty(click, this.scope);
 				method(event);
 			}
 		}
@@ -42,7 +42,7 @@ export default class UIButton extends UIComponent {
 	destroy() {
 		this.element.removeEventListener(events.click, this.clickHandler);
 		this.element.removeEventListener(events.mousedown, this.pressHandler);
-    	super.destroy();
+		super.destroy();
 	}
 
 }
