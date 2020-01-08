@@ -14,9 +14,6 @@ export default class UISelect extends UIList {
 	}
 
 	updateValue(model) {
-		if(this.debug) {
-			console.log("****** updateValue", model);
-		}
 		if (model) {
 			let value = evalProperty(this.valuePath, model);
 			this.element.value = value;
@@ -24,9 +21,6 @@ export default class UISelect extends UIList {
 	}
 
 	inputHandler(e) {
-		if(this.debug) {
-			console.log("****** inputHandler", this.element.value);
-		}
 		if (this._model) {
 			this._model.removeEventListener(Data.CHANGE, this.modelChangeBind);
 			this._model.value = this.dataProvider.find(this.getModel);
