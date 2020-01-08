@@ -245,14 +245,6 @@ export default class UIScrollPane extends UIComponent {
 		this.element.setAttribute("data-scroll-y", (this.maxScroll.y > 0));
 	}
 
-	getTouchPoint(event) {
-		let touch = event;
-		if (isTouch) {
-			touch = event.touches[0];
-		}
-		return new Point(touch.pageX, touch.pageY);
-	}
-
 	mousedownHandler(event) {
 		this.removeWheelHandler();
 		this.momentum.x = this.momentum.y = 0;
