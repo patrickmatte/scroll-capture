@@ -38,47 +38,47 @@ ScreenCapturePro.template = `
 			</div>
 			<actions-view data-provider="actions" is="ui-list">
 				<template data-type="ActionScroll">
-					<action-view class="window" data-type="[[item.type]]" data-model="item">
+					<action-view class="window" data-type="[[data.type]]" data-model="data">
 						<div class="title">
-							<span class="tab" is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[data.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
-								<span class="label">element:</span><input type="text" data-model="item.target" is="ui-input"/>
+								<span class="label">element:</span><input type="text" data-model="data.target" is="ui-input"/>
 							</div>
 							<div class="field">
 								<span class="label">units:</span>
 								<div class="select">
-									<select data-provider="item.units" data-model="item.units.selectedItem" is="ui-select"></select>
+									<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>
 								</div>
 							</div>
 							<div class="field-group">
 								<div class="field">
-									<span class="label">x:</span><input type="text" data-model="item.unitX" is="ui-input"/><span class="unit" is="ui-text">[[item.units.selectedItem]]</span>
+									<span class="label">x:</span><input type="text" data-model="data.unitX" is="ui-input"/><span class="unit" is="ui-text">[[data.units.selectedItem]]</span>
 								</div>
 								<div class="field">
-									<span class="label">y:</span><input type="text" data-model="item.unitY" is="ui-input"/><span class="unit" is="ui-text">[[item.units.selectedItem]]</span>
+									<span class="label">y:</span><input type="text" data-model="data.unitY" is="ui-input"/><span class="unit" is="ui-text">[[data.units.selectedItem]]</span>
 								</div>
 							</div>
 							<div class="field-group">
 								<div class="field">
-									<span class="label">duration:</span><input type="text" data-model="item.duration" is="ui-input"/><span class="unit">s</span>
+									<span class="label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/><span class="unit">s</span>
 								</div>
 								<div class="field">
-									<span class="label">delay:</span><input type="text" data-model="item.delay" is="ui-input"/><span class="unit">s</span>
+									<span class="label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
 								</div>
 							</div>
 							<div class="field-group">
 								<div class="field">
 									<span class="label">easing:</span>
 									<div class="select">
-										<select data-provider="item.easingClasses" data-model="item.easingClasses.selectedItem" is="ui-select"></select>
+										<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
 									</div>
 								</div>
 								<div class="field">
 									<span class="label">method:</span>
 									<div class="select">
-										<select data-provider="item.easingMethods" data-model="item.easingMethods.selectedItem" is="ui-select"></select>
+										<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
 									</div>
 								</div>
 							</div>
@@ -86,24 +86,24 @@ ScreenCapturePro.template = `
 					</action-view>
 				</template>
 				<template data-type="ActionSwipe">
-					<action-view class="window" data-type="[[item.type]]" data-model="item">
+					<action-view class="window" data-type="[[data.type]]" data-model="data">
 						<div class="title">
-							<span class="tab" is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[data.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
-								<span class="label">element:</span><input type="text" data-model="item.elementSelector" is="ui-input"/>
+								<span class="label">element:</span><input type="text" data-model="data.elementSelector" is="ui-input"/>
 							</div>
 							<div class="label">points:</div>
 							<div class="field-group">
-								<div class="points" data-provider="item.points" is="ui-list">
+								<div class="points" data-provider="data.points" is="ui-list">
 									<template>
 										<div class="field-group">
 											<div class="field">
-												<span class="label">x:</span><input type="text" data-model="item.x" is="ui-input"/><span class="unit">px</span>
+												<span class="label">x:</span><input type="text" data-model="data.x" is="ui-input"/><span class="unit">px</span>
 											</div>
 											<div class="field">
-												<span class="label">y:</span><input type="text" data-model="item.y" is="ui-input"/><span class="unit">px</span>
+												<span class="label">y:</span><input type="text" data-model="data.y" is="ui-input"/><span class="unit">px</span>
 											</div>
 										</div>
 									</template>
@@ -111,23 +111,23 @@ ScreenCapturePro.template = `
 							</div>
 							<div class="field-group">
 								<div class="field">
-									<span class="label">duration:</span><input type="text" data-model="item.duration" is="ui-input"/><span class="unit">s</span>
+									<span class="label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/><span class="unit">s</span>
 								</div>
 								<div class="field">
-									<span class="label">delay:</span><input type="text" data-model="item.delay" is="ui-input"/><span class="unit">s</span>
+									<span class="label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
 								</div>
 							</div>
 							<div class="field-group">
 								<div class="field">
 									<span class="label">easing:</span>
 									<div class="select">
-										<select data-provider="item.easingClasses" data-model="item.easingClasses.selectedItem" is="ui-select"></select>
+										<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
 									</div>
 								</div>
 								<div class="field">
 									<span class="label">method:</span>
 									<div class="select">
-										<select data-provider="item.easingMethods" data-model="item.easingMethods.selectedItem" is="ui-select"></select>
+										<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
 									</div>
 								</div>
 							</div>
@@ -135,41 +135,41 @@ ScreenCapturePro.template = `
 					</action-view>
 				</template>
 				<template data-type="ActionWait">
-					<action-view class="window" data-type="[[item.type]]" data-model="item">
+					<action-view class="window" data-type="[[data.type]]" data-model="data">
 						<div class="title">
-							<span class="tab" is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[data.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
-								<span class="label">timeout:</span><input type="text" data-model="item.timeout" is="ui-input"/><span class="unit">s</span>
+								<span class="label">timeout:</span><input type="text" data-model="data.timeout" is="ui-input"/><span class="unit">s</span>
 							</div>
 						</div>
 					</action-view>
 				</template>
 				<template data-type="ActionMouseEvent">
-					<action-view class="window" data-type="[[item.type]]" data-model="item">
+					<action-view class="window" data-type="[[data.type]]" data-model="data">
 						<div class="title">
-							<span class="tab" is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[data.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
 								<span class="label">type:</span>
 								<div class="select">
-									<select data-provider="item.eventTypes" data-model="item.eventTypes.selectedItem" is="ui-select"></select>
+									<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
 								</div>
 							</div>
 							<div class="field">
-								<span class="label">element:</span><input type="text" data-model="item.cssSelector" is="ui-input"/>
+								<span class="label">element:</span><input type="text" data-model="data.cssSelector" is="ui-input"/>
 							</div>
 							<div class="field-group">
 								<div class="field">
 									<span class="label">x:</span>
-									<input type="text" data-model="item.x" is="ui-input"/>
+									<input type="text" data-model="data.x" is="ui-input"/>
 									<span class="unit">px</span>
 								</div>
 								<div class="field">
 									<span class="label">y:</span>
-									<input type="text" data-model="item.y" is="ui-input"/>
+									<input type="text" data-model="data.y" is="ui-input"/>
 									<span class="unit">px</span>
 								</div>
 							</div>
@@ -177,13 +177,13 @@ ScreenCapturePro.template = `
 					</action-view>
 				</template>
 				<template data-type="ActionEval">
-					<action-view class="window" data-type="[[item.type]]" data-model="item">
+					<action-view class="window" data-type="[[data.type]]" data-model="data">
 						<div class="title">
-							<span class="tab" is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[data.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
-								<textarea rows="5" data-model="item.code" is="ui-input"></textarea>
+								<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
 							</div>
 						</div>
 					</action-view>
@@ -199,7 +199,7 @@ ScreenCapturePro.template = `
 							<div class="select">
 								<select is="ui-select" data-valuePath="type" data-provider="actions.types" data-model="actions.types.selectedItem">
 									<template data-type="*">
-										<option is="ui-text" value="[[item.type]]" data-model="item.name"></option>
+										<option is="ui-text" value="[[data.type]]" data-model="data.name"></option>
 									</template>
 								</select>
 							</div>

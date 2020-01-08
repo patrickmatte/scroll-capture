@@ -129,7 +129,6 @@ export default class ArrayData extends Data {
 			}
 		}
 		this.length.value = this._value.length;
-		this.selectedItem.value = null;
 		this.dispatchEvent({type:"reset", value:this._value});
 		this.dispatchChangeEvent();
 	}

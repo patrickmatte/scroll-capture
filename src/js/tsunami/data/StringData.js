@@ -9,6 +9,10 @@ export default class StringData extends Data {
 		this.value = value;
 	}
 
+	static validateLengthIsMinimum1(val) {
+		return val.length > 0;
+	}
+
 	get value() {
 		return this._value;
 	}

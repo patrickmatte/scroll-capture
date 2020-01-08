@@ -15,16 +15,18 @@ export default class Main extends App {
 	constructor(element) {
 		super(element);
 
+		console.log("Main", element);
+
 		this.router = new Router();
 
 		this.actions = new Actions(
-			// new ActionSwipe(),
-			// new ActionWait(),
-			// new ActionScroll("window", "px", 0, 500),
-			// new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
-			// new ActionEval(),
-			// new ActionScroll(".scrollpane", "%", 0, 100),
-			// new ActionMouseEvent("click", ".scrollpane button", 0, 0),
+			new ActionSwipe(),
+			new ActionWait(),
+			new ActionScroll("window", "px", 0, 500),
+			new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
+			new ActionEval(),
+			new ActionScroll(".scrollpane", "%", 0, 100),
+			new ActionMouseEvent("click", ".scrollpane button", 0, 0),
 		);
 
 		this.start = this.start.bind(this);
@@ -33,6 +35,7 @@ export default class Main extends App {
 	init() {
 		super.init(true);
 		this.screenCaptureScenario = importTemplate(ScreenCapturePro.template, this);
+		console.log("this.screenCaptureScenario", this.screenCaptureScenario);
 		this.appendChild(this.screenCaptureScenario, true);
 	}
 

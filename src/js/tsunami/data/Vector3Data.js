@@ -19,4 +19,15 @@ export default class Vector3Data extends Vector2Data {
 		this.z.copy(point.z);
 	}
 
+	serialize() {
+		let obj = super.serialize();
+		obj.z = this.z.value;
+		return obj;
+	}
+
+	deserialize(data) {
+		super.deserialize(data);
+		this.z.value = data.z;
+	}
+
 }

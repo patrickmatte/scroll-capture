@@ -19,6 +19,7 @@ export default class Scope {
 				root = scope;
 			}
 		}
+		return root;
 	}
 
 	toString() {

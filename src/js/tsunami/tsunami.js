@@ -1,4 +1,7 @@
 export function evalProperty(path, scope) {
+	if(path == ".") {
+		return scope;
+	}
 	let array = path.split(".");
 	let object = scope;
 	while(array.length > 0) {
