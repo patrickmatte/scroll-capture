@@ -203,7 +203,7 @@ ScreenCapturePro.template = `
 									</template>
 								</select>
 							</div>
-							<button class="add-button" is="ui-button" data-event-click="actions.addSelectedType">+</button>
+							<button class="add-button" is="ui-button" data-click="actions.addSelectedType">+</button>
 						</div>
 					</div>
 				</div>

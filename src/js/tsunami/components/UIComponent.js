@@ -21,7 +21,6 @@ export default class UIComponent extends Branch {
 		this.windowSize = {};
 
 		this.attributes = {};
-		this.eventHandlers = {};
 
 		if(this.element) {
 			this.debug = (this.element.getAttribute("data-debug") == "true");
@@ -242,15 +241,6 @@ export default class UIComponent extends Branch {
 				let attr = new Attribute(this.element, attribute.name, attributeData, "");
 				attr.debug = this.debug;
 				this.attributes[attribute.name] = attr;
-			}
-
-			if (attribute.name.indexOf("data-event-") === 0) {
-				let eventType = attribute.name.split("data-event-")[1];
-				let eventMethod = evalProperty(attribute.value, value);
-				let eventHandler = (event) => {
-					eventMethod(event);
-				};
-				this.eventHandlers[eventType] = new EventHandler(this.element, eventType, eventHandler);
 			}
 		}
 
