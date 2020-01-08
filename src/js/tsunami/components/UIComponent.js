@@ -6,9 +6,10 @@ import {awaitTimeout} from "../await";
 import ArrayData from "../data/ArrayData";
 import ArrayDataOperation from "../data/ArrayDataOperation";
 import Rectangle from "../geom/Rectangle";
-import {localToGlobal} from "../window";
+import {isTouch, localToGlobal} from "../window";
 import Branch from "../Branch";
 import EventHandler from "../data/EventHandler";
+import Point from "../geom/Point";
 
 export default class UIComponent extends Branch {
 
@@ -90,6 +91,9 @@ export default class UIComponent extends Branch {
 
 	set element(value) {
     	this._element = value;
+    	if(value) {
+    		value.component = this;
+		}
 	}
 
 	getBranch(slug) {
@@ -116,7 +120,12 @@ export default class UIComponent extends Branch {
 		}
 	}
 
-	appendChild(value) {
+	appendChild(value, debug) {
+    	if(debug) {
+			console.log("appendChild", value);
+			console.log("this.element", this.element);
+			console.log("this.componentContainer", this.componentContainer);
+		}
 		if (value) {
 			this.componentContainer.appendChild(value);
 			if(this.isAdded) {
@@ -494,4 +503,14 @@ export default class UIComponent extends Branch {
 		}
 		return array;
 	}
+
+	getTouchPoint(event) {
+		let touch = event;
+		if (isTouch) {
+			touch = event.touches[0];
+		}
+		let point = new Point(touch.pageX, touch.pageY);
+		return point;
+	}
+
 }

@@ -41,6 +41,7 @@ export default class ArrayData extends Data {
 		this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
 		this.nextIndex = new NumberData();
 		this.prevIndex = new NumberData();
+		this.dataClass = Object;
 		this.push.apply(this, arguments);
 	}
 
@@ -290,6 +291,24 @@ export default class ArrayData extends Data {
 
 	slice() {
 		return this._value.slice.apply(this._value, arguments);
+	}
+
+	serialize() {
+		let array = [];
+		this.map((obj) => {
+			array.push(obj.serialize());
+		});
+		return array;
+	}
+
+	deserialize(data) {
+		let array = [];
+		data.map((obj) => {
+			let instance = new this.dataClass();
+			instance.deserialize(obj);
+			array.push(instance);
+		});
+		this.value = array;
 	}
 
 	toString() {

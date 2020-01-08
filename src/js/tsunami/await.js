@@ -1,8 +1,5 @@
 export function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
-	let promise;
-
-	promise = new Promise(function(resolve, reject) {
-
+	let promise = new Promise(function(resolve, reject) {
 		let eventHandler = function(event) {
 			event.stopPropagation();
 			if (stopPropagation) {
@@ -17,19 +14,13 @@ export function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediate
 			dispatcher.removeEventListener(eventName, eventHandler);
 			resolve(event);
 		};
-
 		dispatcher.addEventListener(eventName, eventHandler);
-
 	});
-
 	return promise;
 }
 
 export function awaitTransition(dispatcher, cssProperties) {
-	let promise;
-
-	promise = new Promise(function(resolve, reject) {
-
+	let promise = new Promise(function(resolve, reject) {
 		let eventName = "transitionend";
 		let eventNames = {
 			'OTransition':'otransitionend',
@@ -40,7 +31,6 @@ export function awaitTransition(dispatcher, cssProperties) {
 				eventName = eventNames[i];
 			}
 		}
-
 		let eventHandler = function(event) {
 			let isProperty;
 			for (let i = 0; i < cssProperties.length; i++) {
@@ -58,19 +48,13 @@ export function awaitTransition(dispatcher, cssProperties) {
 			dispatcher.removeEventListener(eventName, eventHandler);
 			resolve(event);
 		};
-
 		dispatcher.addEventListener(eventName, eventHandler);
-
 	});
-
 	return promise;
-
 }
 
 export function awaitAnimation(dispatcher, animationName) {
-	let promise;
-
-	promise = new Promise(function(resolve, reject) {
+	let promise = new Promise(function(resolve, reject) {
 		let eventName = "animationend";
 		let eventNames = {
 			'OTransition':'oanimationend',
@@ -82,7 +66,6 @@ export function awaitAnimation(dispatcher, animationName) {
 				eventName = eventNames[i];
 			}
 		}
-
 		let eventHandler = function(event) {
 			if (animationName != event.animationName || dispatcher != event.target) {
 				return;
@@ -97,55 +80,34 @@ export function awaitAnimation(dispatcher, animationName) {
 		dispatcher.addEventListener(eventName, eventHandler);
 
 	});
-
 	return promise;
 }
 
 export function awaitTimeout(milliseconds) {
-
-	let promise;
-
-	promise = new Promise(function(resolve, reject){
-
+	let promise = new Promise(function(resolve, reject){
 		let timeoutComplete = function(){
 			resolve();
 		};
-
 		setTimeout(timeoutComplete, milliseconds);
-
 	});
-
 	return promise;
-
 }
 
 export function awaitCallback(target, method) {
-
-	let promise;
-
-	promise = new Promise(function(resolve, reject){
-
+	let promise = new Promise(function(resolve, reject){
 		target[method] = function() {
 			target[method] = function(){};
 			resolve(arguments);
 		};
-
 	});
-
 	return promise;
-
 }
 
 export function awaitAnimationFrame(total = 1) {
-
 	total = Math.max(1, Math.round(total));
-
 	let count = 0;
-
 	let promise;
-
 	promise = new Promise(function(resolve, reject){
-
 		function animationFrame() {
 			count++;
 			if (count >= total) {
@@ -154,13 +116,9 @@ export function awaitAnimationFrame(total = 1) {
 				window.requestAnimationFrame(animationFrame);
 			}
 		}
-
 		window.requestAnimationFrame(animationFrame);
-
 	});
-
 	return promise;
-
 }
 
 export function awaitVideoFirstFrame(video, timeout = 5000, debug) {

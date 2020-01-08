@@ -13,8 +13,10 @@ export default class ActionSwipe extends ActionTween {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionSwipe";
 		this.name = "Swipe";
-		this.elementSelector = new StringData("body");
+		this.elementSelector = new StringData("[is=my-canvas]");
 		this.points = new ArrayData();
+		this.points.dataClass = Vector2Data;
+		this.points.value = [new Vector2Data(50, 50), new Vector2Data(400, 250)];
 	}
 
 	clone() {
@@ -33,6 +35,19 @@ export default class ActionSwipe extends ActionTween {
 		this.points.value = points;
 	}
 
+	serialize() {
+		let data = super.serialize();
+		data.points = this.points.serialize();
+		data.elementSelector = this.elementSelector.serialize();
+		return data;
+	}
+
+	deserialize(data) {
+		super.deserialize(data);
+		this.points.deserialize(data.points);
+		this.elementSelector.deserialize(data.elementSelector);
+	}
+
 	trigger() {
 		this.startX.value = 0;
 		this.startY.value = 0;
@@ -49,22 +64,23 @@ export default class ActionSwipe extends ActionTween {
 		this.origin = localToGlobal(target, document.body);
 		let point = this.curve.getPoint(0);
 		this.dispatchMouseEvent("mousedown", point);
+		return super.trigger();
 	}
 
 	dispatchMouseEvent(eventType, offset) {
-		let point = new Point(this.origin.x + offset.x, this.origin.y + offset.y);
-		let element = document.elementFromPoint(point.x - window.scrollX, point.y - window.scrollY);
+		let point = new Point(this.origin.x + offset.x - window.scrollX, this.origin.y + offset.y - window.scrollY);
+		let element = document.elementFromPoint(point.x, point.y);
 		let event = new MouseEvent(eventType, {bubbles: true, cancelable: true, view: window, clientX: point.x, clientY: point.y, pageX: point.x, pageY: point.y, x: point.x, y: point.y});
 		element.dispatchEvent(event);
 	}
 
-	addPoint() {
-		this.points.push(new Vector2Data());
-	}
-
-	removePoint(point) {
-		this.points.remove(point);
-	}
+	// addPoint() {
+	// 	this.points.push(new Vector2Data());
+	// }
+	//
+	// removePoint(point) {
+	// 	this.points.remove(point);
+	// }
 
 	tweenUpdateHandler() {
 		let point = this.curve.getPoint(this.pos.x);

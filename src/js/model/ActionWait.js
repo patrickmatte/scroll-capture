@@ -24,10 +24,6 @@ export default class ActionWait extends Action {
 	}
 
 	serialize() {
-		return {type:"ActionWait", params:[this.timeout.value]};
-	}
-
-	serialize() {
 		let data = super.serialize();
 		data.timeout = this.timeout.value;
 		return data;

@@ -78,9 +78,6 @@ screen-capture-pro {
 		font-size: 1.4rem;
 		font-weight: 700;
 
-		.title {
-		}
-
 		button[is="start-button"] {
 			text-align: right;
 			line-height: 1;
@@ -95,11 +92,45 @@ screen-capture-pro {
 		}
 	}
 
+	.sequencer {
+		button {
+			.icon {
+				display: inline-block;
+				vertical-align: middle;
+				margin-left: 0.5rem;
+			}
+		}
+		.play-button {
+			.icon {
+				width: 0;
+				height: 0;
+				border-top: 0.5rem solid transparent;
+				border-bottom: 0.5rem solid transparent;
+				border-left: 0.75rem solid white;
+			}
+		}
+		.record-button {
+			.icon {
+				width: 0.75rem;
+				height: 0.75rem;
+				overflow: hidden;
+				background-color: red;
+				border-radius: 100%;
+			}
+		}
+	}
+
 	.window {
 		padding: 0;
 		border-radius: 0.25rem;
 		background-color: rgba(255,255,255, 0.1);
 		margin: 1rem 0;
+
+		.app-name {
+			font-size: 2rem;
+			padding: 1rem;
+			font-weight: 700;
+		}
 
 		.title {
 			font-weight: bold;
@@ -107,10 +138,42 @@ screen-capture-pro {
 			display: flex;
 			justify-content: space-between;
 
-			span {
+			.tabs {
+				display: inline-flex;
+
+				.tab {
+					margin-right: 0.2rem;
+
+					&:last-child {
+						margin-right: 0;
+					}
+				}
+			}
+			.tab {
+				display: inline-block;
 				background-color: rgba(255,255,255,0.1);
 				border-radius: 0.25rem 0.25rem 0 0;
-				padding: 1rem 1rem 0.5rem 1rem;
+				padding: 1rem;
+
+				&[data-selected="false"] {
+					opacity: 0.5;
+				}
+			}
+		}
+
+		.fields.panel {
+			display: none;
+
+			&[data-state=show] {
+				display: block;
+			}
+		}
+
+		.options {
+			margin-bottom: 1rem;
+
+			button {
+				background-color: rgba(0, 0, 0, 0.1);
 			}
 		}
 
@@ -154,7 +217,7 @@ screen-capture-pro {
 			flex-grow: 1;
 			flex-shrink: 1;
 			margin-bottom: 0.5rem;
-			align-items: center;
+			align-items: baseline;
 			border-radius: 0.25rem;
 
 			&:last-child {
@@ -213,7 +276,7 @@ screen-capture-pro {
 			}
 
 			&.deleted {
-				transition: opacity 0.5s ease 0s, transform 0.5s ease-in 0s;
+				transition: opacity 0.33s ease 0s, transform 0.33s ease-in 0s;
 				opacity: 0;
 				transform: scaleX(0.5) scaleY(0.5);
 			}

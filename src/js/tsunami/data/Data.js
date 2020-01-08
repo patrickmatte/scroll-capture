@@ -14,6 +14,14 @@ export default class Data extends EventDispatcher {
 
 	}
 
+	serialize() {
+		return this.value;
+	}
+
+	deserialize(data) {
+		this.value = data;
+	}
+
 	static get CHANGE() {
 		return "change";
 	}

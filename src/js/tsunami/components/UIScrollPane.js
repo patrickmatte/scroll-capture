@@ -8,7 +8,7 @@ import TweenProperty from "../animation/TweenProperty";
 import Easing from "../animation/Easing";
 import BooleanData from "../data/BooleanData";
 
-export default class UIScrollpane extends UIComponent {
+export default class UIScrollPane extends UIComponent {
 
 	constructor(element, listSelector = ".panel") {
 		super(element);
@@ -99,7 +99,7 @@ export default class UIScrollpane extends UIComponent {
 		if(this.maxScroll.y > 0) {
 			this.scrollTarget.y += event.deltaY * this.wheelDirection;
 		}
-		this.dispatchEvent(new BaseEvent(UIScrollpane.WHEEL, event));
+		this.dispatchEvent(new BaseEvent(UIScrollPane.WHEEL, event));
 	}
 
 	_startAutoScrollTimeout() {
@@ -245,14 +245,6 @@ export default class UIScrollpane extends UIComponent {
 		this.element.setAttribute("data-scroll-y", (this.maxScroll.y > 0));
 	}
 
-	getTouchPoint(event) {
-		let touch = event;
-		if (isTouch) {
-			touch = event.touches[0];
-		}
-		return new Point(touch.pageX, touch.pageY);
-	}
-
 	mousedownHandler(event) {
 		this.removeWheelHandler();
 		this.momentum.x = this.momentum.y = 0;
@@ -320,7 +312,7 @@ export default class UIScrollpane extends UIComponent {
 
 		if (Math.abs(distance) > 2 && !this.isDragging) {
 			this.isDragging = true;
-			this.dispatchEvent(new BaseEvent(UIScrollpane.DRAG_START));
+			this.dispatchEvent(new BaseEvent(UIScrollPane.DRAG_START));
 		}
 
 		this.momentum = this.touchPrevious.subtract(touchNew);
@@ -381,7 +373,7 @@ export default class UIScrollpane extends UIComponent {
 		let momentumScaleY = this.size.height * this.momentumScaleLimit;
 		this.momentum.y = this.getMinimumAbsoluteMomentum(this.momentum.y, momentumScaleY);
 
-		this.dispatchEvent(new BaseEvent(UIScrollpane.DRAG_END));
+		this.dispatchEvent(new BaseEvent(UIScrollPane.DRAG_END));
 	}
 
 }

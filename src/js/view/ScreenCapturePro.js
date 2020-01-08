@@ -2,38 +2,11 @@ import UIComponent from "../tsunami/components/UIComponent";
 import * as tsunami from "../tsunami/tsunami";
 import StartButton from "./StartButton";
 import ActionView from "./ActionView";
-import Clock, {clock} from "../tsunami/animation/Clock";
 
 export default class ScreenCapturePro extends UIComponent {
 
 	constructor(element) {
 		super(element);
-
-		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
-
-		window.addEventListener("resize", this.resizeHandler.bind(this));
-		this.resizeHandler();
-	}
-
-	clockTick(event) {
-		let animationData = {
-			time: clock.time
-		};
-
-		this.animationFrame(animationData);
-	}
-
-	resizeHandler(event) {
-		let rectangle = this.getRect();
-		// model.windowHeight.value = rectangle.height;
-
-		rectangle.orientation = rectangle.width > rectangle.height ? "landscape" : "portrait";
-
-		if (rectangle.orientation != this.windowSize.orientation) {
-			this.orientationChange(rectangle.orientation);
-		}
-
-		this.windowResize(rectangle);
 	}
 
 }
@@ -41,20 +14,38 @@ export default class ScreenCapturePro extends UIComponent {
 ScreenCapturePro.template = `
 <screen-capture-pro>
 	<div class="window main-window">
+		<div class="app-name">Scroll Capture Pro</div>
 		<header>
 			<div class="title">
-				<span is="ui-text">Screen Capture Pro</span>
+				<div class="tabs">
+					<button class="tab" data-path="sequencer" is="router-button" data-selected="true">
+						<span>Storyboard</span>
+					</button>
+					<button class="tab" data-path="recorder" is="router-button" data-selected="false">
+						<span>Capture</span>
+					</button>
+				</div>
 				<button is="start-button" data-model=".">Start</button>
 			</div>
 		</header>
-		<div class="fields">
+		<div class="panel fields recorder" is="ui-component">
+			
+		</div>
+		<div class="panel fields sequencer" data-state="show" is="ui-component">
+			<div class="options">
+				<button class="play-button" is="ui-button" data-model="." data-click="start"><span class="label">Play</span><span class="icon"></span></button>
+				<button class="record-button" is="ui-button" data-model="." data-click="start"><span class="label">Play & Capture</span><span class="icon"></span></button>
+			</div>
 			<actions-view data-provider="actions" is="ui-list">
-				<template data-type="ActionScrollWindow">
+				<template data-type="ActionScroll">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
-							<span is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[item.name]]</span>
 						</div>
 						<div class="fields">
+							<div class="field">
+								<span class="label">element:</span><input type="text" data-model="item.target" is="ui-input"/>
+							</div>
 							<div class="field">
 								<span class="label">units:</span>
 								<div class="select">
@@ -97,9 +88,27 @@ ScreenCapturePro.template = `
 				<template data-type="ActionSwipe">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
-							<span is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[item.name]]</span>
 						</div>
 						<div class="fields">
+							<div class="field">
+								<span class="label">element:</span><input type="text" data-model="item.elementSelector" is="ui-input"/>
+							</div>
+							<div class="label">points:</div>
+							<div class="field-group">
+								<div class="points" data-provider="item.points" is="ui-list">
+									<template>
+										<div class="field-group">
+											<div class="field">
+												<span class="label">x:</span><input type="text" data-model="item.x" is="ui-input"/><span class="unit">px</span>
+											</div>
+											<div class="field">
+												<span class="label">y:</span><input type="text" data-model="item.y" is="ui-input"/><span class="unit">px</span>
+											</div>
+										</div>
+									</template>
+								</div>
+							</div>
 							<div class="field-group">
 								<div class="field">
 									<span class="label">duration:</span><input type="text" data-model="item.duration" is="ui-input"/><span class="unit">s</span>
@@ -128,7 +137,7 @@ ScreenCapturePro.template = `
 				<template data-type="ActionWait">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
-							<span is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[item.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
@@ -140,7 +149,7 @@ ScreenCapturePro.template = `
 				<template data-type="ActionMouseEvent">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
-							<span is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[item.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
@@ -170,11 +179,11 @@ ScreenCapturePro.template = `
 				<template data-type="ActionEval">
 					<action-view class="window" data-type="[[item.type]]" data-model="item">
 						<div class="title">
-							<span is="ui-text">[[item.name]]</span>
+							<span class="tab" is="ui-text">[[item.name]]</span>
 						</div>
 						<div class="fields">
 							<div class="field">
-								<textarea rows="4" data-model="item.code" is="ui-input"></textarea>
+								<textarea rows="5" data-model="item.code" is="ui-input"></textarea>
 							</div>
 						</div>
 					</action-view>
@@ -183,7 +192,7 @@ ScreenCapturePro.template = `
 			<footer>
 				<div class="window">
 					<div class="title">
-						<span>Add an action</span>
+						<span class="tab">Add an action</span>
 					</div>
 					<div class="fields">
 						<div class="field">

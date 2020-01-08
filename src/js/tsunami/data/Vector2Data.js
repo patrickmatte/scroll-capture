@@ -18,4 +18,13 @@ export default class Vector2Data {
 		this.y.copy(point.y);
 	}
 
+	serialize() {
+		return {x:this.x.value, y:this.y.value};
+	}
+
+	deserialize(data) {
+		this.x.value = data.x;
+		this.y.value = data.y;
+	}
+
 }

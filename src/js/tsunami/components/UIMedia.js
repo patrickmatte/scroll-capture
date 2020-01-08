@@ -1,7 +1,7 @@
 import UIComponent from "./UIComponent";
 import {hasValue} from "../utils/validation";
 
-export default class UIImage extends UIComponent {
+export default class UIMedia extends UIComponent {
 
 	constructor(element) {
 		super(element);

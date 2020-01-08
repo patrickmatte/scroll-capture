@@ -9,9 +9,9 @@
 	},
 	"browserslist": "> 1%, last 2 versions, IE 11",
 	"babel": {
-		"sourceMaps": true,
+		"sourceMaps": false,
 		"presets": [
-			"env"
+			"@babel/preset-env"
 		]
 	},
 	"repository": {
@@ -19,10 +19,9 @@
 		"url": "ssh://git@git.firstborn.com:8443/scm/dew/dew-ice-2018.git"
 	},
 	"devDependencies": {
-		"babel-core": "^6.26.3",
-		"babel-loader": "^7.1.5",
-		"babel-polyfill": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
+		"@babel/core": "^7.7.2",
+		"@babel/preset-env": "^7.7.1",
+		"babel-loader": "^8.0.6",
 		"copy-webpack-plugin": "^5.0.4",
 		"cross-env": "^6.0.3",
 		"css-loader": "^3.2.0",
@@ -37,6 +36,7 @@
 		"sass-resources-loader": "^2.0.1",
 		"source-map-loader": "^0.2.4",
 		"style-loader": "^1.0.0",
+		"terser-webpack-plugin": "^2.2.1",
 		"url-loader": "^2.2.0",
 		"webpack": "^4.41.2",
 		"webpack-cli": "^3.3.10",

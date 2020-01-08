@@ -69,7 +69,7 @@ export function createComponent (element, scope) {
 	}
 	if (classReference) {
 		let component = new classReference(element);
-		element.component = component;
+		// element.component = component;
 	}
 }
 
@@ -125,7 +125,7 @@ export function importTemplate(template, scope) {
 	if(factory.children.length > 0) {
 		child = factory.children.item(0);
 	}
-	scope.element = child;
+	// scope.element = child;
 	applyDirectives(child, scope);
 	return child;
 }

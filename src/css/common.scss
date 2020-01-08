@@ -6,6 +6,11 @@ html {
 }
 
 body {
-	background-color: #ffffff;
-	color: #000000;
+	background-color: #000000;
+	color: #ffffff;
+
+	&[is="test"] {
+		color: #000000;
+		background-color: #ffffff;
+	}
 }

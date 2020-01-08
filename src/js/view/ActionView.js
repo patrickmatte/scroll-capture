@@ -19,7 +19,7 @@ export default class ActionView extends UIComponent {
 			this.element.classList.add("deleted");
 			setTimeout(()=> {
 				this.element.parentNode.component.dataProvider.remove(this.model);
-			}, 500);
+			}, 333);
 		};
 		this.title.appendChild(deleteButton);
 	}

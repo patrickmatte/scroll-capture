@@ -26,6 +26,7 @@ export default class NumberData extends Data {
 	}
 
 	set value (value) {
+		value = Number(value);
 		for (let i = 0; i < this.modifiers.length; i++) {
 			let modifier = this.modifiers[i];
 			value = modifier(value);

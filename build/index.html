@@ -15,6 +15,21 @@
             </div>
         </template>
     </spacers-view>
+    <div is="my-canvas">
+        <canvas width="500" height="300"></canvas>
+    </div>
+    <div class="scrollpane">
+        <div>
+            <div class="list" data-provider="spacers" is="ui-list">
+                <template>
+                    <div class="item item-[[index]]" is="ui-component">
+                        <div class="label" is="ui-text">Item [[index]]</div>
+                    </div>
+                </template>
+            </div>
+            <button onclick="console.log('click inline', this)" is="ui-component">Click Me</button>
+        </div>
+    </div>
     <script src="test.js"></script>
 </body>
 </html>

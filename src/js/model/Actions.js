@@ -1,5 +1,5 @@
 import ArrayData from "../tsunami/data/ArrayData";
-import ActionScrollWindow from "./ActionScrollWindow";
+import ActionScroll from "./ActionScroll";
 import ActionWait from "./ActionWait";
 import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
@@ -16,7 +16,7 @@ export default class Actions extends ArrayData {
 
 		this.types = new ArrayData();
 		this.types.value = [
-			new ActionScrollWindow(),
+			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),
 			new ActionWait(),

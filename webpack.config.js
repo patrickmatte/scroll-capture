@@ -5,6 +5,7 @@ const Dotenv = require("dotenv-webpack");
 const ENV = process.env.NODE_ENV || "development";
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	context: path.resolve(__dirname, "src"),
@@ -22,12 +23,12 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
-				exclude: /(node_modules|bower_components|build)/,
+				test: /\.m?js$/,
+				exclude: /(node_modules|bower_components)/,
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['env']
+						presets: ["@babel/preset-env"]
 					}
 				}
 			},
@@ -78,7 +79,14 @@ module.exports = {
 			path: "./.env",
 		}),
 	],
-
+	optimization: {
+		minimize: false,
+		minimizer: [
+			new TerserPlugin({
+				test: /\.js(\?.*)?$/i,
+			}),
+		],
+	},
 	stats: { colors: true },
 
 	node: {
