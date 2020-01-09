@@ -7,7 +7,7 @@ export default class SplitWords extends UIList {
 	constructor(element) {
 		super(element);
 		this.alsoShowChildren = true;
-		this.wordTemplate = `<span class="word" is="ui-component">{{item}}</span>`;
+		this.wordTemplate = `<span class="word" is="ui-component">{{data}}</span>`;
 		this.spaceTemplate = `<span class="space">&nbsp;</span>`;
 		this.showChildrenDelay = 25;
 		this.hideChildrenDelay = 25;

@@ -5,7 +5,7 @@ export default class SplitLetters extends UIList {
 	constructor(element) {
 		super(element);
 
-		this.template = `<span class="letter" is="ui-component">{{item}}</span>`;
+		this.template = `<span class="letter" is="ui-component">{{data}}</span>`;
 	}
 
 	updateValue(value) {

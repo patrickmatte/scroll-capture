@@ -16,6 +16,7 @@ export default class Actions extends ArrayData {
 
 		this.types = new ArrayData();
 		this.types.value = [
+			new Action("", "Add an action"),
 			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),
@@ -33,6 +34,8 @@ export default class Actions extends ArrayData {
 		if(action) {
 			this.push(action);
 		}
+
+		this.types.selectedItem.value = this.types.value[0];
 	}
 
 	serialize() {

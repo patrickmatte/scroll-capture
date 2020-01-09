@@ -3,13 +3,55 @@ import Point from "./Point";
 export default class Rectangle {
 
 	constructor(x = 0, y = 0, width = 0, height = 0) {
+		this._position = new Point();
+		this._size = new Point();
+		this.center = new Point();
+		this.halfSize = new Point();
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 	}
 
-    contains(point) {
+	get x() {
+		return this.position.x;
+	}
+
+	set x(value) {
+		this.position.x = value;
+		this.center.x = this.position.x + this.halfSize.x;
+	}
+
+	get y() {
+		return this.position.y;
+	}
+
+	set y(value) {
+		this.position.y = value;
+		this.center.y = this.position.y + this.halfSize.y;
+	}
+
+	get width() {
+		return this.size.x;
+	}
+
+	set width(value) {
+		this.size.x = value;
+		this.halfSize.x = value / 2;
+		this.center.x = this.position.x + this.halfSize.x;
+	}
+
+	get height() {
+		return this.size.y;
+	}
+
+	set height(value) {
+		this.size.y = value;
+		this.halfSize.y = value / 2;
+		this.center.y = this.position.y + this.halfSize.y;
+	}
+
+	contains(point) {
 		let hit = (point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height)?true:false;
 		return hit;
     }
@@ -49,29 +91,23 @@ export default class Rectangle {
 	}
 
 	get position() {
-		return new Point(this.x, this.y);
+		return this._position;
 	}
 
-	set position(point) {
-		this.x = point.x;
-		this.y = point.y;
-	}
-
-	get area() {
-		return this.width * this.height;
+	set position(value) {
+		this._position = value;
 	}
 
 	get size() {
-        return new Point(this.width, this.height);
+		return this._size;
 	}
 
-	set size(point) {
-        this.width = point.x;
-        this.height = point.y;
+	set size(value) {
+		this._size = value;
 	}
 
-	get center() {
-		return new Point(this.x + this.width / 2, this.y + this.height / 2);
+	get area() {
+		return this.size.x * this.size.y;
 	}
 
 	toString() {

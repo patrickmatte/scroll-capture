@@ -14,20 +14,21 @@ export default class Main extends App {
 
 	constructor(element) {
 		super(element);
-
 		console.log("Main", element);
 
 		this.router = new Router();
 
-		this.actions = new Actions(
-			new ActionSwipe(),
-			new ActionWait(),
-			new ActionScroll("window", "px", 0, 500),
-			new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
-			new ActionEval(),
-			new ActionScroll(".scrollpane", "%", 0, 100),
-			new ActionMouseEvent("click", ".scrollpane button", 0, 0),
-		);
+		this.actions = new Actions();
+
+		this.actions.value = [
+			// new ActionSwipe(),
+			// new ActionWait(),
+			// new ActionScroll("window", "px", 0, 500),
+			// new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
+			// new ActionEval(),
+			// new ActionScroll(".scrollpane", "%", 0, 100),
+			// new ActionMouseEvent("click", ".scrollpane button", 0, 0),
+		];
 
 		this.start = this.start.bind(this);
 	}

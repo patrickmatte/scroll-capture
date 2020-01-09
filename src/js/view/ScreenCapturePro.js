@@ -14,28 +14,24 @@ export default class ScreenCapturePro extends UIComponent {
 ScreenCapturePro.template = `
 <screen-capture-pro>
 	<div class="window main-window">
-		<div class="app-name">Scroll Capture Pro</div>
+<!--		<div class="app-name">Scroll Capture</div>-->
 		<header>
 			<div class="title">
 				<div class="tabs">
 					<button class="tab" data-path="sequencer" is="router-button" data-selected="true">
-						<span>Storyboard</span>
+						<span>Scroll Capture</span>
 					</button>
-					<button class="tab" data-path="recorder" is="router-button" data-selected="false">
-						<span>Capture</span>
-					</button>
+<!--					<button class="start-button play-button" is="ui-button" data-model="." data-click="start">-->
+<!--						<span>Play</span>-->
+<!--					</button>-->
 				</div>
-				<button is="start-button" data-model=".">Start</button>
+				<button class="play-button" is="ui-button" data-model="." data-click="start"><span class="label">Play</span><span class="icon"></span></button>
 			</div>
 		</header>
-		<div class="panel fields recorder" is="ui-component">
-			
-		</div>
 		<div class="panel fields sequencer" data-state="show" is="ui-component">
-			<div class="options">
-				<button class="play-button" is="ui-button" data-model="." data-click="start"><span class="label">Play</span><span class="icon"></span></button>
-				<button class="record-button" is="ui-button" data-model="." data-click="start"><span class="label">Play & Capture</span><span class="icon"></span></button>
-			</div>
+<!--			<div class="options">-->
+<!--				<button class="play-button" is="ui-button" data-model="." data-click="start"><span class="label">Play</span><span class="icon"></span></button>-->
+<!--			</div>-->
 			<actions-view data-provider="actions" is="ui-list">
 				<template data-type="ActionScroll">
 					<action-view class="window" data-type="[[data.type]]" data-model="data">
@@ -191,9 +187,9 @@ ScreenCapturePro.template = `
 			</actions-view>
 			<footer>
 				<div class="window">
-					<div class="title">
-						<span class="tab">Add an action</span>
-					</div>
+<!--					<div class="title">-->
+<!--						<span class="tab">Add an action</span>-->
+<!--					</div>-->
 					<div class="fields">
 						<div class="field">
 							<div class="select">
@@ -213,5 +209,5 @@ ScreenCapturePro.template = `
 </screen-capture-pro>
 `;
 
-tsunami.define("start-button", StartButton);
+// tsunami.define("start-button", StartButton);
 tsunami.define("action-view", ActionView);

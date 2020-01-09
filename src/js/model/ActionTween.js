@@ -34,7 +34,11 @@ export default class ActionTween extends Action {
 			});
 			this.easingMethods.selectedItem.value = method || this.easingMethods.value[0];
 		});
-		this.easingClasses.selectedItem.value = this.easingClasses.value[1];
+
+		let easingClass = this.easingClasses.find((item)=> {
+			return item == "cubic";
+		});
+		this.easingClasses.selectedItem.value = easingClass || this.easingClasses.value[0];
 		this.tweenUpdateHandler = this.tweenUpdateHandler.bind(this);
 		this.tweenCompleteHandler = this.tweenCompleteHandler.bind(this);
 		this.pos = new Point();
@@ -47,8 +51,8 @@ export default class ActionTween extends Action {
 		this.endY.value = action.endY.value;
 		this.duration.value = action.duration.value;
 		this.delay.value = action.delay.value;
-		this.easingClasses.selectedIndex.value = action.easingClasses.selectedIndex.value;
-		this.easingMethods.selectedIndex.value = action.easingMethods.selectedIndex.value;
+		this.easingClasses.selectedItem.value = action.easingClasses.selectedItem.value;
+		this.easingMethods.selectedItem.value = action.easingMethods.selectedItem.value;
 	}
 
 	trigger() {

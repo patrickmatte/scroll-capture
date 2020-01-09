@@ -78,7 +78,7 @@ screen-capture-pro {
 		font-size: 1.4rem;
 		font-weight: 700;
 
-		button[is="start-button"] {
+		button.start-button {
 			text-align: right;
 			line-height: 1;
 			background-color: transparent;
@@ -92,6 +92,22 @@ screen-capture-pro {
 		}
 	}
 
+	.play-button {
+		background-color: transparent;
+
+		.icon {
+			width: 0;
+			height: 0;
+			font-size: 1.2rem;
+			border-top: 0.4em solid transparent;
+			border-bottom: 0.4em solid transparent;
+			border-left: 0.45em solid white;
+			margin-left: 0.5rem;
+			vertical-align: middle;
+			display: inline-block;
+		}
+	}
+
 	.sequencer {
 		button {
 			.icon {
@@ -100,15 +116,7 @@ screen-capture-pro {
 				margin-left: 0.5rem;
 			}
 		}
-		.play-button {
-			.icon {
-				width: 0;
-				height: 0;
-				border-top: 0.5rem solid transparent;
-				border-bottom: 0.5rem solid transparent;
-				border-left: 0.75rem solid white;
-			}
-		}
+
 		.record-button {
 			.icon {
 				width: 0.75rem;
@@ -173,7 +181,9 @@ screen-capture-pro {
 			margin-bottom: 1rem;
 
 			button {
-				background-color: rgba(0, 0, 0, 0.1);
+				//background-color: rgba(0, 0, 0, 0.1);
+				background-color: transparent;
+				padding: 0;
 			}
 		}
 
@@ -263,16 +273,13 @@ screen-capture-pro {
 
 	actions-view {
 		width: 100%;
+		display: block;
 
 		action-view {
 			display: block;
 
 			&:first-child {
 				margin-top: 0;
-			}
-
-			&:last-child {
-				margin-bottom: 0;
 			}
 
 			&.deleted {
@@ -303,10 +310,13 @@ screen-capture-pro {
 
 		.window {
 			background-color: rgba(0,0,0,0.1);
+			margin-top: 0;
+			margin-bottom: 0;
 		}
 
 		.add-button {
 			margin-left: 0.5rem;
+			font-weight: 900;
 		}
 	}
 }

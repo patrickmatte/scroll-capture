@@ -656,7 +656,7 @@ function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -791,7 +791,7 @@ var Data = __webpack_require__(0);
 var NumberData = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(11);
+var BooleanData = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -2666,6 +2666,10 @@ function () {
 
     _classCallCheck(this, Rectangle);
 
+    this._position = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this._size = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.center = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.halfSize = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
     this.x = x;
     this.y = y;
     this.width = width;
@@ -2797,32 +2801,63 @@ function () {
       return scale;
     }
   }, {
-    key: "position",
+    key: "x",
     get: function get() {
-      return new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](this.x, this.y);
+      return this.position.x;
     },
-    set: function set(point) {
-      this.x = point.x;
-      this.y = point.y;
+    set: function set(value) {
+      this.position.x = value;
+      this.center.x = this.position.x + this.halfSize.x;
     }
   }, {
-    key: "area",
+    key: "y",
     get: function get() {
-      return this.width * this.height;
+      return this.position.y;
+    },
+    set: function set(value) {
+      this.position.y = value;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "width",
+    get: function get() {
+      return this.size.x;
+    },
+    set: function set(value) {
+      this.size.x = value;
+      this.halfSize.x = value / 2;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "height",
+    get: function get() {
+      return this.size.y;
+    },
+    set: function set(value) {
+      this.size.y = value;
+      this.halfSize.y = value / 2;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "position",
+    get: function get() {
+      return this._position;
+    },
+    set: function set(value) {
+      this._position = value;
     }
   }, {
     key: "size",
     get: function get() {
-      return new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](this.width, this.height);
+      return this._size;
     },
-    set: function set(point) {
-      this.width = point.x;
-      this.height = point.y;
+    set: function set(value) {
+      this._size = value;
     }
   }, {
-    key: "center",
+    key: "area",
     get: function get() {
-      return new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](this.x + this.width / 2, this.y + this.height / 2);
+      return this.size.x * this.size.y;
     }
   }, {
     key: "widthToHeight",
@@ -2852,13 +2887,14 @@ function () {
 
 
 /***/ }),
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BooleanData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2943,12 +2979,12 @@ function (_Data) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validation; });
-/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3047,7 +3083,6 @@ function (_BooleanData) {
 
 
 /***/ }),
-/* 13 */,
 /* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4160,7 +4195,7 @@ function (_UIComponent) {
     UIList_classCallCheck(this, UIList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UIList).call(this, element));
-    _this.template = "<li><span is=\"ui-text\">[[item]]</span></li>";
+    _this.template = "<li><span is=\"ui-text\">[[data]]</span></li>";
     _this.templates = {};
     _this._provider = [];
     _this._providerChange = _this._providerChange.bind(_assertThisInitialized(_this));
@@ -4333,13 +4368,13 @@ function (_UIComponent) {
       return _get(_getPrototypeOf(UIList.prototype), "scope", this);
     },
     set: function set(value) {
-      _set(_getPrototypeOf(UIList.prototype), "scope", value, this, true);
-
       var dataProvider = this.element.getAttribute("data-provider");
 
       if (dataProvider) {
         this.dataProvider = Object(tsunami["d" /* evalProperty */])(dataProvider, value);
       }
+
+      _set(_getPrototypeOf(UIList.prototype), "scope", value, this, true);
     }
   }, {
     key: "dataProvider",
@@ -4401,7 +4436,7 @@ function (_UIComponent) {
 /* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5207,7 +5242,7 @@ function (_UIList) {
 
     _this = UISelect_possibleConstructorReturn(this, UISelect_getPrototypeOf(UISelect).call(this, element));
     _this.valuePath = element.getAttribute("data-valuePath") || ".";
-    _this.template = "<option value=\"[[item]]\" is=\"ui-text\">[[item]]</option>";
+    _this.template = "<option value=\"[[data]]\" is=\"ui-text\">[[data]]</option>";
     _this.getModel = _this.getModel.bind(UISelect_assertThisInitialized(_this));
     _this.inputHandler = _this.inputHandler.bind(UISelect_assertThisInitialized(_this));
 
@@ -5232,9 +5267,7 @@ function (_UIList) {
 
         this._model.value = this.dataProvider.find(this.getModel);
 
-        if (this._model) {
-          this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChangeBind);
-        }
+        this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChangeBind);
       }
     }
   }, {
@@ -5936,7 +5969,7 @@ var Point = __webpack_require__(2);
 var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(11);
+var BooleanData = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIScrollPane.js
 function UIScrollPane_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIScrollPane_typeof = function _typeof(obj) { return typeof obj; }; } else { UIScrollPane_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIScrollPane_typeof(obj); }

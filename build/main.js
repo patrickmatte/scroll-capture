@@ -656,7 +656,7 @@ function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -791,7 +791,7 @@ var Data = __webpack_require__(0);
 var NumberData = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(11);
+var BooleanData = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -2666,6 +2666,10 @@ function () {
 
     _classCallCheck(this, Rectangle);
 
+    this._position = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this._size = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.center = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.halfSize = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
     this.x = x;
     this.y = y;
     this.width = width;
@@ -2797,32 +2801,63 @@ function () {
       return scale;
     }
   }, {
-    key: "position",
+    key: "x",
     get: function get() {
-      return new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](this.x, this.y);
+      return this.position.x;
     },
-    set: function set(point) {
-      this.x = point.x;
-      this.y = point.y;
+    set: function set(value) {
+      this.position.x = value;
+      this.center.x = this.position.x + this.halfSize.x;
     }
   }, {
-    key: "area",
+    key: "y",
     get: function get() {
-      return this.width * this.height;
+      return this.position.y;
+    },
+    set: function set(value) {
+      this.position.y = value;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "width",
+    get: function get() {
+      return this.size.x;
+    },
+    set: function set(value) {
+      this.size.x = value;
+      this.halfSize.x = value / 2;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "height",
+    get: function get() {
+      return this.size.y;
+    },
+    set: function set(value) {
+      this.size.y = value;
+      this.halfSize.y = value / 2;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "position",
+    get: function get() {
+      return this._position;
+    },
+    set: function set(value) {
+      this._position = value;
     }
   }, {
     key: "size",
     get: function get() {
-      return new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](this.width, this.height);
+      return this._size;
     },
-    set: function set(point) {
-      this.width = point.x;
-      this.height = point.y;
+    set: function set(value) {
+      this._size = value;
     }
   }, {
-    key: "center",
+    key: "area",
     get: function get() {
-      return new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](this.x + this.width / 2, this.y + this.height / 2);
+      return this.size.x * this.size.y;
     }
   }, {
     key: "widthToHeight",
@@ -2856,9 +2891,64 @@ function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Action; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Action =
+/*#__PURE__*/
+function () {
+  function Action() {
+    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Action";
+    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Action";
+
+    _classCallCheck(this, Action);
+
+    this.type = type;
+    this.name = name;
+  }
+
+  _createClass(Action, [{
+    key: "clone",
+    value: function clone() {}
+  }, {
+    key: "copy",
+    value: function copy() {}
+  }, {
+    key: "trigger",
+    value: function trigger() {
+      return Promise.resolve();
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        type: this.type
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      this.type = data.type;
+    }
+  }]);
+
+  return Action;
+}();
+
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BooleanData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2943,12 +3033,12 @@ function (_Data) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validation; });
-/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3043,61 +3133,6 @@ function (_BooleanData) {
 
   return Validation;
 }(_BooleanData__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Action; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Action =
-/*#__PURE__*/
-function () {
-  function Action() {
-    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Action";
-    var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Action";
-
-    _classCallCheck(this, Action);
-
-    this.type = type;
-    this.name = name;
-  }
-
-  _createClass(Action, [{
-    key: "clone",
-    value: function clone() {}
-  }, {
-    key: "copy",
-    value: function copy() {}
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      return Promise.resolve();
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      return {
-        type: this.type
-      };
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      this.type = data.type;
-    }
-  }]);
-
-  return Action;
-}();
 
 
 
@@ -3983,7 +4018,7 @@ function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StringData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4322,7 +4357,7 @@ function (_UIComponent) {
     UIList_classCallCheck(this, UIList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UIList).call(this, element));
-    _this.template = "<li><span is=\"ui-text\">[[item]]</span></li>";
+    _this.template = "<li><span is=\"ui-text\">[[data]]</span></li>";
     _this.templates = {};
     _this._provider = [];
     _this._providerChange = _this._providerChange.bind(_assertThisInitialized(_this));
@@ -4495,13 +4530,13 @@ function (_UIComponent) {
       return _get(_getPrototypeOf(UIList.prototype), "scope", this);
     },
     set: function set(value) {
-      _set(_getPrototypeOf(UIList.prototype), "scope", value, this, true);
-
       var dataProvider = this.element.getAttribute("data-provider");
 
       if (dataProvider) {
         this.dataProvider = Object(tsunami["d" /* evalProperty */])(dataProvider, value);
       }
+
+      _set(_getPrototypeOf(UIList.prototype), "scope", value, this, true);
     }
   }, {
     key: "dataProvider",
@@ -4563,7 +4598,7 @@ function (_UIComponent) {
 /* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4788,7 +4823,7 @@ function (_Data) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionTween; });
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* harmony import */ var _tsunami_data_NumberData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
 /* harmony import */ var _tsunami_data_ArrayData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
 /* harmony import */ var _tsunami_animation_Easing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(15);
@@ -4873,7 +4908,11 @@ function (_Action) {
       _this.easingMethods.selectedItem.value = method || _this.easingMethods.value[0];
     });
 
-    _this.easingClasses.selectedItem.value = _this.easingClasses.value[1];
+    var easingClass = _this.easingClasses.find(function (item) {
+      return item == "cubic";
+    });
+
+    _this.easingClasses.selectedItem.value = easingClass || _this.easingClasses.value[0];
     _this.tweenUpdateHandler = _this.tweenUpdateHandler.bind(_assertThisInitialized(_this));
     _this.tweenCompleteHandler = _this.tweenCompleteHandler.bind(_assertThisInitialized(_this));
     _this.pos = new _tsunami_geom_Point__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"]();
@@ -4889,8 +4928,8 @@ function (_Action) {
       this.endY.value = action.endY.value;
       this.duration.value = action.duration.value;
       this.delay.value = action.delay.value;
-      this.easingClasses.selectedIndex.value = action.easingClasses.selectedIndex.value;
-      this.easingMethods.selectedIndex.value = action.easingMethods.selectedIndex.value;
+      this.easingClasses.selectedItem.value = action.easingClasses.selectedItem.value;
+      this.easingMethods.selectedItem.value = action.easingMethods.selectedItem.value;
     }
   }, {
     key: "trigger",
@@ -5129,8 +5168,99 @@ function (_ActionTween) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionWait; });
+/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _tsunami_await__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
+/* harmony import */ var _tsunami_data_NumberData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var ActionWait =
+/*#__PURE__*/
+function (_Action) {
+  _inherits(ActionWait, _Action);
+
+  function ActionWait() {
+    var _this;
+
+    var timeout = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.25;
+
+    _classCallCheck(this, ActionWait);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
+    _this.timeout = new _tsunami_data_NumberData__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"](timeout);
+    return _this;
+  }
+
+  _createClass(ActionWait, [{
+    key: "clone",
+    value: function clone() {
+      var action = new ActionWait();
+      action.copy(this);
+      return action;
+    }
+  }, {
+    key: "copy",
+    value: function copy(action) {
+      this.timeout.value = action.timeout.value;
+    }
+  }, {
+    key: "trigger",
+    value: function trigger() {
+      return Object(_tsunami_await__WEBPACK_IMPORTED_MODULE_1__[/* awaitTimeout */ "b"])(this.timeout.value * 1000);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var data = _get(_getPrototypeOf(ActionWait.prototype), "serialize", this).call(this);
+
+      data.timeout = this.timeout.value;
+      return data;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      _get(_getPrototypeOf(ActionWait.prototype), "deserialize", this).call(this, data);
+
+      this.timeout.value = data.timeout;
+    }
+  }]);
+
+  return ActionWait;
+}(_Action__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionMouseEvent; });
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* harmony import */ var _tsunami_data_StringData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
 /* harmony import */ var _tsunami_data_NumberData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
 /* harmony import */ var _tsunami_window__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
@@ -5259,103 +5389,12 @@ function (_Action) {
 
 
 /***/ }),
-/* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionWait; });
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/* harmony import */ var _tsunami_await__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16);
-/* harmony import */ var _tsunami_data_NumberData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-var ActionWait =
-/*#__PURE__*/
-function (_Action) {
-  _inherits(ActionWait, _Action);
-
-  function ActionWait() {
-    var _this;
-
-    var timeout = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.25;
-
-    _classCallCheck(this, ActionWait);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
-    _this.timeout = new _tsunami_data_NumberData__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"](timeout);
-    return _this;
-  }
-
-  _createClass(ActionWait, [{
-    key: "clone",
-    value: function clone() {
-      var action = new ActionWait();
-      action.copy(this);
-      return action;
-    }
-  }, {
-    key: "copy",
-    value: function copy(action) {
-      this.timeout.value = action.timeout.value;
-    }
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      return Object(_tsunami_await__WEBPACK_IMPORTED_MODULE_1__[/* awaitTimeout */ "b"])(this.timeout.value * 1000);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var data = _get(_getPrototypeOf(ActionWait.prototype), "serialize", this).call(this);
-
-      data.timeout = this.timeout.value;
-      return data;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      _get(_getPrototypeOf(ActionWait.prototype), "deserialize", this).call(this, data);
-
-      this.timeout.value = data.timeout;
-    }
-  }]);
-
-  return ActionWait;
-}(_Action__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
 /* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionEval; });
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* harmony import */ var _tsunami_data_StringData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -5459,7 +5498,7 @@ function (_Action) {
 "use strict";
 
 // EXTERNAL MODULE: ./js/model/Action.js
-var Action = __webpack_require__(13);
+var Action = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
 var Point = __webpack_require__(2);
@@ -55267,10 +55306,10 @@ var StyleUnits = function StyleUnits() {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Actions; });
 /* harmony import */ var _tsunami_data_ArrayData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 /* harmony import */ var _ActionScroll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23);
-/* harmony import */ var _ActionWait__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
-/* harmony import */ var _ActionMouseEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24);
+/* harmony import */ var _ActionWait__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24);
+/* harmony import */ var _ActionMouseEvent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25);
 /* harmony import */ var _ActionEval__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26);
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(13);
+/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11);
 /* harmony import */ var _ActionSwipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(27);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -55314,7 +55353,7 @@ function (_ArrayData) {
 
     _this.addSelectedType = _this.addSelectedType.bind(_assertThisInitialized(_this));
     _this.types = new _tsunami_data_ArrayData__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    _this.types.value = [new _ActionScroll__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"](), new _ActionMouseEvent__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"](), new _ActionSwipe__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"](), new _ActionWait__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"](), new _ActionEval__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]()];
+    _this.types.value = [new _Action__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"]("", "Add an action"), new _ActionScroll__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"](), new _ActionMouseEvent__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"](), new _ActionSwipe__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"](), new _ActionWait__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"](), new _ActionEval__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]()];
     _this.types.selectedItem.value = _this.types.value[0];
     return _this;
   }
@@ -55331,6 +55370,8 @@ function (_ArrayData) {
       if (action) {
         this.push(action);
       }
+
+      this.types.selectedItem.value = this.types.value[0];
     }
   }, {
     key: "serialize",
@@ -55559,7 +55600,7 @@ function (_UIList) {
 
     _this = UISelect_possibleConstructorReturn(this, UISelect_getPrototypeOf(UISelect).call(this, element));
     _this.valuePath = element.getAttribute("data-valuePath") || ".";
-    _this.template = "<option value=\"[[item]]\" is=\"ui-text\">[[item]]</option>";
+    _this.template = "<option value=\"[[data]]\" is=\"ui-text\">[[data]]</option>";
     _this.getModel = _this.getModel.bind(UISelect_assertThisInitialized(_this));
     _this.inputHandler = _this.inputHandler.bind(UISelect_assertThisInitialized(_this));
 
@@ -55584,9 +55625,7 @@ function (_UIList) {
 
         this._model.value = this.dataProvider.find(this.getModel);
 
-        if (this._model) {
-          this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChangeBind);
-        }
+        this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChangeBind);
       }
     }
   }, {
@@ -56288,7 +56327,7 @@ var Point = __webpack_require__(2);
 var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(11);
+var BooleanData = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIScrollPane.js
 function UIScrollPane_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIScrollPane_typeof = function _typeof(obj) { return typeof obj; }; } else { UIScrollPane_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIScrollPane_typeof(obj); }
@@ -57109,7 +57148,7 @@ function (_UIComponent) {
 
       _set(ActionView_getPrototypeOf(ActionView.prototype), "scope", value, this, true);
 
-      var deleteButton = Object(tsunami["f" /* importTemplate */])("<button class=\"delete-button\" data-model=\"item\" is=\"ui-button\">x</button>", value);
+      var deleteButton = Object(tsunami["f" /* importTemplate */])("<button class=\"delete-button\" data-model=\"data\" is=\"ui-button\">x</button>", value);
 
       deleteButton.component.onRelease = function (event) {
         _this2.element.classList.add("deleted");
@@ -57177,8 +57216,8 @@ function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
-ScreenCapturePro.template = "\n<screen-capture-pro>\n\t<div class=\"window main-window\">\n\t\t<div class=\"app-name\">Scroll Capture Pro</div>\n\t\t<header>\n\t\t\t<div class=\"title\">\n\t\t\t\t<div class=\"tabs\">\n\t\t\t\t\t<button class=\"tab\" data-path=\"sequencer\" is=\"router-button\" data-selected=\"true\">\n\t\t\t\t\t\t<span>Storyboard</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"tab\" data-path=\"recorder\" is=\"router-button\" data-selected=\"false\">\n\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<button is=\"start-button\" data-model=\".\">Start</button>\n\t\t\t</div>\n\t\t</header>\n\t\t<div class=\"panel fields recorder\" is=\"ui-component\">\n\t\t\t\n\t\t</div>\n\t\t<div class=\"panel fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"options\">\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-model=\".\" data-click=\"start\"><span class=\"label\">Play</span><span class=\"icon\"></span></button>\n\t\t\t\t<button class=\"record-button\" is=\"ui-button\" data-model=\".\" data-click=\"start\"><span class=\"label\">Play & Capture</span><span class=\"icon\"></span></button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\">\n\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">units:</span>\n\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">x:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">y:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">method:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">element:</span><input type=\"text\" data-model=\"data.elementSelector\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"label\">points:</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"label\">x:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"label\">y:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">method:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">timeout:</span><input type=\"text\" data-model=\"data.timeout\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">type:</span>\n\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">element:</span><input type=\"text\" data-model=\"data.cssSelector\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">x:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">y:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"window\">\n\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t<span class=\"tab\">Add an action</span>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</screen-capture-pro>\n";
-tsunami["b" /* define */]("start-button", StartButton);
+ScreenCapturePro.template = "\n<screen-capture-pro>\n\t<div class=\"window main-window\">\n<!--\t\t<div class=\"app-name\">Scroll Capture</div>-->\n\t\t<header>\n\t\t\t<div class=\"title\">\n\t\t\t\t<div class=\"tabs\">\n\t\t\t\t\t<button class=\"tab\" data-path=\"sequencer\" is=\"router-button\" data-selected=\"true\">\n\t\t\t\t\t\t<span>Scroll Capture</span>\n\t\t\t\t\t</button>\n<!--\t\t\t\t\t<button class=\"start-button play-button\" is=\"ui-button\" data-model=\".\" data-click=\"start\">-->\n<!--\t\t\t\t\t\t<span>Play</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-model=\".\" data-click=\"start\"><span class=\"label\">Play</span><span class=\"icon\"></span></button>\n\t\t\t</div>\n\t\t</header>\n\t\t<div class=\"panel fields sequencer\" data-state=\"show\" is=\"ui-component\">\n<!--\t\t\t<div class=\"options\">-->\n<!--\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-model=\".\" data-click=\"start\"><span class=\"label\">Play</span><span class=\"icon\"></span></button>-->\n<!--\t\t\t</div>-->\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\">\n\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">units:</span>\n\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">x:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">y:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">method:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">element:</span><input type=\"text\" data-model=\"data.elementSelector\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"label\">points:</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"label\">x:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"label\">y:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">method:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">timeout:</span><input type=\"text\" data-model=\"data.timeout\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">type:</span>\n\t\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<span class=\"label\">element:</span><input type=\"text\" data-model=\"data.cssSelector\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"field-group\">\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">x:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t\t<span class=\"label\">y:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t<action-view class=\"window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"title\">\n\t\t\t\t\t\t\t<span class=\"tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"window\">\n<!--\t\t\t\t\t<div class=\"title\">-->\n<!--\t\t\t\t\t\t<span class=\"tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"fields\">\n\t\t\t\t\t\t<div class=\"field\">\n\t\t\t\t\t\t\t<div class=\"select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</screen-capture-pro>\n"; // tsunami.define("start-button", StartButton);
+
 tsunami["b" /* define */]("action-view", ActionView_ActionView);
 // EXTERNAL MODULE: ./js/app.js + 9 modules
 var app = __webpack_require__(30);
@@ -57190,13 +57229,13 @@ var ActionSwipe = __webpack_require__(27);
 var Actions = __webpack_require__(29);
 
 // EXTERNAL MODULE: ./js/model/ActionWait.js
-var ActionWait = __webpack_require__(25);
+var ActionWait = __webpack_require__(24);
 
 // EXTERNAL MODULE: ./js/model/ActionScroll.js
 var ActionScroll = __webpack_require__(23);
 
 // EXTERNAL MODULE: ./js/model/ActionMouseEvent.js
-var ActionMouseEvent = __webpack_require__(24);
+var ActionMouseEvent = __webpack_require__(25);
 
 // EXTERNAL MODULE: ./js/model/ActionEval.js
 var ActionEval = __webpack_require__(26);
@@ -57814,7 +57853,15 @@ function (_App) {
     _this = main_possibleConstructorReturn(this, main_getPrototypeOf(Main).call(this, element));
     console.log("Main", element);
     _this.router = new Router_Router();
-    _this.actions = new Actions["a" /* default */](new ActionSwipe["a" /* default */](), new ActionWait["a" /* default */](), new ActionScroll["a" /* default */]("window", "px", 0, 500), new ActionMouseEvent["a" /* default */]("click", ".spacer-1 button", 0, 0), new ActionEval["a" /* default */](), new ActionScroll["a" /* default */](".scrollpane", "%", 0, 100), new ActionMouseEvent["a" /* default */]("click", ".scrollpane button", 0, 0));
+    _this.actions = new Actions["a" /* default */]();
+    _this.actions.value = [// new ActionSwipe(),
+      // new ActionWait(),
+      // new ActionScroll("window", "px", 0, 500),
+      // new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
+      // new ActionEval(),
+      // new ActionScroll(".scrollpane", "%", 0, 100),
+      // new ActionMouseEvent("click", ".scrollpane button", 0, 0),
+    ];
     _this.start = _this.start.bind(main_assertThisInitialized(_this));
     return _this;
   }
