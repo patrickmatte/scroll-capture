@@ -1,47 +1,154 @@
+body {
+
 screen-capture-pro {
-	width: 37.5rem;
-	background-color: #000000;
+	position: fixed;
+	right: 2em;
+	top: 2em;
+	width: 37.5em;
 	color: #ffffff;
 	display: flex;
 	flex-direction: column;
 	user-select: none;
-	font-size: 1.2rem;
+	font-size: 10px !important;
 	line-height: 1;
 	margin: 0;
+	z-index: 200000000;
+	font-weight: normal;
+	font-family: Helvetica, Arial, SansSerif;
+	background-color: #000000;
+	padding: 1em;
+	border-radius: 0.25em;
+	box-sizing: border-box;
 
-	.window.main-window {
-		margin: 1rem;
+	* {
+		text-transform: none;
+		box-shadow: none;
+		border: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		box-sizing: border-box;
+		font-family: inherit;
+		line-height: inherit;
+		-webkit-font-smoothing: antialiased;
+		-webkit-text-size-adjust: none;
+		position: relative;
+		visibility: inherit;
+
+		&:before,
+		&:after {
+			box-sizing: border-box;
+		}
 	}
 
-	.row {
-		width: 100%;
-		display: flex;
-		padding: 2rem 1rem;
-		justify-content: flex-start;
-		align-items: center;
+	img {
+		display: inline-block;
+	}
+
+	span {
+		display: inline-block;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: inherit;
+		margin: 0;
+		padding: 0;
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	p {
+		margin: 0 0 1em 0;
+		padding: 0;
+		font-size: inherit;
+		line-height: inherit;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	a, button {
+		color: inherit;
+		background-color: transparent;
+		margin: 0;
+		padding: 0;
+		font-size: inherit;
+		//outline: none;
+
+		& > * {
+			pointer-events: none;
+		}
+	}
+
+	input, select {
+		font-size: inherit;
+	}
+
+	ul {
+		list-style-type: none;
+	}
+
+	sup {
+		vertical-align: top;
+		top: auto;
+	}
+
+	.sc-window.main-window {
+		margin: 0;
 	}
 
 	button {
 		padding: 0.5em 1em;
 		font-weight: bold;
-		border-radius: 0.25rem;
-		background-color: rgba(0,0,0,0.1);
-		//margin-left: 0.5rem;
+		border-radius: 0.25em;
 		white-space: nowrap;
+		background-color: transparent !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		border: none !important;
 		line-height: 1;
 
 		&:first-child {
 			margin-left: 0;
 		}
 	}
-	.select {
+
+	select, input, textarea {
+		font-size: inherit !important;
+		margin-bottom: 0 !important;
+		margin-top: 0 !important;
+		background: rgba(0,0,0,0.1);
+		background-color: rgba(0,0,0,0.1);
+		box-shadow: none !important;
+		border: none !important;
+		line-height: 1;
+		height: auto !important;
+		min-height: auto !important;
+	}
+
+	.sc-label, .unit, .sc-tab {
+		font-size: 1.2em;
+		border: none;
+	}
+
+	.sc-tab {
+		.sc-label {
+			font-size: inherit;
+		}
+	}
+
+	.sc-select {
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0,0,0,0.1);
-		border-radius: 0.25rem;
-		font-size: 1em;
+		border-radius: 0.25em;
 		display: inline-block;
-		line-height: 1;
 
 		&:after {
 			content: "";
@@ -60,13 +167,12 @@ screen-capture-pro {
 			appearance: none;
 			background: none;
 			border: none;
-			padding: 0.5em;
+			padding: 0.5em !important;
 			color: #fff;
 			display: block;
 			width: 100%;
 			height: 100%;
-			font: inherit;
-			line-height: 1;
+			font-family: inherit;
 
 			option {
 				line-height: 1;
@@ -74,35 +180,36 @@ screen-capture-pro {
 		}
 	}
 
-	header {
-		font-size: 1.4rem;
-		font-weight: 700;
-
+	.sc-header {
 		button.start-button {
 			text-align: right;
-			line-height: 1;
 			background-color: transparent;
-			border-radius: 0.25rem 0.25rem 0 0;
-			padding: 1rem 1rem 0.5rem 1rem;
+			border-radius: 0.25em 0.25em 0 0;
+			padding: 1em 1em 0.5em 1em;
 			opacity: 0.5;
 
 			&:hover {
 				opacity: 1;
 			}
 		}
+
+		.sc-tab {
+			font-size: 1.4em;
+			font-weight: 700;
+		}
 	}
 
 	.play-button {
 		background-color: transparent;
 
-		.icon {
+		.sc-icon {
 			width: 0;
 			height: 0;
-			font-size: 1.2rem;
+			font-size: 1.2em;
 			border-top: 0.4em solid transparent;
 			border-bottom: 0.4em solid transparent;
 			border-left: 0.45em solid white;
-			margin-left: 0.5rem;
+			margin-left: 0.5em;
 			vertical-align: middle;
 			display: inline-block;
 		}
@@ -110,17 +217,17 @@ screen-capture-pro {
 
 	.sequencer {
 		button {
-			.icon {
+			.sc-icon {
 				display: inline-block;
 				vertical-align: middle;
-				margin-left: 0.5rem;
+				margin-left: 0.5em;
 			}
 		}
 
 		.record-button {
-			.icon {
-				width: 0.75rem;
-				height: 0.75rem;
+			.sc-icon {
+				width: 0.75em;
+				height: 0.75em;
 				overflow: hidden;
 				background-color: red;
 				border-radius: 100%;
@@ -128,40 +235,42 @@ screen-capture-pro {
 		}
 	}
 
-	.window {
+	.sc-window {
 		padding: 0;
-		border-radius: 0.25rem;
+		border-radius: 0.25em;
 		background-color: rgba(255,255,255, 0.1);
-		margin: 1rem 0;
+		margin: 1em 0;
 
 		.app-name {
-			font-size: 2rem;
-			padding: 1rem;
+			font-size: 2em;
+			padding: 1em;
 			font-weight: 700;
 		}
 
-		.title {
+		.sc-title {
 			font-weight: bold;
 			font-size: 1em;
 			display: flex;
 			justify-content: space-between;
 
-			.tabs {
+			.sc-tabs {
 				display: inline-flex;
 
-				.tab {
-					margin-right: 0.2rem;
+				.sc-tab {
+					margin-right: 0.2em;
 
 					&:last-child {
 						margin-right: 0;
 					}
 				}
 			}
-			.tab {
+
+			.sc-tab {
 				display: inline-block;
 				background-color: rgba(255,255,255,0.1);
-				border-radius: 0.25rem 0.25rem 0 0;
-				padding: 1rem;
+				border-radius: 0.25em 0.25em 0 0;
+				padding: 1em 1em 0.5em;
+				font-weight: bold;
 
 				&[data-selected="false"] {
 					opacity: 0.5;
@@ -169,7 +278,7 @@ screen-capture-pro {
 			}
 		}
 
-		.fields.panel {
+		.sc-fields.sc-panel {
 			display: none;
 
 			&[data-state=show] {
@@ -178,7 +287,7 @@ screen-capture-pro {
 		}
 
 		.options {
-			margin-bottom: 1rem;
+			margin-bottom: 1em;
 
 			button {
 				//background-color: rgba(0, 0, 0, 0.1);
@@ -187,10 +296,10 @@ screen-capture-pro {
 			}
 		}
 
-		.fields {
-			padding: 1rem;
+		.sc-fields {
+			padding: 1em;
 			background-color: rgba(255,255,255,0.1);
-			border-radius: 0 0.25rem 0.25rem 0.25rem;
+			border-radius: 0 0.25em 0.25em 0.25em;
 
 			//&:after {
 			//	content: "";
@@ -204,17 +313,17 @@ screen-capture-pro {
 			//}
 		}
 
-		.field-group {
+		.sc-field-group {
 			display: flex;
-			margin-bottom: 0.5rem;
+			margin-bottom: 0.5em;
 
 			&:last-child {
-				margin-bottom: 0rem;
+				margin-bottom: 0em;
 			}
 
-			.field {
-				margin-right: 2rem;
-				margin-bottom: 0rem;
+			.sc-field {
+				margin-right: 2em;
+				margin-bottom: 0em;
 
 				&:last-child {
 					margin-right: 0;
@@ -222,25 +331,25 @@ screen-capture-pro {
 			}
 		}
 
-		.field {
+		.sc-field {
 			display: flex;
 			flex-grow: 1;
 			flex-shrink: 1;
-			margin-bottom: 0.5rem;
+			margin-bottom: 0.5em;
 			align-items: baseline;
-			border-radius: 0.25rem;
+			border-radius: 0.25em;
 
 			&:last-child {
-				margin-bottom: 0rem;
+				margin-bottom: 0em;
 			}
 
-			.label {
-				width: 6rem;
+			.sc-label {
+				width: 4.5em;
 				flex-shrink: 0;
 				flex-grow: 0;
 				white-space: nowrap;
 				text-align: left;
-				//padding-left: 0.5rem;
+				//padding-left: 0.5em;
 			}
 
 			input, textarea {
@@ -248,25 +357,23 @@ screen-capture-pro {
 				flex-shrink: 0;
 				flex-grow: 1;
 				color: #fff;
-				padding: 0.5rem;
+				padding: 0.5em !important;
 				background-color: rgba(0,0,0,0.1);
-				border-radius: 0.25rem;
-				font-size: 1em;
-				line-height: 1;
+				border-radius: 0.25em;
 				max-width: 100%;
 			}
 
-			.select {
+			.sc-select {
 				width: 50%;
 				flex-shrink: 0;
 				flex-grow: 1;
 			}
 
 			.unit {
-				width: 3rem;
+				width: 3em;
 				flex-shrink: 0;
 				flex-grow: 0;
-				padding-left: 0.5rem;
+				padding-left: 0.5em;
 			}
 		}
 	}
@@ -274,12 +381,18 @@ screen-capture-pro {
 	actions-view {
 		width: 100%;
 		display: block;
+		overflow-y: scroll;
+		max-height: 75vh;
 
 		action-view {
 			display: block;
 
 			&:first-child {
 				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
 			}
 
 			&.deleted {
@@ -290,10 +403,9 @@ screen-capture-pro {
 
 			button.delete-button {
 				text-align: right;
-				line-height: 1;
 				background-color: transparent;
-				border-radius: 0.25rem 0.25rem 0 0;
-				padding: 1rem 1rem 0.5rem 1rem;
+				border-radius: 0.25em 0.25em 0 0;
+				padding: 1em 1em 0.5em 1em;
 				opacity: 0.5;
 				text-transform: uppercase;
 				font-weight: 700;
@@ -306,17 +418,16 @@ screen-capture-pro {
 	}
 
 	footer {
-		font-weight: 700;
-
-		.window {
+		.sc-window {
 			background-color: rgba(0,0,0,0.1);
-			margin-top: 0;
 			margin-bottom: 0;
 		}
 
 		.add-button {
-			margin-left: 0.5rem;
+			margin-left: 0.5em;
 			font-weight: 900;
 		}
 	}
+}
+
 }

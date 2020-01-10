@@ -5,7 +5,7 @@ export default class ActionView extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		this.title = this.element.querySelector(".title");
+		this.title = this.element.querySelector(".sc-title");
 	}
 
 	get scope() {

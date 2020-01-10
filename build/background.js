@@ -17,3 +17,9 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+
+
+chrome.browserAction.onClicked.addListener((tab) => {
+	let msg = {txt:"execute"};
+	chrome.tabs.sendMessage(tab.id, msg);
+});

@@ -21,7 +21,6 @@ export default class App extends UIComponent {
 		if(debug) {
 			console.log("App.init");
 		}
-		tsunami.applyDirectives(this.element, this);
 
 		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
 

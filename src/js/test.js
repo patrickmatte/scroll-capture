@@ -16,6 +16,7 @@ export default class Test extends App {
 			this.spacers.push(spacer);
 		}
 
+		tsunami.applyDirectives(this.element, this);
 	}
 
 }

@@ -21,11 +21,11 @@ export default class Main extends App {
 		this.actions = new Actions();
 
 		this.actions.value = [
-			// new ActionSwipe(),
-			// new ActionWait(),
-			// new ActionScroll("window", "px", 0, 500),
-			// new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
-			// new ActionEval(),
+			new ActionSwipe(),
+			new ActionWait(),
+			new ActionScroll("window", "px", 0, 500),
+			new ActionMouseEvent("click", ".spacer-1 button", 0, 0),
+			new ActionEval(),
 			// new ActionScroll(".scrollpane", "%", 0, 100),
 			// new ActionMouseEvent("click", ".scrollpane button", 0, 0),
 		];
@@ -36,8 +36,7 @@ export default class Main extends App {
 	init() {
 		super.init(true);
 		this.screenCaptureScenario = importTemplate(ScreenCapturePro.template, this);
-		console.log("this.screenCaptureScenario", this.screenCaptureScenario);
-		this.appendChild(this.screenCaptureScenario, true);
+		this.appendChild(this.screenCaptureScenario);
 	}
 
 	start () {
@@ -53,6 +52,3 @@ export default class Main extends App {
 }
 
 tsunami.define("screen-capture-pro", ScreenCapturePro);
-
-let main = new Main(document.body);
-main.init();
