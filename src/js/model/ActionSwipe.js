@@ -4,19 +4,24 @@ import StringData from "../tsunami/data/StringData";
 import ActionTween from "./ActionTween";
 import ArrayData from "../tsunami/data/ArrayData";
 import Vector2Data from "../tsunami/data/Vector2Data";
-import {localToGlobal} from "../tsunami/window";
+import {isTouch, localToGlobal} from "../tsunami/window";
 import * as THREE from "three";
 
 export default class ActionSwipe extends ActionTween {
 
-	constructor(x = 0, y = 0, duration = 1, delay = 0) {
+	constructor(points = [], duration = 1, delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionSwipe";
 		this.name = "Swipe";
-		this.elementSelector = new StringData("[is=my-canvas]");
 		this.points = new ArrayData();
 		this.points.dataClass = Vector2Data;
-		this.points.value = [new Vector2Data(50, 50), new Vector2Data(400, 250)];
+		while(points.length < 2) {
+			points.push(new Vector2Data());
+		}
+		this.points.value = points;
+
+		this.captureDownHandler = this.captureDownHandler.bind(this);
+		this.captureUpHandler = this.captureUpHandler.bind(this);
 	}
 
 	clone() {
@@ -27,7 +32,6 @@ export default class ActionSwipe extends ActionTween {
 
 	copy(action) {
 		super.copy(action);
-		this.elementSelector.copy(action.elementSelector);
 		let points = [];
 		action.points.map((point) => {
 			points.push(point.clone());
@@ -38,14 +42,12 @@ export default class ActionSwipe extends ActionTween {
 	serialize() {
 		let data = super.serialize();
 		data.points = this.points.serialize();
-		data.elementSelector = this.elementSelector.serialize();
 		return data;
 	}
 
 	deserialize(data) {
 		super.deserialize(data);
 		this.points.deserialize(data.points);
-		this.elementSelector.deserialize(data.elementSelector);
 	}
 
 	trigger() {
@@ -60,17 +62,26 @@ export default class ActionSwipe extends ActionTween {
 		});
 		this.curve = new THREE.CatmullRomCurve3(points, false, 'chordal', 0.75);
 
-		let target = document.querySelector(this.elementSelector.value);
-		this.origin = localToGlobal(target, document.body);
-		let point = this.curve.getPoint(0);
-		this.dispatchMouseEvent("mousedown", point);
+		this.dispatchMouseEvent("mousedown", 0);
 		return super.trigger();
 	}
 
 	dispatchMouseEvent(eventType, offset) {
-		let point = new Point(this.origin.x + offset.x - window.scrollX, this.origin.y + offset.y - window.scrollY);
+		let point = this.curve.getPoint(offset);
+		point.x = point.x - window.scrollX;
+		point.y = point.y - window.scrollY;
 		let element = document.elementFromPoint(point.x, point.y);
-		let event = new MouseEvent(eventType, {bubbles: true, cancelable: true, view: window, clientX: point.x, clientY: point.y, pageX: point.x, pageY: point.y, x: point.x, y: point.y});
+		let event = new MouseEvent(eventType, {
+			bubbles: true,
+			cancelable: true,
+			view: window,
+			clientX: point.x,
+			clientY: point.y,
+			pageX: point.x,
+			pageY: point.y,
+			x: point.x,
+			y: point.y
+		});
 		element.dispatchEvent(event);
 	}
 
@@ -83,13 +94,44 @@ export default class ActionSwipe extends ActionTween {
 	// }
 
 	tweenUpdateHandler() {
-		let point = this.curve.getPoint(this.pos.x);
-		this.dispatchMouseEvent("mousemove", point);
+		this.dispatchMouseEvent("mousemove", this.pos.x);
 	}
 
 	tweenCompleteHandler(e) {
-		let point = this.curve.getPoint(1);
-		this.dispatchMouseEvent("mouseup", point);
+		this.dispatchMouseEvent("mouseup", 1);
+	}
+
+	capture() {
+		this.isCapturing.value = true;
+		document.body.addEventListener("mousedown", this.captureDownHandler);
+	}
+
+	captureDownHandler(event) {
+		let touch = event;
+		if (isTouch) {
+			touch = event.touches[0];
+		}
+		let point = new Point(touch.pageX, touch.pageY);
+		let vec2 = this.points.value[0];
+		vec2.x.value = point.x;
+		vec2.y.value = point.y;
+
+		document.body.removeEventListener("mousedown", this.captureDownHandler);
+		document.body.addEventListener("mouseup", this.captureUpHandler);
+	}
+
+	captureUpHandler(event) {
+		let touch = event;
+		if (isTouch) {
+			touch = event.touches[0];
+		}
+		let point = new Point(touch.pageX, touch.pageY);
+		let vec2 = this.points.value[1];
+		vec2.x.value = point.x;
+		vec2.y.value = point.y;
+
+		document.body.removeEventListener("mouseup", this.captureUpHandler);
+		this.isCapturing.value = false;
 	}
 
 }

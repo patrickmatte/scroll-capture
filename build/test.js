@@ -552,7 +552,7 @@ function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
 /* unused harmony export createCustomEvent */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
-/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -573,7 +573,7 @@ var events = {
   animationend: 'animationend'
 };
 
-if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "b"]) {
+if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
   events.mouseover = "touchstart";
   events.mouseout = "touchend";
   events.mousedown = "touchstart";
@@ -757,7 +757,7 @@ var ArrayDataOperation = __webpack_require__(18);
 var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(8);
+var tsunami_window = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./js/tsunami/EventDispatcher.js
 var EventDispatcher = __webpack_require__(11);
@@ -1185,7 +1185,7 @@ function (_Branch) {
 
       if (this.calculateGlobalPosition) {
         this.globalRectangle = this.rectangle.clone();
-        this.globalRectangle.position = Object(tsunami_window["c" /* localToGlobal */])(this.element, document.body);
+        this.globalRectangle.position = Object(tsunami_window["b" /* localToGlobal */])(this.element, document.body);
       }
 
       var children = this.children;
@@ -1314,7 +1314,7 @@ function (_Branch) {
     value: function getTouchPoint(event) {
       var touch = event;
 
-      if (tsunami_window["b" /* isTouch */]) {
+      if (tsunami_window["a" /* isTouch */]) {
         touch = event.touches[0];
       }
 
@@ -1521,7 +1521,7 @@ function (_Branch) {
       var rectangle = new Rectangle["a" /* default */](0, 0, element.offsetWidth, element.offsetHeight);
 
       if (element.parentNode) {
-        rectangle.position = Object(tsunami_window["c" /* localToGlobal */])(element, parent, null, debug);
+        rectangle.position = Object(tsunami_window["b" /* localToGlobal */])(element, parent, null, debug);
       }
 
       return rectangle;
@@ -2256,123 +2256,19 @@ function (_Data) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Clock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return clock; });
-/* harmony import */ var _tsunami_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var Clock =
-/*#__PURE__*/
-function (_EventDispatcher) {
-  _inherits(Clock, _EventDispatcher);
-
-  function Clock() {
-    var _this;
-
-    _classCallCheck(this, Clock);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Clock).call(this));
-    _this.index = 0;
-    _this.seconds = 0;
-    _this.allFrames = 0;
-    _this.animationFrame = _this.animationFrame.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(Clock, [{
-    key: "start",
-    value: function start() {
-      this.isRunning = true;
-      this.animationFrame(0);
-      this.fpsTimeout = setTimeout(this.dispatchFrameSeconds.bind(this), 1000);
-    }
-  }, {
-    key: "pause",
-    value: function pause() {
-      this.isRunning = false;
-      clearTimeout(this.fpsTimeout);
-    }
-  }, {
-    key: "animationFrame",
-    value: function animationFrame(time) {
-      this.time = time;
-      this.index++;
-      this.dispatchEvent(new _events__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"](Clock.TICK, this.time));
-
-      if (this.isRunning) {
-        window.requestAnimationFrame(this.animationFrame);
-      }
-    }
-  }, {
-    key: "dispatchFrameSeconds",
-    value: function dispatchFrameSeconds() {
-      this.allFrames += this.index;
-      this.seconds++;
-      this.dispatchEvent({
-        type: Clock.FPS,
-        frames: this.index,
-        averageFrames: Math.round(this.allFrames / this.seconds * 10) / 10
-      });
-      this.index = 0;
-      setTimeout(this.dispatchFrameSeconds.bind(this), 1000);
-    }
-  }], [{
-    key: "TICK",
-    get: function get() {
-      return "tick";
-    }
-  }, {
-    key: "FPS",
-    get: function get() {
-      return "fps";
-    }
-  }]);
-
-  return Clock;
-}(_tsunami_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-var clock = new Clock();
-clock.start();
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* unused harmony export isMobile */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isTouch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isTouch; });
 /* unused harmony export getCookie */
 /* unused harmony export getSearchParams */
 /* unused harmony export getRect */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return localToGlobal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return localToGlobal; });
 /* unused harmony export localToGlobalX */
 /* unused harmony export localToGlobalY */
 /* unused harmony export isHidden */
 /* unused harmony export getDeviceMotionDifference */
 /* unused harmony export forceProtocol */
 /* unused harmony export fileExists */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getElementSelector; });
+/* unused harmony export getElementSelector */
 /* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 
@@ -2580,6 +2476,110 @@ function getElementSelector(element) {
   var selector = names.join(" > ");
   return selector;
 }
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Clock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return clock; });
+/* harmony import */ var _tsunami_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Clock =
+/*#__PURE__*/
+function (_EventDispatcher) {
+  _inherits(Clock, _EventDispatcher);
+
+  function Clock() {
+    var _this;
+
+    _classCallCheck(this, Clock);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Clock).call(this));
+    _this.index = 0;
+    _this.seconds = 0;
+    _this.allFrames = 0;
+    _this.animationFrame = _this.animationFrame.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Clock, [{
+    key: "start",
+    value: function start() {
+      this.isRunning = true;
+      this.animationFrame(0);
+      this.fpsTimeout = setTimeout(this.dispatchFrameSeconds.bind(this), 1000);
+    }
+  }, {
+    key: "pause",
+    value: function pause() {
+      this.isRunning = false;
+      clearTimeout(this.fpsTimeout);
+    }
+  }, {
+    key: "animationFrame",
+    value: function animationFrame(time) {
+      this.time = time;
+      this.index++;
+      this.dispatchEvent(new _events__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"](Clock.TICK, this.time));
+
+      if (this.isRunning) {
+        window.requestAnimationFrame(this.animationFrame);
+      }
+    }
+  }, {
+    key: "dispatchFrameSeconds",
+    value: function dispatchFrameSeconds() {
+      this.allFrames += this.index;
+      this.seconds++;
+      this.dispatchEvent({
+        type: Clock.FPS,
+        frames: this.index,
+        averageFrames: Math.round(this.allFrames / this.seconds * 10) / 10
+      });
+      this.index = 0;
+      setTimeout(this.dispatchFrameSeconds.bind(this), 1000);
+    }
+  }], [{
+    key: "TICK",
+    get: function get() {
+      return "tick";
+    }
+  }, {
+    key: "FPS",
+    get: function get() {
+      return "fps";
+    }
+  }]);
+
+  return Clock;
+}(_tsunami_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+var clock = new Clock();
+clock.start();
 
 /***/ }),
 /* 9 */
@@ -3118,7 +3118,7 @@ function (_BooleanData) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tween; });
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
-/* harmony import */ var _Clock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
+/* harmony import */ var _Clock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5572,7 +5572,7 @@ function (_UIText) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(8);
+var tsunami_window = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
 var Point = __webpack_require__(2);
@@ -5863,7 +5863,7 @@ function (_UIComponent) {
         return;
       }
 
-      if (!tsunami_window["b" /* isTouch */]) {
+      if (!tsunami_window["a" /* isTouch */]) {
         event.preventDefault();
       }
 
@@ -6173,7 +6173,7 @@ function (_UIButton) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Clock.js
-var Clock = __webpack_require__(7);
+var Clock = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./js/tsunami/App.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return App_App; });
@@ -6776,6 +6776,13 @@ function (_UIComponent) {
     _this.canvas.addEventListener("mousedown", _this.mousedownHandler);
 
     _this.context = _this.canvas.getContext("2d");
+    _this.calculateGlobalPosition = true;
+    _this.button = _this.element.querySelector("button");
+
+    _this.button.addEventListener("click", function () {
+      _this.context.clearRect(0, 0, _this.canvas.width, _this.canvas.height);
+    });
+
     return _this;
   }
 
@@ -6794,7 +6801,8 @@ function (_UIComponent) {
   }, {
     key: "draw",
     value: function draw(event) {
-      var point = this.getTouchPoint(event).subtract(this.rectangle.position);
+      var eventPoint = this.getTouchPoint(event);
+      var point = eventPoint.subtract(this.globalRectangle.position);
       var context = this.context;
       context.beginPath();
       context.arc(point.x, point.y, 5, 0, 2 * Math.PI, false);
@@ -6808,17 +6816,30 @@ function (_UIComponent) {
       document.body.removeEventListener("mousemove", this.mousemoveHandler);
       document.body.removeEventListener("mouseup", this.mouseupHandler);
     }
+  }, {
+    key: "clearCanvas",
+    value: function clearCanvas() {}
   }]);
 
   return MyCanvas;
 }(UIComponent["a" /* default */]);
 
 
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(7);
+
+// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
+var Point = __webpack_require__(2);
+
 // CONCATENATED MODULE: ./js/test.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return test_Test; });
 function test_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { test_typeof = function _typeof(obj) { return typeof obj; }; } else { test_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return test_typeof(obj); }
 
 function test_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function test_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function test_createClass(Constructor, protoProps, staticProps) { if (protoProps) test_defineProperties(Constructor.prototype, protoProps); if (staticProps) test_defineProperties(Constructor, staticProps); return Constructor; }
 
 function test_possibleConstructorReturn(self, call) { if (call && (test_typeof(call) === "object" || typeof call === "function")) { return call; } return test_assertThisInitialized(self); }
 
@@ -6829,6 +6850,8 @@ function test_assertThisInitialized(self) { if (self === void 0) { throw new Ref
 function test_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) test_setPrototypeOf(subClass, superClass); }
 
 function test_setPrototypeOf(o, p) { test_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return test_setPrototypeOf(o, p); }
+
+
 
 
 
@@ -6856,8 +6879,30 @@ function (_App) {
     }
 
     tsunami["a" /* applyDirectives */](_this.element, test_assertThisInitialized(_this));
+    _this.myCanvas = _this.element.querySelector("[is='my-canvas']").component;
+    _this.specialButton = _this.element.querySelector(".special-button");
+
+    _this.specialButton.addEventListener("click", function (event) {
+      var touch = event;
+
+      if (tsunami_window["a" /* isTouch */]) {
+        touch = event.touches[0];
+      }
+
+      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
+      console.log("specialButton click", point);
+    });
+
     return _this;
   }
+
+  test_createClass(Test, [{
+    key: "clearCanvas",
+    value: function clearCanvas() {
+      console.log("clearCanvas");
+      this.myCanvas.clearCanvas();
+    }
+  }]);
 
   return Test;
 }(App["a" /* default */]);

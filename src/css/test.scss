@@ -1,3 +1,8 @@
+@import "vars";
+@import "typography";
+@import "easing";
+@import "base";
+
 html {
 	line-height: 1;
 	font-size: 10px;
@@ -16,8 +21,8 @@ body {
 }
 
 spacers-view {
-	font-size: 2rem;
-	padding: 3rem;
+	font-size: 20px;
+	padding: 30px;
 	display: block;
 	background-color: #808080;
 
@@ -41,8 +46,14 @@ spacers-view {
 	background-color: blue;
 
 	canvas {
-		width: 50rem;
-		height: 30rem;
+		width: 500px;
+		height: 300px;
+	}
+
+	button {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
 	}
 }
 
@@ -61,4 +72,16 @@ spacers-view {
 		height: 100px;
 	}
 
+}
+
+.special-button {
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 5px;
+	padding: 0.5em;
+	font-size: 20px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	//transform: translateX(200px) translateY(100px);
+	transform: translate3d(200px, 100px, 0);
 }

@@ -108,8 +108,8 @@ scroll-capture {
 		font-weight: bold;
 		border-radius: 0.25em;
 		white-space: nowrap;
-		background-color: transparent !important;
-		background: transparent !important;
+		background-color: transparent;
+		background: transparent;
 		box-shadow: none !important;
 		border: none !important;
 		line-height: 1;
@@ -182,6 +182,25 @@ scroll-capture {
 			border-bottom: 0.4em solid transparent;
 			border-left: 0.45em solid white;
 			margin-left: 0.33em;
+		}
+	}
+
+	.close-button {
+		text-align: right;
+		background-color: transparent;
+		border-radius: 0.25em 0.25em 0 0;
+		padding: 1em 1em 0.5em 1em;
+		opacity: 0.5;
+		text-transform: uppercase;
+		font-weight: 700;
+
+		&:before {
+			content: "x";
+			display: inline-block;
+		}
+
+		&:hover {
+			opacity: 1;
 		}
 	}
 
@@ -291,13 +310,12 @@ scroll-capture {
 
 			.sc-tab {
 				display: inline-block;
-				background-color: rgba(255,255,255,0.1);
 				border-radius: 0.25em 0.25em 0 0;
 				padding: 1em 1em 0.5em;
 				font-weight: bold;
 
-				&[data-selected="false"] {
-					opacity: 0.5;
+				&:first-child {
+					background-color: rgba(255,255,255,0.1);
 				}
 			}
 		}
@@ -424,20 +442,6 @@ scroll-capture {
 				opacity: 0;
 				transform: scaleX(0.5) scaleY(0.5);
 			}
-
-			button.delete-button {
-				text-align: right;
-				background-color: transparent;
-				border-radius: 0.25em 0.25em 0 0;
-				padding: 1em 1em 0.5em 1em;
-				opacity: 0.5;
-				text-transform: uppercase;
-				font-weight: 700;
-
-				&:hover {
-					opacity: 1;
-				}
-			}
 		}
 	}
 
@@ -450,6 +454,7 @@ scroll-capture {
 		.add-button {
 			margin-left: 0.5em;
 			font-weight: 900;
+			background-color: rgba(0,0,0,0.1);
 		}
 	}
 }

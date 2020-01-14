@@ -14,7 +14,7 @@ export default class ActionView extends UIComponent {
 
 	set scope(value) {
 		super.scope = value;
-		let deleteButton = importTemplate(`<button class="delete-button" data-model="data" is="ui-button">x</button>`, value);
+		let deleteButton = importTemplate(`<button class="close-button" data-model="data" is="ui-button"></button>`, value);
 		deleteButton.component.onRelease = (event) => {
 			this.element.classList.add("deleted");
 			setTimeout(()=> {

@@ -3,6 +3,8 @@ import * as tsunami from "./tsunami/tsunami";
 import SpacersView from "./view/SpacersView";
 import ArrayData from "./tsunami/data/ArrayData";
 import MyCanvas from "./view/MyCanvas";
+import {isTouch} from "./tsunami/window";
+import Point from "./tsunami/geom/Point";
 
 export default class Test extends App {
 
@@ -17,6 +19,23 @@ export default class Test extends App {
 		}
 
 		tsunami.applyDirectives(this.element, this);
+
+		this.myCanvas = this.element.querySelector("[is='my-canvas']").component;
+
+		this.specialButton = this.element.querySelector(".special-button");
+		this.specialButton.addEventListener("click", (event) => {
+			let touch = event;
+			if (isTouch) {
+				touch = event.touches[0];
+			}
+			let point = new Point(touch.pageX, touch.pageY);
+			console.log("specialButton click", point);
+		})
+	}
+
+	clearCanvas() {
+		console.log("clearCanvas");
+		this.myCanvas.clearCanvas();
 	}
 
 }

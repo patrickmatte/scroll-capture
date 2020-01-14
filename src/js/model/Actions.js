@@ -20,8 +20,8 @@ export default class Actions extends ArrayData {
 			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),
-			new ActionWait(),
 			new ActionEval()
+			// new ActionWait()
 		];
 		this.types.selectedItem.value = this.types.value[0];
 	}

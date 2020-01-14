@@ -24,9 +24,7 @@ ScrollCapture.template = `
 						<span class="sc-label">Play All</span>
 					</button>
 				</div>
-				<button class="sc-tab close-button" is="ui-button" data-click="hide">
-					<span class="sc-label">X</span>
-				</button>
+				<button class="sc-tab close-button" is="ui-button" data-click="hide"></button>
 			</div>
 		</div>
 		<div class="sc-panel sc-fields sequencer" data-state="show" is="ui-component">
@@ -86,12 +84,14 @@ ScrollCapture.template = `
 				<template data-type="ActionSwipe">
 					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
-							<span class="sc-tab" is="ui-text">[[data.name]]</span>
+							<div class="sc-tabs">
+								<span class="sc-tab" is="ui-text">[[data.name]]</span>
+								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
+									<span class="sc-label">Capture</span>
+								</button>
+							</div>
 						</div>
 						<div class="sc-fields">
-							<div class="sc-field">
-								<span class="sc-label">element:</span><input type="text" data-model="data.elementSelector" is="ui-input"/>
-							</div>
 							<div class="sc-field-group">
 								<div class="points" data-provider="data.points" is="ui-list">
 									<template>
@@ -158,9 +158,6 @@ ScrollCapture.template = `
 								<div class="sc-select">
 									<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
 								</div>
-							</div>
-							<div class="sc-field">
-								<span class="sc-label">target:</span><input type="text" data-model="data.cssSelector" is="ui-input"/>
 							</div>
 							<div class="sc-field-group">
 								<div class="sc-field">

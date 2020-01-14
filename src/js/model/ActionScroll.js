@@ -127,6 +127,9 @@ export default class ActionScroll extends ActionTween {
 					unit.y = Math.round(scroll.y / maxScroll.y * 100);
 					break;
 			}
+			if(isNaN(unit.x)) unit.x = 0;
+			if(isNaN(unit.y)) unit.y = 0;
+
 			this.unitX.value = unit.x;
 			this.unitY.value = unit.y;
 			this.isCapturing.value = false;

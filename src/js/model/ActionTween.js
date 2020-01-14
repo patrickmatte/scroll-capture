@@ -16,7 +16,6 @@ export default class ActionTween extends Action {
 		this.endX = new NumberData(x);
 		this.endY = new NumberData(y);
 		this.duration = new NumberData(duration);
-		this.delay = new NumberData(delay);
 		this.easingMethods = new ArrayData();
 		this.easingClasses = new ArrayData();
 		for(let i in Easing) {
@@ -45,12 +44,12 @@ export default class ActionTween extends Action {
 	}
 
 	copy(action) {
+		super.copy(action);
 		this.startX.value = action.startX.value;
 		this.startY.value = action.startY.value;
 		this.endX.value = action.endX.value;
 		this.endY.value = action.endY.value;
 		this.duration.value = action.duration.value;
-		this.delay.value = action.delay.value;
 		this.easingClasses.selectedItem.value = action.easingClasses.selectedItem.value;
 		this.easingMethods.selectedItem.value = action.easingMethods.selectedItem.value;
 	}

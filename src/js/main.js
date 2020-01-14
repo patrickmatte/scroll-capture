@@ -9,6 +9,7 @@ import ActionScroll from "./model/ActionScroll";
 import ActionMouseEvent from "./model/ActionMouseEvent";
 import ActionEval from "./model/ActionEval";
 import BooleanData from "./tsunami/data/BooleanData";
+import Vector2Data from "./tsunami/data/Vector2Data";
 
 export default class Main extends App {
 
@@ -19,14 +20,12 @@ export default class Main extends App {
 		this.actions = new Actions();
 
 		this.actions.value = [
-			// new ActionSwipe(),
-			// new ActionWait(),
+			new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
 			new ActionScroll("window", "px", 0, 500),
-			new ActionMouseEvent(),
-			// new ActionMouseEvent("click", ".spacer-1 button"),
-			// new ActionEval(),
-			new ActionScroll(".scrollpane", "%", 0, 100),
-			// new ActionMouseEvent("click", ".scrollpane button"),
+			new ActionMouseEvent("click", 0, 0),
+			new ActionEval(),
+			// new ActionScroll(".scrollpane", "%", 0, 100),
+			// new ActionMouseEvent("click", 0, 0),
 		];
 
 		this.playAll = this.playAll.bind(this);

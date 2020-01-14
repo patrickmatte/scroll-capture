@@ -1,4 +1,5 @@
 import BooleanData from "../tsunami/data/BooleanData";
+import NumberData from "../tsunami/data/NumberData";
 
 export default class Action {
 
@@ -6,12 +7,17 @@ export default class Action {
 		this.type = type;
 		this.name = name;
 		this.isCapturing = new BooleanData();
+		this.delay = new NumberData(0);
 		this.capture = this.capture.bind(this);
 	}
 
-	clone() {}
+	clone() {
 
-	copy() {}
+	}
+
+	copy(action) {
+		this.delay.value = action.delay.value;
+	}
 
 	trigger() {
 		return Promise.resolve();
@@ -19,12 +25,14 @@ export default class Action {
 
 	serialize() {
 		return {
-			type:this.type
+			type:this.type,
+			delay:this.delay.value
 		}
 	}
 
 	deserialize(data) {
 		this.type = data.type;
+		this.delay.value = data.delay;
 	}
 
 	capture() {
