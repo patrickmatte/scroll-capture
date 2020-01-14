@@ -1,4 +1,7 @@
-export function evalProperty(path, scope) {
+export function evalProperty(path, scope, debug) {
+	if(debug) {
+		console.log("evalProperty", path, scope);
+	}
 	if(path == ".") {
 		return scope;
 	}

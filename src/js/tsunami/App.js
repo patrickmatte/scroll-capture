@@ -1,15 +1,15 @@
-import * as tsunami from "./tsunami/tsunami";
-import UIComponent from "./tsunami/components/UIComponent";
-import UIButton from "./tsunami/components/UIButton";
-import UIList from "./tsunami/components/UIList";
-import UIInput from "./tsunami/components/UIInput";
-import UISelect from "./tsunami/components/UISelect";
-import UIText from "./tsunami/components/UIText";
-import UINumber from "./tsunami/components/UINumber";
-import UIScrollPane from "./tsunami/components/UIScrollPane";
-import UIMedia from "./tsunami/components/UIMedia";
-import UIToggle from "./tsunami/components/UIToggle";
-import Clock, {clock} from "./tsunami/animation/Clock";
+import * as tsunami from "./tsunami";
+import UIComponent from "./components/UIComponent";
+import UIButton from "./components/UIButton";
+import UIList from "./components/UIList";
+import UIInput from "./components/UIInput";
+import UISelect from "./components/UISelect";
+import UIText from "./components/UIText";
+import UINumber from "./components/UINumber";
+import UIScrollPane from "./components/UIScrollPane";
+import UIMedia from "./components/UIMedia";
+import UIToggle from "./components/UIToggle";
+import Clock, {clock} from "./animation/Clock";
 
 export default class App extends UIComponent {
 

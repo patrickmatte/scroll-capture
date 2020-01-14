@@ -14,6 +14,12 @@ export default class UIComponent extends Branch {
 
     constructor(element) {
         super();
+        if (element) {
+			this.debug = (element.getAttribute("data-debug") == "true");
+			// this.style = new Style(element.style);
+			this.doChildrenAnimationFrame = (element.getAttribute("data-children-animation-frame") == "true");
+			this.alsoShowChildren = (element.getAttribute("data-also-show-children") == "true");
+		}
         this.element = element;
 
 		this.calculateGlobalPosition = false;
@@ -26,12 +32,6 @@ export default class UIComponent extends Branch {
 
 		this.attributes = {};
 
-		if(this.element) {
-			this.debug = (this.element.getAttribute("data-debug") == "true");
-			this.doChildrenAnimationFrame = (this.element.getAttribute("data-children-animation-frame") == "true");
-			this.style = new Style(this.element.style);
-			this.alsoShowChildren = (this.element.getAttribute("data-also-show-children") == "true");
-		}
         this.modelChangeBind = this.modelChange.bind(this);
         this._scope = this;
 		this.showDuration = 0;
@@ -98,7 +98,6 @@ export default class UIComponent extends Branch {
 			value.component = this;
 		}
 	}
-
 
 	getBranch(slug) {
 		let branch;

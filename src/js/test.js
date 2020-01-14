@@ -1,4 +1,4 @@
-import App from "./app";
+import App from "./tsunami/App";
 import * as tsunami from "./tsunami/tsunami";
 import SpacersView from "./view/SpacersView";
 import ArrayData from "./tsunami/data/ArrayData";

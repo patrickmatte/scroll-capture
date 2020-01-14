@@ -1,9 +1,8 @@
 import UIComponent from "../tsunami/components/UIComponent";
 import * as tsunami from "../tsunami/tsunami";
-import StartButton from "./StartButton";
 import ActionView from "./ActionView";
 
-export default class ScreenCapturePro extends UIComponent {
+export default class ScrollCapture extends UIComponent {
 
 	constructor(element) {
 		super(element);
@@ -11,32 +10,36 @@ export default class ScreenCapturePro extends UIComponent {
 
 }
 
-ScreenCapturePro.template = `
-<screen-capture-pro>
+ScrollCapture.template = `
+<scroll-capture data-is-capturing="[[isCapturing]]">
 	<div class="sc-window main-window">
-<!--		<div class="app-name">Scroll Capture</div>-->
+<!--		<div class="app-name"><span>Scroll Capture</span></div>-->
 		<div class="sc-header">
 			<div class="sc-title">
 				<div class="sc-tabs">
-					<span class="sc-tab" data-path="sequencer" is="router-button" data-selected="true">
-						<span>Scroll Capture</span>
+					<span class="sc-tab" data-selected="true">
+						<span class="sc-label">ScrollCapture</span>
 					</span>
+					<button class="sc-tab play-button" is="ui-button" data-click="playAll">
+						<span class="sc-label">Play All</span>
+					</button>
 				</div>
-				<button class="sc-tab play-button" is="ui-button" data-model="." data-click="start">
-					<span class="sc-label">Play</span>
-					<span class="sc-icon"></span>
+				<button class="sc-tab close-button" is="ui-button" data-click="hide">
+					<span class="sc-label">X</span>
 				</button>
 			</div>
 		</div>
 		<div class="sc-panel sc-fields sequencer" data-state="show" is="ui-component">
-<!--			<div class="options">-->
-<!--				<button class="play-button" is="ui-button" data-model="." data-click="start"><span class="sc-label">Play</span><span class="sc-icon"></span></button>-->
-<!--			</div>-->
 			<actions-view data-provider="actions" is="ui-list">
 				<template data-type="ActionScroll">
 					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
-							<span class="sc-tab" is="ui-text">[[data.name]]</span>
+							<div class="sc-tabs">
+								<span class="sc-tab" is="ui-text">[[data.name]]</span>
+								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
+									<span class="sc-label">Capture</span>
+								</button>
+							</div>
 						</div>
 						<div class="sc-fields">
 							<div class="sc-field">
@@ -142,7 +145,12 @@ ScreenCapturePro.template = `
 				<template data-type="ActionMouseEvent">
 					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
-							<span class="sc-tab" is="ui-text">[[data.name]]</span>
+							<div class="sc-tabs">
+								<span class="sc-tab" is="ui-text">[[data.name]]</span>
+								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
+									<span class="sc-label">Capture</span>
+								</button>
+							</div>
 						</div>
 						<div class="sc-fields">
 							<div class="sc-field">
@@ -152,16 +160,16 @@ ScreenCapturePro.template = `
 								</div>
 							</div>
 							<div class="sc-field">
-								<span class="sc-label">element:</span><input type="text" data-model="data.cssSelector" is="ui-input"/>
+								<span class="sc-label">target:</span><input type="text" data-model="data.cssSelector" is="ui-input"/>
 							</div>
 							<div class="sc-field-group">
 								<div class="sc-field">
-									<span class="sc-label">x:</span>
+									<span class="sc-label">pageX:</span>
 									<input type="text" data-model="data.x" is="ui-input"/>
 									<span class="unit">px</span>
 								</div>
 								<div class="sc-field">
-									<span class="sc-label">y:</span>
+									<span class="sc-label">pageY:</span>
 									<input type="text" data-model="data.y" is="ui-input"/>
 									<span class="unit">px</span>
 								</div>
@@ -203,7 +211,7 @@ ScreenCapturePro.template = `
 			</footer>
 		</div>
 	</div>
-</screen-capture-pro>
+</scroll-capture>
 `;
 
 // tsunami.define("start-button", StartButton);

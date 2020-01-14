@@ -1,11 +1,8 @@
-import Tween from "../tsunami/animation/Tween";
 import NumberData from "../tsunami/data/NumberData";
-import TweenProperty from "../tsunami/animation/TweenProperty";
 import ArrayData from "../tsunami/data/ArrayData";
-import Data from "../tsunami/data/Data";
-import Easing from "../tsunami/animation/Easing";
 import ActionTween from "./ActionTween";
 import StringData from "../tsunami/data/StringData";
+import Point from "../tsunami/geom/Point";
 
 export default class ActionScroll extends ActionTween {
 
@@ -97,6 +94,43 @@ export default class ActionScroll extends ActionTween {
 		this.unitX.value = data.unitX;
 		this.unitY.value = data.unitY;
 		this.units.selectedItem.value = data.units;
+	}
+
+	capture() {
+		this.isCapturing.value = true;
+		setTimeout(()=> {
+			let scroll = new Point();
+			let maxScroll = new Point();
+			switch (this.target.value) {
+				case "window":
+					scroll.x = window.scrollX;
+					scroll.y = window.scrollY;
+					maxScroll.x = document.body.offsetWidth - window.innerWidth;
+					maxScroll.y = document.body.offsetHeight - window.innerHeight;
+					break;
+				default:
+					let element = document.querySelector(this.target.value);
+					scroll.x = element.scrollLeft;
+					scroll.y = element.scrollTop;
+					maxScroll.x = element.scrollWidth - element.clientWidth;
+					maxScroll.y = element.scrollHeight - element.clientHeight;
+					break;
+			}
+			let unit = new Point();
+			switch(this.units.selectedItem.value) {
+				case "px":
+					unit.x = scroll.x;
+					unit.y = scroll.y;
+					break;
+				case "%":
+					unit.x = Math.round(scroll.x / maxScroll.x * 100);
+					unit.y = Math.round(scroll.y / maxScroll.y * 100);
+					break;
+			}
+			this.unitX.value = unit.x;
+			this.unitY.value = unit.y;
+			this.isCapturing.value = false;
+		}, 33);
 	}
 
 }

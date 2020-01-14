@@ -11,7 +11,7 @@ module.exports = {
 	context: path.resolve(__dirname, "src"),
 	devtool: `[name].${ENV == "development" ? "inline-source-map" : "none"}`,
 	entry: {
-		main: ["./css/screen-capture-pro.scss"],
+		main: ["./css/scroll-capture.scss"],
 		style: ["./css/test.scss"],
 		content: ["./js/content.js"],
 		test: ["./js/test.js"],

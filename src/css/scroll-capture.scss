@@ -1,6 +1,6 @@
 body {
 
-screen-capture-pro {
+scroll-capture {
 	position: fixed;
 	right: 2em;
 	top: 2em;
@@ -113,6 +113,7 @@ screen-capture-pro {
 		box-shadow: none !important;
 		border: none !important;
 		line-height: 1;
+		cursor: pointer;
 
 		&:first-child {
 			margin-left: 0;
@@ -130,6 +131,58 @@ screen-capture-pro {
 		line-height: 1;
 		height: auto !important;
 		min-height: auto !important;
+	}
+
+
+	.capture-button {
+		outline: none;
+
+		.sc-label {
+			opacity: 0.5;
+		}
+
+		&:hover {
+			.sc-label {
+				opacity: 1;
+			}
+		}
+
+		&:after {
+			content: "";
+			position: relative;
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			border-radius: 100%;
+			background-color: rgba(0, 0, 0, 0.1);
+			margin-left: 0.33em;
+			vertical-align: middle;
+		}
+
+		&[data-is-capturing="true"] {
+			.sc-label {
+				opacity: 1;
+			}
+			&:after {
+				background-color: rgba(255, 0, 0, 1);
+			}
+		}
+	}
+
+	.play-button {
+		background-color: transparent;
+
+		&:after {
+			content: "";
+			display: inline-block;
+			vertical-align: middle;
+			width: 0;
+			height: 0;
+			border-top: 0.4em solid transparent;
+			border-bottom: 0.4em solid transparent;
+			border-left: 0.45em solid white;
+			margin-left: 0.33em;
+		}
 	}
 
 	.sc-label, .unit, .sc-tab {
@@ -196,41 +249,9 @@ screen-capture-pro {
 		.sc-tab {
 			font-size: 1.4em;
 			font-weight: 700;
-		}
-	}
 
-	.play-button {
-		background-color: transparent;
-
-		.sc-icon {
-			width: 0;
-			height: 0;
-			font-size: 1.2em;
-			border-top: 0.4em solid transparent;
-			border-bottom: 0.4em solid transparent;
-			border-left: 0.45em solid white;
-			margin-left: 0.5em;
-			vertical-align: middle;
-			display: inline-block;
-		}
-	}
-
-	.sequencer {
-		button {
-			.sc-icon {
-				display: inline-block;
+			.sc-label {
 				vertical-align: middle;
-				margin-left: 0.5em;
-			}
-		}
-
-		.record-button {
-			.sc-icon {
-				width: 0.75em;
-				height: 0.75em;
-				overflow: hidden;
-				background-color: red;
-				border-radius: 100%;
 			}
 		}
 	}
@@ -242,9 +263,12 @@ screen-capture-pro {
 		margin: 1em 0;
 
 		.app-name {
-			font-size: 2em;
 			padding: 1em;
-			font-weight: 700;
+
+			span {
+				font-size: 2em;
+				font-weight: 700;
+			}
 		}
 
 		.sc-title {

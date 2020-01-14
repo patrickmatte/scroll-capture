@@ -1,7 +1,7 @@
 import Action from "./Action";
 import StringData from "../tsunami/data/StringData";
 import NumberData from "../tsunami/data/NumberData";
-import {localToGlobal} from "../tsunami/window";
+import {getElementSelector, isTouch, localToGlobal} from "../tsunami/window";
 import Point from "../tsunami/geom/Point";
 import ArrayData from "../tsunami/data/ArrayData";
 
@@ -14,6 +14,7 @@ export default class ActionMouseEvent extends Action {
 		this.y = new NumberData(y);
 		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu");
 		this.eventTypes.selectedItem.value = this.eventTypes.value[0];
+		this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
 	}
 
 	clone() {
@@ -30,10 +31,7 @@ export default class ActionMouseEvent extends Action {
 	}
 
 	trigger() {
-		let target = document.querySelector(this.cssSelector.value);
-		let point = localToGlobal(target, document.body, new Point(this.x.value - window.scrollX, this.y.value - window.scrollY));
-		let element = document.elementFromPoint(point.x, point.y);
-		// console.log("this.eventTypes.selectedItem.value", this.eventTypes.selectedItem.value);
+		let point = new Point(this.x.value, this.y.value);
 		let event = new MouseEvent(this.eventTypes.selectedItem.value, {
 			bubbles: true,
 			cancelable: true,
@@ -45,10 +43,8 @@ export default class ActionMouseEvent extends Action {
 			y: point.y,
 			view: window
 		});
-		if (!element) {
-			element = target;
-		}
-		element.dispatchEvent(event);
+		let target = document.querySelector(this.cssSelector.value);
+		target.dispatchEvent(event);
 		return Promise.resolve();
 	}
 
@@ -67,6 +63,26 @@ export default class ActionMouseEvent extends Action {
 		this.cssSelector.value = data.cssSelector;
 		this.x.value = data.x;
 		this.y.value = data.y;
+	}
+
+	capture() {
+		this.isCapturing.value = true;
+		setTimeout(()=> {
+			document.body.addEventListener(this.eventTypes.selectedItem.value, this.captureMouseEventHandler);
+		}, 33);
+	}
+
+	captureMouseEventHandler(event) {
+		this.isCapturing.value = false;
+		this.cssSelector.value = getElementSelector(event.target);
+		let touch = event;
+		if (isTouch) {
+			touch = event.touches[0];
+		}
+		let point = new Point(touch.pageX, touch.pageY);
+		this.x.value = point.x;
+		this.y.value = point.y;
+		document.body.removeEventListener(this.eventTypes.selectedItem.value, this.captureMouseEventHandler);
 	}
 
 }

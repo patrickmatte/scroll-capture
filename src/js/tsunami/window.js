@@ -162,3 +162,23 @@ export function fileExists(url) {
 	req.send();
 	return req.status !== 404;
 }
+
+export function getElementSelector(element) {
+	let names = [];
+	while(element) {
+		let elSelector = element.nodeName;
+		let className = element.className;
+		if(className) {
+			elSelector = elSelector + "." + className.split(" ").join(".");
+		}
+		names.push(elSelector);
+		if (element != document.body) {
+			element = element.parentNode;
+		} else {
+			element = null;
+		}
+	}
+	names = names.reverse();
+	let selector = names.join(" > ");
+	return selector;
+}
