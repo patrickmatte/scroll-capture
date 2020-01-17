@@ -19,14 +19,22 @@ export default class Main extends App {
 		this.isCapturing = new BooleanData();
 		this.actions = new Actions();
 
-		this.actions.value = [
-			new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
-			new ActionScroll("window", "px", 0, 500),
-			new ActionMouseEvent("click", 0, 0),
-			new ActionEval(),
-			// new ActionScroll(".scrollpane", "%", 0, 100),
-			// new ActionMouseEvent("click", 0, 0),
-		];
+		chrome.storage.sync.get(["json"], (result) => {
+			let json = result.json;
+			if(json) {
+				this.actions.deserialize(JSON.parse(json));
+			}
+		});
+
+
+		// this.actions.value = [
+		// 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
+		// 	new ActionScroll("window", "px", 0, 500),
+		// 	new ActionMouseEvent("click", 0, 0),
+		// 	new ActionEval(),
+		// 	// new ActionScroll(".scrollpane", "%", 0, 100),
+		// 	// new ActionMouseEvent("click", 0, 0),
+		// ];
 
 		this.playAll = this.playAll.bind(this);
 		this.show = this.show.bind(this);
@@ -47,21 +55,32 @@ export default class Main extends App {
 		this.appendChild(this.scrollCapture.element);
 	}
 
-	playAll() {
+	play() {
 		let data = this.actions.serialize();
+		let json = JSON.stringify(data);
+		chrome.storage.sync.set({json:json}, () => {
+			// console.log(json);
+		});
+		this.hide();
+		this.actions.selectedIndex.value = 0;
+		setTimeout(()=> {
+			this.triggerAction();
+		}, 500);
 		// let json = JSON.stringify(data);
 		// let code = `window.startActions('${json}')`;
 		// chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
 		// 	chrome.tabs.executeScript(tabs[0].id, {code: code});
 		// });
-		this.actions.selectedIndex.value = 0;
-		this.triggerAction();
+	}
+
+	clear() {
+		console.log("clear");
 	}
 
 	triggerAction() {
 		let action = this.actions.selectedItem.value;
 		if(action) {
-			let promise = action.trigger();
+			let promise = action.triggerDelay();
 			promise.then(this.actionComplete.bind(this));
 		} else {
 			this.allComplete();

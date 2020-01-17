@@ -4,34 +4,14 @@ import NumberData from "../tsunami/data/NumberData";
 
 export default class ActionWait extends Action {
 
-	constructor(timeout = 0.25) {
+	constructor() {
 		super("ActionWait", "Pause");
-		this.timeout = new NumberData(timeout);
 	}
 
 	clone() {
 		let action = new ActionWait();
 		action.copy(this);
 		return action;
-	}
-
-	copy(action) {
-		this.timeout.value = action.timeout.value;
-	}
-
-	trigger() {
-		return awaitTimeout(this.timeout.value * 1000);
-	}
-
-	serialize() {
-		let data = super.serialize();
-		data.timeout = this.timeout.value;
-		return data;
-	}
-
-	deserialize(data) {
-		super.deserialize(data);
-		this.timeout.value = data.timeout;
 	}
 
 }

@@ -194,7 +194,7 @@ scroll-capture {
 		text-transform: uppercase;
 		font-weight: 700;
 
-		&:before {
+		&:after {
 			content: "x";
 			display: inline-block;
 		}
@@ -364,11 +364,14 @@ scroll-capture {
 			}
 
 			.sc-field {
-				margin-right: 2em;
 				margin-bottom: 0em;
+				width: 50%;
 
+				&:first-child {
+					padding-right: 0.5em;
+				}
 				&:last-child {
-					margin-right: 0;
+					padding-left: 0.5em;
 				}
 			}
 		}
@@ -390,8 +393,8 @@ scroll-capture {
 				flex-shrink: 0;
 				flex-grow: 0;
 				white-space: nowrap;
-				text-align: left;
-				//padding-left: 0.5em;
+				text-align: right;
+				padding-right: 0.5em;
 			}
 
 			input, textarea {

@@ -10,7 +10,7 @@ export default class ActionMouseEvent extends Action {
 		super("ActionMouseEvent", "MouseEvent");
 		this.x = new NumberData(x);
 		this.y = new NumberData(y);
-		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu");
+		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
 		this.eventTypes.selectedItem.value = this.eventTypes.value[0];
 		this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
 	}
@@ -22,6 +22,7 @@ export default class ActionMouseEvent extends Action {
 	}
 
 	copy(action) {
+		super.copy(action);
 		this.eventTypes.selectedItem.value = action.eventTypes.selectedItem.value;
 		this.x.value = action.x.value;
 		this.y.value = action.y.value;

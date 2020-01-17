@@ -1,5 +1,6 @@
 import BooleanData from "../tsunami/data/BooleanData";
 import NumberData from "../tsunami/data/NumberData";
+import {awaitTimeout} from "../tsunami/await";
 
 export default class Action {
 
@@ -17,6 +18,14 @@ export default class Action {
 
 	copy(action) {
 		this.delay.value = action.delay.value;
+	}
+
+	triggerDelay() {
+		let promise1 = awaitTimeout(this.delay.value * 1000);
+		let promise2 = promise1.then(() => {
+			return this.trigger();
+		});
+		return promise2;
 	}
 
 	trigger() {

@@ -745,7 +745,7 @@ function () {
 var Style = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(15);
+var tsunami_await = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
 var ArrayData = __webpack_require__(5);
@@ -3115,6 +3115,192 @@ function (_BooleanData) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export awaitEvent */
+/* unused harmony export awaitTransition */
+/* unused harmony export awaitAnimation */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitTimeout; });
+/* unused harmony export awaitCallback */
+/* unused harmony export awaitAnimationFrame */
+/* unused harmony export awaitVideoFirstFrame */
+function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventHandler = function eventHandler(event) {
+      event.stopPropagation();
+
+      if (stopPropagation) {
+        event.stopPropagation();
+      }
+
+      if (stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTransition(dispatcher, cssProperties) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "transitionend";
+    var eventNames = {
+      'OTransition': 'otransitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      var isProperty;
+
+      for (var _i = 0; _i < cssProperties.length; _i++) {
+        var prop = cssProperties[_i];
+
+        if (prop === event.propertyName) {
+          isProperty = true;
+        }
+      }
+
+      if (!isProperty) {
+        return;
+      }
+
+      event.stopPropagation(); //event.stopImmediatePropagation();
+      //event.preventDefault();
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitAnimation(dispatcher, animationName) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "animationend";
+    var eventNames = {
+      'OTransition': 'oanimationend',
+      'MozTransition': 'moznimationend',
+      'WebkitTransition': 'webkitAnimationEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      if (animationName != event.animationName || dispatcher != event.target) {
+        return;
+      }
+
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTimeout() {
+  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+  if (isNaN(milliseconds) || milliseconds <= 0) {
+    return Promise.resolve();
+  } else {
+    return new Promise(function (resolve, reject) {
+      var timeout = setTimeout(function () {
+        resolve();
+      }, milliseconds);
+    });
+  }
+}
+function awaitCallback(target, method) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    target[method] = function () {
+      target[method] = function () {};
+
+      resolve(arguments);
+    };
+  });
+  return promise;
+}
+function awaitAnimationFrame() {
+  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  total = Math.max(1, Math.round(total));
+  var count = 0;
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    function animationFrame() {
+      count++;
+
+      if (count >= total) {
+        resolve();
+      } else {
+        window.requestAnimationFrame(animationFrame);
+      }
+    }
+
+    window.requestAnimationFrame(animationFrame);
+  });
+  return promise;
+}
+function awaitVideoFirstFrame(video) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
+  var debug = arguments.length > 2 ? arguments[2] : undefined;
+  var loadedmetadata = awaitEvent(video, "loadedmetadata");
+  var loadedmetadataTimeout = awaitTimeout(timeout);
+  var promise = Promise.race([loadedmetadata]);
+  return promise.then(function (event) {
+    if (debug) {
+      console.log("loadedmetadata");
+    }
+
+    var loadeddataPromise = awaitEvent(video, "loadeddata");
+    var playPromise = video.play();
+
+    if (!playPromise) {
+      playPromise = loadeddataPromise;
+    }
+
+    var playPromiseTimeout = awaitTimeout(timeout);
+    var promise = Promise.race([playPromise]);
+    return promise.then(function () {
+      if (debug) {
+        console.log("playPromise or loadeddata");
+      }
+
+      video.pause();
+      return video;
+    });
+  });
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tween; });
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
@@ -3297,7 +3483,7 @@ function (_EventDispatcher) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3755,192 +3941,6 @@ Easing.elastic = new Elastic();
 Easing.back = new Back();
 Easing.bounce = new Bounce();
 Easing.linear = new Linear();
-
-/***/ }),
-/* 15 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export awaitEvent */
-/* unused harmony export awaitTransition */
-/* unused harmony export awaitAnimation */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitTimeout; });
-/* unused harmony export awaitCallback */
-/* unused harmony export awaitAnimationFrame */
-/* unused harmony export awaitVideoFirstFrame */
-function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventHandler = function eventHandler(event) {
-      event.stopPropagation();
-
-      if (stopPropagation) {
-        event.stopPropagation();
-      }
-
-      if (stopImmediatePropagation) {
-        event.stopImmediatePropagation();
-      }
-
-      if (preventDefault) {
-        event.preventDefault();
-      }
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTransition(dispatcher, cssProperties) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "transitionend";
-    var eventNames = {
-      'OTransition': 'otransitionend',
-      'WebkitTransition': 'webkitTransitionEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      var isProperty;
-
-      for (var _i = 0; _i < cssProperties.length; _i++) {
-        var prop = cssProperties[_i];
-
-        if (prop === event.propertyName) {
-          isProperty = true;
-        }
-      }
-
-      if (!isProperty) {
-        return;
-      }
-
-      event.stopPropagation(); //event.stopImmediatePropagation();
-      //event.preventDefault();
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitAnimation(dispatcher, animationName) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "animationend";
-    var eventNames = {
-      'OTransition': 'oanimationend',
-      'MozTransition': 'moznimationend',
-      'WebkitTransition': 'webkitAnimationEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      if (animationName != event.animationName || dispatcher != event.target) {
-        return;
-      }
-
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTimeout() {
-  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-  if (isNaN(milliseconds) || milliseconds <= 0) {
-    return Promise.resolve();
-  } else {
-    return new Promise(function (resolve, reject) {
-      var timeout = setTimeout(function () {
-        resolve();
-      }, milliseconds);
-    });
-  }
-}
-function awaitCallback(target, method) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    target[method] = function () {
-      target[method] = function () {};
-
-      resolve(arguments);
-    };
-  });
-  return promise;
-}
-function awaitAnimationFrame() {
-  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  total = Math.max(1, Math.round(total));
-  var count = 0;
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    function animationFrame() {
-      count++;
-
-      if (count >= total) {
-        resolve();
-      } else {
-        window.requestAnimationFrame(animationFrame);
-      }
-    }
-
-    window.requestAnimationFrame(animationFrame);
-  });
-  return promise;
-}
-function awaitVideoFirstFrame(video) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
-  var debug = arguments.length > 2 ? arguments[2] : undefined;
-  var loadedmetadata = awaitEvent(video, "loadedmetadata");
-  var loadedmetadataTimeout = awaitTimeout(timeout);
-  var promise = Promise.race([loadedmetadata]);
-  return promise.then(function (event) {
-    if (debug) {
-      console.log("loadedmetadata");
-    }
-
-    var loadeddataPromise = awaitEvent(video, "loadeddata");
-    var playPromise = video.play();
-
-    if (!playPromise) {
-      playPromise = loadeddataPromise;
-    }
-
-    var playPromiseTimeout = awaitTimeout(timeout);
-    var promise = Promise.race([playPromise]);
-    return promise.then(function () {
-      if (debug) {
-        console.log("playPromise or loadeddata");
-      }
-
-      video.pause();
-      return video;
-    });
-  });
-}
 
 /***/ }),
 /* 16 */
@@ -4979,13 +4979,13 @@ function (_UIComponent) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Tween.js
-var Tween = __webpack_require__(13);
+var Tween = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/TweenProperty.js
 var TweenProperty = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Easing.js
-var Easing = __webpack_require__(14);
+var Easing = __webpack_require__(15);
 
 // CONCATENATED MODULE: ./js/tsunami/utils/number.js
 // Returns a random number between min (inclusive) and max (exclusive)
@@ -6810,7 +6810,7 @@ function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
-ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">ScrollCapture</span>\n\t\t\t\t\t</span>\n\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">\n\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\">\n\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t<button class=\"sc-tab capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">units:</span>\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t<button class=\"sc-tab capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">x<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">y<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">timeout:</span><input type=\"text\" data-model=\"data.timeout\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t<button class=\"sc-tab capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">type:</span>\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageX:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageY:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
+ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">ScrollCapture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\">\n\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t<button class=\"sc-tab capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">units:</span>\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/><span class=\"unit\" is=\"ui-text\">[[data.units.selectedItem]]</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t<button class=\"sc-tab capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">x<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">y<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/><span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t<button class=\"sc-tab capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageX:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageY:</span>\n\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t<span class=\"unit\">px</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">type:</span>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tab\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">code:</span>\n\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/><span class=\"unit\">s</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t\t<div>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n<!--\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">-->\n<!--\t\t\t\t\t<span class=\"sc-label\">Clear</span>-->\n<!--\t\t\t\t</button>-->\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
 
 tsunami["b" /* define */]("action-view", ActionView_ActionView);
 // EXTERNAL MODULE: ./js/tsunami/App.js + 10 modules
@@ -6822,12 +6822,16 @@ var BooleanData = __webpack_require__(9);
 // EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
 var NumberData = __webpack_require__(6);
 
+// EXTERNAL MODULE: ./js/tsunami/await.js
+var tsunami_await = __webpack_require__(13);
+
 // CONCATENATED MODULE: ./js/model/Action.js
 function Action_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function Action_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function Action_createClass(Constructor, protoProps, staticProps) { if (protoProps) Action_defineProperties(Constructor.prototype, protoProps); if (staticProps) Action_defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -6855,6 +6859,17 @@ function () {
     key: "copy",
     value: function copy(action) {
       this.delay.value = action.delay.value;
+    }
+  }, {
+    key: "triggerDelay",
+    value: function triggerDelay() {
+      var _this = this;
+
+      var promise1 = Object(tsunami_await["a" /* awaitTimeout */])(this.delay.value * 1000);
+      var promise2 = promise1.then(function () {
+        return _this.trigger();
+      });
+      return promise2;
     }
   }, {
     key: "trigger",
@@ -7000,10 +7015,10 @@ function (_Data) {
 var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Easing.js
-var Easing = __webpack_require__(14);
+var Easing = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Tween.js
-var Tween = __webpack_require__(13);
+var Tween = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/TweenProperty.js
 var TweenProperty = __webpack_require__(16);
@@ -56622,7 +56637,7 @@ function (_ActionTween) {
     var _this;
 
     var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "window";
-    var units = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "%";
+    var units = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "px";
     var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
     var duration = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
@@ -56795,9 +56810,6 @@ function (_ActionTween) {
 }(ActionTween_ActionTween);
 
 
-// EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(15);
-
 // CONCATENATED MODULE: ./js/model/ActionWait.js
 function ActionWait_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionWait_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionWait_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionWait_typeof(obj); }
 
@@ -56811,10 +56823,6 @@ function ActionWait_possibleConstructorReturn(self, call) { if (call && (ActionW
 
 function ActionWait_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function ActionWait_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionWait_get = Reflect.get; } else { ActionWait_get = function _get(target, property, receiver) { var base = ActionWait_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionWait_get(target, property, receiver || target); }
-
-function ActionWait_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionWait_getPrototypeOf(object); if (object === null) break; } return object; }
-
 function ActionWait_getPrototypeOf(o) { ActionWait_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionWait_getPrototypeOf(o); }
 
 function ActionWait_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionWait_setPrototypeOf(subClass, superClass); }
@@ -56825,21 +56833,15 @@ function ActionWait_setPrototypeOf(o, p) { ActionWait_setPrototypeOf = Object.se
 
 
 
-var ActionWait_ActionWait =
+var ActionWait =
 /*#__PURE__*/
 function (_Action) {
   ActionWait_inherits(ActionWait, _Action);
 
   function ActionWait() {
-    var _this;
-
-    var timeout = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.25;
-
     ActionWait_classCallCheck(this, ActionWait);
 
-    _this = ActionWait_possibleConstructorReturn(this, ActionWait_getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
-    _this.timeout = new NumberData["a" /* default */](timeout);
-    return _this;
+    return ActionWait_possibleConstructorReturn(this, ActionWait_getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
   }
 
   ActionWait_createClass(ActionWait, [{
@@ -56848,31 +56850,6 @@ function (_Action) {
       var action = new ActionWait();
       action.copy(this);
       return action;
-    }
-  }, {
-    key: "copy",
-    value: function copy(action) {
-      this.timeout.value = action.timeout.value;
-    }
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      return Object(tsunami_await["a" /* awaitTimeout */])(this.timeout.value * 1000);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var data = ActionWait_get(ActionWait_getPrototypeOf(ActionWait.prototype), "serialize", this).call(this);
-
-      data.timeout = this.timeout.value;
-      return data;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      ActionWait_get(ActionWait_getPrototypeOf(ActionWait.prototype), "deserialize", this).call(this, data);
-
-      this.timeout.value = data.timeout;
     }
   }]);
 
@@ -56926,7 +56903,7 @@ function (_Action) {
     _this = ActionMouseEvent_possibleConstructorReturn(this, ActionMouseEvent_getPrototypeOf(ActionMouseEvent).call(this, "ActionMouseEvent", "MouseEvent"));
     _this.x = new NumberData["a" /* default */](x);
     _this.y = new NumberData["a" /* default */](y);
-    _this.eventTypes = new ArrayData["a" /* default */]("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu");
+    _this.eventTypes = new ArrayData["a" /* default */]("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
     _this.eventTypes.selectedItem.value = _this.eventTypes.value[0];
     _this.captureMouseEventHandler = _this.captureMouseEventHandler.bind(ActionMouseEvent_assertThisInitialized(_this));
     return _this;
@@ -56942,6 +56919,8 @@ function (_Action) {
   }, {
     key: "copy",
     value: function copy(action) {
+      ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "copy", this).call(this, action);
+
       this.eventTypes.selectedItem.value = action.eventTypes.selectedItem.value;
       this.x.value = action.x.value;
       this.y.value = action.y.value;
@@ -57056,7 +57035,7 @@ function (_Action) {
     _this = ActionEval_possibleConstructorReturn(this, ActionEval_getPrototypeOf(ActionEval).call(this, "ActionEval", "Eval"));
 
     if (!code) {
-      code = "let promise = new Promise(function(resolve, reject) {\n\tconsole.log(\"Example resolving a promise after 1s\");\n\tsetTimeout(function() {resolve(); }, 1000);\n});\nreturn promise;";
+      code = "return new Promise(function(resolve, reject) {\n\tconsole.log(\"Wait for 1 second\");\n\tsetTimeout(function() {resolve(); }, 1000);\n});";
     }
 
     _this.code = new StringData_StringData(code);
@@ -57153,8 +57132,7 @@ function (_ArrayData) {
 
     _this.addSelectedType = _this.addSelectedType.bind(Actions_assertThisInitialized(_this));
     _this.types = new ArrayData["a" /* default */]();
-    _this.types.value = [new Action_Action("", "Add an action"), new ActionScroll_ActionScroll(), new ActionMouseEvent_ActionMouseEvent(), new ActionSwipe_ActionSwipe(), new ActionEval_ActionEval() // new ActionWait()
-    ];
+    _this.types.value = [new Action_Action("", "Add an action"), new ActionScroll_ActionScroll(), new ActionMouseEvent_ActionMouseEvent(), new ActionSwipe_ActionSwipe(), new ActionWait(), new ActionEval_ActionEval()];
     _this.types.selectedItem.value = _this.types.value[0];
     return _this;
   }
@@ -57162,11 +57140,14 @@ function (_ArrayData) {
   Actions_createClass(Actions, [{
     key: "addSelectedType",
     value: function addSelectedType() {
+      console.log("addSelectedType selectedItem.value", this.types.selectedItem.value);
+
       if (!this.types.selectedItem.value) {
         return;
       }
 
       var action = this.types.selectedItem.value.clone();
+      console.log("addSelectedType action", action);
 
       if (action) {
         this.push(action);
@@ -57263,9 +57244,21 @@ function (_App) {
     _this = main_possibleConstructorReturn(this, main_getPrototypeOf(Main).call(this, element));
     _this.isCapturing = new BooleanData["a" /* default */]();
     _this.actions = new Actions_Actions();
-    _this.actions.value = [new ActionSwipe_ActionSwipe([new Vector2Data_Vector2Data(150, 250), new Vector2Data_Vector2Data(400, 450)]), new ActionScroll_ActionScroll("window", "px", 0, 500), new ActionMouseEvent_ActionMouseEvent("click", 0, 0), new ActionEval_ActionEval() // new ActionScroll(".scrollpane", "%", 0, 100),
-    // new ActionMouseEvent("click", 0, 0),
-    ];
+    chrome.storage.sync.get(["json"], function (result) {
+      var json = result.json;
+
+      if (json) {
+        _this.actions.deserialize(JSON.parse(json));
+      }
+    }); // this.actions.value = [
+    // 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
+    // 	new ActionScroll("window", "px", 0, 500),
+    // 	new ActionMouseEvent("click", 0, 0),
+    // 	new ActionEval(),
+    // 	// new ActionScroll(".scrollpane", "%", 0, 100),
+    // 	// new ActionMouseEvent("click", 0, 0),
+    // ];
+
     _this.playAll = _this.playAll.bind(main_assertThisInitialized(_this));
     _this.show = _this.show.bind(main_assertThisInitialized(_this));
     _this.hide = _this.hide.bind(main_assertThisInitialized(_this));
@@ -57291,16 +57284,30 @@ function (_App) {
       this.appendChild(this.scrollCapture.element);
     }
   }, {
-    key: "playAll",
-    value: function playAll() {
-      var data = this.actions.serialize(); // let json = JSON.stringify(data);
+    key: "play",
+    value: function play() {
+      var _this2 = this;
+
+      var data = this.actions.serialize();
+      var json = JSON.stringify(data);
+      chrome.storage.sync.set({
+        json: json
+      }, function () {// console.log(json);
+      });
+      this.hide();
+      this.actions.selectedIndex.value = 0;
+      setTimeout(function () {
+        _this2.triggerAction();
+      }, 500); // let json = JSON.stringify(data);
       // let code = `window.startActions('${json}')`;
       // chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       // 	chrome.tabs.executeScript(tabs[0].id, {code: code});
       // });
-
-      this.actions.selectedIndex.value = 0;
-      this.triggerAction();
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      console.log("clear");
     }
   }, {
     key: "triggerAction",
@@ -57308,7 +57315,7 @@ function (_App) {
       var action = this.actions.selectedItem.value;
 
       if (action) {
-        var promise = action.trigger();
+        var promise = action.triggerDelay();
         promise.then(this.actionComplete.bind(this));
       } else {
         this.allComplete();

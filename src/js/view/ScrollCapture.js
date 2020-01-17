@@ -20,9 +20,9 @@ ScrollCapture.template = `
 					<span class="sc-tab" data-selected="true">
 						<span class="sc-label">ScrollCapture</span>
 					</span>
-					<button class="sc-tab play-button" is="ui-button" data-click="playAll">
-						<span class="sc-label">Play All</span>
-					</button>
+<!--					<button class="sc-tab play-button" is="ui-button" data-click="playAll">-->
+<!--						<span class="sc-label">Play All</span>-->
+<!--					</button>-->
 				</div>
 				<button class="sc-tab close-button" is="ui-button" data-click="hide"></button>
 			</div>
@@ -73,6 +73,7 @@ ScrollCapture.template = `
 									</div>
 								</div>
 								<div class="sc-field">
+									<span class="sc-label">method:</span>
 									<div class="sc-select">
 										<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
 									</div>
@@ -122,6 +123,7 @@ ScrollCapture.template = `
 									</div>
 								</div>
 								<div class="sc-field">
+									<span class="sc-label">method:</span>
 									<div class="sc-select">
 										<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
 									</div>
@@ -137,7 +139,7 @@ ScrollCapture.template = `
 						</div>
 						<div class="sc-fields">
 							<div class="sc-field">
-								<span class="sc-label">timeout:</span><input type="text" data-model="data.timeout" is="ui-input"/><span class="unit">s</span>
+								<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
 							</div>
 						</div>
 					</action-view>
@@ -153,12 +155,6 @@ ScrollCapture.template = `
 							</div>
 						</div>
 						<div class="sc-fields">
-							<div class="sc-field">
-								<span class="sc-label">type:</span>
-								<div class="sc-select">
-									<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
-								</div>
-							</div>
 							<div class="sc-field-group">
 								<div class="sc-field">
 									<span class="sc-label">pageX:</span>
@@ -171,6 +167,17 @@ ScrollCapture.template = `
 									<span class="unit">px</span>
 								</div>
 							</div>
+							<div class="sc-field-group">
+								<div class="sc-field">
+									<span class="sc-label">type:</span>
+									<div class="sc-select">
+										<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
+									</div>
+								</div>
+								<div class="sc-field">
+									<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
+								</div>
+							</div>
 						</div>
 					</action-view>
 				</template>
@@ -181,7 +188,11 @@ ScrollCapture.template = `
 						</div>
 						<div class="sc-fields">
 							<div class="sc-field">
+								<span class="sc-label">code:</span>
 								<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
+							</div>
+							<div class="sc-field">
+								<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
 							</div>
 						</div>
 					</action-view>
@@ -206,6 +217,14 @@ ScrollCapture.template = `
 					</div>
 				</div>
 			</footer>
+			<div>
+				<button class="play-button" is="ui-button" data-click="play">
+					<span class="sc-label">Play</span>
+				</button>
+<!--				<button class="close-button" is="ui-button" data-click="clear">-->
+<!--					<span class="sc-label">Clear</span>-->
+<!--				</button>-->
+			</div>
 		</div>
 	</div>
 </scroll-capture>

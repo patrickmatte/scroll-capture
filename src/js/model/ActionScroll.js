@@ -6,7 +6,7 @@ import Point from "../tsunami/geom/Point";
 
 export default class ActionScroll extends ActionTween {
 
-	constructor(target = "window", units = "%", x = 0, y = 0, duration = 1, delay = 0) {
+	constructor(target = "window", units = "px", x = 0, y = 0, duration = 1, delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionScroll";
 		this.name = "Scroll";
