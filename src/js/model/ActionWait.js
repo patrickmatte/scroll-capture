@@ -1,6 +1,4 @@
 import Action from "./Action";
-import {awaitTimeout} from "../tsunami/await";
-import NumberData from "../tsunami/data/NumberData";
 
 export default class ActionWait extends Action {
 

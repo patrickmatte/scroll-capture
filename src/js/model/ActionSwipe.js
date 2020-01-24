@@ -1,10 +1,8 @@
-import Action from "./Action";
 import Point from "../tsunami/geom/Point";
-import StringData from "../tsunami/data/StringData";
 import ActionTween from "./ActionTween";
 import ArrayData from "../tsunami/data/ArrayData";
 import Vector2Data from "../tsunami/data/Vector2Data";
-import {isTouch, localToGlobal} from "../tsunami/window";
+import {isTouch} from "../tsunami/window";
 import * as THREE from "three";
 
 export default class ActionSwipe extends ActionTween {

@@ -745,7 +745,7 @@ function () {
 var Style = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(13);
+var tsunami_await = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
 var ArrayData = __webpack_require__(5);
@@ -3115,192 +3115,6 @@ function (_BooleanData) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export awaitEvent */
-/* unused harmony export awaitTransition */
-/* unused harmony export awaitAnimation */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitTimeout; });
-/* unused harmony export awaitCallback */
-/* unused harmony export awaitAnimationFrame */
-/* unused harmony export awaitVideoFirstFrame */
-function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventHandler = function eventHandler(event) {
-      event.stopPropagation();
-
-      if (stopPropagation) {
-        event.stopPropagation();
-      }
-
-      if (stopImmediatePropagation) {
-        event.stopImmediatePropagation();
-      }
-
-      if (preventDefault) {
-        event.preventDefault();
-      }
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTransition(dispatcher, cssProperties) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "transitionend";
-    var eventNames = {
-      'OTransition': 'otransitionend',
-      'WebkitTransition': 'webkitTransitionEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      var isProperty;
-
-      for (var _i = 0; _i < cssProperties.length; _i++) {
-        var prop = cssProperties[_i];
-
-        if (prop === event.propertyName) {
-          isProperty = true;
-        }
-      }
-
-      if (!isProperty) {
-        return;
-      }
-
-      event.stopPropagation(); //event.stopImmediatePropagation();
-      //event.preventDefault();
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitAnimation(dispatcher, animationName) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "animationend";
-    var eventNames = {
-      'OTransition': 'oanimationend',
-      'MozTransition': 'moznimationend',
-      'WebkitTransition': 'webkitAnimationEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      if (animationName != event.animationName || dispatcher != event.target) {
-        return;
-      }
-
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTimeout() {
-  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-  if (isNaN(milliseconds) || milliseconds <= 0) {
-    return Promise.resolve();
-  } else {
-    return new Promise(function (resolve, reject) {
-      var timeout = setTimeout(function () {
-        resolve();
-      }, milliseconds);
-    });
-  }
-}
-function awaitCallback(target, method) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    target[method] = function () {
-      target[method] = function () {};
-
-      resolve(arguments);
-    };
-  });
-  return promise;
-}
-function awaitAnimationFrame() {
-  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  total = Math.max(1, Math.round(total));
-  var count = 0;
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    function animationFrame() {
-      count++;
-
-      if (count >= total) {
-        resolve();
-      } else {
-        window.requestAnimationFrame(animationFrame);
-      }
-    }
-
-    window.requestAnimationFrame(animationFrame);
-  });
-  return promise;
-}
-function awaitVideoFirstFrame(video) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
-  var debug = arguments.length > 2 ? arguments[2] : undefined;
-  var loadedmetadata = awaitEvent(video, "loadedmetadata");
-  var loadedmetadataTimeout = awaitTimeout(timeout);
-  var promise = Promise.race([loadedmetadata]);
-  return promise.then(function (event) {
-    if (debug) {
-      console.log("loadedmetadata");
-    }
-
-    var loadeddataPromise = awaitEvent(video, "loadeddata");
-    var playPromise = video.play();
-
-    if (!playPromise) {
-      playPromise = loadeddataPromise;
-    }
-
-    var playPromiseTimeout = awaitTimeout(timeout);
-    var promise = Promise.race([playPromise]);
-    return promise.then(function () {
-      if (debug) {
-        console.log("playPromise or loadeddata");
-      }
-
-      video.pause();
-      return video;
-    });
-  });
-}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tween; });
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
@@ -3483,7 +3297,7 @@ function (_EventDispatcher) {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3941,6 +3755,192 @@ Easing.elastic = new Elastic();
 Easing.back = new Back();
 Easing.bounce = new Bounce();
 Easing.linear = new Linear();
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export awaitEvent */
+/* unused harmony export awaitTransition */
+/* unused harmony export awaitAnimation */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitTimeout; });
+/* unused harmony export awaitCallback */
+/* unused harmony export awaitAnimationFrame */
+/* unused harmony export awaitVideoFirstFrame */
+function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventHandler = function eventHandler(event) {
+      event.stopPropagation();
+
+      if (stopPropagation) {
+        event.stopPropagation();
+      }
+
+      if (stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTransition(dispatcher, cssProperties) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "transitionend";
+    var eventNames = {
+      'OTransition': 'otransitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      var isProperty;
+
+      for (var _i = 0; _i < cssProperties.length; _i++) {
+        var prop = cssProperties[_i];
+
+        if (prop === event.propertyName) {
+          isProperty = true;
+        }
+      }
+
+      if (!isProperty) {
+        return;
+      }
+
+      event.stopPropagation(); //event.stopImmediatePropagation();
+      //event.preventDefault();
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitAnimation(dispatcher, animationName) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "animationend";
+    var eventNames = {
+      'OTransition': 'oanimationend',
+      'MozTransition': 'moznimationend',
+      'WebkitTransition': 'webkitAnimationEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      if (animationName != event.animationName || dispatcher != event.target) {
+        return;
+      }
+
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTimeout() {
+  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+  if (isNaN(milliseconds) || milliseconds <= 0) {
+    return Promise.resolve();
+  } else {
+    return new Promise(function (resolve, reject) {
+      var timeout = setTimeout(function () {
+        resolve();
+      }, milliseconds);
+    });
+  }
+}
+function awaitCallback(target, method) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    target[method] = function () {
+      target[method] = function () {};
+
+      resolve(arguments);
+    };
+  });
+  return promise;
+}
+function awaitAnimationFrame() {
+  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  total = Math.max(1, Math.round(total));
+  var count = 0;
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    function animationFrame() {
+      count++;
+
+      if (count >= total) {
+        resolve();
+      } else {
+        window.requestAnimationFrame(animationFrame);
+      }
+    }
+
+    window.requestAnimationFrame(animationFrame);
+  });
+  return promise;
+}
+function awaitVideoFirstFrame(video) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
+  var debug = arguments.length > 2 ? arguments[2] : undefined;
+  var loadedmetadata = awaitEvent(video, "loadedmetadata");
+  var loadedmetadataTimeout = awaitTimeout(timeout);
+  var promise = Promise.race([loadedmetadata]);
+  return promise.then(function (event) {
+    if (debug) {
+      console.log("loadedmetadata");
+    }
+
+    var loadeddataPromise = awaitEvent(video, "loadeddata");
+    var playPromise = video.play();
+
+    if (!playPromise) {
+      playPromise = loadeddataPromise;
+    }
+
+    var playPromiseTimeout = awaitTimeout(timeout);
+    var promise = Promise.race([playPromise]);
+    return promise.then(function () {
+      if (debug) {
+        console.log("playPromise or loadeddata");
+      }
+
+      video.pause();
+      return video;
+    });
+  });
+}
 
 /***/ }),
 /* 16 */
@@ -4979,13 +4979,13 @@ function (_UIComponent) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Tween.js
-var Tween = __webpack_require__(14);
+var Tween = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/TweenProperty.js
 var TweenProperty = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Easing.js
-var Easing = __webpack_require__(15);
+var Easing = __webpack_require__(14);
 
 // CONCATENATED MODULE: ./js/tsunami/utils/number.js
 // Returns a random number between min (inclusive) and max (exclusive)

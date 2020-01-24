@@ -36,7 +36,9 @@ export default class Main extends App {
 		// 	// new ActionMouseEvent("click", 0, 0),
 		// ];
 
-		this.playAll = this.playAll.bind(this);
+		this.save = this.save.bind(this);
+		this.play = this.play.bind(this);
+		this.clear = this.clear.bind(this);
 		this.show = this.show.bind(this);
 		this.hide = this.hide.bind(this);
 	}
@@ -55,12 +57,16 @@ export default class Main extends App {
 		this.appendChild(this.scrollCapture.element);
 	}
 
-	play() {
+	save() {
 		let data = this.actions.serialize();
 		let json = JSON.stringify(data);
 		chrome.storage.sync.set({json:json}, () => {
 			// console.log(json);
 		});
+	}
+
+	play() {
+		this.save();
 		this.hide();
 		this.actions.selectedIndex.value = 0;
 		setTimeout(()=> {
@@ -74,7 +80,7 @@ export default class Main extends App {
 	}
 
 	clear() {
-		console.log("clear");
+		this.actions.value = [];
 	}
 
 	triggerAction() {
