@@ -44,4 +44,3 @@ tsunami.define("spacers-view", SpacersView);
 tsunami.define("my-canvas", MyCanvas);
 
 let test = new Test(document.body);
-test.init();

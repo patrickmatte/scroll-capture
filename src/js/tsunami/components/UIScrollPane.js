@@ -18,6 +18,8 @@ export default class UIScrollPane extends UIComponent {
 		this.wheelDirection = 1;
 
 		this._autoScrollFactor = 0;
+		this.infiniteLoop = {x: false, y: false};
+		this.loopPoint = new Point(0, 0);
 		this.autoScrollSpeed = 1;
 		this.scrollTarget = new Point();
 		this.scroll = new Point();
@@ -27,7 +29,6 @@ export default class UIScrollPane extends UIComponent {
 		this.maxScroll = new Point();
 		this.size = new Rectangle();
 		this.panelSize = new Rectangle();
-		this.loopScroll = new Point(NaN, NaN);
 
 		this.startTouchDiff = new Point();
 
@@ -96,6 +97,7 @@ export default class UIScrollPane extends UIComponent {
 
 	wheelHandler(event) {
 		event.preventDefault();
+		this.stopTween();
 		if(this.maxScroll.y > 0) {
 			this.scrollTarget.y += event.deltaY * this.wheelDirection;
 		}
@@ -128,6 +130,57 @@ export default class UIScrollPane extends UIComponent {
 		this._autoScrollFactor = 0;
 	}
 
+	tweenTo(targetX = 0, targetY = 0) {
+		this.stopTween();
+		this.tweenPromise = Promise.resolve();
+
+		let currentX = this.scroll.x;
+		let currentY = this.scroll.y;
+
+		if(this.infiniteLoop.x) {
+			if (this.panelSize.width > 0) {
+				while ((currentX - targetX) > this.panelSize.width / 2) {
+					currentX -= this.panelSize.width;
+				}
+
+				while ((currentX - targetX) < this.panelSize.width / -2) {
+					currentX += this.panelSize.width;
+				}
+			}
+		}
+
+		if(this.infiniteLoop.y) {
+			if (this.panelSize.height > 0) {
+				while ((currentY - targetY) > this.panelSize.height / 2) {
+					currentY -= this.panelSize.height;
+				}
+
+				while ((currentY - targetY) < this.panelSize.height / -2) {
+					currentY += this.panelSize.height;
+				}
+			}
+		}
+
+		let props = [];
+		if (currentX != targetX) {
+			props.push(new TweenProperty(this.scrollTarget, "x", currentX, targetX, Easing.cubic.easeOut, 100));
+		}
+		if (currentY != targetY) {
+			props.push(new TweenProperty(this.scrollTarget, "y", currentY, targetY, Easing.cubic.easeOut, 100));
+		}
+		if (props.length > 0) {
+			this.tween = new Tween(0, 0.75, props);
+			this.tweenPromise = this.tween.start();
+		}
+		return this.tweenPromise;
+	}
+
+	stopTween() {
+		if(this.tween) {
+			this.tween.stop();
+		}
+	}
+
 	animationFrame(data) {
 		super.animationFrame(data);
 
@@ -146,7 +199,6 @@ export default class UIScrollPane extends UIComponent {
 
 			this.scrollTarget.x = this.scrollTarget.x + this.momentum.x;
 			this.scrollTarget.y = this.scrollTarget.y + this.momentum.y;
-
 
 			let clamp = {x:NaN, y:NaN};
 			if (this.scrollTarget.x < this.minScroll.x) {
@@ -205,18 +257,25 @@ export default class UIScrollPane extends UIComponent {
 
 		this.scrollDiff = this.scroll.subtract(previousScroll);
 
-		if(!isNaN(this.loopScroll.x)) {
-			while (this.scroll.x > this.loopScroll.x) {
-				this.scroll.x -= this.loopScroll.x;
-				this.scrollTarget.x -= this.loopScroll.x;
-			}
-		}
-
 		this.maxScrollReached.x.value = (this.scroll.x >= this.maxScroll.x);
 		this.maxScrollReached.y.value = (this.scroll.y >= this.maxScroll.y);
 
 		let x = Math.round(this.scroll.x * 10) / 10;
 		let y = Math.round(this.scroll.y * 10) / 10;
+
+		if(this.infiniteLoop.y) {
+			let minY = 0 - this.loopPoint.y;
+			let maxY = this.panelSize.height - this.size.height + this.loopPoint.y;
+
+			while (y < minY) {
+				y += this.panelSize.height;
+			}
+
+			while (y > maxY) {
+				y -= this.panelSize.height;
+			}
+		}
+
 		this.updateTransform(x, y);
 	}
 
@@ -228,6 +287,7 @@ export default class UIScrollPane extends UIComponent {
 	windowResize(windowSize) {
 		super.windowResize(windowSize);
 		this.updatePanelSize();
+		this.updateMaxScroll();
 	}
 
 	updatePanelSize() {
@@ -235,17 +295,25 @@ export default class UIScrollPane extends UIComponent {
 		this.size.height = this.rectangle.height;
 		this.panelSize.width = this.scrollingPanel.offsetWidth;
 		this.panelSize.height = this.scrollingPanel.offsetHeight;
-		this.updateMaxScroll();
 	}
 
 	updateMaxScroll() {
 		this.maxScroll.x = Math.max(this.panelSize.width - this.size.width, 0);
 		this.maxScroll.y = Math.max(this.panelSize.height - this.size.height, 0);
+		if(this.infiniteLoop.x) {
+			this.minScroll.x = Number.MAX_VALUE * -1;
+			this.maxScroll.x = Number.MAX_VALUE;
+		}
+		if(this.infiniteLoop.y) {
+			this.minScroll.y = Number.MAX_VALUE * -1;
+			this.maxScroll.y = Number.MAX_VALUE;
+		}
 		this.element.setAttribute("data-scroll-x", (this.maxScroll.x > 0));
 		this.element.setAttribute("data-scroll-y", (this.maxScroll.y > 0));
 	}
 
 	mousedownHandler(event) {
+		this.stopTween();
 		this.removeWheelHandler();
 		this.momentum.x = this.momentum.y = 0;
 		this.scrollTarget.copyFrom(this.scroll);

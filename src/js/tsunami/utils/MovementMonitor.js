@@ -3,133 +3,94 @@ import Point from "../geom/Point";
 
 export default class MovementMonitor {
 
-	constructor(maxRot = 5, friction = 0.9) {
-		this.maxRot = maxRot;
+	constructor(component, rotationMax = 5, friction = 0.9) {
+		this.component = component;
+		this.rotationMax = rotationMax;
 		this.friction = friction;
 
 		this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
 		this.deviceMotionHandler = this.deviceMotionHandler.bind(this);
+		this.touchstartHandlerIOS = this.touchstartHandlerIOS.bind(this);
 
-		this.value = {
-			y: 0,
-			x: 0
-		};
-
-		this.easedValue = {
-			y: 0,
-			x: 0
-		};
-
-		this.values = {
-			raw:this.value,
-			eased:this.easedValue
-		}
-
-		// this.defaultTiltMultiplier = {
-		// 	y: 5,
-		// 	x: 5
-		// };
-		//
-		// this.tiltMultiplier = {
-		// 	y: this.defaultTiltMultiplier.y,
-		// 	x: this.defaultTiltMultiplier.x
-		// };
-		//
-		// this.easedTilt = {
-		// 	y: 0,
-		// 	x: 0
-		// };
-		//
-		// this.tiltDrag = {
-		// 	y: 0,
-		// 	x: 0
-		// };
-		//
-		// this.friction = 0.1;
+		this.value = new Point();
+		this.easedValue = new Point();
 	}
 
 	start() {
-		this.initialAccelerationIncludingGravity = {x:0, y:0};
+		this.initialAccelerationIncludingGravity = new Point();
 
 		if (!isTouch) {
-			document.body.addEventListener("mousemove", this.mouseMoveHandler);
+			this.component.element.addEventListener("mousemove", this.mouseMoveHandler);
 		}
+		let hasDeviceMotion = ('DeviceMotionEvent' in window);
+		// console.log("hasDeviceMotion", hasDeviceMotion);
+		if(hasDeviceMotion) {
+			if (typeof DeviceMotionEvent.requestPermission === 'function') {
+				// iOS 13+
+				document.body.addEventListener("click", this.touchstartHandlerIOS);
+			}
+		} else {
+			// non iOS 13+
+			window.addEventListener("devicemotion", this.deviceMotionHandler);
+		}
+	}
 
-		window.addEventListener("devicemotion", this.deviceMotionHandler);
+	touchstartHandlerIOS(event) {
+		// console.log("touchstartHandlerIOS", event.type);
+		document.body.removeEventListener("click", this.touchstartHandlerIOS);
+		DeviceMotionEvent.requestPermission().then(response => {
+			// console.log("requestPermission", response);
+			if (response == 'granted') {
+				window.addEventListener("devicemotion", this.deviceMotionHandler);
+			}
+		}).catch(console.error);
 	}
 
 	stop() {
 		window.removeEventListener("devicemotion", this.deviceMotionHandler);
 
 		if (!isTouch) {
-			document.body.removeEventListener("mousemove", this.mouseMoveHandler);
+			this.component.element.removeEventListener("mousemove", this.mouseMoveHandler);
 		}
 	}
 
-	windowResize(rect) {
-		this.rect = rect;
+	removeMouseMove() {
+		this.component.element.removeEventListener("mousemove", this.mouseMoveHandler);
 	}
 
-	deviceMotionHandler (event) {
+	deviceMotionHandler(event) {
 		let diff = this.getDeviceMotionDifference(event);
 		if (diff.x != 0 && diff.y != 0 && !isNaN(diff.x) && !isNaN(diff.y)) {
-			document.body.removeEventListener("mousemove", this.mouseMoveHandler);
+			this.removeMouseMove();
 		}
 
-		let y = Math.round(diff.y * 10000) / 10000;
-		let x = Math.round(diff.x * 10000) / 10000;
+		let y = -diff.y;
+		let x = -diff.x;
 
-		if (y < -this.maxRot) {
-			y = -this.maxRot;
-		}
-		if (y > this.maxRot) {
-			y = this.maxRot;
-		}
+		// if (y < -this.rotationMax) y = -this.rotationMax;
+		// if (y > this.rotationMax) y = this.rotationMax;
+		// if (x < -this.rotationMax) x = -this.rotationMax;
+		// if (x > this.rotationMax) x = this.rotationMax;
 
-		if (x < -this.maxRot) {
-			x = -this.maxRot;
-		}
-		if (x > this.maxRot) {
-			x = this.maxRot;
-		}
-
-		this.value.y = Math.round(y / this.maxRot * 1000) / 1000;
-		this.value.x = Math.round(x / this.maxRot * 1000) / 1000;
+		this.value.y = Math.round(y * 1000) / 1000;
+		this.value.x = Math.round(x * 1000) / 1000;
 	}
 
 	mouseMoveHandler (event) {
-		let mouse = event;
-		if (isTouch) {
-			mouse = event.touches[0];
-		}
-		let mousePoint = new Point(mouse.pageX, mouse.pageY - window.pageYOffset);
-
-		let halfWidth = this.rect.width / 2;
-		let halfHeight = this.rect.height / 2;
-
-		let yFactor = (mousePoint.y - halfHeight) / halfHeight;
-		let xFactor = (mousePoint.x - halfWidth) / halfWidth;
-
-		if (xFactor > 0) {
-			xFactor = Math.min(xFactor, 1);
-		}
-		if (xFactor < 0) {
-			xFactor = Math.max(xFactor, -1);
-		}
-
-		//console.log(mousePoint.x, halfWidth, xFactor, mousePoint.y, halfHeight, yFactor);
-
-		this.value.y = yFactor;
-		this.value.x = xFactor;
+		let point = new Point(event.pageX, event.pageY);
+		let diff = point.subtract(this.component.globalRectangle.center);
+		let multiplier = diff.divide(this.component.globalRectangle.halfSize);
+		let widthToHeight = this.component.globalRectangle.size.x / this.component.globalRectangle.size.y;
+		this.value.x = multiplier.x * this.rotationMax;
+		this.value.y = multiplier.y * this.rotationMax / widthToHeight;
 	}
 
 	getDeviceMotionDifference (event) {
-		let width = this.rect.width;
-		let height = this.rect.height;
+		let width = this.component.rectangle.width;
+		let height = this.component.rectangle.height;
 		let deviceOrientation = "landscape";
 		let deviceDirection = "up";
-		let x = 0;
-		let y = 0;
+		let acceleration = new Point(0, 0);
 
 		if (height > width) {
 			deviceOrientation = "portrait"
@@ -139,28 +100,25 @@ export default class MovementMonitor {
 			if (event.accelerationIncludingGravity.y > 0) {
 				deviceDirection = "down";
 			}
-			x = event.accelerationIncludingGravity.x;
-			y = event.accelerationIncludingGravity.z;
+			acceleration.x = event.accelerationIncludingGravity.x;
+			acceleration.y = event.accelerationIncludingGravity.z;
 
 		} else if (deviceOrientation == "landscape") {
 			if (event.accelerationIncludingGravity.x > 0) {
 				deviceDirection = "down";
 			}
-			x = event.accelerationIncludingGravity.y;
-			y = event.accelerationIncludingGravity.z;
+			acceleration.x = event.accelerationIncludingGravity.y;
+			acceleration.y = event.accelerationIncludingGravity.z;
 		}
 
 		if (deviceOrientation != this.deviceOrientation || deviceDirection != this.deviceDirection) {
 			this.deviceOrientation = deviceOrientation;
 			this.deviceDirection = deviceDirection;
-			this.initialAccelerationIncludingGravity = {x: x, y: y};
+			this.initialAccelerationIncludingGravity = acceleration.clone();
+			// console.log("initialAccelerationIncludingGravity", this.initialAccelerationIncludingGravity.toString());
 		}
 
-		let diff = {
-			x: x - this.initialAccelerationIncludingGravity.x,
-			y: y - this.initialAccelerationIncludingGravity.y
-		};
-
+		let diff = acceleration.subtract(this.initialAccelerationIncludingGravity);
 		return diff;
 	}
 

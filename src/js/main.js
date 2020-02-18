@@ -41,12 +41,10 @@ export default class Main extends App {
 		this.clear = this.clear.bind(this);
 		this.show = this.show.bind(this);
 		this.hide = this.hide.bind(this);
-	}
 
-	init() {
-		super.init();
 		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
 		this.show();
+
 	}
 
 	hide() {

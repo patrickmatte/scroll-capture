@@ -58,6 +58,10 @@ export default class Router extends EventDispatcher {
 			console.log("set location", value);
 		}
 
+		if(value.indexOf("?") != -1) {
+			value = value.split("?")[0];
+		}
+
 		if (this._inTransition) {
 			if (this.goToAllLocations) {
 				let lastInterruptingLocation = this._interruptingLocations[this._interruptingLocations.length - 1];

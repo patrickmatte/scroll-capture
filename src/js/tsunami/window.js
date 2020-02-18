@@ -23,6 +23,16 @@ export function getCookie (cname) {
 	return "";
 }
 
+export function serialize(obj) {
+	let str = [];
+	for(let p in obj){
+		if (obj.hasOwnProperty(p)) {
+			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		}
+	}
+	return str.join("&");
+}
+
 export function getSearchParams(url, dontDecodeURI, obj = {}) {
 	if (!url) {
 		url = window.location.href;
@@ -162,6 +172,7 @@ export function fileExists(url) {
 	req.send();
 	return req.status !== 404;
 }
+
 
 export function getElementSelector(element) {
 	let names = [];

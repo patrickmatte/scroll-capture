@@ -24,7 +24,9 @@ export default class UISelect extends UIList {
 		if (this._model) {
 			this._model.removeEventListener(Data.CHANGE, this.modelChangeBind);
 			this._model.value = this.dataProvider.find(this.getModel);
-			this._model.addEventListener(Data.CHANGE, this.modelChangeBind);
+			if (this._model) {
+				this._model.addEventListener(Data.CHANGE, this.modelChangeBind);
+			}
 		}
 	}
 

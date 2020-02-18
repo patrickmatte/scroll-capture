@@ -114,32 +114,19 @@ export function awaitTimeout(milliseconds = 0) {
 }
 
 export function awaitCallback(target, method) {
-
-	let promise;
-
-	promise = new Promise(function(resolve, reject){
-
-		target[method] = function() {
-			target[method] = function(){};
+	let promise = new Promise((resolve, reject) => {
+		target[method] = () => {
+			delete target[method];
 			resolve(arguments);
 		};
-
 	});
-
 	return promise;
-
 }
 
 export function awaitAnimationFrame(total = 1) {
-
 	total = Math.max(1, Math.round(total));
-
 	let count = 0;
-
-	let promise;
-
-	promise = new Promise(function(resolve, reject){
-
+	let promise = new Promise(function(resolve, reject){
 		function animationFrame() {
 			count++;
 			if (count >= total) {
@@ -148,13 +135,9 @@ export function awaitAnimationFrame(total = 1) {
 				window.requestAnimationFrame(animationFrame);
 			}
 		}
-
 		window.requestAnimationFrame(animationFrame);
-
 	});
-
 	return promise;
-
 }
 
 export function awaitVideoFirstFrame(video, timeout = 5000, debug) {

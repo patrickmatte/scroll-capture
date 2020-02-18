@@ -15,12 +15,6 @@ export default class App extends UIComponent {
 
 	constructor(element) {
 		super(element);
-	}
-
-	init(debug) {
-		if(debug) {
-			console.log("App.init");
-		}
 
 		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
 
