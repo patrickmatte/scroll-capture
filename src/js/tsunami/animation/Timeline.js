@@ -1,6 +1,7 @@
 import EventDispatcher from "../../tsunami/EventDispatcher";
 import TimelineAction from "./TimelineAction";
 import Tween from "./Tween";
+import Clock, {clock} from "./Clock";
 
 export default class Timeline extends EventDispatcher {
 
@@ -50,20 +51,20 @@ export default class Timeline extends EventDispatcher {
 		}
 		this.time = 0;
 		this.clockStartTime = NaN;
-		Tween.clock.addEventListener("tick", this.tickHandler);
+		clock.addEventListener(Clock.TICK, this.tickHandler);
 		return promise;
 	}
 
 	stop() {
-		Tween.clock.removeEventListener("tick", this.tickHandler);
+		clock.removeEventListener(Clock.TICK, this.tickHandler);
 	}
 
 	tick(event) {
 		if (isNaN(this.clockStartTime)) {
-			this.clockStartTime = Tween.clock.time;
+			this.clockStartTime = clock.time;
 
 		}
-		let currentTime = (Tween.clock.time - this.clockStartTime) / 1000;
+		let currentTime = (clock.time - this.clockStartTime) / 1000;
 		this.time = currentTime;
 
 		if (this.time >= this.duration) {

@@ -177,17 +177,17 @@ scroll-capture {
 	.play-button {
 		background-color: transparent;
 
-		&:after {
-			content: "";
-			display: inline-block;
-			vertical-align: middle;
-			width: 0;
-			height: 0;
-			border-top: 0.4em solid transparent;
-			border-bottom: 0.4em solid transparent;
-			border-left: 0.45em solid white;
-			margin-left: 0.33em;
-		}
+		//&:after {
+		//	content: "";
+		//	display: inline-block;
+		//	vertical-align: middle;
+		//	width: 0;
+		//	height: 0;
+		//	border-top: 0.4em solid transparent;
+		//	border-bottom: 0.4em solid transparent;
+		//	border-left: 0.45em solid white;
+		//	margin-left: 0.33em;
+		//}
 	}
 
 	.close-button {
@@ -240,6 +240,7 @@ scroll-capture {
 			border-left: 0.4em solid transparent;
 			border-right: 0.4em solid transparent;
 			border-top: 0.45em solid #fff;
+			pointer-events: none;
 		}
 
 		select {
