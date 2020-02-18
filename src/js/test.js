@@ -30,7 +30,9 @@ export default class Test extends App {
 			}
 			let point = new Point(touch.pageX, touch.pageY);
 			console.log("specialButton click", point);
-		})
+		});
+
+		this.resizeHandler();
 	}
 
 	clearCanvas() {

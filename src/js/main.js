@@ -52,6 +52,7 @@ export default class Main extends App {
 	}
 
 	show() {
+		this.resizeHandler();
 		this.appendChild(this.scrollCapture.element);
 	}
 

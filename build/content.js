@@ -745,7 +745,7 @@ function () {
 var Style = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(15);
+var tsunami_await = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
 var ArrayData = __webpack_require__(5);
@@ -925,14 +925,6 @@ function (_Branch) {
     UIComponent_classCallCheck(this, UIComponent);
 
     _this = UIComponent_possibleConstructorReturn(this, UIComponent_getPrototypeOf(UIComponent).call(this));
-
-    if (element) {
-      _this.debug = element.getAttribute("data-debug") == "true"; // this.style = new Style(element.style);
-
-      _this.doChildrenAnimationFrame = element.getAttribute("data-children-animation-frame") == "true";
-      _this.alsoShowChildren = element.getAttribute("data-also-show-children") == "true";
-    }
-
     _this.element = element;
     _this.calculateGlobalPosition = false;
     _this.childrenSelector = ":scope > *";
@@ -940,6 +932,14 @@ function (_Branch) {
     _this.globalRectangle = new Rectangle["a" /* default */]();
     _this.windowSize = {};
     _this.attributes = {};
+
+    if (_this.element) {
+      _this.debug = _this.element.getAttribute("data-debug") == "true";
+      _this.doChildrenAnimationFrame = _this.element.getAttribute("data-children-animation-frame") == "true"; // this.style = new Style(this.element.style);
+
+      _this.alsoShowChildren = _this.element.getAttribute("data-also-show-children") == "true";
+    }
+
     _this.modelChangeBind = _this.modelChange.bind(UIComponent_assertThisInitialized(_this));
     _this._scope = UIComponent_assertThisInitialized(_this);
     _this.showDuration = 0;
@@ -2129,7 +2129,7 @@ function (_Data) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2259,6 +2259,7 @@ function (_Data) {
 /* unused harmony export isMobile */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isTouch; });
 /* unused harmony export getCookie */
+/* unused harmony export serialize */
 /* unused harmony export getSearchParams */
 /* unused harmony export getRect */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return localToGlobal; });
@@ -2296,6 +2297,17 @@ function getCookie(cname) {
   }
 
   return "";
+}
+function serialize(obj) {
+  var str = [];
+
+  for (var p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  }
+
+  return str.join("&");
 }
 function getSearchParams(url, dontDecodeURI) {
   var obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -2588,7 +2600,7 @@ clock.start();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BooleanData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3008,296 +3020,6 @@ function () {
 
 /***/ }),
 /* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validation; });
-/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var Validation =
-/*#__PURE__*/
-function (_BooleanData) {
-  _inherits(Validation, _BooleanData);
-
-  function Validation(data) {
-    var _this;
-
-    var methods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    _classCallCheck(this, Validation);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Validation).call(this));
-    _this.dataChangeBind = _this.validate.bind(_assertThisInitialized(_this));
-    _this.methods = methods;
-    _this.data = data;
-    return _this;
-  }
-
-  _createClass(Validation, [{
-    key: "validate",
-    value: function validate(event) {
-      var isValid = false;
-
-      if (this.data) {
-        for (var i = 0; i < this.methods.length; i++) {
-          var method = this.methods[i];
-          isValid = method(this.data.value);
-        }
-      }
-
-      this.value = isValid;
-    }
-  }, {
-    key: "addValidation",
-    value: function addValidation(method) {
-      this.methods.push(method);
-      this.validate();
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.methods = null;
-      this.data = null;
-      return _get(_getPrototypeOf(Validation.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "data",
-    get: function get() {
-      return this._data;
-    },
-    set: function set(value) {
-      if (this._data) {
-        this._data.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].CHANGE, this.dataChangeBind);
-      }
-
-      this._data = value;
-
-      if (this._data) {
-        this._data.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].CHANGE, this.dataChangeBind);
-      }
-
-      this.validate();
-    }
-  }]);
-
-  return Validation;
-}(_BooleanData__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tween; });
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
-/* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
-/* harmony import */ var _Clock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-var Tween =
-/*#__PURE__*/
-function (_EventDispatcher) {
-  _inherits(Tween, _EventDispatcher);
-
-  function Tween(startTime, duration, tweenProps, updateHandler, completeHandler) {
-    var _this;
-
-    _classCallCheck(this, Tween);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Tween).call(this));
-    _this.tick = _this.tick.bind(_assertThisInitialized(_this));
-    _this.startTime = startTime;
-    _this.duration = duration;
-    _this.tweenProps = tweenProps;
-    _this.updateHandler = updateHandler;
-    _this.completeHandler = completeHandler;
-    _this._startTime = startTime;
-    _this._duration = duration;
-    _this._tweenTime = 0;
-    _this.forceUpdate = false;
-    return _this;
-  }
-
-  _createClass(Tween, [{
-    key: "start",
-    value: function start() {
-      var tween = this;
-      var promise;
-
-      if (Promise) {
-        promise = new Promise(function (resolve, reject) {
-          var tweenComplete = function tweenComplete(event) {
-            tween.removeEventListener(Tween.COMPLETE, tweenComplete);
-            resolve(tween);
-          };
-
-          tween.addEventListener(Tween.COMPLETE, tweenComplete);
-        });
-      }
-
-      this.clockStartTime = NaN;
-      _Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].addEventListener(_Clock__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"].TICK, this.tick);
-      return promise;
-    }
-  }, {
-    key: "tick",
-    value: function tick(event) {
-      if (isNaN(this.clockStartTime)) {
-        this.clockStartTime = _Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].time;
-      }
-
-      var clockTime = (_Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].time - this.clockStartTime) / 1000;
-
-      if (clockTime >= this.startTime + this.duration) {
-        clockTime = this.startTime + this.duration;
-        this.time = clockTime;
-        this.stop();
-
-        if (this.completeHandler) {
-          this.completeHandler();
-        }
-
-        this.dispatchEvent({
-          type: Tween.COMPLETE,
-          target: this
-        });
-      } else {
-        this.time = clockTime;
-      }
-    }
-  }, {
-    key: "stop",
-    value: function stop() {
-      _Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].removeEventListener(_Clock__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"].TICK, this.tick);
-      this.dispatchEvent({
-        type: Tween.COMPLETE,
-        target: this
-      });
-    }
-  }, {
-    key: "startTime",
-    get: function get() {
-      return this._startTime;
-    },
-    set: function set(value) {
-      this._startTime = value;
-      this.dispatchEvent(new _events__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](Tween.CHANGE));
-    }
-  }, {
-    key: "duration",
-    get: function get() {
-      return this._duration;
-    },
-    set: function set(value) {
-      this._duration = value;
-      this.dispatchEvent(new _events__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](Tween.CHANGE));
-    }
-  }, {
-    key: "time",
-    get: function get() {
-      return this._time;
-    },
-    set: function set(value) {
-      value = Math.min(this.startTime + this.duration, value);
-      value = Math.max(0, value);
-      this._time = value;
-      var tweenTime = value - this.startTime;
-      tweenTime = Math.round(tweenTime * 1000) / 1000;
-      tweenTime = Math.max(tweenTime, 0);
-      tweenTime = Math.min(tweenTime, this.duration);
-
-      if (tweenTime != this._tweenTime || this.forceUpdate) {
-        this._tweenTime = tweenTime;
-
-        for (var i = 0; i < this.tweenProps.length; i++) {
-          var tweenProp = this.tweenProps[i];
-          tweenProp.calculate(tweenTime, this.duration);
-        }
-
-        var updateEvent = {
-          type: Tween.UPDATE,
-          target: this,
-          currentTarget: this
-        };
-
-        if (this.updateHandler) {
-          this.updateHandler(updateEvent);
-        }
-
-        this.dispatchEvent(updateEvent);
-      }
-    }
-  }], [{
-    key: "COMPLETE",
-    get: function get() {
-      return "complete";
-    }
-  }, {
-    key: "UPDATE",
-    get: function get() {
-      return "update";
-    }
-  }, {
-    key: "CHANGE",
-    get: function get() {
-      return "change";
-    }
-  }]);
-
-  return Tween;
-}(_EventDispatcher__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3757,7 +3479,340 @@ Easing.bounce = new Bounce();
 Easing.linear = new Linear();
 
 /***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TweenProperty; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var TweenProperty =
+/*#__PURE__*/
+function () {
+  function TweenProperty(target, name, startValue, endValue, ease) {
+    var roundingValue = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 10000;
+    var debug = arguments.length > 6 ? arguments[6] : undefined;
+
+    _classCallCheck(this, TweenProperty);
+
+    this.target = target;
+    this.name = name;
+    this.startValue = startValue;
+    this.endValue = endValue;
+    this.ease = ease;
+    this.roundingValue = roundingValue;
+    this.debug = debug;
+  }
+
+  _createClass(TweenProperty, [{
+    key: "calculate",
+    value: function calculate(time, duration) {
+      var value = this.ease(time, this.startValue, this.endValue - this.startValue, duration);
+      this.target[this.name] = Math.round(value * this.roundingValue) / this.roundingValue;
+    }
+  }]);
+
+  return TweenProperty;
+}();
+
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validation; });
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Validation =
+/*#__PURE__*/
+function (_BooleanData) {
+  _inherits(Validation, _BooleanData);
+
+  function Validation(data) {
+    var _this;
+
+    var methods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, Validation);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Validation).call(this));
+    _this.dataChangeBind = _this.validate.bind(_assertThisInitialized(_this));
+    _this.methods = methods;
+    _this.data = data;
+    return _this;
+  }
+
+  _createClass(Validation, [{
+    key: "validate",
+    value: function validate(event) {
+      var isValid = false;
+
+      if (this.data) {
+        for (var i = 0; i < this.methods.length; i++) {
+          var method = this.methods[i];
+          isValid = method(this.data.value);
+        }
+      }
+
+      this.value = isValid;
+    }
+  }, {
+    key: "addValidation",
+    value: function addValidation(method) {
+      this.methods.push(method);
+      this.validate();
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.methods = null;
+      this.data = null;
+      return _get(_getPrototypeOf(Validation.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "data",
+    get: function get() {
+      return this._data;
+    },
+    set: function set(value) {
+      if (this._data) {
+        this._data.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].CHANGE, this.dataChangeBind);
+      }
+
+      this._data = value;
+
+      if (this._data) {
+        this._data.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].CHANGE, this.dataChangeBind);
+      }
+
+      this.validate();
+    }
+  }]);
+
+  return Validation;
+}(_BooleanData__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
 /* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tween; });
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var _Clock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Tween =
+/*#__PURE__*/
+function (_EventDispatcher) {
+  _inherits(Tween, _EventDispatcher);
+
+  function Tween(startTime, duration, tweenProps, updateHandler, completeHandler) {
+    var _this;
+
+    _classCallCheck(this, Tween);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Tween).call(this));
+    _this.tick = _this.tick.bind(_assertThisInitialized(_this));
+    _this.startTime = startTime;
+    _this.duration = duration;
+    _this.tweenProps = tweenProps;
+    _this.updateHandler = updateHandler;
+    _this.completeHandler = completeHandler;
+    _this._startTime = startTime;
+    _this._duration = duration;
+    _this._tweenTime = 0;
+    _this.forceUpdate = false;
+    return _this;
+  }
+
+  _createClass(Tween, [{
+    key: "start",
+    value: function start() {
+      var tween = this;
+      var promise;
+
+      if (Promise) {
+        promise = new Promise(function (resolve, reject) {
+          var tweenComplete = function tweenComplete(event) {
+            tween.removeEventListener(Tween.COMPLETE, tweenComplete);
+            resolve(tween);
+          };
+
+          tween.addEventListener(Tween.COMPLETE, tweenComplete);
+        });
+      }
+
+      this.clockStartTime = NaN;
+      _Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].addEventListener(_Clock__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"].TICK, this.tick);
+      return promise;
+    }
+  }, {
+    key: "tick",
+    value: function tick(event) {
+      if (isNaN(this.clockStartTime)) {
+        this.clockStartTime = _Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].time;
+      }
+
+      var clockTime = (_Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].time - this.clockStartTime) / 1000;
+
+      if (clockTime >= this.startTime + this.duration) {
+        clockTime = this.startTime + this.duration;
+        this.time = clockTime;
+        this.stop();
+
+        if (this.completeHandler) {
+          this.completeHandler();
+        }
+
+        this.dispatchEvent({
+          type: Tween.COMPLETE,
+          target: this
+        });
+      } else {
+        this.time = clockTime;
+      }
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      _Clock__WEBPACK_IMPORTED_MODULE_2__[/* clock */ "a"].removeEventListener(_Clock__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"].TICK, this.tick);
+      this.dispatchEvent({
+        type: Tween.COMPLETE,
+        target: this
+      });
+    }
+  }, {
+    key: "startTime",
+    get: function get() {
+      return this._startTime;
+    },
+    set: function set(value) {
+      this._startTime = value;
+      this.dispatchEvent(new _events__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](Tween.CHANGE));
+    }
+  }, {
+    key: "duration",
+    get: function get() {
+      return this._duration;
+    },
+    set: function set(value) {
+      this._duration = value;
+      this.dispatchEvent(new _events__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"](Tween.CHANGE));
+    }
+  }, {
+    key: "time",
+    get: function get() {
+      return this._time;
+    },
+    set: function set(value) {
+      value = Math.min(this.startTime + this.duration, value);
+      value = Math.max(0, value);
+      this._time = value;
+      var tweenTime = value - this.startTime;
+      tweenTime = Math.round(tweenTime * 1000) / 1000;
+      tweenTime = Math.max(tweenTime, 0);
+      tweenTime = Math.min(tweenTime, this.duration);
+
+      if (tweenTime != this._tweenTime || this.forceUpdate) {
+        this._tweenTime = tweenTime;
+
+        for (var i = 0; i < this.tweenProps.length; i++) {
+          var tweenProp = this.tweenProps[i];
+          tweenProp.calculate(tweenTime, this.duration);
+        }
+
+        var updateEvent = {
+          type: Tween.UPDATE,
+          target: this,
+          currentTarget: this
+        };
+
+        if (this.updateHandler) {
+          this.updateHandler(updateEvent);
+        }
+
+        this.dispatchEvent(updateEvent);
+      }
+    }
+  }], [{
+    key: "COMPLETE",
+    get: function get() {
+      return "complete";
+    }
+  }, {
+    key: "UPDATE",
+    get: function get() {
+      return "update";
+    }
+  }, {
+    key: "CHANGE",
+    get: function get() {
+      return "change";
+    }
+  }]);
+
+  return Tween;
+}(_EventDispatcher__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3881,12 +3936,11 @@ function awaitTimeout() {
   }
 }
 function awaitCallback(target, method) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
+  var _arguments = arguments;
+  var promise = new Promise(function (resolve, reject) {
     target[method] = function () {
-      target[method] = function () {};
-
-      resolve(arguments);
+      delete target[method];
+      resolve(_arguments);
     };
   });
   return promise;
@@ -3895,8 +3949,7 @@ function awaitAnimationFrame() {
   var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
   total = Math.max(1, Math.round(total));
   var count = 0;
-  var promise;
-  promise = new Promise(function (resolve, reject) {
+  var promise = new Promise(function (resolve, reject) {
     function animationFrame() {
       count++;
 
@@ -3941,49 +3994,6 @@ function awaitVideoFirstFrame(video) {
     });
   });
 }
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TweenProperty; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var TweenProperty =
-/*#__PURE__*/
-function () {
-  function TweenProperty(target, name, startValue, endValue, ease) {
-    var roundingValue = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 10000;
-    var debug = arguments.length > 6 ? arguments[6] : undefined;
-
-    _classCallCheck(this, TweenProperty);
-
-    this.target = target;
-    this.name = name;
-    this.startValue = startValue;
-    this.endValue = endValue;
-    this.ease = ease;
-    this.roundingValue = roundingValue;
-    this.debug = debug;
-  }
-
-  _createClass(TweenProperty, [{
-    key: "calculate",
-    value: function calculate(time, duration) {
-      var value = this.ease(time, this.startValue, this.endValue - this.startValue, duration);
-      this.target[this.name] = Math.round(value * this.roundingValue) / this.roundingValue;
-    }
-  }]);
-
-  return TweenProperty;
-}();
-
-
 
 /***/ }),
 /* 17 */
@@ -4350,7 +4360,7 @@ function (_UIComponent) {
 /* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(12);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4669,13 +4679,15 @@ function (_UIComponent) {
       return _get(_getPrototypeOf(UIButton.prototype), "scope", this);
     },
     set: function set(value) {
+      var _this2 = this;
+
       _set(_getPrototypeOf(UIButton.prototype), "scope", value, this, true);
 
       var click = this.element.getAttribute("data-click");
 
       if (click) {
         this.onRelease = function (event) {
-          var method = Object(tsunami["d" /* evalProperty */])(click, value);
+          var method = Object(tsunami["d" /* evalProperty */])(click, _this2.scope);
           method(event);
         };
       }
@@ -4882,7 +4894,9 @@ function (_UIList) {
 
         this._model.value = this.dataProvider.find(this.getModel);
 
-        this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChangeBind);
+        if (this._model) {
+          this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChangeBind);
+        }
       }
     }
   }, {
@@ -4979,13 +4993,13 @@ function (_UIComponent) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Tween.js
-var Tween = __webpack_require__(13);
+var Tween = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/TweenProperty.js
-var TweenProperty = __webpack_require__(16);
+var TweenProperty = __webpack_require__(13);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Easing.js
-var Easing = __webpack_require__(14);
+var Easing = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./js/tsunami/utils/number.js
 // Returns a random number between min (inclusive) and max (exclusive)
@@ -5632,6 +5646,11 @@ function (_UIComponent) {
     _this.scrollingPanel = _this.element.querySelector(listSelector);
     _this.wheelDirection = 1;
     _this._autoScrollFactor = 0;
+    _this.infiniteLoop = {
+      x: false,
+      y: false
+    };
+    _this.loopPoint = new Point["a" /* default */](0, 0);
     _this.autoScrollSpeed = 1;
     _this.scrollTarget = new Point["a" /* default */]();
     _this.scroll = new Point["a" /* default */]();
@@ -5641,7 +5660,6 @@ function (_UIComponent) {
     _this.maxScroll = new Point["a" /* default */]();
     _this.size = new Rectangle["a" /* default */]();
     _this.panelSize = new Rectangle["a" /* default */]();
-    _this.loopScroll = new Point["a" /* default */](NaN, NaN);
     _this.startTouchDiff = new Point["a" /* default */]();
     _this.springiness = 0;
     _this.inertia = 1;
@@ -5685,6 +5703,7 @@ function (_UIComponent) {
     key: "wheelHandler",
     value: function wheelHandler(event) {
       event.preventDefault();
+      this.stopTween();
 
       if (this.maxScroll.y > 0) {
         this.scrollTarget.y += event.deltaY * this.wheelDirection;
@@ -5724,6 +5743,64 @@ function (_UIComponent) {
       }
 
       this._autoScrollFactor = 0;
+    }
+  }, {
+    key: "tweenTo",
+    value: function tweenTo() {
+      var targetX = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var targetY = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      this.stopTween();
+      this.tweenPromise = Promise.resolve();
+      var currentX = this.scroll.x;
+      var currentY = this.scroll.y;
+
+      if (this.infiniteLoop.x) {
+        if (this.panelSize.width > 0) {
+          while (currentX - targetX > this.panelSize.width / 2) {
+            currentX -= this.panelSize.width;
+          }
+
+          while (currentX - targetX < this.panelSize.width / -2) {
+            currentX += this.panelSize.width;
+          }
+        }
+      }
+
+      if (this.infiniteLoop.y) {
+        if (this.panelSize.height > 0) {
+          while (currentY - targetY > this.panelSize.height / 2) {
+            currentY -= this.panelSize.height;
+          }
+
+          while (currentY - targetY < this.panelSize.height / -2) {
+            currentY += this.panelSize.height;
+          }
+        }
+      }
+
+      var props = [];
+
+      if (currentX != targetX) {
+        props.push(new TweenProperty["a" /* default */](this.scrollTarget, "x", currentX, targetX, Easing["a" /* default */].cubic.easeOut, 100));
+      }
+
+      if (currentY != targetY) {
+        props.push(new TweenProperty["a" /* default */](this.scrollTarget, "y", currentY, targetY, Easing["a" /* default */].cubic.easeOut, 100));
+      }
+
+      if (props.length > 0) {
+        this.tween = new Tween["a" /* default */](0, 0.75, props);
+        this.tweenPromise = this.tween.start();
+      }
+
+      return this.tweenPromise;
+    }
+  }, {
+    key: "stopTween",
+    value: function stopTween() {
+      if (this.tween) {
+        this.tween.stop();
+      }
     }
   }, {
     key: "animationFrame",
@@ -5805,18 +5882,24 @@ function (_UIComponent) {
       this.speed.y = this.speed.y * this.springiness + (this.scrollTarget.y - this.scroll.y) / this.inertia;
       this.scroll.y += this.speed.y;
       this.scrollDiff = this.scroll.subtract(previousScroll);
-
-      if (!isNaN(this.loopScroll.x)) {
-        while (this.scroll.x > this.loopScroll.x) {
-          this.scroll.x -= this.loopScroll.x;
-          this.scrollTarget.x -= this.loopScroll.x;
-        }
-      }
-
       this.maxScrollReached.x.value = this.scroll.x >= this.maxScroll.x;
       this.maxScrollReached.y.value = this.scroll.y >= this.maxScroll.y;
       var x = Math.round(this.scroll.x * 10) / 10;
       var y = Math.round(this.scroll.y * 10) / 10;
+
+      if (this.infiniteLoop.y) {
+        var minY = 0 - this.loopPoint.y;
+        var maxY = this.panelSize.height - this.size.height + this.loopPoint.y;
+
+        while (y < minY) {
+          y += this.panelSize.height;
+        }
+
+        while (y > maxY) {
+          y -= this.panelSize.height;
+        }
+      }
+
       this.updateTransform(x, y);
     }
   }, {
@@ -5830,6 +5913,7 @@ function (_UIComponent) {
       UIScrollPane_get(UIScrollPane_getPrototypeOf(UIScrollPane.prototype), "windowResize", this).call(this, windowSize);
 
       this.updatePanelSize();
+      this.updateMaxScroll();
     }
   }, {
     key: "updatePanelSize",
@@ -5838,19 +5922,30 @@ function (_UIComponent) {
       this.size.height = this.rectangle.height;
       this.panelSize.width = this.scrollingPanel.offsetWidth;
       this.panelSize.height = this.scrollingPanel.offsetHeight;
-      this.updateMaxScroll();
     }
   }, {
     key: "updateMaxScroll",
     value: function updateMaxScroll() {
       this.maxScroll.x = Math.max(this.panelSize.width - this.size.width, 0);
       this.maxScroll.y = Math.max(this.panelSize.height - this.size.height, 0);
+
+      if (this.infiniteLoop.x) {
+        this.minScroll.x = Number.MAX_VALUE * -1;
+        this.maxScroll.x = Number.MAX_VALUE;
+      }
+
+      if (this.infiniteLoop.y) {
+        this.minScroll.y = Number.MAX_VALUE * -1;
+        this.maxScroll.y = Number.MAX_VALUE;
+      }
+
       this.element.setAttribute("data-scroll-x", this.maxScroll.x > 0);
       this.element.setAttribute("data-scroll-y", this.maxScroll.y > 0);
     }
   }, {
     key: "mousedownHandler",
     value: function mousedownHandler(event) {
+      this.stopTween();
       this.removeWheelHandler();
       this.momentum.x = this.momentum.y = 0;
       this.scrollTarget.copyFrom(this.scroll);
@@ -6187,9 +6282,9 @@ function App_createClass(Constructor, protoProps, staticProps) { if (protoProps)
 
 function App_possibleConstructorReturn(self, call) { if (call && (App_typeof(call) === "object" || typeof call === "function")) { return call; } return App_assertThisInitialized(self); }
 
-function App_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function App_getPrototypeOf(o) { App_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return App_getPrototypeOf(o); }
+
+function App_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function App_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) App_setPrototypeOf(subClass, superClass); }
 
@@ -6214,23 +6309,20 @@ function (_UIComponent) {
   App_inherits(App, _UIComponent);
 
   function App(element) {
+    var _this;
+
     App_classCallCheck(this, App);
 
-    return App_possibleConstructorReturn(this, App_getPrototypeOf(App).call(this, element));
+    _this = App_possibleConstructorReturn(this, App_getPrototypeOf(App).call(this, element));
+    Clock["a" /* clock */].addEventListener(Clock["b" /* default */].TICK, _this.clockTick.bind(App_assertThisInitialized(_this)));
+    window.addEventListener("resize", _this.resizeHandler.bind(App_assertThisInitialized(_this)));
+
+    _this.resizeHandler();
+
+    return _this;
   }
 
   App_createClass(App, [{
-    key: "init",
-    value: function init(debug) {
-      if (debug) {
-        console.log("App.init");
-      }
-
-      Clock["a" /* clock */].addEventListener(Clock["b" /* default */].TICK, this.clockTick.bind(this));
-      window.addEventListener("resize", this.resizeHandler.bind(this));
-      this.resizeHandler();
-    }
-  }, {
     key: "clockTick",
     value: function clockTick(event) {
       var animationData = {
@@ -6826,7 +6918,7 @@ var BooleanData = __webpack_require__(9);
 var NumberData = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(15);
+var tsunami_await = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./js/model/Action.js
 function Action_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6908,16 +7000,16 @@ function () {
 var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Easing.js
-var Easing = __webpack_require__(14);
+var Easing = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Tween.js
-var Tween = __webpack_require__(13);
+var Tween = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/TweenProperty.js
-var TweenProperty = __webpack_require__(16);
+var TweenProperty = __webpack_require__(13);
 
 // CONCATENATED MODULE: ./js/model/ActionTween.js
 function ActionTween_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTween_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTween_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTween_typeof(obj); }
@@ -56494,7 +56586,7 @@ function (_ActionTween) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/data/Validation.js
-var Validation = __webpack_require__(12);
+var Validation = __webpack_require__(14);
 
 // CONCATENATED MODULE: ./js/tsunami/data/StringData.js
 function StringData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { StringData_typeof = function _typeof(obj) { return typeof obj; }; } else { StringData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return StringData_typeof(obj); }
@@ -57202,13 +57294,9 @@ function main_createClass(Constructor, protoProps, staticProps) { if (protoProps
 
 function main_possibleConstructorReturn(self, call) { if (call && (main_typeof(call) === "object" || typeof call === "function")) { return call; } return main_assertThisInitialized(self); }
 
-function main_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function main_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { main_get = Reflect.get; } else { main_get = function _get(target, property, receiver) { var base = main_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return main_get(target, property, receiver || target); }
-
-function main_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = main_getPrototypeOf(object); if (object === null) break; } return object; }
-
 function main_getPrototypeOf(o) { main_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return main_getPrototypeOf(o); }
+
+function main_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function main_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) main_setPrototypeOf(subClass, superClass); }
 
@@ -57260,18 +57348,14 @@ function (_App) {
     _this.clear = _this.clear.bind(main_assertThisInitialized(_this));
     _this.show = _this.show.bind(main_assertThisInitialized(_this));
     _this.hide = _this.hide.bind(main_assertThisInitialized(_this));
+    _this.scrollCapture = Object(tsunami["f" /* importTemplate */])(ScrollCapture.template, main_assertThisInitialized(_this)).component;
+
+    _this.show();
+
     return _this;
   }
 
   main_createClass(Main, [{
-    key: "init",
-    value: function init() {
-      main_get(main_getPrototypeOf(Main.prototype), "init", this).call(this);
-
-      this.scrollCapture = Object(tsunami["f" /* importTemplate */])(ScrollCapture.template, this).component;
-      this.show();
-    }
-  }, {
     key: "hide",
     value: function hide() {
       this.removeChild(this.scrollCapture.element);
@@ -57279,6 +57363,7 @@ function (_App) {
   }, {
     key: "show",
     value: function show() {
+      this.resizeHandler();
       this.appendChild(this.scrollCapture.element);
     }
   }, {
@@ -57353,7 +57438,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   if (msg.txt === "execute") {
     if (!main) {
       main = new main_Main(document.body);
-      main.init();
     } else {
       main.show();
     }
