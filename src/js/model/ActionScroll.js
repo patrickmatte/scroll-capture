@@ -136,4 +136,9 @@ export default class ActionScroll extends ActionTween {
 		}, 33);
 	}
 
+	captureAtInit() {
+		super.captureAtInit();
+		this.capture();
+	}
+
 }

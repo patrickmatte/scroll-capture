@@ -144,6 +144,7 @@ scroll-capture {
 
 		.sc-label {
 			opacity: 0.5;
+			font-weight: 400;
 		}
 
 		&:hover {
@@ -288,7 +289,7 @@ scroll-capture {
 		padding: 1em 0;
 
 		& > * {
-			margin-right: 1em;
+			margin-right: 2em;
 		}
 
 		button {

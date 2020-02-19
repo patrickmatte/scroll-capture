@@ -8,7 +8,7 @@ export default class Action {
 		this.type = type;
 		this.name = name;
 		this.isCapturing = new BooleanData();
-		this.delay = new NumberData(0);
+		this.delay = new NumberData(1.5);
 		this.capture = this.capture.bind(this);
 	}
 
@@ -45,7 +45,11 @@ export default class Action {
 	}
 
 	capture() {
-		console.log("Action.capture");
+		// console.log("Action.capture");
+	}
+
+	captureAtInit() {
+		// console.log("Action.captureAtInit");
 	}
 
 }

@@ -36,7 +36,6 @@ export default class Test extends App {
 	}
 
 	clearCanvas() {
-		console.log("clearCanvas");
 		this.myCanvas.clearCanvas();
 	}
 

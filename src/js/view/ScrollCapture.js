@@ -29,11 +29,11 @@ ScrollCapture.template = `
 		</div>
 		<div class="sc-panel sc-fields sequencer" data-state="show" is="ui-component">
 			<div class="controls">
-				<button class="" is="ui-button" data-click="play">
-					<span class="sc-label">Play</span>
-				</button>
 				<button class="" is="ui-button" data-click="save">
 					<span class="sc-label">Save</span>
+				</button>
+				<button class="" is="ui-button" data-click="play">
+					<span class="sc-label">Play</span>
 				</button>
 				<button class="" is="ui-button" data-click="clear">
 					<span class="sc-label">Clear</span>
@@ -48,7 +48,7 @@ ScrollCapture.template = `
 									<span class="sc-label" is="ui-text">[[data.name]]</span>
 								</span>
 								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
-									<span class="sc-label">Capture value</span>
+									<span class="sc-label">Capture</span>
 								</button>
 							</div>
 						</div>
@@ -103,7 +103,7 @@ ScrollCapture.template = `
 									<span class="sc-label" is="ui-text">[[data.name]]</span>
 								</span>
 								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
-									<span class="sc-label">Capture value</span>
+									<span class="sc-label">Capture</span>
 								</button>
 							</div>
 						</div>
@@ -169,7 +169,7 @@ ScrollCapture.template = `
 									<span class="sc-label" is="ui-text">[[data.name]]</span>
 								</span>
 								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
-									<span class="sc-label">Capture value</span>
+									<span class="sc-label">Capture</span>
 								</button>
 							</div>
 						</div>

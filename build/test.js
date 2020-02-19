@@ -3303,68 +3303,56 @@ function (_Easing8) {
   _inherits(Elastic, _Easing8);
 
   function Elastic() {
-    var _this;
-
-    var s = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.70158;
-
     _classCallCheck(this, Elastic);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Elastic).call(this));
-    _this.s = s;
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Elastic).call(this));
   }
 
   _createClass(Elastic, [{
     key: "easeIn",
-    value: function easeIn(t, b, c, d) {
-      var s = this.s;
-      var p = 0;
-      var a = c;
-      if (t == 0) return b;
-      if ((t /= d) == 1) return b + c;
-      if (!p) p = d * .3;
+    value: function easeIn(t, b, c, d, a, p) {
+      if (t === 0) return b;
+      if ((t /= d) === 1) return b + c;
+      if (!p) p = d * 0.3;
+      var s;
 
-      if (a < Math.abs(c)) {
+      if (!a || a < Math.abs(c)) {
         a = c;
-        var s = p / 4;
-      } else var s = p / (2 * Math.PI) * Math.asin(c / a);
+        s = p / 4;
+      } else s = p / (2 * Math.PI) * Math.asin(c / a);
 
       return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
     }
   }, {
     key: "easeOut",
-    value: function easeOut(t, b, c, d) {
-      var s = this.s;
-      var p = 0;
-      var a = c;
-      if (t == 0) return b;
-      if ((t /= d) == 1) return b + c;
-      if (!p) p = d * .3;
+    value: function easeOut(t, b, c, d, a, p) {
+      if (t === 0) return b;
+      if ((t /= d) === 1) return b + c;
+      if (!p) p = d * 0.3;
+      var s;
 
-      if (a < Math.abs(c)) {
+      if (!a || a < Math.abs(c)) {
         a = c;
-        var s = p / 4;
-      } else var s = p / (2 * Math.PI) * Math.asin(c / a);
+        s = p / 4;
+      } else s = p / (2 * Math.PI) * Math.asin(c / a);
 
       return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
     }
   }, {
     key: "easeInOut",
-    value: function easeInOut(t, b, c, d) {
-      var s = this.s;
-      var p = 0;
-      var a = c;
-      if (t == 0) return b;
-      if ((t /= d / 2) == 2) return b + c;
-      if (!p) p = d * (.3 * 1.5);
+    value: function easeInOut(t, b, c, d, a, p) {
+      if (t === 0) return b;
+      if ((t /= d / 2) === 2) return b + c;
+      if (!p) p = d * (0.3 * 1.5);
+      var s;
 
-      if (a < Math.abs(c)) {
+      if (!a || a < Math.abs(c)) {
         a = c;
-        var s = p / 4;
-      } else var s = p / (2 * Math.PI) * Math.asin(c / a);
+        s = p / 4;
+      } else s = p / (2 * Math.PI) * Math.asin(c / a);
 
-      if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-      return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
+      if (t < 1) return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+      return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * 0.5 + c + b;
     }
   }]);
 
@@ -3376,15 +3364,15 @@ function (_Easing9) {
   _inherits(Back, _Easing9);
 
   function Back() {
-    var _this2;
+    var _this;
 
     var s = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.70158;
 
     _classCallCheck(this, Back);
 
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Back).call(this));
-    _this2.s = s;
-    return _this2;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Back).call(this));
+    _this.s = s;
+    return _this;
   }
 
   _createClass(Back, [{
@@ -6993,7 +6981,6 @@ function (_App) {
   test_createClass(Test, [{
     key: "clearCanvas",
     value: function clearCanvas() {
-      console.log("clearCanvas");
       this.myCanvas.clearCanvas();
     }
   }]);

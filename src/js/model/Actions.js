@@ -27,17 +27,15 @@ export default class Actions extends ArrayData {
 	}
 
 	addSelectedType() {
-		console.log("addSelectedType selectedItem.value", this.types.selectedItem.value);
 		if(!this.types.selectedItem.value) {
 			return;
 		}
 		let action = this.types.selectedItem.value.clone();
-		console.log("addSelectedType action", action);
 		if(action) {
 			this.push(action);
 		}
-
-		this.types.selectedItem.value = this.types.value[0];
+		action.captureAtInit();
+		// this.types.selectedItem.value = this.types.value[0];
 	}
 
 	serialize() {

@@ -65,6 +65,8 @@ export default class ActionSwipe extends ActionTween {
 	}
 
 	dispatchMouseEvent(eventType, offset) {
+		offset = Math.min(offset, 1);
+		offset = Math.max(offset, 0);
 		let point = this.curve.getPoint(offset);
 		point.x = point.x - window.scrollX;
 		point.y = point.y - window.scrollY;
