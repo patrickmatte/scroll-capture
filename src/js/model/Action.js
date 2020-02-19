@@ -7,9 +7,12 @@ export default class Action {
 	constructor(type = "Action", name = "Action") {
 		this.type = type;
 		this.name = name;
+		this.isCaptureable = new BooleanData();
 		this.isCapturing = new BooleanData();
 		this.delay = new NumberData(1.5);
 		this.capture = this.capture.bind(this);
+
+		this.array = [this];
 	}
 
 	clone() {

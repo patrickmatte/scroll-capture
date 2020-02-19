@@ -28,7 +28,7 @@ ScrollCapture.template = `
 			</div>
 		</div>
 		<div class="sc-panel sc-fields sequencer" data-state="show" is="ui-component">
-			<div class="controls">
+			<div class="controls" is="ui-component" data-actions-length="[[actions.length]]">
 				<button class="" is="ui-button" data-click="save">
 					<span class="sc-label">Save</span>
 				</button>
@@ -39,179 +39,140 @@ ScrollCapture.template = `
 					<span class="sc-label">Clear</span>
 				</button>
 			</div>
-			<actions-view data-provider="actions" is="ui-list">
-				<template data-type="ActionScroll">
+			<actions-view data-provider="actions" is="ui-list" data-actions-length="[[actions.length]]">
+				<template>
 					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
 							<div class="sc-tabs">
 								<span class="sc-tab">
 									<span class="sc-label" is="ui-text">[[data.name]]</span>
 								</span>
-								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
-									<span class="sc-label">Capture</span>
-								</button>
 							</div>
 						</div>
 						<div class="sc-fields">
-							<div class="sc-field">
-								<span class="sc-label">element:</span><input type="text" data-model="data.target" is="ui-input"/>
-							</div>
-<!--							<div class="sc-field">-->
-<!--								<span class="sc-label">units:</span>-->
-<!--								<div class="sc-select">-->
-<!--									<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>-->
-<!--								</div>-->
-<!--							</div>-->
-							<div class="sc-field-group">
-								<div class="sc-field">
-									<span class="sc-label">x:</span><input type="text" data-model="data.unitX" is="ui-input"/><span class="unit" is="ui-text">[[data.units.selectedItem]]</span>
-								</div>
-								<div class="sc-field">
-									<span class="sc-label">y:</span><input type="text" data-model="data.unitY" is="ui-input"/><span class="unit" is="ui-text">[[data.units.selectedItem]]</span>
-								</div>
-							</div>
-							<div class="sc-field-group">
-								<div class="sc-field">
-									<span class="sc-label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/><span class="unit">s</span>
-								</div>
-								<div class="sc-field">
-									<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
-								</div>
-							</div>
-							<div class="sc-field-group">
-								<div class="sc-field">
-									<span class="sc-label">easing:</span>
-									<div class="sc-select">
-										<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
-									</div>
-								</div>
-								<div class="sc-field">
-									<span class="sc-label">method:</span>
-									<div class="sc-select">
-										<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
-									</div>
-								</div>
-							</div>
-						</div>
-					</action-view>
-				</template>
-				<template data-type="ActionSwipe">
-					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
-						<div class="sc-title">
-							<div class="sc-tabs">
-								<span class="sc-tab">
-									<span class="sc-label" is="ui-text">[[data.name]]</span>
-								</span>
-								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
-									<span class="sc-label">Capture</span>
-								</button>
-							</div>
-						</div>
-						<div class="sc-fields">
-							<div class="sc-field-group">
-								<div class="points" data-provider="data.points" is="ui-list">
-									<template>
+							<div class="sc-fields-list" is="ui-list" data-provider="data.array">
+								<template data-type="ActionScroll">
+									<div>
+	<!--									<div class="sc-field">-->
+	<!--										<span class="sc-label">units:</span>-->
+	<!--										<div class="sc-select">-->
+	<!--											<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>-->
+	<!--										</div>-->
+	<!--									</div>-->
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label" is="ui-text">x<sup>[[index1]]</sup>:</span><input type="text" data-model="data.x" is="ui-input"/><span class="unit">px</span>
+												<span class="sc-label">left:</span><input type="text" data-model="data.unitX" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label" is="ui-text">y<sup>[[index1]]</sup>:</span><input type="text" data-model="data.y" is="ui-input"/><span class="unit">px</span>
+												<span class="sc-label">top:</span><input type="text" data-model="data.unitY" is="ui-input"/>
 											</div>
 										</div>
-									</template>
-								</div>
-							</div>
-							<div class="sc-field-group">
-								<div class="sc-field">
-									<span class="sc-label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/><span class="unit">s</span>
-								</div>
-								<div class="sc-field">
-									<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
-								</div>
-							</div>
-							<div class="sc-field-group">
-								<div class="sc-field">
-									<span class="sc-label">easing:</span>
-									<div class="sc-select">
-										<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
+											</div>
+											<div class="sc-field">
+												<span class="sc-label">element:</span><input type="text" data-model="data.target" is="ui-input"/>
+											</div>
+										</div>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">easing:</span>
+												<div class="sc-select">
+													<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
+												</div>
+											</div>
+											<div class="sc-field">
+												<span class="sc-label">method:</span>
+												<div class="sc-select">
+													<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>
-								<div class="sc-field">
-									<span class="sc-label">method:</span>
-									<div class="sc-select">
-										<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
+								</template>
+								<template data-type="ActionSwipe">
+									<div>
+										<div class="sc-field-group">
+											<div class="points" data-provider="data.points" is="ui-list">
+												<template>
+													<div class="sc-field-group">
+														<div class="sc-field">
+															<span class="sc-label" is="ui-text">pageX<sup>[[index1]]</sup>:</span><input type="text" data-model="data.x" is="ui-input"/>
+														</div>
+														<div class="sc-field">
+															<span class="sc-label" is="ui-text">pageY<sup>[[index1]]</sup>:</span><input type="text" data-model="data.y" is="ui-input"/>
+														</div>
+													</div>
+												</template>
+											</div>
+										</div>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
+											</div>
+											<div class="sc-field"></div>
+										</div>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">easing:</span>
+												<div class="sc-select">
+													<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
+												</div>
+											</div>
+											<div class="sc-field">
+												<span class="sc-label">method:</span>
+												<div class="sc-select">
+													<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-					</action-view>
-				</template>
-				<template data-type="ActionWait">
-					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
-						<div class="sc-title">
-								<span class="sc-tab">
-									<span class="sc-label" is="ui-text">[[data.name]]</span>
-								</span>
-						</div>
-						<div class="sc-fields">
-							<div class="sc-field">
-								<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
-							</div>
-						</div>
-					</action-view>
-				</template>
-				<template data-type="ActionMouseEvent">
-					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
-						<div class="sc-title">
-							<div class="sc-tabs">
-								<span class="sc-tab">
-									<span class="sc-label" is="ui-text">[[data.name]]</span>
-								</span>
-								<button class="sc-tab capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
-									<span class="sc-label">Capture</span>
-								</button>
-							</div>
-						</div>
-						<div class="sc-fields">
-							<div class="sc-field">
-								<span class="sc-label">type:</span>
-								<div class="sc-select">
-									<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
-								</div>
+								</template>
+								<template data-type="ActionMouseEvent">
+									<div>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">type:</span>
+												<div class="sc-select">
+													<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
+												</div>
+											</div>
+											<div class="sc-field"></div>
+										</div>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">pageX:</span>
+												<input type="text" data-model="data.x" is="ui-input"/>
+											</div>
+											<div class="sc-field">
+												<span class="sc-label">pageY:</span>
+												<input type="text" data-model="data.y" is="ui-input"/>
+											</div>
+										</div>
+									</div>
+								</template>
+								<template data-type="ActionWait">
+									<div></div>
+								</template>
+								<template data-type="ActionEval">
+									<div>
+										<div class="sc-field">
+											<span class="sc-label">code:</span>
+											<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
+										</div>
+									</div>
+								</template>
 							</div>
 							<div class="sc-field-group">
 								<div class="sc-field">
-									<span class="sc-label">pageX:</span>
-									<input type="text" data-model="data.x" is="ui-input"/>
-									<span class="unit">px</span>
+									<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/>
 								</div>
 								<div class="sc-field">
-									<span class="sc-label">pageY:</span>
-									<input type="text" data-model="data.y" is="ui-input"/>
-									<span class="unit">px</span>
+									<button class="capture-button" is="ui-button" data-click="data.capture" data-is-captureable="[[data.isCaptureable]]" data-is-capturing="[[data.isCapturing]]">
+										<span>Capture</span>
+									</button>
 								</div>
-							</div>
-							<div class="sc-field">
-								<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
-							</div>
-						</div>
-					</action-view>
-				</template>
-				<template data-type="ActionEval">
-					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
-						<div class="sc-title">
-								<span class="sc-tab">
-									<span class="sc-label" is="ui-text">[[data.name]]</span>
-								</span>
-						</div>
-						<div class="sc-fields">
-							<div class="sc-field">
-								<span class="sc-label">code:</span>
-								<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
-							</div>
-							<div class="sc-field">
-								<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/><span class="unit">s</span>
 							</div>
 						</div>
 					</action-view>

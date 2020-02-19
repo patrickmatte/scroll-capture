@@ -78,6 +78,7 @@ scroll-capture {
 		background-color: transparent;
 		margin: 0;
 		padding: 0;
+		font: inherit;
 		font-size: inherit;
 		//outline: none;
 
@@ -86,16 +87,12 @@ scroll-capture {
 		}
 	}
 
-	input, select {
-		font-size: inherit;
-	}
-
 	ul {
 		list-style-type: none;
 	}
 
 	sup {
-		vertical-align: top;
+		vertical-align: text-top;
 		top: auto;
 	}
 
@@ -104,7 +101,7 @@ scroll-capture {
 	}
 
 	button {
-		padding: 0.5em 1em;
+		//padding: 0.5em 1em;
 		font-weight: bold;
 		border-radius: 0.25em;
 		white-space: nowrap;
@@ -126,7 +123,7 @@ scroll-capture {
 	}
 
 	select, input, textarea {
-		font-size: inherit !important;
+		font-size: 1em !important;
 		margin-bottom: 0 !important;
 		margin-top: 0 !important;
 		background: rgba(0,0,0,0.1);
@@ -138,31 +135,30 @@ scroll-capture {
 		min-height: auto !important;
 	}
 
-
 	.capture-button {
 		outline: none;
+		font-weight: 400;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.5em 0;
 
-		.sc-label {
-			opacity: 0.5;
-			font-weight: 400;
-		}
-
-		&:hover {
-			.sc-label {
-				opacity: 1;
-			}
+		&[data-is-captureable="false"] {
+			opacity: 0.25;
+			pointer-events: none;
+			display: none;
 		}
 
 		&:after {
 			content: "";
 			position: relative;
 			display: inline-block;
+			font-size: 0.8em;
 			width: 1em;
 			height: 1em;
 			border-radius: 100%;
-			background-color: rgba(0, 0, 0, 0.1);
-			margin-left: 0.33em;
+			margin-left: 0.4em;
 			vertical-align: middle;
+			background-color: rgba(255, 255, 255, 0.5);
 		}
 
 		&[data-is-capturing="true"] {
@@ -211,8 +207,11 @@ scroll-capture {
 		}
 	}
 
-	.sc-label, .unit {
+	.sc-field {
 		font-size: 1.2em;
+	}
+
+	.sc-label, .unit {
 		border: none;
 	}
 
@@ -286,7 +285,13 @@ scroll-capture {
 	}
 
 	.controls {
-		padding: 1em 0;
+		font-size: 1.2em;
+		margin-bottom: 1em;
+
+		&[data-actions-length="0"] {
+			opacity: 0.5;
+			pointer-events: none;
+		}
 
 		& > * {
 			margin-right: 2em;
@@ -360,6 +365,11 @@ scroll-capture {
 			}
 		}
 
+		.sc-action-fields {
+			padding: 1em;
+			border-radius: 0 0.25em 0.25em 0.25em;
+		}
+
 		.sc-fields {
 			padding: 1em;
 			background-color: rgba(255,255,255,0.1);
@@ -375,6 +385,10 @@ scroll-capture {
 			//	height: 1px;
 			//	background-color: rgba(255,255,255, 0.1);
 			//}
+		}
+
+		.sc-fields-list {
+			margin-bottom: 0.5em;
 		}
 
 		.sc-field-group {
@@ -415,7 +429,7 @@ scroll-capture {
 				flex-shrink: 0;
 				flex-grow: 0;
 				white-space: nowrap;
-				text-align: right;
+				text-align: left;
 				padding-right: 0.5em;
 			}
 
@@ -452,6 +466,10 @@ scroll-capture {
 		max-height: 50vh;
 		overscroll-behavior: contain;
 
+		&[data-actions-length="0"] {
+			display: none;
+		}
+
 		action-view {
 			display: block;
 
@@ -480,6 +498,7 @@ scroll-capture {
 		.add-button {
 			margin-left: 0.5em;
 			font-weight: 900;
+			padding: 0.5em 1em;
 			background-color: rgba(0,0,0,0.1);
 		}
 	}

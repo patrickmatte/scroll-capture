@@ -17,6 +17,7 @@ export default class ActionSwipe extends ActionTween {
 			points.push(new Vector2Data());
 		}
 		this.points.value = points;
+		this.isCaptureable.value = true;
 
 		this.captureDownHandler = this.captureDownHandler.bind(this);
 		this.captureUpHandler = this.captureUpHandler.bind(this);

@@ -15,6 +15,7 @@ export default class ActionScroll extends ActionTween {
 		this.unitY = new NumberData(y);
 		this.units = new ArrayData("%", "px");
 		this.units.selectedItem.value = units;
+		this.isCaptureable.value = true;
 	}
 
 	clone() {
@@ -135,7 +136,7 @@ export default class ActionScroll extends ActionTween {
 
 		setTimeout(()=> {
 			this.isCapturing.value = false;
-		}, 33);
+		}, 100);
 	}
 
 	captureAtInit() {

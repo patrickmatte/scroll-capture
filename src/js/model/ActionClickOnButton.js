@@ -6,6 +6,7 @@ export default class ActionClickOnButton extends Action {
 	constructor(cssSelector) {
 		super("ActionClickOnButton");
 		this.cssSelector = new StringData(cssSelector);
+		this.isCaptureable.value = true;
 	}
 
 	trigger() {
