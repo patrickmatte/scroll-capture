@@ -506,6 +506,19 @@ function () {
       return new Point(this.x - p.x, this.y - p.y);
     }
   }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        x: this.x,
+        y: this.y
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.copyFrom(obj);
+    }
+  }, {
     key: "toString",
     value: function toString() {
       return "[Point" + " x=" + this.x + " y=" + this.y + "]";
@@ -6975,13 +6988,11 @@ function () {
     }
   }, {
     key: "capture",
-    value: function capture() {
-      console.log("Action.capture");
+    value: function capture() {// console.log("Action.capture");
     }
   }, {
     key: "captureAtInit",
-    value: function captureAtInit() {
-      console.log("Action.captureAtInit");
+    value: function captureAtInit() {// console.log("Action.captureAtInit");
     }
   }]);
 
@@ -56847,45 +56858,45 @@ function (_ActionTween) {
       var _this2 = this;
 
       this.isCapturing.value = true;
+      var scroll = new Point["a" /* default */]();
+      var maxScroll = new Point["a" /* default */]();
+
+      switch (this.target.value) {
+        case "window":
+          scroll.x = window.scrollX;
+          scroll.y = window.scrollY;
+          maxScroll.x = document.body.offsetWidth - window.innerWidth;
+          maxScroll.y = document.body.offsetHeight - window.innerHeight;
+          break;
+
+        default:
+          var element = document.querySelector(this.target.value);
+          scroll.x = element.scrollLeft;
+          scroll.y = element.scrollTop;
+          maxScroll.x = element.scrollWidth - element.clientWidth;
+          maxScroll.y = element.scrollHeight - element.clientHeight;
+          break;
+      }
+
+      var unit = new Point["a" /* default */]();
+
+      switch (this.units.selectedItem.value) {
+        case "px":
+          unit.x = scroll.x;
+          unit.y = scroll.y;
+          break;
+
+        case "%":
+          unit.x = Math.round(scroll.x / maxScroll.x * 100);
+          unit.y = Math.round(scroll.y / maxScroll.y * 100);
+          break;
+      }
+
+      if (isNaN(unit.x)) unit.x = 0;
+      if (isNaN(unit.y)) unit.y = 0;
+      this.unitX.value = unit.x;
+      this.unitY.value = unit.y;
       setTimeout(function () {
-        var scroll = new Point["a" /* default */]();
-        var maxScroll = new Point["a" /* default */]();
-
-        switch (_this2.target.value) {
-          case "window":
-            scroll.x = window.scrollX;
-            scroll.y = window.scrollY;
-            maxScroll.x = document.body.offsetWidth - window.innerWidth;
-            maxScroll.y = document.body.offsetHeight - window.innerHeight;
-            break;
-
-          default:
-            var element = document.querySelector(_this2.target.value);
-            scroll.x = element.scrollLeft;
-            scroll.y = element.scrollTop;
-            maxScroll.x = element.scrollWidth - element.clientWidth;
-            maxScroll.y = element.scrollHeight - element.clientHeight;
-            break;
-        }
-
-        var unit = new Point["a" /* default */]();
-
-        switch (_this2.units.selectedItem.value) {
-          case "px":
-            unit.x = scroll.x;
-            unit.y = scroll.y;
-            break;
-
-          case "%":
-            unit.x = Math.round(scroll.x / maxScroll.x * 100);
-            unit.y = Math.round(scroll.y / maxScroll.y * 100);
-            break;
-        }
-
-        if (isNaN(unit.x)) unit.x = 0;
-        if (isNaN(unit.y)) unit.y = 0;
-        _this2.unitX.value = unit.x;
-        _this2.unitY.value = unit.y;
         _this2.isCapturing.value = false;
       }, 33);
     }
@@ -57237,10 +57248,10 @@ function (_ArrayData) {
       var action = this.types.selectedItem.value.clone();
 
       if (action) {
+        action.captureAtInit();
         this.push(action);
-      }
+      } // this.types.selectedItem.value = this.types.value[0];
 
-      action.captureAtInit(); // this.types.selectedItem.value = this.types.value[0];
     }
   }, {
     key: "serialize",
@@ -57314,6 +57325,8 @@ function main_setPrototypeOf(o, p) { main_setPrototypeOf = Object.setPrototypeOf
 
 
 
+
+
 var main_Main =
 /*#__PURE__*/
 function (_App) {
@@ -57331,8 +57344,12 @@ function (_App) {
       var json = result.json;
 
       if (json) {
-        _this.actions.deserialize(JSON.parse(json));
+        _this.deserialize(JSON.parse(json));
       }
+
+      _this.actions.addEventListener(ArrayData["a" /* default */].ITEM_CHANGE, function (event) {
+        _this.save();
+      });
     }); // this.actions.value = [
     // 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
     // 	new ActionScroll("window", "px", 0, 500),
@@ -57366,10 +57383,23 @@ function (_App) {
       this.appendChild(this.scrollCapture.element);
     }
   }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.actions.deserialize(obj.actions);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var obj = {
+        actions: this.actions.serialize()
+      };
+      return obj;
+    }
+  }, {
     key: "save",
     value: function save() {
-      var data = this.actions.serialize();
-      var json = JSON.stringify(data);
+      var obj = this.serialize();
+      var json = JSON.stringify(obj);
       chrome.storage.sync.set({
         json: json
       }, function () {// console.log(json);

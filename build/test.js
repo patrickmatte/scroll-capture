@@ -506,6 +506,19 @@ function () {
       return new Point(this.x - p.x, this.y - p.y);
     }
   }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        x: this.x,
+        y: this.y
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.copyFrom(obj);
+    }
+  }, {
     key: "toString",
     value: function toString() {
       return "[Point" + " x=" + this.x + " y=" + this.y + "]";

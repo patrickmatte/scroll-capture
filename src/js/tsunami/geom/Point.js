@@ -88,6 +88,14 @@ export default class Point {
 		return new Point(this.x - p.x, this.y - p.y);
 	}
 
+	serialize() {
+		return {x:this.x, y:this.y};
+	}
+
+	deserialize(obj) {
+		this.copyFrom(obj);
+	}
+
 	toString() {
 		return "[Point" + " x=" + this.x + " y=" + this.y + "]";
 	}

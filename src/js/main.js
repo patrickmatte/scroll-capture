@@ -10,6 +10,8 @@ import ActionMouseEvent from "./model/ActionMouseEvent";
 import ActionEval from "./model/ActionEval";
 import BooleanData from "./tsunami/data/BooleanData";
 import Vector2Data from "./tsunami/data/Vector2Data";
+import Data from "./tsunami/data/Data";
+import ArrayData from "./tsunami/data/ArrayData";
 
 export default class Main extends App {
 
@@ -22,9 +24,14 @@ export default class Main extends App {
 		chrome.storage.sync.get(["json"], (result) => {
 			let json = result.json;
 			if(json) {
-				this.actions.deserialize(JSON.parse(json));
+				this.deserialize(JSON.parse(json));
 			}
+
+			this.actions.addEventListener(ArrayData.ITEM_CHANGE, (event) => {
+				this.save();
+			});
 		});
+
 
 
 		// this.actions.value = [
@@ -44,7 +51,6 @@ export default class Main extends App {
 
 		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
 		this.show();
-
 	}
 
 	hide() {
@@ -56,9 +62,20 @@ export default class Main extends App {
 		this.appendChild(this.scrollCapture.element);
 	}
 
+	deserialize(obj) {
+		this.actions.deserialize(obj.actions);
+	}
+
+	serialize() {
+		let obj = {
+			actions:this.actions.serialize()
+		};
+		return obj;
+	}
+
 	save() {
-		let data = this.actions.serialize();
-		let json = JSON.stringify(data);
+		let obj = this.serialize();
+		let json = JSON.stringify(obj);
 		chrome.storage.sync.set({json:json}, () => {
 			// console.log(json);
 		});

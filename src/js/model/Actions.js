@@ -32,9 +32,9 @@ export default class Actions extends ArrayData {
 		}
 		let action = this.types.selectedItem.value.clone();
 		if(action) {
+			action.captureAtInit();
 			this.push(action);
 		}
-		action.captureAtInit();
 		// this.types.selectedItem.value = this.types.value[0];
 	}
 

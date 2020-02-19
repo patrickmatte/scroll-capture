@@ -98,40 +98,42 @@ export default class ActionScroll extends ActionTween {
 
 	capture() {
 		this.isCapturing.value = true;
-		setTimeout(()=> {
-			let scroll = new Point();
-			let maxScroll = new Point();
-			switch (this.target.value) {
-				case "window":
-					scroll.x = window.scrollX;
-					scroll.y = window.scrollY;
-					maxScroll.x = document.body.offsetWidth - window.innerWidth;
-					maxScroll.y = document.body.offsetHeight - window.innerHeight;
-					break;
-				default:
-					let element = document.querySelector(this.target.value);
-					scroll.x = element.scrollLeft;
-					scroll.y = element.scrollTop;
-					maxScroll.x = element.scrollWidth - element.clientWidth;
-					maxScroll.y = element.scrollHeight - element.clientHeight;
-					break;
-			}
-			let unit = new Point();
-			switch(this.units.selectedItem.value) {
-				case "px":
-					unit.x = scroll.x;
-					unit.y = scroll.y;
-					break;
-				case "%":
-					unit.x = Math.round(scroll.x / maxScroll.x * 100);
-					unit.y = Math.round(scroll.y / maxScroll.y * 100);
-					break;
-			}
-			if(isNaN(unit.x)) unit.x = 0;
-			if(isNaN(unit.y)) unit.y = 0;
 
-			this.unitX.value = unit.x;
-			this.unitY.value = unit.y;
+		let scroll = new Point();
+		let maxScroll = new Point();
+		switch (this.target.value) {
+			case "window":
+				scroll.x = window.scrollX;
+				scroll.y = window.scrollY;
+				maxScroll.x = document.body.offsetWidth - window.innerWidth;
+				maxScroll.y = document.body.offsetHeight - window.innerHeight;
+				break;
+			default:
+				let element = document.querySelector(this.target.value);
+				scroll.x = element.scrollLeft;
+				scroll.y = element.scrollTop;
+				maxScroll.x = element.scrollWidth - element.clientWidth;
+				maxScroll.y = element.scrollHeight - element.clientHeight;
+				break;
+		}
+		let unit = new Point();
+		switch(this.units.selectedItem.value) {
+			case "px":
+				unit.x = scroll.x;
+				unit.y = scroll.y;
+				break;
+			case "%":
+				unit.x = Math.round(scroll.x / maxScroll.x * 100);
+				unit.y = Math.round(scroll.y / maxScroll.y * 100);
+				break;
+		}
+		if(isNaN(unit.x)) unit.x = 0;
+		if(isNaN(unit.y)) unit.y = 0;
+
+		this.unitX.value = unit.x;
+		this.unitY.value = unit.y;
+
+		setTimeout(()=> {
 			this.isCapturing.value = false;
 		}, 33);
 	}
