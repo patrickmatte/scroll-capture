@@ -53,7 +53,7 @@ export default class UIList extends UIComponent {
 				if (match) this.dragIndex = index;
 				return match;
 			});
-			this.dragElementStartPos = localToGlobal(this.dragElement, this.element);
+			this.dragElementStartPos = new Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
 			this.dragElementsMinHeight = Number.MAX_VALUE;
 			this.children.map((child) => {
 				this.dragElementsMinHeight = Math.min(this.dragElementsMinHeight, child.component.rectangle.height);
@@ -89,15 +89,13 @@ export default class UIList extends UIComponent {
 			this.dataProvider.swap(this.dragIndex, index);
 
 			let oldPos = this.dragElementStartPos;
-			this.dragElementStartPos = localToGlobal(this.dragElement, this.element);
+			this.dragElementStartPos = new Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
 			let posDiff = this.dragElementStartPos.subtract(oldPos);
 			this.dragStartPoint = this.dragStartPoint.add(posDiff);
 
 			dragDiff = point.subtract(this.dragStartPoint);
 
 			this.dragIndex = index;
-
-			this.windowResize(this.windowSize);
 		}
 
 		this.dragElement.style.transform = "translate3d(" + dragDiff.x + "px, " + dragDiff.y + "px, 0px)";
@@ -239,6 +237,7 @@ export default class UIList extends UIComponent {
 	}
 
 	_providerSort(event) {
+		this._saveChildrenPositions();
 		let array = this.dataProvider.value;
 		for (let i = 0; i < array.length; i++ ) {
 			let model = array[i];
@@ -247,6 +246,9 @@ export default class UIList extends UIComponent {
 				this.element.appendChild(child);
 			}
 		}
+		this.windowResize(this.windowSize);
+		this._setChildrenTransform();
+		setTimeout(this._resetChildrenTransform.bind(this), 0);
 	}
 
 	getElementByModel(model) {
@@ -260,7 +262,31 @@ export default class UIList extends UIComponent {
 		return element;
 	}
 
+	_saveChildrenPositions() {
+		this.childrenPositions = [];
+		this.children.map((child) => {
+			this.childrenPositions.push({child:child, position:new Point(child.offsetLeft, child.offsetTop)});
+		});
+	}
+
+	_setChildrenTransform() {
+		this.childrenPositions.map((obj, index) => {
+			let newPosition = new Point(obj.child.offsetLeft, obj.child.offsetTop);
+			let offset = obj.position.subtract(newPosition);
+			obj.child.classList.remove("smooth-transform");
+			obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y  + "px, 0px)";
+		});
+	}
+
+	_resetChildrenTransform() {
+		this.children.map((child, index) => {
+			child.classList.add("smooth-transform");
+			child.style.transform = "translate3d(0px, 0px, 0px)";
+		});
+	}
+
 	destroy() {
+		this.childrenPositions = null;
 		this.dataProvider = null;
 		super.destroy();
 	}

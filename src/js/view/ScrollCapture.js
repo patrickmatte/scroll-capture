@@ -89,7 +89,7 @@ ScrollCapture.template = `
 			</div>
 			<actions-view data-provider="actions" is="ui-list" data-actions-length="[[actions.length]]">
 				<template>
-					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
+					<action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
 							<div class="sc-drag-area ui-list-drag-area"></div>
 							<div class="sc-tabs">
@@ -102,12 +102,12 @@ ScrollCapture.template = `
 							<div class="sc-fields-list" is="ui-list" data-provider="data.array">
 								<template data-type="ActionScroll">
 									<div>
-	<!--									<div class="sc-field">-->
-	<!--										<span class="sc-label">units:</span>-->
-	<!--										<div class="sc-select">-->
-	<!--											<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>-->
-	<!--										</div>-->
-	<!--									</div>-->
+<!--										<div class="sc-field">-->
+<!--											<span class="sc-label">units:</span>-->
+<!--											<div class="sc-select">-->
+<!--												<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>-->
+<!--											</div>-->
+<!--										</div>-->
 										<div class="sc-field-group">
 											<div class="sc-field">
 												<span class="sc-label">left:</span><input type="text" data-model="data.unitX" is="ui-input"/>

@@ -135,6 +135,21 @@ scroll-capture {
 		min-height: auto !important;
 	}
 
+	.ui-list-element {
+		&.smooth-transform {
+			transition: transform 0.3s ease 0s;
+			&.is-dragged {
+				transition: transform 0s ease 0s;
+			}
+		}
+	}
+
+	.ui-list-drag-area {
+		> * {
+			pointer-events: none;
+		}
+	}
+
 	.capture-button {
 		outline: none;
 		font-weight: 400;

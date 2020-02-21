@@ -152,11 +152,9 @@ export default class UIComponent extends Branch {
 		}
 		let children = this.children;
 		if (index > children.length - 1) {
-			console.log("afterChildren");
 			this.appendChild(child);
 		} else {
 			let beforeChild = children[index];
-			console.log("beforeChild", beforeChild);
 			this.insertBefore(child, beforeChild);
 		}
 	}

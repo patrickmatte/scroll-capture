@@ -186,7 +186,7 @@ function (_EventDispatcher) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
 /* unused harmony export createCustomEvent */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
-/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -289,6 +289,166 @@ function () {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./js/tsunami/geom/math.js
+function math_lerp(a, b, t) {
+  return a + t * (b - a); // return a(1-t) + bt
+}
+// CONCATENATED MODULE: ./js/tsunami/geom/Point.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Point_Point; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Point_Point =
+/*#__PURE__*/
+function () {
+  function Point() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    _classCallCheck(this, Point);
+
+    this.x = x;
+    this.y = y;
+  }
+
+  _createClass(Point, [{
+    key: "add",
+    value: function add(p) {
+      return new Point(this.x + p.x, this.y + p.y);
+    }
+  }, {
+    key: "abs",
+    value: function abs() {
+      return new Point(Math.abs(this.x), Math.abs(this.y));
+    }
+  }, {
+    key: "clamp",
+    value: function clamp(minX, maxX, minY, maxY) {
+      this.clampX(minX, maxX);
+      this.clampY(minY, maxY);
+    }
+  }, {
+    key: "clampX",
+    value: function clampX(min, max) {
+      this.x = Math.max(this.x, min);
+      this.x = Math.min(this.x, max);
+    }
+  }, {
+    key: "clampY",
+    value: function clampY(min, max) {
+      this.y = Math.max(this.y, min);
+      this.y = Math.min(this.y, max);
+    }
+  }, {
+    key: "copyFrom",
+    value: function copyFrom(p) {
+      this.x = p.x;
+      this.y = p.y;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Point(this.x, this.y);
+    }
+  }, {
+    key: "equals",
+    value: function equals(point) {
+      return this.x == point.x && this.y == point.y;
+    }
+  }, {
+    key: "divide",
+    value: function divide(p) {
+      return new Point(this.x / p.x, this.y / p.y);
+    }
+  }, {
+    key: "divideScalar",
+    value: function divideScalar(scalar) {
+      return new Point(this.x / scalar, this.y / scalar);
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(p) {
+      return new Point(this.x * p.x, this.y * p.y);
+    }
+  }, {
+    key: "multiplyScalar",
+    value: function multiplyScalar(scalar) {
+      return new Point(this.x * scalar, this.y * scalar);
+    }
+  }, {
+    key: "set",
+    value: function set(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract(p) {
+      return new Point(this.x - p.x, this.y - p.y);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        x: this.x,
+        y: this.y
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.copyFrom(obj);
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Point" + " x=" + this.x + " y=" + this.y + "]";
+    }
+  }, {
+    key: "magnitude",
+    get: function get() {
+      return Point.distance(this);
+    }
+  }], [{
+    key: "lerp",
+    value: function lerp(p0, p1, t) {
+      return new Point(math_lerp(p0.x, p1.x, t), math_lerp(p0.y, p1.y, t));
+    }
+  }, {
+    key: "distance",
+    value: function distance(p1) {
+      var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
+      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+    }
+  }, {
+    key: "polar",
+    value: function polar(len, radians) {
+      return new Point(len * Math.cos(radians), len * Math.sin(radians));
+    }
+  }, {
+    key: "getAngle",
+    value: function getAngle(point) {
+      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
+      return Math.atan2(point.y - center.y, point.x - center.x);
+    }
+  }]);
+
+  return Point;
+}();
+
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -507,173 +667,13 @@ function getAllObjects(parent, array) {
 }
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// CONCATENATED MODULE: ./js/tsunami/geom/math.js
-function math_lerp(a, b, t) {
-  return a + t * (b - a); // return a(1-t) + bt
-}
-// CONCATENATED MODULE: ./js/tsunami/geom/Point.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Point_Point; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Point_Point =
-/*#__PURE__*/
-function () {
-  function Point() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    _classCallCheck(this, Point);
-
-    this.x = x;
-    this.y = y;
-  }
-
-  _createClass(Point, [{
-    key: "add",
-    value: function add(p) {
-      return new Point(this.x + p.x, this.y + p.y);
-    }
-  }, {
-    key: "abs",
-    value: function abs() {
-      return new Point(Math.abs(this.x), Math.abs(this.y));
-    }
-  }, {
-    key: "clamp",
-    value: function clamp(minX, maxX, minY, maxY) {
-      this.clampX(minX, maxX);
-      this.clampY(minY, maxY);
-    }
-  }, {
-    key: "clampX",
-    value: function clampX(min, max) {
-      this.x = Math.max(this.x, min);
-      this.x = Math.min(this.x, max);
-    }
-  }, {
-    key: "clampY",
-    value: function clampY(min, max) {
-      this.y = Math.max(this.y, min);
-      this.y = Math.min(this.y, max);
-    }
-  }, {
-    key: "copyFrom",
-    value: function copyFrom(p) {
-      this.x = p.x;
-      this.y = p.y;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      return new Point(this.x, this.y);
-    }
-  }, {
-    key: "equals",
-    value: function equals(point) {
-      return this.x == point.x && this.y == point.y;
-    }
-  }, {
-    key: "divide",
-    value: function divide(p) {
-      return new Point(this.x / p.x, this.y / p.y);
-    }
-  }, {
-    key: "divideScalar",
-    value: function divideScalar(scalar) {
-      return new Point(this.x / scalar, this.y / scalar);
-    }
-  }, {
-    key: "multiply",
-    value: function multiply(p) {
-      return new Point(this.x * p.x, this.y * p.y);
-    }
-  }, {
-    key: "multiplyScalar",
-    value: function multiplyScalar(scalar) {
-      return new Point(this.x * scalar, this.y * scalar);
-    }
-  }, {
-    key: "set",
-    value: function set(x, y) {
-      this.x = x;
-      this.y = y;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract(p) {
-      return new Point(this.x - p.x, this.y - p.y);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      return {
-        x: this.x,
-        y: this.y
-      };
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(obj) {
-      this.copyFrom(obj);
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[Point" + " x=" + this.x + " y=" + this.y + "]";
-    }
-  }, {
-    key: "magnitude",
-    get: function get() {
-      return Point.distance(this);
-    }
-  }], [{
-    key: "lerp",
-    value: function lerp(p0, p1, t) {
-      return new Point(math_lerp(p0.x, p1.x, t), math_lerp(p0.y, p1.y, t));
-    }
-  }, {
-    key: "distance",
-    value: function distance(p1) {
-      var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
-      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
-    }
-  }, {
-    key: "polar",
-    value: function polar(len, radians) {
-      return new Point(len * Math.cos(radians), len * Math.sin(radians));
-    }
-  }, {
-    key: "getAngle",
-    value: function getAngle(point) {
-      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
-      return Math.atan2(point.y - center.y, point.x - center.x);
-    }
-  }]);
-
-  return Point;
-}();
-
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(2);
+var tsunami = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
@@ -770,7 +770,7 @@ var ArrayDataOperation = __webpack_require__(18);
 var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(6);
+var tsunami_window = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./js/tsunami/EventDispatcher.js
 var EventDispatcher = __webpack_require__(11);
@@ -893,7 +893,7 @@ function (_EventDispatcher) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(3);
+var Point = __webpack_require__(2);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIComponent.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIComponent_UIComponent; });
@@ -1029,11 +1029,9 @@ function (_Branch) {
       var children = this.children;
 
       if (index > children.length - 1) {
-        console.log("afterChildren");
         this.appendChild(child);
       } else {
         var beforeChild = children[index];
-        console.log("beforeChild", beforeChild);
         this.insertBefore(child, beforeChild);
       }
     }
@@ -1564,7 +1562,7 @@ function (_Branch) {
 var Data = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(7);
+var NumberData = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
 var BooleanData = __webpack_require__(8);
@@ -1940,7 +1938,6 @@ function (_Data) {
   }, {
     key: "swap",
     value: function swap(index_A, index_B) {
-      console.log("swap", index_A, index_B);
       var temp = this._value[index_A];
       this._value[index_A] = this._value[index_B];
       this._value[index_B] = temp;
@@ -2161,6 +2158,135 @@ function (_Data) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var NumberData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(NumberData, _Data);
+
+  function NumberData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
+    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, NumberData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NumberData).call(this));
+    _this.modifiers = modifiers;
+    _this.value = value;
+    return _this;
+  }
+
+  _createClass(NumberData, [{
+    key: "add",
+    value: function add() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value + value;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value - value;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = 0;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.modifiers = [];
+
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return _get(_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      value = Number(value);
+
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value || this.forceChangeEvent) {
+        this._value = value;
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }], [{
+    key: "roundDecimal1",
+    value: function roundDecimal1(val) {
+      return Math.round(val * 10) / 10;
+    }
+  }, {
+    key: "roundDecimal2",
+    value: function roundDecimal2(val) {
+      return Math.round(val * 100) / 100;
+    }
+  }, {
+    key: "roundDecimal3",
+    value: function roundDecimal3(val) {
+      return Math.round(val * 1000) / 1000;
+    }
+  }]);
+
+  return NumberData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* unused harmony export isMobile */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isTouch; });
 /* unused harmony export getCookie */
@@ -2176,7 +2302,7 @@ function (_Data) {
 /* unused harmony export fileExists */
 /* unused harmony export getElementSelector */
 /* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 
 
 var isMobile = {
@@ -2395,135 +2521,6 @@ function getElementSelector(element) {
 }
 
 /***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var NumberData =
-/*#__PURE__*/
-function (_Data) {
-  _inherits(NumberData, _Data);
-
-  function NumberData() {
-    var _this;
-
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
-    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    _classCallCheck(this, NumberData);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(NumberData).call(this));
-    _this.modifiers = modifiers;
-    _this.value = value;
-    return _this;
-  }
-
-  _createClass(NumberData, [{
-    key: "add",
-    value: function add() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value + value;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value - value;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.value = 0;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.modifiers = [];
-
-      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-        this.validation.destroy();
-      }
-
-      this.validation = null;
-      return _get(_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      value = Number(value);
-
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value || this.forceChangeEvent) {
-        this._value = value;
-        this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }], [{
-    key: "roundDecimal1",
-    value: function roundDecimal1(val) {
-      return Math.round(val * 10) / 10;
-    }
-  }, {
-    key: "roundDecimal2",
-    value: function roundDecimal2(val) {
-      return Math.round(val * 100) / 100;
-    }
-  }, {
-    key: "roundDecimal3",
-    value: function roundDecimal3(val) {
-      return Math.round(val * 1000) / 1000;
-    }
-  }]);
-
-  return NumberData;
-}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2724,7 +2721,7 @@ clock.start();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rectangle; });
-/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4027,7 +4024,7 @@ function awaitVideoFirstFrame(video) {
 var UIComponent = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(2);
+var tsunami = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
 var ArrayData = __webpack_require__(5);
@@ -4094,10 +4091,10 @@ function () {
 
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(3);
+var Point = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(6);
+var tsunami_window = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIList.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIList_UIList; });
@@ -4195,7 +4192,7 @@ function (_UIComponent) {
           if (match) _this2.dragIndex = index;
           return match;
         });
-        this.dragElementStartPos = Object(tsunami_window["b" /* localToGlobal */])(this.dragElement, this.element);
+        this.dragElementStartPos = new Point["a" /* default */](this.dragElement.offsetLeft, this.dragElement.offsetTop);
         this.dragElementsMinHeight = Number.MAX_VALUE;
         this.children.map(function (child) {
           _this2.dragElementsMinHeight = Math.min(_this2.dragElementsMinHeight, child.component.rectangle.height);
@@ -4236,12 +4233,11 @@ function (_UIComponent) {
       if (index != this.dragIndex) {
         this.dataProvider.swap(this.dragIndex, index);
         var oldPos = this.dragElementStartPos;
-        this.dragElementStartPos = Object(tsunami_window["b" /* localToGlobal */])(this.dragElement, this.element);
+        this.dragElementStartPos = new Point["a" /* default */](this.dragElement.offsetLeft, this.dragElement.offsetTop);
         var posDiff = this.dragElementStartPos.subtract(oldPos);
         this.dragStartPoint = this.dragStartPoint.add(posDiff);
         dragDiff = point.subtract(this.dragStartPoint);
         this.dragIndex = index;
-        this.windowResize(this.windowSize);
       }
 
       this.dragElement.style.transform = "translate3d(" + dragDiff.x + "px, " + dragDiff.y + "px, 0px)";
@@ -4367,6 +4363,8 @@ function (_UIComponent) {
   }, {
     key: "_providerSort",
     value: function _providerSort(event) {
+      this._saveChildrenPositions();
+
       var array = this.dataProvider.value;
 
       for (var i = 0; i < array.length; i++) {
@@ -4377,6 +4375,12 @@ function (_UIComponent) {
           this.element.appendChild(child);
         }
       }
+
+      this.windowResize(this.windowSize);
+
+      this._setChildrenTransform();
+
+      setTimeout(this._resetChildrenTransform.bind(this), 0);
     }
   }, {
     key: "getElementByModel",
@@ -4393,8 +4397,42 @@ function (_UIComponent) {
       return element;
     }
   }, {
+    key: "_saveChildrenPositions",
+    value: function _saveChildrenPositions() {
+      var _this3 = this;
+
+      console.log("_saveChildrenPositions");
+      this.childrenPositions = [];
+      this.children.map(function (child) {
+        _this3.childrenPositions.push({
+          child: child,
+          position: new Point["a" /* default */](child.offsetLeft, child.offsetTop)
+        });
+      });
+    }
+  }, {
+    key: "_setChildrenTransform",
+    value: function _setChildrenTransform() {
+      this.childrenPositions.map(function (obj, index) {
+        var newPosition = new Point["a" /* default */](obj.child.offsetLeft, obj.child.offsetTop);
+        var offset = obj.position.subtract(newPosition);
+        console.log(index, "offset", offset);
+        obj.child.classList.remove("smooth-transform");
+        obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y + "px, 0px)";
+      });
+    }
+  }, {
+    key: "_resetChildrenTransform",
+    value: function _resetChildrenTransform() {
+      this.children.map(function (child, index) {
+        child.classList.add("smooth-transform");
+        child.style.transform = "translate3d(0px, 0px, 0px)";
+      });
+    }
+  }, {
     key: "destroy",
     value: function destroy() {
+      this.childrenPositions = null;
       this.dataProvider = null;
 
       _get(_getPrototypeOf(UIList.prototype), "destroy", this).call(this);
@@ -4472,7 +4510,7 @@ function (_UIComponent) {
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
-/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 /* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -5093,7 +5131,7 @@ var StyleUnits = function StyleUnits() {
 "use strict";
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(2);
+var tsunami = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
 var UIComponent = __webpack_require__(4);
@@ -6093,10 +6131,10 @@ function (_UIText) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(6);
+var tsunami_window = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(3);
+var Point = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
 var Rectangle = __webpack_require__(10);
@@ -6886,7 +6924,7 @@ module.exports = __webpack_require__(27);
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(2);
+var tsunami = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
 var UIComponent = __webpack_require__(4);
@@ -7007,7 +7045,7 @@ function (_UIComponent) {
 var Style = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(3);
+var Point = __webpack_require__(2);
 
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
@@ -7104,7 +7142,7 @@ function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
-ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">ScrollCapture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"save\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div>\n\t<!--\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n\t<!--\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units:</span>-->\n\t<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n\t<!--\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n\t<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t<!--\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">left:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">top:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageX<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageY<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
+ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">ScrollCapture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"save\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div>\n<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units:</span>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</div>-->\n<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">left:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">top:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageX<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageY<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
 
 tsunami["b" /* define */]("action-view", ActionView_ActionView);
 // EXTERNAL MODULE: ./js/tsunami/App.js + 10 modules
@@ -7114,7 +7152,7 @@ var App = __webpack_require__(20);
 var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(7);
+var NumberData = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
 var tsunami_await = __webpack_require__(16);
@@ -7733,7 +7771,7 @@ function (_Action) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(6);
+var tsunami_window = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./js/model/ActionMouseEvent.js
 function ActionMouseEvent_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionMouseEvent_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionMouseEvent_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionMouseEvent_typeof(obj); }
