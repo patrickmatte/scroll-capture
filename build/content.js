@@ -186,7 +186,7 @@ function (_EventDispatcher) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
 /* unused harmony export createCustomEvent */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
-/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -672,595 +672,6 @@ function () {
 
 "use strict";
 
-// EXTERNAL MODULE: ./js/tsunami/data/Data.js
-var Data = __webpack_require__(0);
-
-// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(6);
-
-// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(8);
-
-// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var ObjectData_ObjectData =
-/*#__PURE__*/
-function (_Data) {
-  _inherits(ObjectData, _Data);
-
-  function ObjectData(value) {
-    var _this;
-
-    _classCallCheck(this, ObjectData);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ObjectData).call(this));
-    _this.value = value;
-    return _this;
-  }
-
-  _createClass(ObjectData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "_deselectValue",
-    value: function _deselectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData["a" /* default */]) {
-            data.isSelected.value = false;
-          }
-        }
-      }
-    }
-  }, {
-    key: "_selectValue",
-    value: function _selectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData["a" /* default */]) {
-            data.isSelected.value = true;
-          }
-        }
-      }
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._deselectValue(this._value);
-
-        this._value = value;
-
-        this._selectValue(this._value);
-
-        this.dispatchEvent({
-          type: Data["a" /* default */].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return ObjectData;
-}(Data["a" /* default */]);
-
-
-// EXTERNAL MODULE: ./js/tsunami/events.js
-var events = __webpack_require__(1);
-
-// CONCATENATED MODULE: ./js/tsunami/data/ArrayData.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData_ArrayData; });
-function ArrayData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ArrayData_typeof = function _typeof(obj) { return typeof obj; }; } else { ArrayData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ArrayData_typeof(obj); }
-
-function ArrayData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ArrayData_possibleConstructorReturn(self, call) { if (call && (ArrayData_typeof(call) === "object" || typeof call === "function")) { return call; } return ArrayData_assertThisInitialized(self); }
-
-function ArrayData_getPrototypeOf(o) { ArrayData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ArrayData_getPrototypeOf(o); }
-
-function ArrayData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ArrayData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ArrayData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ArrayData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ArrayData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ArrayData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ArrayData_setPrototypeOf(subClass, superClass); }
-
-function ArrayData_setPrototypeOf(o, p) { ArrayData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ArrayData_setPrototypeOf(o, p); }
-
-
-
-
-
-
-var ArrayData_ArrayData =
-/*#__PURE__*/
-function (_Data) {
-  ArrayData_inherits(ArrayData, _Data);
-
-  ArrayData_createClass(ArrayData, null, [{
-    key: "shuffle",
-    value: function shuffle(o) {
-      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
-        ;
-      }
-
-      return o;
-    }
-  }, {
-    key: "nodeListToArray",
-    value: function nodeListToArray(nodeList) {
-      return Array.prototype.slice.call(nodeList); // let array = new Array();
-      // for (let i = 0; i < nodeList.length; i++) {
-      // 	array.push(nodeList.item(i));
-      // }
-      // return array;
-    }
-  }, {
-    key: "ITEM_CHANGE",
-    get: function get() {
-      return "item-change";
-    }
-  }]);
-
-  function ArrayData() {
-    var _this;
-
-    ArrayData_classCallCheck(this, ArrayData);
-
-    _this = ArrayData_possibleConstructorReturn(this, ArrayData_getPrototypeOf(ArrayData).call(this));
-    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(ArrayData_assertThisInitialized(_this));
-    _this.selectedItemChange = _this.selectedItemChange.bind(ArrayData_assertThisInitialized(_this));
-    _this.selectedIndexChange = _this.selectedIndexChange.bind(ArrayData_assertThisInitialized(_this));
-    _this.lastIndex = new NumberData["a" /* default */]();
-    _this.length = new NumberData["a" /* default */]();
-
-    _this.length.addEventListener(Data["a" /* default */].CHANGE, function () {
-      _this.lastIndex.value = _this.length.value - 1;
-    });
-
-    _this.length.value = arguments.length;
-    _this._value = [];
-    _this.selectedItem = new ObjectData_ObjectData();
-
-    _this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, _this.selectedItemChange);
-
-    _this.selectedIndex = new NumberData["a" /* default */]();
-
-    _this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, _this.selectedIndexChange);
-
-    _this.nextIndex = new NumberData["a" /* default */]();
-    _this.prevIndex = new NumberData["a" /* default */]();
-    _this.dataClass = Object;
-
-    _this.push.apply(ArrayData_assertThisInitialized(_this), arguments);
-
-    return _this;
-  }
-
-  ArrayData_createClass(ArrayData, [{
-    key: "selectedItemChange",
-    value: function selectedItemChange(event) {
-      this.selectedIndex.removeEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
-      var index = this.value.indexOf(this.selectedItem.value);
-      this.selectedIndex.value = index;
-      this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "setSelectedData",
-    value: function setSelectedData(value) {
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
-          this.previousSelectedItem.isSelectedItem.value = false;
-        }
-      }
-
-      if (this.selectedData) {
-        this.selectedData.copy(value);
-      }
-
-      this.previousSelectedItem = value;
-
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
-          this.previousSelectedItem.isSelectedItem.value = true;
-        }
-      }
-
-      var index = this.selectedIndex.value;
-      var nextIndex = index + 1;
-
-      if (nextIndex > this.value.length - 1) {
-        nextIndex = 0;
-      }
-
-      this.nextIndex.value = nextIndex;
-
-      if (this.nextData) {
-        this.nextData.copy(this.value[this.nextIndex.value]);
-      }
-
-      var prevIndex = index - 1;
-
-      if (prevIndex < 0) {
-        prevIndex = this.value.length - 1;
-      }
-
-      this.prevIndex.value = prevIndex;
-
-      if (this.prevData) {
-        this.prevData.copy(this.value[this.prevIndex.value]);
-      }
-    }
-  }, {
-    key: "selectedIndexChange",
-    value: function selectedIndexChange(event) {
-      var index = this.selectedIndex.value;
-      this.selectedItem.removeEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
-      this.selectedItem.value = this.value[index];
-      this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "dataItemChangeHandler",
-    value: function dataItemChangeHandler(e) {
-      var event = new events["a" /* default */](ArrayData.ITEM_CHANGE, this.value);
-      this.dispatchEvent(event);
-    }
-  }, {
-    key: "item",
-    value: function item(index) {
-      return this._value[index];
-    }
-  }, {
-    key: "indexOf",
-    value: function indexOf(searchElement, fromIndex) {
-      return this._value.indexOf(searchElement, fromIndex);
-    }
-  }, {
-    key: "map",
-    value: function map(callback) {
-      return this._value.map(callback);
-    }
-  }, {
-    key: "find",
-    value: function find(callback) {
-      return this._value.find(callback);
-    }
-  }, {
-    key: "findByKey",
-    value: function findByKey(key, value) {
-      var selected = this.find(function (element) {
-        return element[key].toString() == value.toString();
-      });
-      return selected;
-    }
-  }, {
-    key: "filter",
-    value: function filter(callback) {
-      return this._value.filter(callback);
-    }
-  }, {
-    key: "pop",
-    value: function pop() {
-      var item = this._value.pop();
-
-      if (item instanceof Data["a" /* default */]) {
-        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: this.value.length,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-      return item;
-    }
-  }, {
-    key: "push",
-    value: function push() {
-      var previousLength = this.value.length;
-
-      var length = this._value.push.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i = 0; _i < added.length; _i++) {
-        var item = added[_i];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: previousLength,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      return length;
-    }
-  }, {
-    key: "reverse",
-    value: function reverse() {
-      this._value.reverse();
-
-      this.dispatchEvent({
-        type: "reverse",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-    }
-  }, {
-    key: "shift",
-    value: function shift() {
-      var item = this._value.shift();
-
-      if (item instanceof Data["a" /* default */]) {
-        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: 0,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-      return item;
-    }
-  }, {
-    key: "sort",
-    value: function sort(compareFunction) {
-      this._value.sort(compareFunction);
-
-      this.dispatchEvent({
-        type: "sort",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-    }
-  }, {
-    key: "splice",
-    value: function splice() {
-      var elements = this._value.splice.apply(this._value, arguments);
-
-      for (var i = 0; i < elements.length; i++) {
-        var item = elements[i];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      var added = [];
-
-      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
-        added.push(arguments[_i2]);
-      }
-
-      this.length.value = this._value.length;
-
-      for (var _i3 = 0; _i3 < added.length; _i3++) {
-        var _item = added[_i3];
-
-        if (_item instanceof Data["a" /* default */]) {
-          _item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      var index = arguments[0];
-
-      if (elements.length > 0) {
-        this.dispatchEvent({
-          type: "remove",
-          value: elements,
-          index: index,
-          total: elements.length
-        });
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: index,
-          total: added.length
-        });
-      }
-
-      if (elements.length > 0 || added.length > 0) {
-        this.dispatchChangeEvent();
-      }
-
-      return elements;
-    }
-  }, {
-    key: "remove",
-    value: function remove(element) {
-      var index = this.indexOf(element);
-
-      if (index != -1) {
-        this.splice(index, 1);
-      }
-    }
-  }, {
-    key: "unshift",
-    value: function unshift() {
-      var length = this._value.unshift.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i4 = 0; _i4 < added.length; _i4++) {
-        var item = added[_i4];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: 0,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      return length;
-    }
-  }, {
-    key: "dispatchChangeEvent",
-    value: function dispatchChangeEvent() {
-      this.dataItemChangeHandler(null);
-      this.dispatchEvent({
-        type: Data["a" /* default */].CHANGE,
-        value: this._value
-      });
-    }
-  }, {
-    key: "includes",
-    value: function includes(element) {
-      var index = this.indexOf(element);
-      return index != -1;
-    }
-  }, {
-    key: "join",
-    value: function join() {
-      return this._value.join.apply(this._value, arguments);
-    }
-  }, {
-    key: "concat",
-    value: function concat() {
-      return this._value.concat.apply(this._value, arguments);
-    }
-  }, {
-    key: "slice",
-    value: function slice() {
-      return this._value.slice.apply(this._value, arguments);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var array = [];
-      this.map(function (obj) {
-        array.push(obj.serialize());
-      });
-      return array;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      var _this2 = this;
-
-      var array = [];
-      data.map(function (obj) {
-        var instance = new _this2.dataClass();
-        instance.deserialize(obj);
-        array.push(instance);
-      });
-      this.value = array;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      for (var i = 0; i < this._value.length; i++) {
-        var oldItem = this._value[i];
-
-        if (oldItem instanceof Data["a" /* default */]) {
-          oldItem.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (!value) {
-        value = [];
-      }
-
-      this._value = value;
-
-      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
-        var item = this._value[_i5];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "reset",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-    }
-  }]);
-
-  return ArrayData;
-}(Data["a" /* default */]);
-
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
 var tsunami = __webpack_require__(2);
 
@@ -1350,7 +761,7 @@ var Style = __webpack_require__(19);
 var tsunami_await = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
-var ArrayData = __webpack_require__(4);
+var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
 var ArrayDataOperation = __webpack_require__(18);
@@ -1359,7 +770,7 @@ var ArrayDataOperation = __webpack_require__(18);
 var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(7);
+var tsunami_window = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/EventDispatcher.js
 var EventDispatcher = __webpack_require__(11);
@@ -2144,13 +1555,21 @@ function (_Branch) {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+
+// EXTERNAL MODULE: ./js/tsunami/data/Data.js
+var Data = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
+var NumberData = __webpack_require__(7);
+
+// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
+var BooleanData = __webpack_require__(8);
+
+// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2163,10 +1582,6 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -2176,58 +1591,47 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var NumberData =
+var ObjectData_ObjectData =
 /*#__PURE__*/
 function (_Data) {
-  _inherits(NumberData, _Data);
+  _inherits(ObjectData, _Data);
 
-  function NumberData() {
+  function ObjectData(value) {
     var _this;
 
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
-    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    _classCallCheck(this, ObjectData);
 
-    _classCallCheck(this, NumberData);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(NumberData).call(this));
-    _this.modifiers = modifiers;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ObjectData).call(this));
     _this.value = value;
     return _this;
   }
 
-  _createClass(NumberData, [{
-    key: "add",
-    value: function add() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value + value;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value - value;
-    }
-  }, {
+  _createClass(ObjectData, [{
     key: "toString",
     value: function toString() {
       return this.value.toString();
     }
   }, {
-    key: "reset",
-    value: function reset() {
-      this.value = 0;
+    key: "_deselectValue",
+    value: function _deselectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof BooleanData["a" /* default */]) {
+            data.isSelected.value = false;
+          }
+        }
+      }
     }
   }, {
-    key: "destroy",
-    value: function destroy() {
-      this.modifiers = [];
-
-      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-        this.validation.destroy();
+    key: "_selectValue",
+    value: function _selectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof BooleanData["a" /* default */]) {
+            data.isSelected.value = true;
+          }
+        }
       }
-
-      this.validation = null;
-      return _get(_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
     }
   }, {
     key: "value",
@@ -2235,45 +1639,525 @@ function (_Data) {
       return this._value;
     },
     set: function set(value) {
-      value = Number(value);
+      if (value != this._value) {
+        this._deselectValue(this._value);
 
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value || this.forceChangeEvent) {
         this._value = value;
+
+        this._selectValue(this._value);
+
         this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          type: Data["a" /* default */].CHANGE,
           value: this._value
         });
       }
     }
-  }], [{
-    key: "roundDecimal1",
-    value: function roundDecimal1(val) {
-      return Math.round(val * 10) / 10;
+  }]);
+
+  return ObjectData;
+}(Data["a" /* default */]);
+
+
+// EXTERNAL MODULE: ./js/tsunami/events.js
+var events = __webpack_require__(1);
+
+// CONCATENATED MODULE: ./js/tsunami/data/ArrayData.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData_ArrayData; });
+function ArrayData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ArrayData_typeof = function _typeof(obj) { return typeof obj; }; } else { ArrayData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ArrayData_typeof(obj); }
+
+function ArrayData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ArrayData_possibleConstructorReturn(self, call) { if (call && (ArrayData_typeof(call) === "object" || typeof call === "function")) { return call; } return ArrayData_assertThisInitialized(self); }
+
+function ArrayData_getPrototypeOf(o) { ArrayData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ArrayData_getPrototypeOf(o); }
+
+function ArrayData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ArrayData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ArrayData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ArrayData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ArrayData_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ArrayData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ArrayData_setPrototypeOf(subClass, superClass); }
+
+function ArrayData_setPrototypeOf(o, p) { ArrayData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ArrayData_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var ArrayData_ArrayData =
+/*#__PURE__*/
+function (_Data) {
+  ArrayData_inherits(ArrayData, _Data);
+
+  ArrayData_createClass(ArrayData, null, [{
+    key: "shuffle",
+    value: function shuffle(o) {
+      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
+        ;
+      }
+
+      return o;
     }
   }, {
-    key: "roundDecimal2",
-    value: function roundDecimal2(val) {
-      return Math.round(val * 100) / 100;
+    key: "nodeListToArray",
+    value: function nodeListToArray(nodeList) {
+      return Array.prototype.slice.call(nodeList); // let array = new Array();
+      // for (let i = 0; i < nodeList.length; i++) {
+      // 	array.push(nodeList.item(i));
+      // }
+      // return array;
     }
   }, {
-    key: "roundDecimal3",
-    value: function roundDecimal3(val) {
-      return Math.round(val * 1000) / 1000;
+    key: "ITEM_CHANGE",
+    get: function get() {
+      return "item-change";
     }
   }]);
 
-  return NumberData;
-}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+  function ArrayData() {
+    var _this;
+
+    ArrayData_classCallCheck(this, ArrayData);
+
+    _this = ArrayData_possibleConstructorReturn(this, ArrayData_getPrototypeOf(ArrayData).call(this));
+    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(ArrayData_assertThisInitialized(_this));
+    _this.selectedItemChange = _this.selectedItemChange.bind(ArrayData_assertThisInitialized(_this));
+    _this.selectedIndexChange = _this.selectedIndexChange.bind(ArrayData_assertThisInitialized(_this));
+    _this.lastIndex = new NumberData["a" /* default */]();
+    _this.length = new NumberData["a" /* default */]();
+
+    _this.length.addEventListener(Data["a" /* default */].CHANGE, function () {
+      _this.lastIndex.value = _this.length.value - 1;
+    });
+
+    _this.length.value = arguments.length;
+    _this._value = [];
+    _this.selectedItem = new ObjectData_ObjectData();
+
+    _this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, _this.selectedItemChange);
+
+    _this.selectedIndex = new NumberData["a" /* default */]();
+
+    _this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, _this.selectedIndexChange);
+
+    _this.nextIndex = new NumberData["a" /* default */]();
+    _this.prevIndex = new NumberData["a" /* default */]();
+    _this.dataClass = Object;
+
+    _this.push.apply(ArrayData_assertThisInitialized(_this), arguments);
+
+    return _this;
+  }
+
+  ArrayData_createClass(ArrayData, [{
+    key: "selectedItemChange",
+    value: function selectedItemChange(event) {
+      this.selectedIndex.removeEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
+      var index = this.value.indexOf(this.selectedItem.value);
+      this.selectedIndex.value = index;
+      this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "setSelectedData",
+    value: function setSelectedData(value) {
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
+          this.previousSelectedItem.isSelectedItem.value = false;
+        }
+      }
+
+      if (this.selectedData) {
+        this.selectedData.copy(value);
+      }
+
+      this.previousSelectedItem = value;
+
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
+          this.previousSelectedItem.isSelectedItem.value = true;
+        }
+      }
+
+      var index = this.selectedIndex.value;
+      var nextIndex = index + 1;
+
+      if (nextIndex > this.value.length - 1) {
+        nextIndex = 0;
+      }
+
+      this.nextIndex.value = nextIndex;
+
+      if (this.nextData) {
+        this.nextData.copy(this.value[this.nextIndex.value]);
+      }
+
+      var prevIndex = index - 1;
+
+      if (prevIndex < 0) {
+        prevIndex = this.value.length - 1;
+      }
+
+      this.prevIndex.value = prevIndex;
+
+      if (this.prevData) {
+        this.prevData.copy(this.value[this.prevIndex.value]);
+      }
+    }
+  }, {
+    key: "selectedIndexChange",
+    value: function selectedIndexChange(event) {
+      var index = this.selectedIndex.value;
+      this.selectedItem.removeEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
+      this.selectedItem.value = this.value[index];
+      this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "dataItemChangeHandler",
+    value: function dataItemChangeHandler(e) {
+      var event = new events["a" /* default */](ArrayData.ITEM_CHANGE, this.value);
+      this.dispatchEvent(event);
+    }
+  }, {
+    key: "item",
+    value: function item(index) {
+      return this._value[index];
+    }
+  }, {
+    key: "indexOf",
+    value: function indexOf(searchElement, fromIndex) {
+      return this._value.indexOf(searchElement, fromIndex);
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      return this._value.map(callback);
+    }
+  }, {
+    key: "find",
+    value: function find(callback) {
+      return this._value.find(callback);
+    }
+  }, {
+    key: "findByKey",
+    value: function findByKey(key, value) {
+      var selected = this.find(function (element) {
+        return element[key].toString() == value.toString();
+      });
+      return selected;
+    }
+  }, {
+    key: "filter",
+    value: function filter(callback) {
+      return this._value.filter(callback);
+    }
+  }, {
+    key: "pop",
+    value: function pop() {
+      var item = this._value.pop();
+
+      if (item instanceof Data["a" /* default */]) {
+        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: this.value.length,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+      return item;
+    }
+  }, {
+    key: "push",
+    value: function push() {
+      var previousLength = this.value.length;
+
+      var length = this._value.push.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i = 0; _i < added.length; _i++) {
+        var item = added[_i];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: previousLength,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      return length;
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._value.reverse();
+
+      this.dispatchEvent({
+        type: "reverse",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }, {
+    key: "shift",
+    value: function shift() {
+      var item = this._value.shift();
+
+      if (item instanceof Data["a" /* default */]) {
+        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: 0,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+      return item;
+    }
+  }, {
+    key: "swap",
+    value: function swap(index_A, index_B) {
+      console.log("swap", index_A, index_B);
+      var temp = this._value[index_A];
+      this._value[index_A] = this._value[index_B];
+      this._value[index_B] = temp;
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }, {
+    key: "sort",
+    value: function sort(compareFunction) {
+      this._value.sort(compareFunction);
+
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }, {
+    key: "splice",
+    value: function splice() {
+      var elements = this._value.splice.apply(this._value, arguments);
+
+      for (var i = 0; i < elements.length; i++) {
+        var item = elements[i];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var added = [];
+
+      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
+        added.push(arguments[_i2]);
+      }
+
+      this.length.value = this._value.length;
+
+      for (var _i3 = 0; _i3 < added.length; _i3++) {
+        var _item = added[_i3];
+
+        if (_item instanceof Data["a" /* default */]) {
+          _item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var index = arguments[0];
+
+      if (elements.length > 0) {
+        this.dispatchEvent({
+          type: "remove",
+          value: elements,
+          index: index,
+          total: elements.length
+        });
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: index,
+          total: added.length
+        });
+      }
+
+      if (elements.length > 0 || added.length > 0) {
+        this.dispatchChangeEvent();
+      }
+
+      return elements;
+    }
+  }, {
+    key: "remove",
+    value: function remove(element) {
+      var index = this.indexOf(element);
+
+      if (index != -1) {
+        this.splice(index, 1);
+      }
+    }
+  }, {
+    key: "unshift",
+    value: function unshift() {
+      var length = this._value.unshift.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i4 = 0; _i4 < added.length; _i4++) {
+        var item = added[_i4];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: 0,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      return length;
+    }
+  }, {
+    key: "dispatchChangeEvent",
+    value: function dispatchChangeEvent() {
+      this.dataItemChangeHandler(null);
+      this.dispatchEvent({
+        type: Data["a" /* default */].CHANGE,
+        value: this._value
+      });
+    }
+  }, {
+    key: "includes",
+    value: function includes(element) {
+      var index = this.indexOf(element);
+      return index != -1;
+    }
+  }, {
+    key: "join",
+    value: function join() {
+      return this._value.join.apply(this._value, arguments);
+    }
+  }, {
+    key: "concat",
+    value: function concat() {
+      return this._value.concat.apply(this._value, arguments);
+    }
+  }, {
+    key: "slice",
+    value: function slice() {
+      return this._value.slice.apply(this._value, arguments);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var array = [];
+      this.map(function (obj) {
+        array.push(obj.serialize());
+      });
+      return array;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      var _this2 = this;
+
+      var array = [];
+      data.map(function (obj) {
+        var instance = new _this2.dataClass();
+        instance.deserialize(obj);
+        array.push(instance);
+      });
+      this.value = array;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      for (var i = 0; i < this._value.length; i++) {
+        var oldItem = this._value[i];
+
+        if (oldItem instanceof Data["a" /* default */]) {
+          oldItem.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (!value) {
+        value = [];
+      }
+
+      this._value = value;
+
+      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
+        var item = this._value[_i5];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "reset",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }]);
+
+  return ArrayData;
+}(Data["a" /* default */]);
 
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2509,6 +2393,135 @@ function getElementSelector(element) {
   var selector = names.join(" > ");
   return selector;
 }
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var NumberData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(NumberData, _Data);
+
+  function NumberData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
+    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, NumberData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NumberData).call(this));
+    _this.modifiers = modifiers;
+    _this.value = value;
+    return _this;
+  }
+
+  _createClass(NumberData, [{
+    key: "add",
+    value: function add() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value + value;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value - value;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = 0;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.modifiers = [];
+
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return _get(_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      value = Number(value);
+
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value || this.forceChangeEvent) {
+        this._value = value;
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }], [{
+    key: "roundDecimal1",
+    value: function roundDecimal1(val) {
+      return Math.round(val * 10) / 10;
+    }
+  }, {
+    key: "roundDecimal2",
+    value: function roundDecimal2(val) {
+      return Math.round(val * 100) / 100;
+    }
+  }, {
+    key: "roundDecimal3",
+    value: function roundDecimal3(val) {
+      return Math.round(val * 1000) / 1000;
+    }
+  }]);
+
+  return NumberData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
 
 /***/ }),
 /* 8 */
@@ -4011,13 +4024,13 @@ function awaitVideoFirstFrame(video) {
 "use strict";
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
-var UIComponent = __webpack_require__(5);
+var UIComponent = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
 var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
-var ArrayData = __webpack_require__(4);
+var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
@@ -4084,10 +4097,7 @@ function () {
 var Point = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(7);
-
-// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(6);
+var tsunami_window = __webpack_require__(6);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIList.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIList_UIList; });
@@ -4118,7 +4128,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -4183,34 +4192,16 @@ function (_UIComponent) {
         this.dragIndex = NaN;
         this.dragElement = this.children.find(function (child, index) {
           var match = event.target == child.querySelector(".ui-list-drag-area");
-
-          if (match) {
-            _this2.dragIndex = index;
-          }
-
+          if (match) _this2.dragIndex = index;
           return match;
         });
         this.dragElementStartPos = Object(tsunami_window["b" /* localToGlobal */])(this.dragElement, this.element);
-        console.log("this.dragElement", this.dragElement);
-        console.log("this.dragIndex", this.dragIndex); // let scope = component.scope;
-        // let template = this.getTemplateForModel(scope.data);
-        // if (!template) {
-        // 	throw new Error("UIList component for " + this.element.outerHTML + " returned no template");
-        // }
-        // // this.dragElement = importTemplate(template, scope);
-        // this.dragElement.classList.add("drag-element");
-        // this.dragElementStartPos = localToGlobal(component.element, this.element);
-        // this.dragElement.style.left = this.dragElementStartPos.x + "px";
-        // this.dragElement.style.top = this.dragElementStartPos.y + "px";
-        //
-
-        document.body.addEventListener(events["b" /* events */].mousemove, this._dragMove);
-        document.body.addEventListener(events["b" /* events */].mouseup, this._dragEnd); //
-
         this.dragElementsMinHeight = Number.MAX_VALUE;
         this.children.map(function (child) {
           _this2.dragElementsMinHeight = Math.min(_this2.dragElementsMinHeight, child.component.rectangle.height);
         });
+        document.body.addEventListener(events["b" /* events */].mousemove, this._dragMove);
+        document.body.addEventListener(events["b" /* events */].mouseup, this._dragEnd);
       }
     }
   }, {
@@ -4220,12 +4211,7 @@ function (_UIComponent) {
       var distance = Point["a" /* default */].distance(point, this.dragStartPoint);
 
       if (distance > 3) {
-        this.dragElement.classList.add("is-dragged"); // 	this.appendChild(this.dragElement);
-        // 	this.dragComponent.isDragging = true;
-        // 	if (this.isAdded) {
-        // 		UIComponent.callElementAdded(this.dragElement);
-        // 	}
-
+        this.dragElement.classList.add("is-dragged");
         document.body.removeEventListener(events["b" /* events */].mousemove, this._dragMove);
         document.body.addEventListener(events["b" /* events */].mousemove, this._dragElementMove);
       }
@@ -4248,38 +4234,13 @@ function (_UIComponent) {
       }
 
       if (index != this.dragIndex) {
-        console.log("index", index);
-        this.appendChildAt(this.dragElement, index);
+        this.dataProvider.swap(this.dragIndex, index);
         var oldPos = this.dragElementStartPos;
         this.dragElementStartPos = Object(tsunami_window["b" /* localToGlobal */])(this.dragElement, this.element);
         var posDiff = this.dragElementStartPos.subtract(oldPos);
         this.dragStartPoint = this.dragStartPoint.add(posDiff);
         dragDiff = point.subtract(this.dragStartPoint);
-
-        if (this._provider instanceof ArrayData["a" /* default */]) {
-          this._provider.removeEventListener("add", this._providerAdd);
-
-          this._provider.removeEventListener("remove", this._providerRemove);
-
-          this._provider.removeEventListener("reset", this._providerChange);
-
-          this._provider.removeEventListener("sort", this._providerSort);
-        }
-
-        var data = this.dataProvider.splice(this.dragIndex, 1)[0];
-        this.dataProvider.splice(index, 0, data);
         this.dragIndex = index;
-
-        if (this._provider instanceof ArrayData["a" /* default */]) {
-          this._provider.addEventListener("add", this._providerAdd);
-
-          this._provider.addEventListener("remove", this._providerRemove);
-
-          this._provider.addEventListener("reset", this._providerChange);
-
-          this._provider.addEventListener("sort", this._providerSort);
-        }
-
         this.windowResize(this.windowSize);
       }
 
@@ -4289,17 +4250,13 @@ function (_UIComponent) {
     key: "_dragEnd",
     value: function _dragEnd(event) {
       this.dragElement.classList.remove("is-dragged");
-      this.dragElement.style.transform = "translate3d(0px, 0px, 0px)"; // this.removeChild(this.dragElement);
-      // this.dragComponent.isDragging = false;
-
+      this.dragElement.style.transform = "translate3d(0px, 0px, 0px)";
       document.body.removeEventListener(events["b" /* events */].mousemove, this._dragMove);
       document.body.removeEventListener(events["b" /* events */].mousemove, this._dragElementMove);
-      document.body.removeEventListener(events["b" /* events */].mouseup, this._dragEnd); //
-
+      document.body.removeEventListener(events["b" /* events */].mouseup, this._dragEnd);
       this.dragStartPoint = null;
       this.dragIndex = NaN;
-      this.dragElement = null; // this.dragComponent = null;
-      // this.dragElementsMinHeight = NaN;
+      this.dragElement = null;
     }
   }, {
     key: "_removeElements",
@@ -4410,8 +4367,10 @@ function (_UIComponent) {
   }, {
     key: "_providerSort",
     value: function _providerSort(event) {
-      for (var i = 0; i < this.dataProvider.value.length; i++) {
-        var model = this.dataProvider.value[i];
+      var array = this.dataProvider.value;
+
+      for (var i = 0; i < array.length; i++) {
+        var model = array[i];
         var child = this.getElementByModel(model);
 
         if (child) {
@@ -4422,17 +4381,15 @@ function (_UIComponent) {
   }, {
     key: "getElementByModel",
     value: function getElementByModel(model) {
-      var element;
-      var children = this.children;
+      var element = this.children.find(function (child) {
+        var match = false;
 
-      for (var i = 0; i < children.length; i++) {
-        var child = children[i];
-
-        if (child.model == model) {
-          element = child;
+        if (child.component) {
+          match = child.component.model == model;
         }
-      }
 
+        return match;
+      });
       return element;
     }
   }, {
@@ -4513,7 +4470,7 @@ function (_UIComponent) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayDataOperation; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
 /* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14);
@@ -5139,7 +5096,7 @@ var StyleUnits = function StyleUnits() {
 var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
-var UIComponent = __webpack_require__(5);
+var UIComponent = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/events.js
 var events = __webpack_require__(1);
@@ -6136,7 +6093,7 @@ function (_UIText) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(7);
+var tsunami_window = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
 var Point = __webpack_require__(3);
@@ -6932,7 +6889,7 @@ __webpack_require__.r(__webpack_exports__);
 var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
-var UIComponent = __webpack_require__(5);
+var UIComponent = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/events.js
 var events = __webpack_require__(1);
@@ -7154,10 +7111,10 @@ tsunami["b" /* define */]("action-view", ActionView_ActionView);
 var App = __webpack_require__(20);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
-var ArrayData = __webpack_require__(4);
+var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(6);
+var NumberData = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
 var tsunami_await = __webpack_require__(16);
@@ -7776,7 +7733,7 @@ function (_Action) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(7);
+var tsunami_window = __webpack_require__(6);
 
 // CONCATENATED MODULE: ./js/model/ActionMouseEvent.js
 function ActionMouseEvent_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionMouseEvent_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionMouseEvent_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionMouseEvent_typeof(obj); }

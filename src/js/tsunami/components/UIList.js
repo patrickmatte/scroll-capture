@@ -6,7 +6,6 @@ import BaseEvent, {events} from "../events";
 import Scope from "../Scope";
 import Point from "../geom/Point";
 import {localToGlobal} from "../window";
-import NumberData from "../data/NumberData";
 
 export default class UIList extends UIComponent {
 
@@ -87,7 +86,8 @@ export default class UIList extends UIComponent {
 			}
 		}
 		if(index != this.dragIndex) {
-			this.appendChildAt(this.dragElement, index);
+			this.dataProvider.swap(this.dragIndex, index);
+
 			let oldPos = this.dragElementStartPos;
 			this.dragElementStartPos = localToGlobal(this.dragElement, this.element);
 			let posDiff = this.dragElementStartPos.subtract(oldPos);
@@ -95,24 +95,7 @@ export default class UIList extends UIComponent {
 
 			dragDiff = point.subtract(this.dragStartPoint);
 
-			if (this._provider instanceof ArrayData) {
-				this._provider.removeEventListener("add", this._providerAdd);
-				this._provider.removeEventListener("remove", this._providerRemove);
-				this._provider.removeEventListener("reset", this._providerChange);
-				this._provider.removeEventListener("sort", this._providerSort);
-			}
-
-			let data = this.dataProvider.splice(this.dragIndex, 1)[0];
-			this.dataProvider.splice(index, 0, data);
-
 			this.dragIndex = index;
-
-			if (this._provider instanceof ArrayData) {
-				this._provider.addEventListener("add", this._providerAdd);
-				this._provider.addEventListener("remove", this._providerRemove);
-				this._provider.addEventListener("reset", this._providerChange);
-				this._provider.addEventListener("sort", this._providerSort);
-			}
 
 			this.windowResize(this.windowSize);
 		}
@@ -123,18 +106,12 @@ export default class UIList extends UIComponent {
 	_dragEnd(event) {
 		this.dragElement.classList.remove("is-dragged");
 		this.dragElement.style.transform = "translate3d(0px, 0px, 0px)";
-
-		// this.removeChild(this.dragElement);
-		// this.dragComponent.isDragging = false;
 		document.body.removeEventListener(events.mousemove, this._dragMove);
 		document.body.removeEventListener(events.mousemove, this._dragElementMove);
 		document.body.removeEventListener(events.mouseup, this._dragEnd);
-		//
 		this.dragStartPoint = null;
 		this.dragIndex = NaN;
 		this.dragElement = null;
-		// this.dragComponent = null;
-		// this.dragElementsMinHeight = NaN;
 	}
 
 	get scope() {
@@ -262,8 +239,9 @@ export default class UIList extends UIComponent {
 	}
 
 	_providerSort(event) {
-		for (let i = 0; i < this.dataProvider.value.length; i++ ) {
-			let model = this.dataProvider.value[i];
+		let array = this.dataProvider.value;
+		for (let i = 0; i < array.length; i++ ) {
+			let model = array[i];
 			let child = this.getElementByModel(model);
 			if (child) {
 				this.element.appendChild(child);
@@ -272,14 +250,13 @@ export default class UIList extends UIComponent {
 	}
 
 	getElementByModel(model) {
-		let element;
-		let children = this.children;
-		for (let i = 0; i < children.length; i++) {
-			let child = children[i];
-			if (child.model == model) {
-				element = child;
+		let element = this.children.find((child) => {
+			let match = false;
+			if(child.component) {
+				match = (child.component.model == model);
 			}
-		}
+			return match;
+		});
 		return element;
 	}
 

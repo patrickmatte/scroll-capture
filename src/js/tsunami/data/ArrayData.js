@@ -207,6 +207,14 @@ export default class ArrayData extends Data {
 		return item;
 	}
 
+	swap(index_A, index_B) {
+		let temp = this._value[index_A];
+		this._value[index_A] = this._value[index_B];
+		this._value[index_B] = temp;
+		this.dispatchEvent({type:"sort", value:this._value});
+		this.dispatchChangeEvent();
+	}
+
 	sort(compareFunction) {
 		this._value.sort(compareFunction);
 		this.dispatchEvent({type:"sort", value:this._value});
