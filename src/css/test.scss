@@ -13,6 +13,7 @@ html {
 body {
 	background-color: #000000;
 	color: #ffffff;
+	overscroll-behavior: none;
 
 	&[is="test"] {
 		color: #000000;

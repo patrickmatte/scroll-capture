@@ -2,37 +2,42 @@ import * as tsunami from "./tsunami/tsunami";
 import {importTemplate} from "./tsunami/tsunami";
 import ScrollCapture from "./view/ScrollCapture";
 import App from "./tsunami/App";
-import ActionSwipe from "./model/ActionSwipe";
 import Actions from "./model/Actions";
-import ActionWait from "./model/ActionWait";
-import ActionScroll from "./model/ActionScroll";
-import ActionMouseEvent from "./model/ActionMouseEvent";
-import ActionEval from "./model/ActionEval";
 import BooleanData from "./tsunami/data/BooleanData";
-import Vector2Data from "./tsunami/data/Vector2Data";
 import Data from "./tsunami/data/Data";
-import ArrayData from "./tsunami/data/ArrayData";
+
+export let app;
 
 export default class Main extends App {
 
 	constructor(element) {
 		super(element);
 
+		app = this;
+
+		this.save = this.save.bind(this);
+		this.play = this.play.bind(this);
+		this.clear = this.clear.bind(this);
+		this.show = this.show.bind(this);
+		this.hide = this.hide.bind(this);
+
 		this.isCapturing = new BooleanData();
 		this.actions = new Actions();
 
+
 		chrome.storage.sync.get(["json"], (result) => {
+			this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
+
 			let json = result.json;
 			if(json) {
 				this.deserialize(JSON.parse(json));
 			}
-
-			this.actions.addEventListener(ArrayData.ITEM_CHANGE, (event) => {
+			this.actions.addEventListener(Data.CHANGE, (event) => {
 				this.save();
 			});
+
+			this.show();
 		});
-
-
 
 		// this.actions.value = [
 		// 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
@@ -43,14 +48,6 @@ export default class Main extends App {
 		// 	// new ActionMouseEvent("click", 0, 0),
 		// ];
 
-		this.save = this.save.bind(this);
-		this.play = this.play.bind(this);
-		this.clear = this.clear.bind(this);
-		this.show = this.show.bind(this);
-		this.hide = this.hide.bind(this);
-
-		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
-		this.show();
 	}
 
 	hide() {
@@ -64,11 +61,13 @@ export default class Main extends App {
 
 	deserialize(obj) {
 		this.actions.deserialize(obj.actions);
+		this.scrollCapture.deserialize(obj.scrollCapture);
 	}
 
 	serialize() {
 		let obj = {
-			actions:this.actions.serialize()
+			actions:this.actions.serialize(),
+			scrollCapture:this.scrollCapture.serialize()
 		};
 		return obj;
 	}

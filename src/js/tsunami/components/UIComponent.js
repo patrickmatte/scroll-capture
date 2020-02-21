@@ -147,11 +147,17 @@ export default class UIComponent extends Branch {
 	}
 
 	appendChildAt(child, index = 0) {
+    	if(child.parentNode == this.element) {
+    		this.element.removeChild(child);
+		}
 		let children = this.children;
-		if (index >= children.length) {
+		if (index > children.length - 1) {
+			console.log("afterChildren");
 			this.appendChild(child);
 		} else {
-			this.insertBefore(child, children[index]);
+			let beforeChild = children[index];
+			console.log("beforeChild", beforeChild);
+			this.insertBefore(child, beforeChild);
 		}
 	}
 
@@ -385,7 +391,7 @@ export default class UIComponent extends Branch {
 
 	windowResize(windowSize) {
 		this.windowSize = windowSize;
-		// this.rectangle = this.getRect();
+		this.rectangle = this.getRect();
 		this.rectangle = new Rectangle(this.element.offsetLeft, this.element.offsetTop, this.element.offsetWidth, this.element.offsetHeight);
 		if(this.calculateGlobalPosition) {
 			this.globalRectangle = this.rectangle.clone();

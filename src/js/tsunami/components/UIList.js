@@ -2,20 +2,31 @@ import UIComponent from "./UIComponent";
 import {destroyElements, evalProperty, importTemplate} from "../tsunami";
 import ArrayData from "../data/ArrayData";
 import Data from "../data/Data";
-import BaseEvent from "../events";
+import BaseEvent, {events} from "../events";
 import Scope from "../Scope";
+import Point from "../geom/Point";
+import {localToGlobal} from "../window";
+import NumberData from "../data/NumberData";
 
 export default class UIList extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		this.template = `<li><span is="ui-text">[[data]]</span></li>`;
-		this.templates = {};
-		this._provider = [];
+
+		this._dragStart = this._dragStart.bind(this);
+		this._dragMove = this._dragMove.bind(this);
+		this._dragElementMove = this._dragElementMove.bind(this);
+		this._dragEnd = this._dragEnd.bind(this);
 		this._providerChange = this._providerChange.bind(this);
 		this._providerAdd = this._providerAdd.bind(this);
 		this._providerRemove = this._providerRemove.bind(this);
 		this._providerSort = this._providerSort.bind(this);
+
+		this.dragIndex = NaN;
+
+		this.template = `<li><span is="ui-text">[[data]]</span></li>`;
+		this.templates = {};
+		this._provider = [];
 
 		let templates = [];
 		if(this.element) {
@@ -30,6 +41,100 @@ export default class UIList extends UIComponent {
 			let type = template.getAttribute("data-type") || "*";
 			this.templates[type] = template.innerHTML;
 		}
+
+		this.element.addEventListener(events.mousedown, this._dragStart);
+	}
+
+	_dragStart(event) {
+		if(event.target.classList.contains("ui-list-drag-area")) {
+			this.dragStartPoint = this.getTouchPoint(event);
+			this.dragIndex = NaN;
+			this.dragElement = this.children.find((child, index) => {
+				let match = (event.target == child.querySelector(".ui-list-drag-area"));
+				if (match) this.dragIndex = index;
+				return match;
+			});
+			this.dragElementStartPos = localToGlobal(this.dragElement, this.element);
+			this.dragElementsMinHeight = Number.MAX_VALUE;
+			this.children.map((child) => {
+				this.dragElementsMinHeight = Math.min(this.dragElementsMinHeight, child.component.rectangle.height);
+			});
+			document.body.addEventListener(events.mousemove, this._dragMove);
+			document.body.addEventListener(events.mouseup, this._dragEnd);
+		}
+	}
+
+	_dragMove(event) {
+		let point = this.getTouchPoint(event);
+		let distance = Point.distance(point, this.dragStartPoint);
+		if(distance > 3) {
+			this.dragElement.classList.add("is-dragged");
+			document.body.removeEventListener(events.mousemove, this._dragMove);
+			document.body.addEventListener(events.mousemove, this._dragElementMove);
+		}
+	}
+
+	_dragElementMove(event) {
+		let point = this.getTouchPoint(event);
+		let dragDiff = point.subtract(this.dragStartPoint);
+		let originOffset = dragDiff.add(this.dragElementStartPos);
+		let children = this.children;
+		let index = this.dragIndex;
+		for(let i = children.length - 1; i > -1; i--) {
+			let child = children[i];
+			if(originOffset.y < child.component.rectangle.y + this.dragElementsMinHeight / 2) {
+				index = i;
+			}
+		}
+		if(index != this.dragIndex) {
+			this.appendChildAt(this.dragElement, index);
+			let oldPos = this.dragElementStartPos;
+			this.dragElementStartPos = localToGlobal(this.dragElement, this.element);
+			let posDiff = this.dragElementStartPos.subtract(oldPos);
+			this.dragStartPoint = this.dragStartPoint.add(posDiff);
+
+			dragDiff = point.subtract(this.dragStartPoint);
+
+			if (this._provider instanceof ArrayData) {
+				this._provider.removeEventListener("add", this._providerAdd);
+				this._provider.removeEventListener("remove", this._providerRemove);
+				this._provider.removeEventListener("reset", this._providerChange);
+				this._provider.removeEventListener("sort", this._providerSort);
+			}
+
+			let data = this.dataProvider.splice(this.dragIndex, 1)[0];
+			this.dataProvider.splice(index, 0, data);
+
+			this.dragIndex = index;
+
+			if (this._provider instanceof ArrayData) {
+				this._provider.addEventListener("add", this._providerAdd);
+				this._provider.addEventListener("remove", this._providerRemove);
+				this._provider.addEventListener("reset", this._providerChange);
+				this._provider.addEventListener("sort", this._providerSort);
+			}
+
+			this.windowResize(this.windowSize);
+		}
+
+		this.dragElement.style.transform = "translate3d(" + dragDiff.x + "px, " + dragDiff.y + "px, 0px)";
+	}
+
+	_dragEnd(event) {
+		this.dragElement.classList.remove("is-dragged");
+		this.dragElement.style.transform = "translate3d(0px, 0px, 0px)";
+
+		// this.removeChild(this.dragElement);
+		// this.dragComponent.isDragging = false;
+		document.body.removeEventListener(events.mousemove, this._dragMove);
+		document.body.removeEventListener(events.mousemove, this._dragElementMove);
+		document.body.removeEventListener(events.mouseup, this._dragEnd);
+		//
+		this.dragStartPoint = null;
+		this.dragIndex = NaN;
+		this.dragElement = null;
+		// this.dragComponent = null;
+		// this.dragElementsMinHeight = NaN;
 	}
 
 	get scope() {

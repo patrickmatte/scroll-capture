@@ -11,6 +11,10 @@ export default class Test extends App {
 	constructor(element) {
 		super(element);
 
+		document.body.addEventListener('touchmove',function(e) {
+			e.preventDefault();
+		});
+
 		this.spacers = new ArrayData();
 
 		for(let i = 0; i < 10; i++) {

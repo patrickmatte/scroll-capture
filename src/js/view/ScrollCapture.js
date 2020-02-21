@@ -1,21 +1,69 @@
 import UIComponent from "../tsunami/components/UIComponent";
 import * as tsunami from "../tsunami/tsunami";
 import ActionView from "./ActionView";
+import Style from "../tsunami/components/Style";
+import {events} from "../tsunami/events";
+import Point from "../tsunami/geom/Point";
+import {app} from "../main";
 
 export default class ScrollCapture extends UIComponent {
 
 	constructor(element) {
 		super(element);
+		this.style = new Style(this.element.style);
+		this.style.right = 50;
+		this.style.top = 50;
+
+		this.dragStart = this.dragStart.bind(this);
+		this.dragMove = this.dragMove.bind(this);
+		this.dragEnd = this.dragEnd.bind(this);
+
+		let dragArea = this.element.querySelector(".sc-header .sc-drag-area");
+		dragArea.addEventListener(events.mousedown, this.dragStart);
+	}
+
+	dragStart(event) {
+		this.startPosition = new Point(this.style.right, this.style.top);
+		this.startPoint = this.getTouchPoint(event);
+		document.body.addEventListener(events.mousemove, this.dragMove);
+		document.body.addEventListener(events.mouseup, this.dragEnd);
+	}
+
+	dragMove(event) {
+		let point = this.getTouchPoint(event);
+		let diff = this.startPoint.subtract(point);
+		this.style.right = this.startPosition.x + diff.x;
+		this.style.top = this.startPosition.y - diff.y;
+	}
+
+	dragEnd(event) {
+		document.body.removeEventListener(events.mousemove, this.dragMove);
+		document.body.removeEventListener(events.mouseup, this.dragEnd);
+		app.save();
+	}
+
+	deserialize(obj) {
+		this.style.right = obj.right;
+		this.style.top = obj.top;
+	}
+
+	serialize() {
+		let obj = {
+			right:this.style.right,
+			top:this.style.top
+		};
+		return obj;
 	}
 
 }
 
 ScrollCapture.template = `
 <scroll-capture data-is-capturing="[[isCapturing]]">
-	<div class="sc-window main-window">
+	<div class="sc-window main-window" is="ui-component">
 <!--		<div class="app-name"><span>Scroll Capture</span></div>-->
 		<div class="sc-header">
 			<div class="sc-title">
+				<div class="sc-drag-area"></div>
 				<div class="sc-tabs">
 					<span class="sc-tab" data-selected="true">
 						<span class="sc-label">ScrollCapture</span>
@@ -43,6 +91,7 @@ ScrollCapture.template = `
 				<template>
 					<action-view class="sc-window" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
+							<div class="sc-drag-area ui-list-drag-area"></div>
 							<div class="sc-tabs">
 								<span class="sc-tab">
 									<span class="sc-label" is="ui-text">[[data.name]]</span>

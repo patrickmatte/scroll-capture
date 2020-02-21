@@ -25,7 +25,11 @@ export default class ArrayData extends Data {
 
 	constructor() {
 		super();
-		this.dataItemChangeBind = this.dataItemChangeHandler.bind(this);
+
+		this.dataItemChangeHandler = this.dataItemChangeHandler.bind(this);
+		this.selectedItemChange = this.selectedItemChange.bind(this);
+		this.selectedIndexChange = this.selectedIndexChange.bind(this);
+
 		this.lastIndex = new NumberData();
 		this.length = new NumberData();
 		this.length.addEventListener(Data.CHANGE, ()=> {
@@ -34,10 +38,8 @@ export default class ArrayData extends Data {
 		this.length.value = arguments.length;
 		this._value = [];
 		this.selectedItem = new ObjectData();
-		this.selectedItemChange = this.selectedItemChange.bind(this);
 		this.selectedItem.addEventListener(Data.CHANGE, this.selectedItemChange);
 		this.selectedIndex = new NumberData();
-		this.selectedIndexChange = this.selectedIndexChange.bind(this);
 		this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
 		this.nextIndex = new NumberData();
 		this.prevIndex = new NumberData();
@@ -115,7 +117,7 @@ export default class ArrayData extends Data {
 		for (let i = 0; i < this._value.length; i++) {
 			let oldItem = this._value[i];
 			if (oldItem instanceof Data) {
-				oldItem.removeEventListener(Data.CHANGE, this.dataItemChangeBind);
+				oldItem.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
 		if(!value) {
@@ -125,7 +127,7 @@ export default class ArrayData extends Data {
 		for (let i = 0; i < this._value.length; i++) {
 			let item = this._value[i];
 			if (item instanceof Data) {
-				item.addEventListener(Data.CHANGE, this.dataItemChangeBind);
+				item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
 		this.length.value = this._value.length;
@@ -159,7 +161,7 @@ export default class ArrayData extends Data {
 	pop() {
 		let item = this._value.pop();
 		if (item instanceof Data) {
-			item.removeEventListener(Data.CHANGE, this.dataItemChangeBind);
+			item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 		}
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"remove", value:[item], index:this.value.length, total:1});
@@ -178,7 +180,7 @@ export default class ArrayData extends Data {
 		for (let i = 0; i < added.length; i++) {
 			let item = added[i];
 			if (item instanceof Data) {
-				item.addEventListener(Data.CHANGE, this.dataItemChangeBind);
+				item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
 		if (added.length > 0) {
@@ -197,7 +199,7 @@ export default class ArrayData extends Data {
 	shift() {
 		let item = this._value.shift();
 		if (item instanceof Data) {
-			item.removeEventListener(Data.CHANGE, this.dataItemChangeBind);
+			item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 		}
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"remove", value:[item], index:0, total:1});
@@ -216,7 +218,7 @@ export default class ArrayData extends Data {
 		for (let i = 0; i < elements.length; i++) {
 			let item = elements[i];
 			if (item instanceof Data) {
-				item.removeEventListener(Data.CHANGE, this.dataItemChangeBind);
+				item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
 		let added = [];
@@ -227,7 +229,7 @@ export default class ArrayData extends Data {
 		for (let i = 0; i < added.length; i++) {
 			let item = added[i];
 			if (item instanceof Data) {
-				item.addEventListener(Data.CHANGE, this.dataItemChangeBind);
+				item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
 		let index = arguments[0];
@@ -260,7 +262,7 @@ export default class ArrayData extends Data {
 		for (let i = 0; i < added.length; i++) {
 			let item = added[i];
 			if (item instanceof Data) {
-				item.addEventListener(Data.CHANGE, this.dataItemChangeBind);
+				item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
 		if (added.length > 0) {

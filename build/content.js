@@ -183,6 +183,115 @@ function (_EventDispatcher) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
+/* unused harmony export createCustomEvent */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
+/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var events = {
+  mouseover: "mouseover",
+  mouseout: "mouseout",
+  mousedown: "mousedown",
+  mouseup: "mouseup",
+  mousemove: "mousemove",
+  click: "click",
+  transitionend: 'transitionend',
+  animationstart: 'animationstart',
+  animationiteration: 'animationiteration',
+  animationend: 'animationend'
+};
+
+if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
+  events.mouseover = "touchstart";
+  events.mouseout = "touchend";
+  events.mousedown = "touchstart";
+  events.mouseup = "touchend";
+  events.mousemove = "touchmove";
+  events.click = "click";
+}
+
+var platforms = {
+  'OTransition': {
+    transitionend: 'otransitionend',
+    animationstart: 'oanimationstart',
+    animationiteration: 'oanimationiteration',
+    animationend: 'oanimationend'
+  },
+  'MozTransition': {
+    transitionend: 'transitionend',
+    animationstart: 'moznimationstart',
+    animationiteration: 'moznimationiteration',
+    animationend: 'moznimationend'
+  },
+  'WebkitTransition': {
+    transitionend: 'webkitTransitionEnd',
+    animationstart: 'webkitAnimationStart',
+    animationiteration: 'webkitAnimationIteration',
+    animationend: 'webkitAnimationEnd'
+  }
+};
+window.addEventListener("load", function () {
+  for (var i in platforms) {
+    var data = platforms[i];
+
+    if (document.body.style[i] !== undefined) {
+      events.transitionend = data.transitionend;
+      events.animationstart = data.animationstart;
+      events.animationiteration = data.animationiteration;
+      events.animationend = data.animationend;
+    }
+  }
+});
+function createCustomEvent(type, params) {
+  var event;
+
+  try {
+    event = new CustomEvent(event, params);
+  } catch (e) {
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent(type, params.bubbles, params.bubbles, params.detail);
+  }
+
+  return event;
+}
+
+var BaseEvent =
+/*#__PURE__*/
+function () {
+  function BaseEvent(type, value) {
+    _classCallCheck(this, BaseEvent);
+
+    this.type = type;
+    this.value = value;
+  }
+
+  _createClass(BaseEvent, [{
+    key: "stopPropagation",
+    value: function stopPropagation() {}
+  }, {
+    key: "stopImmediatePropagation",
+    value: function stopImmediatePropagation() {}
+  }, {
+    key: "preventDefault",
+    value: function preventDefault() {}
+  }]);
+
+  return BaseEvent;
+}();
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return evalProperty; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return define; });
 /* unused harmony export decorateElement */
@@ -398,7 +507,7 @@ function getAllObjects(parent, array) {
 }
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -558,122 +667,602 @@ function () {
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
-/* unused harmony export createCustomEvent */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
-/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+
+// EXTERNAL MODULE: ./js/tsunami/data/Data.js
+var Data = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
+var NumberData = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
+var BooleanData = __webpack_require__(8);
+
+// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-var events = {
-  mouseover: "mouseover",
-  mouseout: "mouseout",
-  mousedown: "mousedown",
-  mouseup: "mouseup",
-  mousemove: "mousemove",
-  click: "click",
-  transitionend: 'transitionend',
-  animationstart: 'animationstart',
-  animationiteration: 'animationiteration',
-  animationend: 'animationend'
-};
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
-  events.mouseover = "touchstart";
-  events.mouseout = "touchend";
-  events.mousedown = "touchstart";
-  events.mouseup = "touchend";
-  events.mousemove = "touchmove";
-  events.click = "click";
-}
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var platforms = {
-  'OTransition': {
-    transitionend: 'otransitionend',
-    animationstart: 'oanimationstart',
-    animationiteration: 'oanimationiteration',
-    animationend: 'oanimationend'
-  },
-  'MozTransition': {
-    transitionend: 'transitionend',
-    animationstart: 'moznimationstart',
-    animationiteration: 'moznimationiteration',
-    animationend: 'moznimationend'
-  },
-  'WebkitTransition': {
-    transitionend: 'webkitTransitionEnd',
-    animationstart: 'webkitAnimationStart',
-    animationiteration: 'webkitAnimationIteration',
-    animationend: 'webkitAnimationEnd'
-  }
-};
-window.addEventListener("load", function () {
-  for (var i in platforms) {
-    var data = platforms[i];
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-    if (document.body.style[i] !== undefined) {
-      events.transitionend = data.transitionend;
-      events.animationstart = data.animationstart;
-      events.animationiteration = data.animationiteration;
-      events.animationend = data.animationend;
-    }
-  }
-});
-function createCustomEvent(type, params) {
-  var event;
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-  try {
-    event = new CustomEvent(event, params);
-  } catch (e) {
-    event = document.createEvent('CustomEvent');
-    event.initCustomEvent(type, params.bubbles, params.bubbles, params.detail);
-  }
 
-  return event;
-}
 
-var BaseEvent =
+
+var ObjectData_ObjectData =
 /*#__PURE__*/
-function () {
-  function BaseEvent(type, value) {
-    _classCallCheck(this, BaseEvent);
+function (_Data) {
+  _inherits(ObjectData, _Data);
 
-    this.type = type;
-    this.value = value;
+  function ObjectData(value) {
+    var _this;
+
+    _classCallCheck(this, ObjectData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ObjectData).call(this));
+    _this.value = value;
+    return _this;
   }
 
-  _createClass(BaseEvent, [{
-    key: "stopPropagation",
-    value: function stopPropagation() {}
+  _createClass(ObjectData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
   }, {
-    key: "stopImmediatePropagation",
-    value: function stopImmediatePropagation() {}
+    key: "_deselectValue",
+    value: function _deselectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof BooleanData["a" /* default */]) {
+            data.isSelected.value = false;
+          }
+        }
+      }
+    }
   }, {
-    key: "preventDefault",
-    value: function preventDefault() {}
+    key: "_selectValue",
+    value: function _selectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof BooleanData["a" /* default */]) {
+            data.isSelected.value = true;
+          }
+        }
+      }
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (value != this._value) {
+        this._deselectValue(this._value);
+
+        this._value = value;
+
+        this._selectValue(this._value);
+
+        this.dispatchEvent({
+          type: Data["a" /* default */].CHANGE,
+          value: this._value
+        });
+      }
+    }
   }]);
 
-  return BaseEvent;
-}();
+  return ObjectData;
+}(Data["a" /* default */]);
+
+
+// EXTERNAL MODULE: ./js/tsunami/events.js
+var events = __webpack_require__(1);
+
+// CONCATENATED MODULE: ./js/tsunami/data/ArrayData.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData_ArrayData; });
+function ArrayData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ArrayData_typeof = function _typeof(obj) { return typeof obj; }; } else { ArrayData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ArrayData_typeof(obj); }
+
+function ArrayData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ArrayData_possibleConstructorReturn(self, call) { if (call && (ArrayData_typeof(call) === "object" || typeof call === "function")) { return call; } return ArrayData_assertThisInitialized(self); }
+
+function ArrayData_getPrototypeOf(o) { ArrayData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ArrayData_getPrototypeOf(o); }
+
+function ArrayData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ArrayData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ArrayData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ArrayData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ArrayData_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ArrayData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ArrayData_setPrototypeOf(subClass, superClass); }
+
+function ArrayData_setPrototypeOf(o, p) { ArrayData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ArrayData_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var ArrayData_ArrayData =
+/*#__PURE__*/
+function (_Data) {
+  ArrayData_inherits(ArrayData, _Data);
+
+  ArrayData_createClass(ArrayData, null, [{
+    key: "shuffle",
+    value: function shuffle(o) {
+      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
+        ;
+      }
+
+      return o;
+    }
+  }, {
+    key: "nodeListToArray",
+    value: function nodeListToArray(nodeList) {
+      return Array.prototype.slice.call(nodeList); // let array = new Array();
+      // for (let i = 0; i < nodeList.length; i++) {
+      // 	array.push(nodeList.item(i));
+      // }
+      // return array;
+    }
+  }, {
+    key: "ITEM_CHANGE",
+    get: function get() {
+      return "item-change";
+    }
+  }]);
+
+  function ArrayData() {
+    var _this;
+
+    ArrayData_classCallCheck(this, ArrayData);
+
+    _this = ArrayData_possibleConstructorReturn(this, ArrayData_getPrototypeOf(ArrayData).call(this));
+    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(ArrayData_assertThisInitialized(_this));
+    _this.selectedItemChange = _this.selectedItemChange.bind(ArrayData_assertThisInitialized(_this));
+    _this.selectedIndexChange = _this.selectedIndexChange.bind(ArrayData_assertThisInitialized(_this));
+    _this.lastIndex = new NumberData["a" /* default */]();
+    _this.length = new NumberData["a" /* default */]();
+
+    _this.length.addEventListener(Data["a" /* default */].CHANGE, function () {
+      _this.lastIndex.value = _this.length.value - 1;
+    });
+
+    _this.length.value = arguments.length;
+    _this._value = [];
+    _this.selectedItem = new ObjectData_ObjectData();
+
+    _this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, _this.selectedItemChange);
+
+    _this.selectedIndex = new NumberData["a" /* default */]();
+
+    _this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, _this.selectedIndexChange);
+
+    _this.nextIndex = new NumberData["a" /* default */]();
+    _this.prevIndex = new NumberData["a" /* default */]();
+    _this.dataClass = Object;
+
+    _this.push.apply(ArrayData_assertThisInitialized(_this), arguments);
+
+    return _this;
+  }
+
+  ArrayData_createClass(ArrayData, [{
+    key: "selectedItemChange",
+    value: function selectedItemChange(event) {
+      this.selectedIndex.removeEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
+      var index = this.value.indexOf(this.selectedItem.value);
+      this.selectedIndex.value = index;
+      this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "setSelectedData",
+    value: function setSelectedData(value) {
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
+          this.previousSelectedItem.isSelectedItem.value = false;
+        }
+      }
+
+      if (this.selectedData) {
+        this.selectedData.copy(value);
+      }
+
+      this.previousSelectedItem = value;
+
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
+          this.previousSelectedItem.isSelectedItem.value = true;
+        }
+      }
+
+      var index = this.selectedIndex.value;
+      var nextIndex = index + 1;
+
+      if (nextIndex > this.value.length - 1) {
+        nextIndex = 0;
+      }
+
+      this.nextIndex.value = nextIndex;
+
+      if (this.nextData) {
+        this.nextData.copy(this.value[this.nextIndex.value]);
+      }
+
+      var prevIndex = index - 1;
+
+      if (prevIndex < 0) {
+        prevIndex = this.value.length - 1;
+      }
+
+      this.prevIndex.value = prevIndex;
+
+      if (this.prevData) {
+        this.prevData.copy(this.value[this.prevIndex.value]);
+      }
+    }
+  }, {
+    key: "selectedIndexChange",
+    value: function selectedIndexChange(event) {
+      var index = this.selectedIndex.value;
+      this.selectedItem.removeEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
+      this.selectedItem.value = this.value[index];
+      this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "dataItemChangeHandler",
+    value: function dataItemChangeHandler(e) {
+      var event = new events["a" /* default */](ArrayData.ITEM_CHANGE, this.value);
+      this.dispatchEvent(event);
+    }
+  }, {
+    key: "item",
+    value: function item(index) {
+      return this._value[index];
+    }
+  }, {
+    key: "indexOf",
+    value: function indexOf(searchElement, fromIndex) {
+      return this._value.indexOf(searchElement, fromIndex);
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      return this._value.map(callback);
+    }
+  }, {
+    key: "find",
+    value: function find(callback) {
+      return this._value.find(callback);
+    }
+  }, {
+    key: "findByKey",
+    value: function findByKey(key, value) {
+      var selected = this.find(function (element) {
+        return element[key].toString() == value.toString();
+      });
+      return selected;
+    }
+  }, {
+    key: "filter",
+    value: function filter(callback) {
+      return this._value.filter(callback);
+    }
+  }, {
+    key: "pop",
+    value: function pop() {
+      var item = this._value.pop();
+
+      if (item instanceof Data["a" /* default */]) {
+        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: this.value.length,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+      return item;
+    }
+  }, {
+    key: "push",
+    value: function push() {
+      var previousLength = this.value.length;
+
+      var length = this._value.push.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i = 0; _i < added.length; _i++) {
+        var item = added[_i];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: previousLength,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      return length;
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._value.reverse();
+
+      this.dispatchEvent({
+        type: "reverse",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }, {
+    key: "shift",
+    value: function shift() {
+      var item = this._value.shift();
+
+      if (item instanceof Data["a" /* default */]) {
+        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: 0,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+      return item;
+    }
+  }, {
+    key: "sort",
+    value: function sort(compareFunction) {
+      this._value.sort(compareFunction);
+
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }, {
+    key: "splice",
+    value: function splice() {
+      var elements = this._value.splice.apply(this._value, arguments);
+
+      for (var i = 0; i < elements.length; i++) {
+        var item = elements[i];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var added = [];
+
+      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
+        added.push(arguments[_i2]);
+      }
+
+      this.length.value = this._value.length;
+
+      for (var _i3 = 0; _i3 < added.length; _i3++) {
+        var _item = added[_i3];
+
+        if (_item instanceof Data["a" /* default */]) {
+          _item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var index = arguments[0];
+
+      if (elements.length > 0) {
+        this.dispatchEvent({
+          type: "remove",
+          value: elements,
+          index: index,
+          total: elements.length
+        });
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: index,
+          total: added.length
+        });
+      }
+
+      if (elements.length > 0 || added.length > 0) {
+        this.dispatchChangeEvent();
+      }
+
+      return elements;
+    }
+  }, {
+    key: "remove",
+    value: function remove(element) {
+      var index = this.indexOf(element);
+
+      if (index != -1) {
+        this.splice(index, 1);
+      }
+    }
+  }, {
+    key: "unshift",
+    value: function unshift() {
+      var length = this._value.unshift.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i4 = 0; _i4 < added.length; _i4++) {
+        var item = added[_i4];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: 0,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      return length;
+    }
+  }, {
+    key: "dispatchChangeEvent",
+    value: function dispatchChangeEvent() {
+      this.dataItemChangeHandler(null);
+      this.dispatchEvent({
+        type: Data["a" /* default */].CHANGE,
+        value: this._value
+      });
+    }
+  }, {
+    key: "includes",
+    value: function includes(element) {
+      var index = this.indexOf(element);
+      return index != -1;
+    }
+  }, {
+    key: "join",
+    value: function join() {
+      return this._value.join.apply(this._value, arguments);
+    }
+  }, {
+    key: "concat",
+    value: function concat() {
+      return this._value.concat.apply(this._value, arguments);
+    }
+  }, {
+    key: "slice",
+    value: function slice() {
+      return this._value.slice.apply(this._value, arguments);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var array = [];
+      this.map(function (obj) {
+        array.push(obj.serialize());
+      });
+      return array;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      var _this2 = this;
+
+      var array = [];
+      data.map(function (obj) {
+        var instance = new _this2.dataClass();
+        instance.deserialize(obj);
+        array.push(instance);
+      });
+      this.value = array;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      for (var i = 0; i < this._value.length; i++) {
+        var oldItem = this._value[i];
+
+        if (oldItem instanceof Data["a" /* default */]) {
+          oldItem.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (!value) {
+        value = [];
+      }
+
+      this._value = value;
+
+      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
+        var item = this._value[_i5];
+
+        if (item instanceof Data["a" /* default */]) {
+          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "reset",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+    }
+  }]);
+
+  return ArrayData;
+}(Data["a" /* default */]);
 
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(1);
+var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
@@ -755,13 +1344,13 @@ function () {
 
 
 // EXTERNAL MODULE: ./js/tsunami/components/Style.js
-var Style = __webpack_require__(20);
+var Style = __webpack_require__(19);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
 var tsunami_await = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
-var ArrayData = __webpack_require__(5);
+var ArrayData = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
 var ArrayDataOperation = __webpack_require__(18);
@@ -893,7 +1482,7 @@ function (_EventDispatcher) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(2);
+var Point = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIComponent.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIComponent_UIComponent; });
@@ -1021,12 +1610,20 @@ function (_Branch) {
     key: "appendChildAt",
     value: function appendChildAt(child) {
       var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+      if (child.parentNode == this.element) {
+        this.element.removeChild(child);
+      }
+
       var children = this.children;
 
-      if (index >= children.length) {
+      if (index > children.length - 1) {
+        console.log("afterChildren");
         this.appendChild(child);
       } else {
-        this.insertBefore(child, children[index]);
+        var beforeChild = children[index];
+        console.log("beforeChild", beforeChild);
+        this.insertBefore(child, beforeChild);
       }
     }
   }, {
@@ -1192,8 +1789,8 @@ function (_Branch) {
   }, {
     key: "windowResize",
     value: function windowResize(windowSize) {
-      this.windowSize = windowSize; // this.rectangle = this.getRect();
-
+      this.windowSize = windowSize;
+      this.rectangle = this.getRect();
       this.rectangle = new Rectangle["a" /* default */](this.element.offsetLeft, this.element.offsetTop, this.element.offsetWidth, this.element.offsetHeight);
 
       if (this.calculateGlobalPosition) {
@@ -1547,595 +2144,6 @@ function (_Branch) {
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXTERNAL MODULE: ./js/tsunami/data/Data.js
-var Data = __webpack_require__(0);
-
-// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(6);
-
-// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(9);
-
-// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var ObjectData_ObjectData =
-/*#__PURE__*/
-function (_Data) {
-  _inherits(ObjectData, _Data);
-
-  function ObjectData(value) {
-    var _this;
-
-    _classCallCheck(this, ObjectData);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ObjectData).call(this));
-    _this.value = value;
-    return _this;
-  }
-
-  _createClass(ObjectData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "_deselectValue",
-    value: function _deselectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData["a" /* default */]) {
-            data.isSelected.value = false;
-          }
-        }
-      }
-    }
-  }, {
-    key: "_selectValue",
-    value: function _selectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData["a" /* default */]) {
-            data.isSelected.value = true;
-          }
-        }
-      }
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._deselectValue(this._value);
-
-        this._value = value;
-
-        this._selectValue(this._value);
-
-        this.dispatchEvent({
-          type: Data["a" /* default */].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return ObjectData;
-}(Data["a" /* default */]);
-
-
-// EXTERNAL MODULE: ./js/tsunami/events.js
-var events = __webpack_require__(3);
-
-// CONCATENATED MODULE: ./js/tsunami/data/ArrayData.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData_ArrayData; });
-function ArrayData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ArrayData_typeof = function _typeof(obj) { return typeof obj; }; } else { ArrayData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ArrayData_typeof(obj); }
-
-function ArrayData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ArrayData_possibleConstructorReturn(self, call) { if (call && (ArrayData_typeof(call) === "object" || typeof call === "function")) { return call; } return ArrayData_assertThisInitialized(self); }
-
-function ArrayData_getPrototypeOf(o) { ArrayData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ArrayData_getPrototypeOf(o); }
-
-function ArrayData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ArrayData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ArrayData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ArrayData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ArrayData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ArrayData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ArrayData_setPrototypeOf(subClass, superClass); }
-
-function ArrayData_setPrototypeOf(o, p) { ArrayData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ArrayData_setPrototypeOf(o, p); }
-
-
-
-
-
-
-var ArrayData_ArrayData =
-/*#__PURE__*/
-function (_Data) {
-  ArrayData_inherits(ArrayData, _Data);
-
-  ArrayData_createClass(ArrayData, null, [{
-    key: "shuffle",
-    value: function shuffle(o) {
-      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
-        ;
-      }
-
-      return o;
-    }
-  }, {
-    key: "nodeListToArray",
-    value: function nodeListToArray(nodeList) {
-      return Array.prototype.slice.call(nodeList); // let array = new Array();
-      // for (let i = 0; i < nodeList.length; i++) {
-      // 	array.push(nodeList.item(i));
-      // }
-      // return array;
-    }
-  }, {
-    key: "ITEM_CHANGE",
-    get: function get() {
-      return "item-change";
-    }
-  }]);
-
-  function ArrayData() {
-    var _this;
-
-    ArrayData_classCallCheck(this, ArrayData);
-
-    _this = ArrayData_possibleConstructorReturn(this, ArrayData_getPrototypeOf(ArrayData).call(this));
-    _this.dataItemChangeBind = _this.dataItemChangeHandler.bind(ArrayData_assertThisInitialized(_this));
-    _this.lastIndex = new NumberData["a" /* default */]();
-    _this.length = new NumberData["a" /* default */]();
-
-    _this.length.addEventListener(Data["a" /* default */].CHANGE, function () {
-      _this.lastIndex.value = _this.length.value - 1;
-    });
-
-    _this.length.value = arguments.length;
-    _this._value = [];
-    _this.selectedItem = new ObjectData_ObjectData();
-    _this.selectedItemChange = _this.selectedItemChange.bind(ArrayData_assertThisInitialized(_this));
-
-    _this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, _this.selectedItemChange);
-
-    _this.selectedIndex = new NumberData["a" /* default */]();
-    _this.selectedIndexChange = _this.selectedIndexChange.bind(ArrayData_assertThisInitialized(_this));
-
-    _this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, _this.selectedIndexChange);
-
-    _this.nextIndex = new NumberData["a" /* default */]();
-    _this.prevIndex = new NumberData["a" /* default */]();
-    _this.dataClass = Object;
-
-    _this.push.apply(ArrayData_assertThisInitialized(_this), arguments);
-
-    return _this;
-  }
-
-  ArrayData_createClass(ArrayData, [{
-    key: "selectedItemChange",
-    value: function selectedItemChange(event) {
-      this.selectedIndex.removeEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
-      var index = this.value.indexOf(this.selectedItem.value);
-      this.selectedIndex.value = index;
-      this.selectedIndex.addEventListener(Data["a" /* default */].CHANGE, this.selectedIndexChange);
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "setSelectedData",
-    value: function setSelectedData(value) {
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
-          this.previousSelectedItem.isSelectedItem.value = false;
-        }
-      }
-
-      if (this.selectedData) {
-        this.selectedData.copy(value);
-      }
-
-      this.previousSelectedItem = value;
-
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof Data["a" /* default */]) {
-          this.previousSelectedItem.isSelectedItem.value = true;
-        }
-      }
-
-      var index = this.selectedIndex.value;
-      var nextIndex = index + 1;
-
-      if (nextIndex > this.value.length - 1) {
-        nextIndex = 0;
-      }
-
-      this.nextIndex.value = nextIndex;
-
-      if (this.nextData) {
-        this.nextData.copy(this.value[this.nextIndex.value]);
-      }
-
-      var prevIndex = index - 1;
-
-      if (prevIndex < 0) {
-        prevIndex = this.value.length - 1;
-      }
-
-      this.prevIndex.value = prevIndex;
-
-      if (this.prevData) {
-        this.prevData.copy(this.value[this.prevIndex.value]);
-      }
-    }
-  }, {
-    key: "selectedIndexChange",
-    value: function selectedIndexChange(event) {
-      var index = this.selectedIndex.value;
-      this.selectedItem.removeEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
-      this.selectedItem.value = this.value[index];
-      this.selectedItem.addEventListener(Data["a" /* default */].CHANGE, this.selectedItemChange);
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "dataItemChangeHandler",
-    value: function dataItemChangeHandler(e) {
-      var event = new events["a" /* default */](ArrayData.ITEM_CHANGE, this.value);
-      this.dispatchEvent(event);
-    }
-  }, {
-    key: "item",
-    value: function item(index) {
-      return this._value[index];
-    }
-  }, {
-    key: "indexOf",
-    value: function indexOf(searchElement, fromIndex) {
-      return this._value.indexOf(searchElement, fromIndex);
-    }
-  }, {
-    key: "map",
-    value: function map(callback) {
-      return this._value.map(callback);
-    }
-  }, {
-    key: "find",
-    value: function find(callback) {
-      return this._value.find(callback);
-    }
-  }, {
-    key: "findByKey",
-    value: function findByKey(key, value) {
-      var selected = this.find(function (element) {
-        return element[key].toString() == value.toString();
-      });
-      return selected;
-    }
-  }, {
-    key: "filter",
-    value: function filter(callback) {
-      return this._value.filter(callback);
-    }
-  }, {
-    key: "pop",
-    value: function pop() {
-      var item = this._value.pop();
-
-      if (item instanceof Data["a" /* default */]) {
-        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: this.value.length,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-      return item;
-    }
-  }, {
-    key: "push",
-    value: function push() {
-      var previousLength = this.value.length;
-
-      var length = this._value.push.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i = 0; _i < added.length; _i++) {
-        var item = added[_i];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: previousLength,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      return length;
-    }
-  }, {
-    key: "reverse",
-    value: function reverse() {
-      this._value.reverse();
-
-      this.dispatchEvent({
-        type: "reverse",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-    }
-  }, {
-    key: "shift",
-    value: function shift() {
-      var item = this._value.shift();
-
-      if (item instanceof Data["a" /* default */]) {
-        item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: 0,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-      return item;
-    }
-  }, {
-    key: "sort",
-    value: function sort(compareFunction) {
-      this._value.sort(compareFunction);
-
-      this.dispatchEvent({
-        type: "sort",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-    }
-  }, {
-    key: "splice",
-    value: function splice() {
-      var elements = this._value.splice.apply(this._value, arguments);
-
-      for (var i = 0; i < elements.length; i++) {
-        var item = elements[i];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-        }
-      }
-
-      var added = [];
-
-      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
-        added.push(arguments[_i2]);
-      }
-
-      this.length.value = this._value.length;
-
-      for (var _i3 = 0; _i3 < added.length; _i3++) {
-        var _item = added[_i3];
-
-        if (_item instanceof Data["a" /* default */]) {
-          _item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-        }
-      }
-
-      var index = arguments[0];
-
-      if (elements.length > 0) {
-        this.dispatchEvent({
-          type: "remove",
-          value: elements,
-          index: index,
-          total: elements.length
-        });
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: index,
-          total: added.length
-        });
-      }
-
-      if (elements.length > 0 || added.length > 0) {
-        this.dispatchChangeEvent();
-      }
-
-      return elements;
-    }
-  }, {
-    key: "remove",
-    value: function remove(element) {
-      var index = this.indexOf(element);
-
-      if (index != -1) {
-        this.splice(index, 1);
-      }
-    }
-  }, {
-    key: "unshift",
-    value: function unshift() {
-      var length = this._value.unshift.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i4 = 0; _i4 < added.length; _i4++) {
-        var item = added[_i4];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: 0,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      return length;
-    }
-  }, {
-    key: "dispatchChangeEvent",
-    value: function dispatchChangeEvent() {
-      this.dataItemChangeHandler(null);
-      this.dispatchEvent({
-        type: Data["a" /* default */].CHANGE,
-        value: this._value
-      });
-    }
-  }, {
-    key: "includes",
-    value: function includes(element) {
-      var index = this.indexOf(element);
-      return index != -1;
-    }
-  }, {
-    key: "join",
-    value: function join() {
-      return this._value.join.apply(this._value, arguments);
-    }
-  }, {
-    key: "concat",
-    value: function concat() {
-      return this._value.concat.apply(this._value, arguments);
-    }
-  }, {
-    key: "slice",
-    value: function slice() {
-      return this._value.slice.apply(this._value, arguments);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var array = [];
-      this.map(function (obj) {
-        array.push(obj.serialize());
-      });
-      return array;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      var _this2 = this;
-
-      var array = [];
-      data.map(function (obj) {
-        var instance = new _this2.dataClass();
-        instance.deserialize(obj);
-        array.push(instance);
-      });
-      this.value = array;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      for (var i = 0; i < this._value.length; i++) {
-        var oldItem = this._value[i];
-
-        if (oldItem instanceof Data["a" /* default */]) {
-          oldItem.removeEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-        }
-      }
-
-      if (!value) {
-        value = [];
-      }
-
-      this._value = value;
-
-      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
-        var item = this._value[_i5];
-
-        if (item instanceof Data["a" /* default */]) {
-          item.addEventListener(Data["a" /* default */].CHANGE, this.dataItemChangeBind);
-        }
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "reset",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-    }
-  }]);
-
-  return ArrayData;
-}(Data["a" /* default */]);
-
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2284,7 +2292,7 @@ function (_Data) {
 /* unused harmony export fileExists */
 /* unused harmony export getElementSelector */
 /* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
 
 
 var isMobile = {
@@ -2507,10 +2515,101 @@ function getElementSelector(element) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BooleanData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var BooleanData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(BooleanData, _Data);
+
+  function BooleanData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    _classCallCheck(this, BooleanData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BooleanData).call(this));
+    _this.value = value;
+    return _this;
+  }
+
+  _createClass(BooleanData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = true;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return _get(_getPrototypeOf(BooleanData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (value != this._value) {
+        this._value = value;
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }]);
+
+  return BooleanData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Clock; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return clock; });
 /* harmony import */ var _tsunami_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2607,103 +2706,12 @@ var clock = new Clock();
 clock.start();
 
 /***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BooleanData; });
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(14);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var BooleanData =
-/*#__PURE__*/
-function (_Data) {
-  _inherits(BooleanData, _Data);
-
-  function BooleanData() {
-    var _this;
-
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-    _classCallCheck(this, BooleanData);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(BooleanData).call(this));
-    _this.value = value;
-    return _this;
-  }
-
-  _createClass(BooleanData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.value = true;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-        this.validation.destroy();
-      }
-
-      this.validation = null;
-      return _get(_getPrototypeOf(BooleanData.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._value = value;
-        this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return BooleanData;
-}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rectangle; });
-/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3528,7 +3536,7 @@ function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validation; });
-/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3632,9 +3640,9 @@ function (_BooleanData) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tween; });
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
-/* harmony import */ var _Clock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+/* harmony import */ var _Clock__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4003,19 +4011,19 @@ function awaitVideoFirstFrame(video) {
 "use strict";
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
-var UIComponent = __webpack_require__(4);
+var UIComponent = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(1);
+var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
-var ArrayData = __webpack_require__(5);
+var ArrayData = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./js/tsunami/events.js
-var events = __webpack_require__(3);
+var events = __webpack_require__(1);
 
 // CONCATENATED MODULE: ./js/tsunami/Scope.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4072,6 +4080,15 @@ function () {
 }();
 
 
+// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
+var Point = __webpack_require__(3);
+
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(7);
+
+// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
+var NumberData = __webpack_require__(6);
+
 // CONCATENATED MODULE: ./js/tsunami/components/UIList.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIList_UIList; });
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -4109,6 +4126,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
 var UIList_UIList =
 /*#__PURE__*/
 function (_UIComponent) {
@@ -4120,13 +4140,18 @@ function (_UIComponent) {
     UIList_classCallCheck(this, UIList);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UIList).call(this, element));
-    _this.template = "<li><span is=\"ui-text\">[[data]]</span></li>";
-    _this.templates = {};
-    _this._provider = [];
+    _this._dragStart = _this._dragStart.bind(_assertThisInitialized(_this));
+    _this._dragMove = _this._dragMove.bind(_assertThisInitialized(_this));
+    _this._dragElementMove = _this._dragElementMove.bind(_assertThisInitialized(_this));
+    _this._dragEnd = _this._dragEnd.bind(_assertThisInitialized(_this));
     _this._providerChange = _this._providerChange.bind(_assertThisInitialized(_this));
     _this._providerAdd = _this._providerAdd.bind(_assertThisInitialized(_this));
     _this._providerRemove = _this._providerRemove.bind(_assertThisInitialized(_this));
     _this._providerSort = _this._providerSort.bind(_assertThisInitialized(_this));
+    _this.dragIndex = NaN;
+    _this.template = "<li><span is=\"ui-text\">[[data]]</span></li>";
+    _this.templates = {};
+    _this._provider = [];
     var templates = [];
 
     if (_this.element) {
@@ -4143,10 +4168,140 @@ function (_UIComponent) {
       _this.templates[type] = template.innerHTML;
     }
 
+    _this.element.addEventListener(events["b" /* events */].mousedown, _this._dragStart);
+
     return _this;
   }
 
   UIList_createClass(UIList, [{
+    key: "_dragStart",
+    value: function _dragStart(event) {
+      var _this2 = this;
+
+      if (event.target.classList.contains("ui-list-drag-area")) {
+        this.dragStartPoint = this.getTouchPoint(event);
+        this.dragIndex = NaN;
+        this.dragElement = this.children.find(function (child, index) {
+          var match = event.target == child.querySelector(".ui-list-drag-area");
+
+          if (match) {
+            _this2.dragIndex = index;
+          }
+
+          return match;
+        });
+        this.dragElementStartPos = Object(tsunami_window["b" /* localToGlobal */])(this.dragElement, this.element);
+        console.log("this.dragElement", this.dragElement);
+        console.log("this.dragIndex", this.dragIndex); // let scope = component.scope;
+        // let template = this.getTemplateForModel(scope.data);
+        // if (!template) {
+        // 	throw new Error("UIList component for " + this.element.outerHTML + " returned no template");
+        // }
+        // // this.dragElement = importTemplate(template, scope);
+        // this.dragElement.classList.add("drag-element");
+        // this.dragElementStartPos = localToGlobal(component.element, this.element);
+        // this.dragElement.style.left = this.dragElementStartPos.x + "px";
+        // this.dragElement.style.top = this.dragElementStartPos.y + "px";
+        //
+
+        document.body.addEventListener(events["b" /* events */].mousemove, this._dragMove);
+        document.body.addEventListener(events["b" /* events */].mouseup, this._dragEnd); //
+
+        this.dragElementsMinHeight = Number.MAX_VALUE;
+        this.children.map(function (child) {
+          _this2.dragElementsMinHeight = Math.min(_this2.dragElementsMinHeight, child.component.rectangle.height);
+        });
+      }
+    }
+  }, {
+    key: "_dragMove",
+    value: function _dragMove(event) {
+      var point = this.getTouchPoint(event);
+      var distance = Point["a" /* default */].distance(point, this.dragStartPoint);
+
+      if (distance > 3) {
+        this.dragElement.classList.add("is-dragged"); // 	this.appendChild(this.dragElement);
+        // 	this.dragComponent.isDragging = true;
+        // 	if (this.isAdded) {
+        // 		UIComponent.callElementAdded(this.dragElement);
+        // 	}
+
+        document.body.removeEventListener(events["b" /* events */].mousemove, this._dragMove);
+        document.body.addEventListener(events["b" /* events */].mousemove, this._dragElementMove);
+      }
+    }
+  }, {
+    key: "_dragElementMove",
+    value: function _dragElementMove(event) {
+      var point = this.getTouchPoint(event);
+      var dragDiff = point.subtract(this.dragStartPoint);
+      var originOffset = dragDiff.add(this.dragElementStartPos);
+      var children = this.children;
+      var index = this.dragIndex;
+
+      for (var i = children.length - 1; i > -1; i--) {
+        var child = children[i];
+
+        if (originOffset.y < child.component.rectangle.y + this.dragElementsMinHeight / 2) {
+          index = i;
+        }
+      }
+
+      if (index != this.dragIndex) {
+        console.log("index", index);
+        this.appendChildAt(this.dragElement, index);
+        var oldPos = this.dragElementStartPos;
+        this.dragElementStartPos = Object(tsunami_window["b" /* localToGlobal */])(this.dragElement, this.element);
+        var posDiff = this.dragElementStartPos.subtract(oldPos);
+        this.dragStartPoint = this.dragStartPoint.add(posDiff);
+        dragDiff = point.subtract(this.dragStartPoint);
+
+        if (this._provider instanceof ArrayData["a" /* default */]) {
+          this._provider.removeEventListener("add", this._providerAdd);
+
+          this._provider.removeEventListener("remove", this._providerRemove);
+
+          this._provider.removeEventListener("reset", this._providerChange);
+
+          this._provider.removeEventListener("sort", this._providerSort);
+        }
+
+        var data = this.dataProvider.splice(this.dragIndex, 1)[0];
+        this.dataProvider.splice(index, 0, data);
+        this.dragIndex = index;
+
+        if (this._provider instanceof ArrayData["a" /* default */]) {
+          this._provider.addEventListener("add", this._providerAdd);
+
+          this._provider.addEventListener("remove", this._providerRemove);
+
+          this._provider.addEventListener("reset", this._providerChange);
+
+          this._provider.addEventListener("sort", this._providerSort);
+        }
+
+        this.windowResize(this.windowSize);
+      }
+
+      this.dragElement.style.transform = "translate3d(" + dragDiff.x + "px, " + dragDiff.y + "px, 0px)";
+    }
+  }, {
+    key: "_dragEnd",
+    value: function _dragEnd(event) {
+      this.dragElement.classList.remove("is-dragged");
+      this.dragElement.style.transform = "translate3d(0px, 0px, 0px)"; // this.removeChild(this.dragElement);
+      // this.dragComponent.isDragging = false;
+
+      document.body.removeEventListener(events["b" /* events */].mousemove, this._dragMove);
+      document.body.removeEventListener(events["b" /* events */].mousemove, this._dragElementMove);
+      document.body.removeEventListener(events["b" /* events */].mouseup, this._dragEnd); //
+
+      this.dragStartPoint = null;
+      this.dragIndex = NaN;
+      this.dragElement = null; // this.dragComponent = null;
+      // this.dragElementsMinHeight = NaN;
+    }
+  }, {
     key: "_removeElements",
     value: function _removeElements(array) {
       for (var i = 0; i < array.length; i++) {
@@ -4358,9 +4513,9 @@ function (_UIComponent) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayDataOperation; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
-/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4585,15 +4740,409 @@ function (_Data) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Style; });
+/* unused harmony export StyleUnits */
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Style =
+/*#__PURE__*/
+function () {
+  function Style(style) {
+    _classCallCheck(this, Style);
+
+    this.style = style;
+    this.units = new StyleUnits();
+    this._transform = "";
+    this.updateTransform = this.updateTransform.bind(this);
+    this.getTransform = this.getTransform.bind(this);
+    this.getTranslate3d = this.getTranslate3d.bind(this);
+    this.getRotateX = this.getRotateX.bind(this);
+    this.getRotateY = this.getRotateY.bind(this);
+    this.getRotateZ = this.getRotateZ.bind(this);
+    this.transformBindings = [this.getTransform];
+  }
+
+  _createClass(Style, [{
+    key: "transformSpace",
+    value: function transformSpace() {
+      return this.transform ? " " : "";
+    }
+  }, {
+    key: "updateTransform",
+    value: function updateTransform() {
+      var style = this.style;
+      var transform = this.getCalculatedTransform();
+      style.msTransform = transform;
+      style.webkitTransform = transform;
+      style.transform = transform;
+      this.setTransform("");
+    }
+  }, {
+    key: "setTransform",
+    value: function setTransform(value) {
+      this._transform = value;
+    }
+  }, {
+    key: "getTransform",
+    value: function getTransform() {
+      return this._transform;
+    }
+  }, {
+    key: "getCalculatedTransform",
+    value: function getCalculatedTransform() {
+      var transform = "";
+
+      for (var i = 0; i < this.transformBindings.length; i++) {
+        if (i > 0) {
+          transform += " ";
+        }
+
+        var method = this.transformBindings[i];
+        transform += method();
+      }
+
+      return transform;
+    }
+  }, {
+    key: "getTranslate3d",
+    value: function getTranslate3d() {
+      return "translate3d(" + this.round(this.translateX) + this.units.translateX + ", " + this.round(this.translateY) + this.units.translateY + "," + this.round(this.translateZ) + this.units.translateZ + ")";
+    }
+  }, {
+    key: "getRotateX",
+    value: function getRotateX() {
+      return "rotateX(" + this.round(this.rotateX) + "deg)";
+    }
+  }, {
+    key: "getRotateY",
+    value: function getRotateY() {
+      return "rotateY(" + this.round(this.rotateY) + "deg)";
+    }
+  }, {
+    key: "getRotateZ",
+    value: function getRotateZ() {
+      return "rotateZ(" + this.round(this.rotateZ) + "deg)";
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.style = null;
+    }
+  }, {
+    key: "round",
+    value: function round(value) {
+      return Math.round(value * 10) / 10;
+    }
+  }, {
+    key: "bottom",
+    get: function get() {
+      return eval(this.style.bottom.split(this.units.bottom)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.bottom = value + this.units.bottom;
+    }
+  }, {
+    key: "fontSize",
+    get: function get() {
+      return eval(this.style.fontSize.split(this.units.fontSize)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.fontSize = value + this.units.fontSize;
+    }
+  }, {
+    key: "height",
+    get: function get() {
+      return eval(this.style.height.split(this.units.height)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.height = value + this.units.height;
+    }
+  }, {
+    key: "left",
+    get: function get() {
+      return eval(this.style.left.split(this.units.left)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.left = value + this.units.left;
+    }
+  }, {
+    key: "marginBottom",
+    get: function get() {
+      return eval(this.style.marginBottom.split(this.units.marginBottom)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.marginBottom = value + this.units.marginBottom;
+    }
+  }, {
+    key: "marginLeft",
+    get: function get() {
+      return eval(this.style.marginLeft.split(this.units.marginLeft)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.marginLeft = value + this.units.marginLeft;
+    }
+  }, {
+    key: "marginRight",
+    get: function get() {
+      return eval(this.style.marginRight.split(this.units.marginRight)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.marginRight = value + this.units.marginRight;
+    }
+  }, {
+    key: "marginTop",
+    get: function get() {
+      return eval(this.style.marginTop.split(this.units.marginTop)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.marginTop = value + this.units.marginTop;
+    }
+  }, {
+    key: "maxHeight",
+    get: function get() {
+      return eval(this.style.maxHeight.split(this.units.maxHeight)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.maxHeight = value + this.units.maxHeight;
+    }
+  }, {
+    key: "opacity",
+    get: function get() {
+      return this._opacity; // return (isNaN(this.style.opacity))?1:this.style.opacity;
+    },
+    set: function set(value) {
+      this._opacity = value;
+      this.style.opacity = this.round(value);
+    }
+  }, {
+    key: "paddingBottom",
+    get: function get() {
+      return eval(this.style.paddingBottom.split(this.units.paddingBottom)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.paddingBottom = value + this.units.paddingBottom;
+    }
+  }, {
+    key: "paddingLeft",
+    get: function get() {
+      return eval(this.style.paddingLeft.split(this.units.paddingLeft)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.paddingLeft = value + this.units.paddingLeft;
+    }
+  }, {
+    key: "paddingRight",
+    get: function get() {
+      return eval(this.style.paddingRight.split(this.units.paddingRight)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.paddingRight = value + this.units.paddingRight;
+    }
+  }, {
+    key: "paddingTop",
+    get: function get() {
+      return eval(this.style.paddingTop.split(this.units.paddingTop)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.paddingTop = value + this.units.paddingTop;
+    }
+  }, {
+    key: "strokeDashoffset",
+    get: function get() {
+      return isNaN(this.style.strokeDashoffset) ? 0 : this.style.strokeDashoffset;
+    },
+    set: function set(value) {
+      this.style.strokeDashoffset = value;
+    }
+  }, {
+    key: "right",
+    get: function get() {
+      return eval(this.style.right.split(this.units.right)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.right = value + this.units.right;
+    }
+  }, {
+    key: "top",
+    get: function get() {
+      return eval(this.style.top.split(this.units.top)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.top = value + this.units.top;
+    }
+  }, {
+    key: "width",
+    get: function get() {
+      return eval(this.style.width.split(this.units.width)[0]) || 0;
+    },
+    set: function set(value) {
+      this.style.width = value + this.units.width;
+    }
+  }, {
+    key: "translateX",
+    get: function get() {
+      return isNaN(this._translateX) ? 0 : this._translateX;
+    },
+    set: function set(value) {
+      this._translateX = value;
+      this._transform += this.transformSpace() + "translateX(" + value + this.units.translateX + ")";
+    }
+  }, {
+    key: "translateY",
+    get: function get() {
+      return isNaN(this._translateY) ? 0 : this._translateY;
+    },
+    set: function set(value) {
+      this._translateY = value;
+      this._transform += this.transformSpace() + "translateY(" + value + this.units.translateY + ")";
+    }
+  }, {
+    key: "translateZ",
+    get: function get() {
+      return isNaN(this._translateZ) ? 0 : this._translateZ;
+    },
+    set: function set(value) {
+      this._translateZ = value;
+      this._transform += this.transformSpace() + "translateZ(" + value + this.units.translateZ + ")";
+    }
+  }, {
+    key: "scale",
+    get: function get() {
+      return this.scaleX;
+    },
+    set: function set(value) {
+      this.scaleX = value;
+      this.scaleY = value;
+    }
+  }, {
+    key: "scaleX",
+    get: function get() {
+      return isNaN(this._scaleX) ? 1 : this._scaleX;
+    },
+    set: function set(value) {
+      this._scaleX = value;
+      this._transform += this.transformSpace() + "scaleX(" + value + ")";
+    }
+  }, {
+    key: "scaleY",
+    get: function get() {
+      return isNaN(this._scaleY) ? 1 : this._scaleY;
+    },
+    set: function set(value) {
+      this._scaleY = value;
+      this._transform += this.transformSpace() + "scaleY(" + value + ")";
+    }
+  }, {
+    key: "scaleZ",
+    get: function get() {
+      return isNaN(this._scaleZ) ? 1 : this._scaleZ;
+    },
+    set: function set(value) {
+      this._scaleZ = value;
+      this._transform += this.transformSpace() + "scaleZ(" + value + ")";
+    }
+  }, {
+    key: "rotateX",
+    get: function get() {
+      return isNaN(this._rotateX) ? 0 : this._rotateX;
+    },
+    set: function set(value) {
+      this._rotateX = value;
+      this._transform += this.transformSpace() + "rotateX(" + value + "deg)";
+    }
+  }, {
+    key: "rotateY",
+    get: function get() {
+      return isNaN(this._rotateY) ? 0 : this._rotateY;
+    },
+    set: function set(value) {
+      this._rotateY = value;
+      this._transform += this.transformSpace() + "rotateY(" + value + "deg)";
+    }
+  }, {
+    key: "rotateZ",
+    get: function get() {
+      return isNaN(this._rotateZ) ? 0 : this._rotateZ;
+    },
+    set: function set(value) {
+      this._rotateZ = value;
+      this._transform += this.transformSpace() + "rotateZ(" + value + "deg)";
+    }
+  }, {
+    key: "rotate",
+    get: function get() {
+      return isNaN(this._rotate) ? 0 : this._rotate;
+    },
+    set: function set(value) {
+      this._rotate = value;
+      this._transform += this.transformSpace() + "rotate(" + value + "deg)";
+    }
+  }, {
+    key: "skewX",
+    get: function get() {
+      return isNaN(this._skewX) ? 0 : this._skewX;
+    },
+    set: function set(value) {
+      this._skewX = value;
+      this._transform += this.transformSpace() + "skewX(" + value + "deg)";
+    }
+  }, {
+    key: "skewY",
+    get: function get() {
+      return isNaN(this._skewY) ? 0 : this._skewY;
+    },
+    set: function set(value) {
+      this._skewY = value;
+      this._transform += this.transformSpace() + "skewY(" + value + "deg)";
+    }
+  }]);
+
+  return Style;
+}();
+
+
+var StyleUnits = function StyleUnits() {
+  _classCallCheck(this, StyleUnits);
+
+  this.fontSize = "px";
+  this.marginTop = "px";
+  this.marginBottom = "px";
+  this.marginRight = "px";
+  this.marginLeft = "px";
+  this.paddingTop = "px";
+  this.paddingBottom = "px";
+  this.paddingRight = "px";
+  this.paddingLeft = "px";
+  this.width = "px";
+  this.height = "px";
+  this.maxHeight = "px";
+  this.left = "px";
+  this.top = "px";
+  this.right = "px";
+  this.bottom = "px";
+  this.translateX = "px";
+  this.translateY = "px";
+  this.translateZ = "px";
+};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(1);
+var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
-var UIComponent = __webpack_require__(4);
+var UIComponent = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/events.js
-var events = __webpack_require__(3);
+var events = __webpack_require__(1);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIButton.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -5590,13 +6139,13 @@ function (_UIText) {
 var tsunami_window = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(2);
+var Point = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
 var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(9);
+var BooleanData = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIScrollPane.js
 function UIScrollPane_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIScrollPane_typeof = function _typeof(obj) { return typeof obj; }; } else { UIScrollPane_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIScrollPane_typeof(obj); }
@@ -6269,7 +6818,7 @@ function (_UIButton) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Clock.js
-var Clock = __webpack_require__(8);
+var Clock = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./js/tsunami/App.js
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return App_App; });
@@ -6361,400 +6910,6 @@ tsunami["b" /* define */]("ui-media", UIMedia_UIMedia);
 tsunami["b" /* define */]("ui-toggle", UIToggle);
 
 /***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export default */
-/* unused harmony export StyleUnits */
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Style =
-/*#__PURE__*/
-function () {
-  function Style(style) {
-    _classCallCheck(this, Style);
-
-    this.style = style;
-    this.units = new StyleUnits();
-    this._transform = "";
-    this.updateTransform = this.updateTransform.bind(this);
-    this.getTransform = this.getTransform.bind(this);
-    this.getTranslate3d = this.getTranslate3d.bind(this);
-    this.getRotateX = this.getRotateX.bind(this);
-    this.getRotateY = this.getRotateY.bind(this);
-    this.getRotateZ = this.getRotateZ.bind(this);
-    this.transformBindings = [this.getTransform];
-  }
-
-  _createClass(Style, [{
-    key: "transformSpace",
-    value: function transformSpace() {
-      return this.transform ? " " : "";
-    }
-  }, {
-    key: "updateTransform",
-    value: function updateTransform() {
-      var style = this.style;
-      var transform = this.getCalculatedTransform();
-      style.msTransform = transform;
-      style.webkitTransform = transform;
-      style.transform = transform;
-      this.setTransform("");
-    }
-  }, {
-    key: "setTransform",
-    value: function setTransform(value) {
-      this._transform = value;
-    }
-  }, {
-    key: "getTransform",
-    value: function getTransform() {
-      return this._transform;
-    }
-  }, {
-    key: "getCalculatedTransform",
-    value: function getCalculatedTransform() {
-      var transform = "";
-
-      for (var i = 0; i < this.transformBindings.length; i++) {
-        if (i > 0) {
-          transform += " ";
-        }
-
-        var method = this.transformBindings[i];
-        transform += method();
-      }
-
-      return transform;
-    }
-  }, {
-    key: "getTranslate3d",
-    value: function getTranslate3d() {
-      return "translate3d(" + this.round(this.translateX) + this.units.translateX + ", " + this.round(this.translateY) + this.units.translateY + "," + this.round(this.translateZ) + this.units.translateZ + ")";
-    }
-  }, {
-    key: "getRotateX",
-    value: function getRotateX() {
-      return "rotateX(" + this.round(this.rotateX) + "deg)";
-    }
-  }, {
-    key: "getRotateY",
-    value: function getRotateY() {
-      return "rotateY(" + this.round(this.rotateY) + "deg)";
-    }
-  }, {
-    key: "getRotateZ",
-    value: function getRotateZ() {
-      return "rotateZ(" + this.round(this.rotateZ) + "deg)";
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.style = null;
-    }
-  }, {
-    key: "round",
-    value: function round(value) {
-      return Math.round(value * 10) / 10;
-    }
-  }, {
-    key: "bottom",
-    get: function get() {
-      return eval(this.style.bottom.split(this.units.bottom)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.bottom = value + this.units.bottom;
-    }
-  }, {
-    key: "fontSize",
-    get: function get() {
-      return eval(this.style.fontSize.split(this.units.fontSize)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.fontSize = value + this.units.fontSize;
-    }
-  }, {
-    key: "height",
-    get: function get() {
-      return eval(this.style.height.split(this.units.height)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.height = value + this.units.height;
-    }
-  }, {
-    key: "left",
-    get: function get() {
-      return eval(this.style.left.split(this.units.left)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.left = value + this.units.left;
-    }
-  }, {
-    key: "marginBottom",
-    get: function get() {
-      return eval(this.style.marginBottom.split(this.units.marginBottom)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.marginBottom = value + this.units.marginBottom;
-    }
-  }, {
-    key: "marginLeft",
-    get: function get() {
-      return eval(this.style.marginLeft.split(this.units.marginLeft)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.marginLeft = value + this.units.marginLeft;
-    }
-  }, {
-    key: "marginRight",
-    get: function get() {
-      return eval(this.style.marginRight.split(this.units.marginRight)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.marginRight = value + this.units.marginRight;
-    }
-  }, {
-    key: "marginTop",
-    get: function get() {
-      return eval(this.style.marginTop.split(this.units.marginTop)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.marginTop = value + this.units.marginTop;
-    }
-  }, {
-    key: "maxHeight",
-    get: function get() {
-      return eval(this.style.maxHeight.split(this.units.maxHeight)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.maxHeight = value + this.units.maxHeight;
-    }
-  }, {
-    key: "opacity",
-    get: function get() {
-      return this._opacity; // return (isNaN(this.style.opacity))?1:this.style.opacity;
-    },
-    set: function set(value) {
-      this._opacity = value;
-      this.style.opacity = this.round(value);
-    }
-  }, {
-    key: "paddingBottom",
-    get: function get() {
-      return eval(this.style.paddingBottom.split(this.units.paddingBottom)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.paddingBottom = value + this.units.paddingBottom;
-    }
-  }, {
-    key: "paddingLeft",
-    get: function get() {
-      return eval(this.style.paddingLeft.split(this.units.paddingLeft)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.paddingLeft = value + this.units.paddingLeft;
-    }
-  }, {
-    key: "paddingRight",
-    get: function get() {
-      return eval(this.style.paddingRight.split(this.units.paddingRight)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.paddingRight = value + this.units.paddingRight;
-    }
-  }, {
-    key: "paddingTop",
-    get: function get() {
-      return eval(this.style.paddingTop.split(this.units.paddingTop)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.paddingTop = value + this.units.paddingTop;
-    }
-  }, {
-    key: "strokeDashoffset",
-    get: function get() {
-      return isNaN(this.style.strokeDashoffset) ? 0 : this.style.strokeDashoffset;
-    },
-    set: function set(value) {
-      this.style.strokeDashoffset = value;
-    }
-  }, {
-    key: "right",
-    get: function get() {
-      return eval(this.style.right.split(this.units.right)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.right = value + this.units.right;
-    }
-  }, {
-    key: "top",
-    get: function get() {
-      return eval(this.style.top.split(this.units.top)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.top = value + this.units.top;
-    }
-  }, {
-    key: "width",
-    get: function get() {
-      return eval(this.style.width.split(this.units.width)[0]) || 0;
-    },
-    set: function set(value) {
-      this.style.width = value + this.units.width;
-    }
-  }, {
-    key: "translateX",
-    get: function get() {
-      return isNaN(this._translateX) ? 0 : this._translateX;
-    },
-    set: function set(value) {
-      this._translateX = value;
-      this._transform += this.transformSpace() + "translateX(" + value + this.units.translateX + ")";
-    }
-  }, {
-    key: "translateY",
-    get: function get() {
-      return isNaN(this._translateY) ? 0 : this._translateY;
-    },
-    set: function set(value) {
-      this._translateY = value;
-      this._transform += this.transformSpace() + "translateY(" + value + this.units.translateY + ")";
-    }
-  }, {
-    key: "translateZ",
-    get: function get() {
-      return isNaN(this._translateZ) ? 0 : this._translateZ;
-    },
-    set: function set(value) {
-      this._translateZ = value;
-      this._transform += this.transformSpace() + "translateZ(" + value + this.units.translateZ + ")";
-    }
-  }, {
-    key: "scale",
-    get: function get() {
-      return this.scaleX;
-    },
-    set: function set(value) {
-      this.scaleX = value;
-      this.scaleY = value;
-    }
-  }, {
-    key: "scaleX",
-    get: function get() {
-      return isNaN(this._scaleX) ? 1 : this._scaleX;
-    },
-    set: function set(value) {
-      this._scaleX = value;
-      this._transform += this.transformSpace() + "scaleX(" + value + ")";
-    }
-  }, {
-    key: "scaleY",
-    get: function get() {
-      return isNaN(this._scaleY) ? 1 : this._scaleY;
-    },
-    set: function set(value) {
-      this._scaleY = value;
-      this._transform += this.transformSpace() + "scaleY(" + value + ")";
-    }
-  }, {
-    key: "scaleZ",
-    get: function get() {
-      return isNaN(this._scaleZ) ? 1 : this._scaleZ;
-    },
-    set: function set(value) {
-      this._scaleZ = value;
-      this._transform += this.transformSpace() + "scaleZ(" + value + ")";
-    }
-  }, {
-    key: "rotateX",
-    get: function get() {
-      return isNaN(this._rotateX) ? 0 : this._rotateX;
-    },
-    set: function set(value) {
-      this._rotateX = value;
-      this._transform += this.transformSpace() + "rotateX(" + value + "deg)";
-    }
-  }, {
-    key: "rotateY",
-    get: function get() {
-      return isNaN(this._rotateY) ? 0 : this._rotateY;
-    },
-    set: function set(value) {
-      this._rotateY = value;
-      this._transform += this.transformSpace() + "rotateY(" + value + "deg)";
-    }
-  }, {
-    key: "rotateZ",
-    get: function get() {
-      return isNaN(this._rotateZ) ? 0 : this._rotateZ;
-    },
-    set: function set(value) {
-      this._rotateZ = value;
-      this._transform += this.transformSpace() + "rotateZ(" + value + "deg)";
-    }
-  }, {
-    key: "rotate",
-    get: function get() {
-      return isNaN(this._rotate) ? 0 : this._rotate;
-    },
-    set: function set(value) {
-      this._rotate = value;
-      this._transform += this.transformSpace() + "rotate(" + value + "deg)";
-    }
-  }, {
-    key: "skewX",
-    get: function get() {
-      return isNaN(this._skewX) ? 0 : this._skewX;
-    },
-    set: function set(value) {
-      this._skewX = value;
-      this._transform += this.transformSpace() + "skewX(" + value + "deg)";
-    }
-  }, {
-    key: "skewY",
-    get: function get() {
-      return isNaN(this._skewY) ? 0 : this._skewY;
-    },
-    set: function set(value) {
-      this._skewY = value;
-      this._transform += this.transformSpace() + "skewY(" + value + "deg)";
-    }
-  }]);
-
-  return Style;
-}();
-
-
-var StyleUnits = function StyleUnits() {
-  _classCallCheck(this, StyleUnits);
-
-  this.fontSize = "px";
-  this.marginTop = "px";
-  this.marginBottom = "px";
-  this.marginRight = "px";
-  this.marginLeft = "px";
-  this.paddingTop = "px";
-  this.paddingBottom = "px";
-  this.paddingRight = "px";
-  this.paddingLeft = "px";
-  this.width = "px";
-  this.height = "px";
-  this.maxHeight = "px";
-  this.left = "px";
-  this.top = "px";
-  this.right = "px";
-  this.bottom = "px";
-  this.translateX = "px";
-  this.translateY = "px";
-  this.translateZ = "px";
-};
-
-/***/ }),
 /* 21 */,
 /* 22 */,
 /* 23 */,
@@ -6774,10 +6929,16 @@ module.exports = __webpack_require__(27);
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(1);
+var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 2 modules
-var UIComponent = __webpack_require__(4);
+var UIComponent = __webpack_require__(5);
+
+// EXTERNAL MODULE: ./js/tsunami/events.js
+var events = __webpack_require__(1);
+
+// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
+var BooleanData = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./js/view/ActionView.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -6811,6 +6972,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var ActionView_ActionView =
 /*#__PURE__*/
 function (_UIComponent) {
@@ -6821,10 +6984,24 @@ function (_UIComponent) {
 
     _classCallCheck(this, ActionView);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActionView).call(this, element));
-    _this.title = _this.element.querySelector(".sc-title");
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ActionView).call(this, element)); // this.dragStart = this.dragStart.bind(this);
+
+    _this.title = _this.element.querySelector(".sc-title"); // this.dragArea = this.title.querySelector(".sc-drag-area");
+    // this.dragArea.addEventListener(events.mousedown, this.dragStart);
+
     return _this;
-  }
+  } // set isDragging(value) {
+  // 	if(value) {
+  // 		this.element.classList.add("is-dragging");
+  // 	} else {
+  // 		this.element.classList.remove("is-dragging");
+  // 	}
+  // }
+  // dragStart(event) {
+  // 	let point = this.getTouchPoint(event);
+  // 	this.element.parentNode.component.dragStart(point, this);
+  // }
+
 
   _createClass(ActionView, [{
     key: "scope",
@@ -6869,16 +7046,26 @@ function (_UIComponent) {
 
 
 
+// EXTERNAL MODULE: ./js/tsunami/components/Style.js
+var Style = __webpack_require__(19);
+
+// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
+var Point = __webpack_require__(3);
+
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
 function ScrollCapture_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function ScrollCapture_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ScrollCapture_createClass(Constructor, protoProps, staticProps) { if (protoProps) ScrollCapture_defineProperties(Constructor.prototype, protoProps); if (staticProps) ScrollCapture_defineProperties(Constructor, staticProps); return Constructor; }
+
 function ScrollCapture_possibleConstructorReturn(self, call) { if (call && (ScrollCapture_typeof(call) === "object" || typeof call === "function")) { return call; } return ScrollCapture_assertThisInitialized(self); }
 
-function ScrollCapture_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function ScrollCapture_getPrototypeOf(o) { ScrollCapture_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ScrollCapture_getPrototypeOf(o); }
+
+function ScrollCapture_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function ScrollCapture_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ScrollCapture_setPrototypeOf(subClass, superClass); }
 
@@ -6888,32 +7075,86 @@ function ScrollCapture_setPrototypeOf(o, p) { ScrollCapture_setPrototypeOf = Obj
 
 
 
-var ScrollCapture =
+
+
+
+
+var ScrollCapture_ScrollCapture =
 /*#__PURE__*/
 function (_UIComponent) {
   ScrollCapture_inherits(ScrollCapture, _UIComponent);
 
   function ScrollCapture(element) {
+    var _this;
+
     ScrollCapture_classCallCheck(this, ScrollCapture);
 
-    return ScrollCapture_possibleConstructorReturn(this, ScrollCapture_getPrototypeOf(ScrollCapture).call(this, element));
+    _this = ScrollCapture_possibleConstructorReturn(this, ScrollCapture_getPrototypeOf(ScrollCapture).call(this, element));
+    _this.style = new Style["a" /* default */](_this.element.style);
+    _this.style.right = 50;
+    _this.style.top = 50;
+    _this.dragStart = _this.dragStart.bind(ScrollCapture_assertThisInitialized(_this));
+    _this.dragMove = _this.dragMove.bind(ScrollCapture_assertThisInitialized(_this));
+    _this.dragEnd = _this.dragEnd.bind(ScrollCapture_assertThisInitialized(_this));
+
+    var dragArea = _this.element.querySelector(".sc-header .sc-drag-area");
+
+    dragArea.addEventListener(events["b" /* events */].mousedown, _this.dragStart);
+    return _this;
   }
+
+  ScrollCapture_createClass(ScrollCapture, [{
+    key: "dragStart",
+    value: function dragStart(event) {
+      this.startPosition = new Point["a" /* default */](this.style.right, this.style.top);
+      this.startPoint = this.getTouchPoint(event);
+      document.body.addEventListener(events["b" /* events */].mousemove, this.dragMove);
+      document.body.addEventListener(events["b" /* events */].mouseup, this.dragEnd);
+    }
+  }, {
+    key: "dragMove",
+    value: function dragMove(event) {
+      var point = this.getTouchPoint(event);
+      var diff = this.startPoint.subtract(point);
+      this.style.right = this.startPosition.x + diff.x;
+      this.style.top = this.startPosition.y - diff.y;
+    }
+  }, {
+    key: "dragEnd",
+    value: function dragEnd(event) {
+      document.body.removeEventListener(events["b" /* events */].mousemove, this.dragMove);
+      document.body.removeEventListener(events["b" /* events */].mouseup, this.dragEnd);
+      app.save();
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.style.right = obj.right;
+      this.style.top = obj.top;
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var obj = {
+        right: this.style.right,
+        top: this.style.top
+      };
+      return obj;
+    }
+  }]);
 
   return ScrollCapture;
 }(UIComponent["a" /* default */]);
 
 
-ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">ScrollCapture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"save\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div>\n\t<!--\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n\t<!--\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units:</span>-->\n\t<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n\t<!--\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n\t<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t<!--\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">left:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">top:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageX<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageY<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
+ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">ScrollCapture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"save\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" is=\"ui-list\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window\" data-type=\"[[data.type]]\" data-model=\"data\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">[[data.name]]</span>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div>\n\t<!--\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n\t<!--\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units:</span>-->\n\t<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n\t<!--\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n\t<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t<!--\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">left:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">top:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageX<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">pageY<sup>[[index1]]</sup>:</span><input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">pageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\">+</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
 
 tsunami["b" /* define */]("action-view", ActionView_ActionView);
 // EXTERNAL MODULE: ./js/tsunami/App.js + 10 modules
-var App = __webpack_require__(19);
+var App = __webpack_require__(20);
 
-// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(2);
-
-// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
-var BooleanData = __webpack_require__(9);
+// EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
+var ArrayData = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
 var NumberData = __webpack_require__(6);
@@ -7001,9 +7242,6 @@ function () {
   return Action;
 }();
 
-
-// EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js + 1 modules
-var ArrayData = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/animation/Easing.js
 var Easing = __webpack_require__(12);
@@ -7169,6 +7407,610 @@ function (_Action) {
 }(Action_Action);
 
 
+// EXTERNAL MODULE: ./js/tsunami/data/Validation.js
+var Validation = __webpack_require__(14);
+
+// CONCATENATED MODULE: ./js/tsunami/data/StringData.js
+function StringData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { StringData_typeof = function _typeof(obj) { return typeof obj; }; } else { StringData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return StringData_typeof(obj); }
+
+function StringData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function StringData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function StringData_createClass(Constructor, protoProps, staticProps) { if (protoProps) StringData_defineProperties(Constructor.prototype, protoProps); if (staticProps) StringData_defineProperties(Constructor, staticProps); return Constructor; }
+
+function StringData_possibleConstructorReturn(self, call) { if (call && (StringData_typeof(call) === "object" || typeof call === "function")) { return call; } return StringData_assertThisInitialized(self); }
+
+function StringData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function StringData_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { StringData_get = Reflect.get; } else { StringData_get = function _get(target, property, receiver) { var base = StringData_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return StringData_get(target, property, receiver || target); }
+
+function StringData_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = StringData_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function StringData_getPrototypeOf(o) { StringData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return StringData_getPrototypeOf(o); }
+
+function StringData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) StringData_setPrototypeOf(subClass, superClass); }
+
+function StringData_setPrototypeOf(o, p) { StringData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return StringData_setPrototypeOf(o, p); }
+
+
+
+
+var StringData_StringData =
+/*#__PURE__*/
+function (_Data) {
+  StringData_inherits(StringData, _Data);
+
+  function StringData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    StringData_classCallCheck(this, StringData);
+
+    _this = StringData_possibleConstructorReturn(this, StringData_getPrototypeOf(StringData).call(this));
+    _this.modifiers = modifiers;
+    _this.value = value;
+    return _this;
+  }
+
+  StringData_createClass(StringData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = "";
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.modifiers = [];
+
+      if (this.validation instanceof Validation["a" /* default */]) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return StringData_get(StringData_getPrototypeOf(StringData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (!value) {
+        value = "";
+      }
+
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value) {
+        this._value = value;
+        this.dispatchEvent({
+          type: Data["a" /* default */].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }], [{
+    key: "validateLengthIsMinimum1",
+    value: function validateLengthIsMinimum1(val) {
+      return val.length > 0;
+    }
+  }]);
+
+  return StringData;
+}(Data["a" /* default */]);
+
+
+// CONCATENATED MODULE: ./js/model/ActionScroll.js
+function ActionScroll_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionScroll_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionScroll_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionScroll_typeof(obj); }
+
+function ActionScroll_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ActionScroll_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ActionScroll_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionScroll_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionScroll_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ActionScroll_possibleConstructorReturn(self, call) { if (call && (ActionScroll_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionScroll_assertThisInitialized(self); }
+
+function ActionScroll_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ActionScroll_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionScroll_get = Reflect.get; } else { ActionScroll_get = function _get(target, property, receiver) { var base = ActionScroll_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionScroll_get(target, property, receiver || target); }
+
+function ActionScroll_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionScroll_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function ActionScroll_getPrototypeOf(o) { ActionScroll_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionScroll_getPrototypeOf(o); }
+
+function ActionScroll_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionScroll_setPrototypeOf(subClass, superClass); }
+
+function ActionScroll_setPrototypeOf(o, p) { ActionScroll_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionScroll_setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var ActionScroll_ActionScroll =
+/*#__PURE__*/
+function (_ActionTween) {
+  ActionScroll_inherits(ActionScroll, _ActionTween);
+
+  function ActionScroll() {
+    var _this;
+
+    var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "window";
+    var units = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "px";
+    var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var duration = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+    var delay = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+
+    ActionScroll_classCallCheck(this, ActionScroll);
+
+    _this = ActionScroll_possibleConstructorReturn(this, ActionScroll_getPrototypeOf(ActionScroll).call(this, 0, 0, 0, 0, duration, delay));
+    _this.type = "ActionScroll";
+    _this.name = "Scroll";
+    _this.target = new StringData_StringData(target);
+    _this.unitX = new NumberData["a" /* default */](x);
+    _this.unitY = new NumberData["a" /* default */](y);
+    _this.units = new ArrayData["a" /* default */]("%", "px");
+    _this.units.selectedItem.value = units;
+    _this.isCaptureable.value = true;
+    return _this;
+  }
+
+  ActionScroll_createClass(ActionScroll, [{
+    key: "clone",
+    value: function clone() {
+      var action = new ActionScroll();
+      action.copy(this);
+      return action;
+    }
+  }, {
+    key: "copy",
+    value: function copy(action) {
+      ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "copy", this).call(this, action);
+
+      this.target.value = action.target.value;
+      this.unitX.value = action.unitX.value;
+      this.unitY.value = action.unitY.value;
+      this.units.selectedItem.value = action.units.selectedItem.value;
+    }
+  }, {
+    key: "trigger",
+    value: function trigger() {
+      switch (this.target.value) {
+        case "window":
+          this.startX.value = window.scrollX;
+          this.startY.value = window.scrollY;
+          break;
+
+        default:
+          var element = document.querySelector(this.target.value);
+          this.startX.value = element.scrollLeft;
+          this.startY.value = element.scrollTop;
+          break;
+      }
+
+      if (this.units.selectedItem.value == "px") {
+        this.endX.copy(this.unitX);
+        this.endY.copy(this.unitY);
+      }
+
+      if (this.units.selectedItem.value == "%") {
+        var maxScroll = {
+          x: 0,
+          y: 0
+        };
+
+        switch (this.target.value) {
+          case "window":
+            maxScroll.x = document.body.offsetWidth - window.innerWidth;
+            maxScroll.y = document.body.offsetHeight - window.innerHeight;
+            break;
+
+          default:
+            var _element = document.querySelector(this.target.value);
+
+            maxScroll.x = _element.scrollWidth - _element.clientWidth;
+            maxScroll.y = _element.scrollHeight - _element.clientHeight;
+            break;
+        }
+
+        this.endX.value = Math.round(this.unitX.value / 100 * maxScroll.x);
+        this.endY.value = Math.round(this.unitY.value / 100 * maxScroll.y);
+      }
+
+      return ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "trigger", this).call(this);
+    }
+  }, {
+    key: "tweenUpdateHandler",
+    value: function tweenUpdateHandler() {
+      switch (this.target.value) {
+        case "window":
+          window.scroll(this.pos.x, this.pos.y);
+          break;
+
+        default:
+          var element = document.querySelector(this.target.value);
+          element.scrollLeft = this.pos.x;
+          element.scrollTop = this.pos.y;
+          break;
+      }
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var data = ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "serialize", this).call(this);
+
+      data.target = this.target.value;
+      data.unitX = this.unitX.value;
+      data.unitY = this.unitY.value;
+      data.units = this.units.selectedItem.value;
+      return data;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "deserialize", this).call(this, data);
+
+      this.target.value = data.target;
+      this.unitX.value = data.unitX;
+      this.unitY.value = data.unitY;
+      this.units.selectedItem.value = data.units;
+    }
+  }, {
+    key: "capture",
+    value: function capture() {
+      var _this2 = this;
+
+      this.isCapturing.value = true;
+      var scroll = new Point["a" /* default */]();
+      var maxScroll = new Point["a" /* default */]();
+
+      switch (this.target.value) {
+        case "window":
+          scroll.x = window.scrollX;
+          scroll.y = window.scrollY;
+          maxScroll.x = document.body.offsetWidth - window.innerWidth;
+          maxScroll.y = document.body.offsetHeight - window.innerHeight;
+          break;
+
+        default:
+          var element = document.querySelector(this.target.value);
+          scroll.x = element.scrollLeft;
+          scroll.y = element.scrollTop;
+          maxScroll.x = element.scrollWidth - element.clientWidth;
+          maxScroll.y = element.scrollHeight - element.clientHeight;
+          break;
+      }
+
+      var unit = new Point["a" /* default */]();
+
+      switch (this.units.selectedItem.value) {
+        case "px":
+          unit.x = scroll.x;
+          unit.y = scroll.y;
+          break;
+
+        case "%":
+          unit.x = Math.round(scroll.x / maxScroll.x * 100);
+          unit.y = Math.round(scroll.y / maxScroll.y * 100);
+          break;
+      }
+
+      if (isNaN(unit.x)) unit.x = 0;
+      if (isNaN(unit.y)) unit.y = 0;
+      this.unitX.value = unit.x;
+      this.unitY.value = unit.y;
+      setTimeout(function () {
+        _this2.isCapturing.value = false;
+      }, 100);
+    }
+  }, {
+    key: "captureAtInit",
+    value: function captureAtInit() {
+      ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "captureAtInit", this).call(this);
+
+      this.capture();
+    }
+  }]);
+
+  return ActionScroll;
+}(ActionTween_ActionTween);
+
+
+// CONCATENATED MODULE: ./js/model/ActionWait.js
+function ActionWait_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionWait_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionWait_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionWait_typeof(obj); }
+
+function ActionWait_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ActionWait_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ActionWait_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionWait_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionWait_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ActionWait_possibleConstructorReturn(self, call) { if (call && (ActionWait_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionWait_assertThisInitialized(self); }
+
+function ActionWait_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ActionWait_getPrototypeOf(o) { ActionWait_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionWait_getPrototypeOf(o); }
+
+function ActionWait_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionWait_setPrototypeOf(subClass, superClass); }
+
+function ActionWait_setPrototypeOf(o, p) { ActionWait_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionWait_setPrototypeOf(o, p); }
+
+
+
+var ActionWait =
+/*#__PURE__*/
+function (_Action) {
+  ActionWait_inherits(ActionWait, _Action);
+
+  function ActionWait() {
+    ActionWait_classCallCheck(this, ActionWait);
+
+    return ActionWait_possibleConstructorReturn(this, ActionWait_getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
+  }
+
+  ActionWait_createClass(ActionWait, [{
+    key: "clone",
+    value: function clone() {
+      var action = new ActionWait();
+      action.copy(this);
+      return action;
+    }
+  }]);
+
+  return ActionWait;
+}(Action_Action);
+
+
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(7);
+
+// CONCATENATED MODULE: ./js/model/ActionMouseEvent.js
+function ActionMouseEvent_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionMouseEvent_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionMouseEvent_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionMouseEvent_typeof(obj); }
+
+function ActionMouseEvent_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ActionMouseEvent_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ActionMouseEvent_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionMouseEvent_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionMouseEvent_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ActionMouseEvent_possibleConstructorReturn(self, call) { if (call && (ActionMouseEvent_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionMouseEvent_assertThisInitialized(self); }
+
+function ActionMouseEvent_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ActionMouseEvent_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionMouseEvent_get = Reflect.get; } else { ActionMouseEvent_get = function _get(target, property, receiver) { var base = ActionMouseEvent_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionMouseEvent_get(target, property, receiver || target); }
+
+function ActionMouseEvent_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionMouseEvent_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function ActionMouseEvent_getPrototypeOf(o) { ActionMouseEvent_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionMouseEvent_getPrototypeOf(o); }
+
+function ActionMouseEvent_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionMouseEvent_setPrototypeOf(subClass, superClass); }
+
+function ActionMouseEvent_setPrototypeOf(o, p) { ActionMouseEvent_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionMouseEvent_setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var ActionMouseEvent_ActionMouseEvent =
+/*#__PURE__*/
+function (_Action) {
+  ActionMouseEvent_inherits(ActionMouseEvent, _Action);
+
+  function ActionMouseEvent() {
+    var _this;
+
+    var eventType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "click";
+    var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+    ActionMouseEvent_classCallCheck(this, ActionMouseEvent);
+
+    _this = ActionMouseEvent_possibleConstructorReturn(this, ActionMouseEvent_getPrototypeOf(ActionMouseEvent).call(this, "ActionMouseEvent", "MouseEvent"));
+    _this.x = new NumberData["a" /* default */](x);
+    _this.y = new NumberData["a" /* default */](y);
+    _this.eventTypes = new ArrayData["a" /* default */]("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
+    _this.eventTypes.selectedItem.value = _this.eventTypes.value[0];
+    _this.isCaptureable.value = true;
+    _this.captureMouseEventHandler = _this.captureMouseEventHandler.bind(ActionMouseEvent_assertThisInitialized(_this));
+    return _this;
+  }
+
+  ActionMouseEvent_createClass(ActionMouseEvent, [{
+    key: "clone",
+    value: function clone() {
+      var action = new ActionMouseEvent();
+      action.copy(this);
+      return action;
+    }
+  }, {
+    key: "copy",
+    value: function copy(action) {
+      ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "copy", this).call(this, action);
+
+      this.eventTypes.selectedItem.value = action.eventTypes.selectedItem.value;
+      this.x.value = action.x.value;
+      this.y.value = action.y.value;
+    }
+  }, {
+    key: "trigger",
+    value: function trigger() {
+      var point = new Point["a" /* default */](this.x.value - window.scrollX, this.y.value - window.scrollY);
+      var el = document.elementFromPoint(point.x, point.y);
+      var event = new MouseEvent(this.eventTypes.selectedItem.value, {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: point.x,
+        clientY: point.y,
+        pageX: point.x,
+        pageY: point.y,
+        x: point.x,
+        y: point.y
+      });
+      el.dispatchEvent(event);
+      return Promise.resolve();
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var data = ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "serialize", this).call(this);
+
+      data.eventType = this.eventTypes.selectedItem.value;
+      data.x = this.x.value;
+      data.y = this.y.value;
+      return data;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "deserialize", this).call(this, data);
+
+      this.eventTypes.selectedItem.value = data.eventType;
+      this.x.value = data.x;
+      this.y.value = data.y;
+    }
+  }, {
+    key: "capture",
+    value: function capture() {
+      var _this2 = this;
+
+      this.isCapturing.value = true;
+      setTimeout(function () {
+        document.body.addEventListener(_this2.eventTypes.selectedItem.value, _this2.captureMouseEventHandler);
+      }, 33);
+    }
+  }, {
+    key: "captureMouseEventHandler",
+    value: function captureMouseEventHandler(event) {
+      this.isCapturing.value = false;
+      var touch = event;
+
+      if (tsunami_window["a" /* isTouch */]) {
+        touch = event.touches[0];
+      }
+
+      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
+      this.x.value = point.x;
+      this.y.value = point.y;
+      document.body.removeEventListener(this.eventTypes.selectedItem.value, this.captureMouseEventHandler);
+    }
+  }]);
+
+  return ActionMouseEvent;
+}(Action_Action);
+
+
+// CONCATENATED MODULE: ./js/model/ActionEval.js
+function ActionEval_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionEval_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionEval_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionEval_typeof(obj); }
+
+function ActionEval_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ActionEval_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ActionEval_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionEval_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionEval_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ActionEval_possibleConstructorReturn(self, call) { if (call && (ActionEval_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionEval_assertThisInitialized(self); }
+
+function ActionEval_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ActionEval_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionEval_get = Reflect.get; } else { ActionEval_get = function _get(target, property, receiver) { var base = ActionEval_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionEval_get(target, property, receiver || target); }
+
+function ActionEval_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionEval_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function ActionEval_getPrototypeOf(o) { ActionEval_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionEval_getPrototypeOf(o); }
+
+function ActionEval_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionEval_setPrototypeOf(subClass, superClass); }
+
+function ActionEval_setPrototypeOf(o, p) { ActionEval_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionEval_setPrototypeOf(o, p); }
+
+
+
+
+var ActionEval_ActionEval =
+/*#__PURE__*/
+function (_Action) {
+  ActionEval_inherits(ActionEval, _Action);
+
+  function ActionEval() {
+    var _this;
+
+    var code = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+    ActionEval_classCallCheck(this, ActionEval);
+
+    _this = ActionEval_possibleConstructorReturn(this, ActionEval_getPrototypeOf(ActionEval).call(this, "ActionEval", "Eval"));
+
+    if (!code) {
+      code = "return new Promise(function(resolve, reject) {\n\tconsole.log(\"Wait for 1 second\");\n\tsetTimeout(function() {resolve(); }, 1000);\n});";
+    }
+
+    _this.code = new StringData_StringData(code);
+    return _this;
+  }
+
+  ActionEval_createClass(ActionEval, [{
+    key: "clone",
+    value: function clone() {
+      var action = new ActionEval();
+      action.copy(this);
+      return action;
+    }
+  }, {
+    key: "copy",
+    value: function copy(action) {
+      this.code.value = action.code.value;
+    }
+  }, {
+    key: "trigger",
+    value: function trigger() {
+      var expression = this.code.value; // let promise = eval('(function() {' + expression + '}())');
+
+      var promise = new Function(expression)();
+      var isPromise = promise instanceof Promise;
+
+      if (!isPromise) {
+        promise = Promise.resolve();
+      }
+
+      return promise;
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var data = ActionEval_get(ActionEval_getPrototypeOf(ActionEval.prototype), "serialize", this).call(this);
+
+      data.code = encodeURIComponent(this.code.value);
+      return data;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      ActionEval_get(ActionEval_getPrototypeOf(ActionEval.prototype), "deserialize", this).call(this, data);
+
+      this.code.value = decodeURIComponent(data.code);
+    }
+  }]);
+
+  return ActionEval;
+}(Action_Action);
+
+
 // CONCATENATED MODULE: ./js/tsunami/data/Vector2Data.js
 function Vector2Data_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -7223,9 +8065,6 @@ function () {
   return Vector2Data;
 }();
 
-
-// EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(7);
 
 // CONCATENATED MODULE: ../node_modules/three/build/three.module.js
 // Polyfills
@@ -56594,607 +57433,6 @@ function (_ActionTween) {
 }(ActionTween_ActionTween);
 
 
-// EXTERNAL MODULE: ./js/tsunami/data/Validation.js
-var Validation = __webpack_require__(14);
-
-// CONCATENATED MODULE: ./js/tsunami/data/StringData.js
-function StringData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { StringData_typeof = function _typeof(obj) { return typeof obj; }; } else { StringData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return StringData_typeof(obj); }
-
-function StringData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function StringData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function StringData_createClass(Constructor, protoProps, staticProps) { if (protoProps) StringData_defineProperties(Constructor.prototype, protoProps); if (staticProps) StringData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function StringData_possibleConstructorReturn(self, call) { if (call && (StringData_typeof(call) === "object" || typeof call === "function")) { return call; } return StringData_assertThisInitialized(self); }
-
-function StringData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function StringData_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { StringData_get = Reflect.get; } else { StringData_get = function _get(target, property, receiver) { var base = StringData_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return StringData_get(target, property, receiver || target); }
-
-function StringData_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = StringData_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function StringData_getPrototypeOf(o) { StringData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return StringData_getPrototypeOf(o); }
-
-function StringData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) StringData_setPrototypeOf(subClass, superClass); }
-
-function StringData_setPrototypeOf(o, p) { StringData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return StringData_setPrototypeOf(o, p); }
-
-
-
-
-var StringData_StringData =
-/*#__PURE__*/
-function (_Data) {
-  StringData_inherits(StringData, _Data);
-
-  function StringData() {
-    var _this;
-
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    StringData_classCallCheck(this, StringData);
-
-    _this = StringData_possibleConstructorReturn(this, StringData_getPrototypeOf(StringData).call(this));
-    _this.modifiers = modifiers;
-    _this.value = value;
-    return _this;
-  }
-
-  StringData_createClass(StringData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value;
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.value = "";
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.modifiers = [];
-
-      if (this.validation instanceof Validation["a" /* default */]) {
-        this.validation.destroy();
-      }
-
-      this.validation = null;
-      return StringData_get(StringData_getPrototypeOf(StringData.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (!value) {
-        value = "";
-      }
-
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value) {
-        this._value = value;
-        this.dispatchEvent({
-          type: Data["a" /* default */].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }], [{
-    key: "validateLengthIsMinimum1",
-    value: function validateLengthIsMinimum1(val) {
-      return val.length > 0;
-    }
-  }]);
-
-  return StringData;
-}(Data["a" /* default */]);
-
-
-// CONCATENATED MODULE: ./js/model/ActionScroll.js
-function ActionScroll_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionScroll_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionScroll_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionScroll_typeof(obj); }
-
-function ActionScroll_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ActionScroll_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ActionScroll_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionScroll_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionScroll_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ActionScroll_possibleConstructorReturn(self, call) { if (call && (ActionScroll_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionScroll_assertThisInitialized(self); }
-
-function ActionScroll_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ActionScroll_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionScroll_get = Reflect.get; } else { ActionScroll_get = function _get(target, property, receiver) { var base = ActionScroll_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionScroll_get(target, property, receiver || target); }
-
-function ActionScroll_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionScroll_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function ActionScroll_getPrototypeOf(o) { ActionScroll_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionScroll_getPrototypeOf(o); }
-
-function ActionScroll_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionScroll_setPrototypeOf(subClass, superClass); }
-
-function ActionScroll_setPrototypeOf(o, p) { ActionScroll_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionScroll_setPrototypeOf(o, p); }
-
-
-
-
-
-
-
-var ActionScroll_ActionScroll =
-/*#__PURE__*/
-function (_ActionTween) {
-  ActionScroll_inherits(ActionScroll, _ActionTween);
-
-  function ActionScroll() {
-    var _this;
-
-    var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "window";
-    var units = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "px";
-    var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-    var duration = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
-    var delay = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
-
-    ActionScroll_classCallCheck(this, ActionScroll);
-
-    _this = ActionScroll_possibleConstructorReturn(this, ActionScroll_getPrototypeOf(ActionScroll).call(this, 0, 0, 0, 0, duration, delay));
-    _this.type = "ActionScroll";
-    _this.name = "Scroll";
-    _this.target = new StringData_StringData(target);
-    _this.unitX = new NumberData["a" /* default */](x);
-    _this.unitY = new NumberData["a" /* default */](y);
-    _this.units = new ArrayData["a" /* default */]("%", "px");
-    _this.units.selectedItem.value = units;
-    _this.isCaptureable.value = true;
-    return _this;
-  }
-
-  ActionScroll_createClass(ActionScroll, [{
-    key: "clone",
-    value: function clone() {
-      var action = new ActionScroll();
-      action.copy(this);
-      return action;
-    }
-  }, {
-    key: "copy",
-    value: function copy(action) {
-      ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "copy", this).call(this, action);
-
-      this.target.value = action.target.value;
-      this.unitX.value = action.unitX.value;
-      this.unitY.value = action.unitY.value;
-      this.units.selectedItem.value = action.units.selectedItem.value;
-    }
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      switch (this.target.value) {
-        case "window":
-          this.startX.value = window.scrollX;
-          this.startY.value = window.scrollY;
-          break;
-
-        default:
-          var element = document.querySelector(this.target.value);
-          this.startX.value = element.scrollLeft;
-          this.startY.value = element.scrollTop;
-          break;
-      }
-
-      if (this.units.selectedItem.value == "px") {
-        this.endX.copy(this.unitX);
-        this.endY.copy(this.unitY);
-      }
-
-      if (this.units.selectedItem.value == "%") {
-        var maxScroll = {
-          x: 0,
-          y: 0
-        };
-
-        switch (this.target.value) {
-          case "window":
-            maxScroll.x = document.body.offsetWidth - window.innerWidth;
-            maxScroll.y = document.body.offsetHeight - window.innerHeight;
-            break;
-
-          default:
-            var _element = document.querySelector(this.target.value);
-
-            maxScroll.x = _element.scrollWidth - _element.clientWidth;
-            maxScroll.y = _element.scrollHeight - _element.clientHeight;
-            break;
-        }
-
-        this.endX.value = Math.round(this.unitX.value / 100 * maxScroll.x);
-        this.endY.value = Math.round(this.unitY.value / 100 * maxScroll.y);
-      }
-
-      return ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "trigger", this).call(this);
-    }
-  }, {
-    key: "tweenUpdateHandler",
-    value: function tweenUpdateHandler() {
-      switch (this.target.value) {
-        case "window":
-          window.scroll(this.pos.x, this.pos.y);
-          break;
-
-        default:
-          var element = document.querySelector(this.target.value);
-          element.scrollLeft = this.pos.x;
-          element.scrollTop = this.pos.y;
-          break;
-      }
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var data = ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "serialize", this).call(this);
-
-      data.target = this.target.value;
-      data.unitX = this.unitX.value;
-      data.unitY = this.unitY.value;
-      data.units = this.units.selectedItem.value;
-      return data;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "deserialize", this).call(this, data);
-
-      this.target.value = data.target;
-      this.unitX.value = data.unitX;
-      this.unitY.value = data.unitY;
-      this.units.selectedItem.value = data.units;
-    }
-  }, {
-    key: "capture",
-    value: function capture() {
-      var _this2 = this;
-
-      this.isCapturing.value = true;
-      var scroll = new Point["a" /* default */]();
-      var maxScroll = new Point["a" /* default */]();
-
-      switch (this.target.value) {
-        case "window":
-          scroll.x = window.scrollX;
-          scroll.y = window.scrollY;
-          maxScroll.x = document.body.offsetWidth - window.innerWidth;
-          maxScroll.y = document.body.offsetHeight - window.innerHeight;
-          break;
-
-        default:
-          var element = document.querySelector(this.target.value);
-          scroll.x = element.scrollLeft;
-          scroll.y = element.scrollTop;
-          maxScroll.x = element.scrollWidth - element.clientWidth;
-          maxScroll.y = element.scrollHeight - element.clientHeight;
-          break;
-      }
-
-      var unit = new Point["a" /* default */]();
-
-      switch (this.units.selectedItem.value) {
-        case "px":
-          unit.x = scroll.x;
-          unit.y = scroll.y;
-          break;
-
-        case "%":
-          unit.x = Math.round(scroll.x / maxScroll.x * 100);
-          unit.y = Math.round(scroll.y / maxScroll.y * 100);
-          break;
-      }
-
-      if (isNaN(unit.x)) unit.x = 0;
-      if (isNaN(unit.y)) unit.y = 0;
-      this.unitX.value = unit.x;
-      this.unitY.value = unit.y;
-      setTimeout(function () {
-        _this2.isCapturing.value = false;
-      }, 100);
-    }
-  }, {
-    key: "captureAtInit",
-    value: function captureAtInit() {
-      ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "captureAtInit", this).call(this);
-
-      this.capture();
-    }
-  }]);
-
-  return ActionScroll;
-}(ActionTween_ActionTween);
-
-
-// CONCATENATED MODULE: ./js/model/ActionWait.js
-function ActionWait_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionWait_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionWait_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionWait_typeof(obj); }
-
-function ActionWait_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ActionWait_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ActionWait_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionWait_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionWait_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ActionWait_possibleConstructorReturn(self, call) { if (call && (ActionWait_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionWait_assertThisInitialized(self); }
-
-function ActionWait_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ActionWait_getPrototypeOf(o) { ActionWait_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionWait_getPrototypeOf(o); }
-
-function ActionWait_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionWait_setPrototypeOf(subClass, superClass); }
-
-function ActionWait_setPrototypeOf(o, p) { ActionWait_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionWait_setPrototypeOf(o, p); }
-
-
-
-var ActionWait =
-/*#__PURE__*/
-function (_Action) {
-  ActionWait_inherits(ActionWait, _Action);
-
-  function ActionWait() {
-    ActionWait_classCallCheck(this, ActionWait);
-
-    return ActionWait_possibleConstructorReturn(this, ActionWait_getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
-  }
-
-  ActionWait_createClass(ActionWait, [{
-    key: "clone",
-    value: function clone() {
-      var action = new ActionWait();
-      action.copy(this);
-      return action;
-    }
-  }]);
-
-  return ActionWait;
-}(Action_Action);
-
-
-// CONCATENATED MODULE: ./js/model/ActionMouseEvent.js
-function ActionMouseEvent_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionMouseEvent_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionMouseEvent_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionMouseEvent_typeof(obj); }
-
-function ActionMouseEvent_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ActionMouseEvent_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ActionMouseEvent_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionMouseEvent_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionMouseEvent_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ActionMouseEvent_possibleConstructorReturn(self, call) { if (call && (ActionMouseEvent_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionMouseEvent_assertThisInitialized(self); }
-
-function ActionMouseEvent_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ActionMouseEvent_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionMouseEvent_get = Reflect.get; } else { ActionMouseEvent_get = function _get(target, property, receiver) { var base = ActionMouseEvent_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionMouseEvent_get(target, property, receiver || target); }
-
-function ActionMouseEvent_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionMouseEvent_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function ActionMouseEvent_getPrototypeOf(o) { ActionMouseEvent_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionMouseEvent_getPrototypeOf(o); }
-
-function ActionMouseEvent_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionMouseEvent_setPrototypeOf(subClass, superClass); }
-
-function ActionMouseEvent_setPrototypeOf(o, p) { ActionMouseEvent_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionMouseEvent_setPrototypeOf(o, p); }
-
-
-
-
-
-
-
-var ActionMouseEvent_ActionMouseEvent =
-/*#__PURE__*/
-function (_Action) {
-  ActionMouseEvent_inherits(ActionMouseEvent, _Action);
-
-  function ActionMouseEvent() {
-    var _this;
-
-    var eventType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "click";
-    var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-
-    ActionMouseEvent_classCallCheck(this, ActionMouseEvent);
-
-    _this = ActionMouseEvent_possibleConstructorReturn(this, ActionMouseEvent_getPrototypeOf(ActionMouseEvent).call(this, "ActionMouseEvent", "MouseEvent"));
-    _this.x = new NumberData["a" /* default */](x);
-    _this.y = new NumberData["a" /* default */](y);
-    _this.eventTypes = new ArrayData["a" /* default */]("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
-    _this.eventTypes.selectedItem.value = _this.eventTypes.value[0];
-    _this.isCaptureable.value = true;
-    _this.captureMouseEventHandler = _this.captureMouseEventHandler.bind(ActionMouseEvent_assertThisInitialized(_this));
-    return _this;
-  }
-
-  ActionMouseEvent_createClass(ActionMouseEvent, [{
-    key: "clone",
-    value: function clone() {
-      var action = new ActionMouseEvent();
-      action.copy(this);
-      return action;
-    }
-  }, {
-    key: "copy",
-    value: function copy(action) {
-      ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "copy", this).call(this, action);
-
-      this.eventTypes.selectedItem.value = action.eventTypes.selectedItem.value;
-      this.x.value = action.x.value;
-      this.y.value = action.y.value;
-    }
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      var point = new Point["a" /* default */](this.x.value - window.scrollX, this.y.value - window.scrollY);
-      var el = document.elementFromPoint(point.x, point.y);
-      var event = new MouseEvent(this.eventTypes.selectedItem.value, {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-        clientX: point.x,
-        clientY: point.y,
-        pageX: point.x,
-        pageY: point.y,
-        x: point.x,
-        y: point.y
-      });
-      el.dispatchEvent(event);
-      return Promise.resolve();
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var data = ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "serialize", this).call(this);
-
-      data.eventType = this.eventTypes.selectedItem.value;
-      data.x = this.x.value;
-      data.y = this.y.value;
-      return data;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      ActionMouseEvent_get(ActionMouseEvent_getPrototypeOf(ActionMouseEvent.prototype), "deserialize", this).call(this, data);
-
-      this.eventTypes.selectedItem.value = data.eventType;
-      this.x.value = data.x;
-      this.y.value = data.y;
-    }
-  }, {
-    key: "capture",
-    value: function capture() {
-      var _this2 = this;
-
-      this.isCapturing.value = true;
-      setTimeout(function () {
-        document.body.addEventListener(_this2.eventTypes.selectedItem.value, _this2.captureMouseEventHandler);
-      }, 33);
-    }
-  }, {
-    key: "captureMouseEventHandler",
-    value: function captureMouseEventHandler(event) {
-      this.isCapturing.value = false;
-      var touch = event;
-
-      if (tsunami_window["a" /* isTouch */]) {
-        touch = event.touches[0];
-      }
-
-      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
-      this.x.value = point.x;
-      this.y.value = point.y;
-      document.body.removeEventListener(this.eventTypes.selectedItem.value, this.captureMouseEventHandler);
-    }
-  }]);
-
-  return ActionMouseEvent;
-}(Action_Action);
-
-
-// CONCATENATED MODULE: ./js/model/ActionEval.js
-function ActionEval_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionEval_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionEval_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionEval_typeof(obj); }
-
-function ActionEval_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ActionEval_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ActionEval_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionEval_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionEval_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ActionEval_possibleConstructorReturn(self, call) { if (call && (ActionEval_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionEval_assertThisInitialized(self); }
-
-function ActionEval_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ActionEval_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ActionEval_get = Reflect.get; } else { ActionEval_get = function _get(target, property, receiver) { var base = ActionEval_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ActionEval_get(target, property, receiver || target); }
-
-function ActionEval_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionEval_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function ActionEval_getPrototypeOf(o) { ActionEval_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionEval_getPrototypeOf(o); }
-
-function ActionEval_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionEval_setPrototypeOf(subClass, superClass); }
-
-function ActionEval_setPrototypeOf(o, p) { ActionEval_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionEval_setPrototypeOf(o, p); }
-
-
-
-
-var ActionEval_ActionEval =
-/*#__PURE__*/
-function (_Action) {
-  ActionEval_inherits(ActionEval, _Action);
-
-  function ActionEval() {
-    var _this;
-
-    var code = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-    ActionEval_classCallCheck(this, ActionEval);
-
-    _this = ActionEval_possibleConstructorReturn(this, ActionEval_getPrototypeOf(ActionEval).call(this, "ActionEval", "Eval"));
-
-    if (!code) {
-      code = "return new Promise(function(resolve, reject) {\n\tconsole.log(\"Wait for 1 second\");\n\tsetTimeout(function() {resolve(); }, 1000);\n});";
-    }
-
-    _this.code = new StringData_StringData(code);
-    return _this;
-  }
-
-  ActionEval_createClass(ActionEval, [{
-    key: "clone",
-    value: function clone() {
-      var action = new ActionEval();
-      action.copy(this);
-      return action;
-    }
-  }, {
-    key: "copy",
-    value: function copy(action) {
-      this.code.value = action.code.value;
-    }
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      var expression = this.code.value; // let promise = eval('(function() {' + expression + '}())');
-
-      var promise = new Function(expression)();
-      var isPromise = promise instanceof Promise;
-
-      if (!isPromise) {
-        promise = Promise.resolve();
-      }
-
-      return promise;
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var data = ActionEval_get(ActionEval_getPrototypeOf(ActionEval.prototype), "serialize", this).call(this);
-
-      data.code = encodeURIComponent(this.code.value);
-      return data;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      ActionEval_get(ActionEval_getPrototypeOf(ActionEval.prototype), "deserialize", this).call(this, data);
-
-      this.code.value = decodeURIComponent(data.code);
-    }
-  }]);
-
-  return ActionEval;
-}(Action_Action);
-
-
 // CONCATENATED MODULE: ./js/model/Actions.js
 function Actions_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Actions_typeof = function _typeof(obj) { return typeof obj; }; } else { Actions_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Actions_typeof(obj); }
 
@@ -57325,13 +57563,7 @@ function main_setPrototypeOf(o, p) { main_setPrototypeOf = Object.setPrototypeOf
 
 
 
-
-
-
-
-
-
-
+var app;
 
 var main_Main =
 /*#__PURE__*/
@@ -57344,18 +57576,27 @@ function (_App) {
     main_classCallCheck(this, Main);
 
     _this = main_possibleConstructorReturn(this, main_getPrototypeOf(Main).call(this, element));
+    app = main_assertThisInitialized(_this);
+    _this.save = _this.save.bind(main_assertThisInitialized(_this));
+    _this.play = _this.play.bind(main_assertThisInitialized(_this));
+    _this.clear = _this.clear.bind(main_assertThisInitialized(_this));
+    _this.show = _this.show.bind(main_assertThisInitialized(_this));
+    _this.hide = _this.hide.bind(main_assertThisInitialized(_this));
     _this.isCapturing = new BooleanData["a" /* default */]();
     _this.actions = new Actions_Actions();
     chrome.storage.sync.get(["json"], function (result) {
+      _this.scrollCapture = Object(tsunami["f" /* importTemplate */])(ScrollCapture_ScrollCapture.template, main_assertThisInitialized(_this)).component;
       var json = result.json;
 
       if (json) {
         _this.deserialize(JSON.parse(json));
       }
 
-      _this.actions.addEventListener(ArrayData["a" /* default */].ITEM_CHANGE, function (event) {
+      _this.actions.addEventListener(Data["a" /* default */].CHANGE, function (event) {
         _this.save();
       });
+
+      _this.show();
     }); // this.actions.value = [
     // 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
     // 	new ActionScroll("window", "px", 0, 500),
@@ -57364,15 +57605,6 @@ function (_App) {
     // 	// new ActionScroll(".scrollpane", "%", 0, 100),
     // 	// new ActionMouseEvent("click", 0, 0),
     // ];
-
-    _this.save = _this.save.bind(main_assertThisInitialized(_this));
-    _this.play = _this.play.bind(main_assertThisInitialized(_this));
-    _this.clear = _this.clear.bind(main_assertThisInitialized(_this));
-    _this.show = _this.show.bind(main_assertThisInitialized(_this));
-    _this.hide = _this.hide.bind(main_assertThisInitialized(_this));
-    _this.scrollCapture = Object(tsunami["f" /* importTemplate */])(ScrollCapture.template, main_assertThisInitialized(_this)).component;
-
-    _this.show();
 
     return _this;
   }
@@ -57392,12 +57624,14 @@ function (_App) {
     key: "deserialize",
     value: function deserialize(obj) {
       this.actions.deserialize(obj.actions);
+      this.scrollCapture.deserialize(obj.scrollCapture);
     }
   }, {
     key: "serialize",
     value: function serialize() {
       var obj = {
-        actions: this.actions.serialize()
+        actions: this.actions.serialize(),
+        scrollCapture: this.scrollCapture.serialize()
       };
       return obj;
     }
@@ -57465,7 +57699,7 @@ function (_App) {
 }(App["a" /* default */]);
 
 
-tsunami["b" /* define */]("scroll-capture", ScrollCapture);
+tsunami["b" /* define */]("scroll-capture", ScrollCapture_ScrollCapture);
 // CONCATENATED MODULE: ./js/content.js
 
 var main;
