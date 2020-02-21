@@ -273,8 +273,12 @@ export default class UIList extends UIComponent {
 		this.childrenPositions.map((obj, index) => {
 			let newPosition = new Point(obj.child.offsetLeft, obj.child.offsetTop);
 			let offset = obj.position.subtract(newPosition);
-			obj.child.classList.remove("smooth-transform");
-			obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y  + "px, 0px)";
+			let magnitude = offset.magnitude;
+			if(magnitude > 0) {
+				console.log(index, "magnitude", magnitude, "offset", offset);
+				obj.child.classList.remove("smooth-transform");
+				obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y  + "px, 0px)";
+			}
 		});
 	}
 

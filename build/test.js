@@ -4415,8 +4415,13 @@ function (_UIComponent) {
       this.childrenPositions.map(function (obj, index) {
         var newPosition = new Point["a" /* default */](obj.child.offsetLeft, obj.child.offsetTop);
         var offset = obj.position.subtract(newPosition);
-        obj.child.classList.remove("smooth-transform");
-        obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y + "px, 0px)";
+        var magnitude = offset.magnitude;
+
+        if (magnitude > 0) {
+          console.log(index, "magnitude", magnitude, "offset", offset);
+          obj.child.classList.remove("smooth-transform");
+          obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y + "px, 0px)";
+        }
       });
     }
   }, {
