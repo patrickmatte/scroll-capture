@@ -5,6 +5,7 @@ import Style from "../tsunami/components/Style";
 import {events} from "../tsunami/events";
 import Point from "../tsunami/geom/Point";
 import {app} from "../main";
+import ActionsView from "./ActionsView";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -87,7 +88,7 @@ ScrollCapture.template = `
 					<span class="sc-label">Clear</span>
 				</button>
 			</div>
-			<actions-view data-provider="actions" is="ui-list" data-actions-length="[[actions.length]]">
+			<actions-view data-provider="actions" data-actions-length="[[actions.length]]">
 				<template>
 					<action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data">
 						<div class="sc-title">
@@ -252,4 +253,4 @@ ScrollCapture.template = `
 `;
 
 // tsunami.define("start-button", StartButton);
-tsunami.define("action-view", ActionView);
+tsunami.define("actions-view", ActionsView);
