@@ -34,10 +34,7 @@ export default class Actions extends ArrayData {
 		if(action) {
 			action.captureAtInit();
 
-			console.log("this.selectedIndex.value", this.selectedIndex.value);
-			console.log("value.length", this.value.length);
 			let index = this.selectedIndex.value + 1;
-			console.log("index", index);
 			if(isNaN(index)) index = this.value.length;
 			this.splice(index, 0, action);
 			// this.push(action);
