@@ -15,7 +15,7 @@ export default class UIList extends UIComponent {
 	constructor(element) {
 		super(element);
 
-		this._dragStart = this._dragStart.bind(this);
+		this._mouseDownHandler = this._mouseDownHandler.bind(this);
 		this._dragMove = this._dragMove.bind(this);
 		this._dragElementMove = this._dragElementMove.bind(this);
 		this._dragEnd = this._dragEnd.bind(this);
@@ -23,6 +23,8 @@ export default class UIList extends UIComponent {
 		this._providerAdd = this._providerAdd.bind(this);
 		this._providerRemove = this._providerRemove.bind(this);
 		this._providerSort = this._providerSort.bind(this);
+
+		this.selectItemOnMouseDown = false;
 
 		this.dragIndex = NaN;
 
@@ -45,7 +47,7 @@ export default class UIList extends UIComponent {
 			this.element.removeChild(template);
 		}
 
-		this.element.addEventListener(events.mousedown, this._dragStart);
+		this.element.addEventListener(events.mousedown, this._mouseDownHandler);
 	}
 
 	get scope() {
@@ -227,16 +229,29 @@ export default class UIList extends UIComponent {
 		});
 	}
 
-	_dragStart(event) {
+	_mouseDownHandler(event) {
+		let selectedIndex = NaN;
+		let selectedChild = this.children.find((child, index) => {
+			let contains = child.contains(event.target);
+			if(contains) selectedIndex = index;
+			return contains;
+		});
+		if(this.selectItemOnMouseDown && !isNaN(selectedIndex)) {
+			if(this.dataProvider.selectedIndex) {
+				this.dataProvider.selectedIndex.value = selectedIndex;
+			}
+		}
 		if(event.target.classList.contains("ui-list-drag-area")) {
 			event.preventDefault();
 			this.dragStartPoint = this.getTouchPoint(event);
 			this.dragIndex = NaN;
-			this.dragElement = this.children.find((child, index) => {
-				let match = (event.target == child.querySelector(".ui-list-drag-area"));
-				if (match) this.dragIndex = index;
-				return match;
-			});
+			// this.dragElement = this.children.find((child, index) => {
+			// 	let match = (event.target == child.querySelector(".ui-list-drag-area"));
+			// 	if (match) this.dragIndex = index;
+			// 	return match;
+			// });
+			this.dragElement = selectedChild;
+			this.dragIndex = selectedIndex;
 			this.dragElementStartPos = new Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
 			this.dragElementsMinHeight = Number.MAX_VALUE;
 			this.children.map((child) => {
@@ -245,6 +260,7 @@ export default class UIList extends UIComponent {
 			document.body.addEventListener(events.mousemove, this._dragMove);
 			document.body.addEventListener(events.mouseup, this._dragEnd);
 		}
+		return selectedIndex;
 	}
 
 	_dragMove(event) {
@@ -282,7 +298,6 @@ export default class UIList extends UIComponent {
 
 			this.dragIndex = index;
 		}
-
 		this.dragElement.style.transform = "translate3d(" + dragDiff.x + "px, " + dragDiff.y + "px, 0px)";
 	}
 

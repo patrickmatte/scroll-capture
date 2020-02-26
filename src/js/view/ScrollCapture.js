@@ -91,7 +91,7 @@ ScrollCapture.template = `
 			</div>
 			<actions-view data-provider="actions" data-actions-length="[[actions.length]]">
 				<template>
-					<action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data">
+					<action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data" data-selected="[[data.isSelectedItem]]">
 						<div class="sc-title">
 							<div class="sc-drag-area ui-list-drag-area"></div>
 							<div class="sc-tabs">
@@ -232,6 +232,7 @@ ScrollCapture.template = `
 								</div>
 							</div>
 						</div>
+						<div class="selected-border"></div>
 					</action-view>
 				</template>
 			</actions-view>

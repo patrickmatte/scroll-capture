@@ -33,7 +33,16 @@ export default class Actions extends ArrayData {
 		let action = this.types.selectedItem.value.clone();
 		if(action) {
 			action.captureAtInit();
-			this.push(action);
+
+			console.log("this.selectedIndex.value", this.selectedIndex.value);
+			console.log("value.length", this.value.length);
+			let index = this.selectedIndex.value + 1;
+			console.log("index", index);
+			if(isNaN(index)) index = this.value.length;
+			this.splice(index, 0, action);
+			// this.push(action);
+			this.selectedIndex.value = index;
+
 			if(this.length.value == 1) {
 				action.delay.value = 0;
 			}
@@ -61,6 +70,7 @@ export default class Actions extends ArrayData {
 			actions.push(action);
 		}
 		this.value = actions;
+		this.selectedIndex.value = actions.length - 1;
 	}
 
 }

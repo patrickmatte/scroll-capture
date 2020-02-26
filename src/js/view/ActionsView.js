@@ -6,6 +6,7 @@ export default class ActionsView extends UIList {
 
 	constructor(element) {
 		super(element);
+		this.selectItemOnMouseDown = true;
 	}
 
 	_providerAdd(event) {

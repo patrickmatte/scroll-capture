@@ -18,6 +18,7 @@ export default class Action {
 		this.isCapturing = new BooleanData();
 		this.isPlaying = new BooleanData();
 		this.delay = new NumberData(1.5);
+		this.isSelectedItem = new BooleanData();
 
 		this.capture = this.capture.bind(this);
 		this.play = this.play.bind(this);
