@@ -2311,11 +2311,16 @@ function (_Data) {
   ArrayData_createClass(ArrayData, [{
     key: "selectedItemChange",
     value: function selectedItemChange(event) {
+      this.updateSelectedIndex();
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "updateSelectedIndex",
+    value: function updateSelectedIndex() {
       this.selectedIndex.removeEventListener(Data.CHANGE, this.selectedIndexChange);
       var index = this.value.indexOf(this.selectedItem.value);
       this.selectedIndex.value = index;
       this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
-      this.setSelectedData(this.selectedItem.value);
     }
   }, {
     key: "setSelectedData",
@@ -2428,6 +2433,13 @@ function (_Data) {
         total: 1
       });
       this.dispatchChangeEvent();
+
+      if (item == this.selectedItem.value) {
+        this.selectedItem.value = null;
+      } else {
+        this.updateSelectedIndex();
+      }
+
       return item;
     }
   }, {
@@ -2474,6 +2486,7 @@ function (_Data) {
         value: this._value
       });
       this.dispatchChangeEvent();
+      this.updateSelectedIndex();
     }
   }, {
     key: "shift",
@@ -2492,6 +2505,13 @@ function (_Data) {
         total: 1
       });
       this.dispatchChangeEvent();
+
+      if (item == this.selectedItem.value) {
+        this.selectedItem.value = null;
+      } else {
+        this.updateSelectedIndex();
+      }
+
       return item;
     }
   }, {
@@ -2505,6 +2525,7 @@ function (_Data) {
         value: this._value
       });
       this.dispatchChangeEvent();
+      this.updateSelectedIndex();
     }
   }, {
     key: "sort",
@@ -2516,6 +2537,7 @@ function (_Data) {
         value: this._value
       });
       this.dispatchChangeEvent();
+      this.updateSelectedIndex();
     }
   }, {
     key: "splice",
@@ -2570,6 +2592,12 @@ function (_Data) {
         this.dispatchChangeEvent();
       }
 
+      if (this.includes(this.selectedItem.value)) {
+        this.updateSelectedIndex();
+      } else {
+        this.selectedItem.value = null;
+      }
+
       return elements;
     }
   }, {
@@ -2611,6 +2639,7 @@ function (_Data) {
         this.dispatchChangeEvent();
       }
 
+      this.updateSelectedIndex();
       return length;
     }
   }, {
@@ -2704,6 +2733,12 @@ function (_Data) {
         value: this._value
       });
       this.dispatchChangeEvent();
+
+      if (this.includes(this.selectedItem.value)) {
+        this.updateSelectedIndex();
+      } else {
+        this.selectedItem.value = null;
+      }
     }
   }]);
 
@@ -3722,7 +3757,8 @@ function ActionView_setPrototypeOf(o, p) { ActionView_setPrototypeOf = Object.se
 
 
 
-var ActionView =
+
+var ActionView_ActionView =
 /*#__PURE__*/
 function (_UIComponent) {
   ActionView_inherits(ActionView, _UIComponent);
@@ -3738,7 +3774,9 @@ function (_UIComponent) {
     var deleteButton = _this.title.querySelector("button.close-button");
 
     deleteButton.component.onRelease = function (event) {
-      _this.element.parentNode.component.dataProvider.remove(_this.model);
+      var index = app.actions.selectedIndex.value;
+      app.actions.remove(app.actions.selectedItem.value);
+      app.actions.selectedIndex.value = Math.min(index, app.actions.value.length - 1);
     };
 
     return _this;
@@ -5060,7 +5098,7 @@ function (_UIList) {
 }(UIList_UIList);
 
 
-define("action-view", ActionView);
+define("action-view", ActionView_ActionView);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
@@ -7467,51 +7505,6 @@ function (_ActionTween) {
 
   return ActionScroll;
 }(ActionTween_ActionTween);
-
-
-// CONCATENATED MODULE: ./js/model/ActionWait.js
-function ActionWait_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionWait_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionWait_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionWait_typeof(obj); }
-
-function ActionWait_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ActionWait_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ActionWait_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionWait_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionWait_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ActionWait_possibleConstructorReturn(self, call) { if (call && (ActionWait_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionWait_assertThisInitialized(self); }
-
-function ActionWait_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ActionWait_getPrototypeOf(o) { ActionWait_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionWait_getPrototypeOf(o); }
-
-function ActionWait_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionWait_setPrototypeOf(subClass, superClass); }
-
-function ActionWait_setPrototypeOf(o, p) { ActionWait_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionWait_setPrototypeOf(o, p); }
-
-
-
-var ActionWait =
-/*#__PURE__*/
-function (_Action) {
-  ActionWait_inherits(ActionWait, _Action);
-
-  function ActionWait() {
-    ActionWait_classCallCheck(this, ActionWait);
-
-    return ActionWait_possibleConstructorReturn(this, ActionWait_getPrototypeOf(ActionWait).call(this, "ActionWait", "Pause"));
-  }
-
-  ActionWait_createClass(ActionWait, [{
-    key: "clone",
-    value: function clone() {
-      var action = new ActionWait();
-      action.copy(this);
-      return action;
-    }
-  }]);
-
-  return ActionWait;
-}(Action_Action);
 
 
 // CONCATENATED MODULE: ./js/model/ActionMouseEvent.js
@@ -57195,7 +57188,6 @@ function Actions_setPrototypeOf(o, p) { Actions_setPrototypeOf = Object.setProto
 
 
 
-
 var Actions_Actions =
 /*#__PURE__*/
 function (_ArrayData) {
@@ -57229,10 +57221,7 @@ function (_ArrayData) {
 
       if (action) {
         action.captureAtInit();
-        console.log("this.selectedIndex.value", this.selectedIndex.value);
-        console.log("value.length", this.value.length);
         var index = this.selectedIndex.value + 1;
-        console.log("index", index);
         if (isNaN(index)) index = this.value.length;
         this.splice(index, 0, action); // this.push(action);
 

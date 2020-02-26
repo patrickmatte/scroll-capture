@@ -48,11 +48,15 @@ export default class ArrayData extends Data {
 	}
 
 	selectedItemChange(event) {
+		this.updateSelectedIndex();
+		this.setSelectedData(this.selectedItem.value);
+	}
+
+	updateSelectedIndex() {
 		this.selectedIndex.removeEventListener(Data.CHANGE, this.selectedIndexChange);
 		let index = this.value.indexOf(this.selectedItem.value);
 		this.selectedIndex.value = index;
 		this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
-		this.setSelectedData(this.selectedItem.value);
 	}
 
 	setSelectedData(value) {
@@ -133,6 +137,11 @@ export default class ArrayData extends Data {
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"reset", value:this._value});
 		this.dispatchChangeEvent();
+		if(this.includes(this.selectedItem.value)) {
+			this.updateSelectedIndex();
+		} else {
+			this.selectedItem.value = null;
+		}
 	}
 
 	indexOf(searchElement, fromIndex) {
@@ -166,6 +175,11 @@ export default class ArrayData extends Data {
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"remove", value:[item], index:this.value.length, total:1});
 		this.dispatchChangeEvent();
+		if(item == this.selectedItem.value) {
+			this.selectedItem.value = null;
+		} else {
+			this.updateSelectedIndex();
+		}
 		return item;
 	}
 
@@ -194,6 +208,7 @@ export default class ArrayData extends Data {
 		this._value.reverse();
 		this.dispatchEvent({type:"reverse", value:this._value});
 		this.dispatchChangeEvent();
+		this.updateSelectedIndex();
 	}
 
 	shift() {
@@ -204,6 +219,11 @@ export default class ArrayData extends Data {
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"remove", value:[item], index:0, total:1});
 		this.dispatchChangeEvent();
+		if(item == this.selectedItem.value) {
+			this.selectedItem.value = null;
+		} else {
+			this.updateSelectedIndex();
+		}
 		return item;
 	}
 
@@ -213,12 +233,14 @@ export default class ArrayData extends Data {
 		this._value[index_B] = temp;
 		this.dispatchEvent({type:"sort", value:this._value});
 		this.dispatchChangeEvent();
+		this.updateSelectedIndex();
 	}
 
 	sort(compareFunction) {
 		this._value.sort(compareFunction);
 		this.dispatchEvent({type:"sort", value:this._value});
 		this.dispatchChangeEvent();
+		this.updateSelectedIndex();
 	}
 
 	splice() {
@@ -250,6 +272,11 @@ export default class ArrayData extends Data {
 		if (elements.length > 0 || added.length > 0) {
 			this.dispatchChangeEvent();
 		}
+		if(this.includes(this.selectedItem.value)) {
+			this.updateSelectedIndex();
+		} else {
+			this.selectedItem.value = null;
+		}
 		return elements;
 	}
 
@@ -277,6 +304,7 @@ export default class ArrayData extends Data {
 			this.dispatchEvent({type:"add", value:added, index:0, total:arguments.length});
 			this.dispatchChangeEvent();
 		}
+		this.updateSelectedIndex();
 		return length;
 	}
 

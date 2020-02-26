@@ -1,6 +1,5 @@
 import ArrayData from "../tsunami/data/ArrayData";
 import ActionScroll from "./ActionScroll";
-import ActionWait from "./ActionWait";
 import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
 import Action from "./Action";
