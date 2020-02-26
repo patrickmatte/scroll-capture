@@ -7,8 +7,8 @@ export default class ActionEval extends Action {
 		super("ActionEval", "Eval");
 		if(!code) {
 			code = `return new Promise(function(resolve, reject) {
-	console.log("Wait for 1 second");
-	setTimeout(function() {resolve(); }, 1000);
+    console.log("Wait for 1 second");
+    setTimeout(function() {resolve(); }, 1000);
 });`;
 		}
 		this.code = new StringData(code);

@@ -24,6 +24,7 @@ export default class ScrollCapture extends UIComponent {
 	}
 
 	dragStart(event) {
+		event.preventDefault();
 		this.startPosition = new Point(this.style.right, this.style.top);
 		this.startPoint = this.getTouchPoint(event);
 		document.body.addEventListener(events.mousemove, this.dragMove);
@@ -67,7 +68,7 @@ ScrollCapture.template = `
 				<div class="sc-drag-area"></div>
 				<div class="sc-tabs">
 					<span class="sc-tab" data-selected="true">
-						<span class="sc-label">ScrollCapture</span>
+						<span class="sc-label">Scroll Capture</span>
 					</span>
 <!--					<button class="sc-tab play-button" is="ui-button" data-click="playAll">-->
 <!--						<span class="sc-label">Play All</span>-->
@@ -78,13 +79,13 @@ ScrollCapture.template = `
 		</div>
 		<div class="sc-panel sc-fields sequencer" data-state="show" is="ui-component">
 			<div class="controls" is="ui-component" data-actions-length="[[actions.length]]">
-				<button class="" is="ui-button" data-click="save">
+				<button class="save-button" is="ui-button" data-click="save" data-is-saving="[[isSaving]]">
 					<span class="sc-label">Save</span>
 				</button>
-				<button class="" is="ui-button" data-click="play">
+				<button class="play-button" is="ui-button" data-click="play">
 					<span class="sc-label">Play</span>
 				</button>
-				<button class="" is="ui-button" data-click="clear">
+				<button class="close-button" is="ui-button" data-click="clear">
 					<span class="sc-label">Clear</span>
 				</button>
 			</div>
@@ -94,46 +95,47 @@ ScrollCapture.template = `
 						<div class="sc-title">
 							<div class="sc-drag-area ui-list-drag-area"></div>
 							<div class="sc-tabs">
-								<span class="sc-tab">
-									<span class="sc-label" is="ui-text">[[data.name]]</span>
+								<span class="sc-tab sc-title-tab">
+									<input class="sc-label" size="[[data.name.length]]" is="ui-input" data-model="data.name"/>
 								</span>
 							</div>
+							<button class="close-button" data-model="data" is="ui-button"></button>
 						</div>
 						<div class="sc-fields">
 							<div class="sc-fields-list" is="ui-list" data-provider="data.array">
 								<template data-type="ActionScroll">
 									<div>
 <!--										<div class="sc-field">-->
-<!--											<span class="sc-label">units:</span>-->
+<!--											<span class="sc-label">units</span>-->
 <!--											<div class="sc-select">-->
 <!--												<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>-->
 <!--											</div>-->
 <!--										</div>-->
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">left:</span><input type="text" data-model="data.unitX" is="ui-input"/>
+												<span class="sc-label">Left:</span><input type="text" data-model="data.unitX" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">top:</span><input type="text" data-model="data.unitY" is="ui-input"/>
-											</div>
-										</div>
-										<div class="sc-field-group">
-											<div class="sc-field">
-												<span class="sc-label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
-											</div>
-											<div class="sc-field">
-												<span class="sc-label">element:</span><input type="text" data-model="data.target" is="ui-input"/>
+												<span class="sc-label">Top:</span><input type="text" data-model="data.unitY" is="ui-input"/>
 											</div>
 										</div>
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">easing:</span>
+												<span class="sc-label">Duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
+											</div>
+											<div class="sc-field">
+												<span class="sc-label">Element:</span><input type="text" data-model="data.target" is="ui-input"/>
+											</div>
+										</div>
+										<div class="sc-field-group">
+											<div class="sc-field">
+												<span class="sc-label">Easing:</span>
 												<div class="sc-select">
 													<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
 												</div>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">method:</span>
+												<span class="sc-label">Method:</span>
 												<div class="sc-select">
 													<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
 												</div>
@@ -148,10 +150,12 @@ ScrollCapture.template = `
 												<template>
 													<div class="sc-field-group">
 														<div class="sc-field">
-															<span class="sc-label" is="ui-text">pageX<sup>[[index1]]</sup>:</span><input type="text" data-model="data.x" is="ui-input"/>
+															<span class="sc-label" is="ui-text">PageX<sup>[[index1]]</sup>:</span>
+															<input type="text" data-model="data.x" is="ui-input"/>
 														</div>
 														<div class="sc-field">
-															<span class="sc-label" is="ui-text">pageY<sup>[[index1]]</sup>:</span><input type="text" data-model="data.y" is="ui-input"/>
+															<span class="sc-label" is="ui-text">PageY<sup>[[index1]]</sup>:</span>
+															<input type="text" data-model="data.y" is="ui-input"/>
 														</div>
 													</div>
 												</template>
@@ -159,19 +163,19 @@ ScrollCapture.template = `
 										</div>
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
+												<span class="sc-label">Duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
 											</div>
 											<div class="sc-field"></div>
 										</div>
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">easing:</span>
+												<span class="sc-label">Easing:</span>
 												<div class="sc-select">
 													<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
 												</div>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">method:</span>
+												<span class="sc-label">Method:</span>
 												<div class="sc-select">
 													<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
 												</div>
@@ -183,7 +187,7 @@ ScrollCapture.template = `
 									<div>
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">type:</span>
+												<span class="sc-label">Type:</span>
 												<div class="sc-select">
 													<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
 												</div>
@@ -192,11 +196,11 @@ ScrollCapture.template = `
 										</div>
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">pageX:</span>
+												<span class="sc-label">PageX:</span>
 												<input type="text" data-model="data.x" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">pageY:</span>
+												<span class="sc-label">PageY:</span>
 												<input type="text" data-model="data.y" is="ui-input"/>
 											</div>
 										</div>
@@ -208,7 +212,7 @@ ScrollCapture.template = `
 								<template data-type="ActionEval">
 									<div>
 										<div class="sc-field">
-											<span class="sc-label">code:</span>
+											<span class="sc-label">Code:</span>
 											<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
 										</div>
 									</div>
@@ -216,9 +220,12 @@ ScrollCapture.template = `
 							</div>
 							<div class="sc-field-group">
 								<div class="sc-field">
-									<span class="sc-label">delay:</span><input type="text" data-model="data.delay" is="ui-input"/>
+									<span class="sc-label">Delay:</span><input type="text" data-model="data.delay" is="ui-input"/>
 								</div>
-								<div class="sc-field">
+								<div class="sc-field sc-action-buttons">
+									<button class="play-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]">
+										<span>Play</span>
+									</button>
 									<button class="capture-button" is="ui-button" data-click="data.capture" data-is-captureable="[[data.isCaptureable]]" data-is-capturing="[[data.isCapturing]]">
 										<span>Capture</span>
 									</button>
@@ -242,7 +249,7 @@ ScrollCapture.template = `
 									</template>
 								</select>
 							</div>
-							<button class="add-button" is="ui-button" data-click="actions.addSelectedType">+</button>
+							<button class="add-button" is="ui-button" data-click="actions.addSelectedType"></button>
 						</div>
 					</div>
 				</div>

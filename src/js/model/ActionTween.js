@@ -35,7 +35,7 @@ export default class ActionTween extends Action {
 		});
 
 		let easingClass = this.easingClasses.find((item)=> {
-			return item == "cubic";
+			return item == "quadratic";
 		});
 		this.easingClasses.selectedItem.value = easingClass || this.easingClasses.value[0];
 		this.tweenUpdateHandler = this.tweenUpdateHandler.bind(this);

@@ -10,7 +10,7 @@ export default class ActionSwipe extends ActionTween {
 	constructor(points = [], duration = 1, delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionSwipe";
-		this.name = "Swipe";
+		this.name.value = "Swipe";
 		this.points = new ArrayData();
 		this.points.dataClass = Vector2Data;
 		while(points.length < 2) {

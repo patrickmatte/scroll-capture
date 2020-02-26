@@ -14,9 +14,9 @@ scroll-capture {
 	margin: 0;
 	z-index: 200000000;
 	font-weight: normal;
-	font-family: Helvetica, Arial, SansSerif;
-	background-color: #000000;
-	padding: 1em;
+	font-family: DefaultFont, Monospaced;
+	background-color: rgba(0, 0, 0, 0.97);
+	padding: 0.5em;
 	border-radius: 0.25em;
 	box-sizing: border-box;
 
@@ -102,7 +102,7 @@ scroll-capture {
 
 	button {
 		//padding: 0.5em 1em;
-		font-weight: bold;
+		//font-weight: bold;
 		border-radius: 0.25em;
 		white-space: nowrap;
 		background-color: transparent;
@@ -120,9 +120,26 @@ scroll-capture {
 			display: inline-block;
 			vertical-align: middle;
 		}
+
+		&:after {
+			font-family: "IcoFont";
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 0.8em;
+			color: white;
+			opacity: 0.5;
+			margin-left: -0.25em;
+		}
+
+		&:hover {
+			&:after {
+				opacity: 1;
+			}
+		}
 	}
 
 	select, input, textarea {
+		color: inherit !important;
 		font-size: 1em !important;
 		margin-bottom: 0 !important;
 		margin-top: 0 !important;
@@ -133,6 +150,10 @@ scroll-capture {
 		line-height: 1;
 		height: auto !important;
 		min-height: auto !important;
+	}
+
+	textarea {
+		resize: none;
 	}
 
 	.ui-list-element {
@@ -150,13 +171,23 @@ scroll-capture {
 		}
 	}
 
-	.capture-button {
-		outline: none;
-		font-weight: 400;
-		display: inline-flex;
-		align-items: center;
-		padding: 0.5em 0;
+	button.save-button {
+		&:after {
+			content: "\ec4b";
+			//content: "\ef08";
+			//font-size: 1em;
+		}
 
+		&[data-is-saving="true"] {
+			opacity: 0.25;
+
+			&:after {
+				opacity: 1;
+			}
+		}
+	}
+
+	button.capture-button {
 		&[data-is-captureable="false"] {
 			opacity: 0.25;
 			pointer-events: none;
@@ -164,66 +195,50 @@ scroll-capture {
 		}
 
 		&:after {
-			content: "";
-			position: relative;
-			display: inline-block;
-			font-size: 0.8em;
-			width: 1em;
-			height: 1em;
-			border-radius: 100%;
-			margin-left: 0.4em;
-			vertical-align: middle;
-			background-color: rgba(255, 255, 255, 0.5);
+			content: "\ec77";
 		}
 
 		&[data-is-capturing="true"] {
-			.sc-label {
+			span {
+				opacity: 0.25;
+			}
+
+			&:after {
+				color: #ff0000;
 				opacity: 1;
 			}
+		}
+	}
+
+	button.play-button {
+		&[data-is-playing="true"] {
+			opacity: 0.25;
+			span {
+			}
 			&:after {
-				background-color: rgba(255, 0, 0, 1);
+				opacity: 1;
 			}
 		}
-	}
-
-	.play-button {
-		background-color: transparent;
-
-		//&:after {
-		//	content: "";
-		//	display: inline-block;
-		//	vertical-align: middle;
-		//	width: 0;
-		//	height: 0;
-		//	border-top: 0.4em solid transparent;
-		//	border-bottom: 0.4em solid transparent;
-		//	border-left: 0.45em solid white;
-		//	margin-left: 0.33em;
-		//}
-	}
-
-	.close-button {
-		text-align: right;
-		background-color: transparent;
-		border-radius: 0.25em 0.25em 0 0;
-		padding: 1em 1em 0.5em 1em;
-		opacity: 0.5;
-		text-transform: uppercase;
-		font-weight: 700;
 
 		&:after {
-			content: "x";
-			display: inline-block;
-			vertical-align: middle;
+			content: "\ec74";
 		}
+	}
 
-		&:hover {
-			opacity: 1;
+	button.add-button {
+		&:after {
+			content: "\ec3e";
+		}
+	}
+
+	button.close-button {
+		&:after {
+			content: "\ec4f";
 		}
 	}
 
 	.sc-field {
-		font-size: 1.2em;
+		font-size: 1.1em;
 	}
 
 	.sc-label, .unit {
@@ -234,7 +249,7 @@ scroll-capture {
 		border: none;
 
 		.sc-label {
-			font-size: 1.2em;
+			font-size: 1.1em;
 		}
 	}
 
@@ -246,15 +261,12 @@ scroll-capture {
 		display: inline-block;
 
 		&:after {
-			content: "";
+			content: "\ea99";
 			position: absolute;
-			top: calc(50% - 0.1em);
-			right: 0.6em;
-			width: 0;
-			height: 0;
-			border-left: 0.4em solid transparent;
-			border-right: 0.4em solid transparent;
-			border-top: 0.45em solid #fff;
+			font-size: 1.25em;
+			top: calc(50% - 0.4em);
+			font-family: IcoFont;
+			right: 0.25em;
 			pointer-events: none;
 		}
 
@@ -300,7 +312,11 @@ scroll-capture {
 	}
 
 	.controls {
-		font-size: 1.2em;
+		font-size: 1.1em;
+		display: inline-block;
+		width: 100%;
+		padding: 0 1em;
+		margin-top: 1em;
 		margin-bottom: 1em;
 
 		&[data-actions-length="0"] {
@@ -345,11 +361,24 @@ scroll-capture {
 				height: 100%;
 			}
 
+			.close-button {
+				padding: 0 1em;
+			}
+
 			.sc-tabs {
 				display: inline-flex;
 
 				.sc-tab {
 					margin-right: 0.2em;
+
+					&.sc-title-tab {
+						input {
+							font-size: 1.2em !important;
+							background-color: transparent;
+							color: inherit;
+							font-weight: inherit;
+						}
+					}
 
 					&:last-child {
 						margin-right: 0;
@@ -397,6 +426,10 @@ scroll-capture {
 			background-color: rgba(255,255,255,0.1);
 			border-radius: 0 0.25em 0.25em 0.25em;
 
+			&.sequencer {
+				padding: 0;
+			}
+
 			//&:after {
 			//	content: "";
 			//	display: block;
@@ -426,10 +459,11 @@ scroll-capture {
 				width: 50%;
 
 				&:first-child {
-					padding-right: 0.5em;
+					padding-right: 0.75em;
 				}
+
 				&:last-child {
-					padding-left: 0.5em;
+					padding-left: 0.75em;
 				}
 			}
 		}
@@ -447,7 +481,7 @@ scroll-capture {
 			}
 
 			.sc-label {
-				width: 4.5em;
+				width: 6em;
 				flex-shrink: 0;
 				flex-grow: 0;
 				white-space: nowrap;
@@ -459,14 +493,14 @@ scroll-capture {
 				width: 40%;
 				flex-shrink: 0;
 				flex-grow: 1;
-				color: #fff;
+				color:select #fff;
 				padding: 0.5em !important;
 				background-color: rgba(0,0,0,0.1);
 				border-radius: 0.25em;
 				max-width: 100%;
 			}
 
-			.sc-select {
+			.sc- {
 				width: 50%;
 				flex-shrink: 0;
 				flex-grow: 1;
@@ -485,9 +519,11 @@ scroll-capture {
 		width: 100%;
 		display: block;
 		overflow-y: scroll;
+		overflow-x: hidden;
 		max-height: 50vh;
 		overscroll-behavior: contain;
 		margin-bottom: 1em;
+		padding: 0 1em;
 
 		&[data-actions-length="0"] {
 			display: none;
@@ -519,13 +555,36 @@ scroll-capture {
 				opacity: 0;
 				transform: scaleX(0.5) scaleY(0.5);
 			}
+
+			.sc-field {
+				&.sc-action-buttons {
+					align-items: center;
+
+					button {
+						margin-left: 2em;
+
+						&:first-child {
+							margin-left: 0;
+						}
+					}
+				}
+			}
 		}
 	}
 
 	footer {
+		margin-bottom: 1em;
+		padding: 0 1em;
+		display: inline-block;
+		width: 100%;
+
 		.sc-window {
 			background-color: rgba(0,0,0,0.1);
 			margin-bottom: 0;
+
+			.sc-fields {
+				border-radius: 0.25em;
+			}
 		}
 
 		.add-button {

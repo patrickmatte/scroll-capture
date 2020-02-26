@@ -11,7 +11,7 @@ export default class ActionsView extends UIList {
 	_providerAdd(event) {
 		let elements = super._providerAdd(event);
 		let element = this.getElementByModel(elements[0]);
-		this.scrollToElement(element);
+		this.scrollToElement(element, 0.5);
 		return elements;
 	}
 

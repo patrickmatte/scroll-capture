@@ -120,6 +120,9 @@ export default class UIComponent extends Branch {
 		if (value) {
 			if (this.componentContainer == value.parentNode) {
 				value.parentNode.removeChild(value);
+				if (this.isAdded) {
+					UIComponent.callElementRemoved(value);
+				}
 			}
 		}
 	}

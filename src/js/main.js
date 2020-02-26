@@ -15,6 +15,29 @@ export default class Main extends App {
 
 		app = this;
 
+		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
+		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/FiraMono-Regular.ttf');
+		let defaultFontBold = chrome.extension.getURL('assets/fonts/FiraMono-Bold.ttf');
+		let fonts = document.createElement('style');
+		fonts.type = 'text/css';
+		fonts.textContent = `
+		@font-face {
+			font-family: IcoFont;
+			src: url("${icoFont}");
+		}
+		@font-face {
+			font-family: DefaultFont;
+			font-weight: 400;
+			src: url("${DefaultFontRegular}");
+		}
+		@font-face {
+			font-family: DefaultFont;
+			font-weight: 700;
+			src: url("${defaultFontBold}");
+		}
+		`;
+		document.head.appendChild(fonts);
+
 		this.save = this.save.bind(this);
 		this.play = this.play.bind(this);
 		this.clear = this.clear.bind(this);
@@ -22,6 +45,7 @@ export default class Main extends App {
 		this.hide = this.hide.bind(this);
 
 		this.isCapturing = new BooleanData();
+		this.isSaving = new BooleanData();
 		this.actions = new Actions();
 
 
@@ -73,10 +97,14 @@ export default class Main extends App {
 	}
 
 	save() {
+		this.isSaving.value = true;
 		let obj = this.serialize();
 		let json = JSON.stringify(obj);
 		chrome.storage.sync.set({json:json}, () => {
 			// console.log(json);
+			setTimeout(()=> {
+				this.isSaving.value = false;
+			}, 100);
 		});
 	}
 

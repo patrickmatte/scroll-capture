@@ -1,11 +1,10 @@
 import UIComponent from "./UIComponent";
-import {destroyElements, evalProperty, importTemplate} from "../tsunami";
+import {destroyElement, destroyElements, evalProperty, importTemplate} from "../tsunami";
 import ArrayData from "../data/ArrayData";
 import Data from "../data/Data";
 import BaseEvent, {events} from "../events";
 import Scope from "../Scope";
 import Point from "../geom/Point";
-import {localToGlobal} from "../window";
 import Tween from "../animation/Tween";
 import TweenProperty from "../animation/TweenProperty";
 import Easing from "../animation/Easing";
@@ -43,6 +42,7 @@ export default class UIList extends UIComponent {
 			let template = templates[i];
 			let type = template.getAttribute("data-type") || "*";
 			this.templates[type] = template.innerHTML;
+			this.element.removeChild(template);
 		}
 
 		this.element.addEventListener(events.mousedown, this._dragStart);
@@ -95,11 +95,9 @@ export default class UIList extends UIComponent {
 	_removeElements(array) {
 		for (let i = 0; i < array.length; i++) {
 			let element = array[i];
-			if (this.isAdded) {
-				UIComponent.callElementRemoved(element);
-			}
+			this.removeChild(element);
+			destroyElement(element);
 		}
-		destroyElements(array);
 	}
 
 	_addElements(array, index = 0) {
@@ -162,6 +160,7 @@ export default class UIList extends UIComponent {
 	}
 
 	_providerRemove(event) {
+		this._saveChildrenPositions();
 		let children = this.children;
 		let removedElements = [];
 		let start = event.index;
@@ -171,6 +170,9 @@ export default class UIList extends UIComponent {
 		}
 		// this.children.splice(event.index, event.total);
 		this._removeElements(removedElements);
+		this.windowResize(this.windowSize);
+		this._setChildrenTransform();
+		setTimeout(this._resetChildrenTransform.bind(this), 0);
 	}
 
 	_providerSort(event) {
@@ -212,7 +214,6 @@ export default class UIList extends UIComponent {
 			let offset = obj.position.subtract(newPosition);
 			let magnitude = offset.magnitude;
 			if(magnitude > 0) {
-				console.log(index, "magnitude", magnitude, "offset", offset);
 				obj.child.classList.remove("smooth-transform");
 				obj.child.style.transform = "translate3d(" + offset.x + "px, " + offset.y  + "px, 0px)";
 			}
@@ -228,6 +229,7 @@ export default class UIList extends UIComponent {
 
 	_dragStart(event) {
 		if(event.target.classList.contains("ui-list-drag-area")) {
+			event.preventDefault();
 			this.dragStartPoint = this.getTouchPoint(event);
 			this.dragIndex = NaN;
 			this.dragElement = this.children.find((child, index) => {
@@ -256,6 +258,7 @@ export default class UIList extends UIComponent {
 	}
 
 	_dragElementMove(event) {
+		event.preventDefault();
 		let point = this.getTouchPoint(event);
 		let dragDiff = point.subtract(this.dragStartPoint);
 		let originOffset = dragDiff.add(this.dragElementStartPos);
@@ -294,7 +297,7 @@ export default class UIList extends UIComponent {
 		this.dragElement = null;
 	}
 
-	scrollToElement(element) {
+	scrollToElement(element, duration) {
 		let pos = new Point();
 
 		let maxScroll = new Point();
@@ -306,11 +309,11 @@ export default class UIList extends UIComponent {
 		pos.x = Math.min(elementRect.x, maxScroll.x);
 		pos.y = Math.min(elementRect.y, maxScroll.y);
 
-		return this.scrollTo(pos.x, pos.y)
+		return this.scrollTo(pos.x, pos.y, duration);
 	}
 
-	scrollTo(scrollLeft, scrollTop) {
-		this.tween = new Tween(0, 1, [
+	scrollTo(scrollLeft, scrollTop, duration = 1) {
+		this.tween = new Tween(0, duration, [
 			new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, 10),
 			new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, 10)
 		]);

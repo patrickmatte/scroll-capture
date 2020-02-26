@@ -9,7 +9,7 @@ export default class ActionScroll extends ActionTween {
 	constructor(target = "window", units = "px", x = 0, y = 0, duration = 1, delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionScroll";
-		this.name = "Scroll";
+		this.name.value = "Scroll";
 		this.target = new StringData(target);
 		this.unitX = new NumberData(x);
 		this.unitY = new NumberData(y);

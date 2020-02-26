@@ -1,7 +1,7 @@
 {
-	"name": "Screen Capture Scenario",
+	"name": "Scroll Capture",
 	"version": "1.0",
-	"description": "Create video screen captures of websites with smooth scrolling and mouse movements",
+	"description": "Automate smooth browser scrolling and mouse actions for your screen captures.",
 	"permissions": [
 		"activeTab",
 		"declarativeContent",
@@ -19,13 +19,16 @@
 				"content.js"
 			],
 			"css": [
-				"main.css"
+				"content.css"
 			],
 			"matches": [
 				"http://*/*",
 				"https://*/*"
 			]
 		}
+	],
+	"web_accessible_resources":[
+		"assets/fonts/*"
 	],
 	"browser_action": {
 		"default_icon": {

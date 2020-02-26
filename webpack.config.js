@@ -7,15 +7,19 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
+let isDev = (ENV == "development");
+
+let entry = {};
+if(isDev) {
+	entry.test = ["./js/test.js", "./css/test.scss"];
+} else {
+	entry.content = ["./js/content.js", "./css/scroll-capture.scss"];
+}
+
 module.exports = {
 	context: path.resolve(__dirname, "src"),
 	devtool: `[name].${ENV == "development" ? "inline-source-map" : "none"}`,
-	entry: {
-		main: ["./css/scroll-capture.scss"],
-		style: ["./css/test.scss"],
-		content: ["./js/content.js"],
-		test: ["./js/test.js"],
-	},
+	entry: entry,
 	output: {
 		path: path.resolve(__dirname, "build"),
 		filename: "[name].js",
@@ -104,6 +108,6 @@ module.exports = {
 		host: process.env.HOST || "0.0.0.0",
 		disableHostCheck: true,
 		publicPath: "/",
-		contentBase: "./build",
+		contentBase: "./src",
 	},
 };
