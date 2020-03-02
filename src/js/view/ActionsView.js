@@ -1,6 +1,7 @@
 import UIList from "../tsunami/components/UIList";
 import * as tsunami from "../tsunami/tsunami";
 import ActionView from "./ActionView";
+import {app} from "../main";
 
 export default class ActionsView extends UIList {
 
@@ -14,6 +15,12 @@ export default class ActionsView extends UIList {
 		let element = this.getElementByModel(elements[0]);
 		this.scrollToElement(element, 0.5);
 		return elements;
+	}
+
+	_dragEnd(event) {
+		let result = super._dragEnd(event);
+		app.save();
+		return result;
 	}
 
 }

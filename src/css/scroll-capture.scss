@@ -529,10 +529,11 @@ scroll-capture {
 			display: none;
 		}
 
-		action-view {
+		action-view.sc-window {
 			display: block;
 			margin-top: 1em;
-
+			background-color: rgba(74, 74, 73, 0.95);
+			
 			&:first-child {
 				margin-top: 0;
 			}
@@ -546,8 +547,8 @@ scroll-capture {
 				}
 			}
 
-			&.is-dragging {
-				opacity: 0.25;
+			&.is-dragged {
+				z-index: 1000;
 			}
 
 			&.deleted {

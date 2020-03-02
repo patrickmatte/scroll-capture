@@ -56,7 +56,10 @@ export default class Main extends App {
 			if(json) {
 				this.deserialize(JSON.parse(json));
 			}
-			this.actions.addEventListener(Data.CHANGE, (event) => {
+			this.actions.addEventListener("add", (event) => {
+				this.save();
+			});
+			this.actions.addEventListener("remove", (event) => {
 				this.save();
 			});
 
