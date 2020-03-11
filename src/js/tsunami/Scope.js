@@ -14,6 +14,7 @@ export default class Scope {
 		let root = this;
 		let scope = this;
 		while(scope) {
+			console.log("scope.parent", scope.parent);
 			scope = scope.parent;
 			if(scope) {
 				root = scope;

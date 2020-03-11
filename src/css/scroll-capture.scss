@@ -1,3 +1,8 @@
+#teconsent {
+	display: none !important;
+	visibility: hidden !important;
+}
+
 body {
 
 scroll-capture {
@@ -448,13 +453,13 @@ scroll-capture {
 
 		.sc-field-group {
 			display: flex;
-			margin-bottom: 0.5em;
+			//margin-bottom: 0.5em;
 
 			&:last-child {
 				margin-bottom: 0em;
 			}
 
-			.sc-field {
+			> * {
 				margin-bottom: 0em;
 				width: 50%;
 
@@ -586,6 +591,118 @@ scroll-capture {
 
 						&:first-child {
 							margin-left: 0;
+						}
+					}
+				}
+			}
+
+			[is="easing-graph"] {
+				padding-bottom: 100%;
+				background-color: rgba(0,0,0,0.1);
+				border-radius: 0.25em;
+
+				&.sc-field {
+					display: block;
+				}
+
+				[is="control-point-lines"] {
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					pointer-events: none;
+					//overflow: hidden;
+
+					[is="control-point-line"] {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 0.1rem;
+						background-color: #919190;
+						transform-origin: 0 50%;
+					}
+				}
+
+				.control-points {
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					//overflow: hidden;
+
+					.control-point {
+						position: absolute;
+
+						.shape {
+							position: absolute;
+							width: 1em;
+							height: 1em;
+							background-color: #919190;
+							display: block;
+							top: -0.5em;
+							left: -0.5em;
+							border-radius: 100%;
+						}
+					}
+				}
+
+				.curve {
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					display: block;
+
+					polyline {
+						fill: none;
+						stroke: #ffffff;
+						stroke-miterlimit: 10;
+						stroke-opacity: 0.6;
+						stroke-dasharray: 0;
+						stroke-width: 2;
+
+						&.js {
+							stroke: #ff0000;
+						}
+					}
+				}
+
+				.points {
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					left: 0;
+					top: 0;
+					display: block;
+
+					&.js {
+						point {
+							&:after {
+								background-color: #ff0000;
+							}
+						}
+					}
+
+					point {
+						position: absolute;
+						width: 0;
+						height: 0;
+						display: inline-block;
+
+						&:after {
+							content: "";
+							position: absolute;
+							width: 0.4em;
+							height: 0.4em;
+							background-color: #ffffff;
+							display: inline-block;
+							top: -0.2em;
+							left: -0.2em;
+							border-radius: 100%;
 						}
 					}
 				}

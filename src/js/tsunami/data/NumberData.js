@@ -1,5 +1,6 @@
 import Data from "./Data";
 import Validation from "./Validation";
+import BaseEvent from "../events";
 
 export default class NumberData extends Data {
 
@@ -9,16 +10,20 @@ export default class NumberData extends Data {
 		this.value = value;
 	}
 
+	static roundDecimal(val, divider = 10) {
+		return Math.round(val * divider) / divider;
+	}
+
 	static roundDecimal1(val) {
-		return Math.round(val * 10) / 10;
+		return NumberData.roundDecimal(val, 10);
 	}
 
 	static roundDecimal2(val) {
-		return Math.round(val * 100) / 100;
+		return NumberData.roundDecimal(val, 100);
 	}
 
 	static roundDecimal3(val) {
-		return Math.round(val * 1000) / 1000;
+		return NumberData.roundDecimal(val, 1000);
 	}
 
 	get value() {
@@ -33,7 +38,8 @@ export default class NumberData extends Data {
 		}
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;
-			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+			let event = new BaseEvent(Data.CHANGE, value);
+			this.dispatchEvent(event);
 		}
 	}
 

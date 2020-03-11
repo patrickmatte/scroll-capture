@@ -500,10 +500,8 @@ module.exports = __webpack_require__(2);
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./js/tsunami/tsunami.js
-function evalProperty(path, scope, debug) {
-  if (debug) {
-    console.log("evalProperty", path, scope);
-  }
+function evalProperty(path, scope) {
+  var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
   if (path == ".") {
     return scope;
@@ -519,10 +517,7 @@ function evalProperty(path, scope, debug) {
     for (var i = 0; i < arr.length; i++) {
       var prop = arr[i].split("]")[0];
       object = object[prop];
-
-      if (object == null) {
-        console.log("Error! The reference " + prop + " in " + path + " is undefined");
-      }
+      if (object == null && debug) console.log("Error! The reference " + prop + " in " + path + " is undefined");
     }
   }
 
@@ -1301,216 +1296,6 @@ function (_BooleanData) {
 }(BooleanData_BooleanData);
 
 
-// CONCATENATED MODULE: ./js/tsunami/data/NumberData.js
-function NumberData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { NumberData_typeof = function _typeof(obj) { return typeof obj; }; } else { NumberData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return NumberData_typeof(obj); }
-
-function NumberData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function NumberData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function NumberData_createClass(Constructor, protoProps, staticProps) { if (protoProps) NumberData_defineProperties(Constructor.prototype, protoProps); if (staticProps) NumberData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function NumberData_possibleConstructorReturn(self, call) { if (call && (NumberData_typeof(call) === "object" || typeof call === "function")) { return call; } return NumberData_assertThisInitialized(self); }
-
-function NumberData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function NumberData_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { NumberData_get = Reflect.get; } else { NumberData_get = function _get(target, property, receiver) { var base = NumberData_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return NumberData_get(target, property, receiver || target); }
-
-function NumberData_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = NumberData_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function NumberData_getPrototypeOf(o) { NumberData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return NumberData_getPrototypeOf(o); }
-
-function NumberData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) NumberData_setPrototypeOf(subClass, superClass); }
-
-function NumberData_setPrototypeOf(o, p) { NumberData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return NumberData_setPrototypeOf(o, p); }
-
-
-
-
-var NumberData_NumberData =
-/*#__PURE__*/
-function (_Data) {
-  NumberData_inherits(NumberData, _Data);
-
-  function NumberData() {
-    var _this;
-
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
-    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    NumberData_classCallCheck(this, NumberData);
-
-    _this = NumberData_possibleConstructorReturn(this, NumberData_getPrototypeOf(NumberData).call(this));
-    _this.modifiers = modifiers;
-    _this.value = value;
-    return _this;
-  }
-
-  NumberData_createClass(NumberData, [{
-    key: "add",
-    value: function add() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value + value;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value - value;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.value = 0;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.modifiers = [];
-
-      if (this.validation instanceof Validation_Validation) {
-        this.validation.destroy();
-      }
-
-      this.validation = null;
-      return NumberData_get(NumberData_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      value = Number(value);
-
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value || this.forceChangeEvent) {
-        this._value = value;
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }], [{
-    key: "roundDecimal1",
-    value: function roundDecimal1(val) {
-      return Math.round(val * 10) / 10;
-    }
-  }, {
-    key: "roundDecimal2",
-    value: function roundDecimal2(val) {
-      return Math.round(val * 100) / 100;
-    }
-  }, {
-    key: "roundDecimal3",
-    value: function roundDecimal3(val) {
-      return Math.round(val * 1000) / 1000;
-    }
-  }]);
-
-  return NumberData;
-}(Data);
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
-function ObjectData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ObjectData_typeof = function _typeof(obj) { return typeof obj; }; } else { ObjectData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ObjectData_typeof(obj); }
-
-function ObjectData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ObjectData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ObjectData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ObjectData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ObjectData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ObjectData_possibleConstructorReturn(self, call) { if (call && (ObjectData_typeof(call) === "object" || typeof call === "function")) { return call; } return ObjectData_assertThisInitialized(self); }
-
-function ObjectData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ObjectData_getPrototypeOf(o) { ObjectData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ObjectData_getPrototypeOf(o); }
-
-function ObjectData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ObjectData_setPrototypeOf(subClass, superClass); }
-
-function ObjectData_setPrototypeOf(o, p) { ObjectData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ObjectData_setPrototypeOf(o, p); }
-
-
-
-
-var ObjectData_ObjectData =
-/*#__PURE__*/
-function (_Data) {
-  ObjectData_inherits(ObjectData, _Data);
-
-  function ObjectData(value) {
-    var _this;
-
-    ObjectData_classCallCheck(this, ObjectData);
-
-    _this = ObjectData_possibleConstructorReturn(this, ObjectData_getPrototypeOf(ObjectData).call(this));
-    _this.value = value;
-    return _this;
-  }
-
-  ObjectData_createClass(ObjectData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "_deselectValue",
-    value: function _deselectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData_BooleanData) {
-            data.isSelected.value = false;
-          }
-        }
-      }
-    }
-  }, {
-    key: "_selectValue",
-    value: function _selectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData_BooleanData) {
-            data.isSelected.value = true;
-          }
-        }
-      }
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._deselectValue(this._value);
-
-        this._value = value;
-
-        this._selectValue(this._value);
-
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return ObjectData;
-}(Data);
-
-
 // CONCATENATED MODULE: ./js/tsunami/geom/math.js
 function math_lerp(a, b, t) {
   return a + t * (b - a); // return a(1-t) + bt
@@ -2217,6 +2002,227 @@ function () {
 
   return BaseEvent;
 }();
+
+
+// CONCATENATED MODULE: ./js/tsunami/data/NumberData.js
+function NumberData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { NumberData_typeof = function _typeof(obj) { return typeof obj; }; } else { NumberData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return NumberData_typeof(obj); }
+
+function NumberData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function NumberData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function NumberData_createClass(Constructor, protoProps, staticProps) { if (protoProps) NumberData_defineProperties(Constructor.prototype, protoProps); if (staticProps) NumberData_defineProperties(Constructor, staticProps); return Constructor; }
+
+function NumberData_possibleConstructorReturn(self, call) { if (call && (NumberData_typeof(call) === "object" || typeof call === "function")) { return call; } return NumberData_assertThisInitialized(self); }
+
+function NumberData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function NumberData_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { NumberData_get = Reflect.get; } else { NumberData_get = function _get(target, property, receiver) { var base = NumberData_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return NumberData_get(target, property, receiver || target); }
+
+function NumberData_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = NumberData_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function NumberData_getPrototypeOf(o) { NumberData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return NumberData_getPrototypeOf(o); }
+
+function NumberData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) NumberData_setPrototypeOf(subClass, superClass); }
+
+function NumberData_setPrototypeOf(o, p) { NumberData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return NumberData_setPrototypeOf(o, p); }
+
+
+
+
+
+var NumberData_NumberData =
+/*#__PURE__*/
+function (_Data) {
+  NumberData_inherits(NumberData, _Data);
+
+  function NumberData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
+    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    NumberData_classCallCheck(this, NumberData);
+
+    _this = NumberData_possibleConstructorReturn(this, NumberData_getPrototypeOf(NumberData).call(this));
+    _this.modifiers = modifiers;
+    _this.value = value;
+    return _this;
+  }
+
+  NumberData_createClass(NumberData, [{
+    key: "add",
+    value: function add() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value + value;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value - value;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = 0;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.modifiers = [];
+
+      if (this.validation instanceof Validation_Validation) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return NumberData_get(NumberData_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      value = Number(value);
+
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value || this.forceChangeEvent) {
+        this._value = value;
+        var event = new BaseEvent(Data.CHANGE, value);
+        this.dispatchEvent(event);
+      }
+    }
+  }], [{
+    key: "roundDecimal",
+    value: function roundDecimal(val) {
+      var divider = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+      return Math.round(val * divider) / divider;
+    }
+  }, {
+    key: "roundDecimal1",
+    value: function roundDecimal1(val) {
+      return NumberData.roundDecimal(val, 10);
+    }
+  }, {
+    key: "roundDecimal2",
+    value: function roundDecimal2(val) {
+      return NumberData.roundDecimal(val, 100);
+    }
+  }, {
+    key: "roundDecimal3",
+    value: function roundDecimal3(val) {
+      return NumberData.roundDecimal(val, 1000);
+    }
+  }]);
+
+  return NumberData;
+}(Data);
+
+
+// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
+function ObjectData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ObjectData_typeof = function _typeof(obj) { return typeof obj; }; } else { ObjectData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ObjectData_typeof(obj); }
+
+function ObjectData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ObjectData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ObjectData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ObjectData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ObjectData_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ObjectData_possibleConstructorReturn(self, call) { if (call && (ObjectData_typeof(call) === "object" || typeof call === "function")) { return call; } return ObjectData_assertThisInitialized(self); }
+
+function ObjectData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ObjectData_getPrototypeOf(o) { ObjectData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ObjectData_getPrototypeOf(o); }
+
+function ObjectData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ObjectData_setPrototypeOf(subClass, superClass); }
+
+function ObjectData_setPrototypeOf(o, p) { ObjectData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ObjectData_setPrototypeOf(o, p); }
+
+
+
+
+var ObjectData_ObjectData =
+/*#__PURE__*/
+function (_Data) {
+  ObjectData_inherits(ObjectData, _Data);
+
+  function ObjectData(value) {
+    var _this;
+
+    ObjectData_classCallCheck(this, ObjectData);
+
+    _this = ObjectData_possibleConstructorReturn(this, ObjectData_getPrototypeOf(ObjectData).call(this));
+    _this.value = value;
+    _this.forceChangeEvent = false;
+    return _this;
+  }
+
+  ObjectData_createClass(ObjectData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "_deselectValue",
+    value: function _deselectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof BooleanData_BooleanData) {
+            data.isSelected.value = false;
+          }
+        }
+      }
+    }
+  }, {
+    key: "_selectValue",
+    value: function _selectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof BooleanData_BooleanData) {
+            data.isSelected.value = true;
+          }
+        }
+      }
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (value != this._value) {
+        this._deselectValue(this._value);
+
+        this._value = value;
+
+        this._selectValue(this._value);
+
+        this.dispatchEvent({
+          type: Data.CHANGE,
+          value: this._value
+        });
+      } else if (this.forceChangeEvent) {
+        this.dispatchEvent({
+          type: Data.CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }]);
+
+  return ObjectData;
+}(Data);
 
 
 // CONCATENATED MODULE: ./js/tsunami/data/ArrayData.js
@@ -2926,12 +2932,22 @@ function (_Data) {
           type: Data.CHANGE,
           value: this._value
         });
+      } else if (this.forceChangeEvent) {
+        this.dispatchEvent({
+          type: Data.CHANGE,
+          value: this._value
+        });
       }
     }
   }], [{
     key: "ADD",
     value: function ADD(value1, value2) {
       return value1 + value2;
+    }
+  }, {
+    key: "ADD_TOSTRING",
+    value: function ADD_TOSTRING(value1, value2) {
+      return value1.toString() + value2.toString();
     }
   }, {
     key: "SUBTRACT",
@@ -3138,8 +3154,8 @@ function (_Branch) {
       _this.alsoShowChildren = _this.element.getAttribute("data-also-show-children") == "true";
     }
 
-    _this.modelChangeBind = _this.modelChange.bind(UIComponent_assertThisInitialized(_this));
-    _this._scope = UIComponent_assertThisInitialized(_this);
+    _this.modelChangeBind = _this.modelChange.bind(UIComponent_assertThisInitialized(_this)); // this._scope = this;
+
     _this.showDuration = 0;
     _this.showDelay = 0;
     _this.hideDuration = 0;
@@ -3388,11 +3404,14 @@ function (_Branch) {
     key: "windowResize",
     value: function windowResize(windowSize) {
       this.windowSize = windowSize;
-      this.rectangle = this.getRect();
-      this.rectangle = new Rectangle_Rectangle(this.element.offsetLeft, this.element.offsetTop, this.element.offsetWidth, this.element.offsetHeight);
+      this.rectangle.x = this.element.offsetLeft;
+      this.rectangle.y = this.element.offsetTop;
+      this.rectangle.width = this.element.offsetWidth;
+      this.rectangle.height = this.element.offsetHeight;
+      this.globalRectangle.width = this.rectangle.width;
+      this.globalRectangle.height = this.rectangle.height;
 
       if (this.calculateGlobalPosition) {
-        this.globalRectangle = this.rectangle.clone();
         this.globalRectangle.position = localToGlobal(this.element, document.body);
       }
 
@@ -3740,52 +3759,6 @@ function (_Branch) {
 }(Branch);
 
 
-// CONCATENATED MODULE: ./js/view/ActionView.js
-function ActionView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionView_typeof(obj); }
-
-function ActionView_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ActionView_possibleConstructorReturn(self, call) { if (call && (ActionView_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionView_assertThisInitialized(self); }
-
-function ActionView_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ActionView_getPrototypeOf(o) { ActionView_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionView_getPrototypeOf(o); }
-
-function ActionView_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionView_setPrototypeOf(subClass, superClass); }
-
-function ActionView_setPrototypeOf(o, p) { ActionView_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionView_setPrototypeOf(o, p); }
-
-
-
-
-var ActionView_ActionView =
-/*#__PURE__*/
-function (_UIComponent) {
-  ActionView_inherits(ActionView, _UIComponent);
-
-  function ActionView(element) {
-    var _this;
-
-    ActionView_classCallCheck(this, ActionView);
-
-    _this = ActionView_possibleConstructorReturn(this, ActionView_getPrototypeOf(ActionView).call(this, element));
-    _this.title = _this.element.querySelector(".sc-title");
-
-    var deleteButton = _this.title.querySelector("button.close-button");
-
-    deleteButton.component.onRelease = function (event) {
-      var index = app.actions.selectedIndex.value;
-      app.actions.remove(app.actions.selectedItem.value);
-      app.actions.selectedIndex.value = Math.min(index, app.actions.value.length - 1);
-    };
-
-    return _this;
-  }
-
-  return ActionView;
-}(UIComponent_UIComponent);
-
-
 // CONCATENATED MODULE: ./js/tsunami/Scope.js
 function Scope_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3826,6 +3799,7 @@ function () {
       var scope = this;
 
       while (scope) {
+        console.log("scope.parent", scope.parent);
         scope = scope.parent;
 
         if (scope) {
@@ -4643,6 +4617,7 @@ function (_UIComponent) {
     _this._providerSort = _this._providerSort.bind(UIList_assertThisInitialized(_this));
     _this.selectItemOnMouseDown = false;
     _this.dragIndex = NaN;
+    _this.dragElementClass = "ui-list-drag-area";
     _this.template = "<li><span is=\"ui-text\">[[data]]</span></li>";
     _this.templates = {};
     _this._provider = [];
@@ -4683,29 +4658,31 @@ function (_UIComponent) {
     value: function _addElements(array) {
       var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
-      for (var i = 0; i < array.length; i++) {
+      for (var i in array) {
         var data = array[i];
-        var scope = new Scope(data, this.scope, index + i, array.length);
-        var template = this.getTemplateForModel(data);
-
-        if (!template) {
-          throw new Error("UIList component for " + this.element.outerHTML + " returned no template");
-        }
-
-        var element = importTemplate(template, scope); // element.model = model;
+        var element = this.createElement(data, index, array.length); // element.model = model;
         // if(element.component instanceof UIComponent) {
         // 	element.component.model = model;
         // }
 
-        this.appendChildAt(element, index + i);
+        this.appendChildAt(element, index);
 
         if (this.isAdded) {
           UIComponent_UIComponent.callElementAdded(element);
         }
+
+        index++;
       }
 
       this.dispatchEvent(new BaseEvent("listChange", array));
       return array;
+    }
+  }, {
+    key: "createElement",
+    value: function createElement(data, index, length) {
+      var template = this.getTemplateForModel(data);
+      var scope = new Scope(data, this.scope, index, length);
+      return importTemplate(template, scope);
     }
   }, {
     key: "getModelType",
@@ -4730,6 +4707,10 @@ function (_UIComponent) {
 
       if (!selectedTemplate) {
         selectedTemplate = this.templates["*"] || this.template;
+      }
+
+      if (!selectedTemplate) {
+        throw new Error("UIList " + this.element.outerHTML + " has no template");
       }
 
       return selectedTemplate;
@@ -4856,40 +4837,48 @@ function (_UIComponent) {
     value: function _mouseDownHandler(event) {
       var _this3 = this;
 
+      if (this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
       var selectedIndex = NaN;
       var selectedChild = this.children.find(function (child, index) {
         var contains = child.contains(event.target);
-        if (contains) selectedIndex = index;
-        return contains;
+        var isChild = child == event.target;
+        var isMatch = contains || isChild;
+        if (_this3.debug) console.log(index, "contains", contains, "isChild", isChild, "isMatch", isMatch);
+        if (isMatch) selectedIndex = index;
+        return isMatch;
       });
+      if (this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
 
-      if (this.selectItemOnMouseDown && !isNaN(selectedIndex)) {
-        if (this.dataProvider.selectedIndex) {
-          this.dataProvider.selectedIndex.value = selectedIndex;
+      if (selectedChild) {
+        if (this.selectItemOnMouseDown) {
+          if (this.dataProvider.selectedIndex) {
+            this.dataProvider.selectedIndex.value = selectedIndex;
+          }
+        }
+
+        var isDragElement = event.target.classList.contains(this.dragElementClass);
+        if (this.debug) console.log("isDragElement", isDragElement);
+
+        if (isDragElement) {
+          event.preventDefault();
+          this.dragStartPoint = this.getTouchPoint(event);
+          this.dragIndex = NaN; // this.dragElement = this.children.find((child, index) => {
+          // 	let match = (event.target == child.querySelector(".ui-list-drag-area"));
+          // 	if (match) this.dragIndex = index;
+          // 	return match;
+          // });
+
+          this.dragElement = selectedChild;
+          this.dragIndex = selectedIndex;
+          this.dragElementStartPos = new Point_Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
+          this.dragElementsMinHeight = Number.MAX_VALUE;
+          this.children.map(function (child) {
+            _this3.dragElementsMinHeight = Math.min(_this3.dragElementsMinHeight, child.component.rectangle.height);
+          });
+          document.body.addEventListener(events.mousemove, this._dragMove);
+          document.body.addEventListener(events.mouseup, this._dragEnd);
         }
       }
-
-      if (event.target.classList.contains("ui-list-drag-area")) {
-        event.preventDefault();
-        this.dragStartPoint = this.getTouchPoint(event);
-        this.dragIndex = NaN; // this.dragElement = this.children.find((child, index) => {
-        // 	let match = (event.target == child.querySelector(".ui-list-drag-area"));
-        // 	if (match) this.dragIndex = index;
-        // 	return match;
-        // });
-
-        this.dragElement = selectedChild;
-        this.dragIndex = selectedIndex;
-        this.dragElementStartPos = new Point_Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
-        this.dragElementsMinHeight = Number.MAX_VALUE;
-        this.children.map(function (child) {
-          _this3.dragElementsMinHeight = Math.min(_this3.dragElementsMinHeight, child.component.rectangle.height);
-        });
-        document.body.addEventListener(events.mousemove, this._dragMove);
-        document.body.addEventListener(events.mouseup, this._dragEnd);
-      }
-
-      return selectedIndex;
     }
   }, {
     key: "_dragMove",
@@ -4897,7 +4886,7 @@ function (_UIComponent) {
       var point = this.getTouchPoint(event);
       var distance = Point_Point.distance(point, this.dragStartPoint);
 
-      if (distance > 3) {
+      if (distance > 0) {
         this.dragElement.classList.add("is-dragged");
         document.body.removeEventListener(events.mousemove, this._dragMove);
         document.body.addEventListener(events.mousemove, this._dragElementMove);
@@ -4937,7 +4926,7 @@ function (_UIComponent) {
     key: "_dragEnd",
     value: function _dragEnd(event) {
       this.dragElement.classList.remove("is-dragged");
-      this.dragElement.style.transform = "translate3d(0px, 0px, 0px)";
+      this.dragElement.style.transform = "";
       document.body.removeEventListener(events.mousemove, this._dragMove);
       document.body.removeEventListener(events.mousemove, this._dragElementMove);
       document.body.removeEventListener(events.mouseup, this._dragEnd);
@@ -4984,6 +4973,7 @@ function (_UIComponent) {
       return UIList_get(UIList_getPrototypeOf(UIList.prototype), "scope", this);
     },
     set: function set(value) {
+      this._scope = value;
       var dataProvider = this.element.getAttribute("data-provider");
 
       if (dataProvider) {
@@ -5041,6 +5031,336 @@ function (_UIComponent) {
 }(UIComponent_UIComponent);
 
 
+// CONCATENATED MODULE: ./js/view/EasingGraph.js
+function EasingGraph_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { EasingGraph_typeof = function _typeof(obj) { return typeof obj; }; } else { EasingGraph_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return EasingGraph_typeof(obj); }
+
+function EasingGraph_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function EasingGraph_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function EasingGraph_createClass(Constructor, protoProps, staticProps) { if (protoProps) EasingGraph_defineProperties(Constructor.prototype, protoProps); if (staticProps) EasingGraph_defineProperties(Constructor, staticProps); return Constructor; }
+
+function EasingGraph_possibleConstructorReturn(self, call) { if (call && (EasingGraph_typeof(call) === "object" || typeof call === "function")) { return call; } return EasingGraph_assertThisInitialized(self); }
+
+function EasingGraph_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function EasingGraph_set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { EasingGraph_set = Reflect.set; } else { EasingGraph_set = function set(target, property, value, receiver) { var base = EasingGraph_superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { EasingGraph_defineProperty(receiver, property, value); } return true; }; } return EasingGraph_set(target, property, value, receiver); }
+
+function view_EasingGraph_set(target, property, value, receiver, isStrict) { var s = EasingGraph_set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
+
+function EasingGraph_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function EasingGraph_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { EasingGraph_get = Reflect.get; } else { EasingGraph_get = function _get(target, property, receiver) { var base = EasingGraph_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return EasingGraph_get(target, property, receiver || target); }
+
+function EasingGraph_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = EasingGraph_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function EasingGraph_getPrototypeOf(o) { EasingGraph_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return EasingGraph_getPrototypeOf(o); }
+
+function EasingGraph_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) EasingGraph_setPrototypeOf(subClass, superClass); }
+
+function EasingGraph_setPrototypeOf(o, p) { EasingGraph_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return EasingGraph_setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+var EasingGraph_EasingGraph =
+/*#__PURE__*/
+function (_UIComponent) {
+  EasingGraph_inherits(EasingGraph, _UIComponent);
+
+  function EasingGraph(element) {
+    var _this;
+
+    EasingGraph_classCallCheck(this, EasingGraph);
+
+    _this = EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraph).call(this, element));
+    _this.controlPoints = _this.element.querySelector(".control-points").component;
+    _this.controlPointLines = _this.element.querySelector('[is="control-point-lines"]').component;
+    _this.curves = ArrayData_ArrayData.nodeListToArray(_this.element.querySelectorAll(".curve polyline"));
+    _this.points = ArrayData_ArrayData.nodeListToArray(_this.element.querySelectorAll(".points"));
+    return _this;
+  }
+
+  EasingGraph_createClass(EasingGraph, [{
+    key: "updateValue",
+    value: function updateValue(value) {
+      EasingGraph_get(EasingGraph_getPrototypeOf(EasingGraph.prototype), "updateValue", this).call(this, value);
+
+      this.curves.map(function (curve) {
+        curve.component.render();
+      });
+      this.points.map(function (curve) {
+        curve.component.render();
+      });
+    }
+  }, {
+    key: "model",
+    get: function get() {
+      return EasingGraph_get(EasingGraph_getPrototypeOf(EasingGraph.prototype), "model", this);
+    },
+    set: function set(value) {
+      view_EasingGraph_set(EasingGraph_getPrototypeOf(EasingGraph.prototype), "model", value, this, true);
+
+      this.controlPoints.dataProvider = [value.p1, value.p2];
+      this.controlPointLines.dataProvider = [[value.p0, value.p1], [value.p2, value.p3]];
+    }
+  }]);
+
+  return EasingGraph;
+}(UIComponent_UIComponent);
+
+
+var EasingGraphControlPoints =
+/*#__PURE__*/
+function (_UIList) {
+  EasingGraph_inherits(EasingGraphControlPoints, _UIList);
+
+  function EasingGraphControlPoints(element) {
+    var _this2;
+
+    EasingGraph_classCallCheck(this, EasingGraphControlPoints);
+
+    _this2 = EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraphControlPoints).call(this, element));
+    _this2.dragElementClass = "shape";
+    return _this2;
+  }
+
+  EasingGraph_createClass(EasingGraphControlPoints, [{
+    key: "_dragElementMove",
+    value: function _dragElementMove(event) {
+      event.preventDefault();
+      var point = this.getTouchPoint(event);
+      var dragDiff = point.subtract(this.dragStartPoint);
+      var originOffset = dragDiff.add(this.dragElementStartPos);
+      var factor = originOffset.clone();
+      factor.x = factor.x / this.rectangle.width;
+      factor.y = 1 - factor.y / this.rectangle.height;
+      this.dragElement.component.model.x.value = factor.x;
+      this.dragElement.component.model.y.value = factor.y;
+    }
+  }]);
+
+  return EasingGraphControlPoints;
+}(UIList_UIList);
+var EasingGraph_EasingGraphControlPointLines =
+/*#__PURE__*/
+function (_UIList2) {
+  EasingGraph_inherits(EasingGraphControlPointLines, _UIList2);
+
+  function EasingGraphControlPointLines(props) {
+    var _this3;
+
+    EasingGraph_classCallCheck(this, EasingGraphControlPointLines);
+
+    _this3 = EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraphControlPointLines).call(this, props));
+    _this3.updateLines = _this3.updateLines.bind(EasingGraph_assertThisInitialized(_this3));
+    return _this3;
+  }
+
+  EasingGraph_createClass(EasingGraphControlPointLines, [{
+    key: "windowResize",
+    value: function windowResize(windowSize) {
+      EasingGraph_get(EasingGraph_getPrototypeOf(EasingGraphControlPointLines.prototype), "windowResize", this).call(this, windowSize);
+
+      this.updateLines();
+    }
+  }, {
+    key: "updateLines",
+    value: function updateLines() {
+      this.children.map(function (child) {
+        child.component.updateLine();
+      });
+    }
+  }, {
+    key: "dataProvider",
+    get: function get() {
+      return EasingGraph_get(EasingGraph_getPrototypeOf(EasingGraphControlPointLines.prototype), "dataProvider", this);
+    },
+    set: function set(value) {
+      view_EasingGraph_set(EasingGraph_getPrototypeOf(EasingGraphControlPointLines.prototype), "dataProvider", value, this, true);
+
+      for (var i in value) {
+        var pair = value[i];
+
+        for (var j in pair) {
+          var vec = pair[j];
+          vec.addEventListener(Data.CHANGE, this.updateLines);
+        }
+      }
+    }
+  }]);
+
+  return EasingGraphControlPointLines;
+}(UIList_UIList);
+var EasingGraph_EasingGraphControlPointLine =
+/*#__PURE__*/
+function (_UIComponent2) {
+  EasingGraph_inherits(EasingGraphControlPointLine, _UIComponent2);
+
+  function EasingGraphControlPointLine(element) {
+    var _this4;
+
+    EasingGraph_classCallCheck(this, EasingGraphControlPointLine);
+
+    _this4 = EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraphControlPointLine).call(this, element));
+    _this4.updateLine = _this4.updateLine.bind(EasingGraph_assertThisInitialized(_this4));
+    return _this4;
+  }
+
+  EasingGraph_createClass(EasingGraphControlPointLine, [{
+    key: "updateLine",
+    value: function updateLine() {
+      if (!this.model) {
+        return;
+      }
+
+      var parent = this.element.parentNode;
+      var parentComponent = parent.component;
+      var parentRectangle = parentComponent.rectangle;
+      var point0 = this.model[0].point;
+      point0.y = 1 - point0.y;
+      var point1 = this.model[1].point;
+      point1.y = 1 - point1.y;
+      var scale = Point_Point.distance(point0, point1);
+      var angle = NumberData_NumberData.roundDecimal2(Point_Point.getAngle(point1, point0) * 180 / Math.PI);
+      var position = new Point_Point(point0.x * parentRectangle.width, point0.y * parentRectangle.height);
+      var transform = "translateX(".concat(position.x, "px) translateY(").concat(position.y, "px) rotate(").concat(angle, "deg) scaleX(").concat(scale, ")");
+      this.element.style.transform = transform;
+    }
+  }]);
+
+  return EasingGraphControlPointLine;
+}(UIComponent_UIComponent);
+var EasingGraph_EasingGraphCurve =
+/*#__PURE__*/
+function (_UIComponent3) {
+  EasingGraph_inherits(EasingGraphCurve, _UIComponent3);
+
+  function EasingGraphCurve(element) {
+    EasingGraph_classCallCheck(this, EasingGraphCurve);
+
+    return EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraphCurve).call(this, element));
+  }
+
+  EasingGraph_createClass(EasingGraphCurve, [{
+    key: "render",
+    value: function render() {
+      var easing = this.model.value;
+      var totalPoints = 40;
+      var points = [];
+      var pointsString = "";
+
+      for (var i = 0; i < totalPoints; i++) {
+        var x = i / (totalPoints - 1);
+        var point = new Point_Point(x, easing(x, 0, 1, 1));
+        points.push(point);
+        pointsString += NumberData_NumberData.roundDecimal3(point.x * 200) + "," + NumberData_NumberData.roundDecimal3(200 - point.y * 200) + " ";
+      }
+
+      this.element.setAttribute("points", pointsString);
+    }
+  }]);
+
+  return EasingGraphCurve;
+}(UIComponent_UIComponent);
+var EasingGraph_EasingGraphPoints =
+/*#__PURE__*/
+function (_UIComponent4) {
+  EasingGraph_inherits(EasingGraphPoints, _UIComponent4);
+
+  function EasingGraphPoints(element) {
+    EasingGraph_classCallCheck(this, EasingGraphPoints);
+
+    return EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraphPoints).call(this, element));
+  }
+
+  EasingGraph_createClass(EasingGraphPoints, [{
+    key: "render",
+    value: function render() {
+      var easing = this.model.value;
+      this.element.innerHTML = "";
+      var totalPoints = 30;
+      var points = [];
+
+      for (var i = 0; i < totalPoints; i++) {
+        var x = i / (totalPoints - 1);
+        var point = new Point_Point(x, easing(x, 0, 1, 1));
+        points.push(point);
+      }
+
+      for (var _i = 0; _i < points.length; _i++) {
+        var position = points[_i];
+
+        var _point = importTemplate("<point></point>");
+
+        _point.style.left = position.x * 100 + "%";
+        _point.style.top = 100 - position.y * 100 + "%";
+        this.element.appendChild(_point);
+      }
+    }
+  }]);
+
+  return EasingGraphPoints;
+}(UIComponent_UIComponent);
+define("easing-graph-control-points", EasingGraphControlPoints);
+define("control-point-lines", EasingGraph_EasingGraphControlPointLines);
+define("control-point-line", EasingGraph_EasingGraphControlPointLine);
+define("easing-graph-curve", EasingGraph_EasingGraphCurve);
+define("easing-graph-points", EasingGraph_EasingGraphPoints);
+// CONCATENATED MODULE: ./js/view/ActionView.js
+function ActionView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionView_typeof(obj); }
+
+function ActionView_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ActionView_possibleConstructorReturn(self, call) { if (call && (ActionView_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionView_assertThisInitialized(self); }
+
+function ActionView_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ActionView_getPrototypeOf(o) { ActionView_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionView_getPrototypeOf(o); }
+
+function ActionView_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionView_setPrototypeOf(subClass, superClass); }
+
+function ActionView_setPrototypeOf(o, p) { ActionView_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionView_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var ActionView_ActionView =
+/*#__PURE__*/
+function (_UIComponent) {
+  ActionView_inherits(ActionView, _UIComponent);
+
+  function ActionView(element) {
+    var _this;
+
+    ActionView_classCallCheck(this, ActionView);
+
+    _this = ActionView_possibleConstructorReturn(this, ActionView_getPrototypeOf(ActionView).call(this, element));
+    _this.title = _this.element.querySelector(".sc-title");
+
+    var deleteButton = _this.title.querySelector("button.close-button");
+
+    deleteButton.component.onRelease = function (event) {
+      var index = app.actions.selectedIndex.value;
+      app.actions.remove(app.actions.selectedItem.value);
+      app.actions.selectedIndex.value = Math.min(index, app.actions.value.length - 1);
+    };
+
+    return _this;
+  }
+
+  return ActionView;
+}(UIComponent_UIComponent);
+
+
+define("easing-graph", EasingGraph_EasingGraph);
 // CONCATENATED MODULE: ./js/view/ActionsView.js
 function ActionsView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionsView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionsView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionsView_typeof(obj); }
 
@@ -5205,7 +5525,7 @@ function (_UIComponent) {
 }(UIComponent_UIComponent);
 
 
-ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div>\n<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</div>-->\n<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"text\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"text\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"text\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"selected-border\"></div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
+ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div is=\"ui-component\">\n<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</div>-->\n<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div is=\"easing-graph\" class=\"sc-field\" data-model=\"data.cubicBezier\">\n\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n\t\t\t\t\t\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>\n\t\t\t\t\t\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n\t\t\t\t\t\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n\t\t\t\t\t\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-lines\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-line\" data-model=\"data\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-points\" is=\"easing-graph-control-points\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"shape\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p1.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p1.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p2.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p2.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"selected-border\"></div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
 
 define("actions-view", ActionsView_ActionsView);
 // CONCATENATED MODULE: ./js/tsunami/components/UIButton.js
@@ -7145,6 +7465,423 @@ function () {
 }();
 
 
+// CONCATENATED MODULE: ./js/tsunami/geom/CubicBezier.js
+function CubicBezier_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function CubicBezier_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function CubicBezier_createClass(Constructor, protoProps, staticProps) { if (protoProps) CubicBezier_defineProperties(Constructor.prototype, protoProps); if (staticProps) CubicBezier_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var CubicBezier_CubicBezier =
+/*#__PURE__*/
+function () {
+  function CubicBezier(p0, p1, p2, p3) {
+    var samples = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 100;
+
+    CubicBezier_classCallCheck(this, CubicBezier);
+
+    this.p0 = p0 || new Point_Point(0, 0);
+    this.p1 = p1 || new Point_Point(0, 0);
+    this.p2 = p2 || new Point_Point(1, 1);
+    this.p3 = p3 || new Point_Point(1, 1);
+    this.samples = samples;
+    this.calculateLength();
+  }
+
+  CubicBezier_createClass(CubicBezier, [{
+    key: "calculateLength",
+    value: function calculateLength() {
+      this.distances = [0];
+      this.distancesX = [0];
+      this.totalLength = 0;
+      this.totalX = 0;
+      var prev = this.p0;
+
+      for (var i = 1; i < this.samples; i++) {
+        var t = i / (this.samples - 1); // console.log("i", i, "t", t);
+
+        var pt = this.getPoint(t);
+        var diff = prev.subtract(pt); //( prev - pt );
+
+        this.totalLength += diff.magnitude;
+        this.distances[i] = this.totalLength;
+        this.totalX -= diff.x;
+        this.distancesX[i] = this.totalX;
+        prev = pt;
+      } // console.log("this.totalX", this.totalX);
+      // console.log("this.distancesX", this.distancesX);
+
+    }
+  }, {
+    key: "getPoint",
+    value: function getPoint(t) {
+      var a = Point_Point.lerp(this.p0, this.p1, t);
+      var b = Point_Point.lerp(this.p1, this.p2, t);
+      var c = Point_Point.lerp(this.p2, this.p3, t);
+      var d = Point_Point.lerp(a, b, t);
+      var e = Point_Point.lerp(b, c, t);
+      var point = Point_Point.lerp(d, e, t);
+      return point;
+    }
+  }, {
+    key: "getPointOnCurve",
+    value: function getPointOnCurve(t) {
+      var time = this.sampleAt(t, this.distances);
+      return this.getPoint(time);
+    }
+  }, {
+    key: "getPointAtX",
+    value: function getPointAtX(t) {
+      var time = this.sampleAt(t, this.distancesX);
+      var point = this.getPoint(time);
+      point.x = t;
+      return point;
+    }
+  }, {
+    key: "sampleAt",
+    value: function sampleAt(u, array) {
+      var i = 0;
+      var lastIndex = array.length - 1;
+      var targetArcLength = u * array[lastIndex]; // binary search for the index with largest value smaller than target u distance
+
+      var low = 0;
+      var high = lastIndex;
+      var comparison;
+
+      while (low <= high) {
+        i = Math.floor(low + (high - low) / 2); // less likely to overflow, though probably not issue here, JS doesn't really have integers, all numbers are floats
+
+        comparison = array[i] - targetArcLength;
+
+        if (comparison < 0) {
+          low = i + 1;
+        } else if (comparison > 0) {
+          high = i - 1;
+        } else {
+          high = i;
+          break; // DONE
+        }
+      }
+
+      i = high;
+
+      if (array[i] === targetArcLength) {
+        return i / lastIndex;
+      } // we could get finer grain at lengths, or use simple interpolation between two points
+
+
+      var lengthBefore = array[i];
+      var lengthAfter = array[i + 1];
+      var segmentLength = lengthAfter - lengthBefore; // determine where we are between the 'before' and 'after' points
+
+      var segmentFraction = (targetArcLength - lengthBefore) / segmentLength; // add that fractional amount to t
+
+      return (i + segmentFraction) / lastIndex;
+    }
+  }]);
+
+  return CubicBezier;
+}();
+
+
+// CONCATENATED MODULE: ./js/tsunami/utils/string.js
+function truncate(str, length, addAfter) {
+  if (str.length > length) {
+    str = str.substr(0, 30) + addAfter;
+  }
+
+  return str;
+}
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+// CONCATENATED MODULE: ./js/tsunami/animation/CubicBezierEasing.js
+function CubicBezierEasing_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { CubicBezierEasing_typeof = function _typeof(obj) { return typeof obj; }; } else { CubicBezierEasing_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return CubicBezierEasing_typeof(obj); }
+
+function CubicBezierEasing_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function CubicBezierEasing_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function CubicBezierEasing_createClass(Constructor, protoProps, staticProps) { if (protoProps) CubicBezierEasing_defineProperties(Constructor.prototype, protoProps); if (staticProps) CubicBezierEasing_defineProperties(Constructor, staticProps); return Constructor; }
+
+function CubicBezierEasing_possibleConstructorReturn(self, call) { if (call && (CubicBezierEasing_typeof(call) === "object" || typeof call === "function")) { return call; } return CubicBezierEasing_assertThisInitialized(self); }
+
+function CubicBezierEasing_getPrototypeOf(o) { CubicBezierEasing_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return CubicBezierEasing_getPrototypeOf(o); }
+
+function CubicBezierEasing_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function CubicBezierEasing_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) CubicBezierEasing_setPrototypeOf(subClass, superClass); }
+
+function CubicBezierEasing_setPrototypeOf(o, p) { CubicBezierEasing_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return CubicBezierEasing_setPrototypeOf(o, p); }
+
+
+
+
+
+var CubicBezierEasing =
+/*#__PURE__*/
+function (_CubicBezier) {
+  CubicBezierEasing_inherits(CubicBezierEasing, _CubicBezier);
+
+  function CubicBezierEasing() {
+    var _this;
+
+    var p1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var samples = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100;
+
+    CubicBezierEasing_classCallCheck(this, CubicBezierEasing);
+
+    _this = CubicBezierEasing_possibleConstructorReturn(this, CubicBezierEasing_getPrototypeOf(CubicBezierEasing).call(this, null, p1, p2, null, samples));
+    _this.ease = _this.ease.bind(CubicBezierEasing_assertThisInitialized(_this));
+    return _this;
+  }
+
+  CubicBezierEasing_createClass(CubicBezierEasing, [{
+    key: "ease",
+    value: function ease(t, b, c, d) {
+      var point = this.getPointAtX(t / d);
+      return c * point.y + b;
+    }
+  }]);
+
+  return CubicBezierEasing;
+}(CubicBezier_CubicBezier);
+
+
+CubicBezierEasing.quadratic = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.45, 0), new Point_Point(0.55, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.41, 0), new Point_Point(0.75, 0.5)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.25, 0.5), new Point_Point(0.59, 1))
+};
+CubicBezierEasing.cubic = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.66, 0), new Point_Point(0.34, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.44, 0), new Point_Point(0.68, 0.09)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.32, 0.91), new Point_Point(0.56, 1))
+};
+CubicBezierEasing.quartic = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.8, 0), new Point_Point(0.2, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.5, 0), new Point_Point(0.75, 0)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.25, 1), new Point_Point(0.5, 1))
+};
+CubicBezierEasing.quintic = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.86, 0), new Point_Point(0.14, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.58, 0), new Point_Point(0.78, -0.05)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.22, 1.05), new Point_Point(0.42, 1))
+};
+CubicBezierEasing.sine = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.37, 0), new Point_Point(0.63, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.38, 0), new Point_Point(0.69, 0.53)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.31, 0.47), new Point_Point(0.62, 1))
+};
+CubicBezierEasing.exponential = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.9, 0), new Point_Point(0.1, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.76, 0), new Point_Point(0.84, 0.06)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.16, 0.94), new Point_Point(0.24, 1))
+};
+CubicBezierEasing.circular = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.81, 0), new Point_Point(0.19, 1)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.55, 0), new Point_Point(1, 0.45)),
+  easeOut: new CubicBezierEasing(new Point_Point(0, 0.55), new Point_Point(0.45, 1))
+};
+CubicBezierEasing.back = {
+  easeInOut: new CubicBezierEasing(new Point_Point(0.68, -0.6), new Point_Point(0.32, 1.6)),
+  easeIn: new CubicBezierEasing(new Point_Point(0.36, 0), new Point_Point(0.66, -0.56)),
+  easeOut: new CubicBezierEasing(new Point_Point(0.34, 1.56), new Point_Point(0.64, 1))
+};
+CubicBezierEasing.linear = {
+  ease: new CubicBezierEasing(new Point_Point(0, 0), new Point_Point(1, 1))
+};
+CubicBezierEasing.ibm = {
+  easeExpressive: new CubicBezierEasing(new Point_Point(0.4, 0.14), new Point_Point(0.3, 1)),
+  easeProductive: new CubicBezierEasing(new Point_Point(0.2, 0), new Point_Point(0.38, 0.9))
+}; // let cssVariables = "";
+// for(let i in CubicBezierEasing) {
+// 	let easingClass = CubicBezierEasing[i];
+// 	for(let j in easingClass) {
+// 		let cubicBezier = easingClass[j];
+// 		let easeClassName = capitalize(i);
+// 		let easeNameArray = j.split("ease");
+// 		easeNameArray.shift();
+// 		let easeName = capitalize(easeNameArray.join(""));
+// 		let variable = `$ease${easeClassName}${easeName}: cubic-bezier(${cubicBezier.p1.x}, ${cubicBezier.p1.y}, ${cubicBezier.p2.x}, ${cubicBezier.p2.x});`;
+// 		cssVariables = cssVariables + variable;
+// 	}
+// }
+// console.log(cssVariables);
+// CONCATENATED MODULE: ./js/tsunami/data/Vector2Data.js
+function Vector2Data_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Vector2Data_typeof = function _typeof(obj) { return typeof obj; }; } else { Vector2Data_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Vector2Data_typeof(obj); }
+
+function Vector2Data_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Vector2Data_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Vector2Data_createClass(Constructor, protoProps, staticProps) { if (protoProps) Vector2Data_defineProperties(Constructor.prototype, protoProps); if (staticProps) Vector2Data_defineProperties(Constructor, staticProps); return Constructor; }
+
+function Vector2Data_possibleConstructorReturn(self, call) { if (call && (Vector2Data_typeof(call) === "object" || typeof call === "function")) { return call; } return Vector2Data_assertThisInitialized(self); }
+
+function Vector2Data_getPrototypeOf(o) { Vector2Data_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Vector2Data_getPrototypeOf(o); }
+
+function Vector2Data_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function Vector2Data_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Vector2Data_setPrototypeOf(subClass, superClass); }
+
+function Vector2Data_setPrototypeOf(o, p) { Vector2Data_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Vector2Data_setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var Vector2Data_Vector2Data =
+/*#__PURE__*/
+function (_EventDispatcher) {
+  Vector2Data_inherits(Vector2Data, _EventDispatcher);
+
+  function Vector2Data() {
+    var _this;
+
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    Vector2Data_classCallCheck(this, Vector2Data);
+
+    _this = Vector2Data_possibleConstructorReturn(this, Vector2Data_getPrototypeOf(Vector2Data).call(this));
+    _this.dispatchChangeEvent = _this.dispatchChangeEvent.bind(Vector2Data_assertThisInitialized(_this));
+    _this.x = new NumberData_NumberData(x);
+
+    _this.x.addEventListener(Data.CHANGE, _this.dispatchChangeEvent);
+
+    _this.y = new NumberData_NumberData(y);
+
+    _this.y.addEventListener(Data.CHANGE, _this.dispatchChangeEvent);
+
+    return _this;
+  }
+
+  Vector2Data_createClass(Vector2Data, [{
+    key: "dispatchChangeEvent",
+    value: function dispatchChangeEvent(event) {
+      this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      var point = new Vector2Data();
+      point.copy(this);
+      return point;
+    }
+  }, {
+    key: "copy",
+    value: function copy(point) {
+      this.x.copy(point.x);
+      this.y.copy(point.y);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        x: this.x.value,
+        y: this.y.value
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      if (data) {
+        this.x.value = data.x;
+        this.y.value = data.y;
+      }
+    }
+  }, {
+    key: "point",
+    get: function get() {
+      return new Point_Point(this.x.value, this.y.value);
+    }
+  }]);
+
+  return Vector2Data;
+}(EventDispatcher);
+
+
+// CONCATENATED MODULE: ./js/model/CubicBezierPoints.js
+function CubicBezierPoints_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { CubicBezierPoints_typeof = function _typeof(obj) { return typeof obj; }; } else { CubicBezierPoints_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return CubicBezierPoints_typeof(obj); }
+
+function CubicBezierPoints_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function CubicBezierPoints_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function CubicBezierPoints_createClass(Constructor, protoProps, staticProps) { if (protoProps) CubicBezierPoints_defineProperties(Constructor.prototype, protoProps); if (staticProps) CubicBezierPoints_defineProperties(Constructor, staticProps); return Constructor; }
+
+function CubicBezierPoints_possibleConstructorReturn(self, call) { if (call && (CubicBezierPoints_typeof(call) === "object" || typeof call === "function")) { return call; } return CubicBezierPoints_assertThisInitialized(self); }
+
+function CubicBezierPoints_getPrototypeOf(o) { CubicBezierPoints_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return CubicBezierPoints_getPrototypeOf(o); }
+
+function CubicBezierPoints_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function CubicBezierPoints_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) CubicBezierPoints_setPrototypeOf(subClass, superClass); }
+
+function CubicBezierPoints_setPrototypeOf(o, p) { CubicBezierPoints_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return CubicBezierPoints_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var CubicBezierPoints_CubicBezierPoints =
+/*#__PURE__*/
+function (_Data) {
+  CubicBezierPoints_inherits(CubicBezierPoints, _Data);
+
+  function CubicBezierPoints() {
+    var _this;
+
+    CubicBezierPoints_classCallCheck(this, CubicBezierPoints);
+
+    _this = CubicBezierPoints_possibleConstructorReturn(this, CubicBezierPoints_getPrototypeOf(CubicBezierPoints).call(this));
+    _this.changeHandler = _this.changeHandler.bind(CubicBezierPoints_assertThisInitialized(_this));
+    _this.p0 = new Vector2Data_Vector2Data(0, 0);
+
+    _this.p0.addEventListener(Data.CHANGE, _this.changeHandler);
+
+    _this.p1 = new Vector2Data_Vector2Data(0, 0);
+
+    _this.p1.addEventListener(Data.CHANGE, _this.changeHandler);
+
+    _this.p2 = new Vector2Data_Vector2Data(1, 1);
+
+    _this.p2.addEventListener(Data.CHANGE, _this.changeHandler);
+
+    _this.p3 = new Vector2Data_Vector2Data(1, 1);
+
+    _this.p3.addEventListener(Data.CHANGE, _this.changeHandler);
+
+    for (var i = 0; i < 4; i++) {
+      var vec = _this["p" + i];
+      vec.x.modifiers = [NumberData_NumberData.roundDecimal3];
+      vec.y.modifiers = [NumberData_NumberData.roundDecimal3];
+    }
+
+    return _this;
+  }
+
+  CubicBezierPoints_createClass(CubicBezierPoints, [{
+    key: "changeHandler",
+    value: function changeHandler() {
+      this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
+    }
+  }]);
+
+  return CubicBezierPoints;
+}(Data);
+
+
 // CONCATENATED MODULE: ./js/model/ActionTween.js
 function ActionTween_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTween_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTween_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTween_typeof(obj); }
 
@@ -7177,6 +7914,10 @@ function ActionTween_setPrototypeOf(o, p) { ActionTween_setPrototypeOf = Object.
 
 
 
+
+
+
+
 var ActionTween_ActionTween =
 /*#__PURE__*/
 function (_Action) {
@@ -7198,35 +7939,35 @@ function (_Action) {
     _this.endX = new NumberData_NumberData(x);
     _this.endY = new NumberData_NumberData(y);
     _this.duration = new NumberData_NumberData(duration);
-    _this.easingMethods = new ArrayData_ArrayData();
-    _this.easingClasses = new ArrayData_ArrayData();
+    _this.easing = new CubicBezierEasing();
+    _this.easingMethod = new ObjectData_ObjectData(_this.easing.ease);
+    _this.cubicBezier = new CubicBezierPoints_CubicBezierPoints();
+    _this.debugEasing = new ObjectData_ObjectData(Easing.cubic.easeInOut);
 
-    for (var i in Easing) {
-      _this.easingClasses.push(i);
+    _this.cubicBezier.addEventListener(Data.CHANGE, function (event) {
+      _this.easing.p1.x = _this.cubicBezier.p1.x.value;
+      _this.easing.p1.y = _this.cubicBezier.p1.y.value;
+      _this.easing.p2.x = _this.cubicBezier.p2.x.value;
+      _this.easing.p2.y = _this.cubicBezier.p2.y.value;
+
+      _this.easing.calculateLength();
+    });
+
+    _this.easingPresets = new ArrayData_ArrayData("Easing Presets");
+
+    _this.easingPresets.selectedItem.addEventListener(Data.CHANGE, _this.easingPresetChange.bind(ActionTween_assertThisInitialized(_this)));
+
+    for (var i in CubicBezierEasing) {
+      var cubicEasingClass = CubicBezierEasing[i];
+
+      for (var j in cubicEasingClass) {
+        var easingPreset = i + "." + j;
+
+        _this.easingPresets.push(easingPreset);
+      }
     }
 
-    _this.easingClasses.selectedItem.addEventListener(Data.CHANGE, function () {
-      var easingClass = Easing[_this.easingClasses.selectedItem.value];
-      var methods = [];
-
-      for (var j in easingClass) {
-        methods.push(j);
-      }
-
-      _this.easingMethods.value = methods;
-
-      var method = _this.easingMethods.find(function (item) {
-        return item == "easeInOut";
-      });
-
-      _this.easingMethods.selectedItem.value = method || _this.easingMethods.value[0];
-    });
-
-    var easingClass = _this.easingClasses.find(function (item) {
-      return item == "quadratic";
-    });
-
-    _this.easingClasses.selectedItem.value = easingClass || _this.easingClasses.value[0];
+    _this.easingPresets.selectedItem.value = _this.easingPresets.value[0];
     _this.tweenUpdateHandler = _this.tweenUpdateHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.tweenCompleteHandler = _this.tweenCompleteHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.pos = new Point_Point();
@@ -7234,6 +7975,25 @@ function (_Action) {
   }
 
   ActionTween_createClass(ActionTween, [{
+    key: "easingPresetChange",
+    value: function easingPresetChange() {
+      var value = this.easingPresets.selectedItem.value;
+      var debugEasingMethod = evalProperty(value, Easing);
+
+      if (debugEasingMethod) {
+        this.debugEasing.value = debugEasingMethod;
+      }
+
+      var cb = evalProperty(value, CubicBezierEasing);
+
+      if (cb) {
+        this.cubicBezier.p1.x.value = cb.p1.x;
+        this.cubicBezier.p1.y.value = cb.p1.y;
+        this.cubicBezier.p2.x.value = cb.p2.x;
+        this.cubicBezier.p2.y.value = cb.p2.y;
+      }
+    }
+  }, {
     key: "copy",
     value: function copy(action) {
       ActionTween_get(ActionTween_getPrototypeOf(ActionTween.prototype), "copy", this).call(this, action);
@@ -7243,15 +8003,13 @@ function (_Action) {
       this.endX.value = action.endX.value;
       this.endY.value = action.endY.value;
       this.duration.value = action.duration.value;
-      this.easingClasses.selectedItem.value = action.easingClasses.selectedItem.value;
-      this.easingMethods.selectedItem.value = action.easingMethods.selectedItem.value;
+      this.cubicBezier.p1.copy(action.cubicBezier.p1);
+      this.cubicBezier.p2.copy(action.cubicBezier.p2);
     }
   }, {
     key: "trigger",
     value: function trigger() {
-      var easingClass = Easing[this.easingClasses.selectedItem.value];
-      var easingMethod = easingClass[this.easingMethods.selectedItem.value];
-      this.tween = new Tween_Tween(0, this.duration.value, [new TweenProperty(this.pos, "x", this.startX.value, this.endX.value, easingMethod), new TweenProperty(this.pos, "y", this.startY.value, this.endY.value, easingMethod)]);
+      this.tween = new Tween_Tween(0, this.duration.value, [new TweenProperty(this.pos, "x", this.startX.value, this.endX.value, this.easing.ease), new TweenProperty(this.pos, "y", this.startY.value, this.endY.value, this.easing.ease)]);
       this.tween.addEventListener(Tween_Tween.UPDATE, this.tweenUpdateHandler);
       this.tween.addEventListener(Tween_Tween.COMPLETE, this.tweenCompleteHandler);
       return this.tween.start();
@@ -7273,8 +8031,8 @@ function (_Action) {
       data.endY = this.endY.value;
       data.duration = this.duration.value;
       data.delay = this.delay.value;
-      data.easingClass = this.easingClasses.selectedItem.value;
-      data.easingMethod = this.easingMethods.selectedItem.value;
+      data.p1 = this.cubicBezier.p1.serialize();
+      data.p2 = this.cubicBezier.p2.serialize();
       return data;
     }
   }, {
@@ -7288,8 +8046,8 @@ function (_Action) {
       this.endY.value = data.endY;
       this.duration.value = data.duration;
       this.delay.value = data.delay;
-      this.easingClasses.selectedItem.value = data.easingClass;
-      this.easingMethods.selectedItem.value = data.easingMethod;
+      this.cubicBezier.p1.deserialize(data.p1);
+      this.cubicBezier.p2.deserialize(data.p2);
     }
   }]);
 
@@ -7747,61 +8505,6 @@ function (_Action) {
 
   return ActionEval;
 }(Action_Action);
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/Vector2Data.js
-function Vector2Data_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Vector2Data_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Vector2Data_createClass(Constructor, protoProps, staticProps) { if (protoProps) Vector2Data_defineProperties(Constructor.prototype, protoProps); if (staticProps) Vector2Data_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Vector2Data_Vector2Data =
-/*#__PURE__*/
-function () {
-  function Vector2Data() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    Vector2Data_classCallCheck(this, Vector2Data);
-
-    this.x = new NumberData_NumberData(x);
-    this.y = new NumberData_NumberData(y);
-  }
-
-  Vector2Data_createClass(Vector2Data, [{
-    key: "clone",
-    value: function clone() {
-      var point = new Vector2Data();
-      point.copy(this);
-      return point;
-    }
-  }, {
-    key: "copy",
-    value: function copy(point) {
-      this.x.copy(point.x);
-      this.y.copy(point.y);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      return {
-        x: this.x.value,
-        y: this.y.value
-      };
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      this.x.value = data.x;
-      this.y.value = data.y;
-    }
-  }]);
-
-  return Vector2Data;
-}();
 
 
 // CONCATENATED MODULE: ../node_modules/three/build/three.module.js
@@ -44679,7 +45382,7 @@ function CubicBezierP3( t, p ) {
 
 }
 
-function CubicBezier( t, p0, p1, p2, p3 ) {
+function three_module_CubicBezier( t, p0, p1, p2, p3 ) {
 
 	return CubicBezierP0( t, p0 ) + CubicBezierP1( t, p1 ) + CubicBezierP2( t, p2 ) +
 		CubicBezierP3( t, p3 );
@@ -44711,8 +45414,8 @@ CubicBezierCurve.prototype.getPoint = function ( t, optionalTarget ) {
 	var v0 = this.v0, v1 = this.v1, v2 = this.v2, v3 = this.v3;
 
 	point.set(
-		CubicBezier( t, v0.x, v1.x, v2.x, v3.x ),
-		CubicBezier( t, v0.y, v1.y, v2.y, v3.y )
+		three_module_CubicBezier( t, v0.x, v1.x, v2.x, v3.x ),
+		three_module_CubicBezier( t, v0.y, v1.y, v2.y, v3.y )
 	);
 
 	return point;
@@ -44783,9 +45486,9 @@ CubicBezierCurve3.prototype.getPoint = function ( t, optionalTarget ) {
 	var v0 = this.v0, v1 = this.v1, v2 = this.v2, v3 = this.v3;
 
 	point.set(
-		CubicBezier( t, v0.x, v1.x, v2.x, v3.x ),
-		CubicBezier( t, v0.y, v1.y, v2.y, v3.y ),
-		CubicBezier( t, v0.z, v1.z, v2.z, v3.z )
+		three_module_CubicBezier( t, v0.x, v1.x, v2.x, v3.x ),
+		three_module_CubicBezier( t, v0.y, v1.y, v2.y, v3.y ),
+		three_module_CubicBezier( t, v0.z, v1.z, v2.z, v3.z )
 	);
 
 	return point;

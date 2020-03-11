@@ -1,5 +1,7 @@
 import UIComponent from "../tsunami/components/UIComponent";
 import {app} from "../main";
+import * as tsunami from "../tsunami/tsunami";
+import EasingGraph from "./EasingGraph";
 
 export default class ActionView extends UIComponent {
 
@@ -17,3 +19,5 @@ export default class ActionView extends UIComponent {
 	}
 
 }
+
+tsunami.define("easing-graph", EasingGraph);

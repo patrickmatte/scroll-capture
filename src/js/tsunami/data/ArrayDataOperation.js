@@ -24,6 +24,10 @@ export default class ArrayDataOperation extends Data {
 		return value1 + value2;
 	}
 
+	static ADD_TOSTRING(value1, value2) {
+		return value1.toString() + value2.toString();
+	}
+
 	static SUBTRACT(value1, value2) {
 		return value1 - value2;
 	}
@@ -74,6 +78,8 @@ export default class ArrayDataOperation extends Data {
 		}
 		if (value != this._value) {
 			this._value = value;
+			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+		} else if(this.forceChangeEvent) {
 			this.dispatchEvent({type:Data.CHANGE, value:this._value});
 		}
 	}

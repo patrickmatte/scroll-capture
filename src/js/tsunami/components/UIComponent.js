@@ -33,7 +33,7 @@ export default class UIComponent extends Branch {
 			this.alsoShowChildren = (this.element.getAttribute("data-also-show-children") == "true");
 		}
         this.modelChangeBind = this.modelChange.bind(this);
-        this._scope = this;
+        // this._scope = this;
 		this.showDuration = 0;
 		this.showDelay = 0;
 		this.hideDuration = 0;
@@ -392,10 +392,13 @@ export default class UIComponent extends Branch {
 
 	windowResize(windowSize) {
 		this.windowSize = windowSize;
-		this.rectangle = this.getRect();
-		this.rectangle = new Rectangle(this.element.offsetLeft, this.element.offsetTop, this.element.offsetWidth, this.element.offsetHeight);
+		this.rectangle.x = this.element.offsetLeft;
+		this.rectangle.y = this.element.offsetTop;
+		this.rectangle.width = this.element.offsetWidth;
+		this.rectangle.height = this.element.offsetHeight;
+		this.globalRectangle.width = this.rectangle.width;
+		this.globalRectangle.height = this.rectangle.height;
 		if(this.calculateGlobalPosition) {
-			this.globalRectangle = this.rectangle.clone();
 			this.globalRectangle.position = localToGlobal(this.element, document.body);
 		}
 		let children = this.children;

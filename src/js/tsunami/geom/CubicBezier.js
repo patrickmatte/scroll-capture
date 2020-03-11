@@ -5,8 +5,8 @@ export default class CubicBezier {
 	constructor(p0, p1, p2, p3, samples = 100) {
 		this.p0 = p0 || new Point(0,0);
 		this.p1 = p1 || new Point(0,0);
-		this.p2 = p2 || new Point(0,1);
-		this.p3 = p3 || new Point(0,1);
+		this.p2 = p2 || new Point(1,1);
+		this.p3 = p3 || new Point(1,1);
 		this.samples = samples;
 		this.calculateLength();
 	}

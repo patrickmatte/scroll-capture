@@ -27,6 +27,7 @@ export default class UIList extends UIComponent {
 		this.selectItemOnMouseDown = false;
 
 		this.dragIndex = NaN;
+		this.dragElementClass = "ui-list-drag-area";
 
 		this.template = `<li><span is="ui-text">[[data]]</span></li>`;
 		this.templates = {};
@@ -55,6 +56,7 @@ export default class UIList extends UIComponent {
 	}
 
 	set scope(value) {
+		this._scope = value;
 		let dataProvider = this.element.getAttribute("data-provider");
 		if (dataProvider) {
 			this.dataProvider = evalProperty(dataProvider, value);
@@ -103,25 +105,27 @@ export default class UIList extends UIComponent {
 	}
 
 	_addElements(array, index = 0) {
-		for (let i = 0; i < array.length; i++) {
+		for (let i in array) {
 			let data = array[i];
-			let scope = new Scope(data, this.scope, index + i, array.length);
-			let template = this.getTemplateForModel(data);
-			if (!template) {
-				throw new Error("UIList component for " + this.element.outerHTML + " returned no template");
-			}
-			let element = importTemplate(template, scope);
+			let element = this.createElement(data, index, array.length);
 			// element.model = model;
 			// if(element.component instanceof UIComponent) {
 			// 	element.component.model = model;
 			// }
-			this.appendChildAt(element, index + i);
+			this.appendChildAt(element, index);
 			if (this.isAdded) {
 				UIComponent.callElementAdded(element);
 			}
+			index++;
 		}
 		this.dispatchEvent(new BaseEvent("listChange", array));
 		return array;
+	}
+
+	createElement(data, index, length) {
+		let template = this.getTemplateForModel(data);
+		let scope = new Scope(data, this.scope, index, length);
+		return importTemplate(template, scope);
 	}
 
 	getModelType(model) {
@@ -140,6 +144,9 @@ export default class UIList extends UIComponent {
 		}
 		if(!selectedTemplate) {
 			selectedTemplate =  this.templates["*"] || this.template;
+		}
+		if (!selectedTemplate) {
+			throw new Error("UIList " + this.element.outerHTML + " has no template");
 		}
 		return selectedTemplate;
 	}
@@ -230,43 +237,51 @@ export default class UIList extends UIComponent {
 	}
 
 	_mouseDownHandler(event) {
+		if(this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
 		let selectedIndex = NaN;
 		let selectedChild = this.children.find((child, index) => {
 			let contains = child.contains(event.target);
-			if(contains) selectedIndex = index;
-			return contains;
+			let isChild = (child == event.target);
+			let isMatch = (contains || isChild);
+			if(this.debug) console.log(index, "contains", contains, "isChild", isChild, "isMatch", isMatch);
+			if(isMatch) selectedIndex = index;
+			return isMatch;
 		});
-		if(this.selectItemOnMouseDown && !isNaN(selectedIndex)) {
-			if(this.dataProvider.selectedIndex) {
-				this.dataProvider.selectedIndex.value = selectedIndex;
+		if(this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
+		if(selectedChild) {
+			if(this.selectItemOnMouseDown) {
+				if(this.dataProvider.selectedIndex) {
+					this.dataProvider.selectedIndex.value = selectedIndex;
+				}
+			}
+			let isDragElement = event.target.classList.contains(this.dragElementClass);
+			if(this.debug) console.log("isDragElement", isDragElement);
+			if(isDragElement) {
+				event.preventDefault();
+				this.dragStartPoint = this.getTouchPoint(event);
+				this.dragIndex = NaN;
+				// this.dragElement = this.children.find((child, index) => {
+				// 	let match = (event.target == child.querySelector(".ui-list-drag-area"));
+				// 	if (match) this.dragIndex = index;
+				// 	return match;
+				// });
+				this.dragElement = selectedChild;
+				this.dragIndex = selectedIndex;
+				this.dragElementStartPos = new Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
+				this.dragElementsMinHeight = Number.MAX_VALUE;
+				this.children.map((child) => {
+					this.dragElementsMinHeight = Math.min(this.dragElementsMinHeight, child.component.rectangle.height);
+				});
+				document.body.addEventListener(events.mousemove, this._dragMove);
+				document.body.addEventListener(events.mouseup, this._dragEnd);
 			}
 		}
-		if(event.target.classList.contains("ui-list-drag-area")) {
-			event.preventDefault();
-			this.dragStartPoint = this.getTouchPoint(event);
-			this.dragIndex = NaN;
-			// this.dragElement = this.children.find((child, index) => {
-			// 	let match = (event.target == child.querySelector(".ui-list-drag-area"));
-			// 	if (match) this.dragIndex = index;
-			// 	return match;
-			// });
-			this.dragElement = selectedChild;
-			this.dragIndex = selectedIndex;
-			this.dragElementStartPos = new Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
-			this.dragElementsMinHeight = Number.MAX_VALUE;
-			this.children.map((child) => {
-				this.dragElementsMinHeight = Math.min(this.dragElementsMinHeight, child.component.rectangle.height);
-			});
-			document.body.addEventListener(events.mousemove, this._dragMove);
-			document.body.addEventListener(events.mouseup, this._dragEnd);
-		}
-		return selectedIndex;
 	}
 
 	_dragMove(event) {
 		let point = this.getTouchPoint(event);
 		let distance = Point.distance(point, this.dragStartPoint);
-		if(distance > 3) {
+		if(distance > 0) {
 			this.dragElement.classList.add("is-dragged");
 			document.body.removeEventListener(events.mousemove, this._dragMove);
 			document.body.addEventListener(events.mousemove, this._dragElementMove);
@@ -303,7 +318,7 @@ export default class UIList extends UIComponent {
 
 	_dragEnd(event) {
 		this.dragElement.classList.remove("is-dragged");
-		this.dragElement.style.transform = "translate3d(0px, 0px, 0px)";
+		this.dragElement.style.transform = "";
 		document.body.removeEventListener(events.mousemove, this._dragMove);
 		document.body.removeEventListener(events.mousemove, this._dragElementMove);
 		document.body.removeEventListener(events.mouseup, this._dragEnd);

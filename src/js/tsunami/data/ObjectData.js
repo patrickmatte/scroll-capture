@@ -6,6 +6,7 @@ export default class ObjectData extends Data {
 	constructor(value) {
 		super();
 		this.value = value;
+		this.forceChangeEvent = false;
 	}
 
 	get value() {
@@ -17,6 +18,8 @@ export default class ObjectData extends Data {
 			this._deselectValue(this._value);
 			this._value = value;
 			this._selectValue(this._value);
+			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+		} else if(this.forceChangeEvent) {
 			this.dispatchEvent({type:Data.CHANGE, value:this._value});
 		}
 	}

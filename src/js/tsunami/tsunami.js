@@ -1,7 +1,4 @@
-export function evalProperty(path, scope, debug) {
-	if(debug) {
-		console.log("evalProperty", path, scope);
-	}
+export function evalProperty(path, scope, debug = false) {
 	if(path == ".") {
 		return scope;
 	}
@@ -13,9 +10,7 @@ export function evalProperty(path, scope, debug) {
 		for (let i = 0; i < arr.length; i++) {
 			let prop = arr[i].split("]")[0];
 			object = object[prop];
-			if (object == null) {
-				console.log("Error! The reference " + prop + " in " + path + " is undefined");
-			}
+			if (object == null && debug) console.log("Error! The reference " + prop + " in " + path + " is undefined");
 		}
 	}
 	return object;

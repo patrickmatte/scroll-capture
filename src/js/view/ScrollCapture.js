@@ -101,10 +101,10 @@ ScrollCapture.template = `
 							</div>
 							<button class="close-button" data-model="data" is="ui-button"></button>
 						</div>
-						<div class="sc-fields">
+						<div class="sc-fields" is="ui-component">
 							<div class="sc-fields-list" is="ui-list" data-provider="data.array">
 								<template data-type="ActionScroll">
-									<div>
+									<div is="ui-component">
 <!--										<div class="sc-field">-->
 <!--											<span class="sc-label">units</span>-->
 <!--											<div class="sc-select">-->
@@ -113,32 +113,65 @@ ScrollCapture.template = `
 <!--										</div>-->
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">Left:</span><input type="text" data-model="data.unitX" is="ui-input"/>
+												<span class="sc-label">Left:</span><input type="number" step="1" data-model="data.unitX" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">Top:</span><input type="text" data-model="data.unitY" is="ui-input"/>
+												<span class="sc-label">Top:</span><input type="number" step="1" data-model="data.unitY" is="ui-input"/>
 											</div>
 										</div>
 										<div class="sc-field-group">
 											<div class="sc-field">
-												<span class="sc-label">Duration:</span><input type="text" data-model="data.duration" is="ui-input"/>
+												<span class="sc-label">Duration:</span><input type="number" step="0.25" data-model="data.duration" is="ui-input"/>
 											</div>
 											<div class="sc-field">
 												<span class="sc-label">Element:</span><input type="text" data-model="data.target" is="ui-input"/>
 											</div>
 										</div>
-										<div class="sc-field-group">
+										<div class="sc-field">
+											<div class="sc-select">
+												<select data-provider="data.easingPresets" data-model="data.easingPresets.selectedItem" is="ui-select"></select>
+											</div>
+										</div>
+										<div is="easing-graph" class="sc-field" data-model="data.cubicBezier">
+											<svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
+												<g>
+													<polyline class="js" is="easing-graph-curve" data-model="data.debugEasing" points=""></polyline>
+												</g>
+											</svg>
+											<div class="points js" is="easing-graph-points" data-model="data.debugEasing"></div>
+											<svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
+												<g>
+													<polyline is="easing-graph-curve" data-model="data.easingMethod" points=""></polyline>
+												</g>
+											</svg>
+											<div class="points" is="easing-graph-points" data-model="data.easingMethod"></div>
+											<div is="control-point-lines" is="ui-list">
+												<template>
+													<div is="control-point-line" data-model="data"></div>
+												</template>
+											</div>
+											<div class="control-points" is="easing-graph-control-points">
+												<template>
+													<div class="control-point" is="ui-component" data-model="data" style="left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)">
+														<span class="shape"></span>
+													</div>
+												</template>
+											</div>
+										</div>
+										<div class="sc-field-group" is="ui-component">
 											<div class="sc-field">
-												<span class="sc-label">Easing:</span>
-												<div class="sc-select">
-													<select data-provider="data.easingClasses" data-model="data.easingClasses.selectedItem" is="ui-select"></select>
-												</div>
+												<span class="sc-label">x<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p1.x" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">Method:</span>
-												<div class="sc-select">
-													<select data-provider="data.easingMethods" data-model="data.easingMethods.selectedItem" is="ui-select"></select>
-												</div>
+												<span class="sc-label">y<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p1.y" is="ui-input"/>
+											</div>
+										</div>
+										<div class="sc-field-group" is="ui-component">
+											<div class="sc-field">
+												<span class="sc-label">x<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p2.x" is="ui-input"/>
+											</div>
+											<div class="sc-field">
+												<span class="sc-label">y<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p2.y" is="ui-input"/>
 											</div>
 										</div>
 									</div>
@@ -220,7 +253,7 @@ ScrollCapture.template = `
 							</div>
 							<div class="sc-field-group">
 								<div class="sc-field">
-									<span class="sc-label">Delay:</span><input type="text" data-model="data.delay" is="ui-input"/>
+									<span class="sc-label">Delay:</span><input type="number" step="0.25" data-model="data.delay" is="ui-input"/>
 								</div>
 								<div class="sc-field sc-action-buttons">
 									<button class="play-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]">
