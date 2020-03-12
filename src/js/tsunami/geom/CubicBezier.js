@@ -11,6 +11,10 @@ export default class CubicBezier {
 		this.calculateLength();
 	}
 
+	clone() {
+		return new CubicBezier(this.p0.clone(), this.p1.clone(), this.p2.clone(), this.p3.clone(), this.samples);
+	}
+
 	calculateLength() {
 		this.distances = [0];
 		this.distancesX = [0];

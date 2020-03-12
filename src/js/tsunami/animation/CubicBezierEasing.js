@@ -4,8 +4,8 @@ import {capitalize} from "../utils/string";
 
 export default class CubicBezierEasing extends CubicBezier {
 
-	constructor(p1 = null, p2 = null, samples = 100) {
-		super(null, p1, p2, null, samples);
+	constructor(x1 = 0, y1 = 0, x2 = 1, y2 = 1, samples = 100) {
+		super(new Point(0, 0), new Point(x1, y1), new Point(x2, y2), new Point(1, 1), samples);
 		this.ease = this.ease.bind(this);
 	}
 
@@ -14,63 +14,67 @@ export default class CubicBezierEasing extends CubicBezier {
 		return c * point.y + b;
 	}
 
+	clone() {
+		return new CubicBezierEasing(this.p1.x, this.p1.y, this.p2.x, this.p1.y, this.samples);
+	}
+
 }
 
-CubicBezierEasing.quadratic = {
-	easeInOut:new CubicBezierEasing( new Point(0.45, 0), new Point(0.55, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.41, 0), new Point(0.75, 0.5) ),
-	easeOut:new CubicBezierEasing( new Point(0.25, 0.5), new Point(0.59, 1) )
-};
-
-CubicBezierEasing.cubic = {
-	easeInOut:new CubicBezierEasing( new Point(0.66, 0), new Point(0.34, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.44, 0), new Point(0.68, 0.09) ),
-	easeOut:new CubicBezierEasing( new Point(0.32, 0.91), new Point(0.56, 1) )
-};
-
-CubicBezierEasing.quartic = {
-	easeInOut:new CubicBezierEasing( new Point(0.8, 0), new Point(0.2, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.5, 0), new Point(0.75, 0) ),
-	easeOut:new CubicBezierEasing( new Point(0.25, 1), new Point(0.5, 1) )
-};
-
-CubicBezierEasing.quintic = {
-	easeInOut:new CubicBezierEasing( new Point(0.86, 0), new Point(0.14, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.58, 0), new Point(0.78, -0.05) ),
-	easeOut:new CubicBezierEasing( new Point(0.22, 1.05), new Point(0.42, 1) )
+CubicBezierEasing.linear = {
+	ease: new CubicBezierEasing(0, 0, 1, 1)
 };
 
 CubicBezierEasing.sine = {
-	easeInOut:new CubicBezierEasing( new Point(0.37, 0), new Point(0.63, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.38, 0), new Point(0.69, 0.53) ),
-	easeOut:new CubicBezierEasing( new Point(0.31, 0.47), new Point(0.62, 1 ) )
+	easeInOut: new CubicBezierEasing(0.37, 0, 0.63, 1),
+	easeIn: new CubicBezierEasing(0.12, 0, 0.39, 0),
+	easeOut: new CubicBezierEasing(0.61, 1, 0.88, 1)
+};
+
+CubicBezierEasing.quadratic = {
+	easeInOut: new CubicBezierEasing(0.45, 0, 0.55, 1),
+	easeIn: new CubicBezierEasing(0.11, 0, 0.5, 0),
+	easeOut: new CubicBezierEasing(0.5, 1, 0.89, 1)
+};
+
+CubicBezierEasing.cubic = {
+	easeInOut: new CubicBezierEasing(0.65, 0, 0.35, 1),
+	easeIn: new CubicBezierEasing(0.32, 0, 0.67, 0),
+	easeOut: new CubicBezierEasing(0.33, 1, 0.68, 1)
+};
+
+CubicBezierEasing.quartic = {
+	easeInOut: new CubicBezierEasing(0.76, 0, 0.24, 1),
+	easeIn: new CubicBezierEasing(0.5, 0, 0.75, 0),
+	easeOut: new CubicBezierEasing(0.25, 1, 0.5, 1)
+};
+
+CubicBezierEasing.quintic = {
+	easeInOut: new CubicBezierEasing(0.83, 0, 0.17, 1),
+	easeIn: new CubicBezierEasing(0.64, 0, 0.78, 0),
+	easeOut: new CubicBezierEasing(0.22, 1, 0.36, 1)
 };
 
 CubicBezierEasing.exponential = {
-	easeInOut:new CubicBezierEasing( new Point(0.9, 0), new Point(0.1, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.76, 0), new Point(0.84, 0.06) ),
-	easeOut:new CubicBezierEasing( new Point(0.16, 0.94), new Point(0.24, 1) )
-};
-
-CubicBezierEasing.circular = {
-	easeInOut:new CubicBezierEasing( new Point(0.81, 0), new Point(0.19, 1) ),
-	easeIn:new CubicBezierEasing( new Point(0.55, 0), new Point(1, 0.45) ),
-	easeOut:new CubicBezierEasing( new Point(0, 0.55), new Point(0.45, 1) )
+	easeInOut: new CubicBezierEasing(0.87, 0, 0.13, 1),
+	easeIn: new CubicBezierEasing(0.7, 0, 0.84, 0),
+	easeOut: new CubicBezierEasing(0.16, 1, 0.3, 1)
 };
 
 CubicBezierEasing.back = {
-	easeInOut:new CubicBezierEasing( new Point(0.68, -0.6), new Point(0.32, 1.6) ),
-	easeIn:new CubicBezierEasing( new Point(0.36, 0), new Point(0.66, -0.56) ),
-	easeOut:new CubicBezierEasing( new Point(0.34, 1.56), new Point(0.64, 1) )
+	easeInOut: new CubicBezierEasing(0.68, -0.6, 0.32, 1.6),
+	easeIn: new CubicBezierEasing(0.36, 0, 0.66, -0.56),
+	easeOut: new CubicBezierEasing(0.34, 1.56, 0.64, 1)
 };
 
-CubicBezierEasing.linear = {
-	ease:new CubicBezierEasing( new Point(0, 0), new Point(1, 1) )
+CubicBezierEasing.circular = {
+	easeInOut: new CubicBezierEasing(0.85, 0, 0.15, 1),
+	easeIn: new CubicBezierEasing(0.55, 0, 1, 0.45),
+	easeOut: new CubicBezierEasing(0, 0.55, 0.45, 1)
 };
 
 CubicBezierEasing.ibm = {
-	easeExpressive:new CubicBezierEasing( new Point(0.4, 0.14), new Point(0.3, 1) ),
-	easeProductive:new CubicBezierEasing( new Point(0.2, 0), new Point(0.38, 0.9) )
+	easeExpressive: new CubicBezierEasing(0.4, 0.14, 0.3, 1),
+	easeProductive: new CubicBezierEasing(0.2, 0, 0.38, 0.9)
 };
 
 // let cssVariables = "";
@@ -82,7 +86,7 @@ CubicBezierEasing.ibm = {
 // 		let easeNameArray = j.split("ease");
 // 		easeNameArray.shift();
 // 		let easeName = capitalize(easeNameArray.join(""));
-// 		let variable = `$ease${easeClassName}${easeName}: cubic-bezier(${cubicBezier.p1.x}, ${cubicBezier.p1.y}, ${cubicBezier.p2.x}, ${cubicBezier.p2.x});`;
+// 		let variable = `$ease${easeClassName}${easeName}: cubic-bezier(${cubicBezier.p1.x}, ${cubicBezier.p1.y}, ${cubicBezier.p2.x}, ${cubicBezier.p2.y});`;
 // 		cssVariables = cssVariables + variable;
 // 	}
 // }

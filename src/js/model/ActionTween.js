@@ -20,17 +20,12 @@ export default class ActionTween extends Action {
 		this.endX = new NumberData(x);
 		this.endY = new NumberData(y);
 		this.duration = new NumberData(duration);
+		this.cubicBezierPoints = new CubicBezierPoints();
 		this.easing = new CubicBezierEasing();
+		this.cubicBezierPointsChange();
 		this.easingMethod = new ObjectData(this.easing.ease);
-		this.cubicBezier = new CubicBezierPoints();
 		this.debugEasing = new ObjectData(Easing.cubic.easeInOut);
-		this.cubicBezier.addEventListener(Data.CHANGE, (event) => {
-			this.easing.p1.x = this.cubicBezier.p1.x.value;
-			this.easing.p1.y = this.cubicBezier.p1.y.value;
-			this.easing.p2.x = this.cubicBezier.p2.x.value;
-			this.easing.p2.y = this.cubicBezier.p2.y.value;
-			this.easing.calculateLength();
-		});
+		this.cubicBezierPoints.addEventListener(Data.CHANGE, this.cubicBezierPointsChange.bind(this));
 		this.easingPresets = new ArrayData("Easing Presets");
 		this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));
 
@@ -41,11 +36,19 @@ export default class ActionTween extends Action {
 				this.easingPresets.push(easingPreset);
 			}
 		}
-		this.easingPresets.selectedItem.value = this.easingPresets.value[0];
+		// this.easingPresets.selectedItem.value = this.easingPresets.value[0];
 		this.tweenUpdateHandler = this.tweenUpdateHandler.bind(this);
 		this.tweenCompleteHandler = this.tweenCompleteHandler.bind(this);
 
 		this.pos = new Point();
+	}
+
+	cubicBezierPointsChange() {
+		this.easing.p1.x = this.cubicBezierPoints.p1.x.value;
+		this.easing.p1.y = this.cubicBezierPoints.p1.y.value;
+		this.easing.p2.x = this.cubicBezierPoints.p2.x.value;
+		this.easing.p2.y = this.cubicBezierPoints.p2.y.value;
+		this.easing.calculateLength();
 	}
 
 	easingPresetChange() {
@@ -56,10 +59,10 @@ export default class ActionTween extends Action {
 		}
 		let cb = evalProperty(value, CubicBezierEasing);
 		if(cb) {
-			this.cubicBezier.p1.x.value = cb.p1.x;
-			this.cubicBezier.p1.y.value = cb.p1.y;
-			this.cubicBezier.p2.x.value = cb.p2.x;
-			this.cubicBezier.p2.y.value = cb.p2.y;
+			this.cubicBezierPoints.p1.x.value = cb.p1.x;
+			this.cubicBezierPoints.p1.y.value = cb.p1.y;
+			this.cubicBezierPoints.p2.x.value = cb.p2.x;
+			this.cubicBezierPoints.p2.y.value = cb.p2.y;
 		}
 	}
 
@@ -70,8 +73,8 @@ export default class ActionTween extends Action {
 		this.endX.value = action.endX.value;
 		this.endY.value = action.endY.value;
 		this.duration.value = action.duration.value;
-		this.cubicBezier.p1.copy(action.cubicBezier.p1);
-		this.cubicBezier.p2.copy(action.cubicBezier.p2);
+		this.cubicBezierPoints.p1.copy(action.cubicBezierPoints.p1);
+		this.cubicBezierPoints.p2.copy(action.cubicBezierPoints.p2);
 	}
 
 	trigger() {
@@ -100,8 +103,8 @@ export default class ActionTween extends Action {
 		data.endY = this.endY.value;
 		data.duration = this.duration.value;
 		data.delay = this.delay.value;
-		data.p1 = this.cubicBezier.p1.serialize();
-		data.p2 = this.cubicBezier.p2.serialize();
+		data.p1 = this.cubicBezierPoints.p1.serialize();
+		data.p2 = this.cubicBezierPoints.p2.serialize();
 		return data;
 	}
 
@@ -113,8 +116,8 @@ export default class ActionTween extends Action {
 		this.endY.value = data.endY;
 		this.duration.value = data.duration;
 		this.delay.value = data.delay;
-		this.cubicBezier.p1.deserialize(data.p1);
-		this.cubicBezier.p2.deserialize(data.p2);
+		this.cubicBezierPoints.p1.deserialize(data.p1);
+		this.cubicBezierPoints.p2.deserialize(data.p2);
 	}
 
 }

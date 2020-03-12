@@ -1,7 +1,6 @@
-export function evalProperty(path, scope, debug = false) {
-	if(path == ".") {
-		return scope;
-	}
+export function evalProperty(path, scope = null, debug = false) {
+	if(!scope) return;
+	if(path == "." ) return scope;
 	let array = path.split(".");
 	let object = scope;
 	while(array.length > 0) {
@@ -9,8 +8,11 @@ export function evalProperty(path, scope, debug = false) {
 		let arr = name.split("[");
 		for (let i = 0; i < arr.length; i++) {
 			let prop = arr[i].split("]")[0];
-			object = object[prop];
-			if (object == null && debug) console.log("Error! The reference " + prop + " in " + path + " is undefined");
+			if (object) {
+				let newObject = object[prop];
+				if(!newObject && debug ) console.log(`Warning, in the expression '${path}', the property '${prop}' is null in ${object}`);
+				object = newObject;
+			}
 		}
 	}
 	return object;

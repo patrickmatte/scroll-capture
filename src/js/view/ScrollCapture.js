@@ -132,13 +132,13 @@ ScrollCapture.template = `
 												<select data-provider="data.easingPresets" data-model="data.easingPresets.selectedItem" is="ui-select"></select>
 											</div>
 										</div>
-										<div is="easing-graph" class="sc-field" data-model="data.cubicBezier">
-											<svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
-												<g>
-													<polyline class="js" is="easing-graph-curve" data-model="data.debugEasing" points=""></polyline>
-												</g>
-											</svg>
-											<div class="points js" is="easing-graph-points" data-model="data.debugEasing"></div>
+										<div is="easing-graph" class="sc-field" data-model="data.cubicBezierPoints">
+<!--											<svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">-->
+<!--												<g>-->
+<!--													<polyline class="js" is="easing-graph-curve" data-model="data.debugEasing" points=""></polyline>-->
+<!--												</g>-->
+<!--											</svg>-->
+<!--											<div class="points js" is="easing-graph-points" data-model="data.debugEasing"></div>-->
 											<svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
 												<g>
 													<polyline is="easing-graph-curve" data-model="data.easingMethod" points=""></polyline>
@@ -160,18 +160,18 @@ ScrollCapture.template = `
 										</div>
 										<div class="sc-field-group" is="ui-component">
 											<div class="sc-field">
-												<span class="sc-label">x<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p1.x" is="ui-input"/>
+												<span class="sc-label">x<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.x" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">y<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p1.y" is="ui-input"/>
+												<span class="sc-label">y<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.y" is="ui-input"/>
 											</div>
 										</div>
 										<div class="sc-field-group" is="ui-component">
 											<div class="sc-field">
-												<span class="sc-label">x<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p2.x" is="ui-input"/>
+												<span class="sc-label">x<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.x" is="ui-input"/>
 											</div>
 											<div class="sc-field">
-												<span class="sc-label">y<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezier.p2.y" is="ui-input"/>
+												<span class="sc-label">y<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.y" is="ui-input"/>
 											</div>
 										</div>
 									</div>

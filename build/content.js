@@ -500,13 +500,11 @@ module.exports = __webpack_require__(2);
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./js/tsunami/tsunami.js
-function evalProperty(path, scope) {
+function evalProperty(path) {
+  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-  if (path == ".") {
-    return scope;
-  }
-
+  if (!scope) return;
+  if (path == ".") return scope;
   var array = path.split(".");
   var object = scope;
 
@@ -516,8 +514,12 @@ function evalProperty(path, scope) {
 
     for (var i = 0; i < arr.length; i++) {
       var prop = arr[i].split("]")[0];
-      object = object[prop];
-      if (object == null && debug) console.log("Error! The reference " + prop + " in " + path + " is undefined");
+
+      if (object) {
+        var newObject = object[prop];
+        if (!newObject && debug) console.log("Warning, in the expression '".concat(path, "', the property '").concat(prop, "' is null in ").concat(object));
+        object = newObject;
+      }
     }
   }
 
@@ -4401,9 +4403,9 @@ function (_Easing8) {
   Easing_createClass(Elastic, [{
     key: "easeIn",
     value: function easeIn(t, b, c, d, a, p) {
-      if (t === 0) return b;
-      if ((t /= d) === 1) return b + c;
-      if (!p) p = d * 0.3;
+      if (t == 0) return b;
+      if ((t /= d) == 1) return b + c;
+      if (!p) p = d * .3;
       var s;
 
       if (!a || a < Math.abs(c)) {
@@ -4416,9 +4418,9 @@ function (_Easing8) {
   }, {
     key: "easeOut",
     value: function easeOut(t, b, c, d, a, p) {
-      if (t === 0) return b;
-      if ((t /= d) === 1) return b + c;
-      if (!p) p = d * 0.3;
+      if (t == 0) return b;
+      if ((t /= d) == 1) return b + c;
+      if (!p) p = d * .3;
       var s;
 
       if (!a || a < Math.abs(c)) {
@@ -4431,9 +4433,9 @@ function (_Easing8) {
   }, {
     key: "easeInOut",
     value: function easeInOut(t, b, c, d, a, p) {
-      if (t === 0) return b;
-      if ((t /= d / 2) === 2) return b + c;
-      if (!p) p = d * (0.3 * 1.5);
+      if (t == 0) return b;
+      if ((t /= d / 2) == 2) return b + c;
+      if (!p) p = d * (.3 * 1.5);
       var s;
 
       if (!a || a < Math.abs(c)) {
@@ -4441,8 +4443,8 @@ function (_Easing8) {
         s = p / 4;
       } else s = p / (2 * Math.PI) * Math.asin(c / a);
 
-      if (t < 1) return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-      return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * 0.5 + c + b;
+      if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+      return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
     }
   }]);
 
@@ -5525,7 +5527,7 @@ function (_UIComponent) {
 }(UIComponent_UIComponent);
 
 
-ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div is=\"ui-component\">\n<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</div>-->\n<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div is=\"easing-graph\" class=\"sc-field\" data-model=\"data.cubicBezier\">\n\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n\t\t\t\t\t\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>\n\t\t\t\t\t\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n\t\t\t\t\t\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n\t\t\t\t\t\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-lines\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-line\" data-model=\"data\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-points\" is=\"easing-graph-control-points\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"shape\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p1.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p1.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p2.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezier.p2.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"selected-border\"></div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
+ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div is=\"ui-component\">\n<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</div>-->\n<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div is=\"easing-graph\" class=\"sc-field\" data-model=\"data.cubicBezierPoints\">\n<!--\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<g>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t</g>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</svg>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div>-->\n\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n\t\t\t\t\t\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n\t\t\t\t\t\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-lines\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-line\" data-model=\"data\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-points\" is=\"easing-graph-control-points\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"shape\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"selected-border\"></div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
 
 define("actions-view", ActionsView_ActionsView);
 // CONCATENATED MODULE: ./js/tsunami/components/UIButton.js
@@ -7491,6 +7493,11 @@ function () {
   }
 
   CubicBezier_createClass(CubicBezier, [{
+    key: "clone",
+    value: function clone() {
+      return new CubicBezier(this.p0.clone(), this.p1.clone(), this.p2.clone(), this.p3.clone(), this.samples);
+    }
+  }, {
     key: "calculateLength",
     value: function calculateLength() {
       this.distances = [0];
@@ -7623,7 +7630,7 @@ function CubicBezierEasing_setPrototypeOf(o, p) { CubicBezierEasing_setPrototype
 
 
 
-var CubicBezierEasing =
+var CubicBezierEasing_CubicBezierEasing =
 /*#__PURE__*/
 function (_CubicBezier) {
   CubicBezierEasing_inherits(CubicBezierEasing, _CubicBezier);
@@ -7631,13 +7638,15 @@ function (_CubicBezier) {
   function CubicBezierEasing() {
     var _this;
 
-    var p1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var samples = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100;
+    var x1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var x2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+    var y2 = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+    var samples = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 100;
 
     CubicBezierEasing_classCallCheck(this, CubicBezierEasing);
 
-    _this = CubicBezierEasing_possibleConstructorReturn(this, CubicBezierEasing_getPrototypeOf(CubicBezierEasing).call(this, null, p1, p2, null, samples));
+    _this = CubicBezierEasing_possibleConstructorReturn(this, CubicBezierEasing_getPrototypeOf(CubicBezierEasing).call(this, new Point_Point(0, 0), new Point_Point(x1, y1), new Point_Point(x2, y2), new Point_Point(1, 1), samples));
     _this.ease = _this.ease.bind(CubicBezierEasing_assertThisInitialized(_this));
     return _this;
   }
@@ -7648,58 +7657,63 @@ function (_CubicBezier) {
       var point = this.getPointAtX(t / d);
       return c * point.y + b;
     }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new CubicBezierEasing(this.p1.x, this.p1.y, this.p2.x, this.p1.y, this.samples);
+    }
   }]);
 
   return CubicBezierEasing;
 }(CubicBezier_CubicBezier);
 
 
-CubicBezierEasing.quadratic = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.45, 0), new Point_Point(0.55, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.41, 0), new Point_Point(0.75, 0.5)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.25, 0.5), new Point_Point(0.59, 1))
+CubicBezierEasing_CubicBezierEasing.linear = {
+  ease: new CubicBezierEasing_CubicBezierEasing(0, 0, 1, 1)
 };
-CubicBezierEasing.cubic = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.66, 0), new Point_Point(0.34, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.44, 0), new Point_Point(0.68, 0.09)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.32, 0.91), new Point_Point(0.56, 1))
+CubicBezierEasing_CubicBezierEasing.sine = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.37, 0, 0.63, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.12, 0, 0.39, 0),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.61, 1, 0.88, 1)
 };
-CubicBezierEasing.quartic = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.8, 0), new Point_Point(0.2, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.5, 0), new Point_Point(0.75, 0)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.25, 1), new Point_Point(0.5, 1))
+CubicBezierEasing_CubicBezierEasing.quadratic = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.45, 0, 0.55, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.11, 0, 0.5, 0),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.5, 1, 0.89, 1)
 };
-CubicBezierEasing.quintic = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.86, 0), new Point_Point(0.14, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.58, 0), new Point_Point(0.78, -0.05)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.22, 1.05), new Point_Point(0.42, 1))
+CubicBezierEasing_CubicBezierEasing.cubic = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.65, 0, 0.35, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.32, 0, 0.67, 0),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.33, 1, 0.68, 1)
 };
-CubicBezierEasing.sine = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.37, 0), new Point_Point(0.63, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.38, 0), new Point_Point(0.69, 0.53)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.31, 0.47), new Point_Point(0.62, 1))
+CubicBezierEasing_CubicBezierEasing.quartic = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.76, 0, 0.24, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.5, 0, 0.75, 0),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.25, 1, 0.5, 1)
 };
-CubicBezierEasing.exponential = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.9, 0), new Point_Point(0.1, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.76, 0), new Point_Point(0.84, 0.06)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.16, 0.94), new Point_Point(0.24, 1))
+CubicBezierEasing_CubicBezierEasing.quintic = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.83, 0, 0.17, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.64, 0, 0.78, 0),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.22, 1, 0.36, 1)
 };
-CubicBezierEasing.circular = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.81, 0), new Point_Point(0.19, 1)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.55, 0), new Point_Point(1, 0.45)),
-  easeOut: new CubicBezierEasing(new Point_Point(0, 0.55), new Point_Point(0.45, 1))
+CubicBezierEasing_CubicBezierEasing.exponential = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.87, 0, 0.13, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.7, 0, 0.84, 0),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.16, 1, 0.3, 1)
 };
-CubicBezierEasing.back = {
-  easeInOut: new CubicBezierEasing(new Point_Point(0.68, -0.6), new Point_Point(0.32, 1.6)),
-  easeIn: new CubicBezierEasing(new Point_Point(0.36, 0), new Point_Point(0.66, -0.56)),
-  easeOut: new CubicBezierEasing(new Point_Point(0.34, 1.56), new Point_Point(0.64, 1))
+CubicBezierEasing_CubicBezierEasing.back = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.68, -0.6, 0.32, 1.6),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.36, 0, 0.66, -0.56),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0.34, 1.56, 0.64, 1)
 };
-CubicBezierEasing.linear = {
-  ease: new CubicBezierEasing(new Point_Point(0, 0), new Point_Point(1, 1))
+CubicBezierEasing_CubicBezierEasing.circular = {
+  easeInOut: new CubicBezierEasing_CubicBezierEasing(0.85, 0, 0.15, 1),
+  easeIn: new CubicBezierEasing_CubicBezierEasing(0.55, 0, 1, 0.45),
+  easeOut: new CubicBezierEasing_CubicBezierEasing(0, 0.55, 0.45, 1)
 };
-CubicBezierEasing.ibm = {
-  easeExpressive: new CubicBezierEasing(new Point_Point(0.4, 0.14), new Point_Point(0.3, 1)),
-  easeProductive: new CubicBezierEasing(new Point_Point(0.2, 0), new Point_Point(0.38, 0.9))
+CubicBezierEasing_CubicBezierEasing.ibm = {
+  easeExpressive: new CubicBezierEasing_CubicBezierEasing(0.4, 0.14, 0.3, 1),
+  easeProductive: new CubicBezierEasing_CubicBezierEasing(0.2, 0, 0.38, 0.9)
 }; // let cssVariables = "";
 // for(let i in CubicBezierEasing) {
 // 	let easingClass = CubicBezierEasing[i];
@@ -7709,7 +7723,7 @@ CubicBezierEasing.ibm = {
 // 		let easeNameArray = j.split("ease");
 // 		easeNameArray.shift();
 // 		let easeName = capitalize(easeNameArray.join(""));
-// 		let variable = `$ease${easeClassName}${easeName}: cubic-bezier(${cubicBezier.p1.x}, ${cubicBezier.p1.y}, ${cubicBezier.p2.x}, ${cubicBezier.p2.x});`;
+// 		let variable = `$ease${easeClassName}${easeName}: cubic-bezier(${cubicBezier.p1.x}, ${cubicBezier.p1.y}, ${cubicBezier.p2.x}, ${cubicBezier.p2.y});`;
 // 		cssVariables = cssVariables + variable;
 // 	}
 // }
@@ -7834,6 +7848,7 @@ function CubicBezierPoints_setPrototypeOf(o, p) { CubicBezierPoints_setPrototype
 
 
 
+
 var CubicBezierPoints_CubicBezierPoints =
 /*#__PURE__*/
 function (_Data) {
@@ -7850,11 +7865,11 @@ function (_Data) {
 
     _this.p0.addEventListener(Data.CHANGE, _this.changeHandler);
 
-    _this.p1 = new Vector2Data_Vector2Data(0, 0);
+    _this.p1 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p1.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p1.y);
 
     _this.p1.addEventListener(Data.CHANGE, _this.changeHandler);
 
-    _this.p2 = new Vector2Data_Vector2Data(1, 1);
+    _this.p2 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.y);
 
     _this.p2.addEventListener(Data.CHANGE, _this.changeHandler);
 
@@ -7939,35 +7954,31 @@ function (_Action) {
     _this.endX = new NumberData_NumberData(x);
     _this.endY = new NumberData_NumberData(y);
     _this.duration = new NumberData_NumberData(duration);
-    _this.easing = new CubicBezierEasing();
+    _this.cubicBezierPoints = new CubicBezierPoints_CubicBezierPoints();
+    _this.easing = new CubicBezierEasing_CubicBezierEasing();
+
+    _this.cubicBezierPointsChange();
+
     _this.easingMethod = new ObjectData_ObjectData(_this.easing.ease);
-    _this.cubicBezier = new CubicBezierPoints_CubicBezierPoints();
     _this.debugEasing = new ObjectData_ObjectData(Easing.cubic.easeInOut);
 
-    _this.cubicBezier.addEventListener(Data.CHANGE, function (event) {
-      _this.easing.p1.x = _this.cubicBezier.p1.x.value;
-      _this.easing.p1.y = _this.cubicBezier.p1.y.value;
-      _this.easing.p2.x = _this.cubicBezier.p2.x.value;
-      _this.easing.p2.y = _this.cubicBezier.p2.y.value;
-
-      _this.easing.calculateLength();
-    });
+    _this.cubicBezierPoints.addEventListener(Data.CHANGE, _this.cubicBezierPointsChange.bind(ActionTween_assertThisInitialized(_this)));
 
     _this.easingPresets = new ArrayData_ArrayData("Easing Presets");
 
     _this.easingPresets.selectedItem.addEventListener(Data.CHANGE, _this.easingPresetChange.bind(ActionTween_assertThisInitialized(_this)));
 
-    for (var i in CubicBezierEasing) {
-      var cubicEasingClass = CubicBezierEasing[i];
+    for (var i in CubicBezierEasing_CubicBezierEasing) {
+      var cubicEasingClass = CubicBezierEasing_CubicBezierEasing[i];
 
       for (var j in cubicEasingClass) {
         var easingPreset = i + "." + j;
 
         _this.easingPresets.push(easingPreset);
       }
-    }
+    } // this.easingPresets.selectedItem.value = this.easingPresets.value[0];
 
-    _this.easingPresets.selectedItem.value = _this.easingPresets.value[0];
+
     _this.tweenUpdateHandler = _this.tweenUpdateHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.tweenCompleteHandler = _this.tweenCompleteHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.pos = new Point_Point();
@@ -7975,6 +7986,15 @@ function (_Action) {
   }
 
   ActionTween_createClass(ActionTween, [{
+    key: "cubicBezierPointsChange",
+    value: function cubicBezierPointsChange() {
+      this.easing.p1.x = this.cubicBezierPoints.p1.x.value;
+      this.easing.p1.y = this.cubicBezierPoints.p1.y.value;
+      this.easing.p2.x = this.cubicBezierPoints.p2.x.value;
+      this.easing.p2.y = this.cubicBezierPoints.p2.y.value;
+      this.easing.calculateLength();
+    }
+  }, {
     key: "easingPresetChange",
     value: function easingPresetChange() {
       var value = this.easingPresets.selectedItem.value;
@@ -7984,13 +8004,13 @@ function (_Action) {
         this.debugEasing.value = debugEasingMethod;
       }
 
-      var cb = evalProperty(value, CubicBezierEasing);
+      var cb = evalProperty(value, CubicBezierEasing_CubicBezierEasing);
 
       if (cb) {
-        this.cubicBezier.p1.x.value = cb.p1.x;
-        this.cubicBezier.p1.y.value = cb.p1.y;
-        this.cubicBezier.p2.x.value = cb.p2.x;
-        this.cubicBezier.p2.y.value = cb.p2.y;
+        this.cubicBezierPoints.p1.x.value = cb.p1.x;
+        this.cubicBezierPoints.p1.y.value = cb.p1.y;
+        this.cubicBezierPoints.p2.x.value = cb.p2.x;
+        this.cubicBezierPoints.p2.y.value = cb.p2.y;
       }
     }
   }, {
@@ -8003,8 +8023,8 @@ function (_Action) {
       this.endX.value = action.endX.value;
       this.endY.value = action.endY.value;
       this.duration.value = action.duration.value;
-      this.cubicBezier.p1.copy(action.cubicBezier.p1);
-      this.cubicBezier.p2.copy(action.cubicBezier.p2);
+      this.cubicBezierPoints.p1.copy(action.cubicBezierPoints.p1);
+      this.cubicBezierPoints.p2.copy(action.cubicBezierPoints.p2);
     }
   }, {
     key: "trigger",
@@ -8031,8 +8051,8 @@ function (_Action) {
       data.endY = this.endY.value;
       data.duration = this.duration.value;
       data.delay = this.delay.value;
-      data.p1 = this.cubicBezier.p1.serialize();
-      data.p2 = this.cubicBezier.p2.serialize();
+      data.p1 = this.cubicBezierPoints.p1.serialize();
+      data.p2 = this.cubicBezierPoints.p2.serialize();
       return data;
     }
   }, {
@@ -8046,8 +8066,8 @@ function (_Action) {
       this.endY.value = data.endY;
       this.duration.value = data.duration;
       this.delay.value = data.delay;
-      this.cubicBezier.p1.deserialize(data.p1);
-      this.cubicBezier.p2.deserialize(data.p2);
+      this.cubicBezierPoints.p1.deserialize(data.p1);
+      this.cubicBezierPoints.p2.deserialize(data.p2);
     }
   }]);
 
