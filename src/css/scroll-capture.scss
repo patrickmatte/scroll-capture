@@ -1,7 +1,8 @@
-#teconsent {
-	display: none !important;
-	visibility: hidden !important;
-}
+$fontSize : 11px;
+$inputFontSize: 11px;
+$tabTitleSize: 14px;
+$titleSize: 18px;
+$fieldMargin: 5px;
 
 body {
 
@@ -19,9 +20,9 @@ scroll-capture {
 	margin: 0;
 	z-index: 200000000;
 	font-weight: normal;
-	font-family: DefaultFont, Monospaced;
+	font-family: DefaultFont, 'Courier New', Courier, monospace;
 	background-color: rgba(0, 0, 0, 0.97);
-	padding: 0.5em;
+	// padding: 0.5em;
 	border-radius: 0.25em;
 	box-sizing: border-box;
 
@@ -116,6 +117,12 @@ scroll-capture {
 		border: none !important;
 		line-height: 1;
 		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+
+		> * {
+			vertical-align: middle;
+		}
 
 		&:first-child {
 			margin-left: 0;
@@ -145,7 +152,7 @@ scroll-capture {
 
 	select, input, textarea {
 		color: inherit !important;
-		font-size: 1em !important;
+		font-size: $inputFontSize !important;
 		margin-bottom: 0 !important;
 		margin-top: 0 !important;
 		background: rgba(0,0,0,0.1);
@@ -157,8 +164,16 @@ scroll-capture {
 		min-height: auto !important;
 	}
 
+	select {
+		line-height: 1.2;
+	}
+
 	textarea {
 		resize: none;
+		white-space: pre;
+		overflow-wrap: normal;
+		overflow-x: scroll;
+		line-height: 1.2;
 	}
 
 	.ui-list-element {
@@ -169,7 +184,7 @@ scroll-capture {
 			}
 		}
 	}
-
+	
 	.ui-list-drag-area {
 		> * {
 			pointer-events: none;
@@ -181,6 +196,7 @@ scroll-capture {
 			content: "\ec4b";
 			//content: "\ef08";
 			//font-size: 1em;
+			margin-left: 0.5em;
 		}
 
 		&[data-is-saving="true"] {
@@ -201,6 +217,7 @@ scroll-capture {
 
 		&:after {
 			content: "\ec77";
+			margin-left: 0.5em;
 		}
 
 		&[data-is-capturing="true"] {
@@ -227,23 +244,26 @@ scroll-capture {
 
 		&:after {
 			content: "\ec74";
+			margin-left: 0.5em;
 		}
 	}
 
 	button.add-button {
 		&:after {
 			content: "\ec3e";
+			margin-left: 0.5em;
 		}
 	}
 
 	button.close-button {
 		&:after {
 			content: "\ec4f";
+			margin-left: 0.5em;
 		}
 	}
 
 	.sc-field {
-		font-size: 1.1em;
+		font-size: $fontSize;
 	}
 
 	.sc-label, .unit {
@@ -252,9 +272,10 @@ scroll-capture {
 
 	.sc-tab {
 		border: none;
+		display: inline-flex;
 
 		.sc-label {
-			font-size: 1.1em;
+			font-size: $fontSize;
 		}
 	}
 
@@ -266,13 +287,22 @@ scroll-capture {
 		display: inline-block;
 
 		&:after {
-			content: "\ea99";
+			// content: "\ea99";
+			content: "\ec74";
+			transform: rotate(90deg);
 			position: absolute;
-			font-size: 1.25em;
+			font-size: 0.8em;
 			top: calc(50% - 0.4em);
 			font-family: IcoFont;
-			right: 0.25em;
+			right: 1em;
 			pointer-events: none;
+			opacity: 0.5;
+		}
+
+		&:hover {
+			&:after {
+				opacity: 1;
+			}
 		}
 
 		select {
@@ -310,19 +340,20 @@ scroll-capture {
 			font-weight: 700;
 
 			.sc-label {
-				font-size: 1.4em;
+				font-size: $titleSize;
 				vertical-align: middle;
 			}
 		}
 	}
 
 	.controls {
-		font-size: 1.1em;
+		font-size: $fontSize;
 		display: inline-block;
 		width: 100%;
 		padding: 0 1em;
 		margin-top: 1em;
 		margin-bottom: 1em;
+		font-weight: bold;
 
 		&[data-actions-length="0"] {
 			opacity: 0.5;
@@ -334,8 +365,19 @@ scroll-capture {
 		}
 
 		button {
-			display: inline-block;
+			display: inline-flex;
 			padding: 0;
+			align-items: center;
+
+			.sc-label {
+				opacity: 0.5;
+			}
+
+			&:hover {
+				.sc-label {
+					opacity: 1;
+				}
+			}
 		}
 	}
 
@@ -378,7 +420,7 @@ scroll-capture {
 
 					&.sc-title-tab {
 						input {
-							font-size: 1.2em !important;
+							font-size: $tabTitleSize !important;
 							background-color: transparent;
 							color: inherit;
 							font-weight: inherit;
@@ -392,10 +434,22 @@ scroll-capture {
 			}
 
 			.sc-tab {
-				display: inline-block;
+				display: inline-flex;
 				border-radius: 0.25em 0.25em 0 0;
 				padding: 1em 1em 0.5em;
 				font-weight: bold;
+
+				button {
+					.sc-label {
+						opacity: 0.5;
+					}
+
+					&:hover {
+						.sc-label {
+							opacity: 1;
+						}
+					}
+				}
 
 				&:first-child {
 					background-color: rgba(255,255,255,0.1);
@@ -431,6 +485,12 @@ scroll-capture {
 			background-color: rgba(255,255,255,0.1);
 			border-radius: 0 0.25em 0.25em 0.25em;
 
+			> * {
+				&:last-child {
+					margin-bottom: 0em;
+				}
+			}
+
 			&.sequencer {
 				padding: 0;
 			}
@@ -447,20 +507,43 @@ scroll-capture {
 			//}
 		}
 
+		.sc-action {
+
+		}
+
 		.sc-fields-list {
-			margin-bottom: 0.5em;
+			> * {
+				margin-bottom: $fieldMargin;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+
+		.sc-field-column {
+			> .sc-field {
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
 		}
 
 		.sc-field-group {
 			display: flex;
-			//margin-bottom: 0.5em;
+			margin-bottom: $fieldMargin;
 
 			&:last-child {
-				margin-bottom: 0em;
+				// margin-bottom: 0;
+			}
+
+			> .sc-field {
+				margin-bottom: 0;
 			}
 
 			> * {
-				margin-bottom: 0em;
+				margin-bottom: 0;
 				width: 50%;
 
 				&:first-child {
@@ -477,12 +560,18 @@ scroll-capture {
 			display: flex;
 			flex-grow: 1;
 			flex-shrink: 1;
-			margin-bottom: 0.5em;
-			align-items: baseline;
+			align-items: flex-start;
+			margin-bottom: $fieldMargin;
 			border-radius: 0.25em;
 
-			&:last-child {
-				margin-bottom: 0em;
+			> * {
+				margin-right: $fieldMargin;
+				// margin-bottom: $fieldMargin;
+
+				&:last-child {
+					margin-right: 0;
+					// margin-bottom: 0;
+				}
 			}
 
 			.sc-label {
@@ -491,7 +580,7 @@ scroll-capture {
 				flex-grow: 0;
 				white-space: nowrap;
 				text-align: left;
-				padding-right: 0.5em;
+				margin: 0.5em 0;
 			}
 
 			input, textarea {
@@ -503,12 +592,6 @@ scroll-capture {
 				background-color: rgba(0,0,0,0.1);
 				border-radius: 0.25em;
 				max-width: 100%;
-			}
-
-			.sc- {
-				width: 50%;
-				flex-shrink: 0;
-				flex-grow: 1;
 			}
 
 			.unit {
@@ -596,14 +679,18 @@ scroll-capture {
 				}
 			}
 
-			[is="easing-graph"] {
-				padding-bottom: 100%;
-				background-color: rgba(0,0,0,0.1);
-				border-radius: 0.25em;
+			.easing-graph-container {
+				display: inline-block;
+				flex-grow: 1;
+				flex-shrink: 0;
+			}
 
-				&.sc-field {
-					display: block;
-				}
+			[is="easing-graph"] {
+				width: 100%;
+				padding-bottom: 100%;
+				display: inline-block;
+				background-color: rgba(0, 0, 0, 0.1);
+				border-radius: 0.25em;
 
 				[is="control-point-lines"] {
 					position: absolute;
@@ -638,13 +725,24 @@ scroll-capture {
 
 						.shape {
 							position: absolute;
-							width: 1em;
-							height: 1em;
+							width: 1.2em;
+							height: 1.2em;
 							background-color: #919190;
 							display: block;
-							top: -0.5em;
-							left: -0.5em;
+							top: -0.6em;
+							left: -0.6em;
 							border-radius: 100%;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+
+							* {
+								pointer-events: none;
+							}
+
+							.shape-label {
+								font-size: 0.8em;
+							}
 						}
 					}
 				}

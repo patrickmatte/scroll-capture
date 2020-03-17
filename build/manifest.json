@@ -28,7 +28,8 @@
 		}
 	],
 	"web_accessible_resources":[
-		"assets/fonts/*"
+		"assets/fonts/*",
+		"assets/fonts/*/*"
 	],
 	"browser_action": {
 		"default_icon": {

@@ -26,9 +26,9 @@ export default class ActionTween extends Action {
 		this.easingMethod = new ObjectData(this.easing.ease);
 		this.debugEasing = new ObjectData(Easing.cubic.easeInOut);
 		this.cubicBezierPoints.addEventListener(Data.CHANGE, this.cubicBezierPointsChange.bind(this));
-		this.easingPresets = new ArrayData("Easing Presets");
+		this.easingPresets = new ArrayData("Select a preset");
 		this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));
-
+		this.easingPresets.selectedItem.forceChangeEvent = true;
 		for(let i in CubicBezierEasing) {
 			let cubicEasingClass = CubicBezierEasing[i];
 			for(let j in cubicEasingClass) {
@@ -36,11 +36,15 @@ export default class ActionTween extends Action {
 				this.easingPresets.push(easingPreset);
 			}
 		}
-		// this.easingPresets.selectedItem.value = this.easingPresets.value[0];
+		this.resetEasing();
 		this.tweenUpdateHandler = this.tweenUpdateHandler.bind(this);
 		this.tweenCompleteHandler = this.tweenCompleteHandler.bind(this);
 
 		this.pos = new Point();
+	}
+
+	resetEasing() {
+		this.easingPresets.selectedItem.value = this.easingPresets.value[0];
 	}
 
 	cubicBezierPointsChange() {

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -480,20 +480,32 @@ var StyleUnits = function StyleUnits() {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-__webpack_require__(3);
-module.exports = __webpack_require__(2);
-
+module.exports = "<div class=\"sc-fields-list\" is=\"ui-component\">\n    <div class=\"sc-field-group\">\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n        </div>\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n        </div>\n    </div>\n    <div class=\"sc-field\">\n        <span class=\"sc-label\">Easing:</span>\n        <div class=\"sc-select\">\n            <select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n        </div>\n    </div>\n    <div class=\"sc-field-group\" is=\"ui-component\">\n        <div class=\"sc-field-column\">\n            <div class=\"sc-field\">\n                <span class=\"sc-label\">X<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.x\" is=\"ui-input\"/>\n            </div>\n            <div class=\"sc-field\">\n                <span class=\"sc-label\">Y<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.y\" is=\"ui-input\"/>\n            </div>\n            <div class=\"sc-field\">\n                <span class=\"sc-label\">X<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.x\" is=\"ui-input\"/>\n            </div>\n            <div class=\"sc-field\">\n                <span class=\"sc-label\">Y<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.y\" is=\"ui-input\"/>\n            </div>\n        </div>\n        <div class=\"sc-field\" is=\"ui-component\">\n            <span class=\"sc-label\">Bezier:</span>\n            <div is=\"ui-component\" class=\"easing-graph-container\">\n                <div is=\"easing-graph\" data-model=\"data.cubicBezierPoints\">\n                    <!-- <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div> -->\n                    <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n                    <div is=\"control-point-lines\" is=\"ui-list\">\n                        <template>\n                            <div is=\"control-point-line\" data-model=\"data\"></div>\n                        </template>\n                    </div>\n                    <div class=\"control-points\" is=\"easing-graph-control-points\">\n                        <template>\n                            <div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n                                <span class=\"shape\">\n                                    <span class=\"shape-label\" is=\"ui-text\">[[index1]]</span>\n                                </span>\n                            </div>\n                        </template>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = "<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play All</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear All</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"selected-border\"></div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>"
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(5);
+module.exports = __webpack_require__(4);
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3761,6 +3773,10 @@ function (_Branch) {
 }(Branch);
 
 
+// EXTERNAL MODULE: ./templates/Easing.html
+var Easing = __webpack_require__(1);
+var Easing_default = /*#__PURE__*/__webpack_require__.n(Easing);
+
 // CONCATENATED MODULE: ./js/tsunami/Scope.js
 function Scope_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4145,7 +4161,7 @@ function Easing_defineProperties(target, props) { for (var i = 0; i < props.leng
 
 function Easing_createClass(Constructor, protoProps, staticProps) { if (protoProps) Easing_defineProperties(Constructor.prototype, protoProps); if (staticProps) Easing_defineProperties(Constructor, staticProps); return Constructor; }
 
-var Easing =
+var Easing_Easing =
 /*#__PURE__*/
 function () {
   function Easing() {
@@ -4201,7 +4217,7 @@ function (_Easing) {
   }]);
 
   return Quadratic;
-}(Easing);
+}(Easing_Easing);
 var Cubic =
 /*#__PURE__*/
 function (_Easing2) {
@@ -4232,7 +4248,7 @@ function (_Easing2) {
   }]);
 
   return Cubic;
-}(Easing);
+}(Easing_Easing);
 var Quartic =
 /*#__PURE__*/
 function (_Easing3) {
@@ -4263,7 +4279,7 @@ function (_Easing3) {
   }]);
 
   return Quartic;
-}(Easing);
+}(Easing_Easing);
 var Quintic =
 /*#__PURE__*/
 function (_Easing4) {
@@ -4294,7 +4310,7 @@ function (_Easing4) {
   }]);
 
   return Quintic;
-}(Easing);
+}(Easing_Easing);
 var Sine =
 /*#__PURE__*/
 function (_Easing5) {
@@ -4324,7 +4340,7 @@ function (_Easing5) {
   }]);
 
   return Sine;
-}(Easing);
+}(Easing_Easing);
 var Exponential =
 /*#__PURE__*/
 function (_Easing6) {
@@ -4357,7 +4373,7 @@ function (_Easing6) {
   }]);
 
   return Exponential;
-}(Easing);
+}(Easing_Easing);
 var Circular =
 /*#__PURE__*/
 function (_Easing7) {
@@ -4388,7 +4404,7 @@ function (_Easing7) {
   }]);
 
   return Circular;
-}(Easing);
+}(Easing_Easing);
 var Elastic =
 /*#__PURE__*/
 function (_Easing8) {
@@ -4449,7 +4465,7 @@ function (_Easing8) {
   }]);
 
   return Elastic;
-}(Easing);
+}(Easing_Easing);
 var Back =
 /*#__PURE__*/
 function (_Easing9) {
@@ -4489,7 +4505,7 @@ function (_Easing9) {
   }]);
 
   return Back;
-}(Easing);
+}(Easing_Easing);
 var Bounce =
 /*#__PURE__*/
 function (_Easing10) {
@@ -4527,7 +4543,7 @@ function (_Easing10) {
   }]);
 
   return Bounce;
-}(Easing);
+}(Easing_Easing);
 var Linear =
 /*#__PURE__*/
 function () {
@@ -4546,17 +4562,17 @@ function () {
 
   return Linear;
 }();
-Easing.quadratic = new Quadratic();
-Easing.cubic = new Cubic();
-Easing.quartic = new Quartic();
-Easing.quintic = new Quintic();
-Easing.sine = new Sine();
-Easing.exponential = new Exponential();
-Easing.circular = new Circular();
-Easing.elastic = new Elastic();
-Easing.back = new Back();
-Easing.bounce = new Bounce();
-Easing.linear = new Linear();
+Easing_Easing.quadratic = new Quadratic();
+Easing_Easing.cubic = new Cubic();
+Easing_Easing.quartic = new Quartic();
+Easing_Easing.quintic = new Quintic();
+Easing_Easing.sine = new Sine();
+Easing_Easing.exponential = new Exponential();
+Easing_Easing.circular = new Circular();
+Easing_Easing.elastic = new Elastic();
+Easing_Easing.back = new Back();
+Easing_Easing.bounce = new Bounce();
+Easing_Easing.linear = new Linear();
 // CONCATENATED MODULE: ./js/tsunami/components/UIList.js
 function UIList_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIList_typeof = function _typeof(obj) { return typeof obj; }; } else { UIList_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIList_typeof(obj); }
 
@@ -4889,10 +4905,20 @@ function (_UIComponent) {
       var distance = Point_Point.distance(point, this.dragStartPoint);
 
       if (distance > 0) {
-        this.dragElement.classList.add("is-dragged");
         document.body.removeEventListener(events.mousemove, this._dragMove);
         document.body.addEventListener(events.mousemove, this._dragElementMove);
+
+        this._dragElementStart();
       }
+    }
+  }, {
+    key: "_dragElementStart",
+    value: function _dragElementStart() {
+      this.dragElement.classList.add("is-dragged");
+      var event = new CustomEvent('drag-start', {
+        detail: "test"
+      });
+      this.dragElement.dispatchEvent(event);
     }
   }, {
     key: "_dragElementMove",
@@ -4952,7 +4978,7 @@ function (_UIComponent) {
     key: "scrollTo",
     value: function scrollTo(scrollLeft, scrollTop) {
       var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-      this.tween = new Tween_Tween(0, duration, [new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, 10), new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, 10)]);
+      this.tween = new Tween_Tween(0, duration, [new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing_Easing.cubic.easeInOut, 10), new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing_Easing.cubic.easeInOut, 10)]);
       return this.tween.start();
     }
   }, {
@@ -5070,6 +5096,7 @@ function EasingGraph_setPrototypeOf(o, p) { EasingGraph_setPrototypeOf = Object.
 
 
 
+
 var EasingGraph_EasingGraph =
 /*#__PURE__*/
 function (_UIComponent) {
@@ -5117,7 +5144,7 @@ function (_UIComponent) {
 }(UIComponent_UIComponent);
 
 
-var EasingGraphControlPoints =
+var EasingGraph_EasingGraphControlPoints =
 /*#__PURE__*/
 function (_UIList) {
   EasingGraph_inherits(EasingGraphControlPoints, _UIList);
@@ -5133,6 +5160,13 @@ function (_UIList) {
   }
 
   EasingGraph_createClass(EasingGraphControlPoints, [{
+    key: "_dragElementStart",
+    value: function _dragElementStart() {
+      EasingGraph_get(EasingGraph_getPrototypeOf(EasingGraphControlPoints.prototype), "_dragElementStart", this).call(this);
+
+      app.actions.selectedItem.value.resetEasing();
+    }
+  }, {
     key: "_dragElementMove",
     value: function _dragElementMove(event) {
       event.preventDefault();
@@ -5253,7 +5287,7 @@ function (_UIComponent3) {
     key: "render",
     value: function render() {
       var easing = this.model.value;
-      var totalPoints = 40;
+      var totalPoints = 20;
       var points = [];
       var pointsString = "";
 
@@ -5286,7 +5320,7 @@ function (_UIComponent4) {
     value: function render() {
       var easing = this.model.value;
       this.element.innerHTML = "";
-      var totalPoints = 30;
+      var totalPoints = 20;
       var points = [];
 
       for (var i = 0; i < totalPoints; i++) {
@@ -5309,11 +5343,72 @@ function (_UIComponent4) {
 
   return EasingGraphPoints;
 }(UIComponent_UIComponent);
-define("easing-graph-control-points", EasingGraphControlPoints);
+define("easing-graph-control-points", EasingGraph_EasingGraphControlPoints);
 define("control-point-lines", EasingGraph_EasingGraphControlPointLines);
 define("control-point-line", EasingGraph_EasingGraphControlPointLine);
 define("easing-graph-curve", EasingGraph_EasingGraphCurve);
 define("easing-graph-points", EasingGraph_EasingGraphPoints);
+// CONCATENATED MODULE: ./js/view/ActionTweenView.js
+function ActionTweenView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTweenView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTweenView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTweenView_typeof(obj); }
+
+function ActionTweenView_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ActionTweenView_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ActionTweenView_createClass(Constructor, protoProps, staticProps) { if (protoProps) ActionTweenView_defineProperties(Constructor.prototype, protoProps); if (staticProps) ActionTweenView_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ActionTweenView_possibleConstructorReturn(self, call) { if (call && (ActionTweenView_typeof(call) === "object" || typeof call === "function")) { return call; } return ActionTweenView_assertThisInitialized(self); }
+
+function ActionTweenView_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ActionTweenView_set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { ActionTweenView_set = Reflect.set; } else { ActionTweenView_set = function set(target, property, value, receiver) { var base = ActionTweenView_superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { ActionTweenView_defineProperty(receiver, property, value); } return true; }; } return ActionTweenView_set(target, property, value, receiver); }
+
+function view_ActionTweenView_set(target, property, value, receiver, isStrict) { var s = ActionTweenView_set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
+
+function ActionTweenView_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function ActionTweenView_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ActionTweenView_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function ActionTweenView_getPrototypeOf(o) { ActionTweenView_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ActionTweenView_getPrototypeOf(o); }
+
+function ActionTweenView_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ActionTweenView_setPrototypeOf(subClass, superClass); }
+
+function ActionTweenView_setPrototypeOf(o, p) { ActionTweenView_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ActionTweenView_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var ActionTweenView_ActionTweenView =
+/*#__PURE__*/
+function (_UIComponent) {
+  ActionTweenView_inherits(ActionTweenView, _UIComponent);
+
+  function ActionTweenView(element) {
+    ActionTweenView_classCallCheck(this, ActionTweenView);
+
+    return ActionTweenView_possibleConstructorReturn(this, ActionTweenView_getPrototypeOf(ActionTweenView).call(this, element));
+  }
+
+  ActionTweenView_createClass(ActionTweenView, [{
+    key: "scope",
+    get: function get() {
+      return this._scope;
+    },
+    set: function set(value) {
+      view_ActionTweenView_set(ActionTweenView_getPrototypeOf(ActionTweenView.prototype), "scope", value, this, true);
+
+      this.easing = importTemplate(Easing_default.a, value);
+      this.appendChild(this.easing);
+    }
+  }]);
+
+  return ActionTweenView;
+}(UIComponent_UIComponent);
+
+
+define("easing-graph", EasingGraph_EasingGraph);
 // CONCATENATED MODULE: ./js/view/ActionView.js
 function ActionView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionView_typeof(obj); }
 
@@ -5362,7 +5457,7 @@ function (_UIComponent) {
 }(UIComponent_UIComponent);
 
 
-define("easing-graph", EasingGraph_EasingGraph);
+define("action-tween", ActionTweenView_ActionTweenView);
 // CONCATENATED MODULE: ./js/view/ActionsView.js
 function ActionsView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionsView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionsView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionsView_typeof(obj); }
 
@@ -5430,6 +5525,10 @@ function (_UIList) {
 
 
 define("action-view", ActionView_ActionView);
+// EXTERNAL MODULE: ./templates/ScrollCapture.html
+var templates_ScrollCapture = __webpack_require__(2);
+var ScrollCapture_default = /*#__PURE__*/__webpack_require__.n(templates_ScrollCapture);
+
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
@@ -5448,6 +5547,7 @@ function ScrollCapture_assertThisInitialized(self) { if (self === void 0) { thro
 function ScrollCapture_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ScrollCapture_setPrototypeOf(subClass, superClass); }
 
 function ScrollCapture_setPrototypeOf(o, p) { ScrollCapture_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ScrollCapture_setPrototypeOf(o, p); }
+
 
 
 
@@ -5527,7 +5627,7 @@ function (_UIComponent) {
 }(UIComponent_UIComponent);
 
 
-ScrollCapture_ScrollCapture.template = "\n<scroll-capture data-is-capturing=\"[[isCapturing]]\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n<!--\t\t<div class=\"app-name\"><span>Scroll Capture</span></div>-->\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n<!--\t\t\t\t\t<button class=\"sc-tab play-button\" is=\"ui-button\" data-click=\"playAll\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-label\">Play All</span>-->\n<!--\t\t\t\t\t</button>-->\n\t\t\t\t</div>\n\t\t\t\t<button class=\"sc-tab close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sc-fields sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<div class=\"controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t<div class=\"sc-fields-list\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div is=\"ui-component\">\n<!--\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</div>-->\n<!--\t\t\t\t\t\t\t\t\t\t</div>-->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Element:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div is=\"easing-graph\" class=\"sc-field\" data-model=\"data.cubicBezierPoints\">\n<!--\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t<g>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t\t</g>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t</svg>-->\n<!--\t\t\t\t\t\t\t\t\t\t\t<div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div>-->\n\t\t\t\t\t\t\t\t\t\t\t<svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n\t\t\t\t\t\t\t\t\t\t\t\t<g>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n\t\t\t\t\t\t\t\t\t\t\t\t</g>\n\t\t\t\t\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-lines\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div is=\"control-point-line\" data-model=\"data\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-points\" is=\"easing-graph-control-points\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"shape\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>1</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">x<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">y<sup>2</sup>:</span><input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span><input type=\"text\" data-model=\"data.duration\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Easing:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingClasses\" data-model=\"data.easingClasses.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Method:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.easingMethods\" data-model=\"data.easingMethods.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\"></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Code:</span>\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-field sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span>Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"selected-border\"></div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>\n"; // tsunami.define("start-button", StartButton);
+ScrollCapture_ScrollCapture.template = ScrollCapture_default.a; // tsunami.define("start-button", StartButton);
 
 define("actions-view", ActionsView_ActionsView);
 // CONCATENATED MODULE: ./js/tsunami/components/UIButton.js
@@ -6431,7 +6531,7 @@ function (_UIText) {
     _this = UINumber_possibleConstructorReturn(this, UINumber_getPrototypeOf(UINumber).call(this, element));
     _this._currentValue = 0;
     _this.roundDecimal = 10;
-    _this.easing = Easing.cubic.easeOut;
+    _this.easing = Easing_Easing.cubic.easeOut;
 
     var isRank = _this.element.getAttribute("data-is-rank");
 
@@ -6635,7 +6735,7 @@ function (_UIComponent) {
     key: "_startAutoScroll",
     value: function _startAutoScroll() {
       if (this.autoScroll) {
-        this.autoScrollTween = new Tween_Tween(0, 2, [new TweenProperty(this, "_autoScrollFactor", 0, 1, Easing.cubic.easeInOut)]);
+        this.autoScrollTween = new Tween_Tween(0, 2, [new TweenProperty(this, "_autoScrollFactor", 0, 1, Easing_Easing.cubic.easeInOut)]);
         this.autoScrollTween.start();
       }
     }
@@ -6687,11 +6787,11 @@ function (_UIComponent) {
       var props = [];
 
       if (currentX != targetX) {
-        props.push(new TweenProperty(this.scrollTarget, "x", currentX, targetX, Easing.cubic.easeOut, 100));
+        props.push(new TweenProperty(this.scrollTarget, "x", currentX, targetX, Easing_Easing.cubic.easeOut, 100));
       }
 
       if (currentY != targetY) {
-        props.push(new TweenProperty(this.scrollTarget, "y", currentY, targetY, Easing.cubic.easeOut, 100));
+        props.push(new TweenProperty(this.scrollTarget, "y", currentY, targetY, Easing_Easing.cubic.easeOut, 100));
       }
 
       if (props.length > 0) {
@@ -7395,7 +7495,7 @@ function () {
     this.isCaptureable = new BooleanData_BooleanData();
     this.isCapturing = new BooleanData_BooleanData();
     this.isPlaying = new BooleanData_BooleanData();
-    this.delay = new NumberData_NumberData(1.5);
+    this.delay = new NumberData_NumberData(1);
     this.isSelectedItem = new BooleanData_BooleanData();
     this.capture = this.capture.bind(this);
     this.play = this.play.bind(this);
@@ -7862,18 +7962,15 @@ function (_Data) {
     _this = CubicBezierPoints_possibleConstructorReturn(this, CubicBezierPoints_getPrototypeOf(CubicBezierPoints).call(this));
     _this.changeHandler = _this.changeHandler.bind(CubicBezierPoints_assertThisInitialized(_this));
     _this.p0 = new Vector2Data_Vector2Data(0, 0);
+    _this.p1 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p1.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p1.y);
+    _this.p2 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.y);
+    _this.p3 = new Vector2Data_Vector2Data(1, 1);
 
     _this.p0.addEventListener(Data.CHANGE, _this.changeHandler);
 
-    _this.p1 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p1.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p1.y);
-
     _this.p1.addEventListener(Data.CHANGE, _this.changeHandler);
 
-    _this.p2 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.y);
-
     _this.p2.addEventListener(Data.CHANGE, _this.changeHandler);
-
-    _this.p3 = new Vector2Data_Vector2Data(1, 1);
 
     _this.p3.addEventListener(Data.CHANGE, _this.changeHandler);
 
@@ -7960,13 +8057,15 @@ function (_Action) {
     _this.cubicBezierPointsChange();
 
     _this.easingMethod = new ObjectData_ObjectData(_this.easing.ease);
-    _this.debugEasing = new ObjectData_ObjectData(Easing.cubic.easeInOut);
+    _this.debugEasing = new ObjectData_ObjectData(Easing_Easing.cubic.easeInOut);
 
     _this.cubicBezierPoints.addEventListener(Data.CHANGE, _this.cubicBezierPointsChange.bind(ActionTween_assertThisInitialized(_this)));
 
-    _this.easingPresets = new ArrayData_ArrayData("Easing Presets");
+    _this.easingPresets = new ArrayData_ArrayData("Select a preset");
 
     _this.easingPresets.selectedItem.addEventListener(Data.CHANGE, _this.easingPresetChange.bind(ActionTween_assertThisInitialized(_this)));
+
+    _this.easingPresets.selectedItem.forceChangeEvent = true;
 
     for (var i in CubicBezierEasing_CubicBezierEasing) {
       var cubicEasingClass = CubicBezierEasing_CubicBezierEasing[i];
@@ -7976,8 +8075,9 @@ function (_Action) {
 
         _this.easingPresets.push(easingPreset);
       }
-    } // this.easingPresets.selectedItem.value = this.easingPresets.value[0];
+    }
 
+    _this.resetEasing();
 
     _this.tweenUpdateHandler = _this.tweenUpdateHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.tweenCompleteHandler = _this.tweenCompleteHandler.bind(ActionTween_assertThisInitialized(_this));
@@ -7986,6 +8086,11 @@ function (_Action) {
   }
 
   ActionTween_createClass(ActionTween, [{
+    key: "resetEasing",
+    value: function resetEasing() {
+      this.easingPresets.selectedItem.value = this.easingPresets.value[0];
+    }
+  }, {
     key: "cubicBezierPointsChange",
     value: function cubicBezierPointsChange() {
       this.easing.p1.x = this.cubicBezierPoints.p1.x.value;
@@ -7998,7 +8103,7 @@ function (_Action) {
     key: "easingPresetChange",
     value: function easingPresetChange() {
       var value = this.easingPresets.selectedItem.value;
-      var debugEasingMethod = evalProperty(value, Easing);
+      var debugEasingMethod = evalProperty(value, Easing_Easing);
 
       if (debugEasingMethod) {
         this.debugEasing.value = debugEasingMethod;
@@ -8473,7 +8578,7 @@ function (_Action) {
     _this = ActionEval_possibleConstructorReturn(this, ActionEval_getPrototypeOf(ActionEval).call(this, "ActionEval", "Eval"));
 
     if (!code) {
-      code = "return new Promise(function(resolve, reject) {\n    console.log(\"Wait for 1 second\");\n    setTimeout(function() {resolve(); }, 1000);\n});";
+      code = "//Example\nreturn new Promise(function(resolve, reject) {\n\tconsole.log(\"Wait for 1 second\");\n\tsetTimeout(function() {resolve(); }, 1000);\n});";
     }
 
     _this.code = new StringData_StringData(code);
@@ -58047,8 +58152,8 @@ function (_App) {
     _this = main_possibleConstructorReturn(this, main_getPrototypeOf(Main).call(this, element));
     app = main_assertThisInitialized(_this);
     var icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
-    var DefaultFontRegular = chrome.extension.getURL('assets/fonts/FiraMono-Regular.ttf');
-    var defaultFontBold = chrome.extension.getURL('assets/fonts/FiraMono-Bold.ttf');
+    var DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Regular.ttf');
+    var defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Bold.ttf');
     var fonts = document.createElement('style');
     fonts.type = 'text/css';
     fonts.textContent = "\n\t\t@font-face {\n\t\t\tfont-family: IcoFont;\n\t\t\tsrc: url(\"".concat(icoFont, "\");\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: DefaultFont;\n\t\t\tfont-weight: 400;\n\t\t\tsrc: url(\"").concat(DefaultFontRegular, "\");\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: DefaultFont;\n\t\t\tfont-weight: 700;\n\t\t\tsrc: url(\"").concat(defaultFontBold, "\");\n\t\t}\n\t\t");

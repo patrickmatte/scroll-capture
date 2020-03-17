@@ -51,12 +51,12 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(tpl.html|twig)$/,
+				test: /\.(twig)$/,
 				exclude: /node_modules/,
 				use: "twig-loader"
 			},
 			{
-				test: /\.(xml|txt|md|hbs|mustache)$/,
+				test: /\.(xml|txt|md|hbs|mustache|html)$/,
 				use: "raw-loader"
 			},
 			{

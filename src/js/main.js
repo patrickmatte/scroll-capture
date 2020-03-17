@@ -16,8 +16,8 @@ export default class Main extends App {
 		app = this;
 
 		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
-		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/FiraMono-Regular.ttf');
-		let defaultFontBold = chrome.extension.getURL('assets/fonts/FiraMono-Bold.ttf');
+		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Regular.ttf');
+		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Bold.ttf');
 		let fonts = document.createElement('style');
 		fonts.type = 'text/css';
 		fonts.textContent = `
@@ -47,7 +47,6 @@ export default class Main extends App {
 		this.isCapturing = new BooleanData();
 		this.isSaving = new BooleanData();
 		this.actions = new Actions();
-
 
 		chrome.storage.sync.get(["json"], (result) => {
 			this.scrollCapture = importTemplate(ScrollCapture.template, this).component;

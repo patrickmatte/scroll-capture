@@ -5,6 +5,7 @@ import ArrayData from "../tsunami/data/ArrayData";
 import Point from "../tsunami/geom/Point";
 import UIList from "../tsunami/components/UIList";
 import Data from "../tsunami/data/Data";
+import { app } from "../main";
 
 export default class EasingGraph extends UIComponent {
 
@@ -43,6 +44,11 @@ export class EasingGraphControlPoints extends UIList {
 	constructor(element) {
 		super(element);
 		this.dragElementClass = "shape";
+	}
+
+	_dragElementStart() {
+		super._dragElementStart();
+		app.actions.selectedItem.value.resetEasing();
 	}
 
 	_dragElementMove(event) {
@@ -131,7 +137,7 @@ export class EasingGraphCurve extends UIComponent {
 
 	render() {
 		let easing = this.model.value;
-		let totalPoints = 40;
+		let totalPoints = 20;
 		let points = [];
 		let pointsString = "";
 		for(let i = 0; i < totalPoints; i++) {
@@ -154,7 +160,7 @@ export class EasingGraphPoints extends UIComponent {
 	render() {
 		let easing = this.model.value;
 		this.element.innerHTML = "";
-		let totalPoints = 30;
+		let totalPoints = 20;
 		let points = [];
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);

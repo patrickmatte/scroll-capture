@@ -282,10 +282,16 @@ export default class UIList extends UIComponent {
 		let point = this.getTouchPoint(event);
 		let distance = Point.distance(point, this.dragStartPoint);
 		if(distance > 0) {
-			this.dragElement.classList.add("is-dragged");
 			document.body.removeEventListener(events.mousemove, this._dragMove);
 			document.body.addEventListener(events.mousemove, this._dragElementMove);
+			this._dragElementStart();
 		}
+	}
+	
+	_dragElementStart() {
+		this.dragElement.classList.add("is-dragged");
+		let event = new CustomEvent('drag-start', { detail: "test" });
+		this.dragElement.dispatchEvent(event);
 	}
 
 	_dragElementMove(event) {
