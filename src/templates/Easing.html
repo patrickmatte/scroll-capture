@@ -7,29 +7,9 @@
             <span class="sc-label">Delay:</span><input type="number" step="0.25" data-model="data.delay" is="ui-input"/>
         </div>
     </div>
-    <div class="sc-field">
-        <span class="sc-label">Easing:</span>
-        <div class="sc-select">
-            <select data-provider="data.easingPresets" data-model="data.easingPresets.selectedItem" is="ui-select"></select>
-        </div>
-    </div>
     <div class="sc-field-group" is="ui-component">
-        <div class="sc-field-column">
-            <div class="sc-field">
-                <span class="sc-label">X<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.x" is="ui-input"/>
-            </div>
-            <div class="sc-field">
-                <span class="sc-label">Y<sup>1</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.y" is="ui-input"/>
-            </div>
-            <div class="sc-field">
-                <span class="sc-label">X<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.x" is="ui-input"/>
-            </div>
-            <div class="sc-field">
-                <span class="sc-label">Y<sup>2</sup>:</span><input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.y" is="ui-input"/>
-            </div>
-        </div>
         <div class="sc-field" is="ui-component">
-            <span class="sc-label">Bezier:</span>
+            <span class="sc-label">Easing:</span>
             <div is="ui-component" class="easing-graph-container">
                 <div is="easing-graph" data-model="data.cubicBezierPoints">
                     <!-- <svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
@@ -59,6 +39,21 @@
                         </template>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="sc-field-column">
+            <div class="sc-field">
+                <div class="sc-select">
+                    <select data-provider="data.easingPresets" data-model="data.easingPresets.selectedItem" is="ui-select"></select>
+                </div>
+            </div>
+            <div class="sc-field">
+                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.x" is="ui-input"/>
+                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.y" is="ui-input"/>
+            </div>
+            <div class="sc-field">
+                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.x" is="ui-input"/>
+                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.y" is="ui-input"/>
             </div>
         </div>
     </div>

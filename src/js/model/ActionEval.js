@@ -6,11 +6,17 @@ export default class ActionEval extends Action {
 	constructor(code = '') {
 		super("ActionEval", "Eval");
 		if(!code) {
-			code = `//Example
-return new Promise(function(resolve, reject) {
-	console.log("Wait for 1 second");
-	setTimeout(function() {resolve(); }, 1000);
-});`;
+			code = `/* Example */
+let promise = new Promise(function(resolve, reject) {
+    console.log("Wait for 1 second");
+    setTimeout(function() {
+        resolve();
+    }, 1000);
+});
+return promise.then(function() {
+    console.log("1 second has passed");
+});
+`;
 		}
 		this.code = new StringData(code);
 	}

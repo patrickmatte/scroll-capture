@@ -72,11 +72,6 @@ CubicBezierEasing.circular = {
 	easeOut: new CubicBezierEasing(0, 0.55, 0.45, 1)
 };
 
-CubicBezierEasing.ibm = {
-	easeExpressive: new CubicBezierEasing(0.4, 0.14, 0.3, 1),
-	easeProductive: new CubicBezierEasing(0.2, 0, 0.38, 0.9)
-};
-
 // let cssVariables = "";
 // for(let i in CubicBezierEasing) {
 // 	let easingClass = CubicBezierEasing[i];
