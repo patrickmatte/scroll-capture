@@ -1,11 +1,10 @@
 $textFontSize : 11px;
-$tabTitleSize: 14px;
-$titleSize: 18px;
+$tabTitleSize: 13px;
+$titleSize: 15px;
 $fieldMargin: 0.5em;
-$borderRadius: 0.5em;
+$borderRadius: 0.25em;
 
 body {
-
 	scroll-capture {
 		position: fixed;
 		right: 4px;
@@ -135,7 +134,7 @@ body {
 				font-family: "IcoFont";
 				display: inline-block;
 				vertical-align: middle;
-				font-size: 0.8em;
+				font-size: 0.7em;
 				color: white;
 				opacity: 0.5;
 			}
@@ -350,7 +349,7 @@ body {
 			}
 		}
 
-		.controls {
+		.sc-controls {
 			// font-size: $textFontSize;
 			display: inline-block;
 			width: 100%;
@@ -476,10 +475,10 @@ body {
 			}
 		}
 
-		.sc-action-fields {
-			padding: 1em;
-			border-radius: 0 0.25em 0.25em 0.25em;
-		}
+		// .sc-action-fields {
+			// padding: 1em;
+			// border-radius: 0 0.25em 0.25em 0.25em;
+		// }
 
 		.sc-fields {
 			padding: 0.75em;

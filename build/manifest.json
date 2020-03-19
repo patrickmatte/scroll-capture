@@ -29,7 +29,8 @@
 	],
 	"web_accessible_resources":[
 		"assets/fonts/*",
-		"assets/fonts/*/*"
+		"assets/fonts/*/*",
+		"assets/images/*"
 	],
 	"browser_action": {
 		"default_icon": {

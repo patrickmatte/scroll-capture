@@ -39,9 +39,9 @@ export default class Actions extends ArrayData {
 			// this.push(action);
 			this.selectedIndex.value = index;
 
-			if(this.length.value == 1) {
-				action.delay.value = 0;
-			}
+			// if(this.length.value == 1) {
+			// 	action.delay.value = 0;
+			// }
 		}
 		// this.types.selectedItem.value = this.types.value[0];
 	}

@@ -65,11 +65,15 @@ export default class ActionMouseEvent extends Action {
 	capture() {
 		this.isCapturing.value = true;
 		setTimeout(()=> {
-			document.body.addEventListener(this.eventTypes.selectedItem.value, this.captureMouseEventHandler);
+			document.body.addEventListener("click", this.captureMouseEventHandler);
 		}, 33);
 	}
 
 	captureMouseEventHandler(event) {
+		console.log("event", event);
+		if(event.preventDefaut) {
+			event.preventDefaut();
+		}
 		this.isCapturing.value = false;
 		let touch = event;
 		if (isTouch) {
@@ -78,7 +82,7 @@ export default class ActionMouseEvent extends Action {
 		let point = new Point(touch.pageX, touch.pageY);
 		this.x.value = point.x;
 		this.y.value = point.y;
-		document.body.removeEventListener(this.eventTypes.selectedItem.value, this.captureMouseEventHandler);
+		document.body.removeEventListener("click", this.captureMouseEventHandler);
 	}
 
 }

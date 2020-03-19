@@ -18,6 +18,7 @@ export default class Main extends App {
 		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
 		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Regular.ttf');
 		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Bold.ttf');
+		let customCursor = chrome.extension.getURL('assets/images/customCursor.png');
 		let fonts = document.createElement('style');
 		fonts.type = 'text/css';
 		fonts.textContent = `
@@ -35,6 +36,10 @@ export default class Main extends App {
 			font-weight: 700;
 			src: url("${defaultFontBold}");
 		}
+
+		body.is-capturing {
+			cursor: url('${customCursor}'), auto;
+		}	
 		`;
 		document.head.appendChild(fonts);
 
@@ -44,7 +49,14 @@ export default class Main extends App {
 		this.show = this.show.bind(this);
 		this.hide = this.hide.bind(this);
 
-		this.isCapturing = new BooleanData();
+		this.showCaptureIcon = new BooleanData();
+		this.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
+			if(event.value) {
+				document.body.classList.add("is-capturing");
+			} else {
+				document.body.classList.remove("is-capturing");
+			}
+		})
 		this.isSaving = new BooleanData();
 		this.actions = new Actions();
 

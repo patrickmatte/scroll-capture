@@ -3,6 +3,7 @@ import NumberData from "../tsunami/data/NumberData";
 import {awaitTimeout} from "../tsunami/await";
 import StringData from "../tsunami/data/StringData";
 import Data from "../tsunami/data/Data";
+import { app } from "../main";
 
 export default class Action {
 
@@ -16,8 +17,14 @@ export default class Action {
 		this.name.value = name;
 		this.isCaptureable = new BooleanData();
 		this.isCapturing = new BooleanData();
+		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
+			app.showCaptureIcon.value = event.value;
+			if(!event.value) {
+				app.save();
+			}
+		});
 		this.isPlaying = new BooleanData();
-		this.delay = new NumberData(1);
+		this.delay = new NumberData(0);
 		this.isSelectedItem = new BooleanData();
 
 		this.capture = this.capture.bind(this);

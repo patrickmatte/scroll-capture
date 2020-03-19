@@ -3,6 +3,7 @@ import ArrayData from "../tsunami/data/ArrayData";
 import ActionTween from "./ActionTween";
 import StringData from "../tsunami/data/StringData";
 import Point from "../tsunami/geom/Point";
+import Data from "../tsunami/data/Data";
 
 export default class ActionScroll extends ActionTween {
 
@@ -16,6 +17,10 @@ export default class ActionScroll extends ActionTween {
 		this.units = new ArrayData("%", "px");
 		this.units.selectedItem.value = units;
 		this.isCaptureable.value = true;
+
+		this.doScroll = this.doScroll.bind(this);
+		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
 	}
 
 	clone() {
@@ -25,11 +30,15 @@ export default class ActionScroll extends ActionTween {
 	}
 
 	copy(action) {
+		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
+		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 		super.copy(action);
 		this.target.value = action.target.value;
 		this.unitX.value = action.unitX.value;
 		this.unitY.value = action.unitY.value;
 		this.units.selectedItem.value = action.units.selectedItem.value;
+		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
 	}
 
 	trigger() {
@@ -67,6 +76,13 @@ export default class ActionScroll extends ActionTween {
 		return super.trigger();
 	}
 
+	doScroll() {
+		console.log("ActionScroll.doScroll");
+		this.pos.x = this.unitX.value;
+		this.pos.y = this.unitY.value;
+		this.tweenUpdateHandler();
+	}
+
 	tweenUpdateHandler() {
 		switch (this.target.value) {
 			case "window":
@@ -90,16 +106,23 @@ export default class ActionScroll extends ActionTween {
 	}
 
 	deserialize(data) {
+		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
+		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 		super.deserialize(data);
 		this.target.value = data.target;
 		this.unitX.value = data.unitX;
 		this.unitY.value = data.unitY;
 		this.units.selectedItem.value = data.units;
+		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
 	}
 
 	capture() {
-		this.isCapturing.value = true;
+		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
+		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 
+		this.isCapturing.value = true;
+		
 		let scroll = new Point();
 		let maxScroll = new Point();
 		switch (this.target.value) {
@@ -136,6 +159,8 @@ export default class ActionScroll extends ActionTween {
 
 		setTimeout(()=> {
 			this.isCapturing.value = false;
+			this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+			this.unitY.addEventListener(Data.CHANGE, this.doScroll);	
 		}, 100);
 	}
 
