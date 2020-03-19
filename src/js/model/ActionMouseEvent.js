@@ -70,7 +70,6 @@ export default class ActionMouseEvent extends Action {
 	}
 
 	captureMouseEventHandler(event) {
-		console.log("event", event);
 		if(event.preventDefaut) {
 			event.preventDefaut();
 		}

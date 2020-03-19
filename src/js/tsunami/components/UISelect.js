@@ -22,10 +22,10 @@ export default class UISelect extends UIList {
 
 	inputHandler(e) {
 		if (this._model) {
-			this._model.removeEventListener(Data.CHANGE, this.modelChangeBind);
+			this._model.removeEventListener(Data.CHANGE, this.modelChange);
 			this._model.value = this.dataProvider.find(this.getModel);
 			if (this._model) {
-				this._model.addEventListener(Data.CHANGE, this.modelChangeBind);
+				this._model.addEventListener(Data.CHANGE, this.modelChange);
 			}
 		}
 	}

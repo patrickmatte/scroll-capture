@@ -58,7 +58,7 @@ export function createComponent (element, scope) {
 	}
 	if (classReference) {
 		let component = new classReference(element);
-		// element.component = component;
+		element.component = component;
 	}
 }
 
@@ -103,7 +103,7 @@ for(let i = 0; i < 5; i++) {
 // 	return child;
 // }
 
-export function importTemplate(template, scope, debug) {
+export function importTemplate(template, scope = {}, debug = false) {
 	let child;
 	if (window.renderTemplate) {
 		template = window.renderTemplate(template, scope);
@@ -114,6 +114,7 @@ export function importTemplate(template, scope, debug) {
 	if(factory.children.length > 0) {
 		child = factory.children.item(0);
 	}
+	scope.scopeElement = child;
 	applyDirectives(child, scope);
 	return child;
 }

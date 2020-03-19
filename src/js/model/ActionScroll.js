@@ -77,7 +77,6 @@ export default class ActionScroll extends ActionTween {
 	}
 
 	doScroll() {
-		console.log("ActionScroll.doScroll");
 		this.pos.x = this.unitX.value;
 		this.pos.y = this.unitY.value;
 		this.tweenUpdateHandler();

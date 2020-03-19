@@ -1,6 +1,6 @@
 export default class EventHandler {
 
-	constructor(eventDispatcher, type, eventHandler) {
+	constructor(eventDispatcher, type, eventHandler, debug = false) {
 		this.eventDispatcher = eventDispatcher;
 		this.type = type;
 		this.eventHandler = eventHandler;

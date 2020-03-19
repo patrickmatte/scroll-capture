@@ -6,11 +6,11 @@ export default class UIInput extends UIComponent {
 	constructor(element) {
 		super(element);
 
-		this.inputBind = this.inputHandler.bind(this);
-		this.element.addEventListener("input", this.inputBind);
+		this.inputHandler = this.inputHandler.bind(this);
+		this.element.addEventListener("input", this.inputHandler);
 
-		this.changeBind = this.changeHandler.bind(this);
-		// this.element.addEventListener("change", this.changeBind);
+		this.changeHandler = this.changeHandler.bind(this);
+		// this.element.addEventListener("change", this.changeHandler);
 	}
 	
 	updateValue(value) {
@@ -33,7 +33,7 @@ export default class UIInput extends UIComponent {
 	inputHandler(event) {
 		if (this._model) {
 			if (this._model instanceof Data) {
-				this._model.removeEventListener(Data.CHANGE, this.modelChangeBind);
+				this._model.removeEventListener(Data.CHANGE, this.modelChange);
 				switch(this.element.type) {
 					case "checkbox":
 						this._model.value = this.element.checked;
@@ -43,7 +43,7 @@ export default class UIInput extends UIComponent {
 						this._model.value = this.element.value;
 						break;
 				}
-				this._model.addEventListener(Data.CHANGE, this.modelChangeBind);
+				this._model.addEventListener(Data.CHANGE, this.modelChange);
 			}
 		}
 	}
@@ -51,7 +51,7 @@ export default class UIInput extends UIComponent {
 	changeHandler(event) {
 		if (this._model) {
 			if (this._model instanceof Data) {
-				this._model.removeEventListener(Data.CHANGE, this.modelChangeBind);
+				this._model.removeEventListener(Data.CHANGE, this.modelChange);
 				switch(this.element.type) {
 					case "checkbox":
 						this._model.value = this.element.checked;
@@ -61,14 +61,14 @@ export default class UIInput extends UIComponent {
 						this._model.value = this.element.value;
 						break;
 				}
-				this._model.addEventListener(Data.CHANGE, this.modelChangeBind);
+				this._model.addEventListener(Data.CHANGE, this.modelChange);
 			}
 		}
 	}
 
 	destroy() {
-		this.element.removeEventListener("input", this.inputBind);
-		this.element.removeEventListener("change", this.changeBind);
+		this.element.removeEventListener("input", this.inputHandler);
+		this.element.removeEventListener("change", this.changeHandler);
 		super.destroy();
 	}
 

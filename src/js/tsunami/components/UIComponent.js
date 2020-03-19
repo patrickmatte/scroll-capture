@@ -9,12 +9,21 @@ import Rectangle from "../geom/Rectangle";
 import {isTouch, localToGlobal} from "../window";
 import Branch from "../Branch";
 import Point from "../geom/Point";
+import EventHandler from "./EventHandler";
 
 export default class UIComponent extends Branch {
 
     constructor(element) {
-        super();
-        this.element = element;
+		super();
+
+		if(element) {
+			this.debug = (element.getAttribute("data-debug") == "true");
+			this.doChildrenAnimationFrame = (element.getAttribute("data-children-animation-frame") == "true");
+			this.alsoShowChildren = (element.getAttribute("data-also-show-children") == "true");
+			// this.style = new Style(element.style);
+		}
+
+		this.element = element;
 
 		this.calculateGlobalPosition = false;
 
@@ -26,14 +35,8 @@ export default class UIComponent extends Branch {
 
 		this.attributes = {};
 
-		if(this.element) {
-			this.debug = (this.element.getAttribute("data-debug") == "true");
-			this.doChildrenAnimationFrame = (this.element.getAttribute("data-children-animation-frame") == "true");
-			// this.style = new Style(this.element.style);
-			this.alsoShowChildren = (this.element.getAttribute("data-also-show-children") == "true");
-		}
-        this.modelChangeBind = this.modelChange.bind(this);
-        // this._scope = this;
+        this.modelChange = this.modelChange.bind(this);
+
 		this.showDuration = 0;
 		this.showDelay = 0;
 		this.hideDuration = 0;
@@ -94,11 +97,8 @@ export default class UIComponent extends Branch {
 
 	set element(value) {
 		this._element = value;
-		if(value) {
-			value.component = this;
-		}
+		if(value) value.component = this;
 	}
-
 
 	getBranch(slug) {
 		let branch;
@@ -214,7 +214,7 @@ export default class UIComponent extends Branch {
         this._scope = value;
 
 		if (this.debug) {
-			console.log("scope", value);
+			console.log("UIComponent.scope", value);
 		}
 
 		let showDuration = this.element.getAttribute("data-show-duration");
@@ -242,6 +242,11 @@ export default class UIComponent extends Branch {
 			if(this.debug) {
 				console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
 			}
+			
+			if(attribute.name.indexOf("data-event-") != -1) {
+				this._createEventHandler(attribute, value);
+			}
+			
 			if (attribute.value.indexOf("[[") != -1) {
 				let attributeData = new ArrayDataOperation();
 				attributeData.parseString(attribute.value, value);
@@ -250,7 +255,7 @@ export default class UIComponent extends Branch {
 				this.attributes[attribute.name] = attr;
 			}
 		}
-
+		
 		if (this.element.hasAttribute("data-model")) {
 			let model = this.element.getAttribute("data-model");
 			if (model) {
@@ -259,6 +264,14 @@ export default class UIComponent extends Branch {
 				this.model = value;
 			}
 		}
+	}
+
+	_createEventHandler(attribute, scope) {
+		if(this.debug) console.log("_createEventHandler attribute", attribute, "scope", scope);
+		let eventType = attribute.name.split("data-event-")[1];
+		let handler = evalProperty(attribute.value, scope);
+		let eventHandler = new EventHandler(this.element, eventType, handler, this.debug);
+		this.attributes[attribute.name] = eventHandler;
 	}
 
     get model() {
@@ -271,13 +284,13 @@ export default class UIComponent extends Branch {
 		}
         if (this._model) {
             if (this._model instanceof Data) {
-                this._model.removeEventListener(Data.CHANGE, this.modelChangeBind);
+                this._model.removeEventListener(Data.CHANGE, this.modelChange);
             }
         }
         this._model = value;
         if (value) {
             if (value instanceof Data) {
-				value.addEventListener(Data.CHANGE, this.modelChangeBind);
+				value.addEventListener(Data.CHANGE, this.modelChange);
                 this.modelChange();
             } else {
                 this.updateValue(value);
