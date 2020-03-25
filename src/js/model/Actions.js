@@ -4,6 +4,7 @@ import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
 import Action from "./Action";
 import ActionSwipe from "./ActionSwipe";
+import ActionWait from "./ActionWait";
 
 export default class Actions extends ArrayData {
 
@@ -19,7 +20,7 @@ export default class Actions extends ArrayData {
 			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),
-			// new ActionWait(),
+			new ActionWait(),
 			new ActionEval()
 		];
 		this.types.selectedItem.value = this.types.value[0];

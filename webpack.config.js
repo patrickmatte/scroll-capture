@@ -1,9 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const ENV = process.env.NODE_ENV || "development";
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -14,6 +12,8 @@ if(isDev) {
 	entry.test = ["./js/test.js", "./css/test.scss"];
 } else {
 	entry.content = ["./js/content.js", "./css/scroll-capture.scss"];
+	entry.background = ["./js/background.js"];
+	entry["video-recording"] = ["./js/video-recording.js", "./css/video-recording.scss"];
 }
 
 module.exports = {

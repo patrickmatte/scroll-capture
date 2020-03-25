@@ -5,6 +5,7 @@ import App from "./tsunami/App";
 import Actions from "./model/Actions";
 import BooleanData from "./tsunami/data/BooleanData";
 import Data from "./tsunami/data/Data";
+import ArrayData from "./tsunami/data/ArrayData";
 
 export let app;
 
@@ -45,6 +46,7 @@ export default class Main extends App {
 
 		this.save = this.save.bind(this);
 		this.play = this.play.bind(this);
+		this.playAndCapture = this.playAndCapture.bind(this);
 		this.clear = this.clear.bind(this);
 		this.show = this.show.bind(this);
 		this.hide = this.hide.bind(this);
@@ -59,6 +61,8 @@ export default class Main extends App {
 		})
 		this.isSaving = new BooleanData();
 		this.actions = new Actions();
+
+		this.capturedVideo = new ArrayData("test.mp4");
 
 		chrome.storage.sync.get(["json"], (result) => {
 			this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
@@ -89,6 +93,7 @@ export default class Main extends App {
 	}
 
 	hide() {
+		console.log("hide");
 		this.removeChild(this.scrollCapture.element);
 	}
 
@@ -111,6 +116,7 @@ export default class Main extends App {
 	}
 
 	save() {
+		console.log("save");
 		this.isSaving.value = true;
 		let obj = this.serialize();
 		let json = JSON.stringify(obj);
@@ -123,10 +129,28 @@ export default class Main extends App {
 	}
 
 	play() {
+		this.doPlay();
+	}
+
+	playAndCapture() {
+		console.log("playAndCapture");
+		this.doPlay(true);
+	}
+
+	doPlay(doCapture = false) {
+		this.doCapture = doCapture;
+		console.log("doPlay", this.doCapture);
 		this.save();
+		console.log("saved");
 		this.hide();
+		console.log("hidden");
 		this.actions.selectedIndex.value = 0;
-		setTimeout(()=> {
+		setTimeout(() => {
+			if (doCapture) {
+				let msg = { txt: "scrollCaptureStartRecording" };
+				console.log("sendMessage", msg);
+				chrome.runtime.sendMessage(msg);
+			}
 			this.triggerAction();
 		}, 500);
 		// let json = JSON.stringify(data);
@@ -138,6 +162,7 @@ export default class Main extends App {
 
 	clear() {
 		this.actions.value = [];
+		this.save();
 	}
 
 	triggerAction() {
@@ -160,7 +185,11 @@ export default class Main extends App {
 	}
 
 	allComplete() {
-		// console.log("done!");
+		console.log("allComplete", this.doCapture);
+		if(this.doCapture) {
+			let msg = { txt: "scrollCaptureStopRecording" };
+			chrome.runtime.sendMessage(msg);
+		}
 	}
 
 }

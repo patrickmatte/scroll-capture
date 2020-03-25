@@ -8,6 +8,7 @@ export default class UIMedia extends UIComponent {
 	}
 
 	updateValue(value) {
+		if (this.debug) console.log("UIMedia.updateValue", value);
 		if (hasValue(value)) {
 			this.element.src = value;
 		}

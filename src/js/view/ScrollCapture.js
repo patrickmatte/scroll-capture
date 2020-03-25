@@ -6,7 +6,7 @@ import {events} from "../tsunami/events";
 import Point from "../tsunami/geom/Point";
 import {app} from "../main";
 import ActionsView from "./ActionsView";
-import template from "../../templates/ScrollCapture.html";
+import template from "../../templates/scroll-capture.html";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -22,6 +22,9 @@ export default class ScrollCapture extends UIComponent {
 
 		let dragArea = this.element.querySelector(".sc-header .sc-drag-area");
 		dragArea.addEventListener(events.mousedown, this.dragStart);
+
+		let iframe = this.element.querySelector("iframe");
+		iframe.src = chrome.extension.getURL('video-recording.html');
 	}
 
 	dragStart(event) {

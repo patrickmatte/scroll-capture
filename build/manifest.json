@@ -1,11 +1,11 @@
 {
 	"name": "Scroll Capture",
-	"version": "1.0",
-	"description": "Automate smooth browser scrolling and mouse actions for your screen captures.",
+	"version": "0.0.1",
+	"description": "Automate scrolling and mouse actions for your portfolio screen captures.",
 	"permissions": [
 		"activeTab",
-		"declarativeContent",
-		"storage"
+		"storage",
+		"tabCapture"
 	],
 	"background": {
 		"scripts": [
@@ -28,6 +28,7 @@
 		}
 	],
 	"web_accessible_resources":[
+		"video-recording.html",
 		"assets/fonts/*",
 		"assets/fonts/*/*",
 		"assets/images/*"

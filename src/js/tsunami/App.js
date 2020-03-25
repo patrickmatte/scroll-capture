@@ -15,8 +15,9 @@ export default class App extends UIComponent {
 
 	constructor(element) {
 		super(element);
-
+		
 		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
+		clock.start();
 
 		window.addEventListener("resize", this.resizeHandler.bind(this));
 		this.resizeHandler();

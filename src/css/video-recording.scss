@@ -1,0 +1,25 @@
+@font-face {
+    font-family: IcoFont;
+    src: url("../../build/assets/fonts/icofont.woff");
+}
+@font-face {
+    font-family: DefaultFont;
+    font-weight: 400;
+    src: url("../../build/assets/fonts/Menlo-Regular.ttf");
+}
+@font-face {
+    font-family: DefaultFont;
+    font-weight: 700;
+    src: url("../../build/assets/fonts/Menlo-Bold.ttf");
+}
+
+.video-recording {
+    font-family: DefaultFont, 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: transparent;
+    
+	.video-player {
+		width: 100%;
+    }
+}

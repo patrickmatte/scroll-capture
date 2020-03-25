@@ -20,6 +20,7 @@ export default class Clock extends EventDispatcher {
 	}
 
 	start() {
+		if(this.isRunning) return;
 		this.isRunning = true;
 		this.animationFrame(0);
 		this.fpsTimeout = setTimeout(this.dispatchFrameSeconds.bind(this), 1000);
@@ -50,4 +51,3 @@ export default class Clock extends EventDispatcher {
 }
 
 export let clock = new Clock();
-clock.start();
