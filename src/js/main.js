@@ -6,6 +6,8 @@ import Actions from "./model/Actions";
 import BooleanData from "./tsunami/data/BooleanData";
 import Data from "./tsunami/data/Data";
 import ArrayData from "./tsunami/data/ArrayData";
+import Router from "./tsunami/Router";
+import RouterButton from "./view/RouterButton";
 
 export let app;
 
@@ -13,12 +15,14 @@ export default class Main extends App {
 
 	constructor(element) {
 		super(element);
+		
+		this.router = new Router(this);
 
 		app = this;
 
 		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
-		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Regular.ttf');
-		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Bold.ttf');
+		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo-Regular.ttf');
+		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo-Bold.ttf');
 		let customCursor = chrome.extension.getURL('assets/images/customCursor.png');
 		let fonts = document.createElement('style');
 		fonts.type = 'text/css';
@@ -48,8 +52,6 @@ export default class Main extends App {
 		this.play = this.play.bind(this);
 		this.playAndCapture = this.playAndCapture.bind(this);
 		this.clear = this.clear.bind(this);
-		this.show = this.show.bind(this);
-		this.hide = this.hide.bind(this);
 
 		this.showCaptureIcon = new BooleanData();
 		this.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
@@ -66,6 +68,7 @@ export default class Main extends App {
 
 		chrome.storage.sync.get(["json"], (result) => {
 			this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
+			this.branches["scrollCapture"] = this.scrollCapture;
 
 			let json = result.json;
 			if(json) {
@@ -78,7 +81,7 @@ export default class Main extends App {
 				this.save();
 			});
 
-			this.show();
+			this.router.location = "scrollCapture/scenario";
 		});
 
 		// this.actions.value = [
@@ -89,17 +92,20 @@ export default class Main extends App {
 		// 	// new ActionScroll(".scrollpane", "%", 0, 100),
 		// 	// new ActionMouseEvent("click", 0, 0),
 		// ];
-
 	}
 
-	hide() {
-		console.log("hide");
-		this.removeChild(this.scrollCapture.element);
+	getBranch(id) {
+		let branch = super.getBranch(id);
+		console.log("Main.getBranch", id, branch);
+		return branch
 	}
 
 	show() {
-		this.resizeHandler();
-		this.appendChild(this.scrollCapture.element);
+		console.log("Main.show");
+	}
+
+	hide() {
+		console.log("Main.hide");
 	}
 
 	deserialize(obj) {
@@ -142,7 +148,7 @@ export default class Main extends App {
 		console.log("doPlay", this.doCapture);
 		this.save();
 		console.log("saved");
-		this.hide();
+		this.router.location = "";
 		console.log("hidden");
 		this.actions.selectedIndex.value = 0;
 		setTimeout(() => {
@@ -189,9 +195,13 @@ export default class Main extends App {
 		if(this.doCapture) {
 			let msg = { txt: "scrollCaptureStopRecording" };
 			chrome.runtime.sendMessage(msg);
+			this.router.location = "scrollCapture/video";
+		} else {
+			this.router.location = "scrollCapture/scenario";
 		}
 	}
 
 }
 
+tsunami.define("router-button", RouterButton);
 tsunami.define("scroll-capture", ScrollCapture);

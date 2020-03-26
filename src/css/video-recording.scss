@@ -13,13 +13,28 @@
     src: url("../../build/assets/fonts/Menlo-Bold.ttf");
 }
 
-.video-recording {
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.sc-video-recording {
     font-family: DefaultFont, 'Courier New', Courier, monospace;
-    font-size: 11px;
+    font-size: 13px;
     color: #ffffff;
     background-color: transparent;
+
+    .sc-controls {
+        font-size: 13px;
+    }
+
+    .sc-video-player-container {
+        width: 100%;
+    }
     
-	.video-player {
-		width: 100%;
+	video.sc-video-player {
+        display: block;
+        border-radius: 0.25em;
+        width: 100%;
     }
 }

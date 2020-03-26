@@ -7,9 +7,17 @@ export default class Branch extends EventDispatcher {
 		this.branches = {};
 		this.slug = null;
 		this.parent = null;
-		this.router = null;
+		this._router = null;
 		this.path = null;
 		this.arrowKeyHandler = this.arrowKeyHandler.bind(this);
+	}
+
+	get router() {
+		return this._router;
+	}
+
+	set router(value) {
+		this._router = value;
 	}
 
 	get defaultChild() {

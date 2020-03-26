@@ -26,14 +26,6 @@ export default class UIRouterButton extends UIButton {
 		}
 	}
 
-	get router() {
-		return this._router;
-	}
-
-	set router(value) {
-		this._router = value;
-	}
-
 	clickHandler(event) {
 		event.preventDefault();
 
@@ -60,7 +52,7 @@ export default class UIRouterButton extends UIButton {
 				this.router.pushState(path);
 			}
 		} else {
-			this.router.location = this.element.getAttribute("data-route");
+			this.router.location = this.element.getAttribute("data-path");
 		}
 	}
 

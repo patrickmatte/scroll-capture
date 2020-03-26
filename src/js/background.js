@@ -72,24 +72,17 @@ let selectedTab;
 
 chrome.browserAction.onClicked.addListener((tab) => {
     selectedTab = tab;
+    console.log("*** window.selectedTab", window.selectedTab);
+    window.selectedTab = tab;
     console.log("chrome.browserAction.onClicked", tab);
     captureTab(selectedTab);
-    let msg = { txt: "scrollCaptureCreateUI" };
+    let msg = { txt: "scrollCaptureScenario" };
     chrome.tabs.sendMessage(selectedTab.id, msg);
 });
 
-
-// const mediaSource = new MediaSource();
-// mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
 let mediaRecorder;
 let recordedBlobs;
 let sourceBuffer;
-
-// function handleSourceOpen(event) {
-//     console.log('############# MediaSource opened');
-//     sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
-//     console.log('Source buffer: ', sourceBuffer);
-// }
 
 function handleDataAvailable(event) {
     // console.log('handleDataAvailable', event);

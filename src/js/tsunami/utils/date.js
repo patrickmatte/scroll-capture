@@ -1,13 +1,18 @@
 import {addLeadingZero} from "./number";
 
-export function formatAMPM(date, spaceBetween = "") {
-	var hours = date.getHours();
-	var minutes = date.getMinutes();
-	var ampm = hours >= 12 ? 'pm' : 'am';
+export function timeAMPM(date) {
+	let hours = date.getHours();
+	let ampm = hours >= 12 ? 'pm' : 'am';
+	let minutes = addLeadingZero(date.getMinutes());
+	let seconds = addLeadingZero(date.getSeconds());
 	hours = hours % 12;
 	hours = hours ? hours : 12; // the hour '0' should be '12'
-	minutes = minutes < 10 ? '0'+minutes : minutes;
-	var strTime = hours + ':' + minutes + spaceBetween + ampm;
+	return { hours, minutes, seconds, ampm };
+}
+
+export function formatAMPM(date, spaceBetween = "") {
+	let dateData = timeAMPM(date);
+	let strTime = dateData.hours + ':' + dateData.minutes + spaceBetween + ampm;
 	return strTime;
 }
 

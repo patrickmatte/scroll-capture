@@ -81,20 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 5:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(24);
 
 
 /***/ }),
 
-/***/ 6:
+/***/ 24:
 /***/ (function(module, exports) {
 
 // chrome.runtime.onInstalled.addListener(function() {
@@ -171,22 +171,18 @@ function captureTab(tab) {
 var selectedTab;
 chrome.browserAction.onClicked.addListener(function (tab) {
   selectedTab = tab;
+  console.log("*** window.selectedTab", window.selectedTab);
+  window.selectedTab = tab;
   console.log("chrome.browserAction.onClicked", tab);
   captureTab(selectedTab);
   var msg = {
-    txt: "scrollCaptureCreateUI"
+    txt: "scrollCaptureScenario"
   };
   chrome.tabs.sendMessage(selectedTab.id, msg);
-}); // const mediaSource = new MediaSource();
-// mediaSource.addEventListener('sourceopen', handleSourceOpen, false);
-
+});
 var mediaRecorder;
 var recordedBlobs;
-var sourceBuffer; // function handleSourceOpen(event) {
-//     console.log('############# MediaSource opened');
-//     sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
-//     console.log('Source buffer: ', sourceBuffer);
-// }
+var sourceBuffer;
 
 function handleDataAvailable(event) {
   // console.log('handleDataAvailable', event);

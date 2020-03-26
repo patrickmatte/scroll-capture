@@ -10,7 +10,7 @@ export default class ActionView extends UIComponent {
 
 		this.title = this.element.querySelector(".sc-title");
 
-		let deleteButton = this.title.querySelector("button.close-button");
+		let deleteButton = this.title.querySelector("button.sc-close-button");
 		deleteButton.component.onRelease = (event) => {
 			let index = app.actions.selectedIndex.value;
 			app.actions.remove(app.actions.selectedItem.value);

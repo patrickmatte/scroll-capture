@@ -7,6 +7,7 @@ import Point from "../tsunami/geom/Point";
 import {app} from "../main";
 import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
+import ScrollCaptureSection from "./ScrollCaptureSection";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -20,11 +21,34 @@ export default class ScrollCapture extends UIComponent {
 		this.dragMove = this.dragMove.bind(this);
 		this.dragEnd = this.dragEnd.bind(this);
 
-		let dragArea = this.element.querySelector(".sc-header .sc-drag-area");
+		let dragArea = this.element.querySelector("* > .sc-window .sc-drag-area");
+		console.log("dragArea", dragArea);
 		dragArea.addEventListener(events.mousedown, this.dragStart);
 
-		let iframe = this.element.querySelector("iframe");
-		iframe.src = chrome.extension.getURL('video-recording.html');
+		this.windowContent = this.element.querySelector(".sc-window-content");
+
+		this.scenario = this.element.querySelector(".sc-scenario");
+		this.branches["scenario"] = this.scenario.component;
+		this.windowContent.component.removeChild(this.scenario);
+
+		this.video = this.element.querySelector(".sc-video");
+		this.branches["video"] = this.video.component;
+		this.windowContent.component.removeChild(this.video);
+		
+		this.iframe = this.video.querySelector("iframe");
+		this.iframe.src = chrome.extension.getURL('video-recording.html');
+	}
+
+	showDelayComplete() {
+		console.log("ScrollCapture.showDelayComplete");
+		app.appendChild(this.element);
+		return super.showDelayComplete();
+	}
+
+	hideComplete() {
+		console.log("ScrollCapture.hideComplete");
+		app.removeChild(this.element);
+		return super.hideComplete();
 	}
 
 	dragStart(event) {
@@ -67,3 +91,4 @@ ScrollCapture.template = template;
 
 // tsunami.define("start-button", StartButton);
 tsunami.define("actions-view", ActionsView);
+tsunami.define("sc-section", ScrollCaptureSection);

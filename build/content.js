@@ -81,11 +81,4118 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Data; });
+/* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Data =
+/*#__PURE__*/
+function (_EventDispatcher) {
+  _inherits(Data, _EventDispatcher);
+
+  function Data() {
+    _classCallCheck(this, Data);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Data).call(this));
+  }
+
+  _createClass(Data, [{
+    key: "serialize",
+    value: function serialize() {
+      return this.value;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      this.value = data;
+    }
+  }, {
+    key: "copy",
+    value: function copy(data) {
+      this.value = data.value;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.value = null;
+      return _get(_getPrototypeOf(Data.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this;
+    },
+    set: function set(val) {}
+  }], [{
+    key: "serialize",
+    value: function serialize(obj) {
+      var str = [];
+
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+
+      return str.join("&");
+    }
+  }, {
+    key: "CHANGE",
+    get: function get() {
+      return "change";
+    }
+  }]);
+
+  return Data;
+}(_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./js/tsunami/geom/math.js
+function math_lerp(a, b, t) {
+  return a + t * (b - a); // return a(1-t) + bt
+}
+// CONCATENATED MODULE: ./js/tsunami/geom/Point.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Point_Point; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Point_Point =
+/*#__PURE__*/
+function () {
+  function Point() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    _classCallCheck(this, Point);
+
+    this.x = x;
+    this.y = y;
+  }
+
+  _createClass(Point, [{
+    key: "add",
+    value: function add(p) {
+      return new Point(this.x + p.x, this.y + p.y);
+    }
+  }, {
+    key: "abs",
+    value: function abs() {
+      return new Point(Math.abs(this.x), Math.abs(this.y));
+    }
+  }, {
+    key: "clamp",
+    value: function clamp(minX, maxX, minY, maxY) {
+      this.clampX(minX, maxX);
+      this.clampY(minY, maxY);
+    }
+  }, {
+    key: "clampX",
+    value: function clampX(min, max) {
+      this.x = Math.max(this.x, min);
+      this.x = Math.min(this.x, max);
+    }
+  }, {
+    key: "clampY",
+    value: function clampY(min, max) {
+      this.y = Math.max(this.y, min);
+      this.y = Math.min(this.y, max);
+    }
+  }, {
+    key: "copyFrom",
+    value: function copyFrom(p) {
+      this.x = p.x;
+      this.y = p.y;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Point(this.x, this.y);
+    }
+  }, {
+    key: "equals",
+    value: function equals(point) {
+      return this.x == point.x && this.y == point.y;
+    }
+  }, {
+    key: "divide",
+    value: function divide(p) {
+      return new Point(this.x / p.x, this.y / p.y);
+    }
+  }, {
+    key: "divideScalar",
+    value: function divideScalar(scalar) {
+      return new Point(this.x / scalar, this.y / scalar);
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(p) {
+      return new Point(this.x * p.x, this.y * p.y);
+    }
+  }, {
+    key: "multiplyScalar",
+    value: function multiplyScalar(scalar) {
+      return new Point(this.x * scalar, this.y * scalar);
+    }
+  }, {
+    key: "set",
+    value: function set(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract(p) {
+      return new Point(this.x - p.x, this.y - p.y);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        x: this.x,
+        y: this.y
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.copyFrom(obj);
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Point" + " x=" + this.x + " y=" + this.y + "]";
+    }
+  }, {
+    key: "magnitude",
+    get: function get() {
+      return Point.distance(this);
+    }
+  }], [{
+    key: "lerp",
+    value: function lerp(p0, p1, t) {
+      return new Point(math_lerp(p0.x, p1.x, t), math_lerp(p0.y, p1.y, t));
+    }
+  }, {
+    key: "distance",
+    value: function distance(p1) {
+      var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
+      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+    }
+  }, {
+    key: "polar",
+    value: function polar(len, radians) {
+      return new Point(len * Math.cos(radians), len * Math.sin(radians));
+    }
+  }, {
+    key: "getAngle",
+    value: function getAngle(point) {
+      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
+      return Math.atan2(point.y - center.y, point.x - center.x);
+    }
+  }]);
+
+  return Point;
+}();
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return evalProperty; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return define; });
+/* unused harmony export decorateElement */
+/* unused harmony export createComponent */
+/* unused harmony export setScope */
+/* unused harmony export directives */
+/* unused harmony export applyDirectives */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return importTemplate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return destroyElement; });
+/* unused harmony export destroyElements */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getAllObjects; });
+function evalProperty(path) {
+  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  if (!scope) return;
+  if (path == ".") return scope;
+  var array = path.split(".");
+  var object = scope;
+
+  while (array.length > 0) {
+    var name = array.shift();
+    var arr = name.split("[");
+
+    for (var i = 0; i < arr.length; i++) {
+      var prop = arr[i].split("]")[0];
+
+      if (object) {
+        var newObject = object[prop];
+        if (!newObject && debug) console.log("Warning, in the expression '".concat(path, "', the property '").concat(prop, "' is null in ").concat(object));
+        object = newObject;
+      }
+    }
+  }
+
+  return object;
+}
+var classes = {};
+function define(name, classReference) {
+  classes[name] = classReference;
+} // export function registerClass(classReference, name) {
+// 	classes[name] = classReference;
+// }
+
+function decorateElement(element, scope) {
+  var dataWrapper = element.getAttribute("data-wrapper");
+
+  if (dataWrapper) {
+    var wrappers = dataWrapper.split(" ");
+
+    for (var i = 0; i < wrappers.length; i++) {
+      var wrapper = wrappers[i];
+
+      if (wrapper) {
+        var method = evalProperty(wrapper, window);
+
+        if (method) {
+          method(element);
+
+          if ("createdCallback" in element) {
+            element.createdCallback();
+          }
+        }
+      }
+    }
+  }
+}
+function createComponent(element, scope) {
+  var className = element.nodeName.toLowerCase();
+  var classReference = classes[className];
+
+  if (!classReference) {
+    className = element.getAttribute("is");
+
+    if (className) {
+      classReference = classes[className];
+    }
+  }
+
+  if (classReference) {
+    var component = new classReference(element);
+    element.component = component;
+  }
+}
+function setScope(element, scope) {
+  if (element.component) {
+    element.component.scope = scope;
+  }
+}
+var directives = [createComponent, setScope];
+function applyDirectives(element, scope) {
+  var array = [element];
+  var elements = getAllObjects(element, array);
+
+  for (var j = 0; j < directives.length; j++) {
+    var directive = directives[j];
+
+    for (var i = elements.length - 1; i > -1; i--) {
+      //for (let i = 0; i < elements.length; i++) {
+      var el = elements[i];
+      directive(el, scope);
+    }
+  }
+}
+var factories = [];
+
+for (var i = 0; i < 5; i++) {
+  factories.push(document.createElement("div"));
+} //
+// export function importTemplate(template, scope) {
+// 	if (window.renderTemplate) {
+// 		template = window.renderTemplate(template, scope);
+// 	}
+// 	let factory = factories.shift();
+// 	factories.push(factory);
+// 	factory.innerHTML = template;
+// 	let child = factory.children.item(0);
+// 	// if (window.CustomElements) {
+// 	// 	CustomElements.upgradeSubtree(child);
+// 	// }
+// 	applyDirectives(child, scope);
+// 	return child;
+// }
+
+
+function importTemplate(template) {
+  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var child;
+
+  if (window.renderTemplate) {
+    template = window.renderTemplate(template, scope);
+  }
+
+  var factory = factories.shift();
+  factories.push(factory);
+  factory.innerHTML = template;
+
+  if (factory.children.length > 0) {
+    child = factory.children.item(0);
+  }
+
+  scope.scopeElement = child;
+  applyDirectives(child, scope);
+  return child;
+}
+function destroyElement(element) {
+  if (element) {
+    var elements = getAllObjects(element);
+
+    for (var _i = elements.length - 1; _i > -1; _i--) {
+      var el = elements[_i];
+
+      if (el.component) {
+        if (el.component.destroy) {
+          try {
+            el.component.destroy();
+          } catch (e) {}
+        }
+
+        el.component = null;
+      } // destroyElement(el);
+
+    }
+
+    element.innerHTML = null;
+
+    if (element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+
+    if (element.component) {
+      if (element.component.destroy) {
+        try {
+          element.component.destroy();
+        } catch (e) {}
+      }
+
+      element.component = null;
+    }
+  }
+}
+function destroyElements(elements) {
+  for (var _i2 = 0; _i2 < elements.length; _i2++) {
+    var element = elements[_i2];
+    destroyElement(element);
+  }
+}
+function getAllObjects(parent, array) {
+  if (!array) {
+    array = [];
+  }
+
+  if (parent.children) {
+    for (var _i3 = 0; _i3 < parent.children.length; _i3++) {
+      var child = parent.children.item(_i3);
+
+      switch (child.nodeName) {
+        case "#text":
+        case "#comment":
+        case "BR":
+        case "TEMPLATE":
+        case "SCRIPT":
+          break;
+
+        default:
+          array.push(child);
+          getAllObjects(child, array);
+          break;
+      }
+    }
+  }
+
+  return array;
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
+/* unused harmony export createCustomEvent */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
+/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var events = {
+  mouseover: "mouseover",
+  mouseout: "mouseout",
+  mousedown: "mousedown",
+  mouseup: "mouseup",
+  mousemove: "mousemove",
+  click: "click",
+  transitionend: 'transitionend',
+  animationstart: 'animationstart',
+  animationiteration: 'animationiteration',
+  animationend: 'animationend'
+};
+
+if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
+  events.mouseover = "touchstart";
+  events.mouseout = "touchend";
+  events.mousedown = "touchstart";
+  events.mouseup = "touchend";
+  events.mousemove = "touchmove";
+  events.click = "click";
+}
+
+var platforms = {
+  'OTransition': {
+    transitionend: 'otransitionend',
+    animationstart: 'oanimationstart',
+    animationiteration: 'oanimationiteration',
+    animationend: 'oanimationend'
+  },
+  'MozTransition': {
+    transitionend: 'transitionend',
+    animationstart: 'moznimationstart',
+    animationiteration: 'moznimationiteration',
+    animationend: 'moznimationend'
+  },
+  'WebkitTransition': {
+    transitionend: 'webkitTransitionEnd',
+    animationstart: 'webkitAnimationStart',
+    animationiteration: 'webkitAnimationIteration',
+    animationend: 'webkitAnimationEnd'
+  }
+};
+window.addEventListener("load", function () {
+  for (var i in platforms) {
+    var data = platforms[i];
+
+    if (document.body.style[i] !== undefined) {
+      events.transitionend = data.transitionend;
+      events.animationstart = data.animationstart;
+      events.animationiteration = data.animationiteration;
+      events.animationend = data.animationend;
+    }
+  }
+});
+function createCustomEvent(type, params) {
+  var event;
+
+  try {
+    event = new CustomEvent(event, params);
+  } catch (e) {
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent(type, params.bubbles, params.bubbles, params.detail);
+  }
+
+  return event;
+}
+
+var BaseEvent =
+/*#__PURE__*/
+function () {
+  function BaseEvent(type, value) {
+    _classCallCheck(this, BaseEvent);
+
+    this.type = type;
+    this.value = value;
+  }
+
+  _createClass(BaseEvent, [{
+    key: "stopPropagation",
+    value: function stopPropagation() {}
+  }, {
+    key: "stopImmediatePropagation",
+    value: function stopImmediatePropagation() {}
+  }, {
+    key: "preventDefault",
+    value: function preventDefault() {}
+  }]);
+
+  return BaseEvent;
+}();
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var NumberData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(NumberData, _Data);
+
+  function NumberData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
+    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, NumberData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NumberData).call(this));
+    _this.modifiers = modifiers;
+    _this.value = value;
+    return _this;
+  }
+
+  _createClass(NumberData, [{
+    key: "add",
+    value: function add() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value + value;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.value = this._value - value;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = 0;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.modifiers = [];
+
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return _get(_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      value = Number(value);
+
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value || this.forceChangeEvent) {
+        this._value = value;
+        var event = new _events__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"](_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, value);
+        this.dispatchEvent(event);
+      }
+    }
+  }], [{
+    key: "roundDecimal",
+    value: function roundDecimal(val) {
+      var divider = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+      return Math.round(val * divider) / divider;
+    }
+  }, {
+    key: "roundDecimal1",
+    value: function roundDecimal1(val) {
+      return NumberData.roundDecimal(val, 10);
+    }
+  }, {
+    key: "roundDecimal2",
+    value: function roundDecimal2(val) {
+      return NumberData.roundDecimal(val, 100);
+    }
+  }, {
+    key: "roundDecimal3",
+    value: function roundDecimal3(val) {
+      return NumberData.roundDecimal(val, 1000);
+    }
+  }]);
+
+  return NumberData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _NumberData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var ArrayData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(ArrayData, _Data);
+
+  _createClass(ArrayData, null, [{
+    key: "shuffle",
+    value: function shuffle(o) {
+      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
+        ;
+      }
+
+      return o;
+    }
+  }, {
+    key: "nodeListToArray",
+    value: function nodeListToArray(nodeList) {
+      return Array.prototype.slice.call(nodeList); // let array = new Array();
+      // for (let i = 0; i < nodeList.length; i++) {
+      // 	array.push(nodeList.item(i));
+      // }
+      // return array;
+    }
+  }, {
+    key: "ITEM_CHANGE",
+    get: function get() {
+      return "item-change";
+    }
+  }]);
+
+  function ArrayData() {
+    var _this;
+
+    _classCallCheck(this, ArrayData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArrayData).call(this));
+    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(_assertThisInitialized(_this));
+    _this.selectedItemChange = _this.selectedItemChange.bind(_assertThisInitialized(_this));
+    _this.selectedIndexChange = _this.selectedIndexChange.bind(_assertThisInitialized(_this));
+    _this.lastIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    _this.length = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+
+    _this.length.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, function () {
+      _this.lastIndex.value = _this.length.value - 1;
+    });
+
+    _this.length.value = arguments.length;
+    _this._value = [];
+    _this.selectedItem = new _ObjectData__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"]();
+
+    _this.selectedItem.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, _this.selectedItemChange);
+
+    _this.selectedIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+
+    _this.selectedIndex.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, _this.selectedIndexChange);
+
+    _this.nextIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    _this.prevIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    _this.dataClass = Object;
+
+    _this.push.apply(_assertThisInitialized(_this), arguments);
+
+    return _this;
+  }
+
+  _createClass(ArrayData, [{
+    key: "selectedItemChange",
+    value: function selectedItemChange(event) {
+      this.updateSelectedIndex();
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "updateSelectedIndex",
+    value: function updateSelectedIndex() {
+      this.selectedIndex.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedIndexChange);
+      var index = this.value.indexOf(this.selectedItem.value);
+      this.selectedIndex.value = index;
+      this.selectedIndex.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedIndexChange);
+    }
+  }, {
+    key: "setSelectedData",
+    value: function setSelectedData(value) {
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          this.previousSelectedItem.isSelectedItem.value = false;
+        }
+      }
+
+      if (this.selectedData) {
+        this.selectedData.copy(value);
+      }
+
+      this.previousSelectedItem = value;
+
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          this.previousSelectedItem.isSelectedItem.value = true;
+        }
+      }
+
+      var index = this.selectedIndex.value;
+      var nextIndex = index + 1;
+
+      if (nextIndex > this.value.length - 1) {
+        nextIndex = 0;
+      }
+
+      this.nextIndex.value = nextIndex;
+
+      if (this.nextData) {
+        this.nextData.copy(this.value[this.nextIndex.value]);
+      }
+
+      var prevIndex = index - 1;
+
+      if (prevIndex < 0) {
+        prevIndex = this.value.length - 1;
+      }
+
+      this.prevIndex.value = prevIndex;
+
+      if (this.prevData) {
+        this.prevData.copy(this.value[this.prevIndex.value]);
+      }
+    }
+  }, {
+    key: "selectedIndexChange",
+    value: function selectedIndexChange(event) {
+      var index = this.selectedIndex.value;
+      this.selectedItem.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedItemChange);
+      this.selectedItem.value = this.value[index];
+      this.selectedItem.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedItemChange);
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "dataItemChangeHandler",
+    value: function dataItemChangeHandler(e) {
+      var event = new _events__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"](ArrayData.ITEM_CHANGE, this.value);
+      this.dispatchEvent(event);
+    }
+  }, {
+    key: "item",
+    value: function item(index) {
+      return this._value[index];
+    }
+  }, {
+    key: "indexOf",
+    value: function indexOf(searchElement, fromIndex) {
+      return this._value.indexOf(searchElement, fromIndex);
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      return this._value.map(callback);
+    }
+  }, {
+    key: "find",
+    value: function find(callback) {
+      return this._value.find(callback);
+    }
+  }, {
+    key: "findByKey",
+    value: function findByKey(key, value) {
+      var selected = this.find(function (element) {
+        return element[key].toString() == value.toString();
+      });
+      return selected;
+    }
+  }, {
+    key: "filter",
+    value: function filter(callback) {
+      return this._value.filter(callback);
+    }
+  }, {
+    key: "pop",
+    value: function pop() {
+      var item = this._value.pop();
+
+      if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+        item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: this.value.length,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+
+      if (item == this.selectedItem.value) {
+        this.selectedItem.value = null;
+      } else {
+        this.updateSelectedIndex();
+      }
+
+      return item;
+    }
+  }, {
+    key: "push",
+    value: function push() {
+      var previousLength = this.value.length;
+
+      var length = this._value.push.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i = 0; _i < added.length; _i++) {
+        var item = added[_i];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: previousLength,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      return length;
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._value.reverse();
+
+      this.dispatchEvent({
+        type: "reverse",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+      this.updateSelectedIndex();
+    }
+  }, {
+    key: "shift",
+    value: function shift() {
+      var item = this._value.shift();
+
+      if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+        item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: 0,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+
+      if (item == this.selectedItem.value) {
+        this.selectedItem.value = null;
+      } else {
+        this.updateSelectedIndex();
+      }
+
+      return item;
+    }
+  }, {
+    key: "swap",
+    value: function swap(index_A, index_B) {
+      var temp = this._value[index_A];
+      this._value[index_A] = this._value[index_B];
+      this._value[index_B] = temp;
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+      this.updateSelectedIndex();
+    }
+  }, {
+    key: "sort",
+    value: function sort(compareFunction) {
+      this._value.sort(compareFunction);
+
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+      this.updateSelectedIndex();
+    }
+  }, {
+    key: "splice",
+    value: function splice() {
+      var elements = this._value.splice.apply(this._value, arguments);
+
+      for (var i = 0; i < elements.length; i++) {
+        var item = elements[i];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var added = [];
+
+      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
+        added.push(arguments[_i2]);
+      }
+
+      this.length.value = this._value.length;
+
+      for (var _i3 = 0; _i3 < added.length; _i3++) {
+        var _item = added[_i3];
+
+        if (_item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          _item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var index = arguments[0];
+
+      if (elements.length > 0) {
+        this.dispatchEvent({
+          type: "remove",
+          value: elements,
+          index: index,
+          total: elements.length
+        });
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: index,
+          total: added.length
+        });
+      }
+
+      if (elements.length > 0 || added.length > 0) {
+        this.dispatchChangeEvent();
+      }
+
+      if (this.includes(this.selectedItem.value)) {
+        this.updateSelectedIndex();
+      } else {
+        this.selectedItem.value = null;
+      }
+
+      return elements;
+    }
+  }, {
+    key: "remove",
+    value: function remove(element) {
+      var index = this.indexOf(element);
+
+      if (index != -1) {
+        this.splice(index, 1);
+      }
+    }
+  }, {
+    key: "unshift",
+    value: function unshift() {
+      var length = this._value.unshift.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i4 = 0; _i4 < added.length; _i4++) {
+        var item = added[_i4];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: 0,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      this.updateSelectedIndex();
+      return length;
+    }
+  }, {
+    key: "dispatchChangeEvent",
+    value: function dispatchChangeEvent() {
+      this.dataItemChangeHandler(null);
+      this.dispatchEvent({
+        type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+        value: this._value
+      });
+    }
+  }, {
+    key: "includes",
+    value: function includes(element) {
+      var index = this.indexOf(element);
+      return index != -1;
+    }
+  }, {
+    key: "join",
+    value: function join() {
+      return this._value.join.apply(this._value, arguments);
+    }
+  }, {
+    key: "concat",
+    value: function concat() {
+      return this._value.concat.apply(this._value, arguments);
+    }
+  }, {
+    key: "slice",
+    value: function slice() {
+      return this._value.slice.apply(this._value, arguments);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var array = [];
+      this.map(function (obj) {
+        array.push(obj.serialize());
+      });
+      return array;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      var _this2 = this;
+
+      var array = [];
+      data.map(function (obj) {
+        var instance = new _this2.dataClass();
+        instance.deserialize(obj);
+        array.push(instance);
+      });
+      this.value = array;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      for (var i = 0; i < this._value.length; i++) {
+        var oldItem = this._value[i];
+
+        if (oldItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          oldItem.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (!value) {
+        value = [];
+      }
+
+      this._value = value;
+
+      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
+        var item = this._value[_i5];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "reset",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+
+      if (this.includes(this.selectedItem.value)) {
+        this.updateSelectedIndex();
+      } else {
+        this.selectedItem.value = null;
+      }
+    }
+  }]);
+
+  return ArrayData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXTERNAL MODULE: ./js/tsunami/tsunami.js
+var tsunami = __webpack_require__(2);
+
+// EXTERNAL MODULE: ./js/tsunami/data/Data.js
+var Data = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./js/tsunami/components/Attribute.js
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Attribute_Attribute =
+/*#__PURE__*/
+function () {
+  function Attribute(element, name, model) {
+    var unit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+
+    _classCallCheck(this, Attribute);
+
+    this.modelChange = this.modelChange.bind(this);
+    this.element = element;
+    this.name = name;
+    this.model = model;
+    this.unit = unit;
+  }
+
+  _createClass(Attribute, [{
+    key: "modelChange",
+    value: function modelChange(event) {
+      this.updateValue(this._model.value);
+    }
+  }, {
+    key: "updateValue",
+    value: function updateValue(value) {
+      if (value == null || value == undefined) {
+        value = "";
+      }
+
+      var string = value.toString();
+
+      if (string && this.unit) {
+        string += this.unit;
+      }
+
+      this.element.setAttribute(this.name, string);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.model = null;
+    }
+  }, {
+    key: "model",
+    get: function get() {
+      return this._model;
+    },
+    set: function set(value) {
+      if (this._model) {
+        if (this._model instanceof Data["a" /* default */]) {
+          this._model.removeEventListener(Data["a" /* default */].CHANGE, this.modelChange);
+        }
+      }
+
+      this._model = value;
+
+      if (value instanceof Data["a" /* default */]) {
+        value.addEventListener(Data["a" /* default */].CHANGE, this.modelChange);
+        this.modelChange();
+      } else {
+        this.updateValue(value);
+      }
+    }
+  }]);
+
+  return Attribute;
+}();
+
+
+// EXTERNAL MODULE: ./js/tsunami/components/Style.js
+var Style = __webpack_require__(17);
+
+// EXTERNAL MODULE: ./js/tsunami/await.js
+var tsunami_await = __webpack_require__(12);
+
+// EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js
+var ArrayData = __webpack_require__(5);
+
+// EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
+var ArrayDataOperation = __webpack_require__(16);
+
+// EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
+var Rectangle = __webpack_require__(11);
+
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(9);
+
+// EXTERNAL MODULE: ./js/tsunami/EventDispatcher.js
+var EventDispatcher = __webpack_require__(10);
+
+// CONCATENATED MODULE: ./js/tsunami/Branch.js
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function Branch_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Branch_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Branch_createClass(Constructor, protoProps, staticProps) { if (protoProps) Branch_defineProperties(Constructor.prototype, protoProps); if (staticProps) Branch_defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Branch =
+/*#__PURE__*/
+function (_EventDispatcher) {
+  _inherits(Branch, _EventDispatcher);
+
+  function Branch() {
+    var _this;
+
+    Branch_classCallCheck(this, Branch);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Branch).call(this));
+    _this.branches = {};
+    _this.slug = null;
+    _this.parent = null;
+    _this._router = null;
+    _this.path = null;
+    _this.arrowKeyHandler = _this.arrowKeyHandler.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  Branch_createClass(Branch, [{
+    key: "getBranch",
+    value: function getBranch(slug) {
+      var branch;
+
+      if (this.branches[slug]) {
+        branch = this.branches[slug];
+      } else if (this.branches["*"]) {
+        branch = this.branches["*"];
+      } else {
+        branch = new Branch();
+      }
+
+      return branch;
+    }
+  }, {
+    key: "load",
+    value: function load(assetList) {
+      return Promise.resolve();
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      return Promise.resolve();
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      return Promise.resolve();
+    }
+  }, {
+    key: "arrowKeyHandler",
+    value: function arrowKeyHandler(event) {
+      var increment = 0;
+
+      switch (event.keyCode) {
+        case 37:
+        case 38:
+          increment = -1;
+          break;
+
+        case 39:
+        case 40:
+          increment = 1;
+          break;
+      }
+
+      return increment;
+    }
+  }, {
+    key: "router",
+    get: function get() {
+      return this._router;
+    },
+    set: function set(value) {
+      this._router = value;
+    }
+  }, {
+    key: "defaultChild",
+    get: function get() {
+      return this._defaultChild;
+    },
+    set: function set(value) {
+      this._defaultChild = value;
+    }
+  }, {
+    key: "arrowKeyNavigation",
+    get: function get() {
+      return this._arrowKeyNavigation;
+    },
+    set: function set(value) {
+      this._arrowKeyNavigation = value;
+      window.removeEventListener("keyup", this.arrowKeyHandler);
+
+      if (value) {
+        window.addEventListener("keyup", this.arrowKeyHandler);
+      }
+    }
+  }]);
+
+  return Branch;
+}(EventDispatcher["a" /* default */]);
+
+
+// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
+var Point = __webpack_require__(1);
+
+// CONCATENATED MODULE: ./js/tsunami/components/EventHandler.js
+function EventHandler_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function EventHandler_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function EventHandler_createClass(Constructor, protoProps, staticProps) { if (protoProps) EventHandler_defineProperties(Constructor.prototype, protoProps); if (staticProps) EventHandler_defineProperties(Constructor, staticProps); return Constructor; }
+
+var EventHandler =
+/*#__PURE__*/
+function () {
+  function EventHandler(eventDispatcher, type, eventHandler) {
+    var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+    EventHandler_classCallCheck(this, EventHandler);
+
+    this.eventDispatcher = eventDispatcher;
+    this.type = type;
+    this.eventHandler = eventHandler;
+    this.eventDispatcher.addEventListener(this.type, this.eventHandler);
+  }
+
+  EventHandler_createClass(EventHandler, [{
+    key: "destroy",
+    value: function destroy() {
+      this.eventDispatcher.removeEventListener(this.type, this.eventHandler);
+      this.eventDispatcher = null;
+      this.type = null;
+      this.eventHandler = null;
+    }
+  }]);
+
+  return EventHandler;
+}();
+
+
+// CONCATENATED MODULE: ./js/tsunami/components/UIComponent.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIComponent_UIComponent; });
+function UIComponent_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIComponent_typeof = function _typeof(obj) { return typeof obj; }; } else { UIComponent_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIComponent_typeof(obj); }
+
+function UIComponent_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function UIComponent_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function UIComponent_createClass(Constructor, protoProps, staticProps) { if (protoProps) UIComponent_defineProperties(Constructor.prototype, protoProps); if (staticProps) UIComponent_defineProperties(Constructor, staticProps); return Constructor; }
+
+function UIComponent_possibleConstructorReturn(self, call) { if (call && (UIComponent_typeof(call) === "object" || typeof call === "function")) { return call; } return UIComponent_assertThisInitialized(self); }
+
+function UIComponent_getPrototypeOf(o) { UIComponent_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return UIComponent_getPrototypeOf(o); }
+
+function UIComponent_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function UIComponent_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) UIComponent_setPrototypeOf(subClass, superClass); }
+
+function UIComponent_setPrototypeOf(o, p) { UIComponent_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return UIComponent_setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var UIComponent_UIComponent =
+/*#__PURE__*/
+function (_Branch) {
+  UIComponent_inherits(UIComponent, _Branch);
+
+  function UIComponent(element) {
+    var _this;
+
+    UIComponent_classCallCheck(this, UIComponent);
+
+    _this = UIComponent_possibleConstructorReturn(this, UIComponent_getPrototypeOf(UIComponent).call(this));
+
+    if (element) {
+      _this.debug = element.getAttribute("data-debug") == "true";
+      _this.doChildrenAnimationFrame = element.getAttribute("data-children-animation-frame") == "true";
+      _this.alsoShowChildren = element.getAttribute("data-also-show-children") == "true"; // this.style = new Style(element.style);
+    }
+
+    _this.element = element;
+    _this.calculateGlobalPosition = false;
+    _this.childrenSelector = ":scope > *";
+    _this.rectangle = new Rectangle["a" /* default */]();
+    _this.globalRectangle = new Rectangle["a" /* default */]();
+    _this.windowSize = {};
+    _this.attributes = {};
+    _this.modelChange = _this.modelChange.bind(UIComponent_assertThisInitialized(_this));
+    _this.showDuration = 0;
+    _this.showDelay = 0;
+    _this.hideDuration = 0;
+    _this.hideDelay = 0;
+    _this.showChildrenDelay = NaN;
+    _this.hideChildrenDelay = NaN;
+    _this.alsoShowChildren = false;
+    return _this;
+  }
+
+  UIComponent_createClass(UIComponent, [{
+    key: "getBranch",
+    value: function getBranch(slug) {
+      var branch;
+
+      if (this.branches[slug]) {
+        branch = this.branches[slug];
+      } else if (this.branches["*"]) {
+        branch = this.branches["*"];
+      } else {
+        branch = new Branch();
+      }
+
+      return branch;
+    }
+  }, {
+    key: "removeChild",
+    value: function removeChild(value) {
+      if (value) {
+        if (this.componentContainer == value.parentNode) {
+          value.parentNode.removeChild(value);
+
+          if (this.isAdded) {
+            UIComponent.callElementRemoved(value);
+          }
+        }
+      }
+    }
+  }, {
+    key: "appendChild",
+    value: function appendChild(value) {
+      if (value) {
+        this.componentContainer.appendChild(value);
+
+        if (this.isAdded) {
+          UIComponent.callElementAdded(value);
+        }
+
+        var component = value.component;
+
+        if (component) {
+          if (component.windowResize) {
+            component.windowResize(this.windowSize);
+          }
+
+          if (component.windowScroll) {
+            component.windowScroll(this.windowScrollPoint);
+          }
+        }
+      }
+    }
+  }, {
+    key: "prependChild",
+    value: function prependChild(child) {
+      this.appendChildAt(child, 0);
+    }
+  }, {
+    key: "appendChildAt",
+    value: function appendChildAt(child) {
+      var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+      if (child.parentNode == this.element) {
+        this.element.removeChild(child);
+      }
+
+      var children = this.children;
+
+      if (index > children.length - 1) {
+        this.appendChild(child);
+      } else {
+        var beforeChild = children[index];
+        this.insertBefore(child, beforeChild);
+      }
+    }
+  }, {
+    key: "insertBefore",
+    value: function insertBefore(value, ref) {
+      if (value) {
+        if (ref) {
+          this.componentContainer.insertBefore(value, ref);
+
+          if (this.isAdded) {
+            UIComponent.callElementAdded(value);
+          }
+
+          var component = value.component;
+
+          if (component) {
+            if (component.windowResize) {
+              component.windowResize(this.windowSize);
+            }
+
+            if (component.windowScroll) {
+              component.windowScroll(this.windowScrollPoint);
+            }
+          }
+        }
+      }
+    }
+  }, {
+    key: "getSVGPathTotalLength",
+    value: function getSVGPathTotalLength() {
+      return this.element.getTotalLength();
+    }
+  }, {
+    key: "_createEventHandler",
+    value: function _createEventHandler(attribute, scope) {
+      if (this.debug) console.log("_createEventHandler attribute", attribute, "scope", scope);
+      var eventType = attribute.name.split("data-event-")[1];
+      var handler = Object(tsunami["c" /* evalProperty */])(attribute.value, scope);
+      var eventHandler = new EventHandler(this.element, eventType, handler, this.debug);
+      this.attributes[attribute.name] = eventHandler;
+    }
+  }, {
+    key: "modelChange",
+    value: function modelChange(event) {
+      if (this.debug) {
+        console.log("UIComponent.modelChange", this.model.value);
+      }
+
+      this.updateValue(this.model.value);
+    }
+  }, {
+    key: "load",
+    value: function load() {
+      var promises = [];
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          promises.push(component.load());
+        }
+      }
+
+      return Promise.all(promises);
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      var _this2 = this;
+
+      var promise1 = Object(tsunami_await["b" /* awaitTimeout */])(this.showDelay);
+      var promise2 = promise1.then(function () {
+        _this2.showPromises = [_this2.showDelayComplete()];
+
+        if (_this2.alsoShowChildren) {
+          _this2.showPromises.push(_this2.showChildren());
+        }
+
+        return Promise.all(_this2.showPromises);
+      });
+      return promise2.then(this.showComplete.bind(this));
+    }
+  }, {
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      if (this.element) {
+        this.element.setAttribute("data-state", "show");
+      }
+
+      return Object(tsunami_await["b" /* awaitTimeout */])(this.showDuration);
+    }
+  }, {
+    key: "showComplete",
+    value: function showComplete() {}
+  }, {
+    key: "showChildren",
+    value: function showChildren() {
+      var promises = [];
+      var delay = 0;
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          if (!isNaN(this.showChildrenDelay)) {
+            component.showDelay = delay;
+            delay += this.showChildrenDelay;
+          }
+
+          promises.push(component.show());
+        }
+      }
+
+      return Promise.all(promises);
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      var _this3 = this;
+
+      var promise1 = Object(tsunami_await["b" /* awaitTimeout */])(this.hideDelay);
+      var promise2 = promise1.then(function () {
+        _this3.hidePromises = [_this3.hideDelayComplete()];
+
+        if (_this3.alsoShowChildren) {
+          _this3.hidePromises.push(_this3.hideChildren());
+        }
+
+        return Promise.all(_this3.hidePromises);
+      });
+      return promise2.then(this.hideComplete.bind(this));
+    }
+  }, {
+    key: "hideDelayComplete",
+    value: function hideDelayComplete() {
+      if (this.element) {
+        this.element.setAttribute("data-state", "hide");
+      }
+
+      return Object(tsunami_await["b" /* awaitTimeout */])(this.hideDuration);
+    }
+  }, {
+    key: "hideComplete",
+    value: function hideComplete() {}
+  }, {
+    key: "hideChildren",
+    value: function hideChildren() {
+      var promises = [];
+      var delay = 0;
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          if (!isNaN(this.hideChildrenDelay)) {
+            component.hideDelay = delay;
+            delay += this.hideChildrenDelay;
+          }
+
+          promises.push(component.hide());
+        }
+      }
+
+      return Promise.all(promises);
+    }
+  }, {
+    key: "updateValue",
+    value: function updateValue(value) {}
+  }, {
+    key: "windowResize",
+    value: function windowResize(windowSize) {
+      this.windowSize = windowSize;
+      this.rectangle.x = this.element.offsetLeft;
+      this.rectangle.y = this.element.offsetTop;
+      this.rectangle.width = this.element.offsetWidth;
+      this.rectangle.height = this.element.offsetHeight;
+      this.globalRectangle.width = this.rectangle.width;
+      this.globalRectangle.height = this.rectangle.height;
+
+      if (this.calculateGlobalPosition) {
+        this.globalRectangle.position = Object(tsunami_window["b" /* localToGlobal */])(this.element, document.body);
+      }
+
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        var component = child.component;
+
+        if (component) {
+          if (component.windowResize) {
+            component.windowResize(windowSize);
+          }
+        }
+      }
+    }
+  }, {
+    key: "windowScroll",
+    value: function windowScroll(point) {
+      this.windowScrollPoint = point;
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          if (component.windowScroll) {
+            component.windowScroll(point);
+          }
+        }
+      }
+    }
+  }, {
+    key: "animationFrame",
+    value: function animationFrame(data) {
+      this.animationFrameData = data;
+
+      if (this.doChildrenAnimationFrame) {
+        var children = this.children;
+
+        for (var i = 0; i < children.length; i++) {
+          var component = children[i].component;
+
+          if (component) {
+            component.animationFrame(data);
+          }
+        }
+      }
+    }
+  }, {
+    key: "orientationChange",
+    value: function orientationChange(orientation) {
+      this.orientation = orientation;
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          if (component.orientationChange) {
+            component.orientationChange(orientation);
+          }
+        }
+      }
+    }
+  }, {
+    key: "elementAdded",
+    value: function elementAdded() {}
+  }, {
+    key: "elementRemoved",
+    value: function elementRemoved() {}
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.model = null;
+      this.style.destroy();
+      this.style = null;
+      this.scope = null;
+
+      for (var i in this.attributes) {
+        var attribute = this.attributes[i];
+        attribute.destroy();
+      }
+
+      if (this.element.parentNode) {
+        this.element.parentNode.removeChild(this.element);
+      }
+
+      this.element = null;
+      this.element.compopnent = null;
+
+      for (var _i in this) {
+        this[_i] = null;
+      }
+    }
+  }, {
+    key: "getRect",
+    value: function getRect(parent, debug) {
+      return UIComponent.getRect(this.element, parent);
+    }
+  }, {
+    key: "querySelector",
+    value: function querySelector(selector) {
+      var element = this.element.querySelector(selector);
+
+      if (!element) {
+        console.log("No element with selector " + selector + " in " + this);
+      }
+
+      return element.component || element;
+    }
+  }, {
+    key: "querySelectorAll",
+    value: function querySelectorAll(selector) {
+      var array = [];
+      var elements = this.element.querySelectorAll(selector);
+
+      for (var i = 0; i < elements.length; i++) {
+        var element = elements.item(i);
+        array.push(element.component || element);
+      }
+
+      return array;
+    }
+  }, {
+    key: "getTouchPoint",
+    value: function getTouchPoint(event) {
+      var touch = event;
+
+      if (tsunami_window["a" /* isTouch */]) {
+        touch = event.touches[0];
+      }
+
+      return new Point["a" /* default */](touch.pageX, touch.pageY);
+    }
+  }, {
+    key: "element",
+    get: function get() {
+      return this._element;
+    },
+    set: function set(value) {
+      this._element = value;
+      if (value) value.component = this;
+    }
+  }, {
+    key: "componentContainer",
+    get: function get() {
+      return this.element;
+    }
+  }, {
+    key: "isAdded",
+    get: function get() {
+      var parent;
+
+      if (this.element) {
+        parent = this.element.parentNode;
+      }
+
+      while (parent && parent != document.body) {
+        parent = parent.parentNode;
+      }
+
+      var isAdded = parent == document.body;
+      return isAdded;
+    }
+  }, {
+    key: "children",
+    get: function get() {
+      var array = [];
+
+      if (this.element) {
+        array = ArrayData["a" /* default */].nodeListToArray(this.element.children);
+      }
+
+      return array;
+    }
+  }, {
+    key: "scope",
+    get: function get() {
+      return this._scope;
+    },
+    set: function set(value) {
+      this._scope = value;
+
+      if (this.debug) {
+        console.log("UIComponent.scope", value);
+      }
+
+      var showDuration = this.element.getAttribute("data-show-duration");
+
+      if (showDuration) {
+        this.showDuration = Number(showDuration);
+      }
+
+      var hideDuration = this.element.getAttribute("data-hide-duration");
+
+      if (hideDuration) {
+        this.hideDuration = Number(hideDuration);
+      }
+
+      var showChildrenDelay = this.element.getAttribute("data-show-children-delay");
+
+      if (showChildrenDelay) {
+        this.showChildrenDelay = Number(showChildrenDelay);
+      }
+
+      var hideChildrenDelay = this.element.getAttribute("data-hide-children-delay");
+
+      if (hideChildrenDelay) {
+        this.hideChildrenDelay = Number(hideChildrenDelay);
+      }
+
+      for (var i = 0; i < this.element.attributes.length; i++) {
+        var attribute = this.element.attributes[i];
+
+        if (this.debug) {
+          console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
+        }
+
+        if (attribute.name.indexOf("data-event-") != -1) {
+          this._createEventHandler(attribute, value);
+        }
+
+        if (attribute.value.indexOf("[[") != -1) {
+          var attributeData = new ArrayDataOperation["a" /* default */]();
+          attributeData.parseString(attribute.value, value);
+          var attr = new Attribute_Attribute(this.element, attribute.name, attributeData, "");
+          attr.debug = this.debug;
+          this.attributes[attribute.name] = attr;
+        }
+      }
+
+      if (this.element.hasAttribute("data-model")) {
+        var model = this.element.getAttribute("data-model");
+
+        if (model) {
+          this.model = Object(tsunami["c" /* evalProperty */])(model, value);
+        } else {
+          this.model = value;
+        }
+      }
+    }
+  }, {
+    key: "model",
+    get: function get() {
+      return this._model;
+    },
+    set: function set(value) {
+      if (this.debug) {
+        console.log("set model", value);
+      }
+
+      if (this._model) {
+        if (this._model instanceof Data["a" /* default */]) {
+          this._model.removeEventListener(Data["a" /* default */].CHANGE, this.modelChange);
+        }
+      }
+
+      this._model = value;
+
+      if (value) {
+        if (value instanceof Data["a" /* default */]) {
+          value.addEventListener(Data["a" /* default */].CHANGE, this.modelChange);
+          this.modelChange();
+        } else {
+          this.updateValue(value);
+        }
+      } else {
+        this.updateValue(value);
+      }
+    }
+  }], [{
+    key: "callElementAdded",
+    value: function callElementAdded(element) {
+      var component = element.component;
+
+      if (component) {
+        if (component instanceof UIComponent) {
+          component.elementAdded();
+
+          if (component.windowResize) {
+            component.windowResize(component.windowSize);
+          }
+        }
+      }
+
+      var objects = Object(tsunami["d" /* getAllObjects */])(element);
+
+      for (var i = 0; i < objects.length; i++) {
+        var object = objects[i];
+        var objectComponent = object.component;
+
+        if (objectComponent) {
+          if (objectComponent instanceof UIComponent) {
+            objectComponent.elementAdded();
+
+            if (objectComponent.windowResize && element.component) {
+              objectComponent.windowResize(element.component.windowSize);
+            }
+          }
+        }
+      }
+    }
+  }, {
+    key: "callElementRemoved",
+    value: function callElementRemoved(element) {
+      var component = element.component;
+
+      if (component) {
+        if (component instanceof UIComponent) {
+          component.elementRemoved();
+        }
+      }
+
+      var objects = Object(tsunami["d" /* getAllObjects */])(element);
+
+      for (var i = 0; i < objects.length; i++) {
+        var object = objects[i];
+        var objectComponent = object.component;
+
+        if (objectComponent) {
+          if (objectComponent instanceof UIComponent) {
+            objectComponent.elementRemoved();
+          }
+        }
+      }
+    }
+  }, {
+    key: "getRect",
+    value: function getRect(element, parent, debug) {
+      if (!parent) {
+        parent = document.body;
+      }
+
+      var rectangle = new Rectangle["a" /* default */](0, 0, element.offsetWidth, element.offsetHeight);
+
+      if (element.parentNode) {
+        rectangle.position = Object(tsunami_window["b" /* localToGlobal */])(element, parent, null, debug);
+      }
+
+      return rectangle;
+    }
+  }]);
+
+  return UIComponent;
+}(Branch);
+
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export getRandomArbitrary */
+/* unused harmony export getRandomInt */
+/* unused harmony export getRandomIntInclusive */
+/* unused harmony export randomWithinRange */
+/* unused harmony export randomIntegerWithinRange */
+/* unused harmony export isEven */
+/* unused harmony export isOdd */
+/* unused harmony export isInteger */
+/* unused harmony export isPrime */
+/* unused harmony export roundDecimalToPlace */
+/* unused harmony export loopIndex */
+/* unused harmony export isBetween */
+/* unused harmony export constrain */
+/* unused harmony export createStepsBetween */
+/* unused harmony export interpolate */
+/* unused harmony export normalize */
+/* unused harmony export map */
+/* unused harmony export getWeightedAverage */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return format; });
+/* unused harmony export formatCurrency */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getOrdinalSuffix; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addLeadingZero; });
+/* unused harmony export spell */
+/* unused harmony export componentToHex */
+/* unused harmony export rgbToHex */
+/* unused harmony export hexToRgb */
+// Returns a random number between min (inclusive) and max (exclusive)
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+} // Returns a random integer between min (included) and max (excluded)
+// Using Math.round() will give you a non-uniform distribution!
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+} // Returns a random integer between min (included) and max (included)
+// Using Math.round() will give you a non-uniform distribution!
+
+function getRandomIntInclusive(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+/**
+ Creates a random number within the defined range.
+
+ @param min: The minimum value the random number can be.
+ @param min: The maximum value the random number can be.
+ @return Returns a random number within the range.
+ */
+
+function randomWithinRange(min, max) {
+  return min + Math.random() * (max - min);
+}
+/**
+ Creates a random integer within the defined range.
+
+ @param min: The minimum value the random integer can be.
+ @param min: The maximum value the random integer can be.
+ @return Returns a random integer within the range.
+ */
+
+function randomIntegerWithinRange(min, max) {
+  return Math.floor(Math.random() * (1 + max - min) + min);
+}
+/**
+ Determines if the number is even.
+
+ @param value: A number to determine if it is divisible by <code>2</code>.
+ @return Returns <code>true</code> if the number is even; otherwise <code>false</code>.
+ @example
+ <code>
+ console.log(isEven(7)); // Traces false
+ console.log(isEven(12)); // Traces true
+ </code>
+ */
+
+function isEven(value) {
+  return (value & 1) == 0;
+}
+/**
+ Determines if the number is odd.
+
+ @param value: A number to determine if it is not divisible by <code>2</code>.
+ @return Returns <code>true</code> if the number is odd; otherwise <code>false</code>.
+ @example
+ <code>
+ console.log(isOdd(7)); // Traces true
+ console.log(isOdd(12)); // Traces false
+ </code>
+ */
+
+function isOdd(value) {
+  return !isEven(value);
+}
+/**
+ Determines if the number is an integer.
+
+ @param value: A number to determine if it contains no decimal values.
+ @return Returns <code>true</code> if the number is an integer; otherwise <code>false</code>.
+ @example
+ <code>
+ console.log(isInteger(13)); // Traces true
+ console.log(isInteger(1.2345)); // Traces false
+ </code>
+ */
+
+function isInteger(value) {
+  return value % 1 == 0;
+}
+/**
+ Determines if the number is prime.
+
+ @param value: A number to determine if it is only divisible by <code>1</code> and itself.
+ @return Returns <code>true</code> if the number is prime; otherwise <code>false</code>.
+ @example
+ <code>
+ console.log(isPrime(13)); // Traces true
+ console.log(isPrime(4)); // Traces false
+ </code>
+ */
+
+function isPrime(value) {
+  if (value == 1 || value == 2) return true;
+  if (isEven(value)) return false;
+  var s = Math.sqrt(value);
+
+  for (var i = 3; i <= s; i++) {
+    if (value % i == 0) return false;
+  }
+
+  return true;
+}
+/**
+ Rounds a number's decimal value to a specific place.
+
+ @param value: The number to round.
+ @param place: The decimal place to round.
+ @return Returns the value rounded to the defined place.
+ @example
+ <code>
+ console.log(roundToPlace(3.14159, 2)); // Traces 3.14
+ console.log(roundToPlace(3.14159, 3)); // Traces 3.142
+ </code>
+ */
+
+function roundDecimalToPlace(value, place) {
+  var p = Math.pow(10, place);
+  return Math.round(value * p) / p;
+}
+/**
+ Determines if index is included within the collection length otherwise the index loops to the beginning or end of the range and continues.
+
+ @param index: Shop to loop if needed.
+ @param length: The total elements in the collection.
+ @return A valid zero-based index.
+ @example
+ <code>
+ var colors:Array = new Array("Red", "Green", "Blue");
+
+ console.logcolors[loopIndex(2, colors.length)]); // Traces Blue
+ console.logcolors[loopIndex(4, colors.length)]); // Traces Green
+ console.logcolors[loopIndex(-6, colors.length)]); // Traces Red
+ </code>
+ */
+
+function loopIndex(index, length) {
+  if (index < 0) index = length + index % length;
+  if (index >= length) return index % length;
+  return index;
+}
+/**
+ Determines if the value is included within a range.
+
+ @param value: Number to determine if it is included in the range.
+ @param firstValue: First value of the range.
+ @param secondValue: Second value of the range.
+ @return Returns <code>true</code> if the number falls within the range; otherwise <code>false</code>.
+ @usageNote The range values do not need to be in order.
+ @example
+ <code>
+ console.log(isBetween(3, 0, 5)); // Traces true
+ console.log(isBetween(7, 0, 5)); // Traces false
+ </code>
+ */
+
+function isBetween(value, firstValue, secondValue) {
+  return !(value < Math.min(firstValue, secondValue) || value > Math.max(firstValue, secondValue));
+}
+/**
+ Determines if value falls within a range; if not it is snapped to the nearest range value.
+
+ @param value: Number to determine if it is included in the range.
+ @param firstValue: First value of the range.
+ @param secondValue: Second value of the range.
+ @return Returns either the number as passed, or its value once snapped to nearest range value.
+ @usageNote The constraint values do not need to be in order.
+ @example
+ <code>
+ console.log(constrain(3, 0, 5)); // Traces 3
+ console.log(constrain(7, 0, 5)); // Traces 5
+ </code>
+ */
+
+function constrain(value, firstValue, secondValue) {
+  return Math.min(Math.max(value, Math.min(firstValue, secondValue)), Math.max(firstValue, secondValue));
+}
+/**
+ Creates evenly spaced numerical increments between two numbers.
+
+ @param begin: The starting value.
+ @param end: The ending value.
+ @param steps: The number of increments between the starting and ending values.
+ @return Returns an Array comprised of the increments between the two values.
+ @example
+ <code>
+ console.log(createStepsBetween(0, 5, 4)); // Traces 1,2,3,4
+ console.log(createStepsBetween(1, 3, 3)); // Traces 1.5,2,2.5
+ </code>
+ */
+
+function createStepsBetween(begin, end, steps) {
+  steps++;
+  var i = 0;
+  var stepsBetween = [];
+  var increment = (end - begin) / steps;
+
+  while (++i < steps) {
+    stepsBetween.push(i * increment + begin);
+  }
+
+  return stepsBetween;
+}
+/**
+ Determines a value between two specified values.
+
+ @param amount: The level of interpolation between the two values. If <code>0</code>, <code>begin</code> value is returned; if <code>1</code>, <code>end</code> value is returned.
+ @param begin: The starting value.
+ @param end: The ending value.
+ @example
+ <code>
+ console.log(interpolate(0.5, 0, 10)); // Traces 5
+ </code>
+ */
+
+function interpolate(amount, begin, end) {
+  return begin + (end - begin) * amount;
+}
+/**
+ Determines a percentage of a value in a given range.
+
+ @param value: The value to be converted.
+ @param minimum: The lower value of the range.
+ @param maximum: The upper value of the range.
+ @example
+ <code>
+ console.log(normalize(8, 4, 20).decimalPercentage); // Traces 0.25
+ </code>
+ */
+
+function normalize(value, minimum, maximum) {
+  return new Percent((value - minimum) / (maximum - minimum));
+}
+/**
+ Maps a value from one coordinate space to another.
+
+ @param value: Value from the input coordinate space to map to the output coordinate space.
+ @param min1: Starting value of the input coordinate space.
+ @param max1: Ending value of the input coordinate space.
+ @param min2: Starting value of the output coordinate space.
+ @param max2: Ending value of the output coordinate space.
+ @example
+ <code>
+ console.log(map(0.75, 0, 1, 0, 100)); // Traces 75
+ </code>
+ */
+
+function map(value, min1, max1, min2, max2) {
+  return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
+}
+/**
+ Low pass filter alogrithm for easing a value toward a destination value. Works best for tweening values when no definite time duration exists and when the destination value changes.
+
+ If <code>(0.5 < n < 1)</code>, then the resulting values will overshoot (ping-pong) until they reach the destination value. When <code>n</code> is greater than 1, as its value increases, the time it takes to reach the destination also increases. A pleasing value for <code>n</code> is 5.
+
+ @param value: The current value.
+ @param dest: The destination value.
+ @param n: The slowdown factor.
+ @return The weighted average.
+ */
+
+function getWeightedAverage(value, dest, n) {
+  return value + (dest - value) / n;
+}
+/**
+ Formats a number as a string.
+
+ @param value: The number you wish to format.
+ @param kDelim: The character used to seperate thousands; defaults to <code>""</code>.
+ @param minLength: The minimum length of the number; defaults to <code>0 </code>.
+ @param fillChar: The leading character used to make the number the minimum length; defaults to <code>"0"</code>.
+ @return Returns the formatted number as a String.
+ @example
+ <code>
+ console.log(format(1234567, ",", 8)); // Traces 01,234,567
+ </code>
+ */
+
+function format(value, kDelim, minLength, fillChar) {
+  if (!kDelim) {
+    kDelim = ",";
+  }
+
+  if (isNaN(minLength)) {
+    minLength = 0;
+  }
+
+  if (!fillChar) {
+    fillChar = "0";
+  }
+
+  var remainder = value % 1;
+  var num = Math.floor(value).toString();
+  var len = num.length;
+
+  if (minLength != 0 && minLength > len) {
+    minLength -= len;
+    var addChar = fillChar || '0';
+
+    while (minLength--) {
+      num = addChar + num;
+    }
+  }
+
+  if (kDelim != null && num.length > 3) {
+    var totalDelim = Math.floor(num.length / 3);
+    var totalRemain = num.length % 3;
+    var numSplit = num.split('');
+    var i = -1;
+
+    while (++i < totalDelim) {
+      numSplit.splice(totalRemain + 4 * i, 0, kDelim);
+    }
+
+    if (totalRemain == 0) numSplit.shift();
+    num = numSplit.join('');
+  }
+
+  if (remainder != 0) num += remainder.toString().substr(1);
+  return num;
+}
+/**
+ Formats a number as a currency string.
+
+ @param value: The number you wish to format.
+ @param forceDecimals: If the number should always have two decimal places <code>true</code>, or only show decimals is there is a decimals value <code>false</code>; defaults to <code>true</code>.
+ @param kDelim: The character used to seperate thousands; defaults to <code>","</code>.
+ @return Returns the formatted number as a String.
+ @example
+ <code>
+ console.log(formatCurrency(1234.5)); // Traces "1,234.50"
+ </code>
+ */
+
+function formatCurrency(value, forceDecimals, kDelim) {
+  if (forceDecimals == null) {
+    forceDecimals = true;
+  }
+
+  if (!kDelim) {
+    kDelim = ",";
+  }
+
+  var remainder = value % 1;
+  var currency = format(Math.floor(value), kDelim);
+  if (remainder != 0 || forceDecimals) currency += remainder.toFixed(2).substr(1);
+  return currency;
+}
+/**
+ Finds the english ordinal suffix for the number given.
+
+ @param value: Number to find the ordinal suffix of.
+ @return Returns the suffix for the number, 2 characters.
+ @example
+ <code>
+ console.log32 + getOrdinalSuffix(32)); // Traces 32nd
+ </code>
+ */
+
+function getOrdinalSuffix(value) {
+  if (value >= 10 && value <= 20) return 'th';
+  if (value == 0) return '';
+
+  switch (value % 10) {
+    case 3:
+      return 'rd';
+
+    case 2:
+      return 'nd';
+
+    case 1:
+      return 'st';
+
+    default:
+      return 'th';
+  }
+}
+/**
+ Adds a leading zero for numbers less than ten.
+
+ @param value: Number to add leading zero.
+ @return Number as a String; if the number was less than ten the number will have a leading zero.
+ @example
+ <code>
+ console.log(addLeadingZero(7)); // Traces 07
+ console.log(addLeadingZero(11)); // Traces 11
+ </code>
+ */
+
+function addLeadingZero(value) {
+  return value < 10 ? '0' + value : value.toString();
+}
+/**
+ Spells the provided number.
+
+ @param value: Number to spell. Needs to be less than 999999999.
+ @return The number spelled out as a String.
+ @throws <code>Error</code> if <code>value</code> is greater than 999999999.
+ @example
+ <code>
+ console.log(spell(0)); // Traces Zero
+ console.log(spell(23)); // Traces Twenty-Three
+ console.log(spell(2005678)); // Traces Two Million, Five Thousand, Six Hundred Seventy-Eight
+ </code>
+ */
+
+function spell(value) {
+  if (value > 999999999) {
+    throw 'Value too large for this method.';
+  }
+
+  var onesSpellings = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  var tensSpellings = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  var spelling = '';
+  var millions = value / 1000000;
+  value %= 1000000;
+  var thousands = value / 1000;
+  value %= 1000;
+  var hundreds = value / 100;
+  value %= 100;
+  var tens = value / 10;
+  value %= 10;
+  var ones = value % 10;
+
+  if (millions != 0) {
+    spelling += spelling.length == 0 ? '' : ', ';
+    spelling += spell(millions) + ' Million';
+  }
+
+  if (thousands != 0) {
+    spelling += spelling.length == 0 ? '' : ', ';
+    spelling += spell(thousands) + ' Thousand';
+  }
+
+  if (hundreds != 0) {
+    spelling += spelling.length == 0 ? '' : ', ';
+    spelling += spell(hundreds) + ' Hundred';
+  }
+
+  if (tens != 0 || ones != 0) {
+    spelling += spelling.length == 0 ? '' : ' ';
+    if (tens < 2) spelling += onesSpellings[tens * 10 + ones];else {
+      spelling += tensSpellings[tens];
+      if (ones != 0) spelling += '-' + onesSpellings[ones];
+    }
+  }
+
+  if (spelling.length == 0) return 'Zero';
+  return spelling;
+}
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+function rgbToHex(rgb) {
+  return componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
+}
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+    toString: function toString() {
+      return "r:" + this.r + ",g:" + this.g + ",b:" + this.b;
+    }
+  } : null;
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BooleanData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var BooleanData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(BooleanData, _Data);
+
+  function BooleanData() {
+    var _this;
+
+    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+    _classCallCheck(this, BooleanData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BooleanData).call(this));
+    _this.value = value;
+    return _this;
+  }
+
+  _createClass(BooleanData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.value = true;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      this.validation = null;
+      return _get(_getPrototypeOf(BooleanData.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (value != this._value) {
+        this._value = value;
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }]);
+
+  return BooleanData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export isMobile */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isTouch; });
+/* unused harmony export getCookie */
+/* unused harmony export serialize */
+/* unused harmony export getSearchParams */
+/* unused harmony export getRect */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return localToGlobal; });
+/* unused harmony export localToGlobalX */
+/* unused harmony export localToGlobalY */
+/* unused harmony export isHidden */
+/* unused harmony export getDeviceMotionDifference */
+/* unused harmony export forceProtocol */
+/* unused harmony export fileExists */
+/* unused harmony export getElementSelector */
+/* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+
+
+var isMobile = {
+  android: navigator.userAgent.match(/Android/i) ? true : false,
+  blackBerry: navigator.userAgent.match(/BlackBerry/i) ? true : false,
+  iOS: navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false,
+  windows: navigator.userAgent.match(/IEMobile/i) ? true : false
+};
+isMobile.any = isMobile.android || isMobile.blackBerry || isMobile.iOS || isMobile.windows;
+var isTouch = "ontouchend" in window;
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+  }
+
+  return "";
+}
+function serialize(obj) {
+  var str = [];
+
+  for (var p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  }
+
+  return str.join("&");
+}
+function getSearchParams(url, dontDecodeURI) {
+  var obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (!url) {
+    url = window.location.href;
+  }
+
+  if (url.indexOf('?') != -1) {
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+    for (var i = 0; i < hashes.length; i++) {
+      var string = hashes[i];
+      var equalIndex = string.indexOf("=");
+
+      if (equalIndex != -1) {
+        var hash = []; //let hash = hashes[i].split('=');
+
+        hash[0] = string.substr(0, equalIndex);
+        hash[1] = string.substr(equalIndex + 1);
+
+        if (dontDecodeURI) {
+          obj[hash[0]] = hash[1];
+        } else {
+          obj[hash[0]] = decodeURI(hash[1]);
+        }
+      } else {
+        obj[string] = null;
+      }
+    }
+  }
+
+  return obj;
+}
+function getRect() {
+  var rectangle = new _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+  rectangle.width = window.innerWidth;
+  rectangle.height = window.innerHeight;
+  return rectangle;
+}
+function localToGlobal(element, root, point) {
+  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  if (!point) {
+    point = new _geom_Point__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+  }
+
+  while (element && element != root) {
+    //point.x += element.offsetLeft - element.parentNode.scrollLeft;
+    //point.y += element.offsetTop - element.parentNode.scrollTop;
+    // if (debug) {
+    // 	console.log("localToGlobal element", element.className, element.offsetTop);
+    // }
+    point.x += element.offsetLeft;
+    point.y += element.offsetTop;
+    element = element.parentNode;
+  }
+
+  return point;
+}
+function localToGlobalX(element, root) {
+  var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  while (element != root) {
+    // if (debug) {
+    // 	console.log("element", element.className, element.offsetLeft);
+    // }
+    x += element.offsetLeft;
+    element = element.parentNode;
+  }
+
+  return x;
+}
+function localToGlobalY(element, root) {
+  var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  while (element != root) {
+    // if (debug) {
+    // 	console.log("element", element.nodeName, element.className, element.offsetTop);
+    // }
+    y += element.offsetTop;
+    element = element.parentNode;
+  }
+
+  return y;
+}
+function isHidden() {
+  return document[window.hidden];
+}
+var devideOrientation = "";
+var deviceDirection = "";
+function getDeviceMotionDifference(event) {
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+  var devideOrientation = "landscape";
+  var deviceDirection = "up";
+  var x = 0;
+  var y = 0;
+
+  if (height > width) {
+    devideOrientation = "portrait";
+  }
+
+  if (devideOrientation == "portrait") {
+    if (event.accelerationIncludingGravity.y > 0) {
+      deviceDirection = "down";
+    }
+
+    x = event.accelerationIncludingGravity.x;
+    y = event.accelerationIncludingGravity.z;
+  }
+
+  if (devideOrientation == "landscape") {
+    if (event.accelerationIncludingGravity.x > 0) {
+      deviceDirection = "down";
+    }
+
+    x = event.accelerationIncludingGravity.y;
+    y = event.accelerationIncludingGravity.z;
+  }
+
+  if (devideOrientation != devideOrientation || deviceDirection != deviceDirection) {
+    devideOrientation = devideOrientation;
+    deviceDirection = deviceDirection;
+    this.initialAccelerationIncludingGravity = {
+      x: x,
+      y: y
+    };
+  }
+
+  var diff = {
+    x: x - this.initialAccelerationIncludingGravity.x,
+    y: y - this.initialAccelerationIncludingGravity.y
+  };
+  return diff;
+}
+function forceProtocol(url, protocol) {
+  var isHttps = protocol.indexOf("https") != -1;
+  var urlIsHttps = url.indexOf("https") != -1;
+
+  if (isHttps && !urlIsHttps) {
+    url = url.split("http").join("https");
+  } else if (!isHttps && urlIsHttps) {
+    url = url.split("https").join("http");
+  }
+
+  return url;
+}
+function fileExists(url) {
+  var req = new XMLHttpRequest();
+  req.open('HEAD', url, false);
+  req.send();
+  return req.status !== 404;
+}
+function getElementSelector(element) {
+  var names = [];
+
+  while (element) {
+    var elSelector = element.nodeName;
+    var className = element.className;
+
+    if (className) {
+      elSelector = elSelector + "." + className.split(" ").join(".");
+    }
+
+    names.push(elSelector);
+
+    if (element != document.body) {
+      element = element.parentNode;
+    } else {
+      element = null;
+    }
+  }
+
+  names = names.reverse();
+  var selector = names.join(" > ");
+  return selector;
+}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventDispatcher; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var EventDispatcher =
+/*#__PURE__*/
+function () {
+  function EventDispatcher() {
+    _classCallCheck(this, EventDispatcher);
+
+    this.listeners = [];
+    this._debug = false;
+  }
+
+  _createClass(EventDispatcher, [{
+    key: "addEventListener",
+    value: function addEventListener(type, func) {
+      this.listeners.push({
+        type: type,
+        func: func
+      });
+    }
+  }, {
+    key: "removeEventListener",
+    value: function removeEventListener(type, func) {
+      var newListeners = [];
+
+      for (var i = 0; i < this.listeners.length; i++) {
+        var listener = this.listeners[i];
+
+        if (listener.type == type && listener.func == func) {} else {
+          newListeners.push(listener);
+        }
+      }
+
+      this.listeners = newListeners;
+    }
+  }, {
+    key: "dispatchEvent",
+    value: function dispatchEvent(event) {
+      event.target = this;
+
+      if (!event.currentTarget) {
+        event.currentTarget = this;
+      }
+
+      var listeners = this.listeners.slice();
+
+      for (var i = 0; i < listeners.length; i++) {
+        var listener = listeners[i];
+
+        if (listener.type == event.type) {
+          var index = this.listeners.indexOf(listener);
+
+          if (index != -1) {
+            listener.func(event);
+          }
+        }
+      }
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.listeners = [];
+    }
+  }, {
+    key: "debug",
+    set: function set(value) {
+      this._debug = value;
+    },
+    get: function get() {
+      return this._debug;
+    }
+  }]);
+
+  return EventDispatcher;
+}();
+
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rectangle; });
+/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Rectangle =
+/*#__PURE__*/
+function () {
+  function Rectangle() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+    _classCallCheck(this, Rectangle);
+
+    this._position = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this._size = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.center = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.halfSize = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  _createClass(Rectangle, [{
+    key: "contains",
+    value: function contains(point) {
+      var hit = point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height ? true : false;
+      return hit;
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(rect) {
+      return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
+    }
+  }, {
+    key: "intersect",
+    value: function intersect(b) {
+      var a = this;
+      var x = Math.max(a.x, b.x);
+      var num1 = Math.min(a.x + a.width, b.x + b.width);
+      var y = Math.max(a.y, b.y);
+      var num2 = Math.min(a.y + a.height, b.y + b.height);
+      var result;
+
+      if (num1 >= x && num2 >= y) {
+        result = new Rectangle(x, y, num1 - x, num2 - y);
+      } else {
+        result = new Rectangle();
+      }
+
+      return result;
+    }
+  }, {
+    key: "equals",
+    value: function equals(rect) {
+      return this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Rectangle(this.x, this.y, this.width, this.height);
+    }
+  }, {
+    key: "copyFrom",
+    value: function copyFrom(rect) {
+      this.x = rect.x;
+      this.y = rect.y;
+      this.width = rect.width;
+      this.height = rect.height;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Rectangle" + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + "]";
+    }
+  }, {
+    key: "scaleWidth",
+    value: function scaleWidth(height) {
+      return new Rectangle(this.x, this.y, height * this.widthToHeight, height);
+    }
+  }, {
+    key: "scaleHeight",
+    value: function scaleHeight(width) {
+      return new Rectangle(this.x, this.y, width, width * this.heightToWidth);
+    }
+  }, {
+    key: "scaleToFillRect",
+    value: function scaleToFillRect(rect) {
+      // let scaled = this.scaleHeight(rect.width);
+      //
+      // if (scaled.height < rect.height) {
+      // 	scaled = this.scaleWidth(rect.height);
+      // }
+      var amount = this.getScaleToFill(rect);
+      return this.scale(amount, amount);
+    }
+  }, {
+    key: "scaleToFitRect",
+    value: function scaleToFitRect(rect) {
+      // let scaled = this.scaleHeight(rect.width);
+      //
+      // if (scaled.height > rect.height) {
+      // 	scaled = this.scaleWidth(rect.height);
+      // }
+      // scaled.x = (rect.width - scaled.width) / 2;
+      // scaled.y = (rect.height - scaled.height) / 2;
+      var amount = this.getScaleToFitRect(rect);
+      return this.scale(amount, amount);
+    }
+  }, {
+    key: "scale",
+    value: function scale(x, y) {
+      return new Rectangle(this.x, this.y, this.width * x, this.height * y);
+    }
+  }, {
+    key: "scaleToArea",
+    value: function scaleToArea(area) {
+      var height = Math.sqrt(area / this.widthToHeight);
+      var width = area / height;
+      return new Rectangle(0, 0, width, height);
+    }
+  }, {
+    key: "getScaleToFill",
+    value: function getScaleToFill(rect) {
+      var scale;
+
+      if (this.widthToHeight > rect.widthToHeight) {
+        scale = rect.height / this.height;
+      } else {
+        scale = rect.width / this.width;
+      }
+
+      return scale;
+    }
+  }, {
+    key: "getScaleToFitRect",
+    value: function getScaleToFitRect(rect) {
+      var scale;
+
+      if (this.widthToHeight > rect.widthToHeight) {
+        scale = rect.width / this.width;
+      } else {
+        scale = rect.height / this.height;
+      }
+
+      return scale;
+    }
+  }, {
+    key: "x",
+    get: function get() {
+      return this.position.x;
+    },
+    set: function set(value) {
+      this.position.x = value;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "y",
+    get: function get() {
+      return this.position.y;
+    },
+    set: function set(value) {
+      this.position.y = value;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "width",
+    get: function get() {
+      return this.size.x;
+    },
+    set: function set(value) {
+      this.size.x = value;
+      this.halfSize.x = value / 2;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "height",
+    get: function get() {
+      return this.size.y;
+    },
+    set: function set(value) {
+      this.size.y = value;
+      this.halfSize.y = value / 2;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "position",
+    get: function get() {
+      return this._position;
+    },
+    set: function set(value) {
+      this._position = value;
+    }
+  }, {
+    key: "size",
+    get: function get() {
+      return this._size;
+    },
+    set: function set(value) {
+      this._size = value;
+    }
+  }, {
+    key: "area",
+    get: function get() {
+      return this.size.x * this.size.y;
+    }
+  }, {
+    key: "widthToHeight",
+    get: function get() {
+      return this.width / this.height;
+    }
+  }, {
+    key: "heightToWidth",
+    get: function get() {
+      return this.height / this.width;
+    }
+  }, {
+    key: "isPortrait",
+    get: function get() {
+      return this.width <= this.height;
+    }
+  }, {
+    key: "isLandscape",
+    get: function get() {
+      return this.height <= this.width;
+    }
+  }]);
+
+  return Rectangle;
+}();
+
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export awaitEvent */
+/* unused harmony export awaitTransition */
+/* unused harmony export awaitAnimation */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return awaitTimeout; });
+/* unused harmony export awaitCallback */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitAnimationFrame; });
+/* unused harmony export awaitVideoFirstFrame */
+function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventHandler = function eventHandler(event) {
+      event.stopPropagation();
+
+      if (stopPropagation) {
+        event.stopPropagation();
+      }
+
+      if (stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTransition(dispatcher, cssProperties) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "transitionend";
+    var eventNames = {
+      'OTransition': 'otransitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      var isProperty;
+
+      for (var _i = 0; _i < cssProperties.length; _i++) {
+        var prop = cssProperties[_i];
+
+        if (prop === event.propertyName) {
+          isProperty = true;
+        }
+      }
+
+      if (!isProperty) {
+        return;
+      }
+
+      event.stopPropagation(); //event.stopImmediatePropagation();
+      //event.preventDefault();
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitAnimation(dispatcher, animationName) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "animationend";
+    var eventNames = {
+      'OTransition': 'oanimationend',
+      'MozTransition': 'moznimationend',
+      'WebkitTransition': 'webkitAnimationEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      if (animationName != event.animationName || dispatcher != event.target) {
+        return;
+      }
+
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTimeout() {
+  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+  if (isNaN(milliseconds) || milliseconds <= 0) {
+    return Promise.resolve();
+  } else {
+    return new Promise(function (resolve, reject) {
+      var timeout = setTimeout(function () {
+        resolve();
+      }, milliseconds);
+    });
+  }
+}
+function awaitCallback(target, method) {
+  var _arguments = arguments;
+  var promise = new Promise(function (resolve, reject) {
+    target[method] = function () {
+      delete target[method];
+      resolve(_arguments);
+    };
+  });
+  return promise;
+}
+function awaitAnimationFrame() {
+  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  total = Math.max(1, Math.round(total));
+  var count = 0;
+  var promise = new Promise(function (resolve, reject) {
+    function animationFrame() {
+      count++;
+
+      if (count >= total) {
+        resolve();
+      } else {
+        window.requestAnimationFrame(animationFrame);
+      }
+    }
+
+    window.requestAnimationFrame(animationFrame);
+  });
+  return promise;
+}
+function awaitVideoFirstFrame(video) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
+  var debug = arguments.length > 2 ? arguments[2] : undefined;
+  var loadedmetadata = awaitEvent(video, "loadedmetadata");
+  var loadedmetadataTimeout = awaitTimeout(timeout);
+  var promise = Promise.race([loadedmetadata]);
+  return promise.then(function (event) {
+    if (debug) {
+      console.log("loadedmetadata");
+    }
+
+    var loadeddataPromise = awaitEvent(video, "loadeddata");
+    var playPromise = video.play();
+
+    if (!playPromise) {
+      playPromise = loadeddataPromise;
+    }
+
+    var playPromiseTimeout = awaitTimeout(timeout);
+    var promise = Promise.race([playPromise]);
+    return promise.then(function () {
+      if (debug) {
+        console.log("playPromise or loadeddata");
+      }
+
+      video.pause();
+      return video;
+    });
+  });
+}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validation; });
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Validation =
+/*#__PURE__*/
+function (_BooleanData) {
+  _inherits(Validation, _BooleanData);
+
+  function Validation(data) {
+    var _this;
+
+    var methods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, Validation);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Validation).call(this));
+    _this.dataChangeBind = _this.validate.bind(_assertThisInitialized(_this));
+    _this.methods = methods;
+    _this.data = data;
+    return _this;
+  }
+
+  _createClass(Validation, [{
+    key: "validate",
+    value: function validate(event) {
+      var isValid = false;
+
+      if (this.data) {
+        for (var i = 0; i < this.methods.length; i++) {
+          var method = this.methods[i];
+          isValid = method(this.data.value);
+        }
+      }
+
+      this.value = isValid;
+    }
+  }, {
+    key: "addValidation",
+    value: function addValidation(method) {
+      this.methods.push(method);
+      this.validate();
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.methods = null;
+      this.data = null;
+      return _get(_getPrototypeOf(Validation.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "data",
+    get: function get() {
+      return this._data;
+    },
+    set: function set(value) {
+      if (this._data) {
+        this._data.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].CHANGE, this.dataChangeBind);
+      }
+
+      this._data = value;
+
+      if (this._data) {
+        this._data.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].CHANGE, this.dataChangeBind);
+      }
+
+      this.validate();
+    }
+  }]);
+
+  return Validation;
+}(_BooleanData__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIButton; });
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _UIComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { set = Reflect.set; } else { set = function set(target, property, value, receiver) { var base = _superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { _defineProperty(receiver, property, value); } return true; }; } return set(target, property, value, receiver); }
+
+function _set(target, property, value, receiver, isStrict) { var s = set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var UIButton =
+/*#__PURE__*/
+function (_UIComponent) {
+  _inherits(UIButton, _UIComponent);
+
+  function UIButton(element) {
+    var _this;
+
+    _classCallCheck(this, UIButton);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UIButton).call(this, element));
+
+    _this.onRelease = function () {};
+
+    _this.clickHandler = _this.clickHandler.bind(_assertThisInitialized(_this));
+    _this.pressHandler = _this.pressHandler.bind(_assertThisInitialized(_this));
+
+    _this.element.addEventListener(_events__WEBPACK_IMPORTED_MODULE_0__[/* events */ "b"].click, _this.clickHandler);
+
+    _this.element.addEventListener(_events__WEBPACK_IMPORTED_MODULE_0__[/* events */ "b"].mousedown, _this.pressHandler);
+
+    return _this;
+  }
+
+  _createClass(UIButton, [{
+    key: "pressHandler",
+    value: function pressHandler(event) {
+      this.element.setAttribute("data-event", "press");
+    }
+  }, {
+    key: "clickHandler",
+    value: function clickHandler(event) {
+      this.element.setAttribute("data-event", "click");
+
+      if (this.onRelease) {
+        this.onRelease(event);
+      }
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.element.removeEventListener(_events__WEBPACK_IMPORTED_MODULE_0__[/* events */ "b"].click, this.clickHandler);
+      this.element.removeEventListener(_events__WEBPACK_IMPORTED_MODULE_0__[/* events */ "b"].mousedown, this.pressHandler);
+
+      _get(_getPrototypeOf(UIButton.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "scope",
+    get: function get() {
+      return _get(_getPrototypeOf(UIButton.prototype), "scope", this);
+    },
+    set: function set(value) {
+      var _this2 = this;
+
+      _set(_getPrototypeOf(UIButton.prototype), "scope", value, this, true);
+
+      var click = this.element.getAttribute("data-click");
+
+      if (click) {
+        this.onRelease = function (event) {
+          var method = Object(_tsunami__WEBPACK_IMPORTED_MODULE_2__[/* evalProperty */ "c"])(click, _this2.scope);
+          method(event);
+        };
+      }
+    }
+  }]);
+
+  return UIButton;
+}(_UIComponent__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ObjectData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var ObjectData =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(ObjectData, _Data);
+
+  function ObjectData(value) {
+    var _this;
+
+    _classCallCheck(this, ObjectData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ObjectData).call(this));
+    _this.value = value;
+    _this.forceChangeEvent = false;
+    return _this;
+  }
+
+  _createClass(ObjectData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "_deselectValue",
+    value: function _deselectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof _BooleanData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+            data.isSelected.value = false;
+          }
+        }
+      }
+    }
+  }, {
+    key: "_selectValue",
+    value: function _selectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof _BooleanData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+            data.isSelected.value = true;
+          }
+        }
+      }
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (value != this._value) {
+        this._deselectValue(this._value);
+
+        this._value = value;
+
+        this._selectValue(this._value);
+
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      } else if (this.forceChangeEvent) {
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }]);
+
+  return ObjectData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayDataOperation; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var ArrayDataOperation =
+/*#__PURE__*/
+function (_Data) {
+  _inherits(ArrayDataOperation, _Data);
+
+  function ArrayDataOperation() {
+    var _this;
+
+    var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ArrayDataOperation.ADD;
+    var arrayData = arguments.length > 1 ? arguments[1] : undefined;
+    var modifiers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+    _classCallCheck(this, ArrayDataOperation);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArrayDataOperation).call(this));
+
+    if (!arrayData) {
+      arrayData = new _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    }
+
+    _this.modifiers = modifiers;
+    _this.itemChangeHandler = _this.itemChangeHandler.bind(_assertThisInitialized(_this));
+    _this.operation = operation;
+    _this.arrayData = arrayData;
+    return _this;
+  }
+
+  _createClass(ArrayDataOperation, [{
+    key: "itemChangeHandler",
+    value: function itemChangeHandler(event) {
+      var newValue;
+      var array = this.arrayData;
+
+      if (array) {
+        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+          array = this.arrayData.value;
+        }
+
+        if (array.length > 0) {
+          var firstItem = array[0];
+          newValue = firstItem;
+
+          if (firstItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+            newValue = firstItem.value;
+          }
+
+          for (var i = 1; i < array.length; i++) {
+            var item = array[i];
+            var itemValue = item;
+
+            if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+              itemValue = item.value;
+            }
+
+            newValue = this.operation(newValue, itemValue);
+          }
+        }
+      } // if(this.debug) {
+      // 	console.log("ArrayDataOperation.itemChangeHandler newValue", newValue);
+      // }
+
+
+      this.value = newValue; // if (this._value != newValue) {
+      // 	this._value = newValue;
+      // 	this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
+      // }
+    }
+  }, {
+    key: "parseString",
+    value: function parseString(string, scope) {
+      var chunks = string.split("[[");
+      var array = [];
+
+      for (var i = 0; i < chunks.length; i++) {
+        var chunk = chunks[i];
+
+        if (chunk.indexOf("]]") == -1) {
+          array.push(chunk);
+        } else {
+          var chunkArray = chunk.split("]]");
+
+          for (var j = 0; j < chunkArray.length; j++) {
+            var chunk2 = chunkArray[j];
+
+            if (j == 0) {
+              var model = Object(_tsunami__WEBPACK_IMPORTED_MODULE_3__[/* evalProperty */ "c"])(chunk2, scope);
+              array.push(model);
+            } else {
+              array.push(chunk2);
+            }
+          }
+        }
+      }
+
+      this.arrayData.value = array;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      if (this.arrayData instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+        this.arrayData.destroy();
+      }
+
+      this.arrayData = null;
+      this.modifiers = [];
+
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      return _get(_getPrototypeOf(ArrayDataOperation.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "arrayData",
+    get: function get() {
+      return this._array;
+    },
+    set: function set(value) {
+      if (this._array) {
+        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+          this._array.removeEventListener(_ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].ITEM_CHANGE, this.itemChangeHandler);
+        }
+      }
+
+      this._array = value;
+
+      if (this._array) {
+        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+          this._array.addEventListener(_ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].ITEM_CHANGE, this.itemChangeHandler);
+        }
+      }
+
+      this.itemChangeHandler();
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value) {
+        this._value = value;
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      } else if (this.forceChangeEvent) {
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }], [{
+    key: "ADD",
+    value: function ADD(value1, value2) {
+      return value1 + value2;
+    }
+  }, {
+    key: "ADD_TOSTRING",
+    value: function ADD_TOSTRING(value1, value2) {
+      return value1.toString() + value2.toString();
+    }
+  }, {
+    key: "SUBTRACT",
+    value: function SUBTRACT(value1, value2) {
+      return value1 - value2;
+    }
+  }, {
+    key: "MULTIPLY",
+    value: function MULTIPLY(value1, value2) {
+      return value1 * value2;
+    }
+  }, {
+    key: "DIVIDE",
+    value: function DIVIDE(value1, value2) {
+      return value1 / value2;
+    }
+  }, {
+    key: "MIN",
+    value: function MIN(value1, value2) {
+      return Math.min(value1, value2);
+    }
+  }, {
+    key: "MAX",
+    value: function MAX(value1, value2) {
+      return Math.max(value1, value2);
+    }
+  }]);
+
+  return ArrayDataOperation;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -479,341 +4586,41 @@ var StyleUnits = function StyleUnits() {
 };
 
 /***/ }),
-/* 1 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"sc-fields-list\" is=\"ui-component\">\n    <div class=\"sc-field-group\">\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n        </div>\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n        </div>\n    </div>\n    <div class=\"sc-field-group\" is=\"ui-component\">\n        <div class=\"sc-field\" is=\"ui-component\">\n            <span class=\"sc-label\">Easing:</span>\n            <div is=\"ui-component\" class=\"easing-graph-container\">\n                <div is=\"easing-graph\" data-model=\"data.cubicBezierPoints\">\n                    <!-- <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div> -->\n                    <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n                    <div is=\"control-point-lines\" is=\"ui-list\">\n                        <template>\n                            <div is=\"control-point-line\" data-model=\"data\"></div>\n                        </template>\n                    </div>\n                    <div class=\"control-points\" is=\"easing-graph-control-points\">\n                        <template>\n                            <div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n                                <span class=\"shape\">\n                                    <span class=\"shape-label\" is=\"ui-text\">[[index1]]</span>\n                                </span>\n                            </div>\n                        </template>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"sc-field-column\">\n            <div class=\"sc-field\">\n                <div class=\"sc-select\">\n                    <select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n                </div>\n            </div>\n            <div class=\"sc-field\">\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.x\" is=\"ui-input\"/>\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.y\" is=\"ui-input\"/>\n            </div>\n            <div class=\"sc-field\">\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.x\" is=\"ui-input\"/>\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.y\" is=\"ui-input\"/>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
-/* 2 */
+/* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<scroll-capture class=\"sc-default\">\n\t<div class=\"sc-window main-window\" is=\"ui-component\">\n\t\t<div class=\"sc-header\">\n\t\t\t<div class=\"sc-title\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t<span class=\"sc-tab sc-title-tab\" data-selected=\"true\">\n\t\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t</span>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"hide\"></button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-panel sequencer\" data-state=\"show\" is=\"ui-component\">\n\t\t\t<iframe></iframe>\n\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<button class=\"save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t</button>\n\t\t\t\t<button class=\"close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t<template>\n\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\"/>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"play-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t<button class=\"close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span><input type=\"text\" data-model=\"data.target\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</action-view>\n\t\t\t\t</template>\n\t\t\t</actions-view>\n\t\t\t<footer>\n\t\t\t\t<div class=\"sc-window\">\n<!--\t\t\t\t\t<div class=\"sc-title\">-->\n<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\" data-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</footer>\n\t\t</div>\n\t</div>\n</scroll-capture>"
+module.exports = "<scroll-capture class=\"sc-default\">\n\t<div class=\"sc-window\" is=\"ui-component\">\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t<div class=\"sc-video sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"video\">\n\t\t\t\t\t<iframe></iframe>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"sc-scenario sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<button class=\"sc-save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<template>\n\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\"\n\t\t\t\t\t\t\tdata-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"data.play\"\n\t\t\t\t\t\t\t\t\t\t\tdata-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Test</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\"\n\t\t\t\t\t\t\t\t\t\t\tdata-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span><input type=\"text\" data-model=\"data.target\"\n\t\t\t\t\t\t\t\t\t\t\t\t\tis=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</action-view>\n\t\t\t\t\t</template>\n\t\t\t\t</actions-view>\n\t\t\t\t<footer>\n\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t<!--\t\t\t\t\t<div class=\"sc-title\">-->\n\t\t\t\t\t\t<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n\t\t\t\t\t\t<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</footer>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</scroll-capture>"
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(10);
-module.exports = __webpack_require__(4);
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIRouterButton; });
+/* harmony import */ var _UIButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-// CONCATENATED MODULE: ./js/tsunami/tsunami.js
-function evalProperty(path) {
-  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  if (!scope) return;
-  if (path == ".") return scope;
-  var array = path.split(".");
-  var object = scope;
-
-  while (array.length > 0) {
-    var name = array.shift();
-    var arr = name.split("[");
-
-    for (var i = 0; i < arr.length; i++) {
-      var prop = arr[i].split("]")[0];
-
-      if (object) {
-        var newObject = object[prop];
-        if (!newObject && debug) console.log("Warning, in the expression '".concat(path, "', the property '").concat(prop, "' is null in ").concat(object));
-        object = newObject;
-      }
-    }
-  }
-
-  return object;
-}
-var classes = {};
-function define(name, classReference) {
-  classes[name] = classReference;
-} // export function registerClass(classReference, name) {
-// 	classes[name] = classReference;
-// }
-
-function decorateElement(element, scope) {
-  var dataWrapper = element.getAttribute("data-wrapper");
-
-  if (dataWrapper) {
-    var wrappers = dataWrapper.split(" ");
-
-    for (var i = 0; i < wrappers.length; i++) {
-      var wrapper = wrappers[i];
-
-      if (wrapper) {
-        var method = evalProperty(wrapper, window);
-
-        if (method) {
-          method(element);
-
-          if ("createdCallback" in element) {
-            element.createdCallback();
-          }
-        }
-      }
-    }
-  }
-}
-function createComponent(element, scope) {
-  var className = element.nodeName.toLowerCase();
-  var classReference = classes[className];
-
-  if (!classReference) {
-    className = element.getAttribute("is");
-
-    if (className) {
-      classReference = classes[className];
-    }
-  }
-
-  if (classReference) {
-    var component = new classReference(element);
-    element.component = component;
-  }
-}
-function setScope(element, scope) {
-  if (element.component) {
-    element.component.scope = scope;
-  }
-}
-var directives = [createComponent, setScope];
-function applyDirectives(element, scope) {
-  var array = [element];
-  var elements = getAllObjects(element, array);
-
-  for (var j = 0; j < directives.length; j++) {
-    var directive = directives[j];
-
-    for (var i = elements.length - 1; i > -1; i--) {
-      //for (let i = 0; i < elements.length; i++) {
-      var el = elements[i];
-      directive(el, scope);
-    }
-  }
-}
-var factories = [];
-
-for (var tsunami_i = 0; tsunami_i < 5; tsunami_i++) {
-  factories.push(document.createElement("div"));
-} //
-// export function importTemplate(template, scope) {
-// 	if (window.renderTemplate) {
-// 		template = window.renderTemplate(template, scope);
-// 	}
-// 	let factory = factories.shift();
-// 	factories.push(factory);
-// 	factory.innerHTML = template;
-// 	let child = factory.children.item(0);
-// 	// if (window.CustomElements) {
-// 	// 	CustomElements.upgradeSubtree(child);
-// 	// }
-// 	applyDirectives(child, scope);
-// 	return child;
-// }
-
-
-function importTemplate(template) {
-  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var child;
-
-  if (window.renderTemplate) {
-    template = window.renderTemplate(template, scope);
-  }
-
-  var factory = factories.shift();
-  factories.push(factory);
-  factory.innerHTML = template;
-
-  if (factory.children.length > 0) {
-    child = factory.children.item(0);
-  }
-
-  scope.scopeElement = child;
-  applyDirectives(child, scope);
-  return child;
-}
-function destroyElement(element) {
-  if (element) {
-    var elements = getAllObjects(element);
-
-    for (var _i = elements.length - 1; _i > -1; _i--) {
-      var el = elements[_i];
-
-      if (el.component) {
-        if (el.component.destroy) {
-          try {
-            el.component.destroy();
-          } catch (e) {}
-        }
-
-        el.component = null;
-      } // destroyElement(el);
-
-    }
-
-    element.innerHTML = null;
-
-    if (element.parentNode) {
-      element.parentNode.removeChild(element);
-    }
-
-    if (element.component) {
-      if (element.component.destroy) {
-        try {
-          element.component.destroy();
-        } catch (e) {}
-      }
-
-      element.component = null;
-    }
-  }
-}
-function destroyElements(elements) {
-  for (var _i2 = 0; _i2 < elements.length; _i2++) {
-    var element = elements[_i2];
-    destroyElement(element);
-  }
-}
-function getAllObjects(parent, array) {
-  if (!array) {
-    array = [];
-  }
-
-  if (parent.children) {
-    for (var _i3 = 0; _i3 < parent.children.length; _i3++) {
-      var child = parent.children.item(_i3);
-
-      switch (child.nodeName) {
-        case "#text":
-        case "#comment":
-        case "BR":
-        case "TEMPLATE":
-        case "SCRIPT":
-          break;
-
-        default:
-          array.push(child);
-          getAllObjects(child, array);
-          break;
-      }
-    }
-  }
-
-  return array;
-}
-// CONCATENATED MODULE: ./js/tsunami/EventDispatcher.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var EventDispatcher =
-/*#__PURE__*/
-function () {
-  function EventDispatcher() {
-    _classCallCheck(this, EventDispatcher);
-
-    this.listeners = [];
-    this._debug = false;
-  }
-
-  _createClass(EventDispatcher, [{
-    key: "addEventListener",
-    value: function addEventListener(type, func) {
-      this.listeners.push({
-        type: type,
-        func: func
-      });
-    }
-  }, {
-    key: "removeEventListener",
-    value: function removeEventListener(type, func) {
-      var newListeners = [];
-
-      for (var i = 0; i < this.listeners.length; i++) {
-        var listener = this.listeners[i];
-
-        if (listener.type == type && listener.func == func) {} else {
-          newListeners.push(listener);
-        }
-      }
-
-      this.listeners = newListeners;
-    }
-  }, {
-    key: "dispatchEvent",
-    value: function dispatchEvent(event) {
-      event.target = this;
-
-      if (!event.currentTarget) {
-        event.currentTarget = this;
-      }
-
-      var listeners = this.listeners.slice();
-
-      for (var i = 0; i < listeners.length; i++) {
-        var listener = listeners[i];
-
-        if (listener.type == event.type) {
-          var index = this.listeners.indexOf(listener);
-
-          if (index != -1) {
-            listener.func(event);
-          }
-        }
-      }
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.listeners = [];
-    }
-  }, {
-    key: "debug",
-    set: function set(value) {
-      this._debug = value;
-    },
-    get: function get() {
-      return this._debug;
-    }
-  }]);
-
-  return EventDispatcher;
-}();
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/Data.js
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function Data_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Data_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Data_createClass(Constructor, protoProps, staticProps) { if (protoProps) Data_defineProperties(Constructor.prototype, protoProps); if (staticProps) Data_defineProperties(Constructor, staticProps); return Constructor; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { set = Reflect.set; } else { set = function set(target, property, value, receiver) { var base = _superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { _defineProperty(receiver, property, value); } return true; }; } return set(target, property, value, receiver); }
+
+function _set(target, property, value, receiver, isStrict) { var s = set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
@@ -827,3015 +4634,138 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var Data =
+var UIRouterButton =
 /*#__PURE__*/
-function (_EventDispatcher) {
-  _inherits(Data, _EventDispatcher);
+function (_UIButton) {
+  _inherits(UIRouterButton, _UIButton);
 
-  function Data() {
-    Data_classCallCheck(this, Data);
+  function UIRouterButton(element) {
+    var _this;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Data).call(this));
+    _classCallCheck(this, UIRouterButton);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UIRouterButton).call(this, element));
+    _this.pushState = true;
+    _this.clickDelay = 0;
+    return _this;
   }
 
-  Data_createClass(Data, [{
-    key: "serialize",
-    value: function serialize() {
-      return this.value;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      this.value = data;
-    }
-  }, {
-    key: "copy",
-    value: function copy(data) {
-      this.value = data.value;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.value = null;
-      return _get(_getPrototypeOf(Data.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this;
-    },
-    set: function set(val) {}
-  }], [{
-    key: "serialize",
-    value: function serialize(obj) {
-      var str = [];
-
-      for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        }
-      }
-
-      return str.join("&");
-    }
-  }, {
-    key: "CHANGE",
-    get: function get() {
-      return "change";
-    }
-  }]);
-
-  return Data;
-}(EventDispatcher);
-
-
-// CONCATENATED MODULE: ./js/tsunami/components/Attribute.js
-function Attribute_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Attribute_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Attribute_createClass(Constructor, protoProps, staticProps) { if (protoProps) Attribute_defineProperties(Constructor.prototype, protoProps); if (staticProps) Attribute_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Attribute_Attribute =
-/*#__PURE__*/
-function () {
-  function Attribute(element, name, model) {
-    var unit = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-
-    Attribute_classCallCheck(this, Attribute);
-
-    this.modelChange = this.modelChange.bind(this);
-    this.element = element;
-    this.name = name;
-    this.model = model;
-    this.unit = unit;
-  }
-
-  Attribute_createClass(Attribute, [{
-    key: "modelChange",
-    value: function modelChange(event) {
-      this.updateValue(this._model.value);
-    }
-  }, {
-    key: "updateValue",
-    value: function updateValue(value) {
-      if (value == null || value == undefined) {
-        value = "";
-      }
-
-      var string = value.toString();
-
-      if (string && this.unit) {
-        string += this.unit;
-      }
-
-      this.element.setAttribute(this.name, string);
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.model = null;
-    }
-  }, {
-    key: "model",
-    get: function get() {
-      return this._model;
-    },
-    set: function set(value) {
-      if (this._model) {
-        if (this._model instanceof Data) {
-          this._model.removeEventListener(Data.CHANGE, this.modelChange);
-        }
-      }
-
-      this._model = value;
-
-      if (value instanceof Data) {
-        value.addEventListener(Data.CHANGE, this.modelChange);
-        this.modelChange();
-      } else {
-        this.updateValue(value);
-      }
-    }
-  }]);
-
-  return Attribute;
-}();
-
-
-// EXTERNAL MODULE: ./js/tsunami/components/Style.js
-var Style = __webpack_require__(0);
-
-// CONCATENATED MODULE: ./js/tsunami/await.js
-function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventHandler = function eventHandler(event) {
-      event.stopPropagation();
-
-      if (stopPropagation) {
-        event.stopPropagation();
-      }
-
-      if (stopImmediatePropagation) {
-        event.stopImmediatePropagation();
-      }
-
-      if (preventDefault) {
-        event.preventDefault();
-      }
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTransition(dispatcher, cssProperties) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "transitionend";
-    var eventNames = {
-      'OTransition': 'otransitionend',
-      'WebkitTransition': 'webkitTransitionEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      var isProperty;
-
-      for (var _i = 0; _i < cssProperties.length; _i++) {
-        var prop = cssProperties[_i];
-
-        if (prop === event.propertyName) {
-          isProperty = true;
-        }
-      }
-
-      if (!isProperty) {
-        return;
-      }
-
-      event.stopPropagation(); //event.stopImmediatePropagation();
-      //event.preventDefault();
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitAnimation(dispatcher, animationName) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "animationend";
-    var eventNames = {
-      'OTransition': 'oanimationend',
-      'MozTransition': 'moznimationend',
-      'WebkitTransition': 'webkitAnimationEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      if (animationName != event.animationName || dispatcher != event.target) {
-        return;
-      }
-
-      event.stopPropagation();
-      event.stopImmediatePropagation();
+  _createClass(UIRouterButton, [{
+    key: "clickHandler",
+    value: function clickHandler(event) {
       event.preventDefault();
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
 
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTimeout() {
-  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      if (this.cancelClick) {
+        this.cancelClick = false;
+        return;
+      }
 
-  if (isNaN(milliseconds) || milliseconds <= 0) {
-    return Promise.resolve();
-  } else {
-    return new Promise(function (resolve, reject) {
-      var timeout = setTimeout(function () {
-        resolve();
-      }, milliseconds);
-    });
-  }
-}
-function awaitCallback(target, method) {
-  var _arguments = arguments;
-  var promise = new Promise(function (resolve, reject) {
-    target[method] = function () {
-      delete target[method];
-      resolve(_arguments);
-    };
-  });
-  return promise;
-}
-function awaitAnimationFrame() {
-  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  total = Math.max(1, Math.round(total));
-  var count = 0;
-  var promise = new Promise(function (resolve, reject) {
-    function animationFrame() {
-      count++;
+      _get(_getPrototypeOf(UIRouterButton.prototype), "clickHandler", this).call(this, event);
 
-      if (count >= total) {
-        resolve();
+      if (this.clickDelay > 0) {
+        setTimeout(this.clickDelayComplete.bind(this), this.clickDelay * 1000);
       } else {
-        window.requestAnimationFrame(animationFrame);
+        this.clickDelayComplete();
       }
     }
-
-    window.requestAnimationFrame(animationFrame);
-  });
-  return promise;
-}
-function awaitVideoFirstFrame(video) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
-  var debug = arguments.length > 2 ? arguments[2] : undefined;
-  var loadedmetadata = awaitEvent(video, "loadedmetadata");
-  var loadedmetadataTimeout = awaitTimeout(timeout);
-  var promise = Promise.race([loadedmetadata]);
-  return promise.then(function (event) {
-    if (debug) {
-      console.log("loadedmetadata");
-    }
-
-    var loadeddataPromise = awaitEvent(video, "loadeddata");
-    var playPromise = video.play();
-
-    if (!playPromise) {
-      playPromise = loadeddataPromise;
-    }
-
-    var playPromiseTimeout = awaitTimeout(timeout);
-    var promise = Promise.race([playPromise]);
-    return promise.then(function () {
-      if (debug) {
-        console.log("playPromise or loadeddata");
-      }
-
-      video.pause();
-      return video;
-    });
-  });
-}
-// CONCATENATED MODULE: ./js/tsunami/data/BooleanData.js
-function BooleanData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { BooleanData_typeof = function _typeof(obj) { return typeof obj; }; } else { BooleanData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return BooleanData_typeof(obj); }
-
-function BooleanData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function BooleanData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function BooleanData_createClass(Constructor, protoProps, staticProps) { if (protoProps) BooleanData_defineProperties(Constructor.prototype, protoProps); if (staticProps) BooleanData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function BooleanData_possibleConstructorReturn(self, call) { if (call && (BooleanData_typeof(call) === "object" || typeof call === "function")) { return call; } return BooleanData_assertThisInitialized(self); }
-
-function BooleanData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function BooleanData_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { BooleanData_get = Reflect.get; } else { BooleanData_get = function _get(target, property, receiver) { var base = BooleanData_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return BooleanData_get(target, property, receiver || target); }
-
-function BooleanData_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = BooleanData_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function BooleanData_getPrototypeOf(o) { BooleanData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return BooleanData_getPrototypeOf(o); }
-
-function BooleanData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) BooleanData_setPrototypeOf(subClass, superClass); }
-
-function BooleanData_setPrototypeOf(o, p) { BooleanData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return BooleanData_setPrototypeOf(o, p); }
-
-
-
-
-var BooleanData_BooleanData =
-/*#__PURE__*/
-function (_Data) {
-  BooleanData_inherits(BooleanData, _Data);
-
-  function BooleanData() {
-    var _this;
-
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-    BooleanData_classCallCheck(this, BooleanData);
-
-    _this = BooleanData_possibleConstructorReturn(this, BooleanData_getPrototypeOf(BooleanData).call(this));
-    _this.value = value;
-    return _this;
-  }
-
-  BooleanData_createClass(BooleanData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
   }, {
-    key: "reset",
-    value: function reset() {
-      this.value = true;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      if (this.validation instanceof Validation_Validation) {
-        this.validation.destroy();
-      }
-
-      this.validation = null;
-      return BooleanData_get(BooleanData_getPrototypeOf(BooleanData.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._value = value;
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return BooleanData;
-}(Data);
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/Validation.js
-function Validation_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Validation_typeof = function _typeof(obj) { return typeof obj; }; } else { Validation_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Validation_typeof(obj); }
-
-function Validation_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Validation_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Validation_createClass(Constructor, protoProps, staticProps) { if (protoProps) Validation_defineProperties(Constructor.prototype, protoProps); if (staticProps) Validation_defineProperties(Constructor, staticProps); return Constructor; }
-
-function Validation_possibleConstructorReturn(self, call) { if (call && (Validation_typeof(call) === "object" || typeof call === "function")) { return call; } return Validation_assertThisInitialized(self); }
-
-function Validation_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function Validation_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { Validation_get = Reflect.get; } else { Validation_get = function _get(target, property, receiver) { var base = Validation_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return Validation_get(target, property, receiver || target); }
-
-function Validation_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = Validation_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function Validation_getPrototypeOf(o) { Validation_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Validation_getPrototypeOf(o); }
-
-function Validation_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Validation_setPrototypeOf(subClass, superClass); }
-
-function Validation_setPrototypeOf(o, p) { Validation_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Validation_setPrototypeOf(o, p); }
-
-
-
-
-var Validation_Validation =
-/*#__PURE__*/
-function (_BooleanData) {
-  Validation_inherits(Validation, _BooleanData);
-
-  function Validation(data) {
-    var _this;
-
-    var methods = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    Validation_classCallCheck(this, Validation);
-
-    _this = Validation_possibleConstructorReturn(this, Validation_getPrototypeOf(Validation).call(this));
-    _this.dataChangeBind = _this.validate.bind(Validation_assertThisInitialized(_this));
-    _this.methods = methods;
-    _this.data = data;
-    return _this;
-  }
-
-  Validation_createClass(Validation, [{
-    key: "validate",
-    value: function validate(event) {
-      var isValid = false;
-
-      if (this.data) {
-        for (var i = 0; i < this.methods.length; i++) {
-          var method = this.methods[i];
-          isValid = method(this.data.value);
-        }
-      }
-
-      this.value = isValid;
-    }
-  }, {
-    key: "addValidation",
-    value: function addValidation(method) {
-      this.methods.push(method);
-      this.validate();
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.methods = null;
-      this.data = null;
-      return Validation_get(Validation_getPrototypeOf(Validation.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "data",
-    get: function get() {
-      return this._data;
-    },
-    set: function set(value) {
-      if (this._data) {
-        this._data.removeEventListener(Data.CHANGE, this.dataChangeBind);
-      }
-
-      this._data = value;
-
-      if (this._data) {
-        this._data.addEventListener(Data.CHANGE, this.dataChangeBind);
-      }
-
-      this.validate();
-    }
-  }]);
-
-  return Validation;
-}(BooleanData_BooleanData);
-
-
-// CONCATENATED MODULE: ./js/tsunami/geom/math.js
-function math_lerp(a, b, t) {
-  return a + t * (b - a); // return a(1-t) + bt
-}
-// CONCATENATED MODULE: ./js/tsunami/geom/Point.js
-function Point_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Point_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Point_createClass(Constructor, protoProps, staticProps) { if (protoProps) Point_defineProperties(Constructor.prototype, protoProps); if (staticProps) Point_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Point_Point =
-/*#__PURE__*/
-function () {
-  function Point() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    Point_classCallCheck(this, Point);
-
-    this.x = x;
-    this.y = y;
-  }
-
-  Point_createClass(Point, [{
-    key: "add",
-    value: function add(p) {
-      return new Point(this.x + p.x, this.y + p.y);
-    }
-  }, {
-    key: "abs",
-    value: function abs() {
-      return new Point(Math.abs(this.x), Math.abs(this.y));
-    }
-  }, {
-    key: "clamp",
-    value: function clamp(minX, maxX, minY, maxY) {
-      this.clampX(minX, maxX);
-      this.clampY(minY, maxY);
-    }
-  }, {
-    key: "clampX",
-    value: function clampX(min, max) {
-      this.x = Math.max(this.x, min);
-      this.x = Math.min(this.x, max);
-    }
-  }, {
-    key: "clampY",
-    value: function clampY(min, max) {
-      this.y = Math.max(this.y, min);
-      this.y = Math.min(this.y, max);
-    }
-  }, {
-    key: "copyFrom",
-    value: function copyFrom(p) {
-      this.x = p.x;
-      this.y = p.y;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      return new Point(this.x, this.y);
-    }
-  }, {
-    key: "equals",
-    value: function equals(point) {
-      return this.x == point.x && this.y == point.y;
-    }
-  }, {
-    key: "divide",
-    value: function divide(p) {
-      return new Point(this.x / p.x, this.y / p.y);
-    }
-  }, {
-    key: "divideScalar",
-    value: function divideScalar(scalar) {
-      return new Point(this.x / scalar, this.y / scalar);
-    }
-  }, {
-    key: "multiply",
-    value: function multiply(p) {
-      return new Point(this.x * p.x, this.y * p.y);
-    }
-  }, {
-    key: "multiplyScalar",
-    value: function multiplyScalar(scalar) {
-      return new Point(this.x * scalar, this.y * scalar);
-    }
-  }, {
-    key: "set",
-    value: function set(x, y) {
-      this.x = x;
-      this.y = y;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract(p) {
-      return new Point(this.x - p.x, this.y - p.y);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      return {
-        x: this.x,
-        y: this.y
-      };
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(obj) {
-      this.copyFrom(obj);
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[Point" + " x=" + this.x + " y=" + this.y + "]";
-    }
-  }, {
-    key: "magnitude",
-    get: function get() {
-      return Point.distance(this);
-    }
-  }], [{
-    key: "lerp",
-    value: function lerp(p0, p1, t) {
-      return new Point(math_lerp(p0.x, p1.x, t), math_lerp(p0.y, p1.y, t));
-    }
-  }, {
-    key: "distance",
-    value: function distance(p1) {
-      var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
-      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
-    }
-  }, {
-    key: "polar",
-    value: function polar(len, radians) {
-      return new Point(len * Math.cos(radians), len * Math.sin(radians));
-    }
-  }, {
-    key: "getAngle",
-    value: function getAngle(point) {
-      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
-      return Math.atan2(point.y - center.y, point.x - center.x);
-    }
-  }]);
-
-  return Point;
-}();
-
-
-// CONCATENATED MODULE: ./js/tsunami/geom/Rectangle.js
-function Rectangle_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Rectangle_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Rectangle_createClass(Constructor, protoProps, staticProps) { if (protoProps) Rectangle_defineProperties(Constructor.prototype, protoProps); if (staticProps) Rectangle_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Rectangle_Rectangle =
-/*#__PURE__*/
-function () {
-  function Rectangle() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-
-    Rectangle_classCallCheck(this, Rectangle);
-
-    this._position = new Point_Point();
-    this._size = new Point_Point();
-    this.center = new Point_Point();
-    this.halfSize = new Point_Point();
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-  }
-
-  Rectangle_createClass(Rectangle, [{
-    key: "contains",
-    value: function contains(point) {
-      var hit = point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height ? true : false;
-      return hit;
-    }
-  }, {
-    key: "intersects",
-    value: function intersects(rect) {
-      return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
-    }
-  }, {
-    key: "intersect",
-    value: function intersect(b) {
-      var a = this;
-      var x = Math.max(a.x, b.x);
-      var num1 = Math.min(a.x + a.width, b.x + b.width);
-      var y = Math.max(a.y, b.y);
-      var num2 = Math.min(a.y + a.height, b.y + b.height);
-      var result;
-
-      if (num1 >= x && num2 >= y) {
-        result = new Rectangle(x, y, num1 - x, num2 - y);
-      } else {
-        result = new Rectangle();
-      }
-
-      return result;
-    }
-  }, {
-    key: "equals",
-    value: function equals(rect) {
-      return this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      return new Rectangle(this.x, this.y, this.width, this.height);
-    }
-  }, {
-    key: "copyFrom",
-    value: function copyFrom(rect) {
-      this.x = rect.x;
-      this.y = rect.y;
-      this.width = rect.width;
-      this.height = rect.height;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[Rectangle" + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + "]";
-    }
-  }, {
-    key: "scaleWidth",
-    value: function scaleWidth(height) {
-      return new Rectangle(this.x, this.y, height * this.widthToHeight, height);
-    }
-  }, {
-    key: "scaleHeight",
-    value: function scaleHeight(width) {
-      return new Rectangle(this.x, this.y, width, width * this.heightToWidth);
-    }
-  }, {
-    key: "scaleToFillRect",
-    value: function scaleToFillRect(rect) {
-      // let scaled = this.scaleHeight(rect.width);
-      //
-      // if (scaled.height < rect.height) {
-      // 	scaled = this.scaleWidth(rect.height);
-      // }
-      var amount = this.getScaleToFill(rect);
-      return this.scale(amount, amount);
-    }
-  }, {
-    key: "scaleToFitRect",
-    value: function scaleToFitRect(rect) {
-      // let scaled = this.scaleHeight(rect.width);
-      //
-      // if (scaled.height > rect.height) {
-      // 	scaled = this.scaleWidth(rect.height);
-      // }
-      // scaled.x = (rect.width - scaled.width) / 2;
-      // scaled.y = (rect.height - scaled.height) / 2;
-      var amount = this.getScaleToFitRect(rect);
-      return this.scale(amount, amount);
-    }
-  }, {
-    key: "scale",
-    value: function scale(x, y) {
-      return new Rectangle(this.x, this.y, this.width * x, this.height * y);
-    }
-  }, {
-    key: "scaleToArea",
-    value: function scaleToArea(area) {
-      var height = Math.sqrt(area / this.widthToHeight);
-      var width = area / height;
-      return new Rectangle(0, 0, width, height);
-    }
-  }, {
-    key: "getScaleToFill",
-    value: function getScaleToFill(rect) {
-      var scale;
-
-      if (this.widthToHeight > rect.widthToHeight) {
-        scale = rect.height / this.height;
-      } else {
-        scale = rect.width / this.width;
-      }
-
-      return scale;
-    }
-  }, {
-    key: "getScaleToFitRect",
-    value: function getScaleToFitRect(rect) {
-      var scale;
-
-      if (this.widthToHeight > rect.widthToHeight) {
-        scale = rect.width / this.width;
-      } else {
-        scale = rect.height / this.height;
-      }
-
-      return scale;
-    }
-  }, {
-    key: "x",
-    get: function get() {
-      return this.position.x;
-    },
-    set: function set(value) {
-      this.position.x = value;
-      this.center.x = this.position.x + this.halfSize.x;
-    }
-  }, {
-    key: "y",
-    get: function get() {
-      return this.position.y;
-    },
-    set: function set(value) {
-      this.position.y = value;
-      this.center.y = this.position.y + this.halfSize.y;
-    }
-  }, {
-    key: "width",
-    get: function get() {
-      return this.size.x;
-    },
-    set: function set(value) {
-      this.size.x = value;
-      this.halfSize.x = value / 2;
-      this.center.x = this.position.x + this.halfSize.x;
-    }
-  }, {
-    key: "height",
-    get: function get() {
-      return this.size.y;
-    },
-    set: function set(value) {
-      this.size.y = value;
-      this.halfSize.y = value / 2;
-      this.center.y = this.position.y + this.halfSize.y;
-    }
-  }, {
-    key: "position",
-    get: function get() {
-      return this._position;
-    },
-    set: function set(value) {
-      this._position = value;
-    }
-  }, {
-    key: "size",
-    get: function get() {
-      return this._size;
-    },
-    set: function set(value) {
-      this._size = value;
-    }
-  }, {
-    key: "area",
-    get: function get() {
-      return this.size.x * this.size.y;
-    }
-  }, {
-    key: "widthToHeight",
-    get: function get() {
-      return this.width / this.height;
-    }
-  }, {
-    key: "heightToWidth",
-    get: function get() {
-      return this.height / this.width;
-    }
-  }, {
-    key: "isPortrait",
-    get: function get() {
-      return this.width <= this.height;
-    }
-  }, {
-    key: "isLandscape",
-    get: function get() {
-      return this.height <= this.width;
-    }
-  }]);
-
-  return Rectangle;
-}();
-
-
-// CONCATENATED MODULE: ./js/tsunami/window.js
-
-
-var isMobile = {
-  android: navigator.userAgent.match(/Android/i) ? true : false,
-  blackBerry: navigator.userAgent.match(/BlackBerry/i) ? true : false,
-  iOS: navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false,
-  windows: navigator.userAgent.match(/IEMobile/i) ? true : false
-};
-isMobile.any = isMobile.android || isMobile.blackBerry || isMobile.iOS || isMobile.windows;
-var isTouch = "ontouchend" in window;
-function getCookie(cname) {
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-
-    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-  }
-
-  return "";
-}
-function serialize(obj) {
-  var str = [];
-
-  for (var p in obj) {
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    }
-  }
-
-  return str.join("&");
-}
-function getSearchParams(url, dontDecodeURI) {
-  var obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  if (!url) {
-    url = window.location.href;
-  }
-
-  if (url.indexOf('?') != -1) {
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-
-    for (var i = 0; i < hashes.length; i++) {
-      var string = hashes[i];
-      var equalIndex = string.indexOf("=");
-
-      if (equalIndex != -1) {
-        var hash = []; //let hash = hashes[i].split('=');
-
-        hash[0] = string.substr(0, equalIndex);
-        hash[1] = string.substr(equalIndex + 1);
-
-        if (dontDecodeURI) {
-          obj[hash[0]] = hash[1];
-        } else {
-          obj[hash[0]] = decodeURI(hash[1]);
+    key: "clickDelayComplete",
+    value: function clickDelayComplete() {
+      var href = this.element.href;
+
+      if (href) {
+        var path = href.substr(this.router.absoluteBasePath.length);
+
+        if (this.pushState) {
+          this.router.pushState(path);
         }
       } else {
-        obj[string] = null;
+        this.router.location = this.element.getAttribute("data-path");
       }
-    }
-  }
-
-  return obj;
-}
-function window_getRect() {
-  var rectangle = new Rectangle_Rectangle();
-  rectangle.width = window.innerWidth;
-  rectangle.height = window.innerHeight;
-  return rectangle;
-}
-function localToGlobal(element, root, point) {
-  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  if (!point) {
-    point = new Point_Point();
-  }
-
-  while (element && element != root) {
-    //point.x += element.offsetLeft - element.parentNode.scrollLeft;
-    //point.y += element.offsetTop - element.parentNode.scrollTop;
-    // if (debug) {
-    // 	console.log("localToGlobal element", element.className, element.offsetTop);
-    // }
-    point.x += element.offsetLeft;
-    point.y += element.offsetTop;
-    element = element.parentNode;
-  }
-
-  return point;
-}
-function localToGlobalX(element, root) {
-  var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  while (element != root) {
-    // if (debug) {
-    // 	console.log("element", element.className, element.offsetLeft);
-    // }
-    x += element.offsetLeft;
-    element = element.parentNode;
-  }
-
-  return x;
-}
-function localToGlobalY(element, root) {
-  var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  while (element != root) {
-    // if (debug) {
-    // 	console.log("element", element.nodeName, element.className, element.offsetTop);
-    // }
-    y += element.offsetTop;
-    element = element.parentNode;
-  }
-
-  return y;
-}
-function isHidden() {
-  return document[window.hidden];
-}
-var devideOrientation = "";
-var deviceDirection = "";
-function getDeviceMotionDifference(event) {
-  var width = window.innerWidth;
-  var height = window.innerHeight;
-  var devideOrientation = "landscape";
-  var deviceDirection = "up";
-  var x = 0;
-  var y = 0;
-
-  if (height > width) {
-    devideOrientation = "portrait";
-  }
-
-  if (devideOrientation == "portrait") {
-    if (event.accelerationIncludingGravity.y > 0) {
-      deviceDirection = "down";
-    }
-
-    x = event.accelerationIncludingGravity.x;
-    y = event.accelerationIncludingGravity.z;
-  }
-
-  if (devideOrientation == "landscape") {
-    if (event.accelerationIncludingGravity.x > 0) {
-      deviceDirection = "down";
-    }
-
-    x = event.accelerationIncludingGravity.y;
-    y = event.accelerationIncludingGravity.z;
-  }
-
-  if (devideOrientation != devideOrientation || deviceDirection != deviceDirection) {
-    devideOrientation = devideOrientation;
-    deviceDirection = deviceDirection;
-    this.initialAccelerationIncludingGravity = {
-      x: x,
-      y: y
-    };
-  }
-
-  var diff = {
-    x: x - this.initialAccelerationIncludingGravity.x,
-    y: y - this.initialAccelerationIncludingGravity.y
-  };
-  return diff;
-}
-function forceProtocol(url, protocol) {
-  var isHttps = protocol.indexOf("https") != -1;
-  var urlIsHttps = url.indexOf("https") != -1;
-
-  if (isHttps && !urlIsHttps) {
-    url = url.split("http").join("https");
-  } else if (!isHttps && urlIsHttps) {
-    url = url.split("https").join("http");
-  }
-
-  return url;
-}
-function fileExists(url) {
-  var req = new XMLHttpRequest();
-  req.open('HEAD', url, false);
-  req.send();
-  return req.status !== 404;
-}
-function getElementSelector(element) {
-  var names = [];
-
-  while (element) {
-    var elSelector = element.nodeName;
-    var className = element.className;
-
-    if (className) {
-      elSelector = elSelector + "." + className.split(" ").join(".");
-    }
-
-    names.push(elSelector);
-
-    if (element != document.body) {
-      element = element.parentNode;
-    } else {
-      element = null;
-    }
-  }
-
-  names = names.reverse();
-  var selector = names.join(" > ");
-  return selector;
-}
-// CONCATENATED MODULE: ./js/tsunami/events.js
-function events_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function events_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function events_createClass(Constructor, protoProps, staticProps) { if (protoProps) events_defineProperties(Constructor.prototype, protoProps); if (staticProps) events_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-var events = {
-  mouseover: "mouseover",
-  mouseout: "mouseout",
-  mousedown: "mousedown",
-  mouseup: "mouseup",
-  mousemove: "mousemove",
-  click: "click",
-  transitionend: 'transitionend',
-  animationstart: 'animationstart',
-  animationiteration: 'animationiteration',
-  animationend: 'animationend'
-};
-
-if (isTouch) {
-  events.mouseover = "touchstart";
-  events.mouseout = "touchend";
-  events.mousedown = "touchstart";
-  events.mouseup = "touchend";
-  events.mousemove = "touchmove";
-  events.click = "click";
-}
-
-var platforms = {
-  'OTransition': {
-    transitionend: 'otransitionend',
-    animationstart: 'oanimationstart',
-    animationiteration: 'oanimationiteration',
-    animationend: 'oanimationend'
-  },
-  'MozTransition': {
-    transitionend: 'transitionend',
-    animationstart: 'moznimationstart',
-    animationiteration: 'moznimationiteration',
-    animationend: 'moznimationend'
-  },
-  'WebkitTransition': {
-    transitionend: 'webkitTransitionEnd',
-    animationstart: 'webkitAnimationStart',
-    animationiteration: 'webkitAnimationIteration',
-    animationend: 'webkitAnimationEnd'
-  }
-};
-window.addEventListener("load", function () {
-  for (var i in platforms) {
-    var data = platforms[i];
-
-    if (document.body.style[i] !== undefined) {
-      events.transitionend = data.transitionend;
-      events.animationstart = data.animationstart;
-      events.animationiteration = data.animationiteration;
-      events.animationend = data.animationend;
-    }
-  }
-});
-function createCustomEvent(type, params) {
-  var event;
-
-  try {
-    event = new CustomEvent(event, params);
-  } catch (e) {
-    event = document.createEvent('CustomEvent');
-    event.initCustomEvent(type, params.bubbles, params.bubbles, params.detail);
-  }
-
-  return event;
-}
-
-var BaseEvent =
-/*#__PURE__*/
-function () {
-  function BaseEvent(type, value) {
-    events_classCallCheck(this, BaseEvent);
-
-    this.type = type;
-    this.value = value;
-  }
-
-  events_createClass(BaseEvent, [{
-    key: "stopPropagation",
-    value: function stopPropagation() {}
-  }, {
-    key: "stopImmediatePropagation",
-    value: function stopImmediatePropagation() {}
-  }, {
-    key: "preventDefault",
-    value: function preventDefault() {}
-  }]);
-
-  return BaseEvent;
-}();
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/NumberData.js
-function NumberData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { NumberData_typeof = function _typeof(obj) { return typeof obj; }; } else { NumberData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return NumberData_typeof(obj); }
-
-function NumberData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function NumberData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function NumberData_createClass(Constructor, protoProps, staticProps) { if (protoProps) NumberData_defineProperties(Constructor.prototype, protoProps); if (staticProps) NumberData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function NumberData_possibleConstructorReturn(self, call) { if (call && (NumberData_typeof(call) === "object" || typeof call === "function")) { return call; } return NumberData_assertThisInitialized(self); }
-
-function NumberData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function NumberData_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { NumberData_get = Reflect.get; } else { NumberData_get = function _get(target, property, receiver) { var base = NumberData_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return NumberData_get(target, property, receiver || target); }
-
-function NumberData_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = NumberData_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function NumberData_getPrototypeOf(o) { NumberData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return NumberData_getPrototypeOf(o); }
-
-function NumberData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) NumberData_setPrototypeOf(subClass, superClass); }
-
-function NumberData_setPrototypeOf(o, p) { NumberData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return NumberData_setPrototypeOf(o, p); }
-
-
-
-
-
-var NumberData_NumberData =
-/*#__PURE__*/
-function (_Data) {
-  NumberData_inherits(NumberData, _Data);
-
-  function NumberData() {
-    var _this;
-
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NaN;
-    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-    NumberData_classCallCheck(this, NumberData);
-
-    _this = NumberData_possibleConstructorReturn(this, NumberData_getPrototypeOf(NumberData).call(this));
-    _this.modifiers = modifiers;
-    _this.value = value;
-    return _this;
-  }
-
-  NumberData_createClass(NumberData, [{
-    key: "add",
-    value: function add() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value + value;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract() {
-      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.value = this._value - value;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.value = 0;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.modifiers = [];
-
-      if (this.validation instanceof Validation_Validation) {
-        this.validation.destroy();
-      }
-
-      this.validation = null;
-      return NumberData_get(NumberData_getPrototypeOf(NumberData.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      value = Number(value);
-
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value || this.forceChangeEvent) {
-        this._value = value;
-        var event = new BaseEvent(Data.CHANGE, value);
-        this.dispatchEvent(event);
-      }
-    }
-  }], [{
-    key: "roundDecimal",
-    value: function roundDecimal(val) {
-      var divider = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
-      return Math.round(val * divider) / divider;
-    }
-  }, {
-    key: "roundDecimal1",
-    value: function roundDecimal1(val) {
-      return NumberData.roundDecimal(val, 10);
-    }
-  }, {
-    key: "roundDecimal2",
-    value: function roundDecimal2(val) {
-      return NumberData.roundDecimal(val, 100);
-    }
-  }, {
-    key: "roundDecimal3",
-    value: function roundDecimal3(val) {
-      return NumberData.roundDecimal(val, 1000);
-    }
-  }]);
-
-  return NumberData;
-}(Data);
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/ObjectData.js
-function ObjectData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ObjectData_typeof = function _typeof(obj) { return typeof obj; }; } else { ObjectData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ObjectData_typeof(obj); }
-
-function ObjectData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ObjectData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ObjectData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ObjectData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ObjectData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ObjectData_possibleConstructorReturn(self, call) { if (call && (ObjectData_typeof(call) === "object" || typeof call === "function")) { return call; } return ObjectData_assertThisInitialized(self); }
-
-function ObjectData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ObjectData_getPrototypeOf(o) { ObjectData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ObjectData_getPrototypeOf(o); }
-
-function ObjectData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ObjectData_setPrototypeOf(subClass, superClass); }
-
-function ObjectData_setPrototypeOf(o, p) { ObjectData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ObjectData_setPrototypeOf(o, p); }
-
-
-
-
-var ObjectData_ObjectData =
-/*#__PURE__*/
-function (_Data) {
-  ObjectData_inherits(ObjectData, _Data);
-
-  function ObjectData(value) {
-    var _this;
-
-    ObjectData_classCallCheck(this, ObjectData);
-
-    _this = ObjectData_possibleConstructorReturn(this, ObjectData_getPrototypeOf(ObjectData).call(this));
-    _this.value = value;
-    _this.forceChangeEvent = false;
-    return _this;
-  }
-
-  ObjectData_createClass(ObjectData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "_deselectValue",
-    value: function _deselectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData_BooleanData) {
-            data.isSelected.value = false;
-          }
-        }
-      }
-    }
-  }, {
-    key: "_selectValue",
-    value: function _selectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof BooleanData_BooleanData) {
-            data.isSelected.value = true;
-          }
-        }
-      }
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._deselectValue(this._value);
-
-        this._value = value;
-
-        this._selectValue(this._value);
-
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      } else if (this.forceChangeEvent) {
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return ObjectData;
-}(Data);
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/ArrayData.js
-function ArrayData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ArrayData_typeof = function _typeof(obj) { return typeof obj; }; } else { ArrayData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ArrayData_typeof(obj); }
-
-function ArrayData_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ArrayData_possibleConstructorReturn(self, call) { if (call && (ArrayData_typeof(call) === "object" || typeof call === "function")) { return call; } return ArrayData_assertThisInitialized(self); }
-
-function ArrayData_getPrototypeOf(o) { ArrayData_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ArrayData_getPrototypeOf(o); }
-
-function ArrayData_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ArrayData_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ArrayData_createClass(Constructor, protoProps, staticProps) { if (protoProps) ArrayData_defineProperties(Constructor.prototype, protoProps); if (staticProps) ArrayData_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ArrayData_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ArrayData_setPrototypeOf(subClass, superClass); }
-
-function ArrayData_setPrototypeOf(o, p) { ArrayData_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ArrayData_setPrototypeOf(o, p); }
-
-
-
-
-
-
-var ArrayData_ArrayData =
-/*#__PURE__*/
-function (_Data) {
-  ArrayData_inherits(ArrayData, _Data);
-
-  ArrayData_createClass(ArrayData, null, [{
-    key: "shuffle",
-    value: function shuffle(o) {
-      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
-        ;
-      }
-
-      return o;
-    }
-  }, {
-    key: "nodeListToArray",
-    value: function nodeListToArray(nodeList) {
-      return Array.prototype.slice.call(nodeList); // let array = new Array();
-      // for (let i = 0; i < nodeList.length; i++) {
-      // 	array.push(nodeList.item(i));
-      // }
-      // return array;
-    }
-  }, {
-    key: "ITEM_CHANGE",
-    get: function get() {
-      return "item-change";
-    }
-  }]);
-
-  function ArrayData() {
-    var _this;
-
-    ArrayData_classCallCheck(this, ArrayData);
-
-    _this = ArrayData_possibleConstructorReturn(this, ArrayData_getPrototypeOf(ArrayData).call(this));
-    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(ArrayData_assertThisInitialized(_this));
-    _this.selectedItemChange = _this.selectedItemChange.bind(ArrayData_assertThisInitialized(_this));
-    _this.selectedIndexChange = _this.selectedIndexChange.bind(ArrayData_assertThisInitialized(_this));
-    _this.lastIndex = new NumberData_NumberData();
-    _this.length = new NumberData_NumberData();
-
-    _this.length.addEventListener(Data.CHANGE, function () {
-      _this.lastIndex.value = _this.length.value - 1;
-    });
-
-    _this.length.value = arguments.length;
-    _this._value = [];
-    _this.selectedItem = new ObjectData_ObjectData();
-
-    _this.selectedItem.addEventListener(Data.CHANGE, _this.selectedItemChange);
-
-    _this.selectedIndex = new NumberData_NumberData();
-
-    _this.selectedIndex.addEventListener(Data.CHANGE, _this.selectedIndexChange);
-
-    _this.nextIndex = new NumberData_NumberData();
-    _this.prevIndex = new NumberData_NumberData();
-    _this.dataClass = Object;
-
-    _this.push.apply(ArrayData_assertThisInitialized(_this), arguments);
-
-    return _this;
-  }
-
-  ArrayData_createClass(ArrayData, [{
-    key: "selectedItemChange",
-    value: function selectedItemChange(event) {
-      this.updateSelectedIndex();
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "updateSelectedIndex",
-    value: function updateSelectedIndex() {
-      this.selectedIndex.removeEventListener(Data.CHANGE, this.selectedIndexChange);
-      var index = this.value.indexOf(this.selectedItem.value);
-      this.selectedIndex.value = index;
-      this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
-    }
-  }, {
-    key: "setSelectedData",
-    value: function setSelectedData(value) {
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof Data) {
-          this.previousSelectedItem.isSelectedItem.value = false;
-        }
-      }
-
-      if (this.selectedData) {
-        this.selectedData.copy(value);
-      }
-
-      this.previousSelectedItem = value;
-
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof Data) {
-          this.previousSelectedItem.isSelectedItem.value = true;
-        }
-      }
-
-      var index = this.selectedIndex.value;
-      var nextIndex = index + 1;
-
-      if (nextIndex > this.value.length - 1) {
-        nextIndex = 0;
-      }
-
-      this.nextIndex.value = nextIndex;
-
-      if (this.nextData) {
-        this.nextData.copy(this.value[this.nextIndex.value]);
-      }
-
-      var prevIndex = index - 1;
-
-      if (prevIndex < 0) {
-        prevIndex = this.value.length - 1;
-      }
-
-      this.prevIndex.value = prevIndex;
-
-      if (this.prevData) {
-        this.prevData.copy(this.value[this.prevIndex.value]);
-      }
-    }
-  }, {
-    key: "selectedIndexChange",
-    value: function selectedIndexChange(event) {
-      var index = this.selectedIndex.value;
-      this.selectedItem.removeEventListener(Data.CHANGE, this.selectedItemChange);
-      this.selectedItem.value = this.value[index];
-      this.selectedItem.addEventListener(Data.CHANGE, this.selectedItemChange);
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "dataItemChangeHandler",
-    value: function dataItemChangeHandler(e) {
-      var event = new BaseEvent(ArrayData.ITEM_CHANGE, this.value);
-      this.dispatchEvent(event);
-    }
-  }, {
-    key: "item",
-    value: function item(index) {
-      return this._value[index];
-    }
-  }, {
-    key: "indexOf",
-    value: function indexOf(searchElement, fromIndex) {
-      return this._value.indexOf(searchElement, fromIndex);
-    }
-  }, {
-    key: "map",
-    value: function map(callback) {
-      return this._value.map(callback);
-    }
-  }, {
-    key: "find",
-    value: function find(callback) {
-      return this._value.find(callback);
-    }
-  }, {
-    key: "findByKey",
-    value: function findByKey(key, value) {
-      var selected = this.find(function (element) {
-        return element[key].toString() == value.toString();
-      });
-      return selected;
-    }
-  }, {
-    key: "filter",
-    value: function filter(callback) {
-      return this._value.filter(callback);
-    }
-  }, {
-    key: "pop",
-    value: function pop() {
-      var item = this._value.pop();
-
-      if (item instanceof Data) {
-        item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: this.value.length,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-
-      if (item == this.selectedItem.value) {
-        this.selectedItem.value = null;
-      } else {
-        this.updateSelectedIndex();
-      }
-
-      return item;
-    }
-  }, {
-    key: "push",
-    value: function push() {
-      var previousLength = this.value.length;
-
-      var length = this._value.push.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i = 0; _i < added.length; _i++) {
-        var item = added[_i];
-
-        if (item instanceof Data) {
-          item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: previousLength,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      return length;
-    }
-  }, {
-    key: "reverse",
-    value: function reverse() {
-      this._value.reverse();
-
-      this.dispatchEvent({
-        type: "reverse",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-      this.updateSelectedIndex();
-    }
-  }, {
-    key: "shift",
-    value: function shift() {
-      var item = this._value.shift();
-
-      if (item instanceof Data) {
-        item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: 0,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-
-      if (item == this.selectedItem.value) {
-        this.selectedItem.value = null;
-      } else {
-        this.updateSelectedIndex();
-      }
-
-      return item;
-    }
-  }, {
-    key: "swap",
-    value: function swap(index_A, index_B) {
-      var temp = this._value[index_A];
-      this._value[index_A] = this._value[index_B];
-      this._value[index_B] = temp;
-      this.dispatchEvent({
-        type: "sort",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-      this.updateSelectedIndex();
-    }
-  }, {
-    key: "sort",
-    value: function sort(compareFunction) {
-      this._value.sort(compareFunction);
-
-      this.dispatchEvent({
-        type: "sort",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-      this.updateSelectedIndex();
-    }
-  }, {
-    key: "splice",
-    value: function splice() {
-      var elements = this._value.splice.apply(this._value, arguments);
-
-      for (var i = 0; i < elements.length; i++) {
-        var item = elements[i];
-
-        if (item instanceof Data) {
-          item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      var added = [];
-
-      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
-        added.push(arguments[_i2]);
-      }
-
-      this.length.value = this._value.length;
-
-      for (var _i3 = 0; _i3 < added.length; _i3++) {
-        var _item = added[_i3];
-
-        if (_item instanceof Data) {
-          _item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      var index = arguments[0];
-
-      if (elements.length > 0) {
-        this.dispatchEvent({
-          type: "remove",
-          value: elements,
-          index: index,
-          total: elements.length
-        });
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: index,
-          total: added.length
-        });
-      }
-
-      if (elements.length > 0 || added.length > 0) {
-        this.dispatchChangeEvent();
-      }
-
-      if (this.includes(this.selectedItem.value)) {
-        this.updateSelectedIndex();
-      } else {
-        this.selectedItem.value = null;
-      }
-
-      return elements;
-    }
-  }, {
-    key: "remove",
-    value: function remove(element) {
-      var index = this.indexOf(element);
-
-      if (index != -1) {
-        this.splice(index, 1);
-      }
-    }
-  }, {
-    key: "unshift",
-    value: function unshift() {
-      var length = this._value.unshift.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i4 = 0; _i4 < added.length; _i4++) {
-        var item = added[_i4];
-
-        if (item instanceof Data) {
-          item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: 0,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      this.updateSelectedIndex();
-      return length;
-    }
-  }, {
-    key: "dispatchChangeEvent",
-    value: function dispatchChangeEvent() {
-      this.dataItemChangeHandler(null);
-      this.dispatchEvent({
-        type: Data.CHANGE,
-        value: this._value
-      });
-    }
-  }, {
-    key: "includes",
-    value: function includes(element) {
-      var index = this.indexOf(element);
-      return index != -1;
-    }
-  }, {
-    key: "join",
-    value: function join() {
-      return this._value.join.apply(this._value, arguments);
-    }
-  }, {
-    key: "concat",
-    value: function concat() {
-      return this._value.concat.apply(this._value, arguments);
-    }
-  }, {
-    key: "slice",
-    value: function slice() {
-      return this._value.slice.apply(this._value, arguments);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var array = [];
-      this.map(function (obj) {
-        array.push(obj.serialize());
-      });
-      return array;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      var _this2 = this;
-
-      var array = [];
-      data.map(function (obj) {
-        var instance = new _this2.dataClass();
-        instance.deserialize(obj);
-        array.push(instance);
-      });
-      this.value = array;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      for (var i = 0; i < this._value.length; i++) {
-        var oldItem = this._value[i];
-
-        if (oldItem instanceof Data) {
-          oldItem.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (!value) {
-        value = [];
-      }
-
-      this._value = value;
-
-      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
-        var item = this._value[_i5];
-
-        if (item instanceof Data) {
-          item.addEventListener(Data.CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "reset",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-
-      if (this.includes(this.selectedItem.value)) {
-        this.updateSelectedIndex();
-      } else {
-        this.selectedItem.value = null;
-      }
-    }
-  }]);
-
-  return ArrayData;
-}(Data);
-
-
-// CONCATENATED MODULE: ./js/tsunami/data/ArrayDataOperation.js
-function ArrayDataOperation_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ArrayDataOperation_typeof = function _typeof(obj) { return typeof obj; }; } else { ArrayDataOperation_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ArrayDataOperation_typeof(obj); }
-
-function ArrayDataOperation_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function ArrayDataOperation_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function ArrayDataOperation_createClass(Constructor, protoProps, staticProps) { if (protoProps) ArrayDataOperation_defineProperties(Constructor.prototype, protoProps); if (staticProps) ArrayDataOperation_defineProperties(Constructor, staticProps); return Constructor; }
-
-function ArrayDataOperation_possibleConstructorReturn(self, call) { if (call && (ArrayDataOperation_typeof(call) === "object" || typeof call === "function")) { return call; } return ArrayDataOperation_assertThisInitialized(self); }
-
-function ArrayDataOperation_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function ArrayDataOperation_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ArrayDataOperation_get = Reflect.get; } else { ArrayDataOperation_get = function _get(target, property, receiver) { var base = ArrayDataOperation_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ArrayDataOperation_get(target, property, receiver || target); }
-
-function ArrayDataOperation_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ArrayDataOperation_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function ArrayDataOperation_getPrototypeOf(o) { ArrayDataOperation_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ArrayDataOperation_getPrototypeOf(o); }
-
-function ArrayDataOperation_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ArrayDataOperation_setPrototypeOf(subClass, superClass); }
-
-function ArrayDataOperation_setPrototypeOf(o, p) { ArrayDataOperation_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ArrayDataOperation_setPrototypeOf(o, p); }
-
-
-
-
-
-
-
-var ArrayDataOperation_ArrayDataOperation =
-/*#__PURE__*/
-function (_Data) {
-  ArrayDataOperation_inherits(ArrayDataOperation, _Data);
-
-  function ArrayDataOperation() {
-    var _this;
-
-    var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ArrayDataOperation.ADD;
-    var arrayData = arguments.length > 1 ? arguments[1] : undefined;
-    var modifiers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-    ArrayDataOperation_classCallCheck(this, ArrayDataOperation);
-
-    _this = ArrayDataOperation_possibleConstructorReturn(this, ArrayDataOperation_getPrototypeOf(ArrayDataOperation).call(this));
-
-    if (!arrayData) {
-      arrayData = new ArrayData_ArrayData();
-    }
-
-    _this.modifiers = modifiers;
-    _this.itemChangeHandler = _this.itemChangeHandler.bind(ArrayDataOperation_assertThisInitialized(_this));
-    _this.operation = operation;
-    _this.arrayData = arrayData;
-    return _this;
-  }
-
-  ArrayDataOperation_createClass(ArrayDataOperation, [{
-    key: "itemChangeHandler",
-    value: function itemChangeHandler(event) {
-      var newValue;
-      var array = this.arrayData;
-
-      if (array) {
-        if (this._array instanceof ArrayData_ArrayData) {
-          array = this.arrayData.value;
-        }
-
-        if (array.length > 0) {
-          var firstItem = array[0];
-          newValue = firstItem;
-
-          if (firstItem instanceof Data) {
-            newValue = firstItem.value;
-          }
-
-          for (var i = 1; i < array.length; i++) {
-            var item = array[i];
-            var itemValue = item;
-
-            if (item instanceof Data) {
-              itemValue = item.value;
-            }
-
-            newValue = this.operation(newValue, itemValue);
-          }
-        }
-      } // if(this.debug) {
-      // 	console.log("ArrayDataOperation.itemChangeHandler newValue", newValue);
-      // }
-
-
-      this.value = newValue; // if (this._value != newValue) {
-      // 	this._value = newValue;
-      // 	this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
-      // }
-    }
-  }, {
-    key: "parseString",
-    value: function parseString(string, scope) {
-      var chunks = string.split("[[");
-      var array = [];
-
-      for (var i = 0; i < chunks.length; i++) {
-        var chunk = chunks[i];
-
-        if (chunk.indexOf("]]") == -1) {
-          array.push(chunk);
-        } else {
-          var chunkArray = chunk.split("]]");
-
-          for (var j = 0; j < chunkArray.length; j++) {
-            var chunk2 = chunkArray[j];
-
-            if (j == 0) {
-              var model = evalProperty(chunk2, scope);
-              array.push(model);
-            } else {
-              array.push(chunk2);
-            }
-          }
-        }
-      }
-
-      this.arrayData.value = array;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      if (this.arrayData instanceof Data) {
-        this.arrayData.destroy();
-      }
-
-      this.arrayData = null;
-      this.modifiers = [];
-
-      if (this.validation instanceof Validation_Validation) {
-        this.validation.destroy();
-      }
-
-      return ArrayDataOperation_get(ArrayDataOperation_getPrototypeOf(ArrayDataOperation.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "arrayData",
-    get: function get() {
-      return this._array;
-    },
-    set: function set(value) {
-      if (this._array) {
-        if (this._array instanceof ArrayData_ArrayData) {
-          this._array.removeEventListener(ArrayData_ArrayData.ITEM_CHANGE, this.itemChangeHandler);
-        }
-      }
-
-      this._array = value;
-
-      if (this._array) {
-        if (this._array instanceof ArrayData_ArrayData) {
-          this._array.addEventListener(ArrayData_ArrayData.ITEM_CHANGE, this.itemChangeHandler);
-        }
-      }
-
-      this.itemChangeHandler();
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value) {
-        this._value = value;
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      } else if (this.forceChangeEvent) {
-        this.dispatchEvent({
-          type: Data.CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }], [{
-    key: "ADD",
-    value: function ADD(value1, value2) {
-      return value1 + value2;
-    }
-  }, {
-    key: "ADD_TOSTRING",
-    value: function ADD_TOSTRING(value1, value2) {
-      return value1.toString() + value2.toString();
-    }
-  }, {
-    key: "SUBTRACT",
-    value: function SUBTRACT(value1, value2) {
-      return value1 - value2;
-    }
-  }, {
-    key: "MULTIPLY",
-    value: function MULTIPLY(value1, value2) {
-      return value1 * value2;
-    }
-  }, {
-    key: "DIVIDE",
-    value: function DIVIDE(value1, value2) {
-      return value1 / value2;
-    }
-  }, {
-    key: "MIN",
-    value: function MIN(value1, value2) {
-      return Math.min(value1, value2);
-    }
-  }, {
-    key: "MAX",
-    value: function MAX(value1, value2) {
-      return Math.max(value1, value2);
-    }
-  }]);
-
-  return ArrayDataOperation;
-}(Data);
-
-
-// CONCATENATED MODULE: ./js/tsunami/Branch.js
-function Branch_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Branch_typeof = function _typeof(obj) { return typeof obj; }; } else { Branch_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Branch_typeof(obj); }
-
-function Branch_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Branch_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function Branch_createClass(Constructor, protoProps, staticProps) { if (protoProps) Branch_defineProperties(Constructor.prototype, protoProps); if (staticProps) Branch_defineProperties(Constructor, staticProps); return Constructor; }
-
-function Branch_possibleConstructorReturn(self, call) { if (call && (Branch_typeof(call) === "object" || typeof call === "function")) { return call; } return Branch_assertThisInitialized(self); }
-
-function Branch_getPrototypeOf(o) { Branch_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Branch_getPrototypeOf(o); }
-
-function Branch_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function Branch_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Branch_setPrototypeOf(subClass, superClass); }
-
-function Branch_setPrototypeOf(o, p) { Branch_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Branch_setPrototypeOf(o, p); }
-
-
-
-var Branch =
-/*#__PURE__*/
-function (_EventDispatcher) {
-  Branch_inherits(Branch, _EventDispatcher);
-
-  function Branch() {
-    var _this;
-
-    Branch_classCallCheck(this, Branch);
-
-    _this = Branch_possibleConstructorReturn(this, Branch_getPrototypeOf(Branch).call(this));
-    _this.branches = {};
-    _this.slug = null;
-    _this.parent = null;
-    _this.router = null;
-    _this.path = null;
-    _this.arrowKeyHandler = _this.arrowKeyHandler.bind(Branch_assertThisInitialized(_this));
-    return _this;
-  }
-
-  Branch_createClass(Branch, [{
-    key: "getBranch",
-    value: function getBranch(slug) {
-      var branch;
-
-      if (this.branches[slug]) {
-        branch = this.branches[slug];
-      } else if (this.branches["*"]) {
-        branch = this.branches["*"];
-      } else {
-        branch = new Branch();
-      }
-
-      return branch;
-    }
-  }, {
-    key: "load",
-    value: function load(assetList) {
-      return Promise.resolve();
-    }
-  }, {
-    key: "show",
-    value: function show() {
-      return Promise.resolve();
-    }
-  }, {
-    key: "hide",
-    value: function hide() {
-      return Promise.resolve();
-    }
-  }, {
-    key: "arrowKeyHandler",
-    value: function arrowKeyHandler(event) {
-      var increment = 0;
-
-      switch (event.keyCode) {
-        case 37:
-        case 38:
-          increment = -1;
-          break;
-
-        case 39:
-        case 40:
-          increment = 1;
-          break;
-      }
-
-      return increment;
-    }
-  }, {
-    key: "defaultChild",
-    get: function get() {
-      return this._defaultChild;
-    },
-    set: function set(value) {
-      this._defaultChild = value;
-    }
-  }, {
-    key: "arrowKeyNavigation",
-    get: function get() {
-      return this._arrowKeyNavigation;
-    },
-    set: function set(value) {
-      this._arrowKeyNavigation = value;
-      window.removeEventListener("keyup", this.arrowKeyHandler);
-
-      if (value) {
-        window.addEventListener("keyup", this.arrowKeyHandler);
-      }
-    }
-  }]);
-
-  return Branch;
-}(EventDispatcher);
-
-
-// CONCATENATED MODULE: ./js/tsunami/components/EventHandler.js
-function EventHandler_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function EventHandler_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function EventHandler_createClass(Constructor, protoProps, staticProps) { if (protoProps) EventHandler_defineProperties(Constructor.prototype, protoProps); if (staticProps) EventHandler_defineProperties(Constructor, staticProps); return Constructor; }
-
-var EventHandler =
-/*#__PURE__*/
-function () {
-  function EventHandler(eventDispatcher, type, eventHandler) {
-    var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-    EventHandler_classCallCheck(this, EventHandler);
-
-    this.eventDispatcher = eventDispatcher;
-    this.type = type;
-    this.eventHandler = eventHandler;
-    this.eventDispatcher.addEventListener(this.type, this.eventHandler);
-  }
-
-  EventHandler_createClass(EventHandler, [{
-    key: "destroy",
-    value: function destroy() {
-      this.eventDispatcher.removeEventListener(this.type, this.eventHandler);
-      this.eventDispatcher = null;
-      this.type = null;
-      this.eventHandler = null;
-    }
-  }]);
-
-  return EventHandler;
-}();
-
-
-// CONCATENATED MODULE: ./js/tsunami/components/UIComponent.js
-function UIComponent_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIComponent_typeof = function _typeof(obj) { return typeof obj; }; } else { UIComponent_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIComponent_typeof(obj); }
-
-function UIComponent_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function UIComponent_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function UIComponent_createClass(Constructor, protoProps, staticProps) { if (protoProps) UIComponent_defineProperties(Constructor.prototype, protoProps); if (staticProps) UIComponent_defineProperties(Constructor, staticProps); return Constructor; }
-
-function UIComponent_possibleConstructorReturn(self, call) { if (call && (UIComponent_typeof(call) === "object" || typeof call === "function")) { return call; } return UIComponent_assertThisInitialized(self); }
-
-function UIComponent_getPrototypeOf(o) { UIComponent_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return UIComponent_getPrototypeOf(o); }
-
-function UIComponent_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function UIComponent_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) UIComponent_setPrototypeOf(subClass, superClass); }
-
-function UIComponent_setPrototypeOf(o, p) { UIComponent_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return UIComponent_setPrototypeOf(o, p); }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var UIComponent_UIComponent =
-/*#__PURE__*/
-function (_Branch) {
-  UIComponent_inherits(UIComponent, _Branch);
-
-  function UIComponent(element) {
-    var _this;
-
-    UIComponent_classCallCheck(this, UIComponent);
-
-    _this = UIComponent_possibleConstructorReturn(this, UIComponent_getPrototypeOf(UIComponent).call(this));
-
-    if (element) {
-      _this.debug = element.getAttribute("data-debug") == "true";
-      _this.doChildrenAnimationFrame = element.getAttribute("data-children-animation-frame") == "true";
-      _this.alsoShowChildren = element.getAttribute("data-also-show-children") == "true"; // this.style = new Style(element.style);
-    }
-
-    _this.element = element;
-    _this.calculateGlobalPosition = false;
-    _this.childrenSelector = ":scope > *";
-    _this.rectangle = new Rectangle_Rectangle();
-    _this.globalRectangle = new Rectangle_Rectangle();
-    _this.windowSize = {};
-    _this.attributes = {};
-    _this.modelChange = _this.modelChange.bind(UIComponent_assertThisInitialized(_this));
-    _this.showDuration = 0;
-    _this.showDelay = 0;
-    _this.hideDuration = 0;
-    _this.hideDelay = 0;
-    _this.showChildrenDelay = NaN;
-    _this.hideChildrenDelay = NaN;
-    _this.alsoShowChildren = false;
-    return _this;
-  }
-
-  UIComponent_createClass(UIComponent, [{
-    key: "getBranch",
-    value: function getBranch(slug) {
-      var branch;
-
-      if (this.branches[slug]) {
-        branch = this.branches[slug];
-      } else if (this.branches["*"]) {
-        branch = this.branches["*"];
-      } else {
-        branch = new Branch();
-      }
-
-      return branch;
-    }
-  }, {
-    key: "removeChild",
-    value: function removeChild(value) {
-      if (value) {
-        if (this.componentContainer == value.parentNode) {
-          value.parentNode.removeChild(value);
-
-          if (this.isAdded) {
-            UIComponent.callElementRemoved(value);
-          }
-        }
-      }
-    }
-  }, {
-    key: "appendChild",
-    value: function appendChild(value) {
-      if (value) {
-        this.componentContainer.appendChild(value);
-
-        if (this.isAdded) {
-          UIComponent.callElementAdded(value);
-        }
-
-        var component = value.component;
-
-        if (component) {
-          if (component.windowResize) {
-            component.windowResize(this.windowSize);
-          }
-
-          if (component.windowScroll) {
-            component.windowScroll(this.windowScrollPoint);
-          }
-        }
-      }
-    }
-  }, {
-    key: "prependChild",
-    value: function prependChild(child) {
-      this.appendChildAt(child, 0);
-    }
-  }, {
-    key: "appendChildAt",
-    value: function appendChildAt(child) {
-      var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-      if (child.parentNode == this.element) {
-        this.element.removeChild(child);
-      }
-
-      var children = this.children;
-
-      if (index > children.length - 1) {
-        this.appendChild(child);
-      } else {
-        var beforeChild = children[index];
-        this.insertBefore(child, beforeChild);
-      }
-    }
-  }, {
-    key: "insertBefore",
-    value: function insertBefore(value, ref) {
-      if (value) {
-        if (ref) {
-          this.componentContainer.insertBefore(value, ref);
-
-          if (this.isAdded) {
-            UIComponent.callElementAdded(value);
-          }
-
-          var component = value.component;
-
-          if (component) {
-            if (component.windowResize) {
-              component.windowResize(this.windowSize);
-            }
-
-            if (component.windowScroll) {
-              component.windowScroll(this.windowScrollPoint);
-            }
-          }
-        }
-      }
-    }
-  }, {
-    key: "getSVGPathTotalLength",
-    value: function getSVGPathTotalLength() {
-      return this.element.getTotalLength();
-    }
-  }, {
-    key: "_createEventHandler",
-    value: function _createEventHandler(attribute, scope) {
-      if (this.debug) console.log("_createEventHandler attribute", attribute, "scope", scope);
-      var eventType = attribute.name.split("data-event-")[1];
-      var handler = evalProperty(attribute.value, scope);
-      var eventHandler = new EventHandler(this.element, eventType, handler, this.debug);
-      this.attributes[attribute.name] = eventHandler;
-    }
-  }, {
-    key: "modelChange",
-    value: function modelChange(event) {
-      if (this.debug) {
-        console.log("UIComponent.modelChange", this.model.value);
-      }
-
-      this.updateValue(this.model.value);
-    }
-  }, {
-    key: "load",
-    value: function load() {
-      var promises = [];
-      var children = this.children;
-
-      for (var i = 0; i < children.length; i++) {
-        var component = children[i].component;
-
-        if (component) {
-          promises.push(component.load());
-        }
-      }
-
-      return Promise.all(promises);
-    }
-  }, {
-    key: "show",
-    value: function show() {
-      var _this2 = this;
-
-      var promise1 = awaitTimeout(this.showDelay);
-      var promise2 = promise1.then(function () {
-        _this2.showPromises = [_this2.showDelayComplete()];
-
-        if (_this2.alsoShowChildren) {
-          _this2.showPromises.push(_this2.showChildren());
-        }
-
-        return Promise.all(_this2.showPromises);
-      });
-      return promise2.then(this.showComplete.bind(this));
-    }
-  }, {
-    key: "showDelayComplete",
-    value: function showDelayComplete() {
-      if (this.element) {
-        this.element.setAttribute("data-state", "show");
-      }
-
-      return awaitTimeout(this.showDuration);
-    }
-  }, {
-    key: "showComplete",
-    value: function showComplete() {}
-  }, {
-    key: "showChildren",
-    value: function showChildren() {
-      var promises = [];
-      var delay = 0;
-      var children = this.children;
-
-      for (var i = 0; i < children.length; i++) {
-        var component = children[i].component;
-
-        if (component) {
-          if (!isNaN(this.showChildrenDelay)) {
-            component.showDelay = delay;
-            delay += this.showChildrenDelay;
-          }
-
-          promises.push(component.show());
-        }
-      }
-
-      return Promise.all(promises);
-    }
-  }, {
-    key: "hide",
-    value: function hide() {
-      var _this3 = this;
-
-      var promise1 = awaitTimeout(this.hideDelay);
-      var promise2 = promise1.then(function () {
-        _this3.hidePromises = [_this3.hideDelayComplete()];
-
-        if (_this3.alsoShowChildren) {
-          _this3.hidePromises.push(_this3.hideChildren());
-        }
-
-        return Promise.all(_this3.hidePromises);
-      });
-      return promise2.then(this.hideComplete.bind(this));
-    }
-  }, {
-    key: "hideDelayComplete",
-    value: function hideDelayComplete() {
-      if (this.element) {
-        this.element.setAttribute("data-state", "hide");
-      }
-
-      return awaitTimeout(this.hideDuration);
-    }
-  }, {
-    key: "hideComplete",
-    value: function hideComplete() {}
-  }, {
-    key: "hideChildren",
-    value: function hideChildren() {
-      var promises = [];
-      var delay = 0;
-      var children = this.children;
-
-      for (var i = 0; i < children.length; i++) {
-        var component = children[i].component;
-
-        if (component) {
-          if (!isNaN(this.hideChildrenDelay)) {
-            component.hideDelay = delay;
-            delay += this.hideChildrenDelay;
-          }
-
-          promises.push(component.hide());
-        }
-      }
-
-      return Promise.all(promises);
-    }
-  }, {
-    key: "updateValue",
-    value: function updateValue(value) {}
-  }, {
-    key: "windowResize",
-    value: function windowResize(windowSize) {
-      this.windowSize = windowSize;
-      this.rectangle.x = this.element.offsetLeft;
-      this.rectangle.y = this.element.offsetTop;
-      this.rectangle.width = this.element.offsetWidth;
-      this.rectangle.height = this.element.offsetHeight;
-      this.globalRectangle.width = this.rectangle.width;
-      this.globalRectangle.height = this.rectangle.height;
-
-      if (this.calculateGlobalPosition) {
-        this.globalRectangle.position = localToGlobal(this.element, document.body);
-      }
-
-      var children = this.children;
-
-      for (var i = 0; i < children.length; i++) {
-        var child = children[i];
-        var component = child.component;
-
-        if (component) {
-          if (component.windowResize) {
-            component.windowResize(windowSize);
-          }
-        }
-      }
-    }
-  }, {
-    key: "windowScroll",
-    value: function windowScroll(point) {
-      this.windowScrollPoint = point;
-      var children = this.children;
-
-      for (var i = 0; i < children.length; i++) {
-        var component = children[i].component;
-
-        if (component) {
-          if (component.windowScroll) {
-            component.windowScroll(point);
-          }
-        }
-      }
-    }
-  }, {
-    key: "animationFrame",
-    value: function animationFrame(data) {
-      this.animationFrameData = data;
-
-      if (this.doChildrenAnimationFrame) {
-        var children = this.children;
-
-        for (var i = 0; i < children.length; i++) {
-          var component = children[i].component;
-
-          if (component) {
-            component.animationFrame(data);
-          }
-        }
-      }
-    }
-  }, {
-    key: "orientationChange",
-    value: function orientationChange(orientation) {
-      this.orientation = orientation;
-      var children = this.children;
-
-      for (var i = 0; i < children.length; i++) {
-        var component = children[i].component;
-
-        if (component) {
-          if (component.orientationChange) {
-            component.orientationChange(orientation);
-          }
-        }
-      }
-    }
-  }, {
-    key: "elementAdded",
-    value: function elementAdded() {}
-  }, {
-    key: "elementRemoved",
-    value: function elementRemoved() {}
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.model = null;
-      this.style.destroy();
-      this.style = null;
-      this.scope = null;
-
-      for (var i in this.attributes) {
-        var attribute = this.attributes[i];
-        attribute.destroy();
-      }
-
-      if (this.element.parentNode) {
-        this.element.parentNode.removeChild(this.element);
-      }
-
-      this.element = null;
-      this.element.compopnent = null;
-
-      for (var _i in this) {
-        this[_i] = null;
-      }
-    }
-  }, {
-    key: "getRect",
-    value: function getRect(parent, debug) {
-      return UIComponent.getRect(this.element, parent);
-    }
-  }, {
-    key: "querySelector",
-    value: function querySelector(selector) {
-      var element = this.element.querySelector(selector);
-
-      if (!element) {
-        console.log("No element with selector " + selector + " in " + this);
-      }
-
-      return element.component || element;
-    }
-  }, {
-    key: "querySelectorAll",
-    value: function querySelectorAll(selector) {
-      var array = [];
-      var elements = this.element.querySelectorAll(selector);
-
-      for (var i = 0; i < elements.length; i++) {
-        var element = elements.item(i);
-        array.push(element.component || element);
-      }
-
-      return array;
-    }
-  }, {
-    key: "getTouchPoint",
-    value: function getTouchPoint(event) {
-      var touch = event;
-
-      if (isTouch) {
-        touch = event.touches[0];
-      }
-
-      return new Point_Point(touch.pageX, touch.pageY);
-    }
-  }, {
-    key: "element",
-    get: function get() {
-      return this._element;
-    },
-    set: function set(value) {
-      this._element = value;
-      if (value) value.component = this;
-    }
-  }, {
-    key: "componentContainer",
-    get: function get() {
-      return this.element;
-    }
-  }, {
-    key: "isAdded",
-    get: function get() {
-      var parent;
-
-      if (this.element) {
-        parent = this.element.parentNode;
-      }
-
-      while (parent && parent != document.body) {
-        parent = parent.parentNode;
-      }
-
-      var isAdded = parent == document.body;
-      return isAdded;
-    }
-  }, {
-    key: "children",
-    get: function get() {
-      var array = [];
-
-      if (this.element) {
-        array = ArrayData_ArrayData.nodeListToArray(this.element.children);
-      }
-
-      return array;
     }
   }, {
     key: "scope",
     get: function get() {
-      return this._scope;
+      return _get(_getPrototypeOf(UIRouterButton.prototype), "scope", this);
     },
     set: function set(value) {
-      this._scope = value;
+      _set(_getPrototypeOf(UIRouterButton.prototype), "scope", value, this, true);
 
-      if (this.debug) {
-        console.log("UIComponent.scope", value);
+      var pushState = this.element.hasAttribute("data-pushstate");
+
+      if (pushState) {
+        this.pushState = eval(pushState);
       }
 
-      var showDuration = this.element.getAttribute("data-show-duration");
+      var clickDelay = this.element.hasAttribute("data-click-delay");
 
-      if (showDuration) {
-        this.showDuration = Number(showDuration);
+      if (clickDelay) {
+        this.clickDelay = eval(clickDelay);
       }
-
-      var hideDuration = this.element.getAttribute("data-hide-duration");
-
-      if (hideDuration) {
-        this.hideDuration = Number(hideDuration);
-      }
-
-      var showChildrenDelay = this.element.getAttribute("data-show-children-delay");
-
-      if (showChildrenDelay) {
-        this.showChildrenDelay = Number(showChildrenDelay);
-      }
-
-      var hideChildrenDelay = this.element.getAttribute("data-hide-children-delay");
-
-      if (hideChildrenDelay) {
-        this.hideChildrenDelay = Number(hideChildrenDelay);
-      }
-
-      for (var i = 0; i < this.element.attributes.length; i++) {
-        var attribute = this.element.attributes[i];
-
-        if (this.debug) {
-          console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
-        }
-
-        if (attribute.name.indexOf("data-event-") != -1) {
-          this._createEventHandler(attribute, value);
-        }
-
-        if (attribute.value.indexOf("[[") != -1) {
-          var attributeData = new ArrayDataOperation_ArrayDataOperation();
-          attributeData.parseString(attribute.value, value);
-          var attr = new Attribute_Attribute(this.element, attribute.name, attributeData, "");
-          attr.debug = this.debug;
-          this.attributes[attribute.name] = attr;
-        }
-      }
-
-      if (this.element.hasAttribute("data-model")) {
-        var model = this.element.getAttribute("data-model");
-
-        if (model) {
-          this.model = evalProperty(model, value);
-        } else {
-          this.model = value;
-        }
-      }
-    }
-  }, {
-    key: "model",
-    get: function get() {
-      return this._model;
-    },
-    set: function set(value) {
-      if (this.debug) {
-        console.log("set model", value);
-      }
-
-      if (this._model) {
-        if (this._model instanceof Data) {
-          this._model.removeEventListener(Data.CHANGE, this.modelChange);
-        }
-      }
-
-      this._model = value;
-
-      if (value) {
-        if (value instanceof Data) {
-          value.addEventListener(Data.CHANGE, this.modelChange);
-          this.modelChange();
-        } else {
-          this.updateValue(value);
-        }
-      } else {
-        this.updateValue(value);
-      }
-    }
-  }], [{
-    key: "callElementAdded",
-    value: function callElementAdded(element) {
-      var component = element.component;
-
-      if (component) {
-        if (component instanceof UIComponent) {
-          component.elementAdded();
-
-          if (component.windowResize) {
-            component.windowResize(component.windowSize);
-          }
-        }
-      }
-
-      var objects = getAllObjects(element);
-
-      for (var i = 0; i < objects.length; i++) {
-        var object = objects[i];
-        var objectComponent = object.component;
-
-        if (objectComponent) {
-          if (objectComponent instanceof UIComponent) {
-            objectComponent.elementAdded();
-
-            if (objectComponent.windowResize && element.component) {
-              objectComponent.windowResize(element.component.windowSize);
-            }
-          }
-        }
-      }
-    }
-  }, {
-    key: "callElementRemoved",
-    value: function callElementRemoved(element) {
-      var component = element.component;
-
-      if (component) {
-        if (component instanceof UIComponent) {
-          component.elementRemoved();
-        }
-      }
-
-      var objects = getAllObjects(element);
-
-      for (var i = 0; i < objects.length; i++) {
-        var object = objects[i];
-        var objectComponent = object.component;
-
-        if (objectComponent) {
-          if (objectComponent instanceof UIComponent) {
-            objectComponent.elementRemoved();
-          }
-        }
-      }
-    }
-  }, {
-    key: "getRect",
-    value: function getRect(element, parent, debug) {
-      if (!parent) {
-        parent = document.body;
-      }
-
-      var rectangle = new Rectangle_Rectangle(0, 0, element.offsetWidth, element.offsetHeight);
-
-      if (element.parentNode) {
-        rectangle.position = localToGlobal(element, parent, null, debug);
-      }
-
-      return rectangle;
     }
   }]);
 
-  return UIComponent;
-}(Branch);
+  return UIRouterButton;
+}(_UIButton__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
 
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(27);
+module.exports = __webpack_require__(22);
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./js/tsunami/tsunami.js
+var tsunami = __webpack_require__(2);
+
+// EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 3 modules
+var UIComponent = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./templates/Easing.html
-var Easing = __webpack_require__(1);
+var Easing = __webpack_require__(18);
 var Easing_default = /*#__PURE__*/__webpack_require__.n(Easing);
 
+// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
+var NumberData = __webpack_require__(4);
+
+// EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js
+var ArrayData = __webpack_require__(5);
+
+// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
+var Point = __webpack_require__(1);
+
+// EXTERNAL MODULE: ./js/tsunami/data/Data.js
+var Data = __webpack_require__(0);
+
+// EXTERNAL MODULE: ./js/tsunami/events.js
+var events = __webpack_require__(3);
+
 // CONCATENATED MODULE: ./js/tsunami/Scope.js
-function Scope_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function Scope_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function Scope_createClass(Constructor, protoProps, staticProps) { if (protoProps) Scope_defineProperties(Constructor.prototype, protoProps); if (staticProps) Scope_defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var Scope =
 /*#__PURE__*/
@@ -3845,7 +4775,7 @@ function () {
     var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : NaN;
     var length = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : NaN;
 
-    Scope_classCallCheck(this, Scope);
+    _classCallCheck(this, Scope);
 
     this.data = data;
     this.parent = parent;
@@ -3858,7 +4788,7 @@ function () {
     this.length = length;
   }
 
-  Scope_createClass(Scope, [{
+  _createClass(Scope, [{
     key: "toString",
     value: function toString() {
       return "Scope" + " " + this.parent;
@@ -3886,8 +4816,11 @@ function () {
 }();
 
 
+// EXTERNAL MODULE: ./js/tsunami/EventDispatcher.js
+var EventDispatcher = __webpack_require__(10);
+
 // CONCATENATED MODULE: ./js/tsunami/animation/Clock.js
-function Clock_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Clock_typeof = function _typeof(obj) { return typeof obj; }; } else { Clock_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Clock_typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function Clock_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3895,15 +4828,15 @@ function Clock_defineProperties(target, props) { for (var i = 0; i < props.lengt
 
 function Clock_createClass(Constructor, protoProps, staticProps) { if (protoProps) Clock_defineProperties(Constructor.prototype, protoProps); if (staticProps) Clock_defineProperties(Constructor, staticProps); return Constructor; }
 
-function Clock_possibleConstructorReturn(self, call) { if (call && (Clock_typeof(call) === "object" || typeof call === "function")) { return call; } return Clock_assertThisInitialized(self); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function Clock_getPrototypeOf(o) { Clock_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Clock_getPrototypeOf(o); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-function Clock_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function Clock_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Clock_setPrototypeOf(subClass, superClass); }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function Clock_setPrototypeOf(o, p) { Clock_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Clock_setPrototypeOf(o, p); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
 
@@ -3911,18 +4844,18 @@ function Clock_setPrototypeOf(o, p) { Clock_setPrototypeOf = Object.setPrototype
 var Clock_Clock =
 /*#__PURE__*/
 function (_EventDispatcher) {
-  Clock_inherits(Clock, _EventDispatcher);
+  _inherits(Clock, _EventDispatcher);
 
   function Clock() {
     var _this;
 
     Clock_classCallCheck(this, Clock);
 
-    _this = Clock_possibleConstructorReturn(this, Clock_getPrototypeOf(Clock).call(this));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Clock).call(this));
     _this.index = 0;
     _this.seconds = 0;
     _this.allFrames = 0;
-    _this.animationFrame = _this.animationFrame.bind(Clock_assertThisInitialized(_this));
+    _this.animationFrame = _this.animationFrame.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -3945,7 +4878,7 @@ function (_EventDispatcher) {
     value: function animationFrame(time) {
       this.time = time;
       this.index++;
-      this.dispatchEvent(new BaseEvent(Clock.TICK, this.time));
+      this.dispatchEvent(new events["a" /* default */](Clock.TICK, this.time));
 
       if (this.isRunning) {
         window.requestAnimationFrame(this.animationFrame);
@@ -3977,7 +4910,7 @@ function (_EventDispatcher) {
   }]);
 
   return Clock;
-}(EventDispatcher);
+}(EventDispatcher["a" /* default */]);
 
 
 var clock = new Clock_Clock();
@@ -4091,7 +5024,7 @@ function (_EventDispatcher) {
     },
     set: function set(value) {
       this._startTime = value;
-      this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+      this.dispatchEvent(new events["a" /* default */](Tween.CHANGE));
     }
   }, {
     key: "duration",
@@ -4100,7 +5033,7 @@ function (_EventDispatcher) {
     },
     set: function set(value) {
       this._duration = value;
-      this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+      this.dispatchEvent(new events["a" /* default */](Tween.CHANGE));
     }
   }, {
     key: "time",
@@ -4155,7 +5088,7 @@ function (_EventDispatcher) {
   }]);
 
   return Tween;
-}(EventDispatcher);
+}(EventDispatcher["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/tsunami/animation/TweenProperty.js
@@ -4626,6 +5559,9 @@ Easing_Easing.elastic = new Elastic();
 Easing_Easing.back = new Back();
 Easing_Easing.bounce = new Bounce();
 Easing_Easing.linear = new Linear();
+// EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
+var Rectangle = __webpack_require__(11);
+
 // CONCATENATED MODULE: ./js/tsunami/components/UIList.js
 function UIList_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIList_typeof = function _typeof(obj) { return typeof obj; }; } else { UIList_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIList_typeof(obj); }
 
@@ -4639,15 +5575,15 @@ function UIList_possibleConstructorReturn(self, call) { if (call && (UIList_type
 
 function UIList_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function UIList_set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { UIList_set = Reflect.set; } else { UIList_set = function set(target, property, value, receiver) { var base = UIList_superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { _defineProperty(receiver, property, value); } return true; }; } return UIList_set(target, property, value, receiver); }
+function UIList_set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { UIList_set = Reflect.set; } else { UIList_set = function set(target, property, value, receiver) { var base = _superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { _defineProperty(receiver, property, value); } return true; }; } return UIList_set(target, property, value, receiver); }
 
 function _set(target, property, value, receiver, isStrict) { var s = UIList_set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function UIList_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { UIList_get = Reflect.get; } else { UIList_get = function _get(target, property, receiver) { var base = UIList_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return UIList_get(target, property, receiver || target); }
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
-function UIList_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = UIList_getPrototypeOf(object); if (object === null) break; } return object; }
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = UIList_getPrototypeOf(object); if (object === null) break; } return object; }
 
 function UIList_getPrototypeOf(o) { UIList_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return UIList_getPrototypeOf(o); }
 
@@ -4710,7 +5646,7 @@ function (_UIComponent) {
       _this.element.removeChild(template);
     }
 
-    _this.element.addEventListener(events.mousedown, _this._mouseDownHandler);
+    _this.element.addEventListener(events["b" /* events */].mousedown, _this._mouseDownHandler);
 
     return _this;
   }
@@ -4721,7 +5657,7 @@ function (_UIComponent) {
       for (var i = 0; i < array.length; i++) {
         var element = array[i];
         this.removeChild(element);
-        destroyElement(element);
+        Object(tsunami["b" /* destroyElement */])(element);
       }
     }
   }, {
@@ -4739,13 +5675,13 @@ function (_UIComponent) {
         this.appendChildAt(element, index);
 
         if (this.isAdded) {
-          UIComponent_UIComponent.callElementAdded(element);
+          UIComponent["a" /* default */].callElementAdded(element);
         }
 
         index++;
       }
 
-      this.dispatchEvent(new BaseEvent("listChange", array));
+      this.dispatchEvent(new events["a" /* default */]("listChange", array));
       return array;
     }
   }, {
@@ -4753,14 +5689,14 @@ function (_UIComponent) {
     value: function createElement(data, index, length) {
       var template = this.getTemplateForModel(data);
       var scope = new Scope(data, this.scope, index, length);
-      return importTemplate(template, scope);
+      return Object(tsunami["e" /* importTemplate */])(template, scope);
     }
   }, {
     key: "getModelType",
     value: function getModelType(model) {
       var type = model.type;
 
-      if (type instanceof Data) {
+      if (type instanceof Data["a" /* default */]) {
         type = type.value;
       }
 
@@ -4877,7 +5813,7 @@ function (_UIComponent) {
       this.children.map(function (child) {
         _this2.childrenPositions.push({
           child: child,
-          position: new Point_Point(child.offsetLeft, child.offsetTop)
+          position: new Point["a" /* default */](child.offsetLeft, child.offsetTop)
         });
       });
     }
@@ -4885,7 +5821,7 @@ function (_UIComponent) {
     key: "_setChildrenTransform",
     value: function _setChildrenTransform() {
       this.childrenPositions.map(function (obj, index) {
-        var newPosition = new Point_Point(obj.child.offsetLeft, obj.child.offsetTop);
+        var newPosition = new Point["a" /* default */](obj.child.offsetLeft, obj.child.offsetTop);
         var offset = obj.position.subtract(newPosition);
         var magnitude = offset.magnitude;
 
@@ -4941,13 +5877,13 @@ function (_UIComponent) {
 
           this.dragElement = selectedChild;
           this.dragIndex = selectedIndex;
-          this.dragElementStartPos = new Point_Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
+          this.dragElementStartPos = new Point["a" /* default */](this.dragElement.offsetLeft, this.dragElement.offsetTop);
           this.dragElementsMinHeight = Number.MAX_VALUE;
           this.children.map(function (child) {
             _this3.dragElementsMinHeight = Math.min(_this3.dragElementsMinHeight, child.component.rectangle.height);
           });
-          document.body.addEventListener(events.mousemove, this._dragMove);
-          document.body.addEventListener(events.mouseup, this._dragEnd);
+          document.body.addEventListener(events["b" /* events */].mousemove, this._dragMove);
+          document.body.addEventListener(events["b" /* events */].mouseup, this._dragEnd);
         }
       }
     }
@@ -4955,11 +5891,11 @@ function (_UIComponent) {
     key: "_dragMove",
     value: function _dragMove(event) {
       var point = this.getTouchPoint(event);
-      var distance = Point_Point.distance(point, this.dragStartPoint);
+      var distance = Point["a" /* default */].distance(point, this.dragStartPoint);
 
       if (distance > 0) {
-        document.body.removeEventListener(events.mousemove, this._dragMove);
-        document.body.addEventListener(events.mousemove, this._dragElementMove);
+        document.body.removeEventListener(events["b" /* events */].mousemove, this._dragMove);
+        document.body.addEventListener(events["b" /* events */].mousemove, this._dragElementMove);
 
         this._dragElementStart();
       }
@@ -4994,7 +5930,7 @@ function (_UIComponent) {
       if (index != this.dragIndex) {
         this.dataProvider.swap(this.dragIndex, index);
         var oldPos = this.dragElementStartPos;
-        this.dragElementStartPos = new Point_Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
+        this.dragElementStartPos = new Point["a" /* default */](this.dragElement.offsetLeft, this.dragElement.offsetTop);
         var posDiff = this.dragElementStartPos.subtract(oldPos);
         this.dragStartPoint = this.dragStartPoint.add(posDiff);
         dragDiff = point.subtract(this.dragStartPoint);
@@ -5008,9 +5944,9 @@ function (_UIComponent) {
     value: function _dragEnd(event) {
       this.dragElement.classList.remove("is-dragged");
       this.dragElement.style.transform = "";
-      document.body.removeEventListener(events.mousemove, this._dragMove);
-      document.body.removeEventListener(events.mousemove, this._dragElementMove);
-      document.body.removeEventListener(events.mouseup, this._dragEnd);
+      document.body.removeEventListener(events["b" /* events */].mousemove, this._dragMove);
+      document.body.removeEventListener(events["b" /* events */].mousemove, this._dragElementMove);
+      document.body.removeEventListener(events["b" /* events */].mouseup, this._dragEnd);
       this.dragStartPoint = null;
       this.dragIndex = NaN;
       this.dragElement = null;
@@ -5018,11 +5954,11 @@ function (_UIComponent) {
   }, {
     key: "scrollToElement",
     value: function scrollToElement(element, duration) {
-      var pos = new Point_Point();
-      var maxScroll = new Point_Point();
+      var pos = new Point["a" /* default */]();
+      var maxScroll = new Point["a" /* default */]();
       maxScroll.x = this.element.scrollWidth - this.element.clientWidth;
       maxScroll.y = this.element.scrollHeight - this.element.clientHeight;
-      var elementRect = new Rectangle_Rectangle(element.offsetLeft, element.offsetTop, element.offsetWidth, element.offsetHeight);
+      var elementRect = new Rectangle["a" /* default */](element.offsetLeft, element.offsetTop, element.offsetWidth, element.offsetHeight);
       pos.x = Math.min(elementRect.x, maxScroll.x);
       pos.y = Math.min(elementRect.y, maxScroll.y);
       return this.scrollTo(pos.x, pos.y, duration);
@@ -5046,19 +5982,19 @@ function (_UIComponent) {
       this.childrenPositions = null;
       this.dataProvider = null;
 
-      UIList_get(UIList_getPrototypeOf(UIList.prototype), "destroy", this).call(this);
+      _get(UIList_getPrototypeOf(UIList.prototype), "destroy", this).call(this);
     }
   }, {
     key: "scope",
     get: function get() {
-      return UIList_get(UIList_getPrototypeOf(UIList.prototype), "scope", this);
+      return _get(UIList_getPrototypeOf(UIList.prototype), "scope", this);
     },
     set: function set(value) {
       this._scope = value;
       var dataProvider = this.element.getAttribute("data-provider");
 
       if (dataProvider) {
-        this.dataProvider = evalProperty(dataProvider, value);
+        this.dataProvider = Object(tsunami["c" /* evalProperty */])(dataProvider, value);
       }
 
       _set(UIList_getPrototypeOf(UIList.prototype), "scope", value, this, true);
@@ -5074,7 +6010,7 @@ function (_UIComponent) {
       }
 
       if (this._provider) {
-        if (this._provider instanceof ArrayData_ArrayData) {
+        if (this._provider instanceof ArrayData["a" /* default */]) {
           this._provider.removeEventListener("add", this._providerAdd);
 
           this._provider.removeEventListener("remove", this._providerRemove);
@@ -5090,7 +6026,7 @@ function (_UIComponent) {
       this._provider = value;
 
       if (this._provider) {
-        if (this._provider instanceof ArrayData_ArrayData) {
+        if (this._provider instanceof ArrayData["a" /* default */]) {
           this._provider.addEventListener("add", this._providerAdd);
 
           this._provider.addEventListener("remove", this._providerRemove);
@@ -5109,7 +6045,7 @@ function (_UIComponent) {
   }]);
 
   return UIList;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/view/EasingGraph.js
@@ -5163,8 +6099,8 @@ function (_UIComponent) {
     _this = EasingGraph_possibleConstructorReturn(this, EasingGraph_getPrototypeOf(EasingGraph).call(this, element));
     _this.controlPoints = _this.element.querySelector(".control-points").component;
     _this.controlPointLines = _this.element.querySelector('[is="control-point-lines"]').component;
-    _this.curves = ArrayData_ArrayData.nodeListToArray(_this.element.querySelectorAll(".curve polyline"));
-    _this.points = ArrayData_ArrayData.nodeListToArray(_this.element.querySelectorAll(".points"));
+    _this.curves = ArrayData["a" /* default */].nodeListToArray(_this.element.querySelectorAll(".curve polyline"));
+    _this.points = ArrayData["a" /* default */].nodeListToArray(_this.element.querySelectorAll(".points"));
     return _this;
   }
 
@@ -5194,7 +6130,7 @@ function (_UIComponent) {
   }]);
 
   return EasingGraph;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
 var EasingGraph_EasingGraphControlPoints =
@@ -5278,7 +6214,7 @@ function (_UIList2) {
 
         for (var j in pair) {
           var vec = pair[j];
-          vec.addEventListener(Data.CHANGE, this.updateLines);
+          vec.addEventListener(Data["a" /* default */].CHANGE, this.updateLines);
         }
       }
     }
@@ -5315,16 +6251,16 @@ function (_UIComponent2) {
       point0.y = 1 - point0.y;
       var point1 = this.model[1].point;
       point1.y = 1 - point1.y;
-      var scale = Point_Point.distance(point0, point1);
-      var angle = NumberData_NumberData.roundDecimal2(Point_Point.getAngle(point1, point0) * 180 / Math.PI);
-      var position = new Point_Point(point0.x * parentRectangle.width, point0.y * parentRectangle.height);
+      var scale = Point["a" /* default */].distance(point0, point1);
+      var angle = NumberData["a" /* default */].roundDecimal2(Point["a" /* default */].getAngle(point1, point0) * 180 / Math.PI);
+      var position = new Point["a" /* default */](point0.x * parentRectangle.width, point0.y * parentRectangle.height);
       var transform = "translateX(".concat(position.x, "px) translateY(").concat(position.y, "px) rotate(").concat(angle, "deg) scaleX(").concat(scale, ")");
       this.element.style.transform = transform;
     }
   }]);
 
   return EasingGraphControlPointLine;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 var EasingGraph_EasingGraphCurve =
 /*#__PURE__*/
 function (_UIComponent3) {
@@ -5346,9 +6282,9 @@ function (_UIComponent3) {
 
       for (var i = 0; i < totalPoints; i++) {
         var x = i / (totalPoints - 1);
-        var point = new Point_Point(x, easing(x, 0, 1, 1));
+        var point = new Point["a" /* default */](x, easing(x, 0, 1, 1));
         points.push(point);
-        pointsString += NumberData_NumberData.roundDecimal3(point.x * 200) + "," + NumberData_NumberData.roundDecimal3(200 - point.y * 200) + " ";
+        pointsString += NumberData["a" /* default */].roundDecimal3(point.x * 200) + "," + NumberData["a" /* default */].roundDecimal3(200 - point.y * 200) + " ";
       }
 
       this.element.setAttribute("points", pointsString);
@@ -5356,7 +6292,7 @@ function (_UIComponent3) {
   }]);
 
   return EasingGraphCurve;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 var EasingGraph_EasingGraphPoints =
 /*#__PURE__*/
 function (_UIComponent4) {
@@ -5378,14 +6314,14 @@ function (_UIComponent4) {
 
       for (var i = 0; i < totalPoints; i++) {
         var x = i / (totalPoints - 1);
-        var point = new Point_Point(x, easing(x, 0, 1, 1));
+        var point = new Point["a" /* default */](x, easing(x, 0, 1, 1));
         points.push(point);
       }
 
       for (var _i = 0; _i < points.length; _i++) {
         var position = points[_i];
 
-        var _point = importTemplate("<point></point>");
+        var _point = tsunami["e" /* importTemplate */]("<point></point>");
 
         _point.style.left = position.x * 100 + "%";
         _point.style.top = 100 - position.y * 100 + "%";
@@ -5395,12 +6331,12 @@ function (_UIComponent4) {
   }]);
 
   return EasingGraphPoints;
-}(UIComponent_UIComponent);
-define("easing-graph-control-points", EasingGraph_EasingGraphControlPoints);
-define("control-point-lines", EasingGraph_EasingGraphControlPointLines);
-define("control-point-line", EasingGraph_EasingGraphControlPointLine);
-define("easing-graph-curve", EasingGraph_EasingGraphCurve);
-define("easing-graph-points", EasingGraph_EasingGraphPoints);
+}(UIComponent["a" /* default */]);
+tsunami["a" /* define */]("easing-graph-control-points", EasingGraph_EasingGraphControlPoints);
+tsunami["a" /* define */]("control-point-lines", EasingGraph_EasingGraphControlPointLines);
+tsunami["a" /* define */]("control-point-line", EasingGraph_EasingGraphControlPointLine);
+tsunami["a" /* define */]("easing-graph-curve", EasingGraph_EasingGraphCurve);
+tsunami["a" /* define */]("easing-graph-points", EasingGraph_EasingGraphPoints);
 // CONCATENATED MODULE: ./js/view/ActionTweenView.js
 function ActionTweenView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTweenView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTweenView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTweenView_typeof(obj); }
 
@@ -5452,16 +6388,16 @@ function (_UIComponent) {
     set: function set(value) {
       view_ActionTweenView_set(ActionTweenView_getPrototypeOf(ActionTweenView.prototype), "scope", value, this, true);
 
-      this.easing = importTemplate(Easing_default.a, value);
+      this.easing = tsunami["e" /* importTemplate */](Easing_default.a, value);
       this.appendChild(this.easing);
     }
   }]);
 
   return ActionTweenView;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
-define("easing-graph", EasingGraph_EasingGraph);
+tsunami["a" /* define */]("easing-graph", EasingGraph_EasingGraph);
 // CONCATENATED MODULE: ./js/view/ActionView.js
 function ActionView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionView_typeof(obj); }
 
@@ -5495,7 +6431,7 @@ function (_UIComponent) {
     _this = ActionView_possibleConstructorReturn(this, ActionView_getPrototypeOf(ActionView).call(this, element));
     _this.title = _this.element.querySelector(".sc-title");
 
-    var deleteButton = _this.title.querySelector("button.close-button");
+    var deleteButton = _this.title.querySelector("button.sc-close-button");
 
     deleteButton.component.onRelease = function (event) {
       var index = app.actions.selectedIndex.value;
@@ -5507,10 +6443,13 @@ function (_UIComponent) {
   }
 
   return ActionView;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
-define("action-tween", ActionTweenView_ActionTweenView);
+tsunami["a" /* define */]("action-tween", ActionTweenView_ActionTweenView);
+// EXTERNAL MODULE: ./js/tsunami/components/Style.js
+var Style = __webpack_require__(17);
+
 // CONCATENATED MODULE: ./js/view/ActionsView.js
 function ActionsView_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionsView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionsView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionsView_typeof(obj); }
 
@@ -5612,10 +6551,65 @@ function (_UIList) {
 }(UIList_UIList);
 
 
-define("action-view", ActionView_ActionView);
+tsunami["a" /* define */]("action-view", ActionView_ActionView);
 // EXTERNAL MODULE: ./templates/scroll-capture.html
-var scroll_capture = __webpack_require__(2);
+var scroll_capture = __webpack_require__(19);
 var scroll_capture_default = /*#__PURE__*/__webpack_require__.n(scroll_capture);
+
+// CONCATENATED MODULE: ./js/view/ScrollCaptureSection.js
+function ScrollCaptureSection_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCaptureSection_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCaptureSection_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCaptureSection_typeof(obj); }
+
+function ScrollCaptureSection_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function ScrollCaptureSection_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function ScrollCaptureSection_createClass(Constructor, protoProps, staticProps) { if (protoProps) ScrollCaptureSection_defineProperties(Constructor.prototype, protoProps); if (staticProps) ScrollCaptureSection_defineProperties(Constructor, staticProps); return Constructor; }
+
+function ScrollCaptureSection_possibleConstructorReturn(self, call) { if (call && (ScrollCaptureSection_typeof(call) === "object" || typeof call === "function")) { return call; } return ScrollCaptureSection_assertThisInitialized(self); }
+
+function ScrollCaptureSection_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ScrollCaptureSection_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ScrollCaptureSection_get = Reflect.get; } else { ScrollCaptureSection_get = function _get(target, property, receiver) { var base = ScrollCaptureSection_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ScrollCaptureSection_get(target, property, receiver || target); }
+
+function ScrollCaptureSection_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ScrollCaptureSection_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function ScrollCaptureSection_getPrototypeOf(o) { ScrollCaptureSection_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ScrollCaptureSection_getPrototypeOf(o); }
+
+function ScrollCaptureSection_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ScrollCaptureSection_setPrototypeOf(subClass, superClass); }
+
+function ScrollCaptureSection_setPrototypeOf(o, p) { ScrollCaptureSection_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ScrollCaptureSection_setPrototypeOf(o, p); }
+
+
+
+
+var ScrollCaptureSection_ScrollCaptureSection =
+/*#__PURE__*/
+function (_UIComponent) {
+  ScrollCaptureSection_inherits(ScrollCaptureSection, _UIComponent);
+
+  function ScrollCaptureSection() {
+    ScrollCaptureSection_classCallCheck(this, ScrollCaptureSection);
+
+    return ScrollCaptureSection_possibleConstructorReturn(this, ScrollCaptureSection_getPrototypeOf(ScrollCaptureSection).apply(this, arguments));
+  }
+
+  ScrollCaptureSection_createClass(ScrollCaptureSection, [{
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      app.scrollCapture.windowContent.component.appendChild(this.element);
+      return ScrollCaptureSection_get(ScrollCaptureSection_getPrototypeOf(ScrollCaptureSection.prototype), "showDelayComplete", this).call(this);
+    }
+  }, {
+    key: "hideComplete",
+    value: function hideComplete() {
+      app.scrollCapture.windowContent.component.removeChild(this.element);
+      return ScrollCaptureSection_get(ScrollCaptureSection_getPrototypeOf(ScrollCaptureSection.prototype), "hideComplete", this).call(this);
+    }
+  }]);
+
+  return ScrollCaptureSection;
+}(UIComponent["a" /* default */]);
+
 
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
@@ -5628,13 +6622,18 @@ function ScrollCapture_createClass(Constructor, protoProps, staticProps) { if (p
 
 function ScrollCapture_possibleConstructorReturn(self, call) { if (call && (ScrollCapture_typeof(call) === "object" || typeof call === "function")) { return call; } return ScrollCapture_assertThisInitialized(self); }
 
-function ScrollCapture_getPrototypeOf(o) { ScrollCapture_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ScrollCapture_getPrototypeOf(o); }
-
 function ScrollCapture_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function ScrollCapture_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ScrollCapture_get = Reflect.get; } else { ScrollCapture_get = function _get(target, property, receiver) { var base = ScrollCapture_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ScrollCapture_get(target, property, receiver || target); }
+
+function ScrollCapture_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ScrollCapture_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function ScrollCapture_getPrototypeOf(o) { ScrollCapture_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ScrollCapture_getPrototypeOf(o); }
 
 function ScrollCapture_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ScrollCapture_setPrototypeOf(subClass, superClass); }
 
 function ScrollCapture_setPrototypeOf(o, p) { ScrollCapture_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ScrollCapture_setPrototypeOf(o, p); }
+
 
 
 
@@ -5664,24 +6663,48 @@ function (_UIComponent) {
     _this.dragMove = _this.dragMove.bind(ScrollCapture_assertThisInitialized(_this));
     _this.dragEnd = _this.dragEnd.bind(ScrollCapture_assertThisInitialized(_this));
 
-    var dragArea = _this.element.querySelector(".sc-header .sc-drag-area");
+    var dragArea = _this.element.querySelector("* > .sc-window .sc-drag-area");
 
-    dragArea.addEventListener(events.mousedown, _this.dragStart);
+    console.log("dragArea", dragArea);
+    dragArea.addEventListener(events["b" /* events */].mousedown, _this.dragStart);
+    _this.windowContent = _this.element.querySelector(".sc-window-content");
+    _this.scenario = _this.element.querySelector(".sc-scenario");
+    _this.branches["scenario"] = _this.scenario.component;
 
-    var iframe = _this.element.querySelector("iframe");
+    _this.windowContent.component.removeChild(_this.scenario);
 
-    iframe.src = chrome.extension.getURL('video-recording.html');
+    _this.video = _this.element.querySelector(".sc-video");
+    _this.branches["video"] = _this.video.component;
+
+    _this.windowContent.component.removeChild(_this.video);
+
+    _this.iframe = _this.video.querySelector("iframe");
+    _this.iframe.src = chrome.extension.getURL('video-recording.html');
     return _this;
   }
 
   ScrollCapture_createClass(ScrollCapture, [{
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      console.log("ScrollCapture.showDelayComplete");
+      app.appendChild(this.element);
+      return ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "showDelayComplete", this).call(this);
+    }
+  }, {
+    key: "hideComplete",
+    value: function hideComplete() {
+      console.log("ScrollCapture.hideComplete");
+      app.removeChild(this.element);
+      return ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "hideComplete", this).call(this);
+    }
+  }, {
     key: "dragStart",
     value: function dragStart(event) {
       event.preventDefault();
-      this.startPosition = new Point_Point(this.style.right, this.style.top);
+      this.startPosition = new Point["a" /* default */](this.style.right, this.style.top);
       this.startPoint = this.getTouchPoint(event);
-      document.body.addEventListener(events.mousemove, this.dragMove);
-      document.body.addEventListener(events.mouseup, this.dragEnd);
+      document.body.addEventListener(events["b" /* events */].mousemove, this.dragMove);
+      document.body.addEventListener(events["b" /* events */].mouseup, this.dragEnd);
     }
   }, {
     key: "dragMove",
@@ -5694,8 +6717,8 @@ function (_UIComponent) {
   }, {
     key: "dragEnd",
     value: function dragEnd(event) {
-      document.body.removeEventListener(events.mousemove, this.dragMove);
-      document.body.removeEventListener(events.mouseup, this.dragEnd);
+      document.body.removeEventListener(events["b" /* events */].mousemove, this.dragMove);
+      document.body.removeEventListener(events["b" /* events */].mouseup, this.dragEnd);
       app.save();
     }
   }, {
@@ -5716,115 +6739,15 @@ function (_UIComponent) {
   }]);
 
   return ScrollCapture;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
 ScrollCapture_ScrollCapture.template = scroll_capture_default.a; // tsunami.define("start-button", StartButton);
 
-define("actions-view", ActionsView_ActionsView);
-// CONCATENATED MODULE: ./js/tsunami/components/UIButton.js
-function UIButton_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIButton_typeof = function _typeof(obj) { return typeof obj; }; } else { UIButton_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIButton_typeof(obj); }
-
-function UIButton_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function UIButton_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function UIButton_createClass(Constructor, protoProps, staticProps) { if (protoProps) UIButton_defineProperties(Constructor.prototype, protoProps); if (staticProps) UIButton_defineProperties(Constructor, staticProps); return Constructor; }
-
-function UIButton_possibleConstructorReturn(self, call) { if (call && (UIButton_typeof(call) === "object" || typeof call === "function")) { return call; } return UIButton_assertThisInitialized(self); }
-
-function UIButton_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function UIButton_set(target, property, value, receiver) { if (typeof Reflect !== "undefined" && Reflect.set) { UIButton_set = Reflect.set; } else { UIButton_set = function set(target, property, value, receiver) { var base = UIButton_superPropBase(target, property); var desc; if (base) { desc = Object.getOwnPropertyDescriptor(base, property); if (desc.set) { desc.set.call(receiver, value); return true; } else if (!desc.writable) { return false; } } desc = Object.getOwnPropertyDescriptor(receiver, property); if (desc) { if (!desc.writable) { return false; } desc.value = value; Object.defineProperty(receiver, property, desc); } else { UIButton_defineProperty(receiver, property, value); } return true; }; } return UIButton_set(target, property, value, receiver); }
-
-function components_UIButton_set(target, property, value, receiver, isStrict) { var s = UIButton_set(target, property, value, receiver || target); if (!s && isStrict) { throw new Error('failed to set property'); } return value; }
-
-function UIButton_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function UIButton_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { UIButton_get = Reflect.get; } else { UIButton_get = function _get(target, property, receiver) { var base = UIButton_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return UIButton_get(target, property, receiver || target); }
-
-function UIButton_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = UIButton_getPrototypeOf(object); if (object === null) break; } return object; }
-
-function UIButton_getPrototypeOf(o) { UIButton_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return UIButton_getPrototypeOf(o); }
-
-function UIButton_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) UIButton_setPrototypeOf(subClass, superClass); }
-
-function UIButton_setPrototypeOf(o, p) { UIButton_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return UIButton_setPrototypeOf(o, p); }
-
-
-
-
-
-var UIButton_UIButton =
-/*#__PURE__*/
-function (_UIComponent) {
-  UIButton_inherits(UIButton, _UIComponent);
-
-  function UIButton(element) {
-    var _this;
-
-    UIButton_classCallCheck(this, UIButton);
-
-    _this = UIButton_possibleConstructorReturn(this, UIButton_getPrototypeOf(UIButton).call(this, element));
-
-    _this.onRelease = function () {};
-
-    _this.clickHandler = _this.clickHandler.bind(UIButton_assertThisInitialized(_this));
-    _this.pressHandler = _this.pressHandler.bind(UIButton_assertThisInitialized(_this));
-
-    _this.element.addEventListener(events.click, _this.clickHandler);
-
-    _this.element.addEventListener(events.mousedown, _this.pressHandler);
-
-    return _this;
-  }
-
-  UIButton_createClass(UIButton, [{
-    key: "pressHandler",
-    value: function pressHandler(event) {
-      this.element.setAttribute("data-event", "press");
-    }
-  }, {
-    key: "clickHandler",
-    value: function clickHandler(event) {
-      this.element.setAttribute("data-event", "click");
-
-      if (this.onRelease) {
-        this.onRelease(event);
-      }
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.element.removeEventListener(events.click, this.clickHandler);
-      this.element.removeEventListener(events.mousedown, this.pressHandler);
-
-      UIButton_get(UIButton_getPrototypeOf(UIButton.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "scope",
-    get: function get() {
-      return UIButton_get(UIButton_getPrototypeOf(UIButton.prototype), "scope", this);
-    },
-    set: function set(value) {
-      var _this2 = this;
-
-      components_UIButton_set(UIButton_getPrototypeOf(UIButton.prototype), "scope", value, this, true);
-
-      var click = this.element.getAttribute("data-click");
-
-      if (click) {
-        this.onRelease = function (event) {
-          var method = evalProperty(click, _this2.scope);
-          method(event);
-        };
-      }
-    }
-  }]);
-
-  return UIButton;
-}(UIComponent_UIComponent);
-
+tsunami["a" /* define */]("actions-view", ActionsView_ActionsView);
+tsunami["a" /* define */]("sc-section", ScrollCaptureSection_ScrollCaptureSection);
+// EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
+var UIButton = __webpack_require__(14);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIInput.js
 function UIInput_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIInput_typeof = function _typeof(obj) { return typeof obj; }; } else { UIInput_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIInput_typeof(obj); }
@@ -5898,8 +6821,8 @@ function (_UIComponent) {
     key: "inputHandler",
     value: function inputHandler(event) {
       if (this._model) {
-        if (this._model instanceof Data) {
-          this._model.removeEventListener(Data.CHANGE, this.modelChange);
+        if (this._model instanceof Data["a" /* default */]) {
+          this._model.removeEventListener(Data["a" /* default */].CHANGE, this.modelChange);
 
           switch (this.element.type) {
             case "checkbox":
@@ -5912,7 +6835,7 @@ function (_UIComponent) {
               break;
           }
 
-          this._model.addEventListener(Data.CHANGE, this.modelChange);
+          this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChange);
         }
       }
     }
@@ -5920,8 +6843,8 @@ function (_UIComponent) {
     key: "changeHandler",
     value: function changeHandler(event) {
       if (this._model) {
-        if (this._model instanceof Data) {
-          this._model.removeEventListener(Data.CHANGE, this.modelChange);
+        if (this._model instanceof Data["a" /* default */]) {
+          this._model.removeEventListener(Data["a" /* default */].CHANGE, this.modelChange);
 
           switch (this.element.type) {
             case "checkbox":
@@ -5934,7 +6857,7 @@ function (_UIComponent) {
               break;
           }
 
-          this._model.addEventListener(Data.CHANGE, this.modelChange);
+          this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChange);
         }
       }
     }
@@ -5949,7 +6872,7 @@ function (_UIComponent) {
   }]);
 
   return UIInput;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/tsunami/components/UISelect.js
@@ -6004,7 +6927,7 @@ function (_UIList) {
     key: "updateValue",
     value: function updateValue(model) {
       if (model) {
-        var value = evalProperty(this.valuePath, model);
+        var value = Object(tsunami["c" /* evalProperty */])(this.valuePath, model);
         this.element.value = value;
       }
     }
@@ -6012,19 +6935,19 @@ function (_UIList) {
     key: "inputHandler",
     value: function inputHandler(e) {
       if (this._model) {
-        this._model.removeEventListener(Data.CHANGE, this.modelChange);
+        this._model.removeEventListener(Data["a" /* default */].CHANGE, this.modelChange);
 
         this._model.value = this.dataProvider.find(this.getModel);
 
         if (this._model) {
-          this._model.addEventListener(Data.CHANGE, this.modelChange);
+          this._model.addEventListener(Data["a" /* default */].CHANGE, this.modelChange);
         }
       }
     }
   }, {
     key: "getModel",
     value: function getModel(model) {
-      var value = evalProperty(this.valuePath, model);
+      var value = Object(tsunami["c" /* evalProperty */])(this.valuePath, model);
       var match = value == this.element.value;
       return match;
     }
@@ -6040,6 +6963,9 @@ function (_UIList) {
   return UISelect;
 }(UIList_UIList);
 
+
+// EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
+var ArrayDataOperation = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIText.js
 function UIText_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIText_typeof = function _typeof(obj) { return typeof obj; }; } else { UIText_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIText_typeof(obj); }
@@ -6100,7 +7026,7 @@ function (_UIComponent) {
       var innerHTML = this.element.innerHTML;
 
       if (innerHTML.indexOf("[[") != -1) {
-        var arrayOperation = new ArrayDataOperation_ArrayDataOperation();
+        var arrayOperation = new ArrayDataOperation["a" /* default */]();
         arrayOperation.parseString(innerHTML, value);
         this.model = arrayOperation;
       }
@@ -6108,479 +7034,12 @@ function (_UIComponent) {
   }]);
 
   return UIText;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
-// CONCATENATED MODULE: ./js/tsunami/utils/number.js
-// Returns a random number between min (inclusive) and max (exclusive)
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-} // Returns a random integer between min (included) and max (excluded)
-// Using Math.round() will give you a non-uniform distribution!
+// EXTERNAL MODULE: ./js/tsunami/utils/number.js
+var number = __webpack_require__(7);
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-} // Returns a random integer between min (included) and max (included)
-// Using Math.round() will give you a non-uniform distribution!
-
-function getRandomIntInclusive(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-/**
- Creates a random number within the defined range.
-
- @param min: The minimum value the random number can be.
- @param min: The maximum value the random number can be.
- @return Returns a random number within the range.
- */
-
-function randomWithinRange(min, max) {
-  return min + Math.random() * (max - min);
-}
-/**
- Creates a random integer within the defined range.
-
- @param min: The minimum value the random integer can be.
- @param min: The maximum value the random integer can be.
- @return Returns a random integer within the range.
- */
-
-function randomIntegerWithinRange(min, max) {
-  return Math.floor(Math.random() * (1 + max - min) + min);
-}
-/**
- Determines if the number is even.
-
- @param value: A number to determine if it is divisible by <code>2</code>.
- @return Returns <code>true</code> if the number is even; otherwise <code>false</code>.
- @example
- <code>
- console.log(isEven(7)); // Traces false
- console.log(isEven(12)); // Traces true
- </code>
- */
-
-function isEven(value) {
-  return (value & 1) == 0;
-}
-/**
- Determines if the number is odd.
-
- @param value: A number to determine if it is not divisible by <code>2</code>.
- @return Returns <code>true</code> if the number is odd; otherwise <code>false</code>.
- @example
- <code>
- console.log(isOdd(7)); // Traces true
- console.log(isOdd(12)); // Traces false
- </code>
- */
-
-function isOdd(value) {
-  return !isEven(value);
-}
-/**
- Determines if the number is an integer.
-
- @param value: A number to determine if it contains no decimal values.
- @return Returns <code>true</code> if the number is an integer; otherwise <code>false</code>.
- @example
- <code>
- console.log(isInteger(13)); // Traces true
- console.log(isInteger(1.2345)); // Traces false
- </code>
- */
-
-function isInteger(value) {
-  return value % 1 == 0;
-}
-/**
- Determines if the number is prime.
-
- @param value: A number to determine if it is only divisible by <code>1</code> and itself.
- @return Returns <code>true</code> if the number is prime; otherwise <code>false</code>.
- @example
- <code>
- console.log(isPrime(13)); // Traces true
- console.log(isPrime(4)); // Traces false
- </code>
- */
-
-function isPrime(value) {
-  if (value == 1 || value == 2) return true;
-  if (isEven(value)) return false;
-  var s = Math.sqrt(value);
-
-  for (var i = 3; i <= s; i++) {
-    if (value % i == 0) return false;
-  }
-
-  return true;
-}
-/**
- Rounds a number's decimal value to a specific place.
-
- @param value: The number to round.
- @param place: The decimal place to round.
- @return Returns the value rounded to the defined place.
- @example
- <code>
- console.log(roundToPlace(3.14159, 2)); // Traces 3.14
- console.log(roundToPlace(3.14159, 3)); // Traces 3.142
- </code>
- */
-
-function roundDecimalToPlace(value, place) {
-  var p = Math.pow(10, place);
-  return Math.round(value * p) / p;
-}
-/**
- Determines if index is included within the collection length otherwise the index loops to the beginning or end of the range and continues.
-
- @param index: Shop to loop if needed.
- @param length: The total elements in the collection.
- @return A valid zero-based index.
- @example
- <code>
- var colors:Array = new Array("Red", "Green", "Blue");
-
- console.logcolors[loopIndex(2, colors.length)]); // Traces Blue
- console.logcolors[loopIndex(4, colors.length)]); // Traces Green
- console.logcolors[loopIndex(-6, colors.length)]); // Traces Red
- </code>
- */
-
-function loopIndex(index, length) {
-  if (index < 0) index = length + index % length;
-  if (index >= length) return index % length;
-  return index;
-}
-/**
- Determines if the value is included within a range.
-
- @param value: Number to determine if it is included in the range.
- @param firstValue: First value of the range.
- @param secondValue: Second value of the range.
- @return Returns <code>true</code> if the number falls within the range; otherwise <code>false</code>.
- @usageNote The range values do not need to be in order.
- @example
- <code>
- console.log(isBetween(3, 0, 5)); // Traces true
- console.log(isBetween(7, 0, 5)); // Traces false
- </code>
- */
-
-function isBetween(value, firstValue, secondValue) {
-  return !(value < Math.min(firstValue, secondValue) || value > Math.max(firstValue, secondValue));
-}
-/**
- Determines if value falls within a range; if not it is snapped to the nearest range value.
-
- @param value: Number to determine if it is included in the range.
- @param firstValue: First value of the range.
- @param secondValue: Second value of the range.
- @return Returns either the number as passed, or its value once snapped to nearest range value.
- @usageNote The constraint values do not need to be in order.
- @example
- <code>
- console.log(constrain(3, 0, 5)); // Traces 3
- console.log(constrain(7, 0, 5)); // Traces 5
- </code>
- */
-
-function constrain(value, firstValue, secondValue) {
-  return Math.min(Math.max(value, Math.min(firstValue, secondValue)), Math.max(firstValue, secondValue));
-}
-/**
- Creates evenly spaced numerical increments between two numbers.
-
- @param begin: The starting value.
- @param end: The ending value.
- @param steps: The number of increments between the starting and ending values.
- @return Returns an Array comprised of the increments between the two values.
- @example
- <code>
- console.log(createStepsBetween(0, 5, 4)); // Traces 1,2,3,4
- console.log(createStepsBetween(1, 3, 3)); // Traces 1.5,2,2.5
- </code>
- */
-
-function createStepsBetween(begin, end, steps) {
-  steps++;
-  var i = 0;
-  var stepsBetween = [];
-  var increment = (end - begin) / steps;
-
-  while (++i < steps) {
-    stepsBetween.push(i * increment + begin);
-  }
-
-  return stepsBetween;
-}
-/**
- Determines a value between two specified values.
-
- @param amount: The level of interpolation between the two values. If <code>0</code>, <code>begin</code> value is returned; if <code>1</code>, <code>end</code> value is returned.
- @param begin: The starting value.
- @param end: The ending value.
- @example
- <code>
- console.log(interpolate(0.5, 0, 10)); // Traces 5
- </code>
- */
-
-function interpolate(amount, begin, end) {
-  return begin + (end - begin) * amount;
-}
-/**
- Determines a percentage of a value in a given range.
-
- @param value: The value to be converted.
- @param minimum: The lower value of the range.
- @param maximum: The upper value of the range.
- @example
- <code>
- console.log(normalize(8, 4, 20).decimalPercentage); // Traces 0.25
- </code>
- */
-
-function normalize(value, minimum, maximum) {
-  return new Percent((value - minimum) / (maximum - minimum));
-}
-/**
- Maps a value from one coordinate space to another.
-
- @param value: Value from the input coordinate space to map to the output coordinate space.
- @param min1: Starting value of the input coordinate space.
- @param max1: Ending value of the input coordinate space.
- @param min2: Starting value of the output coordinate space.
- @param max2: Ending value of the output coordinate space.
- @example
- <code>
- console.log(map(0.75, 0, 1, 0, 100)); // Traces 75
- </code>
- */
-
-function map(value, min1, max1, min2, max2) {
-  return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
-}
-/**
- Low pass filter alogrithm for easing a value toward a destination value. Works best for tweening values when no definite time duration exists and when the destination value changes.
-
- If <code>(0.5 < n < 1)</code>, then the resulting values will overshoot (ping-pong) until they reach the destination value. When <code>n</code> is greater than 1, as its value increases, the time it takes to reach the destination also increases. A pleasing value for <code>n</code> is 5.
-
- @param value: The current value.
- @param dest: The destination value.
- @param n: The slowdown factor.
- @return The weighted average.
- */
-
-function getWeightedAverage(value, dest, n) {
-  return value + (dest - value) / n;
-}
-/**
- Formats a number as a string.
-
- @param value: The number you wish to format.
- @param kDelim: The character used to seperate thousands; defaults to <code>""</code>.
- @param minLength: The minimum length of the number; defaults to <code>0 </code>.
- @param fillChar: The leading character used to make the number the minimum length; defaults to <code>"0"</code>.
- @return Returns the formatted number as a String.
- @example
- <code>
- console.log(format(1234567, ",", 8)); // Traces 01,234,567
- </code>
- */
-
-function number_format(value, kDelim, minLength, fillChar) {
-  if (!kDelim) {
-    kDelim = ",";
-  }
-
-  if (isNaN(minLength)) {
-    minLength = 0;
-  }
-
-  if (!fillChar) {
-    fillChar = "0";
-  }
-
-  var remainder = value % 1;
-  var num = Math.floor(value).toString();
-  var len = num.length;
-
-  if (minLength != 0 && minLength > len) {
-    minLength -= len;
-    var addChar = fillChar || '0';
-
-    while (minLength--) {
-      num = addChar + num;
-    }
-  }
-
-  if (kDelim != null && num.length > 3) {
-    var totalDelim = Math.floor(num.length / 3);
-    var totalRemain = num.length % 3;
-    var numSplit = num.split('');
-    var i = -1;
-
-    while (++i < totalDelim) {
-      numSplit.splice(totalRemain + 4 * i, 0, kDelim);
-    }
-
-    if (totalRemain == 0) numSplit.shift();
-    num = numSplit.join('');
-  }
-
-  if (remainder != 0) num += remainder.toString().substr(1);
-  return num;
-}
-/**
- Formats a number as a currency string.
-
- @param value: The number you wish to format.
- @param forceDecimals: If the number should always have two decimal places <code>true</code>, or only show decimals is there is a decimals value <code>false</code>; defaults to <code>true</code>.
- @param kDelim: The character used to seperate thousands; defaults to <code>","</code>.
- @return Returns the formatted number as a String.
- @example
- <code>
- console.log(formatCurrency(1234.5)); // Traces "1,234.50"
- </code>
- */
-
-function formatCurrency(value, forceDecimals, kDelim) {
-  if (forceDecimals == null) {
-    forceDecimals = true;
-  }
-
-  if (!kDelim) {
-    kDelim = ",";
-  }
-
-  var remainder = value % 1;
-  var currency = number_format(Math.floor(value), kDelim);
-  if (remainder != 0 || forceDecimals) currency += remainder.toFixed(2).substr(1);
-  return currency;
-}
-/**
- Finds the english ordinal suffix for the number given.
-
- @param value: Number to find the ordinal suffix of.
- @return Returns the suffix for the number, 2 characters.
- @example
- <code>
- console.log32 + getOrdinalSuffix(32)); // Traces 32nd
- </code>
- */
-
-function getOrdinalSuffix(value) {
-  if (value >= 10 && value <= 20) return 'th';
-  if (value == 0) return '';
-
-  switch (value % 10) {
-    case 3:
-      return 'rd';
-
-    case 2:
-      return 'nd';
-
-    case 1:
-      return 'st';
-
-    default:
-      return 'th';
-  }
-}
-/**
- Adds a leading zero for numbers less than ten.
-
- @param value: Number to add leading zero.
- @return Number as a String; if the number was less than ten the number will have a leading zero.
- @example
- <code>
- console.log(addLeadingZero(7)); // Traces 07
- console.log(addLeadingZero(11)); // Traces 11
- </code>
- */
-
-function addLeadingZero(value) {
-  return value < 10 ? '0' + value : value.toString();
-}
-/**
- Spells the provided number.
-
- @param value: Number to spell. Needs to be less than 999999999.
- @return The number spelled out as a String.
- @throws <code>Error</code> if <code>value</code> is greater than 999999999.
- @example
- <code>
- console.log(spell(0)); // Traces Zero
- console.log(spell(23)); // Traces Twenty-Three
- console.log(spell(2005678)); // Traces Two Million, Five Thousand, Six Hundred Seventy-Eight
- </code>
- */
-
-function spell(value) {
-  if (value > 999999999) {
-    throw 'Value too large for this method.';
-  }
-
-  var onesSpellings = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-  var tensSpellings = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-  var spelling = '';
-  var millions = value / 1000000;
-  value %= 1000000;
-  var thousands = value / 1000;
-  value %= 1000;
-  var hundreds = value / 100;
-  value %= 100;
-  var tens = value / 10;
-  value %= 10;
-  var ones = value % 10;
-
-  if (millions != 0) {
-    spelling += spelling.length == 0 ? '' : ', ';
-    spelling += spell(millions) + ' Million';
-  }
-
-  if (thousands != 0) {
-    spelling += spelling.length == 0 ? '' : ', ';
-    spelling += spell(thousands) + ' Thousand';
-  }
-
-  if (hundreds != 0) {
-    spelling += spelling.length == 0 ? '' : ', ';
-    spelling += spell(hundreds) + ' Hundred';
-  }
-
-  if (tens != 0 || ones != 0) {
-    spelling += spelling.length == 0 ? '' : ' ';
-    if (tens < 2) spelling += onesSpellings[tens * 10 + ones];else {
-      spelling += tensSpellings[tens];
-      if (ones != 0) spelling += '-' + onesSpellings[ones];
-    }
-  }
-
-  if (spelling.length == 0) return 'Zero';
-  return spelling;
-}
-function componentToHex(c) {
-  var hex = c.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
-}
-function rgbToHex(rgb) {
-  return componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
-}
-function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16),
-    toString: function toString() {
-      return "r:" + this.r + ",g:" + this.g + ",b:" + this.b;
-    }
-  } : null;
-}
 // CONCATENATED MODULE: ./js/tsunami/components/UINumber.js
 function UINumber_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UINumber_typeof = function _typeof(obj) { return typeof obj; }; } else { UINumber_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UINumber_typeof(obj); }
 
@@ -6663,7 +7122,7 @@ function (_UIText) {
         var split = value.toString().split(".");
 
         if (split.length > 0) {
-          split[0] = number_format(split[0], ",");
+          split[0] = Object(number["b" /* format */])(split[0], ",");
 
           if (split.length > 0) {
             value = split.join('.');
@@ -6674,7 +7133,7 @@ function (_UIText) {
       }
 
       if (this.isRank) {
-        value = value + getOrdinalSuffix(value);
+        value = value + Object(number["c" /* getOrdinalSuffix */])(value);
       }
 
       UINumber_get(UINumber_getPrototypeOf(UINumber.prototype), "updateValue", this).call(this, value);
@@ -6694,6 +7153,12 @@ function (_UIText) {
   return UINumber;
 }(UIText_UIText);
 
+
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(9);
+
+// EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
+var BooleanData = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIScrollPane.js
 function UIScrollPane_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIScrollPane_typeof = function _typeof(obj) { return typeof obj; }; } else { UIScrollPane_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIScrollPane_typeof(obj); }
@@ -6748,39 +7213,39 @@ function (_UIComponent) {
       x: false,
       y: false
     };
-    _this.loopPoint = new Point_Point(0, 0);
+    _this.loopPoint = new Point["a" /* default */](0, 0);
     _this.autoScrollSpeed = 1;
-    _this.scrollTarget = new Point_Point();
-    _this.scroll = new Point_Point();
-    _this.speed = new Point_Point();
-    _this.momentum = new Point_Point();
-    _this.minScroll = new Point_Point();
-    _this.maxScroll = new Point_Point();
-    _this.size = new Rectangle_Rectangle();
-    _this.panelSize = new Rectangle_Rectangle();
-    _this.startTouchDiff = new Point_Point();
+    _this.scrollTarget = new Point["a" /* default */]();
+    _this.scroll = new Point["a" /* default */]();
+    _this.speed = new Point["a" /* default */]();
+    _this.momentum = new Point["a" /* default */]();
+    _this.minScroll = new Point["a" /* default */]();
+    _this.maxScroll = new Point["a" /* default */]();
+    _this.size = new Rectangle["a" /* default */]();
+    _this.panelSize = new Rectangle["a" /* default */]();
+    _this.startTouchDiff = new Point["a" /* default */]();
     _this.springiness = 0;
     _this.inertia = 1;
     _this.elasticScrollInertia = 0.1;
-    _this.elasticScrollElasticity = new Point_Point(0.15, 0);
+    _this.elasticScrollElasticity = new Point["a" /* default */](0.15, 0);
     _this.momentumFriction = 0.965;
     _this.momentumScaleLimit = 0.5;
     _this.maxScrollReached = {
-      x: new BooleanData_BooleanData(),
-      y: new BooleanData_BooleanData()
+      x: new BooleanData["a" /* default */](),
+      y: new BooleanData["a" /* default */]()
     };
     _this.wheelHandler = _this.wheelHandler.bind(UIScrollPane_assertThisInitialized(_this));
     _this.mousedownHandler = _this.mousedownHandler.bind(UIScrollPane_assertThisInitialized(_this));
     _this.mousemoveHandler = _this.mousemoveHandler.bind(UIScrollPane_assertThisInitialized(_this));
     _this.mouseupHandler = _this.mouseupHandler.bind(UIScrollPane_assertThisInitialized(_this));
 
-    _this.element.addEventListener(events.mousedown, _this.mousedownHandler);
+    _this.element.addEventListener(events["b" /* events */].mousedown, _this.mousedownHandler);
 
     _this.autoScrollTimeoutDuration = 4;
     _this._startAutoScroll = _this._startAutoScroll.bind(UIScrollPane_assertThisInitialized(_this));
 
     if (_this.debug) {
-      console.log("events", events);
+      console.log("events", events["b" /* events */]);
     }
 
     return _this;
@@ -6807,7 +7272,7 @@ function (_UIComponent) {
         this.scrollTarget.y += event.deltaY * this.wheelDirection;
       }
 
-      this.dispatchEvent(new BaseEvent(UIScrollPane.WHEEL, event));
+      this.dispatchEvent(new events["a" /* default */](UIScrollPane.WHEEL, event));
     }
   }, {
     key: "_startAutoScrollTimeout",
@@ -7056,7 +7521,7 @@ function (_UIComponent) {
         return;
       }
 
-      if (!isTouch) {
+      if (!tsunami_window["a" /* isTouch */]) {
         event.preventDefault();
       }
 
@@ -7068,8 +7533,8 @@ function (_UIComponent) {
       this.scrollStart = this.scroll.clone();
       this.touchStart = this.getTouchPoint(event);
       this.touchPrevious = this.touchStart;
-      window.addEventListener(events.mousemove, this.mousemoveHandler);
-      window.addEventListener(events.mouseup, this.mouseupHandler);
+      window.addEventListener(events["b" /* events */].mousemove, this.mousemoveHandler);
+      window.addEventListener(events["b" /* events */].mouseup, this.mouseupHandler);
     }
   }, {
     key: "mousemoveHandler",
@@ -7078,16 +7543,16 @@ function (_UIComponent) {
       event.preventDefault(); // }
 
       var touchNew = this.getTouchPoint(event);
-      var distance = Point_Point.distance(touchNew, this.touchStart);
+      var distance = Point["a" /* default */].distance(touchNew, this.touchStart);
 
       if (Math.abs(distance) > 2 && !this.isDragging) {
         this.isDragging = true;
-        this.dispatchEvent(new BaseEvent(UIScrollPane.DRAG_START));
+        this.dispatchEvent(new events["a" /* default */](UIScrollPane.DRAG_START));
       }
 
       this.momentum = this.touchPrevious.subtract(touchNew);
       this.startTouchDiff = this.touchStart.subtract(touchNew);
-      this.scrollTarget = new Point_Point(this.scrollStart.x + this.startTouchDiff.x, this.scrollStart.y + this.startTouchDiff.y);
+      this.scrollTarget = new Point["a" /* default */](this.scrollStart.x + this.startTouchDiff.x, this.scrollStart.y + this.startTouchDiff.y);
       this.touchPrevious = touchNew;
       var clamp = {
         x: NaN,
@@ -7132,8 +7597,8 @@ function (_UIComponent) {
       // if (this.isDragging) {
       // event.preventDefault();
       // }
-      window.removeEventListener(events.mousemove, this.mousemoveHandler);
-      window.removeEventListener(events.mouseup, this.mouseupHandler);
+      window.removeEventListener(events["b" /* events */].mousemove, this.mousemoveHandler);
+      window.removeEventListener(events["b" /* events */].mouseup, this.mouseupHandler);
 
       if (this.wheelEnabled) {
         this.addWheelHandler();
@@ -7148,7 +7613,7 @@ function (_UIComponent) {
       this.momentum.x = this.getMinimumAbsoluteMomentum(this.momentum.x, momentumScaleX);
       var momentumScaleY = this.size.height * this.momentumScaleLimit;
       this.momentum.y = this.getMinimumAbsoluteMomentum(this.momentum.y, momentumScaleY);
-      this.dispatchEvent(new BaseEvent(UIScrollPane.DRAG_END));
+      this.dispatchEvent(new events["a" /* default */](UIScrollPane.DRAG_END));
     }
   }, {
     key: "autoScroll",
@@ -7210,7 +7675,7 @@ function (_UIComponent) {
   }]);
 
   return UIScrollPane;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/tsunami/utils/validation.js
@@ -7313,7 +7778,7 @@ function (_UIComponent) {
   }]);
 
   return UIMedia;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIToggle.js
@@ -7364,7 +7829,7 @@ function (_UIButton) {
   }]);
 
   return UIToggle;
-}(UIButton_UIButton);
+}(UIButton["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/tsunami/App.js
@@ -7442,19 +7907,25 @@ function (_UIComponent) {
   }]);
 
   return App;
-}(UIComponent_UIComponent);
+}(UIComponent["a" /* default */]);
 
 
-define("ui-component", UIComponent_UIComponent);
-define("ui-button", UIButton_UIButton);
-define("ui-list", UIList_UIList);
-define("ui-input", UIInput_UIInput);
-define("ui-select", UISelect_UISelect);
-define("ui-text", UIText_UIText);
-define("ui-number", UINumber_UINumber);
-define("ui-scroll-pane", UIScrollPane_UIScrollPane);
-define("ui-media", UIMedia_UIMedia);
-define("ui-toggle", UIToggle);
+tsunami["a" /* define */]("ui-component", UIComponent["a" /* default */]);
+tsunami["a" /* define */]("ui-button", UIButton["a" /* default */]);
+tsunami["a" /* define */]("ui-list", UIList_UIList);
+tsunami["a" /* define */]("ui-input", UIInput_UIInput);
+tsunami["a" /* define */]("ui-select", UISelect_UISelect);
+tsunami["a" /* define */]("ui-text", UIText_UIText);
+tsunami["a" /* define */]("ui-number", UINumber_UINumber);
+tsunami["a" /* define */]("ui-scroll-pane", UIScrollPane_UIScrollPane);
+tsunami["a" /* define */]("ui-media", UIMedia_UIMedia);
+tsunami["a" /* define */]("ui-toggle", UIToggle);
+// EXTERNAL MODULE: ./js/tsunami/await.js
+var tsunami_await = __webpack_require__(12);
+
+// EXTERNAL MODULE: ./js/tsunami/data/Validation.js
+var Validation = __webpack_require__(13);
+
 // CONCATENATED MODULE: ./js/tsunami/data/StringData.js
 function StringData_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { StringData_typeof = function _typeof(obj) { return typeof obj; }; } else { StringData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return StringData_typeof(obj); }
 
@@ -7515,7 +7986,7 @@ function (_Data) {
     value: function destroy() {
       this.modifiers = [];
 
-      if (this.validation instanceof Validation_Validation) {
+      if (this.validation instanceof Validation["a" /* default */]) {
         this.validation.destroy();
       }
 
@@ -7540,7 +8011,7 @@ function (_Data) {
       if (value != this._value) {
         this._value = value;
         this.dispatchEvent({
-          type: Data.CHANGE,
+          type: Data["a" /* default */].CHANGE,
           value: this._value
         });
       }
@@ -7553,7 +8024,7 @@ function (_Data) {
   }]);
 
   return StringData;
-}(Data);
+}(Data["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/model/Action.js
@@ -7583,23 +8054,23 @@ function () {
 
     this.type = type;
     this.name = new StringData_StringData();
-    this.name.length = new NumberData_NumberData();
-    this.name.addEventListener(Data.CHANGE, function () {
+    this.name.length = new NumberData["a" /* default */]();
+    this.name.addEventListener(Data["a" /* default */].CHANGE, function () {
       _this.name.length.value = Math.max(_this.name.value.length, 4);
     });
     this.name.value = name;
-    this.isCaptureable = new BooleanData_BooleanData();
-    this.isCapturing = new BooleanData_BooleanData();
-    this.isCapturing.addEventListener(Data.CHANGE, function (event) {
+    this.isCaptureable = new BooleanData["a" /* default */]();
+    this.isCapturing = new BooleanData["a" /* default */]();
+    this.isCapturing.addEventListener(Data["a" /* default */].CHANGE, function (event) {
       app.showCaptureIcon.value = event.value;
 
       if (!event.value) {
         app.save();
       }
     });
-    this.isPlaying = new BooleanData_BooleanData();
-    this.delay = new NumberData_NumberData(0);
-    this.isSelectedItem = new BooleanData_BooleanData();
+    this.isPlaying = new BooleanData["a" /* default */]();
+    this.delay = new NumberData["a" /* default */](0);
+    this.isSelectedItem = new BooleanData["a" /* default */]();
     this.capture = this.capture.bind(this);
     this.play = this.play.bind(this);
     this.array = [this];
@@ -7619,7 +8090,7 @@ function () {
     value: function triggerDelay() {
       var _this2 = this;
 
-      var promise1 = awaitTimeout(this.delay.value * 1000);
+      var promise1 = Object(tsunami_await["b" /* awaitTimeout */])(this.delay.value * 1000);
       var promise2 = promise1.then(function () {
         return _this2.trigger();
       });
@@ -7687,10 +8158,10 @@ function () {
 
     CubicBezier_classCallCheck(this, CubicBezier);
 
-    this.p0 = p0 || new Point_Point(0, 0);
-    this.p1 = p1 || new Point_Point(0, 0);
-    this.p2 = p2 || new Point_Point(1, 1);
-    this.p3 = p3 || new Point_Point(1, 1);
+    this.p0 = p0 || new Point["a" /* default */](0, 0);
+    this.p1 = p1 || new Point["a" /* default */](0, 0);
+    this.p2 = p2 || new Point["a" /* default */](1, 1);
+    this.p3 = p3 || new Point["a" /* default */](1, 1);
     this.samples = samples;
     this.calculateLength();
   }
@@ -7727,12 +8198,12 @@ function () {
   }, {
     key: "getPoint",
     value: function getPoint(t) {
-      var a = Point_Point.lerp(this.p0, this.p1, t);
-      var b = Point_Point.lerp(this.p1, this.p2, t);
-      var c = Point_Point.lerp(this.p2, this.p3, t);
-      var d = Point_Point.lerp(a, b, t);
-      var e = Point_Point.lerp(b, c, t);
-      var point = Point_Point.lerp(d, e, t);
+      var a = Point["a" /* default */].lerp(this.p0, this.p1, t);
+      var b = Point["a" /* default */].lerp(this.p1, this.p2, t);
+      var c = Point["a" /* default */].lerp(this.p2, this.p3, t);
+      var d = Point["a" /* default */].lerp(a, b, t);
+      var e = Point["a" /* default */].lerp(b, c, t);
+      var point = Point["a" /* default */].lerp(d, e, t);
       return point;
     }
   }, {
@@ -7849,7 +8320,7 @@ function (_CubicBezier) {
 
     CubicBezierEasing_classCallCheck(this, CubicBezierEasing);
 
-    _this = CubicBezierEasing_possibleConstructorReturn(this, CubicBezierEasing_getPrototypeOf(CubicBezierEasing).call(this, new Point_Point(0, 0), new Point_Point(x1, y1), new Point_Point(x2, y2), new Point_Point(1, 1), samples));
+    _this = CubicBezierEasing_possibleConstructorReturn(this, CubicBezierEasing_getPrototypeOf(CubicBezierEasing).call(this, new Point["a" /* default */](0, 0), new Point["a" /* default */](x1, y1), new Point["a" /* default */](x2, y2), new Point["a" /* default */](1, 1), samples));
     _this.ease = _this.ease.bind(CubicBezierEasing_assertThisInitialized(_this));
     return _this;
   }
@@ -7967,13 +8438,13 @@ function (_EventDispatcher) {
 
     _this = Vector2Data_possibleConstructorReturn(this, Vector2Data_getPrototypeOf(Vector2Data).call(this));
     _this.dispatchChangeEvent = _this.dispatchChangeEvent.bind(Vector2Data_assertThisInitialized(_this));
-    _this.x = new NumberData_NumberData(x);
+    _this.x = new NumberData["a" /* default */](x);
 
-    _this.x.addEventListener(Data.CHANGE, _this.dispatchChangeEvent);
+    _this.x.addEventListener(Data["a" /* default */].CHANGE, _this.dispatchChangeEvent);
 
-    _this.y = new NumberData_NumberData(y);
+    _this.y = new NumberData["a" /* default */](y);
 
-    _this.y.addEventListener(Data.CHANGE, _this.dispatchChangeEvent);
+    _this.y.addEventListener(Data["a" /* default */].CHANGE, _this.dispatchChangeEvent);
 
     return _this;
   }
@@ -7981,7 +8452,7 @@ function (_EventDispatcher) {
   Vector2Data_createClass(Vector2Data, [{
     key: "dispatchChangeEvent",
     value: function dispatchChangeEvent(event) {
-      this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
+      this.dispatchEvent(new events["a" /* default */](Data["a" /* default */].CHANGE, this));
     }
   }, {
     key: "clone",
@@ -8015,12 +8486,12 @@ function (_EventDispatcher) {
   }, {
     key: "point",
     get: function get() {
-      return new Point_Point(this.x.value, this.y.value);
+      return new Point["a" /* default */](this.x.value, this.y.value);
     }
   }]);
 
   return Vector2Data;
-}(EventDispatcher);
+}(EventDispatcher["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/model/CubicBezierPoints.js
@@ -8065,18 +8536,18 @@ function (_Data) {
     _this.p2 = new Vector2Data_Vector2Data(CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.x, CubicBezierEasing_CubicBezierEasing.quadratic.easeInOut.p2.y);
     _this.p3 = new Vector2Data_Vector2Data(1, 1);
 
-    _this.p0.addEventListener(Data.CHANGE, _this.changeHandler);
+    _this.p0.addEventListener(Data["a" /* default */].CHANGE, _this.changeHandler);
 
-    _this.p1.addEventListener(Data.CHANGE, _this.changeHandler);
+    _this.p1.addEventListener(Data["a" /* default */].CHANGE, _this.changeHandler);
 
-    _this.p2.addEventListener(Data.CHANGE, _this.changeHandler);
+    _this.p2.addEventListener(Data["a" /* default */].CHANGE, _this.changeHandler);
 
-    _this.p3.addEventListener(Data.CHANGE, _this.changeHandler);
+    _this.p3.addEventListener(Data["a" /* default */].CHANGE, _this.changeHandler);
 
     for (var i = 0; i < 4; i++) {
       var vec = _this["p" + i];
-      vec.x.modifiers = [NumberData_NumberData.roundDecimal3];
-      vec.y.modifiers = [NumberData_NumberData.roundDecimal3];
+      vec.x.modifiers = [NumberData["a" /* default */].roundDecimal3];
+      vec.y.modifiers = [NumberData["a" /* default */].roundDecimal3];
     }
 
     return _this;
@@ -8085,13 +8556,16 @@ function (_Data) {
   CubicBezierPoints_createClass(CubicBezierPoints, [{
     key: "changeHandler",
     value: function changeHandler() {
-      this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
+      this.dispatchEvent(new events["a" /* default */](Data["a" /* default */].CHANGE, this));
     }
   }]);
 
   return CubicBezierPoints;
-}(Data);
+}(Data["a" /* default */]);
 
+
+// EXTERNAL MODULE: ./js/tsunami/data/ObjectData.js
+var ObjectData = __webpack_require__(15);
 
 // CONCATENATED MODULE: ./js/model/ActionTween.js
 function ActionTween_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTween_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTween_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTween_typeof(obj); }
@@ -8145,24 +8619,24 @@ function (_Action) {
     ActionTween_classCallCheck(this, ActionTween);
 
     _this = ActionTween_possibleConstructorReturn(this, ActionTween_getPrototypeOf(ActionTween).call(this, "ActionTween", "ActionTween"));
-    _this.startX = new NumberData_NumberData(startX);
-    _this.startY = new NumberData_NumberData(startY);
-    _this.endX = new NumberData_NumberData(x);
-    _this.endY = new NumberData_NumberData(y);
-    _this.duration = new NumberData_NumberData(duration);
+    _this.startX = new NumberData["a" /* default */](startX);
+    _this.startY = new NumberData["a" /* default */](startY);
+    _this.endX = new NumberData["a" /* default */](x);
+    _this.endY = new NumberData["a" /* default */](y);
+    _this.duration = new NumberData["a" /* default */](duration);
     _this.cubicBezierPoints = new CubicBezierPoints_CubicBezierPoints();
     _this.easing = new CubicBezierEasing_CubicBezierEasing();
 
     _this.cubicBezierPointsChange();
 
-    _this.easingMethod = new ObjectData_ObjectData(_this.easing.ease);
-    _this.debugEasing = new ObjectData_ObjectData(Easing_Easing.cubic.easeInOut);
+    _this.easingMethod = new ObjectData["a" /* default */](_this.easing.ease);
+    _this.debugEasing = new ObjectData["a" /* default */](Easing_Easing.cubic.easeInOut);
 
-    _this.cubicBezierPoints.addEventListener(Data.CHANGE, _this.cubicBezierPointsChange.bind(ActionTween_assertThisInitialized(_this)));
+    _this.cubicBezierPoints.addEventListener(Data["a" /* default */].CHANGE, _this.cubicBezierPointsChange.bind(ActionTween_assertThisInitialized(_this)));
 
-    _this.easingPresets = new ArrayData_ArrayData("Select a preset");
+    _this.easingPresets = new ArrayData["a" /* default */]("Select a preset");
 
-    _this.easingPresets.selectedItem.addEventListener(Data.CHANGE, _this.easingPresetChange.bind(ActionTween_assertThisInitialized(_this)));
+    _this.easingPresets.selectedItem.addEventListener(Data["a" /* default */].CHANGE, _this.easingPresetChange.bind(ActionTween_assertThisInitialized(_this)));
 
     _this.easingPresets.selectedItem.forceChangeEvent = true;
 
@@ -8180,7 +8654,7 @@ function (_Action) {
 
     _this.tweenUpdateHandler = _this.tweenUpdateHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.tweenCompleteHandler = _this.tweenCompleteHandler.bind(ActionTween_assertThisInitialized(_this));
-    _this.pos = new Point_Point();
+    _this.pos = new Point["a" /* default */]();
     return _this;
   }
 
@@ -8202,13 +8676,13 @@ function (_Action) {
     key: "easingPresetChange",
     value: function easingPresetChange() {
       var value = this.easingPresets.selectedItem.value;
-      var debugEasingMethod = evalProperty(value, Easing_Easing);
+      var debugEasingMethod = Object(tsunami["c" /* evalProperty */])(value, Easing_Easing);
 
       if (debugEasingMethod) {
         this.debugEasing.value = debugEasingMethod;
       }
 
-      var cb = evalProperty(value, CubicBezierEasing_CubicBezierEasing);
+      var cb = Object(tsunami["c" /* evalProperty */])(value, CubicBezierEasing_CubicBezierEasing);
 
       if (cb) {
         this.cubicBezierPoints.p1.x.value = cb.p1.x;
@@ -8330,16 +8804,16 @@ function (_ActionTween) {
     _this.type = "ActionScroll";
     _this.name.value = "Scroll";
     _this.target = new StringData_StringData(target);
-    _this.unitX = new NumberData_NumberData(x);
-    _this.unitY = new NumberData_NumberData(y);
-    _this.units = new ArrayData_ArrayData("%", "px");
+    _this.unitX = new NumberData["a" /* default */](x);
+    _this.unitY = new NumberData["a" /* default */](y);
+    _this.units = new ArrayData["a" /* default */]("%", "px");
     _this.units.selectedItem.value = units;
     _this.isCaptureable.value = true;
     _this.doScroll = _this.doScroll.bind(ActionScroll_assertThisInitialized(_this));
 
-    _this.unitX.addEventListener(Data.CHANGE, _this.doScroll);
+    _this.unitX.addEventListener(Data["a" /* default */].CHANGE, _this.doScroll);
 
-    _this.unitY.addEventListener(Data.CHANGE, _this.doScroll);
+    _this.unitY.addEventListener(Data["a" /* default */].CHANGE, _this.doScroll);
 
     return _this;
   }
@@ -8354,8 +8828,8 @@ function (_ActionTween) {
   }, {
     key: "copy",
     value: function copy(action) {
-      this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
-      this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
+      this.unitX.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.unitY.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
 
       ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "copy", this).call(this, action);
 
@@ -8363,8 +8837,8 @@ function (_ActionTween) {
       this.unitX.value = action.unitX.value;
       this.unitY.value = action.unitY.value;
       this.units.selectedItem.value = action.units.selectedItem.value;
-      this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-      this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+      this.unitX.addEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.unitY.addEventListener(Data["a" /* default */].CHANGE, this.doScroll);
     }
   }, {
     key: "trigger",
@@ -8449,8 +8923,8 @@ function (_ActionTween) {
   }, {
     key: "deserialize",
     value: function deserialize(data) {
-      this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
-      this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
+      this.unitX.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.unitY.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
 
       ActionScroll_get(ActionScroll_getPrototypeOf(ActionScroll.prototype), "deserialize", this).call(this, data);
 
@@ -8458,19 +8932,19 @@ function (_ActionTween) {
       this.unitX.value = data.unitX;
       this.unitY.value = data.unitY;
       this.units.selectedItem.value = data.units;
-      this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-      this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+      this.unitX.addEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.unitY.addEventListener(Data["a" /* default */].CHANGE, this.doScroll);
     }
   }, {
     key: "capture",
     value: function capture() {
       var _this2 = this;
 
-      this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
-      this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
+      this.unitX.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.unitY.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
       this.isCapturing.value = true;
-      var scroll = new Point_Point();
-      var maxScroll = new Point_Point();
+      var scroll = new Point["a" /* default */]();
+      var maxScroll = new Point["a" /* default */]();
 
       switch (this.target.value) {
         case "window":
@@ -8489,7 +8963,7 @@ function (_ActionTween) {
           break;
       }
 
-      var unit = new Point_Point();
+      var unit = new Point["a" /* default */]();
 
       switch (this.units.selectedItem.value) {
         case "px":
@@ -8510,9 +8984,9 @@ function (_ActionTween) {
       setTimeout(function () {
         _this2.isCapturing.value = false;
 
-        _this2.unitX.addEventListener(Data.CHANGE, _this2.doScroll);
+        _this2.unitX.addEventListener(Data["a" /* default */].CHANGE, _this2.doScroll);
 
-        _this2.unitY.addEventListener(Data.CHANGE, _this2.doScroll);
+        _this2.unitY.addEventListener(Data["a" /* default */].CHANGE, _this2.doScroll);
       }, 100);
     }
   }, {
@@ -8572,9 +9046,9 @@ function (_Action) {
     ActionMouseEvent_classCallCheck(this, ActionMouseEvent);
 
     _this = ActionMouseEvent_possibleConstructorReturn(this, ActionMouseEvent_getPrototypeOf(ActionMouseEvent).call(this, "ActionMouseEvent", "MouseEvent"));
-    _this.x = new NumberData_NumberData(x);
-    _this.y = new NumberData_NumberData(y);
-    _this.eventTypes = new ArrayData_ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
+    _this.x = new NumberData["a" /* default */](x);
+    _this.y = new NumberData["a" /* default */](y);
+    _this.eventTypes = new ArrayData["a" /* default */]("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
     _this.eventTypes.selectedItem.value = _this.eventTypes.value[0];
     _this.isCaptureable.value = true;
     _this.captureMouseEventHandler = _this.captureMouseEventHandler.bind(ActionMouseEvent_assertThisInitialized(_this));
@@ -8600,7 +9074,7 @@ function (_Action) {
   }, {
     key: "trigger",
     value: function trigger() {
-      var point = new Point_Point(this.x.value - window.scrollX, this.y.value - window.scrollY);
+      var point = new Point["a" /* default */](this.x.value - window.scrollX, this.y.value - window.scrollY);
       var el = document.elementFromPoint(point.x, point.y);
       var event = new MouseEvent(this.eventTypes.selectedItem.value, {
         bubbles: true,
@@ -8655,11 +9129,11 @@ function (_Action) {
       this.isCapturing.value = false;
       var touch = event;
 
-      if (isTouch) {
+      if (tsunami_window["a" /* isTouch */]) {
         touch = event.touches[0];
       }
 
-      var point = new Point_Point(touch.pageX, touch.pageY);
+      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
       this.x.value = point.x;
       this.y.value = point.y;
       document.body.removeEventListener("click", this.captureMouseEventHandler);
@@ -57987,7 +58461,7 @@ function (_ActionTween) {
     _this = ActionSwipe_possibleConstructorReturn(this, ActionSwipe_getPrototypeOf(ActionSwipe).call(this, 0, 0, 0, 0, duration, delay));
     _this.type = "ActionSwipe";
     _this.name.value = "Swipe";
-    _this.points = new ArrayData_ArrayData();
+    _this.points = new ArrayData["a" /* default */]();
     _this.points.dataClass = Vector2Data_Vector2Data;
 
     while (points.length < 2) {
@@ -58099,11 +58573,11 @@ function (_ActionTween) {
     value: function captureDownHandler(event) {
       var touch = event;
 
-      if (isTouch) {
+      if (tsunami_window["a" /* isTouch */]) {
         touch = event.touches[0];
       }
 
-      var point = new Point_Point(touch.pageX, touch.pageY);
+      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
       var vec2 = this.points.value[0];
       vec2.x.value = point.x;
       vec2.y.value = point.y;
@@ -58115,11 +58589,11 @@ function (_ActionTween) {
     value: function captureUpHandler(event) {
       var touch = event;
 
-      if (isTouch) {
+      if (tsunami_window["a" /* isTouch */]) {
         touch = event.touches[0];
       }
 
-      var point = new Point_Point(touch.pageX, touch.pageY);
+      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
       var vec2 = this.points.value[1];
       vec2.x.value = point.x;
       vec2.y.value = point.y;
@@ -58219,7 +58693,7 @@ function (_ArrayData) {
     _this.push.apply(Actions_assertThisInitialized(_this), arguments);
 
     _this.addSelectedType = _this.addSelectedType.bind(Actions_assertThisInitialized(_this));
-    _this.types = new ArrayData_ArrayData();
+    _this.types = new ArrayData["a" /* default */]();
     _this.types.value = [new Action_Action("", "Add an action"), new ActionScroll_ActionScroll(), new ActionMouseEvent_ActionMouseEvent(), new ActionSwipe_ActionSwipe(), new ActionWait(), new ActionEval_ActionEval()];
     _this.types.selectedItem.value = _this.types.value[0];
     return _this;
@@ -58284,7 +58758,613 @@ function (_ArrayData) {
   }]);
 
   return Actions;
-}(ArrayData_ArrayData);
+}(ArrayData["a" /* default */]);
+
+
+// CONCATENATED MODULE: ./js/tsunami/AssetList.js
+function AssetList_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function AssetList_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function AssetList_createClass(Constructor, protoProps, staticProps) { if (protoProps) AssetList_defineProperties(Constructor.prototype, protoProps); if (staticProps) AssetList_defineProperties(Constructor, staticProps); return Constructor; }
+
+var AssetList =
+/*#__PURE__*/
+function () {
+  function AssetList() {
+    var assets = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    AssetList_classCallCheck(this, AssetList);
+
+    this.assets = assets;
+  }
+
+  AssetList_createClass(AssetList, [{
+    key: "push",
+    value: function push(value) {
+      this.assets.push(value);
+      return value;
+    }
+  }, {
+    key: "progress",
+    get: function get() {
+      var progress = 0;
+      var length = this.assets.length;
+
+      for (var i = 0; i < this.assets.length; i++) {
+        var promise = this.assets[i];
+
+        if (promise.hasOwnProperty("progress")) {
+          progress += promise.progress;
+        } else {
+          length--;
+        }
+      }
+
+      if (length > 0) {
+        progress = progress / length;
+      } else {
+        progress = 1;
+      }
+
+      return progress;
+    }
+  }]);
+
+  return AssetList;
+}();
+
+
+// CONCATENATED MODULE: ./js/tsunami/Router.js
+function Router_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Router_typeof = function _typeof(obj) { return typeof obj; }; } else { Router_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Router_typeof(obj); }
+
+function Router_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Router_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Router_createClass(Constructor, protoProps, staticProps) { if (protoProps) Router_defineProperties(Constructor.prototype, protoProps); if (staticProps) Router_defineProperties(Constructor, staticProps); return Constructor; }
+
+function Router_possibleConstructorReturn(self, call) { if (call && (Router_typeof(call) === "object" || typeof call === "function")) { return call; } return Router_assertThisInitialized(self); }
+
+function Router_getPrototypeOf(o) { Router_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Router_getPrototypeOf(o); }
+
+function Router_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function Router_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Router_setPrototypeOf(subClass, superClass); }
+
+function Router_setPrototypeOf(o, p) { Router_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Router_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var Router_Router =
+/*#__PURE__*/
+function (_EventDispatcher) {
+  Router_inherits(Router, _EventDispatcher);
+
+  function Router(root) {
+    var _this;
+
+    Router_classCallCheck(this, Router);
+
+    _this = Router_possibleConstructorReturn(this, Router_getPrototypeOf(Router).call(this));
+    _this.root = root;
+    _this._location = null;
+    _this.goToAllLocations = false;
+    _this.interruptTransitions = true;
+    _this._inTransition = false;
+    _this._interruptingLocations = [];
+    _this.branches = new ArrayData["a" /* default */]();
+    _this.redirects = {};
+    _this.parameters = {};
+    _this.show = new RouterTransition(Router_assertThisInitialized(_this), "show", _this._showComplete.bind(Router_assertThisInitialized(_this)));
+    _this.show.tasks = [new Router_RouterTask("load", true), new Router_RouterTask("show", false)];
+    _this.hide = new RouterTransition(Router_assertThisInitialized(_this), "hide", _this._hideComplete.bind(Router_assertThisInitialized(_this)));
+    _this.hide.tasks = [new Router_RouterTask("hide", false)];
+    return _this;
+  }
+
+  Router_createClass(Router, [{
+    key: "changeTheLocation",
+    value: function changeTheLocation(value) {
+      var _this2 = this;
+
+      var hashes = value.split("&");
+      this.parameters = {};
+
+      for (var i = 0; i < hashes.length; i++) {
+        var string = hashes[i];
+        var equalIndex = string.indexOf("=");
+
+        if (equalIndex != -1) {
+          var hash = [];
+          hash[0] = string.substr(0, equalIndex);
+          hash[1] = string.substr(equalIndex + 1);
+          this.parameters[hash[0]] = hash[1];
+        }
+      }
+
+      var path = hashes[0]; // remove slash if it is the last character, we don't need blank pages.
+
+      var lastChar = path.charAt(path.length - 1);
+
+      while (lastChar == "/") {
+        path = path.substr(0, path.length - 1);
+        lastChar = path.charAt(path.length - 1);
+      }
+
+      path = this._applyRedirect(path);
+
+      if (path != this._location) {
+        this._inTransition = true;
+        this._location = path;
+        this.dispatchEvent({
+          type: Router.CHANGE,
+          location: path
+        });
+        this._nextLocation = "root";
+
+        if (path != "") {
+          this._nextLocation += "/" + path;
+        }
+
+        if (this._debug) {
+          console.log("_nextLocation", this._nextLocation);
+        }
+
+        Object(tsunami_await["b" /* awaitTimeout */])(0).then(function () {
+          _this2._startTransitions();
+        });
+      } else {
+        this._showComplete();
+      }
+    }
+  }, {
+    key: "_applyRedirect",
+    value: function _applyRedirect(path) {
+      var redirect = this.redirects[path];
+      var newPath;
+
+      if (redirect) {
+        newPath = redirect();
+      }
+
+      newPath = newPath || path;
+
+      if (newPath != path) {
+        newPath = this._applyRedirect(newPath);
+      }
+
+      return newPath;
+    }
+  }, {
+    key: "_startTransitions",
+    value: function _startTransitions() {
+      var currentLocationArray = this.branches.value.map(function (branch) {
+        return branch.slug;
+      });
+
+      var nextLocationArray = this._nextLocation.split("/");
+
+      var breakIndex = -1;
+
+      for (var i = 0; i < currentLocationArray.length; i++) {
+        var branchId = currentLocationArray.slice(0, i + 1).join("/");
+        var nextBranchId = nextLocationArray.slice(0, i + 1).join("/");
+
+        if (branchId == nextBranchId) {
+          breakIndex = i;
+        }
+      }
+
+      this.hide.branches = this.branches.splice(breakIndex + 1).reverse();
+      var parent = this;
+
+      if (this.branches.length > 0) {
+        parent = this.branches.item(this.branches.length - 1);
+      }
+
+      var newBranches = [];
+
+      for (var _i = breakIndex + 1; _i < nextLocationArray.length; _i++) {
+        var slug = nextLocationArray[_i];
+        var branch = this.getBranchFromSlug(parent, slug);
+        newBranches.push(branch);
+        parent = branch;
+      }
+
+      this.checkForDefaultBranches(parent, newBranches);
+      this.show.branches = newBranches;
+      this.hide.start();
+    }
+  }, {
+    key: "checkForDefaultBranches",
+    value: function checkForDefaultBranches(parent, branches) {
+      if (parent) {
+        if (parent.defaultChild) {
+          var slug = parent.defaultChild;
+          var branch = this.getBranchFromSlug(parent, slug);
+
+          if (branch) {
+            branches.push(branch);
+            this.checkForDefaultBranches(branch, branches);
+          }
+        }
+      }
+    }
+  }, {
+    key: "getBranchFromSlug",
+    value: function getBranchFromSlug(parent, slug) {
+      var branch;
+
+      if (slug) {
+        if (!parent.getBranch) {
+          throw new Error("The branch '" + parent.slug + "' doesn't implement the getBranch method for '" + slug + "'");
+        }
+
+        branch = parent.getBranch(slug);
+        branch.router = this;
+        branch.parent = parent;
+        branch.root = parent.root;
+        branch.slug = slug;
+        var path = "";
+
+        if (parent == this) {
+          path = "";
+        } else if (parent.slug == "root") {
+          path = slug;
+        } else {
+          path = parent.path + "/" + slug;
+        }
+
+        branch.path = path;
+      }
+
+      return branch;
+    }
+  }, {
+    key: "_hideComplete",
+    value: function _hideComplete(event) {
+      var interruptTheTransition = false;
+
+      if (this.interruptTransitions && this._interruptingLocations.lenth > 0) {
+        var nextInterruptedLocation = this._interruptingLocations[0];
+
+        if (nextInterruptedLocation != null || nextInterruptedLocation != undefined) {
+          interruptTheTransition = true;
+        }
+      }
+
+      if (interruptTheTransition) {
+        this._inTransition = false;
+        this.dispatchEvent({
+          type: Router.INTERRUPT,
+          location: this.location
+        }); // this.location = this._interruptingLocations.shift();
+
+        this.changeTheLocation(this._interruptingLocations.shift());
+      } else {
+        this.branches.push.apply(this.branches, this.show.branches);
+        this.show.start();
+      }
+    }
+  }, {
+    key: "_showComplete",
+    value: function _showComplete(event) {
+      this._inTransition = false;
+      this.dispatchEvent({
+        type: Router.COMPLETE,
+        location: this.location
+      });
+      var interruptedLocation = this._interruptingLocations[0];
+
+      if (interruptedLocation != null || interruptedLocation != undefined) {
+        // this.location = this._interruptingLocations.shift();
+        this.changeTheLocation(this._interruptingLocations.shift());
+      }
+    }
+  }, {
+    key: "getBranch",
+    value: function getBranch(slug) {
+      return this.root;
+    }
+  }, {
+    key: "redirect",
+    value: function redirect(path, newPath) {
+      if (newPath) {
+        this.redirects[path] = newPath;
+      } else {
+        delete this.redirects[path];
+      }
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this._interruptingLocations = null;
+      this.branches = null;
+      this.redirects = null;
+      this.root = null;
+      this.popStateBind = null;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Router" + " location=" + this.location + "]";
+    }
+  }, {
+    key: "root",
+    get: function get() {
+      return this._root;
+    },
+    set: function set(value) {
+      this._root = value;
+    }
+  }, {
+    key: "location",
+    get: function get() {
+      return this._location;
+    },
+    set: function set(value) {
+      if (this._debug) {
+        console.log("set location", value);
+      }
+
+      if (value.indexOf("?") != -1) {
+        value = value.split("?")[0];
+      }
+
+      if (this._inTransition) {
+        if (this.goToAllLocations) {
+          var lastInterruptingLocation = this._interruptingLocations[this._interruptingLocations.length - 1];
+
+          if (lastInterruptingLocation != value) {
+            this._interruptingLocations.push(value);
+          }
+        } else {
+          this._interruptingLocations = [value];
+        }
+      } else {
+        this.changeTheLocation(value);
+      }
+    }
+  }], [{
+    key: "INTERRUPT",
+    get: function get() {
+      return "interrupt";
+    }
+  }, {
+    key: "CHANGE",
+    get: function get() {
+      return "change";
+    }
+  }, {
+    key: "COMPLETE",
+    get: function get() {
+      return "complete";
+    }
+  }]);
+
+  return Router;
+}(EventDispatcher["a" /* default */]);
+
+
+
+var RouterTransition =
+/*#__PURE__*/
+function () {
+  function RouterTransition(router, name, onComplete) {
+    Router_classCallCheck(this, RouterTransition);
+
+    this.router = router;
+    this.name = name;
+    this.onComplete = onComplete;
+    this.branches = [];
+    this.tasks = [];
+  }
+
+  Router_createClass(RouterTransition, [{
+    key: "start",
+    value: function start() {
+      if (this.branches.length > 0) {
+        var nextTask;
+
+        for (var i = this.tasks.length - 1; i > -1; i--) {
+          var task = this.tasks[i];
+          task.router = this.router;
+          task.branches = this.branches.slice();
+
+          if (nextTask) {
+            task.onComplete = nextTask.start.bind(nextTask);
+          } else {
+            task.onComplete = this.tasksComplete.bind(this);
+          }
+
+          nextTask = task;
+        }
+
+        var firstTask = this.tasks[0];
+        firstTask.start();
+      } else {
+        this.tasksComplete();
+      }
+    }
+  }, {
+    key: "tasksComplete",
+    value: function tasksComplete() {
+      this.onComplete();
+    }
+  }]);
+
+  return RouterTransition;
+}();
+
+var Router_RouterTask =
+/*#__PURE__*/
+function () {
+  function RouterTask(name, preload) {
+    Router_classCallCheck(this, RouterTask);
+
+    this.name = name;
+    this.preload = preload;
+    this.branches = [];
+    this.router = null;
+    this.checkProgressBind = this.checkProgress.bind(this);
+  }
+
+  Router_createClass(RouterTask, [{
+    key: "start",
+    value: function start() {
+      var _this3 = this;
+
+      this.preloader = null;
+      this.assets = [];
+
+      if (this.branches.length > 0) {
+        if (this.preload) {
+          for (var i = 0; i < this.branches.length; i++) {
+            this.assets.push(new AssetList());
+          }
+
+          this.assetList = new AssetList(this.assets.slice());
+          this.preloader = this.router.preloader;
+
+          if (this.preloader) {
+            this.isPreloading = true;
+            this.checkProgress();
+            var promise = this.preloader.show();
+
+            if (promise) {
+              promise.then(function (obj) {
+                _this3.startNextBranch();
+              });
+            } else {
+              this.startNextBranch();
+            }
+          } else {
+            this.startNextBranch();
+          }
+        } else {
+          this.startNextBranch();
+        }
+      } else {
+        this.allComplete();
+      }
+    }
+  }, {
+    key: "checkProgress",
+    value: function checkProgress() {
+      if (this.assetList) {
+        this.preloader.progress = this.assetList.progress;
+      }
+
+      if (this.isPreloading) {
+        this.animationFrame = requestAnimationFrame(this.checkProgressBind);
+      }
+    }
+  }, {
+    key: "startNextBranch",
+    value: function startNextBranch() {
+      this.branch = this.branches.shift(); // let method = this.branch.getMethod(this.name);
+
+      var method = this.branch[this.name];
+
+      if (method) {
+        method = method.bind(this.branch);
+        var assetList = this.assets.shift();
+        var promise = method(assetList);
+
+        if (promise) {
+          promise.then(this.branchComplete.bind(this));
+        } else {
+          this.branchComplete();
+        }
+      } else {
+        this.branchComplete();
+      }
+    }
+  }, {
+    key: "branchComplete",
+    value: function branchComplete() {
+      if (this.branches.length > 0) {
+        this.startNextBranch();
+      } else {
+        if (this.preloader) {
+          this.isPreloading = false;
+          var promise = this.preloader.hide();
+
+          if (promise) {
+            promise.then(this.allComplete.bind(this));
+          } else {
+            this.allComplete();
+          }
+        } else {
+          this.allComplete();
+        }
+      }
+    }
+  }, {
+    key: "allComplete",
+    value: function allComplete() {
+      var _this4 = this;
+
+      this.assets = null;
+      this.assetList = null;
+      this.branches = null;
+      Object(tsunami_await["a" /* awaitAnimationFrame */])(1).then(function () {
+        _this4.onComplete();
+      });
+    }
+  }]);
+
+  return RouterTask;
+}();
+// EXTERNAL MODULE: ./js/tsunami/components/UIRouterButton.js
+var UIRouterButton = __webpack_require__(20);
+
+// CONCATENATED MODULE: ./js/view/RouterButton.js
+function RouterButton_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { RouterButton_typeof = function _typeof(obj) { return typeof obj; }; } else { RouterButton_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return RouterButton_typeof(obj); }
+
+function RouterButton_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function RouterButton_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function RouterButton_createClass(Constructor, protoProps, staticProps) { if (protoProps) RouterButton_defineProperties(Constructor.prototype, protoProps); if (staticProps) RouterButton_defineProperties(Constructor, staticProps); return Constructor; }
+
+function RouterButton_possibleConstructorReturn(self, call) { if (call && (RouterButton_typeof(call) === "object" || typeof call === "function")) { return call; } return RouterButton_assertThisInitialized(self); }
+
+function RouterButton_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function RouterButton_getPrototypeOf(o) { RouterButton_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return RouterButton_getPrototypeOf(o); }
+
+function RouterButton_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) RouterButton_setPrototypeOf(subClass, superClass); }
+
+function RouterButton_setPrototypeOf(o, p) { RouterButton_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return RouterButton_setPrototypeOf(o, p); }
+
+
+
+
+var RouterButton_RouterButton =
+/*#__PURE__*/
+function (_UIRouterButton) {
+  RouterButton_inherits(RouterButton, _UIRouterButton);
+
+  function RouterButton() {
+    RouterButton_classCallCheck(this, RouterButton);
+
+    return RouterButton_possibleConstructorReturn(this, RouterButton_getPrototypeOf(RouterButton).apply(this, arguments));
+  }
+
+  RouterButton_createClass(RouterButton, [{
+    key: "router",
+    get: function get() {
+      return app.router;
+    }
+  }]);
+
+  return RouterButton;
+}(UIRouterButton["a" /* default */]);
 
 
 // CONCATENATED MODULE: ./js/main.js
@@ -58298,13 +59378,19 @@ function main_createClass(Constructor, protoProps, staticProps) { if (protoProps
 
 function main_possibleConstructorReturn(self, call) { if (call && (main_typeof(call) === "object" || typeof call === "function")) { return call; } return main_assertThisInitialized(self); }
 
-function main_getPrototypeOf(o) { main_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return main_getPrototypeOf(o); }
-
 function main_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function main_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { main_get = Reflect.get; } else { main_get = function _get(target, property, receiver) { var base = main_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return main_get(target, property, receiver || target); }
+
+function main_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = main_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function main_getPrototypeOf(o) { main_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return main_getPrototypeOf(o); }
 
 function main_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) main_setPrototypeOf(subClass, superClass); }
 
 function main_setPrototypeOf(o, p) { main_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return main_setPrototypeOf(o, p); }
+
+
 
 
 
@@ -58327,10 +59413,11 @@ function (_App) {
     main_classCallCheck(this, Main);
 
     _this = main_possibleConstructorReturn(this, main_getPrototypeOf(Main).call(this, element));
+    _this.router = new Router_Router(main_assertThisInitialized(_this));
     app = main_assertThisInitialized(_this);
     var icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
-    var DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Regular.ttf');
-    var defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo/Menlo-Bold.ttf');
+    var DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo-Regular.ttf');
+    var defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo-Bold.ttf');
     var customCursor = chrome.extension.getURL('assets/images/customCursor.png');
     var fonts = document.createElement('style');
     fonts.type = 'text/css';
@@ -58340,11 +59427,9 @@ function (_App) {
     _this.play = _this.play.bind(main_assertThisInitialized(_this));
     _this.playAndCapture = _this.playAndCapture.bind(main_assertThisInitialized(_this));
     _this.clear = _this.clear.bind(main_assertThisInitialized(_this));
-    _this.show = _this.show.bind(main_assertThisInitialized(_this));
-    _this.hide = _this.hide.bind(main_assertThisInitialized(_this));
-    _this.showCaptureIcon = new BooleanData_BooleanData();
+    _this.showCaptureIcon = new BooleanData["a" /* default */]();
 
-    _this.showCaptureIcon.addEventListener(Data.CHANGE, function (event) {
+    _this.showCaptureIcon.addEventListener(Data["a" /* default */].CHANGE, function (event) {
       if (event.value) {
         document.body.classList.add("is-capturing");
       } else {
@@ -58352,11 +59437,12 @@ function (_App) {
       }
     });
 
-    _this.isSaving = new BooleanData_BooleanData();
+    _this.isSaving = new BooleanData["a" /* default */]();
     _this.actions = new Actions_Actions();
-    _this.capturedVideo = new ArrayData_ArrayData("test.mp4");
+    _this.capturedVideo = new ArrayData["a" /* default */]("test.mp4");
     chrome.storage.sync.get(["json"], function (result) {
-      _this.scrollCapture = importTemplate(ScrollCapture_ScrollCapture.template, main_assertThisInitialized(_this)).component;
+      _this.scrollCapture = Object(tsunami["e" /* importTemplate */])(ScrollCapture_ScrollCapture.template, main_assertThisInitialized(_this)).component;
+      _this.branches["scrollCapture"] = _this.scrollCapture;
       var json = result.json;
 
       if (json) {
@@ -58371,7 +59457,7 @@ function (_App) {
         _this.save();
       });
 
-      _this.show();
+      _this.router.location = "scrollCapture/scenario";
     }); // this.actions.value = [
     // 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
     // 	new ActionScroll("window", "px", 0, 500),
@@ -58385,16 +59471,22 @@ function (_App) {
   }
 
   main_createClass(Main, [{
-    key: "hide",
-    value: function hide() {
-      console.log("hide");
-      this.removeChild(this.scrollCapture.element);
+    key: "getBranch",
+    value: function getBranch(id) {
+      var branch = main_get(main_getPrototypeOf(Main.prototype), "getBranch", this).call(this, id);
+
+      console.log("Main.getBranch", id, branch);
+      return branch;
     }
   }, {
     key: "show",
     value: function show() {
-      this.resizeHandler();
-      this.appendChild(this.scrollCapture.element);
+      console.log("Main.show");
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      console.log("Main.hide");
     }
   }, {
     key: "deserialize",
@@ -58450,7 +59542,7 @@ function (_App) {
       console.log("doPlay", this.doCapture);
       this.save();
       console.log("saved");
-      this.hide();
+      this.router.location = "";
       console.log("hidden");
       this.actions.selectedIndex.value = 0;
       setTimeout(function () {
@@ -58508,6 +59600,9 @@ function (_App) {
           txt: "scrollCaptureStopRecording"
         };
         chrome.runtime.sendMessage(msg);
+        this.router.location = "scrollCapture/video";
+      } else {
+        this.router.location = "scrollCapture/scenario";
       }
     }
   }]);
@@ -58516,23 +59611,30 @@ function (_App) {
 }(App_App);
 
 
-define("scroll-capture", ScrollCapture_ScrollCapture);
+tsunami["a" /* define */]("router-button", RouterButton_RouterButton);
+tsunami["a" /* define */]("scroll-capture", ScrollCapture_ScrollCapture);
 // CONCATENATED MODULE: ./js/content.js
 
 var main;
-
-function createUI() {
-  if (!main) {
-    main = new main_Main(document.body);
-  } else {
-    main.show();
-  }
-}
-
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+  console.log("chrome.runtime.onMessage", msg);
+
   switch (msg.txt) {
-    case "scrollCaptureCreateUI":
-      createUI();
+    case "scrollCaptureScenario":
+      if (!main) {
+        main = new main_Main(document.body);
+      } else {
+        main.router.location = "scrollCapture/scenario";
+      }
+
+      break;
+
+    case "scrollCaptureVideoHeigth":
+      console.log("scrollCaptureVideoHeigth");
+      console.log("scrollCaptureVideoHeigth main", main);
+      console.log("scrollCaptureVideoHeigth main.scrollCapture", main.scrollCapture);
+      console.log("scrollCaptureVideoHeigth main.scrollCapture.iframe", main.scrollCapture.iframe);
+      main.scrollCapture.iframe.style.height = msg.height + "px";
       break;
   }
 });

@@ -2,53 +2,40 @@
 // console.log("videoCapture chrome.tabs", chrome.tabs);
 // console.log("chrome.browserAction", chrome.browserAction);
 
-// player.addEventListener('canplay', function () {
-//     this.volume = 0.75;
-//     this.muted = false;
-//     player.setAttribute('controls', '1');
-//     this.play();
-// });
-
-let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
+import { timeAMPM } from "./tsunami/utils/date";
+import { addLeadingZero } from "./tsunami/utils/number";
 
 let page = chrome.extension.getBackgroundPage();
-console.log("*** page", page);
-console.log("*** page.videoBlob", page.videoBlob);
-console.log("*** page.videoURL", page.videoURL);
+
+let player = document.querySelector('.sc-video-player');
+player.addEventListener('canplay', function () {
+    this.muted = true;
+    player.setAttribute('controls', '1');
+    this.play();
+    let msg = { txt: "scrollCaptureVideoHeigth", height:document.body.scrollHeight};
+    chrome.tabs.sendMessage(page.selectedTab.id, msg);
+});
+
+let backButton = document.querySelector(".sc-close-button");
+backButton.addEventListener("click", () => {
+    let msg = { txt: "scrollCaptureScenario" };
+    chrome.tabs.sendMessage(page.selectedTab.id, msg);
+});
+
 if (page.videoURL) {
-    let player = document.querySelector('.video-player');
     player.src = page.videoURL;
-    let button = document.querySelector(".download-button");
+    let button = document.querySelector(".sc-download-button");
     button.href = page.videoURL;
     let date = new Date();
-    console.log("date.toDateString()", date.toDateString());
-    console.log("date.toString()", date.toString());
-    console.log("date.toUTCString()", date.toUTCString());
-    let dateString = date.toDateString();
-    button.download = `scroll-capture-${dateString}.webm`;
+    let ampmTime = timeAMPM(date);
+    // Screen Shot 2020-03-20 at 4.35.14 PM
+    let dateData = {
+        year:date.getFullYear(),
+        month: addLeadingZero(date.getMonth() + 1),
+        date: addLeadingZero(date.getDate())
+    };
+    ampmTime.ampm = ampmTime.ampm.toUpperCase();
+    let download = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
+    console.log("download", download);
+    button.download = download;
 }
-
-// let videoBlob;
-
-// chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-//     console.log("videoCapture chrome.runtime.onMessage", msg);
-//     switch (msg.txt) {
-//         case "scrollCaptureVideoSource":
-            
-//             let page = chrome.extension.getBackgroundPage();
-//             console.log("*** page", page);
-//             console.log("*** page.videoBlob", page.videoBlob);
-//             console.log("*** page.videoURL", page.videoURL);
-
-//             console.log("---- scrollCaptureVideoSource!!!", msg);
-//             console.log("msg.videoBlob", msg.videoBlob);
-//             console.log("window", window);
-//             console.log("window.URL", window.URL);
-//             console.log("window.URL.createObjectURL", window.URL.createObjectURL);
-//             videoBlob = msg.videoBlob;
-//             let videoURL = window.URL.createObjectURL(videoBlob);
-
-//             player.srcObject = videoURL;
-//             break;
-//     }
-// });
