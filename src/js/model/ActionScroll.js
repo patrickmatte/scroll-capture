@@ -17,6 +17,7 @@ export default class ActionScroll extends ActionTween {
 		this.units = new ArrayData("%", "px");
 		this.units.selectedItem.value = units;
 		this.isCaptureable.value = true;
+		this.isTestable.value = true;
 
 		this.doScroll = this.doScroll.bind(this);
 		this.unitX.addEventListener(Data.CHANGE, this.doScroll);

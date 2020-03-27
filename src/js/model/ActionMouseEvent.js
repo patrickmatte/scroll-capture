@@ -12,6 +12,7 @@ export default class ActionMouseEvent extends Action {
 		this.y = new NumberData(y);
 		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
 		this.eventTypes.selectedItem.value = this.eventTypes.value[0];
+		this.isTestable.value = true;
 		this.isCaptureable.value = true;
 		this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
 	}

@@ -19,6 +19,7 @@ return promise.then(function() {
 `;
 		}
 		this.code = new StringData(code);
+		this.isTestable.value = true;
 	}
 
 	clone() {

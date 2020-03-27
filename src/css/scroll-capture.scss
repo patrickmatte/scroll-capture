@@ -1,6 +1,6 @@
 $fieldMargin: 0.5em;
 $borderRadius: 0.25em;
-
+body {
 .sc-default {
 	* {
 		text-transform: none;
@@ -100,6 +100,17 @@ $borderRadius: 0.25em;
 			font-weight: 700;
 		}
 
+		&:after {
+			font-family: "IcoFont";
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 0.7em;
+			color: white;
+			opacity: 0.5;
+			font-weight: 400;
+			transition: opacity 0.25s ease 0s;
+		}
+		
 		&:hover {
 			&:after {
 				opacity: 1;
@@ -110,20 +121,11 @@ $borderRadius: 0.25em;
 			}
 		}
 
-		&:after {
-			font-family: "IcoFont";
-			display: inline-block;
-			vertical-align: middle;
-			font-size: 0.7em;
-			color: white;
-			opacity: 0.5;
-			font-weight: 400;
-		}
-		
 		&.sc-save-button {
 			&:after {
-				content: "\ec4b";
-				margin-left: 0.5em;
+				content: "\ee00";
+				margin-left: 0.33em;
+				font-size: 1em;
 			}
 
 			&[data-is-saving="true"] {
@@ -135,11 +137,11 @@ $borderRadius: 0.25em;
 			}
 		}
 
-		&.sc-download-button {
+		&.sc-trash-button {
 			&:after {
-				content: "\ef08";
-				margin-left: 0.4em;
-				font-size: 1.2em;
+				content: "\ec53";
+				margin-left: 0.3em;
+				font-size: 1.1em;
 			}
 		}
 
@@ -175,7 +177,23 @@ $borderRadius: 0.25em;
 			}
 		}
 
+		&.sc-capture-video-button {
+				&:after {
+				content: "\eca8";
+				margin-left: 0.25em;
+				font-size: 1.2em;
+			}
+		}
+
 		&.sc-play-button {
+			&:after {
+				content: "\eca6";
+				margin-left: 0.33em;
+				font-size: 1em;
+			}
+		}
+
+		&.sc-test-button {
 			&[data-is-playing="true"] {
 				opacity: 0.25;
 
@@ -189,7 +207,6 @@ $borderRadius: 0.25em;
 				margin-left: 0.5em;
 			}
 		}
-
 
 		&.sc-close-button {
 			&:after {
@@ -292,6 +309,10 @@ $borderRadius: 0.25em;
 		}
 	}
 
+	*[data-visible="false"] {
+		display: none !important;
+	}
+
 	.sc-controls {
 		display: inline-block;
 		width: 100%;
@@ -303,7 +324,7 @@ $borderRadius: 0.25em;
 		}
 
 		& > * {
-			margin-right: 2em;
+			margin-right: 1.5em;
 		}
 
 		button {
@@ -385,7 +406,7 @@ $borderRadius: 0.25em;
 }
 
 scroll-capture {
-	position: fixed;
+	position: fixed !important;
 	right: 4px;
 	top: 4px;
 	width: 375px;
@@ -726,4 +747,5 @@ scroll-capture {
 			}
 		}
 	}
+}
 }

@@ -1,5 +1,5 @@
 import UIComponent from "../tsunami/components/UIComponent";
-import easingTemplate from "../../templates/Easing.html"
+import easingTemplate from "../../templates/easing.html"
 import * as tsunami from "../tsunami/tsunami";
 import EasingGraph from "./EasingGraph";
 

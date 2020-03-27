@@ -96,16 +96,13 @@ export default class Main extends App {
 
 	getBranch(id) {
 		let branch = super.getBranch(id);
-		console.log("Main.getBranch", id, branch);
 		return branch
 	}
 
 	show() {
-		console.log("Main.show");
 	}
 
 	hide() {
-		console.log("Main.hide");
 	}
 
 	deserialize(obj) {
@@ -122,12 +119,10 @@ export default class Main extends App {
 	}
 
 	save() {
-		console.log("save");
 		this.isSaving.value = true;
 		let obj = this.serialize();
 		let json = JSON.stringify(obj);
 		chrome.storage.sync.set({json:json}, () => {
-			// console.log(json);
 			setTimeout(()=> {
 				this.isSaving.value = false;
 			}, 100);
@@ -139,22 +134,17 @@ export default class Main extends App {
 	}
 
 	playAndCapture() {
-		console.log("playAndCapture");
 		this.doPlay(true);
 	}
 
 	doPlay(doCapture = false) {
 		this.doCapture = doCapture;
-		console.log("doPlay", this.doCapture);
 		this.save();
-		console.log("saved");
 		this.router.location = "";
-		console.log("hidden");
 		this.actions.selectedIndex.value = 0;
 		setTimeout(() => {
 			if (doCapture) {
 				let msg = { txt: "scrollCaptureStartRecording" };
-				console.log("sendMessage", msg);
 				chrome.runtime.sendMessage(msg);
 			}
 			this.triggerAction();
@@ -191,7 +181,6 @@ export default class Main extends App {
 	}
 
 	allComplete() {
-		console.log("allComplete", this.doCapture);
 		if(this.doCapture) {
 			let msg = { txt: "scrollCaptureStopRecording" };
 			chrome.runtime.sendMessage(msg);

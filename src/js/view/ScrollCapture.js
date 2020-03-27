@@ -22,7 +22,6 @@ export default class ScrollCapture extends UIComponent {
 		this.dragEnd = this.dragEnd.bind(this);
 
 		let dragArea = this.element.querySelector("* > .sc-window .sc-drag-area");
-		console.log("dragArea", dragArea);
 		dragArea.addEventListener(events.mousedown, this.dragStart);
 
 		this.windowContent = this.element.querySelector(".sc-window-content");
@@ -40,13 +39,11 @@ export default class ScrollCapture extends UIComponent {
 	}
 
 	showDelayComplete() {
-		console.log("ScrollCapture.showDelayComplete");
 		app.appendChild(this.element);
 		return super.showDelayComplete();
 	}
 
 	hideComplete() {
-		console.log("ScrollCapture.hideComplete");
 		app.removeChild(this.element);
 		return super.hideComplete();
 	}
@@ -89,6 +86,5 @@ export default class ScrollCapture extends UIComponent {
 
 ScrollCapture.template = template;
 
-// tsunami.define("start-button", StartButton);
 tsunami.define("actions-view", ActionsView);
 tsunami.define("sc-section", ScrollCaptureSection);

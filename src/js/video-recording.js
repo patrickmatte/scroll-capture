@@ -1,7 +1,3 @@
-// console.log("videoCapture!!!!!!!!");
-// console.log("videoCapture chrome.tabs", chrome.tabs);
-// console.log("chrome.browserAction", chrome.browserAction);
-
 import { timeAMPM } from "./tsunami/utils/date";
 import { addLeadingZero } from "./tsunami/utils/number";
 
@@ -36,6 +32,5 @@ if (page.videoURL) {
     };
     ampmTime.ampm = ampmTime.ampm.toUpperCase();
     let download = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
-    console.log("download", download);
     button.download = download;
 }

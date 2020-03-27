@@ -4595,7 +4595,7 @@ module.exports = "<div class=\"sc-fields-list\" is=\"ui-component\">\n    <div c
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<scroll-capture class=\"sc-default\">\n\t<div class=\"sc-window\" is=\"ui-component\">\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t<div class=\"sc-video sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"video\">\n\t\t\t\t\t<iframe></iframe>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"sc-scenario sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<button class=\"sc-save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-close-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<template>\n\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\"\n\t\t\t\t\t\t\tdata-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"data.play\"\n\t\t\t\t\t\t\t\t\t\t\tdata-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Test</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\"\n\t\t\t\t\t\t\t\t\t\t\tdata-is-captureable=\"[[data.isCaptureable]]\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span><input type=\"text\" data-model=\"data.target\"\n\t\t\t\t\t\t\t\t\t\t\t\t\tis=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</action-view>\n\t\t\t\t\t</template>\n\t\t\t\t</actions-view>\n\t\t\t\t<footer>\n\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t<!--\t\t\t\t\t<div class=\"sc-title\">-->\n\t\t\t\t\t\t<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n\t\t\t\t\t\t<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</footer>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</scroll-capture>"
+module.exports = "<scroll-capture class=\"sc-default\">\n\t<div class=\"sc-window\" is=\"ui-component\">\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t<div class=\"sc-video sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"video\">\n\t\t\t\t\t<iframe></iframe>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"sc-scenario sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<button class=\"sc-save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-capture-video-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<template>\n\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\"\n\t\t\t\t\t\t\tdata-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t<input class=\"sc-label\" size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Test</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-close-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span><input type=\"text\" data-model=\"data.target\"\n\t\t\t\t\t\t\t\t\t\t\t\t\tis=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span><input type=\"number\" step=\"1\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span><input type=\"number\" step=\"1\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</action-view>\n\t\t\t\t\t</template>\n\t\t\t\t</actions-view>\n\t\t\t\t<footer>\n\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t<!--\t\t\t\t\t<div class=\"sc-title\">-->\n\t\t\t\t\t\t<!--\t\t\t\t\t\t<span class=\"sc-tab\">Add an action</span>-->\n\t\t\t\t\t\t<!--\t\t\t\t\t</div>-->\n\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\">\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</footer>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</scroll-capture>"
 
 /***/ }),
 /* 20 */
@@ -4741,9 +4741,9 @@ var tsunami = __webpack_require__(2);
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 3 modules
 var UIComponent = __webpack_require__(6);
 
-// EXTERNAL MODULE: ./templates/Easing.html
-var Easing = __webpack_require__(18);
-var Easing_default = /*#__PURE__*/__webpack_require__.n(Easing);
+// EXTERNAL MODULE: ./templates/easing.html
+var templates_easing = __webpack_require__(18);
+var easing_default = /*#__PURE__*/__webpack_require__.n(templates_easing);
 
 // EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
 var NumberData = __webpack_require__(4);
@@ -5147,7 +5147,7 @@ function Easing_defineProperties(target, props) { for (var i = 0; i < props.leng
 
 function Easing_createClass(Constructor, protoProps, staticProps) { if (protoProps) Easing_defineProperties(Constructor.prototype, protoProps); if (staticProps) Easing_defineProperties(Constructor, staticProps); return Constructor; }
 
-var Easing_Easing =
+var Easing =
 /*#__PURE__*/
 function () {
   function Easing() {
@@ -5203,7 +5203,7 @@ function (_Easing) {
   }]);
 
   return Quadratic;
-}(Easing_Easing);
+}(Easing);
 var Cubic =
 /*#__PURE__*/
 function (_Easing2) {
@@ -5234,7 +5234,7 @@ function (_Easing2) {
   }]);
 
   return Cubic;
-}(Easing_Easing);
+}(Easing);
 var Quartic =
 /*#__PURE__*/
 function (_Easing3) {
@@ -5265,7 +5265,7 @@ function (_Easing3) {
   }]);
 
   return Quartic;
-}(Easing_Easing);
+}(Easing);
 var Quintic =
 /*#__PURE__*/
 function (_Easing4) {
@@ -5296,7 +5296,7 @@ function (_Easing4) {
   }]);
 
   return Quintic;
-}(Easing_Easing);
+}(Easing);
 var Sine =
 /*#__PURE__*/
 function (_Easing5) {
@@ -5326,7 +5326,7 @@ function (_Easing5) {
   }]);
 
   return Sine;
-}(Easing_Easing);
+}(Easing);
 var Exponential =
 /*#__PURE__*/
 function (_Easing6) {
@@ -5359,7 +5359,7 @@ function (_Easing6) {
   }]);
 
   return Exponential;
-}(Easing_Easing);
+}(Easing);
 var Circular =
 /*#__PURE__*/
 function (_Easing7) {
@@ -5390,7 +5390,7 @@ function (_Easing7) {
   }]);
 
   return Circular;
-}(Easing_Easing);
+}(Easing);
 var Elastic =
 /*#__PURE__*/
 function (_Easing8) {
@@ -5451,7 +5451,7 @@ function (_Easing8) {
   }]);
 
   return Elastic;
-}(Easing_Easing);
+}(Easing);
 var Back =
 /*#__PURE__*/
 function (_Easing9) {
@@ -5491,7 +5491,7 @@ function (_Easing9) {
   }]);
 
   return Back;
-}(Easing_Easing);
+}(Easing);
 var Bounce =
 /*#__PURE__*/
 function (_Easing10) {
@@ -5529,7 +5529,7 @@ function (_Easing10) {
   }]);
 
   return Bounce;
-}(Easing_Easing);
+}(Easing);
 var Linear =
 /*#__PURE__*/
 function () {
@@ -5548,17 +5548,17 @@ function () {
 
   return Linear;
 }();
-Easing_Easing.quadratic = new Quadratic();
-Easing_Easing.cubic = new Cubic();
-Easing_Easing.quartic = new Quartic();
-Easing_Easing.quintic = new Quintic();
-Easing_Easing.sine = new Sine();
-Easing_Easing.exponential = new Exponential();
-Easing_Easing.circular = new Circular();
-Easing_Easing.elastic = new Elastic();
-Easing_Easing.back = new Back();
-Easing_Easing.bounce = new Bounce();
-Easing_Easing.linear = new Linear();
+Easing.quadratic = new Quadratic();
+Easing.cubic = new Cubic();
+Easing.quartic = new Quartic();
+Easing.quintic = new Quintic();
+Easing.sine = new Sine();
+Easing.exponential = new Exponential();
+Easing.circular = new Circular();
+Easing.elastic = new Elastic();
+Easing.back = new Back();
+Easing.bounce = new Bounce();
+Easing.linear = new Linear();
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
 var Rectangle = __webpack_require__(11);
 
@@ -5967,7 +5967,7 @@ function (_UIComponent) {
     key: "scrollTo",
     value: function scrollTo(scrollLeft, scrollTop) {
       var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
-      this.tween = new Tween_Tween(0, duration, [new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing_Easing.cubic.easeInOut, 10), new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing_Easing.cubic.easeInOut, 10)]);
+      this.tween = new Tween_Tween(0, duration, [new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, 10), new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, 10)]);
       return this.tween.start();
     }
   }, {
@@ -6388,7 +6388,7 @@ function (_UIComponent) {
     set: function set(value) {
       view_ActionTweenView_set(ActionTweenView_getPrototypeOf(ActionTweenView.prototype), "scope", value, this, true);
 
-      this.easing = tsunami["e" /* importTemplate */](Easing_default.a, value);
+      this.easing = tsunami["e" /* importTemplate */](easing_default.a, value);
       this.appendChild(this.easing);
     }
   }]);
@@ -6665,7 +6665,6 @@ function (_UIComponent) {
 
     var dragArea = _this.element.querySelector("* > .sc-window .sc-drag-area");
 
-    console.log("dragArea", dragArea);
     dragArea.addEventListener(events["b" /* events */].mousedown, _this.dragStart);
     _this.windowContent = _this.element.querySelector(".sc-window-content");
     _this.scenario = _this.element.querySelector(".sc-scenario");
@@ -6686,14 +6685,12 @@ function (_UIComponent) {
   ScrollCapture_createClass(ScrollCapture, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      console.log("ScrollCapture.showDelayComplete");
       app.appendChild(this.element);
       return ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "showDelayComplete", this).call(this);
     }
   }, {
     key: "hideComplete",
     value: function hideComplete() {
-      console.log("ScrollCapture.hideComplete");
       app.removeChild(this.element);
       return ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "hideComplete", this).call(this);
     }
@@ -6742,8 +6739,7 @@ function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
-ScrollCapture_ScrollCapture.template = scroll_capture_default.a; // tsunami.define("start-button", StartButton);
-
+ScrollCapture_ScrollCapture.template = scroll_capture_default.a;
 tsunami["a" /* define */]("actions-view", ActionsView_ActionsView);
 tsunami["a" /* define */]("sc-section", ScrollCaptureSection_ScrollCaptureSection);
 // EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
@@ -7082,7 +7078,7 @@ function (_UIText) {
     _this = UINumber_possibleConstructorReturn(this, UINumber_getPrototypeOf(UINumber).call(this, element));
     _this._currentValue = 0;
     _this.roundDecimal = 10;
-    _this.easing = Easing_Easing.cubic.easeOut;
+    _this.easing = Easing.cubic.easeOut;
 
     var isRank = _this.element.getAttribute("data-is-rank");
 
@@ -7292,7 +7288,7 @@ function (_UIComponent) {
     key: "_startAutoScroll",
     value: function _startAutoScroll() {
       if (this.autoScroll) {
-        this.autoScrollTween = new Tween_Tween(0, 2, [new TweenProperty(this, "_autoScrollFactor", 0, 1, Easing_Easing.cubic.easeInOut)]);
+        this.autoScrollTween = new Tween_Tween(0, 2, [new TweenProperty(this, "_autoScrollFactor", 0, 1, Easing.cubic.easeInOut)]);
         this.autoScrollTween.start();
       }
     }
@@ -7344,11 +7340,11 @@ function (_UIComponent) {
       var props = [];
 
       if (currentX != targetX) {
-        props.push(new TweenProperty(this.scrollTarget, "x", currentX, targetX, Easing_Easing.cubic.easeOut, 100));
+        props.push(new TweenProperty(this.scrollTarget, "x", currentX, targetX, Easing.cubic.easeOut, 100));
       }
 
       if (currentY != targetY) {
-        props.push(new TweenProperty(this.scrollTarget, "y", currentY, targetY, Easing_Easing.cubic.easeOut, 100));
+        props.push(new TweenProperty(this.scrollTarget, "y", currentY, targetY, Easing.cubic.easeOut, 100));
       }
 
       if (props.length > 0) {
@@ -8059,6 +8055,7 @@ function () {
       _this.name.length.value = Math.max(_this.name.value.length, 4);
     });
     this.name.value = name;
+    this.isTestable = new BooleanData["a" /* default */]();
     this.isCaptureable = new BooleanData["a" /* default */]();
     this.isCapturing = new BooleanData["a" /* default */]();
     this.isCapturing.addEventListener(Data["a" /* default */].CHANGE, function (event) {
@@ -8119,12 +8116,10 @@ function () {
     }
   }, {
     key: "capture",
-    value: function capture() {// console.log("Action.capture");
-    }
+    value: function capture() {}
   }, {
     key: "captureAtInit",
-    value: function captureAtInit() {// console.log("Action.captureAtInit");
-    }
+    value: function captureAtInit() {}
   }, {
     key: "play",
     value: function play() {
@@ -8630,7 +8625,7 @@ function (_Action) {
     _this.cubicBezierPointsChange();
 
     _this.easingMethod = new ObjectData["a" /* default */](_this.easing.ease);
-    _this.debugEasing = new ObjectData["a" /* default */](Easing_Easing.cubic.easeInOut);
+    _this.debugEasing = new ObjectData["a" /* default */](Easing.cubic.easeInOut);
 
     _this.cubicBezierPoints.addEventListener(Data["a" /* default */].CHANGE, _this.cubicBezierPointsChange.bind(ActionTween_assertThisInitialized(_this)));
 
@@ -8676,7 +8671,7 @@ function (_Action) {
     key: "easingPresetChange",
     value: function easingPresetChange() {
       var value = this.easingPresets.selectedItem.value;
-      var debugEasingMethod = Object(tsunami["c" /* evalProperty */])(value, Easing_Easing);
+      var debugEasingMethod = Object(tsunami["c" /* evalProperty */])(value, Easing);
 
       if (debugEasingMethod) {
         this.debugEasing.value = debugEasingMethod;
@@ -8809,6 +8804,7 @@ function (_ActionTween) {
     _this.units = new ArrayData["a" /* default */]("%", "px");
     _this.units.selectedItem.value = units;
     _this.isCaptureable.value = true;
+    _this.isTestable.value = true;
     _this.doScroll = _this.doScroll.bind(ActionScroll_assertThisInitialized(_this));
 
     _this.unitX.addEventListener(Data["a" /* default */].CHANGE, _this.doScroll);
@@ -9050,6 +9046,7 @@ function (_Action) {
     _this.y = new NumberData["a" /* default */](y);
     _this.eventTypes = new ArrayData["a" /* default */]("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
     _this.eventTypes.selectedItem.value = _this.eventTypes.value[0];
+    _this.isTestable.value = true;
     _this.isCaptureable.value = true;
     _this.captureMouseEventHandler = _this.captureMouseEventHandler.bind(ActionMouseEvent_assertThisInitialized(_this));
     return _this;
@@ -9189,6 +9186,7 @@ function (_Action) {
     }
 
     _this.code = new StringData_StringData(code);
+    _this.isTestable.value = true;
     return _this;
   }
 
@@ -58470,6 +58468,7 @@ function (_ActionTween) {
 
     _this.points.value = points;
     _this.isCaptureable.value = true;
+    _this.isTestable.value = true;
     _this.captureDownHandler = _this.captureDownHandler.bind(ActionSwipe_assertThisInitialized(_this));
     _this.captureUpHandler = _this.captureUpHandler.bind(ActionSwipe_assertThisInitialized(_this));
     return _this;
@@ -59475,19 +59474,14 @@ function (_App) {
     value: function getBranch(id) {
       var branch = main_get(main_getPrototypeOf(Main.prototype), "getBranch", this).call(this, id);
 
-      console.log("Main.getBranch", id, branch);
       return branch;
     }
   }, {
     key: "show",
-    value: function show() {
-      console.log("Main.show");
-    }
+    value: function show() {}
   }, {
     key: "hide",
-    value: function hide() {
-      console.log("Main.hide");
-    }
+    value: function hide() {}
   }, {
     key: "deserialize",
     value: function deserialize(obj) {
@@ -59508,14 +59502,12 @@ function (_App) {
     value: function save() {
       var _this2 = this;
 
-      console.log("save");
       this.isSaving.value = true;
       var obj = this.serialize();
       var json = JSON.stringify(obj);
       chrome.storage.sync.set({
         json: json
       }, function () {
-        // console.log(json);
         setTimeout(function () {
           _this2.isSaving.value = false;
         }, 100);
@@ -59529,7 +59521,6 @@ function (_App) {
   }, {
     key: "playAndCapture",
     value: function playAndCapture() {
-      console.log("playAndCapture");
       this.doPlay(true);
     }
   }, {
@@ -59539,18 +59530,14 @@ function (_App) {
 
       var doCapture = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       this.doCapture = doCapture;
-      console.log("doPlay", this.doCapture);
       this.save();
-      console.log("saved");
       this.router.location = "";
-      console.log("hidden");
       this.actions.selectedIndex.value = 0;
       setTimeout(function () {
         if (doCapture) {
           var msg = {
             txt: "scrollCaptureStartRecording"
           };
-          console.log("sendMessage", msg);
           chrome.runtime.sendMessage(msg);
         }
 
@@ -59593,8 +59580,6 @@ function (_App) {
   }, {
     key: "allComplete",
     value: function allComplete() {
-      console.log("allComplete", this.doCapture);
-
       if (this.doCapture) {
         var msg = {
           txt: "scrollCaptureStopRecording"
@@ -59617,8 +59602,6 @@ tsunami["a" /* define */]("scroll-capture", ScrollCapture_ScrollCapture);
 
 var main;
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  console.log("chrome.runtime.onMessage", msg);
-
   switch (msg.txt) {
     case "scrollCaptureScenario":
       if (!main) {
@@ -59630,10 +59613,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       break;
 
     case "scrollCaptureVideoHeigth":
-      console.log("scrollCaptureVideoHeigth");
-      console.log("scrollCaptureVideoHeigth main", main);
-      console.log("scrollCaptureVideoHeigth main.scrollCapture", main.scrollCapture);
-      console.log("scrollCaptureVideoHeigth main.scrollCapture.iframe", main.scrollCapture.iframe);
       main.scrollCapture.iframe.style.height = msg.height + "px";
       break;
   }

@@ -15,6 +15,7 @@ export default class Action {
 			this.name.length.value = Math.max(this.name.value.length, 4);
 		});
 		this.name.value = name;
+		this.isTestable = new BooleanData();
 		this.isCaptureable = new BooleanData();
 		this.isCapturing = new BooleanData();
 		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
@@ -69,11 +70,9 @@ export default class Action {
 	}
 
 	capture() {
-		// console.log("Action.capture");
 	}
 
 	captureAtInit() {
-		// console.log("Action.captureAtInit");
 	}
 
 	play() {

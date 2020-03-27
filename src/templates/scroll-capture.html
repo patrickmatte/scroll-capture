@@ -25,10 +25,10 @@
 					<button class="sc-play-button" is="ui-button" data-click="play">
 						<span class="sc-label">Play</span>
 					</button>
-					<button class="sc-capture-button" is="ui-button" data-click="playAndCapture">
+					<button class="sc-capture-video-button" is="ui-button" data-click="playAndCapture">
 						<span class="sc-label">Record</span>
 					</button>
-					<button class="sc-close-button" is="ui-button" data-click="clear">
+					<button class="sc-trash-button" is="ui-button" data-click="clear">
 						<span class="sc-label">Clear</span>
 					</button>
 				</div>
@@ -42,16 +42,14 @@
 									<span class="sc-tab sc-title-tab">
 										<input class="sc-label" size="[[data.name.length]]" is="ui-input" data-model="data.name" />
 									</span>
-									<span class="sc-tab">
-										<button class="sc-play-button" is="ui-button" data-click="data.play"
-											data-is-playing="[[data.isPlaying]]">
-											<span class="sc-label">Test</span>
+									<span class="sc-tab" data-visible="[[data.isCaptureable]]" is="ui-component">
+										<button class="sc-capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
+											<span class="sc-label">Capture</span>
 										</button>
 									</span>
-									<span class="sc-tab">
-										<button class="sc-capture-button" is="ui-button" data-click="data.capture"
-											data-is-captureable="[[data.isCaptureable]]" data-is-capturing="[[data.isCapturing]]">
-											<span class="sc-label">Capture</span>
+									<span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
+										<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]">
+											<span class="sc-label">Test</span>
 										</button>
 									</span>
 								</div>

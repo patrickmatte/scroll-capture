@@ -286,9 +286,6 @@ function getFamiliarTimeBetween(startDate, endDate) {
   return text;
 }
 // CONCATENATED MODULE: ./js/video-recording.js
-// console.log("videoCapture!!!!!!!!");
-// console.log("videoCapture chrome.tabs", chrome.tabs);
-// console.log("chrome.browserAction", chrome.browserAction);
 
 
 var page = chrome.extension.getBackgroundPage();
@@ -325,7 +322,6 @@ if (page.videoURL) {
   };
   ampmTime.ampm = ampmTime.ampm.toUpperCase();
   var download = "Scroll Capture ".concat(dateData.year, "-").concat(dateData.month, "-").concat(dateData.date, " at ").concat(ampmTime.hours, ".").concat(ampmTime.minutes, ".").concat(ampmTime.seconds, " ").concat(ampmTime.ampm, ".webm");
-  console.log("download", download);
   video_recording_button.download = download;
 }
 

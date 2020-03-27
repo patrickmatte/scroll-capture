@@ -97,22 +97,8 @@ module.exports = __webpack_require__(24);
 /***/ 24:
 /***/ (function(module, exports) {
 
-// chrome.runtime.onInstalled.addListener(function() {
-//   console.log("chrome", chrome);
-//   console.log("chrome.declarativeContent", chrome.declarativeContent);
-//   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-//     chrome.declarativeContent.onPageChanged.addRules([{
-//       conditions: [new chrome.declarativeContent.PageStateMatcher({
-//         pageUrl: {hostEquals: 'developer.chrome.com'},
-//       })],
-//       actions: [new chrome.declarativeContent.ShowPageAction()]
-//     }]);
-//   });
-// });
 // let page = chrome.extension.getBackgroundPage();
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  console.log("chrome.runtime.onMessage", msg);
-
   switch (msg.txt) {
     case "scrollCaptureStartRecording":
       startRecording();
@@ -121,16 +107,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     case "scrollCaptureStopRecording":
       stopRecording();
       break;
-
-    case "scrollCaptureSendVideoCapture":
-      sendVideoCapture();
-      break;
   }
 });
 var mediaStream;
 
 function setStream(stream) {
-  console.log("setStream", stream);
   mediaStream = stream;
 
   if (!stream) {
@@ -171,9 +152,7 @@ function captureTab(tab) {
 var selectedTab;
 chrome.browserAction.onClicked.addListener(function (tab) {
   selectedTab = tab;
-  console.log("*** window.selectedTab", window.selectedTab);
   window.selectedTab = tab;
-  console.log("chrome.browserAction.onClicked", tab);
   captureTab(selectedTab);
   var msg = {
     txt: "scrollCaptureScenario"
@@ -185,33 +164,28 @@ var recordedBlobs;
 var sourceBuffer;
 
 function handleDataAvailable(event) {
-  // console.log('handleDataAvailable', event);
   if (event.data && event.data.size > 0) {
     recordedBlobs.push(event.data);
   }
 }
 
 function startRecording() {
-  console.log("background startRecording");
   recordedBlobs = [];
   var options = {
     mimeType: 'video/webm;codecs=vp9'
   }; // let options = { mimeType: "video/webm;codecs=h264" };
 
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-    console.log("".concat(options.mimeType, " is not Supported"));
     options = {
       mimeType: 'video/webm;codecs=vp8'
     };
 
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-      console.log("".concat(options.mimeType, " is not Supported"));
       options = {
         mimeType: 'video/webm'
       };
 
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-        console.log("".concat(options.mimeType, " is not Supported"));
         options = {
           mimeType: ''
         };
@@ -227,43 +201,30 @@ function startRecording() {
     console.error('Exception while creating MediaRecorder:', e);
     console.log("Exception while creating MediaRecorder: ".concat(JSON.stringify(e)));
     return;
-  }
-
-  console.log('Created MediaRecorder', mediaRecorder, 'with options', options); // recordButton.textContent = 'Stop Recording';
+  } // console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+  // recordButton.textContent = 'Stop Recording';
   // playButton.disabled = true;
   // downloadButton.disabled = true;
 
-  mediaRecorder.onstop = function (event) {
-    console.log('Recorder stopped: ', event);
-    console.log('Recorded Blobs: ', recordedBlobs);
+
+  mediaRecorder.onstop = function (event) {// console.log('Recorder stopped: ', event);
+    // console.log('Recorded Blobs: ', recordedBlobs);
   };
 
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start(10); // collect 10ms of data
-
-  console.log('MediaRecorder started', mediaRecorder);
 }
 
-var videoBlob;
 var videoURL;
 
 function stopRecording() {
-  console.log("background stopRecording");
   mediaRecorder.stop();
   videoBlob = new Blob(recordedBlobs, {
     type: 'video/webm'
   });
-  window.videoBlob = videoBlob;
-  console.log("videoBlob", videoBlob);
   videoURL = window.URL.createObjectURL(videoBlob);
-  window.videoURL = videoURL;
-  console.log("videoURL", videoURL);
-  var msg = {
-    txt: "scrollCaptureVideoSource",
-    videoBlob: videoBlob,
-    videoURL: videoURL
-  };
-  chrome.tabs.sendMessage(selectedTab.id, msg);
+  window.videoURL = videoURL; // let msg = { txt: "scrollCaptureVideoSource", videoBlob: videoBlob, videoURL: videoURL };
+  // chrome.tabs.sendMessage(selectedTab.id, msg);
 }
 
 /***/ })
