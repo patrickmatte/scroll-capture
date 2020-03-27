@@ -201,27 +201,20 @@ function startRecording() {
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.log("".concat(options.mimeType, " is not Supported"));
     options = {
-      mimeType: 'video/webm;codecs=vp9'
+      mimeType: 'video/webm;codecs=vp8'
     };
 
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.log("".concat(options.mimeType, " is not Supported"));
       options = {
-        mimeType: 'video/webm;codecs=vp8'
+        mimeType: 'video/webm'
       };
 
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.log("".concat(options.mimeType, " is not Supported"));
         options = {
-          mimeType: 'video/webm'
+          mimeType: ''
         };
-
-        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-          console.log("".concat(options.mimeType, " is not Supported"));
-          options = {
-            mimeType: ''
-          };
-        }
       }
     }
   }
