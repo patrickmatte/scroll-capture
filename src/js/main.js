@@ -172,8 +172,8 @@ export default class Main extends App {
 	}
 
 	actionComplete() {
-		this.actions.selectedIndex.value = this.actions.selectedIndex.value + 1;
-		if(this.actions.selectedIndex.value < this.actions.value.length) {
+		if(this.actions.selectedIndex.value < (this.actions.value.length - 1)) {
+			this.actions.selectedIndex.value = (this.actions.selectedIndex.value + 1);
 			this.triggerAction();
 		} else {
 			this.allComplete();

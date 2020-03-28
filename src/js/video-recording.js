@@ -9,13 +9,13 @@ player.addEventListener('canplay', function () {
     player.setAttribute('controls', '1');
     this.play();
     let msg = { txt: "scrollCaptureVideoHeigth", height:document.body.scrollHeight};
-    chrome.tabs.sendMessage(page.selectedTab.id, msg);
+    chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 
 let backButton = document.querySelector(".sc-close-button");
 backButton.addEventListener("click", () => {
     let msg = { txt: "scrollCaptureScenario" };
-    chrome.tabs.sendMessage(page.selectedTab.id, msg);
+    chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 
 if (page.videoURL) {

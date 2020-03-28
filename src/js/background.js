@@ -1,5 +1,11 @@
 // let page = chrome.extension.getBackgroundPage();
 
+let mediaStream = null;
+let selectedTabId = null;
+let isRecording = false;
+let mediaRecorder = null;
+let recordedBlobs = [];
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg.txt) {
         case "scrollCaptureStartRecording":
@@ -11,19 +17,29 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
 });
 
-let mediaStream;
+chrome.browserAction.onClicked.addListener((tab) => {
+    if(isRecording) {
+        stopRecording();
+    }
+    selectedTabId = tab.id;
+    window.selectedTabId = selectedTabId;
+    let msg = { txt: "scrollCaptureScenario" };
+    chrome.tabs.sendMessage(selectedTabId, msg);
+});
 
-function setStream(stream) {
-    mediaStream = stream;
-    if (!stream) {
-        alert('Stream creation failed: ' + chrome.runtime.lastError.message);
+function handleDataAvailable(event) {
+    if (event.data && event.data.size > 0) {
+        recordedBlobs.push(event.data);
     }
 }
 
-function captureTab(tab) {
-    if (mediaStream) {
-        return;
-    }
+function startRecording() {
+    chrome.tabs.get(selectedTabId, _startTabCapture);
+}
+
+function _startTabCapture(tab) {
+    isRecording = true;
+
     // Note: this method must be invoked by the user as defined
     // in https://crbug.com/489258, e.g. chrome.browserAction.onClicked.
 
@@ -47,30 +63,16 @@ function captureTab(tab) {
             },
         },
     };
-    chrome.tabCapture.capture(captureOptions, setStream);
+    chrome.tabCapture.capture(captureOptions, _setStream);
 }
 
-let selectedTab;
-
-chrome.browserAction.onClicked.addListener((tab) => {
-    selectedTab = tab;
-    window.selectedTab = tab;
-    captureTab(selectedTab);
-    let msg = { txt: "scrollCaptureScenario" };
-    chrome.tabs.sendMessage(selectedTab.id, msg);
-});
-
-let mediaRecorder;
-let recordedBlobs;
-let sourceBuffer;
-
-function handleDataAvailable(event) {
-    if (event.data && event.data.size > 0) {
-        recordedBlobs.push(event.data);
+function _setStream(stream) {
+    if(stream) {
+        mediaStream = stream;
+    } else {
+        alert('Stream creation failed: ' + chrome.runtime.lastError.message);
     }
-}
 
-function startRecording() {
     recordedBlobs = [];
     let options = { mimeType: 'video/webm;codecs=vp9' };
     // let options = { mimeType: "video/webm;codecs=h264" };
@@ -107,13 +109,20 @@ function startRecording() {
     mediaRecorder.start(10); // collect 10ms of data
 }
 
-let videoURL;
 
 function stopRecording() {
     mediaRecorder.stop();
-    videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
-    videoURL = window.URL.createObjectURL(videoBlob);
-    window.videoURL = videoURL;
+    let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
+    window.videoURL = window.URL.createObjectURL(videoBlob);
+
+    let tracks = mediaStream.getTracks();
+    for (var i = 0; i < tracks.length; ++i) {
+        tracks[i].stop();
+    }
+    mediaRecorder = null;
+    mediaStream = null;
+    isRecording = false;
+
     // let msg = { txt: "scrollCaptureVideoSource", videoBlob: videoBlob, videoURL: videoURL };
-    // chrome.tabs.sendMessage(selectedTab.id, msg);
+    // chrome.tabs.sendMessage(selectedTabId, msg);
 }

@@ -98,6 +98,11 @@ module.exports = __webpack_require__(24);
 /***/ (function(module, exports) {
 
 // let page = chrome.extension.getBackgroundPage();
+var mediaStream = null;
+var selectedTabId = null;
+var isRecording = false;
+var mediaRecorder = null;
+var recordedBlobs = [];
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   switch (msg.txt) {
     case "scrollCaptureStartRecording":
@@ -109,22 +114,32 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       break;
   }
 });
-var mediaStream;
+chrome.browserAction.onClicked.addListener(function (tab) {
+  if (isRecording) {
+    stopRecording();
+  }
 
-function setStream(stream) {
-  mediaStream = stream;
+  selectedTabId = tab.id;
+  window.selectedTabId = selectedTabId;
+  var msg = {
+    txt: "scrollCaptureScenario"
+  };
+  chrome.tabs.sendMessage(selectedTabId, msg);
+});
 
-  if (!stream) {
-    alert('Stream creation failed: ' + chrome.runtime.lastError.message);
+function handleDataAvailable(event) {
+  if (event.data && event.data.size > 0) {
+    recordedBlobs.push(event.data);
   }
 }
 
-function captureTab(tab) {
-  if (mediaStream) {
-    return;
-  } // Note: this method must be invoked by the user as defined
-  // in https://crbug.com/489258, e.g. chrome.browserAction.onClicked.
+function startRecording() {
+  chrome.tabs.get(selectedTabId, _startTabCapture);
+}
 
+function _startTabCapture(tab) {
+  isRecording = true; // Note: this method must be invoked by the user as defined
+  // in https://crbug.com/489258, e.g. chrome.browserAction.onClicked.
 
   var captureOptions = {
     audio: true,
@@ -146,30 +161,16 @@ function captureTab(tab) {
       }
     }
   };
-  chrome.tabCapture.capture(captureOptions, setStream);
+  chrome.tabCapture.capture(captureOptions, _setStream);
 }
 
-var selectedTab;
-chrome.browserAction.onClicked.addListener(function (tab) {
-  selectedTab = tab;
-  window.selectedTab = tab;
-  captureTab(selectedTab);
-  var msg = {
-    txt: "scrollCaptureScenario"
-  };
-  chrome.tabs.sendMessage(selectedTab.id, msg);
-});
-var mediaRecorder;
-var recordedBlobs;
-var sourceBuffer;
-
-function handleDataAvailable(event) {
-  if (event.data && event.data.size > 0) {
-    recordedBlobs.push(event.data);
+function _setStream(stream) {
+  if (stream) {
+    mediaStream = stream;
+  } else {
+    alert('Stream creation failed: ' + chrome.runtime.lastError.message);
   }
-}
 
-function startRecording() {
   recordedBlobs = [];
   var options = {
     mimeType: 'video/webm;codecs=vp9'
@@ -215,16 +216,22 @@ function startRecording() {
   mediaRecorder.start(10); // collect 10ms of data
 }
 
-var videoURL;
-
 function stopRecording() {
   mediaRecorder.stop();
-  videoBlob = new Blob(recordedBlobs, {
+  var videoBlob = new Blob(recordedBlobs, {
     type: 'video/webm'
   });
-  videoURL = window.URL.createObjectURL(videoBlob);
-  window.videoURL = videoURL; // let msg = { txt: "scrollCaptureVideoSource", videoBlob: videoBlob, videoURL: videoURL };
-  // chrome.tabs.sendMessage(selectedTab.id, msg);
+  window.videoURL = window.URL.createObjectURL(videoBlob);
+  var tracks = mediaStream.getTracks();
+
+  for (var i = 0; i < tracks.length; ++i) {
+    tracks[i].stop();
+  }
+
+  mediaRecorder = null;
+  mediaStream = null;
+  isRecording = false; // let msg = { txt: "scrollCaptureVideoSource", videoBlob: videoBlob, videoURL: videoURL };
+  // chrome.tabs.sendMessage(selectedTabId, msg);
 }
 
 /***/ })

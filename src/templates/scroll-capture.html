@@ -1,10 +1,15 @@
-<scroll-capture class="sc-default">
-	<div class="sc-window" is="ui-component">
+<div class="sc-default" is="scroll-capture">
+	<div class="sc-window sc-window-main" is="ui-component">
 		<div class="sc-title">
 			<div class="sc-drag-area"></div>
 			<div class="sc-tabs">
 				<span class="sc-tab sc-title-tab">
 					<span class="sc-label">Scroll Capture</span>
+					<svg class="sc-icon" x="0px" y="0px" viewBox="0 0 55 133">
+						<circle class="shape" cx="27.5" cy="14.5" r="14.5" />
+						<circle class="shape" cx="27.5" cy="53.26" r="20" />
+						<circle class="shape" cx="27.5" cy="105.38" r="27.5" />
+					</svg>
 				</span>
 			</div>
 			<div class="sc-tab">
@@ -54,7 +59,7 @@
 									</span>
 								</div>
 								<div class="sc-tab">
-									<button class="sc-close-button" data-model="data" is="ui-button"></button>
+									<button class="sc-trash-button sc-delete-action-button" data-model="data" is="ui-button"></button>
 								</div>
 							</div>
 							<div class="sc-fields sc-window-content" is="ui-component">
@@ -68,17 +73,17 @@
 												</div>
 											</div> -->
 											<div class="sc-field">
-												<span class="sc-label">Selector:</span><input type="text" data-model="data.target"
-													is="ui-input" />
+												<span class="sc-label">Selector:</span>
+												<input type="text" data-model="data.target"is="ui-input" />
 											</div>
 											<div class="sc-field-group">
 												<div class="sc-field">
-													<span class="sc-label">Left:</span><input type="number" step="1"
-														data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" />
+													<span class="sc-label">Left:</span>
+													<input type="number" step="1" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" />
 												</div>
 												<div class="sc-field">
-													<span class="sc-label">Top:</span><input type="number" step="1"
-														data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" />
+													<span class="sc-label">Top:</span>
+													<input type="number" step="1" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" />
 												</div>
 											</div>
 										</div>
@@ -117,13 +122,12 @@
 												<div class="sc-field">
 													<span class="sc-label">Type:</span>
 													<div class="sc-select">
-														<select data-provider="data.eventTypes"
-															data-model="data.eventTypes.selectedItem" is="ui-select"></select>
+														<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
 													</div>
 												</div>
 												<div class="sc-field">
-													<span class="sc-label">Delay:</span><input type="number" step="0.25"
-														data-model="data.delay" is="ui-input" />
+													<span class="sc-label">Delay:</span>
+													<input type="number" step="0.25" data-model="data.delay" is="ui-input" />
 												</div>
 											</div>
 										</div>
@@ -158,16 +162,12 @@
 						</action-view>
 					</template>
 				</actions-view>
-				<footer>
+				<sc-select-action>
 					<div class="sc-window">
-						<!--					<div class="sc-title">-->
-						<!--						<span class="sc-tab">Add an action</span>-->
-						<!--					</div>-->
 						<div class="sc-fields sc-window-content">
 							<div class="sc-field">
 								<div class="sc-select">
-									<select is="ui-select" data-valuePath="type" data-provider="actions.types"
-										data-model="actions.types.selectedItem">
+									<select is="ui-select" data-valuePath="type" data-provider="actions.types" data-model="actions.types.selectedItem">
 										<template data-type="*">
 											<option is="ui-text" value="[[data.type]]" data-model="data.name"></option>
 										</template>
@@ -177,8 +177,8 @@
 							</div>
 						</div>
 					</div>
-				</footer>
+				</sc-select-action>
 			</div>
 		</div>
 	</div>
-</scroll-capture>
+</div>

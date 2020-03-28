@@ -298,14 +298,14 @@ player.addEventListener('canplay', function () {
     txt: "scrollCaptureVideoHeigth",
     height: document.body.scrollHeight
   };
-  chrome.tabs.sendMessage(page.selectedTab.id, msg);
+  chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 var backButton = document.querySelector(".sc-close-button");
 backButton.addEventListener("click", function () {
   var msg = {
     txt: "scrollCaptureScenario"
   };
-  chrome.tabs.sendMessage(page.selectedTab.id, msg);
+  chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 
 if (page.videoURL) {
