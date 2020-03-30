@@ -17,12 +17,14 @@
 			</div>
 		</div>
 		<div class="sc-window-content" is="ui-component">
-			<div class="sc-video sc-fields" is="sc-section">
-				<div class="video">
-					<iframe></iframe>
+			<sc-video class="sc-fields">
+				<div class="sc-iframe">
+					<div class="sc-iframe-container">
+						<iframe class="sc-video-iframe"></iframe>
+					</div>
 				</div>
-			</div>
-			<div class="sc-scenario sc-fields" is="sc-section">
+			</sc-video>
+			<sc-scenario class="sc-fields">
 				<div class="sc-controls" is="ui-component" data-actions-length="[[actions.length]]">
 					<button class="sc-save-button" is="ui-button" data-click="save" data-is-saving="[[isSaving]]">
 						<span class="sc-label">Save</span>
@@ -180,7 +182,7 @@
 						</div>
 					</div>
 				</sc-select-action>
-			</div>
+			</sc-scenario>
 		</div>
 	</div>
 </div>

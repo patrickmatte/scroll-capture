@@ -114,9 +114,9 @@ export default class UIList extends UIComponent {
 			// 	element.component.model = model;
 			// }
 			this.appendChildAt(element, index);
-			if (this.isAdded) {
-				UIComponent.callElementAdded(element);
-			}
+			// if (this.isAdded) {
+			// 	UIComponent.callElementAdded(element);
+			// }
 			index++;
 		}
 		this.dispatchEvent(new BaseEvent("listChange", array));

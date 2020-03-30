@@ -350,10 +350,10 @@ function () {
 /* unused harmony export setScope */
 /* unused harmony export directives */
 /* unused harmony export applyDirectives */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return importTemplate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return importTemplate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return destroyElement; });
 /* unused harmony export destroyElements */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return getAllObjects; });
+/* unused harmony export getAllObjects */
 function evalProperty(path) {
   var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
   var debug = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -1701,9 +1701,12 @@ function (_Branch) {
       if (value) {
         if (this.componentContainer == value.parentNode) {
           value.parentNode.removeChild(value);
+          var component = value.component;
 
-          if (this.isAdded) {
-            UIComponent.callElementRemoved(value);
+          if (component) {
+            if (this.isAdded) {
+              component.elementRemoved();
+            }
           }
         }
       }
@@ -1713,14 +1716,13 @@ function (_Branch) {
     value: function appendChild(value) {
       if (value) {
         this.componentContainer.appendChild(value);
-
-        if (this.isAdded) {
-          UIComponent.callElementAdded(value);
-        }
-
         var component = value.component;
 
         if (component) {
+          if (this.isAdded) {
+            component.elementAdded();
+          }
+
           if (component.windowResize) {
             component.windowResize(this.windowSize);
           }
@@ -1760,14 +1762,13 @@ function (_Branch) {
       if (value) {
         if (ref) {
           this.componentContainer.insertBefore(value, ref);
-
-          if (this.isAdded) {
-            UIComponent.callElementAdded(value);
-          }
-
           var component = value.component;
 
           if (component) {
+            if (this.isAdded) {
+              component.elementAdded();
+            }
+
             if (component.windowResize) {
               component.windowResize(this.windowSize);
             }
@@ -2002,10 +2003,30 @@ function (_Branch) {
     }
   }, {
     key: "elementAdded",
-    value: function elementAdded() {}
+    value: function elementAdded() {
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          component.elementAdded();
+        }
+      }
+    }
   }, {
     key: "elementRemoved",
-    value: function elementRemoved() {}
+    value: function elementRemoved() {
+      var children = this.children;
+
+      for (var i = 0; i < children.length; i++) {
+        var component = children[i].component;
+
+        if (component) {
+          component.elementRemoved();
+        }
+      }
+    }
   }, {
     key: "destroy",
     value: function destroy() {
@@ -2069,7 +2090,49 @@ function (_Branch) {
       }
 
       return new Point["a" /* default */](touch.pageX, touch.pageY);
-    }
+    } // static callElementAdded (element) {
+    // 	let component = element.component;
+    // 	if (component) {
+    // 		if (component instanceof UIComponent) {
+    // 			component.elementAdded();
+    // 			if (component.windowResize) {
+    // 				component.windowResize(component.windowSize);
+    // 			}
+    // 		}
+    // 	}
+    // 	let objects = getAllObjects(element);
+    // 	for (let i = 0; i < objects.length; i++) {
+    // 		let object = objects[i];
+    // 		let objectComponent = object.component;
+    // 		if (objectComponent) {
+    // 			if (objectComponent instanceof UIComponent) {
+    // 				objectComponent.elementAdded();
+    // 				if (objectComponent.windowResize && element.component) {
+    // 					objectComponent.windowResize(element.component.windowSize);
+    // 				}
+    // 			}
+    // 		}
+    // 	}
+    // }
+    // static callElementRemoved (element) {
+    // 	let component = element.component;
+    // 	if (component) {
+    // 		if (component instanceof UIComponent) {
+    // 			component.elementRemoved();
+    // 		}
+    // 	}
+    // 	let objects = getAllObjects(element);
+    // 	for (let i = 0; i < objects.length; i++) {
+    // 		let object = objects[i];
+    // 		let objectComponent = object.component;
+    // 		if (objectComponent) {
+    // 			if (objectComponent instanceof UIComponent) {
+    // 				objectComponent.elementRemoved();
+    // 			}
+    // 		}
+    // 	}
+    // }
+
   }, {
     key: "element",
     get: function get() {
@@ -2207,62 +2270,6 @@ function (_Branch) {
       }
     }
   }], [{
-    key: "callElementAdded",
-    value: function callElementAdded(element) {
-      var component = element.component;
-
-      if (component) {
-        if (component instanceof UIComponent) {
-          component.elementAdded();
-
-          if (component.windowResize) {
-            component.windowResize(component.windowSize);
-          }
-        }
-      }
-
-      var objects = Object(tsunami["d" /* getAllObjects */])(element);
-
-      for (var i = 0; i < objects.length; i++) {
-        var object = objects[i];
-        var objectComponent = object.component;
-
-        if (objectComponent) {
-          if (objectComponent instanceof UIComponent) {
-            objectComponent.elementAdded();
-
-            if (objectComponent.windowResize && element.component) {
-              objectComponent.windowResize(element.component.windowSize);
-            }
-          }
-        }
-      }
-    }
-  }, {
-    key: "callElementRemoved",
-    value: function callElementRemoved(element) {
-      var component = element.component;
-
-      if (component) {
-        if (component instanceof UIComponent) {
-          component.elementRemoved();
-        }
-      }
-
-      var objects = Object(tsunami["d" /* getAllObjects */])(element);
-
-      for (var i = 0; i < objects.length; i++) {
-        var object = objects[i];
-        var objectComponent = object.component;
-
-        if (objectComponent) {
-          if (objectComponent instanceof UIComponent) {
-            objectComponent.elementRemoved();
-          }
-        }
-      }
-    }
-  }, {
     key: "getRect",
     value: function getRect(element, parent, debug) {
       if (!parent) {
@@ -4595,7 +4602,7 @@ module.exports = "<div class=\"sc-fields-list\" is=\"ui-component\">\n    <div c
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"sc-default\" is=\"scroll-capture\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t<svg class=\"sc-icon\" x=\"0px\" y=\"0px\" viewBox=\"0 0 55 133\">\n\t\t\t\t\t\t<circle class=\"shape\" cx=\"27.5\" cy=\"14.5\" r=\"14.5\" />\n\t\t\t\t\t\t<circle class=\"shape\" cx=\"27.5\" cy=\"53.26\" r=\"20\" />\n\t\t\t\t\t\t<circle class=\"shape\" cx=\"27.5\" cy=\"105.38\" r=\"27.5\" />\n\t\t\t\t\t</svg>\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t<div class=\"sc-video sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"video\">\n\t\t\t\t\t<iframe></iframe>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"sc-scenario sc-fields\" is=\"sc-section\">\n\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<button class=\"sc-save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-capture-video-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<template>\n\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\"\n\t\t\t\t\t\t\tdata-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Test</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button sc-delete-action-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\"is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</action-view>\n\t\t\t\t\t</template>\n\t\t\t\t</actions-view>\n\t\t\t\t<sc-select-action>\n\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t<span class=\"sc-label\">Actions:</span>\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</sc-select-action>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<div class=\"sc-default\" is=\"scroll-capture\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t<svg class=\"sc-icon\" x=\"0px\" y=\"0px\" viewBox=\"0 0 55 133\">\n\t\t\t\t\t\t<circle class=\"shape\" cx=\"27.5\" cy=\"14.5\" r=\"14.5\" />\n\t\t\t\t\t\t<circle class=\"shape\" cx=\"27.5\" cy=\"53.26\" r=\"20\" />\n\t\t\t\t\t\t<circle class=\"shape\" cx=\"27.5\" cy=\"105.38\" r=\"27.5\" />\n\t\t\t\t\t</svg>\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t<sc-video class=\"sc-fields\">\n\t\t\t\t<div class=\"sc-iframe\">\n\t\t\t\t\t<div class=\"sc-iframe-container\">\n\t\t\t\t\t\t<iframe class=\"sc-video-iframe\"></iframe>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</sc-video>\n\t\t\t<sc-scenario class=\"sc-fields\">\n\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<button class=\"sc-save-button\" is=\"ui-button\" data-click=\"save\" data-is-saving=\"[[isSaving]]\">\n\t\t\t\t\t\t<span class=\"sc-label\">Save</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-capture-video-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t</button>\n\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t</button>\n\t\t\t\t</div>\n\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t<template>\n\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\"\n\t\t\t\t\t\t\tdata-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Test</span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button sc-delete-action-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"sc-fields sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\"is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"points\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</action-view>\n\t\t\t\t\t</template>\n\t\t\t\t</actions-view>\n\t\t\t\t<sc-select-action>\n\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t<span class=\"sc-label\">Actions:</span>\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button class=\"add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</sc-select-action>\n\t\t\t</sc-scenario>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 /* 20 */
@@ -5673,11 +5680,9 @@ function (_UIComponent) {
         // 	element.component.model = model;
         // }
 
-        this.appendChildAt(element, index);
-
-        if (this.isAdded) {
-          UIComponent["a" /* default */].callElementAdded(element);
-        }
+        this.appendChildAt(element, index); // if (this.isAdded) {
+        // 	UIComponent.callElementAdded(element);
+        // }
 
         index++;
       }
@@ -5690,7 +5695,7 @@ function (_UIComponent) {
     value: function createElement(data, index, length) {
       var template = this.getTemplateForModel(data);
       var scope = new Scope(data, this.scope, index, length);
-      return Object(tsunami["e" /* importTemplate */])(template, scope);
+      return Object(tsunami["d" /* importTemplate */])(template, scope);
     }
   }, {
     key: "getModelType",
@@ -6324,7 +6329,7 @@ function (_UIComponent4) {
       for (var _i = 0; _i < points.length; _i++) {
         var position = points[_i];
 
-        var _point = tsunami["e" /* importTemplate */]("<point></point>");
+        var _point = tsunami["d" /* importTemplate */]("<point></point>");
 
         _point.style.left = position.x * 100 + "%";
         _point.style.top = 100 - position.y * 100 + "%";
@@ -6391,7 +6396,7 @@ function (_UIComponent) {
     set: function set(value) {
       view_ActionTweenView_set(ActionTweenView_getPrototypeOf(ActionTweenView.prototype), "scope", value, this, true);
 
-      this.easing = tsunami["e" /* importTemplate */](easing_default.a, value);
+      this.easing = tsunami["d" /* importTemplate */](easing_default.a, value);
       this.appendChild(this.easing);
     }
   }]);
@@ -6561,59 +6566,152 @@ tsunami["a" /* define */]("action-view", ActionView_ActionView);
 var scroll_capture = __webpack_require__(19);
 var scroll_capture_default = /*#__PURE__*/__webpack_require__.n(scroll_capture);
 
-// CONCATENATED MODULE: ./js/view/ScrollCaptureSection.js
-function ScrollCaptureSection_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCaptureSection_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCaptureSection_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCaptureSection_typeof(obj); }
+// CONCATENATED MODULE: ./js/view/Section.js
+function Section_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Section_typeof = function _typeof(obj) { return typeof obj; }; } else { Section_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Section_typeof(obj); }
 
-function ScrollCaptureSection_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function Section_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function ScrollCaptureSection_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function Section_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function ScrollCaptureSection_createClass(Constructor, protoProps, staticProps) { if (protoProps) ScrollCaptureSection_defineProperties(Constructor.prototype, protoProps); if (staticProps) ScrollCaptureSection_defineProperties(Constructor, staticProps); return Constructor; }
+function Section_createClass(Constructor, protoProps, staticProps) { if (protoProps) Section_defineProperties(Constructor.prototype, protoProps); if (staticProps) Section_defineProperties(Constructor, staticProps); return Constructor; }
 
-function ScrollCaptureSection_possibleConstructorReturn(self, call) { if (call && (ScrollCaptureSection_typeof(call) === "object" || typeof call === "function")) { return call; } return ScrollCaptureSection_assertThisInitialized(self); }
+function Section_possibleConstructorReturn(self, call) { if (call && (Section_typeof(call) === "object" || typeof call === "function")) { return call; } return Section_assertThisInitialized(self); }
 
-function ScrollCaptureSection_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function Section_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function ScrollCaptureSection_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { ScrollCaptureSection_get = Reflect.get; } else { ScrollCaptureSection_get = function _get(target, property, receiver) { var base = ScrollCaptureSection_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return ScrollCaptureSection_get(target, property, receiver || target); }
+function Section_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { Section_get = Reflect.get; } else { Section_get = function _get(target, property, receiver) { var base = Section_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return Section_get(target, property, receiver || target); }
 
-function ScrollCaptureSection_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = ScrollCaptureSection_getPrototypeOf(object); if (object === null) break; } return object; }
+function Section_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = Section_getPrototypeOf(object); if (object === null) break; } return object; }
 
-function ScrollCaptureSection_getPrototypeOf(o) { ScrollCaptureSection_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return ScrollCaptureSection_getPrototypeOf(o); }
+function Section_getPrototypeOf(o) { Section_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Section_getPrototypeOf(o); }
 
-function ScrollCaptureSection_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ScrollCaptureSection_setPrototypeOf(subClass, superClass); }
+function Section_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Section_setPrototypeOf(subClass, superClass); }
 
-function ScrollCaptureSection_setPrototypeOf(o, p) { ScrollCaptureSection_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ScrollCaptureSection_setPrototypeOf(o, p); }
-
-
+function Section_setPrototypeOf(o, p) { Section_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Section_setPrototypeOf(o, p); }
 
 
-var ScrollCaptureSection_ScrollCaptureSection =
+
+
+var Section_ScrollCaptureSection =
 /*#__PURE__*/
 function (_UIComponent) {
-  ScrollCaptureSection_inherits(ScrollCaptureSection, _UIComponent);
+  Section_inherits(ScrollCaptureSection, _UIComponent);
 
   function ScrollCaptureSection() {
-    ScrollCaptureSection_classCallCheck(this, ScrollCaptureSection);
+    Section_classCallCheck(this, ScrollCaptureSection);
 
-    return ScrollCaptureSection_possibleConstructorReturn(this, ScrollCaptureSection_getPrototypeOf(ScrollCaptureSection).apply(this, arguments));
+    return Section_possibleConstructorReturn(this, Section_getPrototypeOf(ScrollCaptureSection).apply(this, arguments));
   }
 
-  ScrollCaptureSection_createClass(ScrollCaptureSection, [{
+  Section_createClass(ScrollCaptureSection, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
       app.scrollCapture.windowContent.component.appendChild(this.element);
-      return ScrollCaptureSection_get(ScrollCaptureSection_getPrototypeOf(ScrollCaptureSection.prototype), "showDelayComplete", this).call(this);
+      return Section_get(Section_getPrototypeOf(ScrollCaptureSection.prototype), "showDelayComplete", this).call(this);
     }
   }, {
     key: "hideComplete",
     value: function hideComplete() {
       app.scrollCapture.windowContent.component.removeChild(this.element);
-      return ScrollCaptureSection_get(ScrollCaptureSection_getPrototypeOf(ScrollCaptureSection.prototype), "hideComplete", this).call(this);
+      return Section_get(Section_getPrototypeOf(ScrollCaptureSection.prototype), "hideComplete", this).call(this);
     }
   }]);
 
   return ScrollCaptureSection;
 }(UIComponent["a" /* default */]);
+
+
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(9);
+
+// CONCATENATED MODULE: ./js/view/VideoSection.js
+function VideoSection_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { VideoSection_typeof = function _typeof(obj) { return typeof obj; }; } else { VideoSection_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return VideoSection_typeof(obj); }
+
+function VideoSection_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function VideoSection_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function VideoSection_createClass(Constructor, protoProps, staticProps) { if (protoProps) VideoSection_defineProperties(Constructor.prototype, protoProps); if (staticProps) VideoSection_defineProperties(Constructor, staticProps); return Constructor; }
+
+function VideoSection_possibleConstructorReturn(self, call) { if (call && (VideoSection_typeof(call) === "object" || typeof call === "function")) { return call; } return VideoSection_assertThisInitialized(self); }
+
+function VideoSection_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function VideoSection_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { VideoSection_get = Reflect.get; } else { VideoSection_get = function _get(target, property, receiver) { var base = VideoSection_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return VideoSection_get(target, property, receiver || target); }
+
+function VideoSection_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = VideoSection_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function VideoSection_getPrototypeOf(o) { VideoSection_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return VideoSection_getPrototypeOf(o); }
+
+function VideoSection_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) VideoSection_setPrototypeOf(subClass, superClass); }
+
+function VideoSection_setPrototypeOf(o, p) { VideoSection_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return VideoSection_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var VideoSection_VideoSection =
+/*#__PURE__*/
+function (_ScrollCaptureSection) {
+  VideoSection_inherits(VideoSection, _ScrollCaptureSection);
+
+  function VideoSection(element) {
+    var _this;
+
+    VideoSection_classCallCheck(this, VideoSection);
+
+    _this = VideoSection_possibleConstructorReturn(this, VideoSection_getPrototypeOf(VideoSection).call(this, element));
+    _this.iframeContainer = _this.element.querySelector(".sc-iframe-container");
+    _this.iframe = _this.iframeContainer.querySelector("iframe");
+    _this.iframe.src = chrome.extension.getURL('video-recording.html');
+
+    _this.iframeContainer.removeChild(_this.iframe);
+
+    _this.iframeOffset = new Point["a" /* default */]();
+    return _this;
+  }
+
+  VideoSection_createClass(VideoSection, [{
+    key: "iframePositionUpdate",
+    value: function iframePositionUpdate() {
+      this.iframe.style.right = app.scrollCapture.style.right + this.iframeOffset.x + "px";
+      this.iframe.style.top = app.scrollCapture.style.top + this.iframeOffset.y + "px";
+    }
+  }, {
+    key: "windowResize",
+    value: function windowResize(windowSize) {
+      VideoSection_get(VideoSection_getPrototypeOf(VideoSection.prototype), "windowResize", this).call(this, windowSize);
+
+      this.iframe.style.width = this.iframeContainer.offsetWidth + "px";
+      this.iframeOffset = Object(tsunami_window["b" /* localToGlobal */])(this.iframeContainer, app.scrollCapture.element);
+    }
+  }, {
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      app.scrollCapture.windowContent.component.appendChild(this.element);
+      this.iframePositionUpdate();
+      document.body.appendChild(this.iframe);
+      return VideoSection_get(VideoSection_getPrototypeOf(VideoSection.prototype), "showDelayComplete", this).call(this);
+    }
+  }, {
+    key: "hideComplete",
+    value: function hideComplete() {
+      document.body.removeChild(this.iframe);
+      app.scrollCapture.windowContent.component.removeChild(this.element);
+      return VideoSection_get(VideoSection_getPrototypeOf(VideoSection.prototype), "hideComplete", this).call(this);
+    }
+  }, {
+    key: "contentHeight",
+    set: function set(value) {
+      this.iframeContainer.style.height = value + "px";
+      this.iframe.style.height = value + "px";
+    }
+  }]);
+
+  return VideoSection;
+}(Section_ScrollCaptureSection);
 
 
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
@@ -6650,6 +6748,7 @@ function ScrollCapture_setPrototypeOf(o, p) { ScrollCapture_setPrototypeOf = Obj
 
 
 
+
 var ScrollCapture_ScrollCapture =
 /*#__PURE__*/
 function (_UIComponent) {
@@ -6672,18 +6771,16 @@ function (_UIComponent) {
 
     dragArea.addEventListener(events["b" /* events */].mousedown, _this.dragStart);
     _this.windowContent = _this.element.querySelector(".sc-window-content");
-    _this.scenario = _this.element.querySelector(".sc-scenario");
+    _this.scenario = _this.element.querySelector("sc-scenario");
     _this.branches["scenario"] = _this.scenario.component;
 
     _this.windowContent.component.removeChild(_this.scenario);
 
-    _this.video = _this.element.querySelector(".sc-video");
+    _this.video = _this.element.querySelector("sc-video");
     _this.branches["video"] = _this.video.component;
 
     _this.windowContent.component.removeChild(_this.video);
 
-    _this.iframe = _this.video.querySelector("iframe");
-    _this.iframe.src = chrome.extension.getURL('video-recording.html');
     return _this;
   }
 
@@ -6715,6 +6812,7 @@ function (_UIComponent) {
       var diff = this.startPoint.subtract(point);
       this.style.right = this.startPosition.x + diff.x;
       this.style.top = this.startPosition.y - diff.y;
+      this.video.component.iframePositionUpdate();
     }
   }, {
     key: "dragEnd",
@@ -6746,7 +6844,8 @@ function (_UIComponent) {
 
 ScrollCapture_ScrollCapture.template = scroll_capture_default.a;
 tsunami["a" /* define */]("actions-view", ActionsView_ActionsView);
-tsunami["a" /* define */]("sc-section", ScrollCaptureSection_ScrollCaptureSection);
+tsunami["a" /* define */]("sc-scenario", Section_ScrollCaptureSection);
+tsunami["a" /* define */]("sc-video", VideoSection_VideoSection);
 // EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
 var UIButton = __webpack_require__(14);
 
@@ -7154,9 +7253,6 @@ function (_UIText) {
   return UINumber;
 }(UIText_UIText);
 
-
-// EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./js/tsunami/data/BooleanData.js
 var BooleanData = __webpack_require__(8);
@@ -59446,7 +59542,7 @@ function (_App) {
     _this.actions = new Actions_Actions();
     _this.capturedVideo = new ArrayData["a" /* default */]("test.mp4");
     chrome.storage.sync.get(["json"], function (result) {
-      _this.scrollCapture = Object(tsunami["e" /* importTemplate */])(ScrollCapture_ScrollCapture.template, main_assertThisInitialized(_this)).component;
+      _this.scrollCapture = Object(tsunami["d" /* importTemplate */])(ScrollCapture_ScrollCapture.template, main_assertThisInitialized(_this)).component;
       _this.branches["scrollCapture"] = _this.scrollCapture;
       var json = result.json;
 
@@ -59618,7 +59714,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       break;
 
     case "scrollCaptureVideoHeigth":
-      main.scrollCapture.iframe.style.height = msg.height + "px";
+      main.scrollCapture.video.component.contentHeight = msg.height;
       break;
   }
 });

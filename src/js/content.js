@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 			}
 			break;
 		case "scrollCaptureVideoHeigth":
-			main.scrollCapture.iframe.style.height = msg.height + "px";
+			main.scrollCapture.video.component.contentHeight = msg.height;
 			break;
 	}
 });

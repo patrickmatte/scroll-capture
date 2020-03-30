@@ -47,50 +47,6 @@ export default class UIComponent extends Branch {
 		this.alsoShowChildren = false;
 	}
 
-	static callElementAdded (element) {
-    	let component = element.component;
-		if (component) {
-			if (component instanceof UIComponent) {
-				component.elementAdded();
-				if (component.windowResize) {
-					component.windowResize(component.windowSize);
-				}
-			}
-		}
-		let objects = getAllObjects(element);
-		for (let i = 0; i < objects.length; i++) {
-			let object = objects[i];
-			let objectComponent = object.component;
-			if (objectComponent) {
-				if (objectComponent instanceof UIComponent) {
-					objectComponent.elementAdded();
-					if (objectComponent.windowResize && element.component) {
-						objectComponent.windowResize(element.component.windowSize);
-					}
-				}
-			}
-		}
-	}
-
-	static callElementRemoved (element) {
-		let component = element.component;
-		if (component) {
-			if (component instanceof UIComponent) {
-				component.elementRemoved();
-			}
-		}
-		let objects = getAllObjects(element);
-		for (let i = 0; i < objects.length; i++) {
-			let object = objects[i];
-			let objectComponent = object.component;
-			if (objectComponent) {
-				if (objectComponent instanceof UIComponent) {
-					objectComponent.elementRemoved();
-				}
-			}
-		}
-	}
-
 	get element() {
 		return this._element;
 	}
@@ -120,8 +76,11 @@ export default class UIComponent extends Branch {
 		if (value) {
 			if (this.componentContainer == value.parentNode) {
 				value.parentNode.removeChild(value);
-				if (this.isAdded) {
-					UIComponent.callElementRemoved(value);
+				let component = value.component;
+				if (component) {
+					if (this.isAdded) {
+						component.elementRemoved();
+					}
 				}
 			}
 		}
@@ -130,11 +89,11 @@ export default class UIComponent extends Branch {
 	appendChild(value) {
 		if (value) {
 			this.componentContainer.appendChild(value);
-			if(this.isAdded) {
-				UIComponent.callElementAdded(value);
-			}
 			let component = value.component;
 			if(component) {
+				if(this.isAdded) {
+					component.elementAdded();
+				}
 				if (component.windowResize)  {
 					component.windowResize(this.windowSize);
 				}
@@ -166,11 +125,11 @@ export default class UIComponent extends Branch {
 		if (value) {
 			if (ref) {
 				this.componentContainer.insertBefore(value, ref);
-				if(this.isAdded) {
-					UIComponent.callElementAdded(value);
-				}
 				let component = value.component;
 				if(component) {
+					if (this.isAdded) {
+						component.elementAdded();
+					}
 					if (component.windowResize)  {
 						component.windowResize(this.windowSize);
 					}
@@ -466,11 +425,23 @@ export default class UIComponent extends Branch {
 	}
 
 	elementAdded() {
-
+		let children = this.children;
+		for (let i = 0; i < children.length; i++) {
+			let component = children[i].component;
+			if (component) {
+				component.elementAdded();
+			}
+		}
 	}
 
 	elementRemoved() {
-
+		let children = this.children;
+		for (let i = 0; i < children.length; i++) {
+			let component = children[i].component;
+			if (component) {
+				component.elementRemoved();
+			}
+		}
 	}
 
 	destroy() {
@@ -532,5 +503,49 @@ export default class UIComponent extends Branch {
 		}
 		return new Point(touch.pageX, touch.pageY);
 	}
+
+	// static callElementAdded (element) {
+    // 	let component = element.component;
+	// 	if (component) {
+	// 		if (component instanceof UIComponent) {
+	// 			component.elementAdded();
+	// 			if (component.windowResize) {
+	// 				component.windowResize(component.windowSize);
+	// 			}
+	// 		}
+	// 	}
+	// 	let objects = getAllObjects(element);
+	// 	for (let i = 0; i < objects.length; i++) {
+	// 		let object = objects[i];
+	// 		let objectComponent = object.component;
+	// 		if (objectComponent) {
+	// 			if (objectComponent instanceof UIComponent) {
+	// 				objectComponent.elementAdded();
+	// 				if (objectComponent.windowResize && element.component) {
+	// 					objectComponent.windowResize(element.component.windowSize);
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	// static callElementRemoved (element) {
+	// 	let component = element.component;
+	// 	if (component) {
+	// 		if (component instanceof UIComponent) {
+	// 			component.elementRemoved();
+	// 		}
+	// 	}
+	// 	let objects = getAllObjects(element);
+	// 	for (let i = 0; i < objects.length; i++) {
+	// 		let object = objects[i];
+	// 		let objectComponent = object.component;
+	// 		if (objectComponent) {
+	// 			if (objectComponent instanceof UIComponent) {
+	// 				objectComponent.elementRemoved();
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 }

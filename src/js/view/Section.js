@@ -5,7 +5,7 @@ export default class ScrollCaptureSection extends UIComponent {
 
     showDelayComplete() {
         app.scrollCapture.windowContent.component.appendChild(this.element);
-       return super.showDelayComplete();
+        return super.showDelayComplete();
     }
 
     hideComplete() {

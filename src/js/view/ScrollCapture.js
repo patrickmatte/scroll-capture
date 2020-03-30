@@ -7,7 +7,8 @@ import Point from "../tsunami/geom/Point";
 import {app} from "../main";
 import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
-import ScrollCaptureSection from "./ScrollCaptureSection";
+import ScrollCaptureSection from "./Section";
+import VideoSection from "./VideoSection";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -26,16 +27,13 @@ export default class ScrollCapture extends UIComponent {
 
 		this.windowContent = this.element.querySelector(".sc-window-content");
 
-		this.scenario = this.element.querySelector(".sc-scenario");
+		this.scenario = this.element.querySelector("sc-scenario");
 		this.branches["scenario"] = this.scenario.component;
 		this.windowContent.component.removeChild(this.scenario);
 
-		this.video = this.element.querySelector(".sc-video");
+		this.video = this.element.querySelector("sc-video");
 		this.branches["video"] = this.video.component;
 		this.windowContent.component.removeChild(this.video);
-		
-		this.iframe = this.video.querySelector("iframe");
-		this.iframe.src = chrome.extension.getURL('video-recording.html');
 	}
 
 	showDelayComplete() {
@@ -61,6 +59,7 @@ export default class ScrollCapture extends UIComponent {
 		let diff = this.startPoint.subtract(point);
 		this.style.right = this.startPosition.x + diff.x;
 		this.style.top = this.startPosition.y - diff.y;
+		this.video.component.iframePositionUpdate();
 	}
 
 	dragEnd(event) {
@@ -87,4 +86,5 @@ export default class ScrollCapture extends UIComponent {
 ScrollCapture.template = template;
 
 tsunami.define("actions-view", ActionsView);
-tsunami.define("sc-section", ScrollCaptureSection);
+tsunami.define("sc-scenario", ScrollCaptureSection);
+tsunami.define("sc-video", VideoSection);

@@ -171,6 +171,15 @@ function _setStream(stream) {
     alert('Stream creation failed: ' + chrome.runtime.lastError.message);
   }
 
+  var tracks = mediaStream.getTracks(); // for (var i = 0; i < tracks.length; ++i) {
+  //     let track = tracks[i];
+  //     console.log("---- track", track);
+  //     for (let j in track) console.log(j, "=", track[j]);
+  //     let settings = track.getSettings();
+  //     console.log("----- settings");
+  //     for (let k in settings) console.log(k, "=", settings[k]);
+  // }
+
   recordedBlobs = [];
   var options = {
     mimeType: 'video/webm;codecs=vp9'
