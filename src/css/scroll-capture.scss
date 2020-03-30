@@ -565,11 +565,11 @@ body {
 					margin-left: $fieldMargin;
 					margin-right: $fieldMargin;
 
-					&:first-child {
+					&:nth-child(odd) {
 						margin-left: 0;
 					}
 
-					&:last-child {
+					&:nth-child(even) {
 						margin-right: 0;
 					}
 				}
@@ -601,8 +601,8 @@ body {
 					flex-grow: 0;
 					white-space: nowrap;
 					text-align: left;
-					margin-top: 0.5em;
-					margin-bottom: 0.5em;
+					padding-top: 0.5em;
+					height: 2em;
 				}
 
 				input, textarea {
@@ -627,9 +627,9 @@ body {
 			actions-view {
 				width: 100%;
 				display: block;
+				max-height: 50vh;
 				overflow-y: scroll;
 				overflow-x: hidden;
-				max-height: 50vh;
 				overscroll-behavior: contain;
 
 				&[data-actions-length="0"] {
@@ -681,6 +681,13 @@ body {
 						display: inline-block;
 						flex-grow: 1;
 						flex-shrink: 0;
+					}
+
+					.sc-points-list {
+						max-height: 4.5em;
+						overflow-y: scroll;
+						overflow-x: hidden;
+						overscroll-behavior: contain;
 					}
 
 					[is="easing-graph"] {

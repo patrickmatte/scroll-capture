@@ -4,6 +4,8 @@ import ArrayData from "../tsunami/data/ArrayData";
 import Vector2Data from "../tsunami/data/Vector2Data";
 import {isTouch} from "../tsunami/window";
 import * as THREE from "three";
+import NumberData from "../tsunami/data/NumberData";
+import { events } from "../tsunami/events";
 
 export default class ActionSwipe extends ActionTween {
 
@@ -19,8 +21,10 @@ export default class ActionSwipe extends ActionTween {
 		this.points.value = points;
 		this.isCaptureable.value = true;
 		this.isTestable.value = true;
+		this.smoothness = new NumberData(20);
 
 		this.captureDownHandler = this.captureDownHandler.bind(this);
+		this.captureMoveHandler = this.captureMoveHandler.bind(this);
 		this.captureUpHandler = this.captureUpHandler.bind(this);
 	}
 
@@ -61,7 +65,7 @@ export default class ActionSwipe extends ActionTween {
 			points.push(new THREE.Vector3(pointData.x.value, pointData.y.value, 0));
 		});
 		this.curve = new THREE.CatmullRomCurve3(points, false, 'chordal', 0.75);
-
+		
 		this.dispatchMouseEvent("mousedown", 0);
 		return super.trigger();
 	}
@@ -90,7 +94,7 @@ export default class ActionSwipe extends ActionTween {
 	// addPoint() {
 	// 	this.points.push(new Vector2Data());
 	// }
-	//
+	
 	// removePoint(point) {
 	// 	this.points.remove(point);
 	// }
@@ -105,7 +109,7 @@ export default class ActionSwipe extends ActionTween {
 
 	capture() {
 		this.isCapturing.value = true;
-		document.body.addEventListener("mousedown", this.captureDownHandler);
+		document.body.addEventListener(events.mousedown, this.captureDownHandler);
 	}
 
 	captureDownHandler(event) {
@@ -114,12 +118,26 @@ export default class ActionSwipe extends ActionTween {
 			touch = event.touches[0];
 		}
 		let point = new Point(touch.pageX, touch.pageY);
-		let vec2 = this.points.value[0];
-		vec2.x.value = point.x;
-		vec2.y.value = point.y;
+		this.points.value = [new Vector2Data(point.x, point.y)];
 
-		document.body.removeEventListener("mousedown", this.captureDownHandler);
-		document.body.addEventListener("mouseup", this.captureUpHandler);
+		this.lastPoint = point;
+
+		document.body.removeEventListener(events.mousedown, this.captureDownHandler);
+		document.body.addEventListener(events.mousemove, this.captureMoveHandler);
+		document.body.addEventListener(events.mouseup, this.captureUpHandler);
+	}
+
+	captureMoveHandler(event) {
+		let touch = event;
+		if (isTouch) {
+			touch = event.touches[0];
+		}
+		let point = new Point(touch.pageX, touch.pageY);
+		let distance = Point.distance(this.lastPoint, point);
+		if (distance > this.smoothness.value) {
+			this.lastPoint = point;
+			this.points.push(new Vector2Data(point.x, point.y));
+		}
 	}
 
 	captureUpHandler(event) {
@@ -128,11 +146,13 @@ export default class ActionSwipe extends ActionTween {
 			touch = event.touches[0];
 		}
 		let point = new Point(touch.pageX, touch.pageY);
-		let vec2 = this.points.value[1];
-		vec2.x.value = point.x;
-		vec2.y.value = point.y;
-
-		document.body.removeEventListener("mouseup", this.captureUpHandler);
+		let distance = Point.distance(this.lastPoint, point);
+		if (distance > 0) {
+			this.points.push(new Vector2Data(point.x, point.y));
+		}
+		
+		document.body.removeEventListener(events.mousemove, this.captureMoveHandler);
+		document.body.removeEventListener(events.mouseup, this.captureUpHandler);
 		this.isCapturing.value = false;
 	}
 

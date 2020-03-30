@@ -9,31 +9,31 @@ export default class ActionsView extends UIList {
 		super(element);
 		this.selectItemOnMouseDown = true;
 
-		this.previousClientY = 0;
+		// this.previousClientY = 0;
 
-		this.element.addEventListener("wheel", (event) => {
-			var scrollTop = this.element.scrollTop;
-			var maxScroll = this.element.scrollHeight - this.element.offsetHeight;
-			var deltaY = event.deltaY;
-			if ( (scrollTop >= maxScroll && deltaY > 0) || (scrollTop === 0 && deltaY < 0) ) {
-				event.preventDefault();
-			}
-		}, {passive:false});
+		// this.element.addEventListener("wheel", (event) => {
+		// 	var scrollTop = this.element.scrollTop;
+		// 	var maxScroll = this.element.scrollHeight - this.element.offsetHeight;
+		// 	var deltaY = event.deltaY;
+		// 	if ( (scrollTop >= maxScroll && deltaY > 0) || (scrollTop === 0 && deltaY < 0) ) {
+		// 		event.preventDefault();
+		// 	}
+		// }, {passive:false});
 		
-		this.element.addEventListener("touchstart", (event) => {
-			this.previousClientY = event.touches[0].clientY;
-		}, {passive:false});
+		// this.element.addEventListener("touchstart", (event) => {
+		// 	this.previousClientY = event.touches[0].clientY;
+		// }, {passive:false});
 		
-		this.element.addEventListener("touchmove", (event) => {
-			var scrollTop = this.element.scrollTop;
-			var maxScroll = this.element.scrollHeight - this.element.offsetHeight;
-			var currentClientY = event.touches[0].clientY;
-			var deltaY = this.previousClientY - currentClientY;
-			if ( (scrollTop >= maxScroll && deltaY > 0) || (scrollTop === 0 && deltaY < 0) ) {
-				event.preventDefault();
-			}
-			this.previousClientY = currentClientY;
-		}, {passive:false});
+		// this.element.addEventListener("touchmove", (event) => {
+		// 	var scrollTop = this.element.scrollTop;
+		// 	var maxScroll = this.element.scrollHeight - this.element.offsetHeight;
+		// 	var currentClientY = event.touches[0].clientY;
+		// 	var deltaY = this.previousClientY - currentClientY;
+		// 	if ( (scrollTop >= maxScroll && deltaY > 0) || (scrollTop === 0 && deltaY < 0) ) {
+		// 		event.preventDefault();
+		// 	}
+		// 	this.previousClientY = currentClientY;
+		// }, {passive:false});
 	}
 
 	_providerAdd(event) {
