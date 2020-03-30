@@ -25,6 +25,7 @@ export default class UIList extends UIComponent {
 		this._providerSort = this._providerSort.bind(this);
 
 		this.selectItemOnMouseDown = false;
+		this.isDragged = false;
 
 		this.dragIndex = NaN;
 		this.dragElementClass = "ui-list-drag-area";
@@ -289,6 +290,7 @@ export default class UIList extends UIComponent {
 	}
 	
 	_dragElementStart() {
+		this.isDragged = true;
 		this.dragElement.classList.add("is-dragged");
 		let event = new CustomEvent('drag-start', { detail: "test" });
 		this.dragElement.dispatchEvent(event);
@@ -323,6 +325,7 @@ export default class UIList extends UIComponent {
 	}
 
 	_dragEnd(event) {
+		this.isDragged = false;
 		this.dragElement.classList.remove("is-dragged");
 		this.dragElement.style.transform = "";
 		document.body.removeEventListener(events.mousemove, this._dragMove);

@@ -16,7 +16,7 @@ export default class Actions extends ArrayData {
 
 		this.types = new ArrayData();
 		this.types.value = [
-			new Action("", "Add an action"),
+			// new Action("", "Add an action"),
 			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),

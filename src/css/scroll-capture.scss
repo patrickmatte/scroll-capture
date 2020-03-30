@@ -337,7 +337,15 @@ body {
 			}
 
 			& > * {
-				margin-right: 1.5em;
+				margin: 0 0.5em;
+
+				&:first-child {
+					margin-left: 0;
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
 			}
 
 			button {
@@ -399,7 +407,10 @@ body {
 						background-color: rgba(255,255,255,0.1);
 						margin-right: 0.5em;
 						transition: background-color 0.3s ease 0s;
-						font-size: 1.18em;
+
+						> * {
+							font-size: 1.18em;
+						}
 
 						input {
 							height: auto !important;
@@ -430,9 +441,13 @@ body {
 			.sc-window-content {
 				background-color: rgba(255, 255, 255, 0.1);
 				transition: background-color 0.3s ease 0s;
-				border-radius: 0 $borderRadius $borderRadius $borderRadius;
 				padding: 0.75em 0;
-			}	
+				border-radius: $borderRadius;
+			}
+
+			.sc-title + .sc-window-content {
+				border-radius: 0 $borderRadius $borderRadius $borderRadius;
+			}
 
 			&[data-selected="true"] {
 				background-color: rgba(64, 64, 64, 0.95);
@@ -472,7 +487,7 @@ body {
 			display: flex;
 			flex-direction: column;
 			user-select: none;
-			font-size: 15.58px !important;
+			font-size: 16.3px !important;
 			line-height: 1;
 			margin: 0;
 			padding: 0.2em;
@@ -480,7 +495,6 @@ body {
 			font-weight: normal;
 			border-radius: $borderRadius;
 			box-sizing: border-box;
-			padding: 0px;
 			-webkit-backdrop-filter: blur(10px);
 			backdrop-filter: blur(15px);
 			mix-blend-mode: luminosity;
@@ -540,9 +554,12 @@ body {
 				}
 
 				> * {
+					width: calc(50% - 0.5em);
 					margin-bottom: 0;
-					width: 50%;
-					margin-right: 1em;
+					flex-grow: 0;
+					flex-shrink: 0;
+					margin-left: $fieldMargin;
+					margin-right: $fieldMargin;
 
 					&:first-child {
 						margin-left: 0;
@@ -559,21 +576,23 @@ body {
 				flex-grow: 1;
 				flex-shrink: 1;
 				align-items: flex-start;
-				// margin-bottom: $fieldMargin;
 				border-radius: $borderRadius;
 
 				> * {
-					margin-left: $fieldMargin;
-					// margin-bottom: $fieldMargin;
+					margin-left: 0.25em;
+					margin-right: 0.25em;
 
 					&:first-child {
 						margin-left: 0;
-						// margin-bottom: 0;
+					}
+					
+					&:last-child {
+						margin-right: 0;
 					}
 				}
 
 				.sc-label {
-					width: calc(25% - 0.5em);
+					width: calc(25% - 0.25em);
 					flex-shrink: 0;
 					flex-grow: 0;
 					white-space: nowrap;
@@ -794,8 +813,10 @@ body {
 				button.add-button {
 					background-color: rgba(255, 255, 255, 0.1);
 					display: inline-flex;
-					width: 3em;
+					width: 2em;
 					height: 2em;
+					flex-shrink: 0;
+					flex-grow: 0;
 					justify-content: center;
 					align-items: center;
 
