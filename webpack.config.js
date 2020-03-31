@@ -101,13 +101,5 @@ module.exports = {
 		__dirname: true,
 		setImmediate: false,
 		fs: "empty",
-	},
-
-	devServer: {
-		port: process.env.PORT || 8888,
-		host: process.env.HOST || "0.0.0.0",
-		disableHostCheck: true,
-		publicPath: "/",
-		contentBase: "./src",
-	},
+	}
 };

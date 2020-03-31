@@ -1,10 +1,9 @@
 {
-	"name": "screen-capture-pro",
+	"name": "scroll-capture",
 	"version": "0.0.1",
-	"author": "Patrick Matte <patrick.mattek@gmail.com>",
-	"description": "Build script that uses webpack-dev-server to compile twig templates to static html, using Sass for CSS.",
+	"author": "Patrick Matte <patrick.matte@gmail.com>",
+	"description": "A chrome extension to automate scrolling and mouse actions for your portfolio screen captures.",
 	"scripts": {
-		"dev": "cross-env NODE_ENV=development webpack-dev-server --progress --open --history-api-fallback",
 		"build": "cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
 	},
 	"browserslist": "> 1%, last 2 versions, IE 11",
@@ -16,7 +15,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "ssh://git@git.firstborn.com:8443/scm/dew/dew-ice-2018.git"
+		"url": "https://github.com/patrickmatte/screen-capture-scenario"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.2",
