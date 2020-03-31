@@ -119,7 +119,7 @@ export default class ActionSwipe extends ActionTween {
 			touch = event.touches[0];
 		}
 		let point = new Point(touch.pageX, touch.pageY);
-		this.points.value = [new Vector2Data(point.x, point.y)];
+		this.capturedPoints = [new Vector2Data(point.x, point.y)];
 
 		this.lastPoint = point;
 
@@ -137,7 +137,7 @@ export default class ActionSwipe extends ActionTween {
 		let distance = Point.distance(this.lastPoint, point);
 		if (distance > this.smoothness.value) {
 			this.lastPoint = point;
-			this.points.push(new Vector2Data(point.x, point.y));
+			this.capturedPoints.push(new Vector2Data(point.x, point.y));
 		}
 	}
 
@@ -149,8 +149,10 @@ export default class ActionSwipe extends ActionTween {
 		let point = new Point(touch.pageX, touch.pageY);
 		let distance = Point.distance(this.lastPoint, point);
 		if (distance > 0) {
-			this.points.push(new Vector2Data(point.x, point.y));
+			this.capturedPoints.push(new Vector2Data(point.x, point.y));
 		}
+		this.points.value = this.capturedPoints;
+		this.capturedPoints = [];
 		
 		document.body.removeEventListener(events.mousemove, this.captureMoveHandler);
 		document.body.removeEventListener(events.mouseup, this.captureUpHandler);

@@ -42,27 +42,7 @@ export default class Main extends App {
 			src: url("${defaultFontBold}");
 		}
 
-		body.is-capturing {
-			cursor: url('${customCursor}'), auto !important;
-		}
-
 		body.is-capturing * {
-			cursor: url('${customCursor}'), auto !important;
-		}
-
-		body.is-capturing *:link {
-			cursor: url('${customCursor}'), auto !important;
-		}
-
-		body.is-capturing *:visited {
-			cursor: url('${customCursor}'), auto !important;
-		}
-
-		body.is-capturing *:active {
-			cursor: url('${customCursor}'), auto !important;
-		}
-
-		body.is-capturing *:hover {
 			cursor: url('${customCursor}'), auto !important;
 		}
 		`;

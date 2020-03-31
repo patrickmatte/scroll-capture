@@ -9137,8 +9137,6 @@ var ActionScroll_ActionScroll = /*#__PURE__*/function (_ActionTween) {
   }, {
     key: "capture",
     value: function capture() {
-      var _this2 = this;
-
       this.unitX.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
       this.unitY.removeEventListener(Data["a" /* default */].CHANGE, this.doScroll);
       this.isCapturing.value = true;
@@ -9179,14 +9177,11 @@ var ActionScroll_ActionScroll = /*#__PURE__*/function (_ActionTween) {
       if (isNaN(unit.x)) unit.x = 0;
       if (isNaN(unit.y)) unit.y = 0;
       this.unitX.value = unit.x;
-      this.unitY.value = unit.y;
-      setTimeout(function () {
-        _this2.unitX.addEventListener(Data["a" /* default */].CHANGE, _this2.doScroll);
+      this.unitY.value = unit.y; // setTimeout(()=> {
 
-        _this2.unitY.addEventListener(Data["a" /* default */].CHANGE, _this2.doScroll);
-
-        _this2.captureComplete();
-      }, 100);
+      this.unitX.addEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.unitY.addEventListener(Data["a" /* default */].CHANGE, this.doScroll);
+      this.captureComplete(); // }, 100);
     }
   }, {
     key: "captureAtInit",
@@ -59719,7 +59714,7 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
       }
 
       var point = new Point["a" /* default */](touch.pageX, touch.pageY);
-      this.points.value = [new Vector2Data_Vector2Data(point.x, point.y)];
+      this.capturedPoints = [new Vector2Data_Vector2Data(point.x, point.y)];
       this.lastPoint = point;
       document.body.removeEventListener(events["b" /* events */].mousedown, this.captureDownHandler);
       document.body.addEventListener(events["b" /* events */].mousemove, this.captureMoveHandler);
@@ -59739,7 +59734,7 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
 
       if (distance > this.smoothness.value) {
         this.lastPoint = point;
-        this.points.push(new Vector2Data_Vector2Data(point.x, point.y));
+        this.capturedPoints.push(new Vector2Data_Vector2Data(point.x, point.y));
       }
     }
   }, {
@@ -59755,9 +59750,11 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
       var distance = Point["a" /* default */].distance(this.lastPoint, point);
 
       if (distance > 0) {
-        this.points.push(new Vector2Data_Vector2Data(point.x, point.y));
+        this.capturedPoints.push(new Vector2Data_Vector2Data(point.x, point.y));
       }
 
+      this.points.value = this.capturedPoints;
+      this.capturedPoints = [];
       document.body.removeEventListener(events["b" /* events */].mousemove, this.captureMoveHandler);
       document.body.removeEventListener(events["b" /* events */].mouseup, this.captureUpHandler);
       this.captureComplete();
@@ -60602,7 +60599,7 @@ var main_Main = /*#__PURE__*/function (_App) {
     var customCursor = chrome.extension.getURL('assets/images/customCursor.png');
     var fonts = document.createElement('style');
     fonts.type = 'text/css';
-    fonts.textContent = "\n\t\t@font-face {\n\t\t\tfont-family: IcoFont;\n\t\t\tsrc: url(\"".concat(icoFont, "\");\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: DefaultFont;\n\t\t\tfont-weight: 400;\n\t\t\tsrc: url(\"").concat(DefaultFontRegular, "\");\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: DefaultFont;\n\t\t\tfont-weight: 700;\n\t\t\tsrc: url(\"").concat(defaultFontBold, "\");\n\t\t}\n\n\t\tbody.is-capturing {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\n\t\tbody.is-capturing * {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\n\t\tbody.is-capturing *:link {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\n\t\tbody.is-capturing *:visited {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\n\t\tbody.is-capturing *:active {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\n\t\tbody.is-capturing *:hover {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\t\t");
+    fonts.textContent = "\n\t\t@font-face {\n\t\t\tfont-family: IcoFont;\n\t\t\tsrc: url(\"".concat(icoFont, "\");\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: DefaultFont;\n\t\t\tfont-weight: 400;\n\t\t\tsrc: url(\"").concat(DefaultFontRegular, "\");\n\t\t}\n\t\t@font-face {\n\t\t\tfont-family: DefaultFont;\n\t\t\tfont-weight: 700;\n\t\t\tsrc: url(\"").concat(defaultFontBold, "\");\n\t\t}\n\n\t\tbody.is-capturing * {\n\t\t\tcursor: url('").concat(customCursor, "'), auto !important;\n\t\t}\n\t\t");
     document.head.appendChild(fonts);
     _this.save = _this.save.bind(main_assertThisInitialized(_this));
     _this.play = _this.play.bind(main_assertThisInitialized(_this));
