@@ -18,10 +18,10 @@ export default class Action {
 		this.isTestable = new BooleanData();
 		this.isCaptureable = new BooleanData();
 		this.isCapturing = new BooleanData();
+		this.changeCursorOnCapture = new BooleanData();
 		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
-			app.showCaptureIcon.value = event.value;
-			if(!event.value) {
-				app.save();
+			if (this.changeCursorOnCapture.value) {
+				app.showCaptureIcon.value = event.value;
 			}
 		});
 		this.isPlaying = new BooleanData();

@@ -14,6 +14,7 @@ export default class ActionMouseEvent extends Action {
 		this.eventTypes.selectedItem.value = this.eventTypes.value[0];
 		this.isTestable.value = true;
 		this.isCaptureable.value = true;
+		this.changeCursorOnCapture.value = true;
 		this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
 	}
 

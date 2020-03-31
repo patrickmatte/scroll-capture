@@ -23,7 +23,8 @@ export default class ActionSwipe extends ActionTween {
 		this.isCaptureable.value = true;
 		this.isTestable.value = true;
 		this.smoothness = new NumberData(20);
-
+		this.changeCursorOnCapture.value = true;
+		
 		this.captureDownHandler = this.captureDownHandler.bind(this);
 		this.captureMoveHandler = this.captureMoveHandler.bind(this);
 		this.captureUpHandler = this.captureUpHandler.bind(this);

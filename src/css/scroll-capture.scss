@@ -274,11 +274,11 @@ body {
 			}
 		}
 		
-		.ui-list-drag-area {
-			> * {
-				pointer-events: none;
-			}
-		}
+		// .ui-list-drag-area {
+		// 	> * {
+		// 		pointer-events: none;
+		// 	}
+		// }
 
 		.sc-label, .unit {
 			border: none;
@@ -287,6 +287,15 @@ body {
 		.sc-tab {
 			border: none;
 			display: inline-flex;
+
+			.ui-list-drag-area {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
+			}
+
 		}
 
 		.sc-select {
