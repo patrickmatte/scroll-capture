@@ -50,15 +50,19 @@ export default class Main extends App {
 			cursor: url('${customCursor}'), auto !important;
 		}
 
-		body.is-capturing button {
+		body.is-capturing *:link {
 			cursor: url('${customCursor}'), auto !important;
 		}
 
-		body.is-capturing select {
+		body.is-capturing *:visited {
 			cursor: url('${customCursor}'), auto !important;
 		}
 
-		body.is-capturing input {
+		body.is-capturing *:active {
+			cursor: url('${customCursor}'), auto !important;
+		}
+
+		body.is-capturing *:hover {
 			cursor: url('${customCursor}'), auto !important;
 		}
 		`;

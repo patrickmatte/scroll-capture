@@ -1,5 +1,5 @@
 $fieldMargin: 0.5em;
-$borderRadius: 0.25em;
+$borderRadius: 0.33em;
 
 body {
 	.sc-default {
@@ -86,6 +86,7 @@ body {
 			display: inline-flex;
 			align-items: center;
 			height: auto;
+			cursor: pointer;
 			
 			> * {
 				pointer-events: none;
@@ -158,15 +159,16 @@ body {
 			}
 
 			&.sc-capture-button {
+				&:after {
+					content: "\ea80";
+					margin-left: 0.1em;
+					font-size: 1.4em;
+				}
+
 				&[data-is-captureable="false"] {
 					opacity: 0.25;
 					pointer-events: none;
 					display: none;
-				}
-
-				&:after {
-					content: "\ec77";
-					margin-left: 0.5em;
 				}
 
 				&[data-is-capturing="true"] {
@@ -182,7 +184,7 @@ body {
 			}
 
 			&.sc-capture-video-button {
-					&:after {
+				&:after {
 					content: "\ec92";
 					margin-left: 0.25em;
 					font-size: 1.2em;
@@ -191,7 +193,7 @@ body {
 			}
 
 			&.sc-play-all-button {
-					&:after {
+				&:after {
 					content: "\eca8";
 					margin-left: 0.25em;
 					font-size: 1.2em;
@@ -207,18 +209,18 @@ body {
 			}
 
 			&.sc-test-button {
+				&:after {
+					content: "\eca6";
+					margin-left: 0.33em;
+					font-size: 1em;
+				}
+
 				&[data-is-playing="true"] {
 					opacity: 0.25;
 
 					&:after {
 						opacity: 1;
 					}
-				}
-
-				&:after {
-					content: "\eca6";
-					margin-left: 0.33em;
-					font-size: 1em;
 				}
 			}
 

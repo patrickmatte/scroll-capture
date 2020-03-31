@@ -26,11 +26,11 @@
 			</sc-video>
 			<sc-scenario class="sc-fields">
 				<div class="sc-controls" is="ui-component" data-actions-length="[[actions.length]]">
-					<button class="sc-test-button" is="ui-button" data-click="playSelectedAction" data-is-playing="[[selectedActionIsPlaying]]">
+					<!-- <button class="sc-test-button" is="ui-button" data-click="playSelectedAction" data-is-playing="[[selectedActionIsPlaying]]">
 						<span class="sc-label">Play</span>
-					</button>
+					</button> -->
 					<button class="sc-play-all-button" is="ui-button" data-click="play">
-						<span class="sc-label">Play All</span>
+						<span class="sc-label">Play</span>
 					</button>
 					<button class="sc-capture-video-button" is="ui-button" data-click="playAndCapture">
 						<span class="sc-label">Record</span>
@@ -56,11 +56,11 @@
 											<span class="sc-label">Capture</span>
 										</button>
 									</span>
-									<!-- <span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
+									<span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
 										<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]">
-											<span class="sc-label">Test</span>
+											<span class="sc-label">Play</span>
 										</button>
-									</span> -->
+									</span>
 								</div>
 								<div class="sc-tab">
 									<button class="sc-trash-button sc-delete-action-button" data-model="data" is="ui-button"></button>
