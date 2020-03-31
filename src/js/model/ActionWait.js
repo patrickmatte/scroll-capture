@@ -4,6 +4,7 @@ export default class ActionWait extends Action {
 
 	constructor() {
 		super("ActionWait", "Pause");
+		this.delay.value = 1;
 	}
 
 	clone() {

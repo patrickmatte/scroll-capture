@@ -3,9 +3,10 @@ import ActionTween from "./ActionTween";
 import ArrayData from "../tsunami/data/ArrayData";
 import Vector2Data from "../tsunami/data/Vector2Data";
 import {isTouch} from "../tsunami/window";
-import * as THREE from "three";
+
 import NumberData from "../tsunami/data/NumberData";
 import { events } from "../tsunami/events";
+import { Vector3, CatmullRomCurve3 } from "three";
 
 export default class ActionSwipe extends ActionTween {
 
@@ -62,9 +63,9 @@ export default class ActionSwipe extends ActionTween {
 
 		let points = [];
 		this.points.map((pointData) => {
-			points.push(new THREE.Vector3(pointData.x.value, pointData.y.value, 0));
+			points.push(new Vector3(pointData.x.value, pointData.y.value, 0));
 		});
-		this.curve = new THREE.CatmullRomCurve3(points, false, 'chordal', 0.75);
+		this.curve = new CatmullRomCurve3(points, false, 'chordal', 0.75);
 		
 		this.dispatchMouseEvent("mousedown", 0);
 		return super.trigger();
@@ -153,7 +154,7 @@ export default class ActionSwipe extends ActionTween {
 		
 		document.body.removeEventListener(events.mousemove, this.captureMoveHandler);
 		document.body.removeEventListener(events.mouseup, this.captureUpHandler);
-		this.isCapturing.value = false;
+		this.captureComplete();
 	}
 
 }

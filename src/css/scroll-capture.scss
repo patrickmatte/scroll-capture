@@ -83,7 +83,6 @@ body {
 			box-shadow: none !important;
 			border: none !important;
 			line-height: 1;
-			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
 			height: auto;
@@ -184,6 +183,15 @@ body {
 
 			&.sc-capture-video-button {
 					&:after {
+					content: "\ec92";
+					margin-left: 0.25em;
+					font-size: 1.2em;
+					font-weight: 400;
+				}
+			}
+
+			&.sc-play-all-button {
+					&:after {
 					content: "\eca8";
 					margin-left: 0.25em;
 					font-size: 1.2em;
@@ -208,8 +216,9 @@ body {
 				}
 
 				&:after {
-					content: "\ec74";
-					margin-left: 0.5em;
+					content: "\eca6";
+					margin-left: 0.33em;
+					font-size: 1em;
 				}
 			}
 

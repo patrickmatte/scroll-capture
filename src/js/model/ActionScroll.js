@@ -158,9 +158,9 @@ export default class ActionScroll extends ActionTween {
 		this.unitY.value = unit.y;
 
 		setTimeout(()=> {
-			this.isCapturing.value = false;
 			this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-			this.unitY.addEventListener(Data.CHANGE, this.doScroll);	
+			this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+			this.captureComplete();
 		}, 100);
 	}
 

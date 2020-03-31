@@ -72,14 +72,21 @@ export default class Action {
 	capture() {
 	}
 
+	captureComplete() {
+		this.isCapturing.value = false;
+		app.save();
+	}
+
 	captureAtInit() {
 	}
 
 	play() {
 		this.isPlaying.value = true;
-		this.playingPromise = this.trigger().then(()=> {
+		let promise1 = this.trigger();
+		let promise2 = promise1.then(() => {
 			this.isPlaying.value = false;
 		});
+		return promise2;
 	}
 
 }

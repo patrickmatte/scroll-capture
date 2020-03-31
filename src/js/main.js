@@ -21,8 +21,8 @@ export default class Main extends App {
 		app = this;
 
 		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
-		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo-Regular.ttf');
-		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo-Bold.ttf');
+		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo-Regular.woff');
+		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo-Bold.woff');
 		let customCursor = chrome.extension.getURL('assets/images/customCursor.png');
 		let fonts = document.createElement('style');
 		fonts.type = 'text/css';
@@ -43,13 +43,30 @@ export default class Main extends App {
 		}
 
 		body.is-capturing {
-			cursor: url('${customCursor}'), auto;
-		}	
+			cursor: url('${customCursor}'), auto !important;
+		}
+
+		body.is-capturing * {
+			cursor: url('${customCursor}'), auto !important;
+		}
+
+		body.is-capturing button {
+			cursor: url('${customCursor}'), auto !important;
+		}
+
+		body.is-capturing select {
+			cursor: url('${customCursor}'), auto !important;
+		}
+
+		body.is-capturing input {
+			cursor: url('${customCursor}'), auto !important;
+		}
 		`;
 		document.head.appendChild(fonts);
 
 		this.save = this.save.bind(this);
 		this.play = this.play.bind(this);
+		this.playSelectedAction = this.playSelectedAction.bind(this);
 		this.playAndCapture = this.playAndCapture.bind(this);
 		this.clear = this.clear.bind(this);
 
@@ -63,6 +80,8 @@ export default class Main extends App {
 		})
 		this.isSaving = new BooleanData();
 		this.actions = new Actions();
+
+		this.selectedActionIsPlaying = new BooleanData();
 
 		this.capturedVideo = new ArrayData("test.mp4");
 
@@ -131,6 +150,16 @@ export default class Main extends App {
 
 	play() {
 		this.doPlay();
+	}
+
+	playSelectedAction() {
+		console.log("playSelectedAction");
+		this.selectedActionIsPlaying.value = true;
+		let promise = this.actions.selectedItem.value.play();
+		promise.then(()=> {
+			this.selectedActionIsPlaying.value = false;
+			this.save();
+		});
 	}
 
 	playAndCapture() {
