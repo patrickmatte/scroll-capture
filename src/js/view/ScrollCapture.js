@@ -1,14 +1,12 @@
 import UIComponent from "../tsunami/components/UIComponent";
 import * as tsunami from "../tsunami/tsunami";
-import ActionView from "./ActionView";
 import Style from "../tsunami/components/Style";
 import {events} from "../tsunami/events";
 import Point from "../tsunami/geom/Point";
 import {app} from "../main";
 import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
-import Section from "./Section";
-import SectionVideo from "./SectionVideo";
+import WindowContentMain from "./WindowContentMain";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -25,15 +23,14 @@ export default class ScrollCapture extends UIComponent {
 		let dragArea = this.element.querySelector("* > .sc-window .sc-drag-area");
 		dragArea.addEventListener(events.mousedown, this.dragStart);
 
-		this.windowContent = this.element.querySelector(".sc-window-content");
+		this.windowContent = this.element.querySelector(".sc-window-content").component;
 
-		this.scenario = this.element.querySelector("sc-scenario");
-		this.branches["scenario"] = this.scenario.component;
-		this.windowContent.component.removeChild(this.scenario);
+		this.branches["scenario"] = this.windowContent.sections.scenario;
+		this.branches["video"] = this.windowContent.sections.video;
+	}
 
-		this.video = this.element.querySelector("sc-video");
-		this.branches["video"] = this.video.component;
-		this.windowContent.component.removeChild(this.video);
+	windowResize() {
+
 	}
 
 	showDelayComplete() {
@@ -59,7 +56,7 @@ export default class ScrollCapture extends UIComponent {
 		let diff = this.startPoint.subtract(point);
 		this.style.right = this.startPosition.x + diff.x;
 		this.style.top = this.startPosition.y - diff.y;
-		this.video.component.iframePositionUpdate();
+		// this.video.component.iframePositionUpdate();
 	}
 
 	dragEnd(event) {
@@ -86,5 +83,4 @@ export default class ScrollCapture extends UIComponent {
 ScrollCapture.template = template;
 
 tsunami.define("actions-view", ActionsView);
-tsunami.define("sc-scenario", Section);
-tsunami.define("sc-video", SectionVideo);
+tsunami.define("sc-window-content-main", WindowContentMain);

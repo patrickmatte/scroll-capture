@@ -11,8 +11,5 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 				main.router.location = "scrollCapture/scenario";
 			}
 			break;
-		case "scrollCaptureVideoHeigth":
-			main.scrollCapture.video.component.contentHeight = msg.height;
-			break;
 	}
 });

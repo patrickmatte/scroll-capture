@@ -1,5 +1,6 @@
 <div class="sc-default" is="scroll-capture">
 	<div class="sc-window sc-window-main" is="ui-component">
+
 		<div class="sc-title">
 			<div class="sc-drag-area"></div>
 			<div class="sc-tabs">
@@ -16,20 +17,18 @@
 				<button class="sc-close-button" is="router-button" data-path=""></button>
 			</div>
 		</div>
-		<div class="sc-window-content" is="ui-component">
-			
-			<sc-video class="sc-default">
-				<div class="sc-fields">
-					<div class="sc-iframe">
-						<div class="sc-iframe-container">
-							<iframe class="sc-video-iframe"></iframe>
-						</div>
-					</div>
-				</div>
-			</sc-video>
 
-			<sc-scenario class="sc-section sc-default">
-				<div class="sc-fields" is="ui-component">
+		<sc-window-content-main class="sc-window-content">
+
+			<sc-sections class="sc-default">
+
+				<sc-video class="sc-fields">
+					<div class="sc-iframe">
+						<iframe></iframe>
+					</div>
+				</sc-video>
+				
+				<sc-scenario class="sc-fields">
 
 					<div class="sc-controls" is="ui-component" data-actions-length="[[actions.length]]">
 						<!-- <button class="sc-test-button" is="ui-button" data-click="playSelectedAction" data-is-playing="[[selectedActionIsPlaying]]">
@@ -200,9 +199,10 @@
 						</div>
 					</sc-select-action>
 
-				</div>
-			</sc-scenario>
+				</sc-scenario>
 
-		</div>
+			</sc-sections>
+
+		</sc-window-content-main>
 	</div>
 </div>

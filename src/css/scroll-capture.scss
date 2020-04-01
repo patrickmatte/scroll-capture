@@ -490,6 +490,7 @@ $borderRadius: 0.33em;
 		}
 
 		.sc-window-content {
+			display: block;
 			background-color: rgba(255, 255, 255, 0.1);
 			transition: background-color 0.3s ease 0s;
 			border-radius: $borderRadius;
@@ -529,12 +530,8 @@ $borderRadius: 0.33em;
 	}
 
 	sc-video {
-		.sc-iframe {
+		iframe {
 			width: 100%;
-
-			.sc-iframe-container {
-				width: 100%;
-			}
 		}
 	}
 
@@ -842,7 +839,7 @@ $borderRadius: 0.33em;
 }
 
 
-iframe.sc-video-iframe {
+.sc-window-content-layer {
 	position: fixed !important;
 	z-index: 200000001;
 	background: transparent !important;

@@ -4,12 +4,12 @@ import { app } from "../main";
 export default class Section extends UIComponent {
 
     showDelayComplete() {
-        app.scrollCapture.windowContent.component.appendChild(this.element);
+        app.scrollCapture.windowContent.sections.appendChild(this.element);
         return super.showDelayComplete();
     }
 
     hideComplete() {
-        app.scrollCapture.windowContent.component.removeChild(this.element);
+        app.scrollCapture.windowContent.sections.removeChild(this.element);
         return super.hideComplete();
     }
     

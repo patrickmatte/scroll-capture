@@ -347,113 +347,6 @@ var Point_Point = /*#__PURE__*/function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
-/* unused harmony export createCustomEvent */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
-/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-var events = {
-  mouseover: "mouseover",
-  mouseout: "mouseout",
-  mousedown: "mousedown",
-  mouseup: "mouseup",
-  mousemove: "mousemove",
-  click: "click",
-  transitionend: 'transitionend',
-  animationstart: 'animationstart',
-  animationiteration: 'animationiteration',
-  animationend: 'animationend'
-};
-
-if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
-  events.mouseover = "touchstart";
-  events.mouseout = "touchend";
-  events.mousedown = "touchstart";
-  events.mouseup = "touchend";
-  events.mousemove = "touchmove";
-  events.click = "click";
-}
-
-var platforms = {
-  'OTransition': {
-    transitionend: 'otransitionend',
-    animationstart: 'oanimationstart',
-    animationiteration: 'oanimationiteration',
-    animationend: 'oanimationend'
-  },
-  'MozTransition': {
-    transitionend: 'transitionend',
-    animationstart: 'moznimationstart',
-    animationiteration: 'moznimationiteration',
-    animationend: 'moznimationend'
-  },
-  'WebkitTransition': {
-    transitionend: 'webkitTransitionEnd',
-    animationstart: 'webkitAnimationStart',
-    animationiteration: 'webkitAnimationIteration',
-    animationend: 'webkitAnimationEnd'
-  }
-};
-window.addEventListener("load", function () {
-  for (var i in platforms) {
-    var data = platforms[i];
-
-    if (document.body.style[i] !== undefined) {
-      events.transitionend = data.transitionend;
-      events.animationstart = data.animationstart;
-      events.animationiteration = data.animationiteration;
-      events.animationend = data.animationend;
-    }
-  }
-});
-function createCustomEvent(type, params) {
-  var event;
-
-  try {
-    event = new CustomEvent(event, params);
-  } catch (e) {
-    event = document.createEvent('CustomEvent');
-    event.initCustomEvent(type, params.bubbles, params.bubbles, params.detail);
-  }
-
-  return event;
-}
-
-var BaseEvent = /*#__PURE__*/function () {
-  function BaseEvent(type, value) {
-    _classCallCheck(this, BaseEvent);
-
-    this.type = type;
-    this.value = value;
-  }
-
-  _createClass(BaseEvent, [{
-    key: "stopPropagation",
-    value: function stopPropagation() {}
-  }, {
-    key: "stopImmediatePropagation",
-    value: function stopImmediatePropagation() {}
-  }, {
-    key: "preventDefault",
-    value: function preventDefault() {}
-  }]);
-
-  return BaseEvent;
-}();
-
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return evalProperty; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return define; });
 /* unused harmony export decorateElement */
@@ -670,6 +563,113 @@ function getAllObjects(parent, array) {
 }
 
 /***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return events; });
+/* unused harmony export createCustomEvent */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BaseEvent; });
+/* harmony import */ var _window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var events = {
+  mouseover: "mouseover",
+  mouseout: "mouseout",
+  mousedown: "mousedown",
+  mouseup: "mouseup",
+  mousemove: "mousemove",
+  click: "click",
+  transitionend: 'transitionend',
+  animationstart: 'animationstart',
+  animationiteration: 'animationiteration',
+  animationend: 'animationend'
+};
+
+if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
+  events.mouseover = "touchstart";
+  events.mouseout = "touchend";
+  events.mousedown = "touchstart";
+  events.mouseup = "touchend";
+  events.mousemove = "touchmove";
+  events.click = "click";
+}
+
+var platforms = {
+  'OTransition': {
+    transitionend: 'otransitionend',
+    animationstart: 'oanimationstart',
+    animationiteration: 'oanimationiteration',
+    animationend: 'oanimationend'
+  },
+  'MozTransition': {
+    transitionend: 'transitionend',
+    animationstart: 'moznimationstart',
+    animationiteration: 'moznimationiteration',
+    animationend: 'moznimationend'
+  },
+  'WebkitTransition': {
+    transitionend: 'webkitTransitionEnd',
+    animationstart: 'webkitAnimationStart',
+    animationiteration: 'webkitAnimationIteration',
+    animationend: 'webkitAnimationEnd'
+  }
+};
+window.addEventListener("load", function () {
+  for (var i in platforms) {
+    var data = platforms[i];
+
+    if (document.body.style[i] !== undefined) {
+      events.transitionend = data.transitionend;
+      events.animationstart = data.animationstart;
+      events.animationiteration = data.animationiteration;
+      events.animationend = data.animationend;
+    }
+  }
+});
+function createCustomEvent(type, params) {
+  var event;
+
+  try {
+    event = new CustomEvent(event, params);
+  } catch (e) {
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent(type, params.bubbles, params.bubbles, params.detail);
+  }
+
+  return event;
+}
+
+var BaseEvent = /*#__PURE__*/function () {
+  function BaseEvent(type, value) {
+    _classCallCheck(this, BaseEvent);
+
+    this.type = type;
+    this.value = value;
+  }
+
+  _createClass(BaseEvent, [{
+    key: "stopPropagation",
+    value: function stopPropagation() {}
+  }, {
+    key: "stopImmediatePropagation",
+    value: function stopImmediatePropagation() {}
+  }, {
+    key: "preventDefault",
+    value: function preventDefault() {}
+  }]);
+
+  return BaseEvent;
+}();
+
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -677,7 +677,7 @@ function getAllObjects(parent, array) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -813,553 +813,12 @@ var NumberData = /*#__PURE__*/function (_Data) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData; });
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _NumberData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-
-var ArrayData = /*#__PURE__*/function (_Data) {
-  _inherits(ArrayData, _Data);
-
-  var _super = _createSuper(ArrayData);
-
-  _createClass(ArrayData, null, [{
-    key: "shuffle",
-    value: function shuffle(o) {
-      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
-        ;
-      }
-
-      return o;
-    }
-  }, {
-    key: "nodeListToArray",
-    value: function nodeListToArray(nodeList) {
-      return Array.prototype.slice.call(nodeList); // let array = new Array();
-      // for (let i = 0; i < nodeList.length; i++) {
-      // 	array.push(nodeList.item(i));
-      // }
-      // return array;
-    }
-  }, {
-    key: "ITEM_CHANGE",
-    get: function get() {
-      return "item-change";
-    }
-  }]);
-
-  function ArrayData() {
-    var _this;
-
-    _classCallCheck(this, ArrayData);
-
-    _this = _super.call(this);
-    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(_assertThisInitialized(_this));
-    _this.selectedItemChange = _this.selectedItemChange.bind(_assertThisInitialized(_this));
-    _this.selectedIndexChange = _this.selectedIndexChange.bind(_assertThisInitialized(_this));
-    _this.lastIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-    _this.length = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-
-    _this.length.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, function () {
-      _this.lastIndex.value = _this.length.value - 1;
-    });
-
-    _this.length.value = arguments.length;
-    _this._value = [];
-    _this.selectedItem = new _ObjectData__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"]();
-
-    _this.selectedItem.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, _this.selectedItemChange);
-
-    _this.selectedIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-
-    _this.selectedIndex.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, _this.selectedIndexChange);
-
-    _this.nextIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-    _this.prevIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-    _this.dataClass = Object;
-
-    _this.push.apply(_assertThisInitialized(_this), arguments);
-
-    return _this;
-  }
-
-  _createClass(ArrayData, [{
-    key: "selectedItemChange",
-    value: function selectedItemChange(event) {
-      this.updateSelectedIndex();
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "updateSelectedIndex",
-    value: function updateSelectedIndex() {
-      this.selectedIndex.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedIndexChange);
-      var index = this.value.indexOf(this.selectedItem.value);
-      this.selectedIndex.value = index;
-      this.selectedIndex.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedIndexChange);
-    }
-  }, {
-    key: "setSelectedData",
-    value: function setSelectedData(value) {
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          this.previousSelectedItem.isSelectedItem.value = false;
-        }
-      }
-
-      if (this.selectedData) {
-        this.selectedData.copy(value);
-      }
-
-      this.previousSelectedItem = value;
-
-      if (this.previousSelectedItem) {
-        if (this.previousSelectedItem.isSelectedItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          this.previousSelectedItem.isSelectedItem.value = true;
-        }
-      }
-
-      var index = this.selectedIndex.value;
-      var nextIndex = index + 1;
-
-      if (nextIndex > this.value.length - 1) {
-        nextIndex = 0;
-      }
-
-      this.nextIndex.value = nextIndex;
-
-      if (this.nextData) {
-        this.nextData.copy(this.value[this.nextIndex.value]);
-      }
-
-      var prevIndex = index - 1;
-
-      if (prevIndex < 0) {
-        prevIndex = this.value.length - 1;
-      }
-
-      this.prevIndex.value = prevIndex;
-
-      if (this.prevData) {
-        this.prevData.copy(this.value[this.prevIndex.value]);
-      }
-    }
-  }, {
-    key: "selectedIndexChange",
-    value: function selectedIndexChange(event) {
-      var index = this.selectedIndex.value;
-      this.selectedItem.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedItemChange);
-      this.selectedItem.value = this.value[index];
-      this.selectedItem.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedItemChange);
-      this.setSelectedData(this.selectedItem.value);
-    }
-  }, {
-    key: "dataItemChangeHandler",
-    value: function dataItemChangeHandler(e) {
-      var event = new _events__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"](ArrayData.ITEM_CHANGE, this.value);
-      this.dispatchEvent(event);
-    }
-  }, {
-    key: "item",
-    value: function item(index) {
-      return this._value[index];
-    }
-  }, {
-    key: "indexOf",
-    value: function indexOf(searchElement, fromIndex) {
-      return this._value.indexOf(searchElement, fromIndex);
-    }
-  }, {
-    key: "map",
-    value: function map(callback) {
-      return this._value.map(callback);
-    }
-  }, {
-    key: "find",
-    value: function find(callback) {
-      return this._value.find(callback);
-    }
-  }, {
-    key: "findByKey",
-    value: function findByKey(key, value) {
-      var selected = this.find(function (element) {
-        return element[key].toString() == value.toString();
-      });
-      return selected;
-    }
-  }, {
-    key: "filter",
-    value: function filter(callback) {
-      return this._value.filter(callback);
-    }
-  }, {
-    key: "pop",
-    value: function pop() {
-      var item = this._value.pop();
-
-      if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-        item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: this.value.length,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-
-      if (item == this.selectedItem.value) {
-        this.selectedItem.value = null;
-      } else {
-        this.updateSelectedIndex();
-      }
-
-      return item;
-    }
-  }, {
-    key: "push",
-    value: function push() {
-      var previousLength = this.value.length;
-
-      var length = this._value.push.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i = 0; _i < added.length; _i++) {
-        var item = added[_i];
-
-        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: previousLength,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      return length;
-    }
-  }, {
-    key: "reverse",
-    value: function reverse() {
-      this._value.reverse();
-
-      this.dispatchEvent({
-        type: "reverse",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-      this.updateSelectedIndex();
-    }
-  }, {
-    key: "shift",
-    value: function shift() {
-      var item = this._value.shift();
-
-      if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-        item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "remove",
-        value: [item],
-        index: 0,
-        total: 1
-      });
-      this.dispatchChangeEvent();
-
-      if (item == this.selectedItem.value) {
-        this.selectedItem.value = null;
-      } else {
-        this.updateSelectedIndex();
-      }
-
-      return item;
-    }
-  }, {
-    key: "swap",
-    value: function swap(index_A, index_B) {
-      var temp = this._value[index_A];
-      this._value[index_A] = this._value[index_B];
-      this._value[index_B] = temp;
-      this.dispatchEvent({
-        type: "sort",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-      this.updateSelectedIndex();
-    }
-  }, {
-    key: "sort",
-    value: function sort(compareFunction) {
-      this._value.sort(compareFunction);
-
-      this.dispatchEvent({
-        type: "sort",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-      this.updateSelectedIndex();
-    }
-  }, {
-    key: "splice",
-    value: function splice() {
-      var elements = this._value.splice.apply(this._value, arguments);
-
-      for (var i = 0; i < elements.length; i++) {
-        var item = elements[i];
-
-        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      var added = [];
-
-      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
-        added.push(arguments[_i2]);
-      }
-
-      this.length.value = this._value.length;
-
-      for (var _i3 = 0; _i3 < added.length; _i3++) {
-        var _item = added[_i3];
-
-        if (_item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          _item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      var index = arguments[0];
-
-      if (elements.length > 0) {
-        this.dispatchEvent({
-          type: "remove",
-          value: elements,
-          index: index,
-          total: elements.length
-        });
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: index,
-          total: added.length
-        });
-      }
-
-      if (elements.length > 0 || added.length > 0) {
-        this.dispatchChangeEvent();
-      }
-
-      if (this.includes(this.selectedItem.value)) {
-        this.updateSelectedIndex();
-      } else {
-        this.selectedItem.value = null;
-      }
-
-      return elements;
-    }
-  }, {
-    key: "remove",
-    value: function remove(element) {
-      var index = this.indexOf(element);
-
-      if (index != -1) {
-        this.splice(index, 1);
-      }
-    }
-  }, {
-    key: "unshift",
-    value: function unshift() {
-      var length = this._value.unshift.apply(this._value, arguments);
-
-      this.length.value = length;
-      var added = [];
-
-      for (var i = 0; i < arguments.length; i++) {
-        added.push(arguments[i]);
-      }
-
-      for (var _i4 = 0; _i4 < added.length; _i4++) {
-        var item = added[_i4];
-
-        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (added.length > 0) {
-        this.dispatchEvent({
-          type: "add",
-          value: added,
-          index: 0,
-          total: arguments.length
-        });
-        this.dispatchChangeEvent();
-      }
-
-      this.updateSelectedIndex();
-      return length;
-    }
-  }, {
-    key: "dispatchChangeEvent",
-    value: function dispatchChangeEvent() {
-      this.dataItemChangeHandler(null);
-      this.dispatchEvent({
-        type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-        value: this._value
-      });
-    }
-  }, {
-    key: "includes",
-    value: function includes(element) {
-      var index = this.indexOf(element);
-      return index != -1;
-    }
-  }, {
-    key: "join",
-    value: function join() {
-      return this._value.join.apply(this._value, arguments);
-    }
-  }, {
-    key: "concat",
-    value: function concat() {
-      return this._value.concat.apply(this._value, arguments);
-    }
-  }, {
-    key: "slice",
-    value: function slice() {
-      return this._value.slice.apply(this._value, arguments);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      var array = [];
-      this.map(function (obj) {
-        array.push(obj.serialize());
-      });
-      return array;
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(data) {
-      var _this2 = this;
-
-      var array = [];
-      data.map(function (obj) {
-        var instance = new _this2.dataClass();
-        instance.deserialize(obj);
-        array.push(instance);
-      });
-      this.value = array;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      for (var i = 0; i < this._value.length; i++) {
-        var oldItem = this._value[i];
-
-        if (oldItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          oldItem.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      if (!value) {
-        value = [];
-      }
-
-      this._value = value;
-
-      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
-        var item = this._value[_i5];
-
-        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
-        }
-      }
-
-      this.length.value = this._value.length;
-      this.dispatchEvent({
-        type: "reset",
-        value: this._value
-      });
-      this.dispatchChangeEvent();
-
-      if (this.includes(this.selectedItem.value)) {
-        this.updateSelectedIndex();
-      } else {
-        this.selectedItem.value = null;
-      }
-    }
-  }]);
-
-  return ArrayData;
-}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ UIComponent_UIComponent; });
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(3);
+var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
@@ -1445,7 +904,7 @@ var Style = __webpack_require__(17);
 var tsunami_await = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js
-var ArrayData = __webpack_require__(5);
+var ArrayData = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
 var ArrayDataOperation = __webpack_require__(16);
@@ -2304,6 +1763,547 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
 
   return UIComponent;
 }(Branch);
+
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _NumberData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var ArrayData = /*#__PURE__*/function (_Data) {
+  _inherits(ArrayData, _Data);
+
+  var _super = _createSuper(ArrayData);
+
+  _createClass(ArrayData, null, [{
+    key: "shuffle",
+    value: function shuffle(o) {
+      for (var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x) {
+        ;
+      }
+
+      return o;
+    }
+  }, {
+    key: "nodeListToArray",
+    value: function nodeListToArray(nodeList) {
+      return Array.prototype.slice.call(nodeList); // let array = new Array();
+      // for (let i = 0; i < nodeList.length; i++) {
+      // 	array.push(nodeList.item(i));
+      // }
+      // return array;
+    }
+  }, {
+    key: "ITEM_CHANGE",
+    get: function get() {
+      return "item-change";
+    }
+  }]);
+
+  function ArrayData() {
+    var _this;
+
+    _classCallCheck(this, ArrayData);
+
+    _this = _super.call(this);
+    _this.dataItemChangeHandler = _this.dataItemChangeHandler.bind(_assertThisInitialized(_this));
+    _this.selectedItemChange = _this.selectedItemChange.bind(_assertThisInitialized(_this));
+    _this.selectedIndexChange = _this.selectedIndexChange.bind(_assertThisInitialized(_this));
+    _this.lastIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    _this.length = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+
+    _this.length.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, function () {
+      _this.lastIndex.value = _this.length.value - 1;
+    });
+
+    _this.length.value = arguments.length;
+    _this._value = [];
+    _this.selectedItem = new _ObjectData__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"]();
+
+    _this.selectedItem.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, _this.selectedItemChange);
+
+    _this.selectedIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+
+    _this.selectedIndex.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, _this.selectedIndexChange);
+
+    _this.nextIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    _this.prevIndex = new _NumberData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    _this.dataClass = Object;
+
+    _this.push.apply(_assertThisInitialized(_this), arguments);
+
+    return _this;
+  }
+
+  _createClass(ArrayData, [{
+    key: "selectedItemChange",
+    value: function selectedItemChange(event) {
+      this.updateSelectedIndex();
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "updateSelectedIndex",
+    value: function updateSelectedIndex() {
+      this.selectedIndex.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedIndexChange);
+      var index = this.value.indexOf(this.selectedItem.value);
+      this.selectedIndex.value = index;
+      this.selectedIndex.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedIndexChange);
+    }
+  }, {
+    key: "setSelectedData",
+    value: function setSelectedData(value) {
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          this.previousSelectedItem.isSelectedItem.value = false;
+        }
+      }
+
+      if (this.selectedData) {
+        this.selectedData.copy(value);
+      }
+
+      this.previousSelectedItem = value;
+
+      if (this.previousSelectedItem) {
+        if (this.previousSelectedItem.isSelectedItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          this.previousSelectedItem.isSelectedItem.value = true;
+        }
+      }
+
+      var index = this.selectedIndex.value;
+      var nextIndex = index + 1;
+
+      if (nextIndex > this.value.length - 1) {
+        nextIndex = 0;
+      }
+
+      this.nextIndex.value = nextIndex;
+
+      if (this.nextData) {
+        this.nextData.copy(this.value[this.nextIndex.value]);
+      }
+
+      var prevIndex = index - 1;
+
+      if (prevIndex < 0) {
+        prevIndex = this.value.length - 1;
+      }
+
+      this.prevIndex.value = prevIndex;
+
+      if (this.prevData) {
+        this.prevData.copy(this.value[this.prevIndex.value]);
+      }
+    }
+  }, {
+    key: "selectedIndexChange",
+    value: function selectedIndexChange(event) {
+      var index = this.selectedIndex.value;
+      this.selectedItem.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedItemChange);
+      this.selectedItem.value = this.value[index];
+      this.selectedItem.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.selectedItemChange);
+      this.setSelectedData(this.selectedItem.value);
+    }
+  }, {
+    key: "dataItemChangeHandler",
+    value: function dataItemChangeHandler(e) {
+      var event = new _events__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"](ArrayData.ITEM_CHANGE, this.value);
+      this.dispatchEvent(event);
+    }
+  }, {
+    key: "item",
+    value: function item(index) {
+      return this._value[index];
+    }
+  }, {
+    key: "indexOf",
+    value: function indexOf(searchElement, fromIndex) {
+      return this._value.indexOf(searchElement, fromIndex);
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      return this._value.map(callback);
+    }
+  }, {
+    key: "find",
+    value: function find(callback) {
+      return this._value.find(callback);
+    }
+  }, {
+    key: "findByKey",
+    value: function findByKey(key, value) {
+      var selected = this.find(function (element) {
+        return element[key].toString() == value.toString();
+      });
+      return selected;
+    }
+  }, {
+    key: "filter",
+    value: function filter(callback) {
+      return this._value.filter(callback);
+    }
+  }, {
+    key: "pop",
+    value: function pop() {
+      var item = this._value.pop();
+
+      if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+        item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: this.value.length,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+
+      if (item == this.selectedItem.value) {
+        this.selectedItem.value = null;
+      } else {
+        this.updateSelectedIndex();
+      }
+
+      return item;
+    }
+  }, {
+    key: "push",
+    value: function push() {
+      var previousLength = this.value.length;
+
+      var length = this._value.push.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i = 0; _i < added.length; _i++) {
+        var item = added[_i];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: previousLength,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      return length;
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._value.reverse();
+
+      this.dispatchEvent({
+        type: "reverse",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+      this.updateSelectedIndex();
+    }
+  }, {
+    key: "shift",
+    value: function shift() {
+      var item = this._value.shift();
+
+      if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+        item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "remove",
+        value: [item],
+        index: 0,
+        total: 1
+      });
+      this.dispatchChangeEvent();
+
+      if (item == this.selectedItem.value) {
+        this.selectedItem.value = null;
+      } else {
+        this.updateSelectedIndex();
+      }
+
+      return item;
+    }
+  }, {
+    key: "swap",
+    value: function swap(index_A, index_B) {
+      var temp = this._value[index_A];
+      this._value[index_A] = this._value[index_B];
+      this._value[index_B] = temp;
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+      this.updateSelectedIndex();
+    }
+  }, {
+    key: "sort",
+    value: function sort(compareFunction) {
+      this._value.sort(compareFunction);
+
+      this.dispatchEvent({
+        type: "sort",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+      this.updateSelectedIndex();
+    }
+  }, {
+    key: "splice",
+    value: function splice() {
+      var elements = this._value.splice.apply(this._value, arguments);
+
+      for (var i = 0; i < elements.length; i++) {
+        var item = elements[i];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var added = [];
+
+      for (var _i2 = 2; _i2 < arguments.length; _i2++) {
+        added.push(arguments[_i2]);
+      }
+
+      this.length.value = this._value.length;
+
+      for (var _i3 = 0; _i3 < added.length; _i3++) {
+        var _item = added[_i3];
+
+        if (_item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          _item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      var index = arguments[0];
+
+      if (elements.length > 0) {
+        this.dispatchEvent({
+          type: "remove",
+          value: elements,
+          index: index,
+          total: elements.length
+        });
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: index,
+          total: added.length
+        });
+      }
+
+      if (elements.length > 0 || added.length > 0) {
+        this.dispatchChangeEvent();
+      }
+
+      if (this.includes(this.selectedItem.value)) {
+        this.updateSelectedIndex();
+      } else {
+        this.selectedItem.value = null;
+      }
+
+      return elements;
+    }
+  }, {
+    key: "remove",
+    value: function remove(element) {
+      var index = this.indexOf(element);
+
+      if (index != -1) {
+        this.splice(index, 1);
+      }
+    }
+  }, {
+    key: "unshift",
+    value: function unshift() {
+      var length = this._value.unshift.apply(this._value, arguments);
+
+      this.length.value = length;
+      var added = [];
+
+      for (var i = 0; i < arguments.length; i++) {
+        added.push(arguments[i]);
+      }
+
+      for (var _i4 = 0; _i4 < added.length; _i4++) {
+        var item = added[_i4];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (added.length > 0) {
+        this.dispatchEvent({
+          type: "add",
+          value: added,
+          index: 0,
+          total: arguments.length
+        });
+        this.dispatchChangeEvent();
+      }
+
+      this.updateSelectedIndex();
+      return length;
+    }
+  }, {
+    key: "dispatchChangeEvent",
+    value: function dispatchChangeEvent() {
+      this.dataItemChangeHandler(null);
+      this.dispatchEvent({
+        type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+        value: this._value
+      });
+    }
+  }, {
+    key: "includes",
+    value: function includes(element) {
+      var index = this.indexOf(element);
+      return index != -1;
+    }
+  }, {
+    key: "join",
+    value: function join() {
+      return this._value.join.apply(this._value, arguments);
+    }
+  }, {
+    key: "concat",
+    value: function concat() {
+      return this._value.concat.apply(this._value, arguments);
+    }
+  }, {
+    key: "slice",
+    value: function slice() {
+      return this._value.slice.apply(this._value, arguments);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      var array = [];
+      this.map(function (obj) {
+        array.push(obj.serialize());
+      });
+      return array;
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(data) {
+      var _this2 = this;
+
+      var array = [];
+      data.map(function (obj) {
+        var instance = new _this2.dataClass();
+        instance.deserialize(obj);
+        array.push(instance);
+      });
+      this.value = array;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      for (var i = 0; i < this._value.length; i++) {
+        var oldItem = this._value[i];
+
+        if (oldItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          oldItem.removeEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      if (!value) {
+        value = [];
+      }
+
+      this._value = value;
+
+      for (var _i5 = 0; _i5 < this._value.length; _i5++) {
+        var item = this._value[_i5];
+
+        if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+          item.addEventListener(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE, this.dataItemChangeHandler);
+        }
+      }
+
+      this.length.value = this._value.length;
+      this.dispatchEvent({
+        type: "reset",
+        value: this._value
+      });
+      this.dispatchChangeEvent();
+
+      if (this.includes(this.selectedItem.value)) {
+        this.updateSelectedIndex();
+      } else {
+        this.selectedItem.value = null;
+      }
+    }
+  }]);
+
+  return ArrayData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
 
 
 
@@ -3769,9 +3769,9 @@ var Validation = /*#__PURE__*/function (_BooleanData) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIButton; });
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _UIComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _UIComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3994,9 +3994,9 @@ var ObjectData = /*#__PURE__*/function (_Data) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayDataOperation; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
-/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
+/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
 /* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4766,27 +4766,25 @@ module.exports = __webpack_require__(20);
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./js/tsunami/tsunami.js
-var tsunami = __webpack_require__(3);
+var tsunami = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./js/tsunami/components/UIComponent.js + 3 modules
-var UIComponent = __webpack_require__(6);
+var UIComponent = __webpack_require__(5);
 
-// CONCATENATED MODULE: ./templates/easing.html
-/* harmony default export */ var templates_easing = ("<div class=\"sc-fields-list\" is=\"ui-component\">\n    <div class=\"sc-field-group\">\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n        </div>\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n        </div>\n    </div>\n    <div class=\"sc-field-group\" is=\"ui-component\">\n        <div class=\"sc-field\" is=\"ui-component\">\n            <span class=\"sc-label\">Easing:</span>\n            <div is=\"ui-component\" class=\"easing-graph-container\">\n                <div is=\"easing-graph\" data-model=\"data.cubicBezierPoints\">\n                    <!-- <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div> -->\n                    <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n                    <div is=\"control-point-lines\" is=\"ui-list\">\n                        <template>\n                            <div is=\"control-point-line\" data-model=\"data\"></div>\n                        </template>\n                    </div>\n                    <div class=\"control-points\" is=\"easing-graph-control-points\">\n                        <template>\n                            <div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n                                <span class=\"shape\">\n                                    <span class=\"shape-label\" is=\"ui-text\">[[index1]]</span>\n                                </span>\n                            </div>\n                        </template>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"sc-field-column\">\n            <div class=\"sc-field\">\n                <div class=\"sc-select\">\n                    <select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n                </div>\n            </div>\n            <div class=\"sc-field\">\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.x\" is=\"ui-input\"/>\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.y\" is=\"ui-input\"/>\n            </div>\n            <div class=\"sc-field\">\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.x\" is=\"ui-input\"/>\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.y\" is=\"ui-input\"/>\n            </div>\n        </div>\n    </div>\n</div>\n");
-// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
-var NumberData = __webpack_require__(4);
+// EXTERNAL MODULE: ./js/tsunami/components/Style.js
+var Style = __webpack_require__(17);
 
-// EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js
-var ArrayData = __webpack_require__(5);
+// EXTERNAL MODULE: ./js/tsunami/events.js
+var events = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
 var Point = __webpack_require__(1);
 
+// EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js
+var ArrayData = __webpack_require__(6);
+
 // EXTERNAL MODULE: ./js/tsunami/data/Data.js
 var Data = __webpack_require__(0);
-
-// EXTERNAL MODULE: ./js/tsunami/events.js
-var events = __webpack_require__(2);
 
 // CONCATENATED MODULE: ./js/tsunami/Scope.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6085,6 +6083,11 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
+// CONCATENATED MODULE: ./templates/easing.html
+/* harmony default export */ var templates_easing = ("<div class=\"sc-fields-list\" is=\"ui-component\">\n    <div class=\"sc-field-group\">\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Duration:</span><input type=\"number\" step=\"0.25\" data-model=\"data.duration\" is=\"ui-input\"/>\n        </div>\n        <div class=\"sc-field\">\n            <span class=\"sc-label\">Delay:</span><input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\"/>\n        </div>\n    </div>\n    <div class=\"sc-field-group\" is=\"ui-component\">\n        <div class=\"sc-field\" is=\"ui-component\">\n            <span class=\"sc-label\">Easing:</span>\n            <div is=\"ui-component\" class=\"easing-graph-container\">\n                <div is=\"easing-graph\" data-model=\"data.cubicBezierPoints\">\n                    <!-- <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline class=\"js\" is=\"easing-graph-curve\" data-model=\"data.debugEasing\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points js\" is=\"easing-graph-points\" data-model=\"data.debugEasing\"></div> -->\n                    <svg class=\"curve\" x=\"0px\" y=\"0px\" preserveAspectRatio=\"none\" viewBox=\"0 0 200 200\">\n                        <g>\n                            <polyline is=\"easing-graph-curve\" data-model=\"data.easingMethod\" points=\"\"></polyline>\n                        </g>\n                    </svg>\n                    <div class=\"points\" is=\"easing-graph-points\" data-model=\"data.easingMethod\"></div>\n                    <div is=\"control-point-lines\" is=\"ui-list\">\n                        <template>\n                            <div is=\"control-point-line\" data-model=\"data\"></div>\n                        </template>\n                    </div>\n                    <div class=\"control-points\" is=\"easing-graph-control-points\">\n                        <template>\n                            <div class=\"control-point\" is=\"ui-component\" data-model=\"data\" style=\"left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)\">\n                                <span class=\"shape\">\n                                    <span class=\"shape-label\" is=\"ui-text\">[[index1]]</span>\n                                </span>\n                            </div>\n                        </template>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"sc-field-column\">\n            <div class=\"sc-field\">\n                <div class=\"sc-select\">\n                    <select data-provider=\"data.easingPresets\" data-model=\"data.easingPresets.selectedItem\" is=\"ui-select\"></select>\n                </div>\n            </div>\n            <div class=\"sc-field\">\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.x\" is=\"ui-input\"/>\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p1.y\" is=\"ui-input\"/>\n            </div>\n            <div class=\"sc-field\">\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.x\" is=\"ui-input\"/>\n                <input type=\"number\" step=\"0.005\" data-model=\"data.cubicBezierPoints.p2.y\" is=\"ui-input\"/>\n            </div>\n        </div>\n    </div>\n</div>\n");
+// EXTERNAL MODULE: ./js/tsunami/data/NumberData.js
+var NumberData = __webpack_require__(4);
+
 // CONCATENATED MODULE: ./js/view/EasingGraph.js
 function EasingGraph_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { EasingGraph_typeof = function _typeof(obj) { return typeof obj; }; } else { EasingGraph_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return EasingGraph_typeof(obj); }
 
@@ -6496,9 +6499,6 @@ var ActionView_ActionView = /*#__PURE__*/function (_UIComponent) {
 
 
 tsunami["a" /* define */]("action-tween", ActionTweenView_ActionTweenView);
-// EXTERNAL MODULE: ./js/tsunami/components/Style.js
-var Style = __webpack_require__(17);
-
 // CONCATENATED MODULE: ./js/view/ActionsView.js
 function ActionsView_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionsView_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionsView_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionsView_typeof(obj); }
 
@@ -6595,7 +6595,7 @@ var ActionsView_ActionsView = /*#__PURE__*/function (_UIList) {
 
 tsunami["a" /* define */]("action-view", ActionView_ActionView);
 // CONCATENATED MODULE: ./templates/scroll-capture.html
-/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t<!-- <svg class=\"sc-icon\" x=\"0px\" y=\"0px\" viewBox=\"0 0 55 133\">\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"14.5\" r=\"14.5\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"53.26\" r=\"20\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"105.38\" r=\"27.5\" />\n\t\t\t\t\t</svg> -->\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\n\t\t\t<sc-video class=\"sc-default\">\n\t\t\t\t<div class=\"sc-fields\">\n\t\t\t\t\t<div class=\"sc-iframe\">\n\t\t\t\t\t\t<div class=\"sc-iframe-container\">\n\t\t\t\t\t\t\t<iframe class=\"sc-video-iframe\"></iframe>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</sc-video>\n\n\t\t\t<sc-scenario class=\"sc-section sc-default\">\n\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\n\t\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t<!-- <button class=\"sc-test-button\" is=\"ui-button\" data-click=\"playSelectedAction\" data-is-playing=\"[[selectedActionIsPlaying]]\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t</button> -->\n\t\t\t\t\t\t<button class=\"sc-play-all-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<button class=\"sc-capture-video-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button sc-delete-action-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!--\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t-->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tis=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</action-view>\n\t\t\t\t\t\t</template>\n\t\t\t\t\t</actions-view>\n\n\t\t\t\t\t<sc-select-action>\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Actions:</span>\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<button class=\"sc-add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</sc-select-action>\n\n\t\t\t\t</div>\n\t\t\t</sc-scenario>\n\n\t\t</div>\n\t</div>\n</div>");
+/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t\t<!-- <svg class=\"sc-icon\" x=\"0px\" y=\"0px\" viewBox=\"0 0 55 133\">\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"14.5\" r=\"14.5\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"53.26\" r=\"20\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"105.38\" r=\"27.5\" />\n\t\t\t\t\t</svg> -->\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t\t<div class=\"sc-tab\">\n\t\t\t\t<button class=\"sc-close-button\" is=\"router-button\" data-path=\"\"></button>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<sc-window-content-main class=\"sc-window-content\">\n\n\t\t\t<sc-sections class=\"sc-default\">\n\n\t\t\t\t<sc-video class=\"sc-fields\">\n\t\t\t\t\t<div class=\"sc-iframe\">\n\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t</div>\n\t\t\t\t</sc-video>\n\t\t\t\t\n\t\t\t\t<sc-scenario class=\"sc-fields\">\n\n\t\t\t\t\t<div class=\"sc-controls\" is=\"ui-component\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t<!-- <button class=\"sc-test-button\" is=\"ui-button\" data-click=\"playSelectedAction\" data-is-playing=\"[[selectedActionIsPlaying]]\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t</button> -->\n\t\t\t\t\t\t<button class=\"sc-play-all-button\" is=\"ui-button\" data-click=\"play\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<button class=\"sc-capture-video-button\" is=\"ui-button\" data-click=\"playAndCapture\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"clear\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Clear</span>\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</div>\n\n\t\t\t\t\t<actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t<action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-capture-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button sc-delete-action-button\" data-model=\"data\" is=\"ui-button\"></button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!--\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t-->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tis=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</action-view>\n\t\t\t\t\t\t</template>\n\t\t\t\t\t</actions-view>\n\n\t\t\t\t\t<sc-select-action>\n\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t<span class=\"sc-label\">Actions:</span>\n\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t<select is=\"ui-select\" data-valuePath=\"type\" data-provider=\"actions.types\"\n\t\t\t\t\t\t\t\t\t\tdata-model=\"actions.types.selectedItem\">\n\t\t\t\t\t\t\t\t\t\t<template data-type=\"*\">\n\t\t\t\t\t\t\t\t\t\t\t<option is=\"ui-text\" value=\"[[data.type]]\" data-model=\"data.name\"></option>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<button class=\"sc-add-button\" is=\"ui-button\" data-click=\"actions.addSelectedType\"></button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</sc-select-action>\n\n\t\t\t\t</sc-scenario>\n\n\t\t\t</sc-sections>\n\n\t\t</sc-window-content-main>\n\t</div>\n</div>");
 // CONCATENATED MODULE: ./js/view/Section.js
 function Section_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Section_typeof = function _typeof(obj) { return typeof obj; }; } else { Section_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Section_typeof(obj); }
 
@@ -6640,13 +6640,13 @@ var Section_Section = /*#__PURE__*/function (_UIComponent) {
   Section_createClass(Section, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      app.scrollCapture.windowContent.component.appendChild(this.element);
+      app.scrollCapture.windowContent.sections.appendChild(this.element);
       return Section_get(Section_getPrototypeOf(Section.prototype), "showDelayComplete", this).call(this);
     }
   }, {
     key: "hideComplete",
     value: function hideComplete() {
-      app.scrollCapture.windowContent.component.removeChild(this.element);
+      app.scrollCapture.windowContent.sections.removeChild(this.element);
       return Section_get(Section_getPrototypeOf(Section.prototype), "hideComplete", this).call(this);
     }
   }]);
@@ -6667,10 +6667,6 @@ function SectionVideo_defineProperties(target, props) { for (var i = 0; i < prop
 
 function SectionVideo_createClass(Constructor, protoProps, staticProps) { if (protoProps) SectionVideo_defineProperties(Constructor.prototype, protoProps); if (staticProps) SectionVideo_defineProperties(Constructor, staticProps); return Constructor; }
 
-function SectionVideo_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { SectionVideo_get = Reflect.get; } else { SectionVideo_get = function _get(target, property, receiver) { var base = SectionVideo_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return SectionVideo_get(target, property, receiver || target); }
-
-function SectionVideo_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = SectionVideo_getPrototypeOf(object); if (object === null) break; } return object; }
-
 function SectionVideo_createSuper(Derived) { return function () { var Super = SectionVideo_getPrototypeOf(Derived), result; if (SectionVideo_isNativeReflectConstruct()) { var NewTarget = SectionVideo_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SectionVideo_possibleConstructorReturn(this, result); }; }
 
 function SectionVideo_possibleConstructorReturn(self, call) { if (call && (SectionVideo_typeof(call) === "object" || typeof call === "function")) { return call; } return SectionVideo_assertThisInitialized(self); }
@@ -6690,7 +6686,7 @@ function SectionVideo_setPrototypeOf(o, p) { SectionVideo_setPrototypeOf = Objec
 
 
 
-var SectionVideo_SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
+var SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
   SectionVideo_inherits(SectionVideo, _ScrollCaptureSection);
 
   var _super = SectionVideo_createSuper(SectionVideo);
@@ -6701,57 +6697,156 @@ var SectionVideo_SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
     SectionVideo_classCallCheck(this, SectionVideo);
 
     _this = _super.call(this, element);
-    _this.iframeContainer = _this.element.querySelector(".sc-iframe-container");
-    _this.iframe = _this.iframeContainer.querySelector("iframe");
+    _this.iframe = _this.element.querySelector("iframe");
     _this.iframe.src = chrome.extension.getURL('video-recording.html');
-
-    _this.iframeContainer.removeChild(_this.iframe);
-
-    _this.iframeOffset = new Point["a" /* default */]();
+    chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+      switch (msg.txt) {
+        case "scrollCaptureVideoHeigth":
+          _this.frameHeight = msg.height;
+          break;
+      }
+    });
     return _this;
   }
 
   SectionVideo_createClass(SectionVideo, [{
-    key: "iframePositionUpdate",
-    value: function iframePositionUpdate() {
-      this.iframe.style.right = app.scrollCapture.style.right + this.iframeOffset.x + "px";
-      this.iframe.style.top = app.scrollCapture.style.top + this.iframeOffset.y + "px";
-    }
-  }, {
-    key: "windowResize",
-    value: function windowResize(windowSize) {
-      SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "windowResize", this).call(this, windowSize);
-
-      this.iframe.style.width = this.iframeContainer.offsetWidth + "px";
-      this.iframeOffset = Object(tsunami_window["b" /* localToGlobal */])(this.iframeContainer, app.scrollCapture.element);
-    }
-  }, {
-    key: "showDelayComplete",
-    value: function showDelayComplete() {
-      app.scrollCapture.windowContent.component.appendChild(this.element);
-      this.iframePositionUpdate();
-      document.body.appendChild(this.iframe);
-      return SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "showDelayComplete", this).call(this);
-    }
-  }, {
-    key: "hideComplete",
-    value: function hideComplete() {
-      document.body.removeChild(this.iframe);
-      app.scrollCapture.windowContent.component.removeChild(this.element);
-      return SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "hideComplete", this).call(this);
-    }
-  }, {
-    key: "contentHeight",
+    key: "frameHeight",
     set: function set(value) {
-      this.iframeContainer.style.height = value + "px";
       this.iframe.style.height = value + "px";
-    }
+    } // iframePositionUpdate() {
+    //     this.iframe.style.right = app.scrollCapture.style.right + this.iframeOffset.x + "px";
+    //     this.iframe.style.top = app.scrollCapture.style.top + this.iframeOffset.y + "px";
+    // }
+    // windowResize(windowSize) {
+    //     super.windowResize(windowSize);
+    //     this.iframe.style.width = this.iframeContainer.offsetWidth + "px";
+    //     this.iframeOffset = localToGlobal(this.iframeContainer, app.scrollCapture.element);
+    // }
+    // showDelayComplete() {
+    //     app.scrollCapture.windowContent.component.appendChild(this.element);
+    //     this.iframePositionUpdate();
+    //     document.body.appendChild(this.iframe);
+    //     return super.showDelayComplete();
+    // }
+    // hideComplete() {
+    //     document.body.removeChild(this.iframe);
+    //     app.scrollCapture.windowContent.component.removeChild(this.element);
+    //     return super.hideComplete();
+    // }
+
   }]);
 
   return SectionVideo;
 }(Section_Section);
 
 
+// CONCATENATED MODULE: ./js/view/Sections.js
+function Sections_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Sections_typeof = function _typeof(obj) { return typeof obj; }; } else { Sections_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Sections_typeof(obj); }
+
+function Sections_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Sections_createSuper(Derived) { return function () { var Super = Sections_getPrototypeOf(Derived), result; if (Sections_isNativeReflectConstruct()) { var NewTarget = Sections_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return Sections_possibleConstructorReturn(this, result); }; }
+
+function Sections_possibleConstructorReturn(self, call) { if (call && (Sections_typeof(call) === "object" || typeof call === "function")) { return call; } return Sections_assertThisInitialized(self); }
+
+function Sections_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function Sections_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function Sections_getPrototypeOf(o) { Sections_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return Sections_getPrototypeOf(o); }
+
+function Sections_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Sections_setPrototypeOf(subClass, superClass); }
+
+function Sections_setPrototypeOf(o, p) { Sections_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Sections_setPrototypeOf(o, p); }
+
+
+
+
+
+
+var Sections = /*#__PURE__*/function (_UIComponent) {
+  Sections_inherits(Sections, _UIComponent);
+
+  var _super = Sections_createSuper(Sections);
+
+  function Sections(element) {
+    var _this;
+
+    Sections_classCallCheck(this, Sections);
+
+    _this = _super.call(this, element);
+    _this.scenario = _this.element.querySelector("sc-scenario").component;
+
+    _this.removeChild(_this.scenario.element);
+
+    _this.video = _this.element.querySelector("sc-video").component;
+
+    _this.removeChild(_this.video.element);
+
+    return _this;
+  }
+
+  return Sections;
+}(UIComponent["a" /* default */]);
+
+
+tsunami["a" /* define */]("sc-scenario", Section_Section);
+tsunami["a" /* define */]("sc-video", SectionVideo);
+// CONCATENATED MODULE: ./js/view/WindowContentMain.js
+function WindowContentMain_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { WindowContentMain_typeof = function _typeof(obj) { return typeof obj; }; } else { WindowContentMain_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return WindowContentMain_typeof(obj); }
+
+function WindowContentMain_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function WindowContentMain_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function WindowContentMain_createClass(Constructor, protoProps, staticProps) { if (protoProps) WindowContentMain_defineProperties(Constructor.prototype, protoProps); if (staticProps) WindowContentMain_defineProperties(Constructor, staticProps); return Constructor; }
+
+function WindowContentMain_createSuper(Derived) { return function () { var Super = WindowContentMain_getPrototypeOf(Derived), result; if (WindowContentMain_isNativeReflectConstruct()) { var NewTarget = WindowContentMain_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return WindowContentMain_possibleConstructorReturn(this, result); }; }
+
+function WindowContentMain_possibleConstructorReturn(self, call) { if (call && (WindowContentMain_typeof(call) === "object" || typeof call === "function")) { return call; } return WindowContentMain_assertThisInitialized(self); }
+
+function WindowContentMain_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function WindowContentMain_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function WindowContentMain_getPrototypeOf(o) { WindowContentMain_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return WindowContentMain_getPrototypeOf(o); }
+
+function WindowContentMain_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) WindowContentMain_setPrototypeOf(subClass, superClass); }
+
+function WindowContentMain_setPrototypeOf(o, p) { WindowContentMain_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return WindowContentMain_setPrototypeOf(o, p); }
+
+
+
+
+
+var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
+  WindowContentMain_inherits(WindowContentMain, _UIComponent);
+
+  var _super = WindowContentMain_createSuper(WindowContentMain);
+
+  function WindowContentMain(element) {
+    var _this;
+
+    WindowContentMain_classCallCheck(this, WindowContentMain);
+
+    _this = _super.call(this, element);
+    _this.sections = _this.element.querySelector("sc-sections").component;
+    _this._children = [_this.sections.element];
+    return _this;
+  }
+
+  WindowContentMain_createClass(WindowContentMain, [{
+    key: "children",
+    get: function get() {
+      return this._children;
+    }
+  }]);
+
+  return WindowContentMain;
+}(UIComponent["a" /* default */]);
+
+
+tsunami["a" /* define */]("sc-sections", Sections);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
@@ -6789,8 +6884,6 @@ function ScrollCapture_setPrototypeOf(o, p) { ScrollCapture_setPrototypeOf = Obj
 
 
 
-
-
 var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
   ScrollCapture_inherits(ScrollCapture, _UIComponent);
 
@@ -6812,21 +6905,16 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
     var dragArea = _this.element.querySelector("* > .sc-window .sc-drag-area");
 
     dragArea.addEventListener(events["b" /* events */].mousedown, _this.dragStart);
-    _this.windowContent = _this.element.querySelector(".sc-window-content");
-    _this.scenario = _this.element.querySelector("sc-scenario");
-    _this.branches["scenario"] = _this.scenario.component;
-
-    _this.windowContent.component.removeChild(_this.scenario);
-
-    _this.video = _this.element.querySelector("sc-video");
-    _this.branches["video"] = _this.video.component;
-
-    _this.windowContent.component.removeChild(_this.video);
-
+    _this.windowContent = _this.element.querySelector(".sc-window-content").component;
+    _this.branches["scenario"] = _this.windowContent.sections.scenario;
+    _this.branches["video"] = _this.windowContent.sections.video;
     return _this;
   }
 
   ScrollCapture_createClass(ScrollCapture, [{
+    key: "windowResize",
+    value: function windowResize() {}
+  }, {
     key: "showDelayComplete",
     value: function showDelayComplete() {
       app.appendChild(this.element);
@@ -6853,8 +6941,7 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
       var point = this.getTouchPoint(event);
       var diff = this.startPoint.subtract(point);
       this.style.right = this.startPosition.x + diff.x;
-      this.style.top = this.startPosition.y - diff.y;
-      this.video.component.iframePositionUpdate();
+      this.style.top = this.startPosition.y - diff.y; // this.video.component.iframePositionUpdate();
     }
   }, {
     key: "dragEnd",
@@ -6886,8 +6973,7 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
 
 ScrollCapture_ScrollCapture.template = scroll_capture;
 tsunami["a" /* define */]("actions-view", ActionsView_ActionsView);
-tsunami["a" /* define */]("sc-scenario", Section_Section);
-tsunami["a" /* define */]("sc-video", SectionVideo_SectionVideo);
+tsunami["a" /* define */]("sc-window-content-main", WindowContentMain);
 // EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
 var UIButton = __webpack_require__(14);
 
@@ -60810,10 +60896,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         main.router.location = "scrollCapture/scenario";
       }
 
-      break;
-
-    case "scrollCaptureVideoHeigth":
-      main.scrollCapture.video.component.contentHeight = msg.height;
       break;
   }
 });
