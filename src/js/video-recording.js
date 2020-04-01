@@ -12,7 +12,7 @@ player.addEventListener('canplay', function () {
     chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 
-let backButton = document.querySelector(".sc-close-button");
+let backButton = document.querySelector(".sc-trash-button");
 backButton.addEventListener("click", () => {
     let msg = { txt: "scrollCaptureScenario" };
     chrome.tabs.sendMessage(page.selectedTabId, msg);

@@ -203,7 +203,7 @@ function _setStream(stream) {
     }
   }
 
-  options.videoBitsPerSecond = 1024 * 1024 * 16;
+  options.videoBitsPerSecond = 1024 * 1024 * 8;
 
   try {
     mediaRecorder = new MediaRecorder(mediaStream, options);
