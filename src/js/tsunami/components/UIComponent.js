@@ -503,6 +503,10 @@ export default class UIComponent extends Branch {
 		}
 		return new Point(touch.pageX, touch.pageY);
 	}
+	
+	dispatchResizeEvent() {
+		this.element.dispatchEvent(new Event("ui-resize", { bubbles: true, cancelable: true }));
+	}
 
 	// static callElementAdded (element) {
     // 	let component = element.component;

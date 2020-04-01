@@ -29,17 +29,20 @@ export default class ScrollCapture extends UIComponent {
 		this.branches["video"] = this.windowContent.sections.video;
 	}
 
-	windowResize() {
-
+	windowResize(windowSize) {
+		super.windowResize(windowSize);
+		this.move(this.style.right, this.style.top);
 	}
-
+	
 	showDelayComplete() {
 		app.appendChild(this.element);
+		app.appendChild(this.windowContent.sections.element);
 		return super.showDelayComplete();
 	}
 
 	hideComplete() {
 		app.removeChild(this.element);
+		app.removeChild(this.windowContent.sections.element);
 		return super.hideComplete();
 	}
 
@@ -54,9 +57,7 @@ export default class ScrollCapture extends UIComponent {
 	dragMove(event) {
 		let point = this.getTouchPoint(event);
 		let diff = this.startPoint.subtract(point);
-		this.style.right = this.startPosition.x + diff.x;
-		this.style.top = this.startPosition.y - diff.y;
-		// this.video.component.iframePositionUpdate();
+		this.move(this.startPosition.x + diff.x, this.startPosition.y - diff.y);
 	}
 
 	dragEnd(event) {
@@ -65,9 +66,15 @@ export default class ScrollCapture extends UIComponent {
 		app.save();
 	}
 
+	move(x, y) {
+		this.style.right = x;
+		this.style.top = y;
+		this.windowContent.sections.style.right = x + this.windowContent.position.x;
+		this.windowContent.sections.style.top = y + this.windowContent.position.y;
+	}
+
 	deserialize(obj) {
-		this.style.right = obj.right;
-		this.style.top = obj.top;
+		this.move(obj.right, obj.top);
 	}
 
 	serialize() {

@@ -898,7 +898,7 @@ var Attribute_Attribute = /*#__PURE__*/function () {
 
 
 // EXTERNAL MODULE: ./js/tsunami/components/Style.js
-var Style = __webpack_require__(17);
+var Style = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
 var tsunami_await = __webpack_require__(12);
@@ -907,7 +907,7 @@ var tsunami_await = __webpack_require__(12);
 var ArrayData = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
-var ArrayDataOperation = __webpack_require__(16);
+var ArrayDataOperation = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
 var Rectangle = __webpack_require__(11);
@@ -1565,6 +1565,14 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
       }
 
       return new Point["a" /* default */](touch.pageX, touch.pageY);
+    }
+  }, {
+    key: "dispatchResizeEvent",
+    value: function dispatchResizeEvent() {
+      this.element.dispatchEvent(new Event("ui-resize", {
+        bubbles: true,
+        cancelable: true
+      }));
     } // static callElementAdded (element) {
     // 	let component = element.component;
     // 	if (component) {
@@ -1774,7 +1782,7 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var _NumberData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
+/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3885,356 +3893,6 @@ var UIButton = /*#__PURE__*/function (_UIComponent) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ObjectData; });
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var ObjectData = /*#__PURE__*/function (_Data) {
-  _inherits(ObjectData, _Data);
-
-  var _super = _createSuper(ObjectData);
-
-  function ObjectData(value) {
-    var _this;
-
-    _classCallCheck(this, ObjectData);
-
-    _this = _super.call(this);
-    _this.value = value;
-    _this.forceChangeEvent = false;
-    return _this;
-  }
-
-  _createClass(ObjectData, [{
-    key: "toString",
-    value: function toString() {
-      return this.value.toString();
-    }
-  }, {
-    key: "_deselectValue",
-    value: function _deselectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof _BooleanData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-            data.isSelected.value = false;
-          }
-        }
-      }
-    }
-  }, {
-    key: "_selectValue",
-    value: function _selectValue(data) {
-      if (data) {
-        if (data.isSelected) {
-          if (data.isSelected instanceof _BooleanData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-            data.isSelected.value = true;
-          }
-        }
-      }
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      if (value != this._value) {
-        this._deselectValue(this._value);
-
-        this._value = value;
-
-        this._selectValue(this._value);
-
-        this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-          value: this._value
-        });
-      } else if (this.forceChangeEvent) {
-        this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }]);
-
-  return ObjectData;
-}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayDataOperation; });
-/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
-/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
-/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-
-
-var ArrayDataOperation = /*#__PURE__*/function (_Data) {
-  _inherits(ArrayDataOperation, _Data);
-
-  var _super = _createSuper(ArrayDataOperation);
-
-  function ArrayDataOperation() {
-    var _this;
-
-    var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ArrayDataOperation.ADD;
-    var arrayData = arguments.length > 1 ? arguments[1] : undefined;
-    var modifiers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-    _classCallCheck(this, ArrayDataOperation);
-
-    _this = _super.call(this);
-
-    if (!arrayData) {
-      arrayData = new _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-    }
-
-    _this.modifiers = modifiers;
-    _this.itemChangeHandler = _this.itemChangeHandler.bind(_assertThisInitialized(_this));
-    _this.operation = operation;
-    _this.arrayData = arrayData;
-    return _this;
-  }
-
-  _createClass(ArrayDataOperation, [{
-    key: "itemChangeHandler",
-    value: function itemChangeHandler(event) {
-      var newValue;
-      var array = this.arrayData;
-
-      if (array) {
-        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-          array = this.arrayData.value;
-        }
-
-        if (array.length > 0) {
-          var firstItem = array[0];
-          newValue = firstItem;
-
-          if (firstItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-            newValue = firstItem.value;
-          }
-
-          for (var i = 1; i < array.length; i++) {
-            var item = array[i];
-            var itemValue = item;
-
-            if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-              itemValue = item.value;
-            }
-
-            newValue = this.operation(newValue, itemValue);
-          }
-        }
-      } // if(this.debug) {
-      // 	console.log("ArrayDataOperation.itemChangeHandler newValue", newValue);
-      // }
-
-
-      this.value = newValue; // if (this._value != newValue) {
-      // 	this._value = newValue;
-      // 	this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
-      // }
-    }
-  }, {
-    key: "parseString",
-    value: function parseString(string, scope) {
-      var chunks = string.split("[[");
-      var array = [];
-
-      for (var i = 0; i < chunks.length; i++) {
-        var chunk = chunks[i];
-
-        if (chunk.indexOf("]]") == -1) {
-          array.push(chunk);
-        } else {
-          var chunkArray = chunk.split("]]");
-
-          for (var j = 0; j < chunkArray.length; j++) {
-            var chunk2 = chunkArray[j];
-
-            if (j == 0) {
-              var model = Object(_tsunami__WEBPACK_IMPORTED_MODULE_3__[/* evalProperty */ "c"])(chunk2, scope);
-              array.push(model);
-            } else {
-              array.push(chunk2);
-            }
-          }
-        }
-      }
-
-      this.arrayData.value = array;
-    }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      if (this.arrayData instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
-        this.arrayData.destroy();
-      }
-
-      this.arrayData = null;
-      this.modifiers = [];
-
-      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]) {
-        this.validation.destroy();
-      }
-
-      return _get(_getPrototypeOf(ArrayDataOperation.prototype), "destroy", this).call(this);
-    }
-  }, {
-    key: "arrayData",
-    get: function get() {
-      return this._array;
-    },
-    set: function set(value) {
-      if (this._array) {
-        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-          this._array.removeEventListener(_ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].ITEM_CHANGE, this.itemChangeHandler);
-        }
-      }
-
-      this._array = value;
-
-      if (this._array) {
-        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
-          this._array.addEventListener(_ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].ITEM_CHANGE, this.itemChangeHandler);
-        }
-      }
-
-      this.itemChangeHandler();
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      for (var i = 0; i < this.modifiers.length; i++) {
-        var modifier = this.modifiers[i];
-        value = modifier(value);
-      }
-
-      if (value != this._value) {
-        this._value = value;
-        this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-          value: this._value
-        });
-      } else if (this.forceChangeEvent) {
-        this.dispatchEvent({
-          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
-          value: this._value
-        });
-      }
-    }
-  }], [{
-    key: "ADD",
-    value: function ADD(value1, value2) {
-      return value1 + value2;
-    }
-  }, {
-    key: "ADD_TOSTRING",
-    value: function ADD_TOSTRING(value1, value2) {
-      return value1.toString() + value2.toString();
-    }
-  }, {
-    key: "SUBTRACT",
-    value: function SUBTRACT(value1, value2) {
-      return value1 - value2;
-    }
-  }, {
-    key: "MULTIPLY",
-    value: function MULTIPLY(value1, value2) {
-      return value1 * value2;
-    }
-  }, {
-    key: "DIVIDE",
-    value: function DIVIDE(value1, value2) {
-      return value1 / value2;
-    }
-  }, {
-    key: "MIN",
-    value: function MIN(value1, value2) {
-      return Math.min(value1, value2);
-    }
-  }, {
-    key: "MAX",
-    value: function MAX(value1, value2) {
-      return Math.max(value1, value2);
-    }
-  }]);
-
-  return ArrayDataOperation;
-}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Style; });
 /* unused harmony export StyleUnits */
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4623,6 +4281,356 @@ var StyleUnits = function StyleUnits() {
 };
 
 /***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ObjectData; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _BooleanData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var ObjectData = /*#__PURE__*/function (_Data) {
+  _inherits(ObjectData, _Data);
+
+  var _super = _createSuper(ObjectData);
+
+  function ObjectData(value) {
+    var _this;
+
+    _classCallCheck(this, ObjectData);
+
+    _this = _super.call(this);
+    _this.value = value;
+    _this.forceChangeEvent = false;
+    return _this;
+  }
+
+  _createClass(ObjectData, [{
+    key: "toString",
+    value: function toString() {
+      return this.value.toString();
+    }
+  }, {
+    key: "_deselectValue",
+    value: function _deselectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof _BooleanData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+            data.isSelected.value = false;
+          }
+        }
+      }
+    }
+  }, {
+    key: "_selectValue",
+    value: function _selectValue(data) {
+      if (data) {
+        if (data.isSelected) {
+          if (data.isSelected instanceof _BooleanData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+            data.isSelected.value = true;
+          }
+        }
+      }
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      if (value != this._value) {
+        this._deselectValue(this._value);
+
+        this._value = value;
+
+        this._selectValue(this._value);
+
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      } else if (this.forceChangeEvent) {
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }]);
+
+  return ObjectData;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayDataOperation; });
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony import */ var _ArrayData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _tsunami__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
+/* harmony import */ var _Validation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var ArrayDataOperation = /*#__PURE__*/function (_Data) {
+  _inherits(ArrayDataOperation, _Data);
+
+  var _super = _createSuper(ArrayDataOperation);
+
+  function ArrayDataOperation() {
+    var _this;
+
+    var operation = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ArrayDataOperation.ADD;
+    var arrayData = arguments.length > 1 ? arguments[1] : undefined;
+    var modifiers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+    _classCallCheck(this, ArrayDataOperation);
+
+    _this = _super.call(this);
+
+    if (!arrayData) {
+      arrayData = new _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
+    }
+
+    _this.modifiers = modifiers;
+    _this.itemChangeHandler = _this.itemChangeHandler.bind(_assertThisInitialized(_this));
+    _this.operation = operation;
+    _this.arrayData = arrayData;
+    return _this;
+  }
+
+  _createClass(ArrayDataOperation, [{
+    key: "itemChangeHandler",
+    value: function itemChangeHandler(event) {
+      var newValue;
+      var array = this.arrayData;
+
+      if (array) {
+        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+          array = this.arrayData.value;
+        }
+
+        if (array.length > 0) {
+          var firstItem = array[0];
+          newValue = firstItem;
+
+          if (firstItem instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+            newValue = firstItem.value;
+          }
+
+          for (var i = 1; i < array.length; i++) {
+            var item = array[i];
+            var itemValue = item;
+
+            if (item instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+              itemValue = item.value;
+            }
+
+            newValue = this.operation(newValue, itemValue);
+          }
+        }
+      } // if(this.debug) {
+      // 	console.log("ArrayDataOperation.itemChangeHandler newValue", newValue);
+      // }
+
+
+      this.value = newValue; // if (this._value != newValue) {
+      // 	this._value = newValue;
+      // 	this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
+      // }
+    }
+  }, {
+    key: "parseString",
+    value: function parseString(string, scope) {
+      var chunks = string.split("[[");
+      var array = [];
+
+      for (var i = 0; i < chunks.length; i++) {
+        var chunk = chunks[i];
+
+        if (chunk.indexOf("]]") == -1) {
+          array.push(chunk);
+        } else {
+          var chunkArray = chunk.split("]]");
+
+          for (var j = 0; j < chunkArray.length; j++) {
+            var chunk2 = chunkArray[j];
+
+            if (j == 0) {
+              var model = Object(_tsunami__WEBPACK_IMPORTED_MODULE_3__[/* evalProperty */ "c"])(chunk2, scope);
+              array.push(model);
+            } else {
+              array.push(chunk2);
+            }
+          }
+        }
+      }
+
+      this.arrayData.value = array;
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      if (this.arrayData instanceof _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]) {
+        this.arrayData.destroy();
+      }
+
+      this.arrayData = null;
+      this.modifiers = [];
+
+      if (this.validation instanceof _Validation__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"]) {
+        this.validation.destroy();
+      }
+
+      return _get(_getPrototypeOf(ArrayDataOperation.prototype), "destroy", this).call(this);
+    }
+  }, {
+    key: "arrayData",
+    get: function get() {
+      return this._array;
+    },
+    set: function set(value) {
+      if (this._array) {
+        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+          this._array.removeEventListener(_ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].ITEM_CHANGE, this.itemChangeHandler);
+        }
+      }
+
+      this._array = value;
+
+      if (this._array) {
+        if (this._array instanceof _ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]) {
+          this._array.addEventListener(_ArrayData__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"].ITEM_CHANGE, this.itemChangeHandler);
+        }
+      }
+
+      this.itemChangeHandler();
+    }
+  }, {
+    key: "value",
+    get: function get() {
+      return this._value;
+    },
+    set: function set(value) {
+      for (var i = 0; i < this.modifiers.length; i++) {
+        var modifier = this.modifiers[i];
+        value = modifier(value);
+      }
+
+      if (value != this._value) {
+        this._value = value;
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      } else if (this.forceChangeEvent) {
+        this.dispatchEvent({
+          type: _Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"].CHANGE,
+          value: this._value
+        });
+      }
+    }
+  }], [{
+    key: "ADD",
+    value: function ADD(value1, value2) {
+      return value1 + value2;
+    }
+  }, {
+    key: "ADD_TOSTRING",
+    value: function ADD_TOSTRING(value1, value2) {
+      return value1.toString() + value2.toString();
+    }
+  }, {
+    key: "SUBTRACT",
+    value: function SUBTRACT(value1, value2) {
+      return value1 - value2;
+    }
+  }, {
+    key: "MULTIPLY",
+    value: function MULTIPLY(value1, value2) {
+      return value1 * value2;
+    }
+  }, {
+    key: "DIVIDE",
+    value: function DIVIDE(value1, value2) {
+      return value1 / value2;
+    }
+  }, {
+    key: "MIN",
+    value: function MIN(value1, value2) {
+      return Math.min(value1, value2);
+    }
+  }, {
+    key: "MAX",
+    value: function MAX(value1, value2) {
+      return Math.max(value1, value2);
+    }
+  }]);
+
+  return ArrayDataOperation;
+}(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
 /* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4772,7 +4780,7 @@ var tsunami = __webpack_require__(2);
 var UIComponent = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./js/tsunami/components/Style.js
-var Style = __webpack_require__(17);
+var Style = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/events.js
 var events = __webpack_require__(3);
@@ -5689,16 +5697,21 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
   UIList_createClass(UIList, [{
     key: "_removeElements",
     value: function _removeElements(array) {
+      if (this.debug) console.log("UIList._removeElements", array.length);
+
       for (var i = 0; i < array.length; i++) {
         var element = array[i];
         this.removeChild(element);
         Object(tsunami["b" /* destroyElement */])(element);
       }
+
+      this.dispatchResizeEvent();
     }
   }, {
     key: "_addElements",
     value: function _addElements(array) {
       var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      if (this.debug) console.log("UIList._addElements", array.length);
 
       for (var i in array) {
         var data = array[i];
@@ -5712,9 +5725,10 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
         // }
 
         index++;
-      }
+      } // this.dispatchEvent(new BaseEvent("listChange", array));
 
-      this.dispatchEvent(new events["a" /* default */]("listChange", array));
+
+      this.dispatchResizeEvent();
       return array;
     }
   }, {
@@ -5758,6 +5772,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
   }, {
     key: "_providerChange",
     value: function _providerChange(event) {
+      if (this.debug) console.log("UIList._providerChange");
       var children = this.children.slice();
 
       this._removeElements(children);
@@ -5767,6 +5782,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
   }, {
     key: "_providerAdd",
     value: function _providerAdd(event) {
+      if (this.debug) console.log("UIList._providerAdd");
       var addedElements = [];
       var start = event.index;
       var end = event.index + event.total;
@@ -5781,6 +5797,8 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
   }, {
     key: "_providerRemove",
     value: function _providerRemove(event) {
+      if (this.debug) console.log("UIList._providerRemove");
+
       this._saveChildrenPositions();
 
       var children = this.children;
@@ -5877,7 +5895,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
     value: function _mouseDownHandler(event) {
       var _this3 = this;
 
-      if (this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
+      // if(this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
       var selectedIndex = NaN;
       var selectedChild = this.children.find(function (child, index) {
         var contains = child.contains(event.target);
@@ -5886,8 +5904,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
         if (_this3.debug) console.log(index, "contains", contains, "isChild", isChild, "isMatch", isMatch);
         if (isMatch) selectedIndex = index;
         return isMatch;
-      });
-      if (this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
+      }); // if(this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
 
       if (selectedChild) {
         if (this.selectItemOnMouseDown) {
@@ -5896,8 +5913,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
           }
         }
 
-        var isDragElement = event.target.classList.contains(this.dragElementClass);
-        if (this.debug) console.log("isDragElement", isDragElement);
+        var isDragElement = event.target.classList.contains(this.dragElementClass); // if(this.debug) console.log("isDragElement", isDragElement);
 
         if (isDragElement) {
           event.preventDefault();
@@ -5938,10 +5954,10 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
     value: function _dragElementStart() {
       this.isDragged = true;
       this.dragElement.classList.add("is-dragged");
-      var event = new CustomEvent('drag-start', {
-        detail: "test"
-      });
-      this.dragElement.dispatchEvent(event);
+      this.dragElement.dispatchEvent(new Event('drag-start', {
+        bubbles: false,
+        cancelable: true
+      }));
     }
   }, {
     key: "_dragElementMove",
@@ -6040,9 +6056,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
       return this._provider;
     },
     set: function set(value) {
-      if (this.debug) {
-        console.log("dataProvider", value);
-      }
+      if (this.debug) console.log("dataProvider", value);
 
       if (this._provider) {
         if (this._provider instanceof ArrayData["a" /* default */]) {
@@ -6641,12 +6655,14 @@ var Section_Section = /*#__PURE__*/function (_UIComponent) {
     key: "showDelayComplete",
     value: function showDelayComplete() {
       app.scrollCapture.windowContent.sections.appendChild(this.element);
+      this.dispatchResizeEvent();
       return Section_get(Section_getPrototypeOf(Section.prototype), "showDelayComplete", this).call(this);
     }
   }, {
     key: "hideComplete",
     value: function hideComplete() {
       app.scrollCapture.windowContent.sections.removeChild(this.element);
+      this.dispatchResizeEvent();
       return Section_get(Section_getPrototypeOf(Section.prototype), "hideComplete", this).call(this);
     }
   }]);
@@ -6654,9 +6670,6 @@ var Section_Section = /*#__PURE__*/function (_UIComponent) {
   return Section;
 }(UIComponent["a" /* default */]);
 
-
-// EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./js/view/SectionVideo.js
 function SectionVideo_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SectionVideo_typeof = function _typeof(obj) { return typeof obj; }; } else { SectionVideo_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SectionVideo_typeof(obj); }
@@ -6666,6 +6679,10 @@ function SectionVideo_classCallCheck(instance, Constructor) { if (!(instance ins
 function SectionVideo_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function SectionVideo_createClass(Constructor, protoProps, staticProps) { if (protoProps) SectionVideo_defineProperties(Constructor.prototype, protoProps); if (staticProps) SectionVideo_defineProperties(Constructor, staticProps); return Constructor; }
+
+function SectionVideo_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { SectionVideo_get = Reflect.get; } else { SectionVideo_get = function _get(target, property, receiver) { var base = SectionVideo_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return SectionVideo_get(target, property, receiver || target); }
+
+function SectionVideo_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = SectionVideo_getPrototypeOf(object); if (object === null) break; } return object; }
 
 function SectionVideo_createSuper(Derived) { return function () { var Super = SectionVideo_getPrototypeOf(Derived), result; if (SectionVideo_isNativeReflectConstruct()) { var NewTarget = SectionVideo_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SectionVideo_possibleConstructorReturn(this, result); }; }
 
@@ -6681,13 +6698,12 @@ function SectionVideo_inherits(subClass, superClass) { if (typeof superClass !==
 
 function SectionVideo_setPrototypeOf(o, p) { SectionVideo_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return SectionVideo_setPrototypeOf(o, p); }
 
+ // import { localToGlobal } from "../tsunami/window";
+// import { app } from "../main";
+// import Point from "../tsunami/geom/Point";
 
-
-
-
-
-var SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
-  SectionVideo_inherits(SectionVideo, _ScrollCaptureSection);
+var SectionVideo = /*#__PURE__*/function (_Section) {
+  SectionVideo_inherits(SectionVideo, _Section);
 
   var _super = SectionVideo_createSuper(SectionVideo);
 
@@ -6698,11 +6714,13 @@ var SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
 
     _this = _super.call(this, element);
     _this.iframe = _this.element.querySelector("iframe");
-    _this.iframe.src = chrome.extension.getURL('video-recording.html');
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       switch (msg.txt) {
         case "scrollCaptureVideoHeigth":
-          _this.frameHeight = msg.height;
+          _this.iframe.style.height = msg.height + "px";
+
+          _this.dispatchResizeEvent();
+
           break;
       }
     });
@@ -6710,9 +6728,20 @@ var SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
   }
 
   SectionVideo_createClass(SectionVideo, [{
-    key: "frameHeight",
-    set: function set(value) {
-      this.iframe.style.height = value + "px";
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      var promise = SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "showDelayComplete", this).call(this);
+
+      this.iframe.src = chrome.extension.getURL('video-recording.html');
+      return promise;
+    }
+  }, {
+    key: "hideComplete",
+    value: function hideComplete() {
+      var promise = SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "hideComplete", this).call(this);
+
+      this.iframe.src = "";
+      return promise;
     } // iframePositionUpdate() {
     //     this.iframe.style.right = app.scrollCapture.style.right + this.iframeOffset.x + "px";
     //     this.iframe.style.top = app.scrollCapture.style.top + this.iframeOffset.y + "px";
@@ -6740,6 +6769,42 @@ var SectionVideo = /*#__PURE__*/function (_ScrollCaptureSection) {
 }(Section_Section);
 
 
+// CONCATENATED MODULE: ./js/view/SectionScenario.js
+function SectionScenario_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SectionScenario_typeof = function _typeof(obj) { return typeof obj; }; } else { SectionScenario_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SectionScenario_typeof(obj); }
+
+function SectionScenario_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function SectionScenario_createSuper(Derived) { return function () { var Super = SectionScenario_getPrototypeOf(Derived), result; if (SectionScenario_isNativeReflectConstruct()) { var NewTarget = SectionScenario_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SectionScenario_possibleConstructorReturn(this, result); }; }
+
+function SectionScenario_possibleConstructorReturn(self, call) { if (call && (SectionScenario_typeof(call) === "object" || typeof call === "function")) { return call; } return SectionScenario_assertThisInitialized(self); }
+
+function SectionScenario_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function SectionScenario_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function SectionScenario_getPrototypeOf(o) { SectionScenario_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return SectionScenario_getPrototypeOf(o); }
+
+function SectionScenario_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) SectionScenario_setPrototypeOf(subClass, superClass); }
+
+function SectionScenario_setPrototypeOf(o, p) { SectionScenario_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return SectionScenario_setPrototypeOf(o, p); }
+
+
+
+var SectionScenario = /*#__PURE__*/function (_Section) {
+  SectionScenario_inherits(SectionScenario, _Section);
+
+  var _super = SectionScenario_createSuper(SectionScenario);
+
+  function SectionScenario(element) {
+    SectionScenario_classCallCheck(this, SectionScenario);
+
+    return _super.call(this, element);
+  }
+
+  return SectionScenario;
+}(Section_Section);
+
+
 // CONCATENATED MODULE: ./js/view/Sections.js
 function Sections_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Sections_typeof = function _typeof(obj) { return typeof obj; }; } else { Sections_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Sections_typeof(obj); }
 
@@ -6764,7 +6829,8 @@ function Sections_setPrototypeOf(o, p) { Sections_setPrototypeOf = Object.setPro
 
 
 
-var Sections = /*#__PURE__*/function (_UIComponent) {
+
+var Sections_Sections = /*#__PURE__*/function (_UIComponent) {
   Sections_inherits(Sections, _UIComponent);
 
   var _super = Sections_createSuper(Sections);
@@ -6775,6 +6841,7 @@ var Sections = /*#__PURE__*/function (_UIComponent) {
     Sections_classCallCheck(this, Sections);
 
     _this = _super.call(this, element);
+    _this.style = new Style["a" /* default */](_this.element.style);
     _this.scenario = _this.element.querySelector("sc-scenario").component;
 
     _this.removeChild(_this.scenario.element);
@@ -6790,8 +6857,11 @@ var Sections = /*#__PURE__*/function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
-tsunami["a" /* define */]("sc-scenario", Section_Section);
+tsunami["a" /* define */]("sc-scenario", SectionScenario);
 tsunami["a" /* define */]("sc-video", SectionVideo);
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(9);
+
 // CONCATENATED MODULE: ./js/view/WindowContentMain.js
 function WindowContentMain_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { WindowContentMain_typeof = function _typeof(obj) { return typeof obj; }; } else { WindowContentMain_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return WindowContentMain_typeof(obj); }
 
@@ -6800,6 +6870,10 @@ function WindowContentMain_classCallCheck(instance, Constructor) { if (!(instanc
 function WindowContentMain_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function WindowContentMain_createClass(Constructor, protoProps, staticProps) { if (protoProps) WindowContentMain_defineProperties(Constructor.prototype, protoProps); if (staticProps) WindowContentMain_defineProperties(Constructor, staticProps); return Constructor; }
+
+function WindowContentMain_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { WindowContentMain_get = Reflect.get; } else { WindowContentMain_get = function _get(target, property, receiver) { var base = WindowContentMain_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return WindowContentMain_get(target, property, receiver || target); }
+
+function WindowContentMain_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = WindowContentMain_getPrototypeOf(object); if (object === null) break; } return object; }
 
 function WindowContentMain_createSuper(Derived) { return function () { var Super = WindowContentMain_getPrototypeOf(Derived), result; if (WindowContentMain_isNativeReflectConstruct()) { var NewTarget = WindowContentMain_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return WindowContentMain_possibleConstructorReturn(this, result); }; }
 
@@ -6819,7 +6893,10 @@ function WindowContentMain_setPrototypeOf(o, p) { WindowContentMain_setPrototype
 
 
 
-var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
+
+
+
+var WindowContentMain_WindowContentMain = /*#__PURE__*/function (_UIComponent) {
   WindowContentMain_inherits(WindowContentMain, _UIComponent);
 
   var _super = WindowContentMain_createSuper(WindowContentMain);
@@ -6830,12 +6907,27 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
     WindowContentMain_classCallCheck(this, WindowContentMain);
 
     _this = _super.call(this, element);
+    _this.position = new Point["a" /* default */]();
     _this.sections = _this.element.querySelector("sc-sections").component;
+
+    _this.sections.element.addEventListener("ui-resize", function (event) {
+      var height = _this.sections.element.offsetHeight;
+      _this.element.style.height = height + "px";
+    });
+
     _this._children = [_this.sections.element];
     return _this;
   }
 
   WindowContentMain_createClass(WindowContentMain, [{
+    key: "windowResize",
+    value: function windowResize(windowSize) {
+      WindowContentMain_get(WindowContentMain_getPrototypeOf(WindowContentMain.prototype), "windowResize", this).call(this, windowSize);
+
+      this.sections.element.style.width = this.element.offsetWidth + "px";
+      this.position = Object(tsunami_window["b" /* localToGlobal */])(this.element, app.scrollCapture.element);
+    }
+  }, {
     key: "children",
     get: function get() {
       return this._children;
@@ -6846,7 +6938,7 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 }(UIComponent["a" /* default */]);
 
 
-tsunami["a" /* define */]("sc-sections", Sections);
+tsunami["a" /* define */]("sc-sections", Sections_Sections);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
@@ -6913,17 +7005,23 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
 
   ScrollCapture_createClass(ScrollCapture, [{
     key: "windowResize",
-    value: function windowResize() {}
+    value: function windowResize(windowSize) {
+      ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "windowResize", this).call(this, windowSize);
+
+      this.move(this.style.right, this.style.top);
+    }
   }, {
     key: "showDelayComplete",
     value: function showDelayComplete() {
       app.appendChild(this.element);
+      app.appendChild(this.windowContent.sections.element);
       return ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "showDelayComplete", this).call(this);
     }
   }, {
     key: "hideComplete",
     value: function hideComplete() {
       app.removeChild(this.element);
+      app.removeChild(this.windowContent.sections.element);
       return ScrollCapture_get(ScrollCapture_getPrototypeOf(ScrollCapture.prototype), "hideComplete", this).call(this);
     }
   }, {
@@ -6940,8 +7038,7 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
     value: function dragMove(event) {
       var point = this.getTouchPoint(event);
       var diff = this.startPoint.subtract(point);
-      this.style.right = this.startPosition.x + diff.x;
-      this.style.top = this.startPosition.y - diff.y; // this.video.component.iframePositionUpdate();
+      this.move(this.startPosition.x + diff.x, this.startPosition.y - diff.y);
     }
   }, {
     key: "dragEnd",
@@ -6951,10 +7048,17 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
       app.save();
     }
   }, {
+    key: "move",
+    value: function move(x, y) {
+      this.style.right = x;
+      this.style.top = y;
+      this.windowContent.sections.style.right = x + this.windowContent.position.x;
+      this.windowContent.sections.style.top = y + this.windowContent.position.y;
+    }
+  }, {
     key: "deserialize",
     value: function deserialize(obj) {
-      this.style.right = obj.right;
-      this.style.top = obj.top;
+      this.move(obj.right, obj.top);
     }
   }, {
     key: "serialize",
@@ -6973,7 +7077,7 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
 
 ScrollCapture_ScrollCapture.template = scroll_capture;
 tsunami["a" /* define */]("actions-view", ActionsView_ActionsView);
-tsunami["a" /* define */]("sc-window-content-main", WindowContentMain);
+tsunami["a" /* define */]("sc-window-content-main", WindowContentMain_WindowContentMain);
 // EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
 var UIButton = __webpack_require__(14);
 
@@ -7201,7 +7305,7 @@ var UISelect_UISelect = /*#__PURE__*/function (_UIList) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
-var ArrayDataOperation = __webpack_require__(16);
+var ArrayDataOperation = __webpack_require__(17);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIText.js
 function UIText_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIText_typeof = function _typeof(obj) { return typeof obj; }; } else { UIText_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIText_typeof(obj); }
@@ -8840,7 +8944,7 @@ var CubicBezierPoints_CubicBezierPoints = /*#__PURE__*/function (_Data) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/data/ObjectData.js
-var ObjectData = __webpack_require__(15);
+var ObjectData = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./js/model/ActionTween.js
 function ActionTween_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTween_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTween_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTween_typeof(obj); }
@@ -60820,16 +60924,17 @@ var main_Main = /*#__PURE__*/function (_App) {
       this.save();
       this.router.location = "";
       this.actions.selectedIndex.value = 0;
-      setTimeout(function () {
-        if (doCapture) {
-          var msg = {
-            txt: "scrollCaptureStartRecording"
-          };
-          chrome.runtime.sendMessage(msg);
-        }
 
+      if (doCapture) {
+        var msg = {
+          txt: "scrollCaptureStartRecording"
+        };
+        chrome.runtime.sendMessage(msg);
+      }
+
+      setTimeout(function () {
         _this4.triggerAction();
-      }, 500); // let json = JSON.stringify(data);
+      }, 250); // let json = JSON.stringify(data);
       // let code = `window.startActions('${json}')`;
       // chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       // 	chrome.tabs.executeScript(tabs[0].id, {code: code});

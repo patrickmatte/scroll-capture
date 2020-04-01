@@ -1,29 +1,37 @@
-import ScrollCaptureSection from "./Section";
-import { localToGlobal } from "../tsunami/window";
-import { app } from "../main";
-import Point from "../tsunami/geom/Point";
+import Section from "./Section";
+// import { localToGlobal } from "../tsunami/window";
+// import { app } from "../main";
+// import Point from "../tsunami/geom/Point";
 
-export default class SectionVideo extends ScrollCaptureSection {
+export default class SectionVideo extends Section {
 
     constructor(element) {
         super(element);
         this.iframe = this.element.querySelector("iframe");
-        this.iframe.src = chrome.extension.getURL('video-recording.html');
 
         chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             switch (msg.txt) {
                 case "scrollCaptureVideoHeigth":
-                    this.frameHeight = msg.height;
+                    this.iframe.style.height = msg.height + "px";
+                    this.dispatchResizeEvent();
                     break;
             }
         });
     }
 
-    set frameHeight(value) {
-        this.iframe.style.height = value + "px";
+    showDelayComplete() {
+        let promise = super.showDelayComplete();
+        this.iframe.src = chrome.extension.getURL('video-recording.html');
+        return promise;
     }
 
-   // iframePositionUpdate() {
+    hideComplete() {
+        let promise = super.hideComplete();
+        this.iframe.src = "";
+        return promise;
+    }
+
+    // iframePositionUpdate() {
     //     this.iframe.style.right = app.scrollCapture.style.right + this.iframeOffset.x + "px";
     //     this.iframe.style.top = app.scrollCapture.style.top + this.iframeOffset.y + "px";
     // }

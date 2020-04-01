@@ -155,13 +155,13 @@ export default class Main extends App {
 		this.save();
 		this.router.location = "";
 		this.actions.selectedIndex.value = 0;
+		if (doCapture) {
+			let msg = { txt: "scrollCaptureStartRecording" };
+			chrome.runtime.sendMessage(msg);
+		}
 		setTimeout(() => {
-			if (doCapture) {
-				let msg = { txt: "scrollCaptureStartRecording" };
-				chrome.runtime.sendMessage(msg);
-			}
 			this.triggerAction();
-		}, 500);
+		}, 250);
 		// let json = JSON.stringify(data);
 		// let code = `window.startActions('${json}')`;
 		// chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {

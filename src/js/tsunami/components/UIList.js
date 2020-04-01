@@ -70,9 +70,7 @@ export default class UIList extends UIComponent {
 	}
 
 	set dataProvider(value) {
-		if(this.debug) {
-			console.log("dataProvider", value);
-		}
+		if(this.debug) console.log("dataProvider", value);
 		if (this._provider) {
 			if (this._provider instanceof ArrayData) {
 				this._provider.removeEventListener("add", this._providerAdd);
@@ -98,14 +96,17 @@ export default class UIList extends UIComponent {
 	}
 
 	_removeElements(array) {
+		if(this.debug) console.log("UIList._removeElements", array.length);
 		for (let i = 0; i < array.length; i++) {
 			let element = array[i];
 			this.removeChild(element);
 			destroyElement(element);
 		}
+		this.dispatchResizeEvent();
 	}
 
 	_addElements(array, index = 0) {
+		if (this.debug) console.log("UIList._addElements", array.length);
 		for (let i in array) {
 			let data = array[i];
 			let element = this.createElement(data, index, array.length);
@@ -119,10 +120,11 @@ export default class UIList extends UIComponent {
 			// }
 			index++;
 		}
-		this.dispatchEvent(new BaseEvent("listChange", array));
+		// this.dispatchEvent(new BaseEvent("listChange", array));
+		this.dispatchResizeEvent();
 		return array;
 	}
-
+	
 	createElement(data, index, length) {
 		let template = this.getTemplateForModel(data);
 		let scope = new Scope(data, this.scope, index, length);
@@ -153,12 +155,14 @@ export default class UIList extends UIComponent {
 	}
 
 	_providerChange(event) {
+		if (this.debug) console.log("UIList._providerChange");
 		let children = this.children.slice();
 		this._removeElements(children);
 		this._addElements(this._provider.value);
 	}
 
 	_providerAdd(event) {
+		if (this.debug) console.log("UIList._providerAdd");
 		let addedElements = [];
 		let start = event.index;
 		let end = event.index + event.total;
@@ -170,6 +174,7 @@ export default class UIList extends UIComponent {
 	}
 
 	_providerRemove(event) {
+		if (this.debug) console.log("UIList._providerRemove");
 		this._saveChildrenPositions();
 		let children = this.children;
 		let removedElements = [];
@@ -238,7 +243,7 @@ export default class UIList extends UIComponent {
 	}
 
 	_mouseDownHandler(event) {
-		if(this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
+		// if(this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
 		let selectedIndex = NaN;
 		let selectedChild = this.children.find((child, index) => {
 			let contains = child.contains(event.target);
@@ -248,7 +253,7 @@ export default class UIList extends UIComponent {
 			if(isMatch) selectedIndex = index;
 			return isMatch;
 		});
-		if(this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
+		// if(this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
 		if(selectedChild) {
 			if(this.selectItemOnMouseDown) {
 				if(this.dataProvider.selectedIndex) {
@@ -256,7 +261,7 @@ export default class UIList extends UIComponent {
 				}
 			}
 			let isDragElement = event.target.classList.contains(this.dragElementClass);
-			if(this.debug) console.log("isDragElement", isDragElement);
+			// if(this.debug) console.log("isDragElement", isDragElement);
 			if(isDragElement) {
 				event.preventDefault();
 				this.dragStartPoint = this.getTouchPoint(event);
@@ -292,8 +297,7 @@ export default class UIList extends UIComponent {
 	_dragElementStart() {
 		this.isDragged = true;
 		this.dragElement.classList.add("is-dragged");
-		let event = new CustomEvent('drag-start', { detail: "test" });
-		this.dragElement.dispatchEvent(event);
+		this.dragElement.dispatchEvent(new Event('drag-start', {bubbles:false, cancelable:true}));
 	}
 
 	_dragElementMove(event) {

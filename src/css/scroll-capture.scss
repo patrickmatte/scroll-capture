@@ -4,6 +4,12 @@ $borderRadius: 0.33em;
 .sc-default {
 	display: block;
 	font-family: DefaultFont, 'Courier New', Courier, monospace !important;
+	color: white;
+	font-weight: 400;
+	user-select: none;
+	border-radius: $borderRadius;
+	margin: 0;
+	box-sizing: border-box;
 
 	* {
 		text-transform: none;
@@ -279,18 +285,12 @@ $borderRadius: 0.33em;
 		right: 4px;
 		top: 4px;
 		width: 375px;
-		color: #ffffff;
 		display: flex;
 		flex-direction: column;
-		user-select: none;
 		font-size: 16.3px !important;
 		line-height: 1;
-		margin: 0;
 		padding: 0.2em;
 		z-index: 200000000;
-		font-weight: normal;
-		border-radius: $borderRadius;
-		box-sizing: border-box;
 		-webkit-backdrop-filter: blur(10px);
 		backdrop-filter: blur(15px);
 		mix-blend-mode: luminosity;
@@ -464,6 +464,7 @@ $borderRadius: 0.33em;
 					}
 
 					input {
+						max-width: 152px;
 						height: auto !important;
 					}
 
@@ -501,7 +502,7 @@ $borderRadius: 0.33em;
 		}
 
 		&[data-selected="true"] {
-			background-color: rgba(64, 64, 64, 0.95);
+			// background-color: rgba(64, 64, 64, 0.95);
 			
 			&:after {
 				content: "";
@@ -513,18 +514,6 @@ $borderRadius: 0.33em;
 				box-shadow: inset 0 0 0px 1px rgba(255, 255, 255, 0.5);
 				pointer-events: none;
 				border-radius: $borderRadius;
-			}
-			
-			.sc-title {
-				.sc-tab {
-					&.sc-title-tab {
-						// background-color: rgba(0, 0, 0, 0.95);
-					}
-				}
-			}
-			
-			.sc-window-content {
-				// background-color: rgba(0, 0, 0, 0.95);
 			}
 		}
 	}
@@ -839,11 +828,14 @@ $borderRadius: 0.33em;
 }
 
 
-.sc-window-content-layer {
+sc-sections {
 	position: fixed !important;
+	right: 0;
+	top: 0;
 	z-index: 200000001;
 	background: transparent !important;
 	background-color: transparent !important;
 	border: none !important;
 	outline: none !important;
+	font-size: 0.84em;
 }
