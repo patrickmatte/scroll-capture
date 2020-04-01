@@ -3,7 +3,7 @@ import { localToGlobal } from "../tsunami/window";
 import { app } from "../main";
 import Point from "../tsunami/geom/Point";
 
-export default class VideoSection extends ScrollCaptureSection {
+export default class SectionVideo extends ScrollCaptureSection {
 
     constructor(element) {
         super(element);

@@ -7,8 +7,8 @@ import Point from "../tsunami/geom/Point";
 import {app} from "../main";
 import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
-import ScrollCaptureSection from "./Section";
-import VideoSection from "./VideoSection";
+import Section from "./Section";
+import SectionVideo from "./SectionVideo";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -86,5 +86,5 @@ export default class ScrollCapture extends UIComponent {
 ScrollCapture.template = template;
 
 tsunami.define("actions-view", ActionsView);
-tsunami.define("sc-scenario", ScrollCaptureSection);
-tsunami.define("sc-video", VideoSection);
+tsunami.define("sc-scenario", Section);
+tsunami.define("sc-video", SectionVideo);
