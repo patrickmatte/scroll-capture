@@ -187,23 +187,31 @@ function _setStream(stream) {
 
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     options = {
-      mimeType: 'video/webm;codecs=vp8'
+      mimeType: 'video/webm;codecs=vp9'
     };
 
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       options = {
-        mimeType: 'video/webm'
+        mimeType: 'video/webm;codecs=vp8'
       };
 
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         options = {
-          mimeType: ''
+          mimeType: 'video/webm'
         };
+
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+          options = {
+            mimeType: ''
+          };
+        }
       }
     }
   }
 
-  options.videoBitsPerSecond = 1024 * 1024 * 8;
+  options.audioBitsPerSecond = 128000; // 128 Kbit/sec
+
+  options.videoBitsPerSecond = 8000000; // 8 Mbit/sec
 
   try {
     mediaRecorder = new MediaRecorder(mediaStream, options);

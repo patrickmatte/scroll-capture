@@ -161,7 +161,7 @@ export default class ActionScroll extends ActionTween {
 			this.unitX.addEventListener(Data.CHANGE, this.doScroll);
 			this.unitY.addEventListener(Data.CHANGE, this.doScroll);
 			this.captureComplete();
-		}, 100);
+		}, 200);
 	}
 
 	captureAtInit() {

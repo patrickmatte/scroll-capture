@@ -74,6 +74,30 @@ $borderRadius: 0.33em;
 		top: auto;
 	}
 
+	.sc-icon {
+		display: inline-block;
+		vertical-align: middle;
+		
+		&:after {
+			font-family: "IcoFont";
+			display: block;
+			font-size: 1.2em;
+			font-weight: 400;
+		}
+
+		.sc-icon-shape {
+			fill: #ffffff;
+		}
+	}
+
+	* + .sc-icon {
+		margin-left: 0.3em;
+	}
+
+	.sc-icon + * {
+		margin-left: 0.3em;
+	}
+
 	a, button {
 		color: inherit;
 		margin: 0;
@@ -110,65 +134,66 @@ $borderRadius: 0.33em;
 			transition: opacity 0.25s ease 0s;
 			font-weight: 700;
 		}
-
-		&:after {
-			font-family: "IcoFont";
-			display: inline-block;
-			vertical-align: middle;
-			font-size: 0.7em;
-			color: white;
-			opacity: 0.5;
-			font-weight: 400;
-			transition: opacity 0.25s ease 0s;
-		}
 		
+		.sc-icon {
+			transition: opacity 0.25s ease 0s, color 0.25s ease 0s;
+			opacity: 0.5;
+		}
+
 		&:hover {
-			&:after {
+			.sc-icon {
 				opacity: 1;
 			}
-
 			.sc-label {
 				opacity: 1;
 			}
 		}
 
 		&.sc-save-button {
-			&:after {
-				content: "\ee00";
-				margin-left: 0.33em;
-				font-size: 1em;
+			.sc-icon {
+				&:after {
+					content: "\ee00";
+				}
 			}
 
 			&[data-is-saving="true"] {
 				opacity: 0.25;
-
-				&:after {
+				
+				.sc-icon {
 					opacity: 1;
 				}
 			}
 		}
 
 		&.sc-trash-button {
-			&:after {
-				content: "\ec53";
-				margin-left: 0.3em;
-				font-size: 1.1em;
+			.sc-icon {
+				&:after {
+					content: "\ec53";
+				}
+			}
+		}
+
+		&.sc-clear-button {
+			.sc-icon {
+				&:after {
+					content: "\ec53";
+				}
 			}
 		}
 
 		&.sc-download-button {
-			&:after {
-				content: "\ef08";
-				margin-left: 0.4em;
-				font-size: 1.2em;
+			.sc-icon {
+				&:after {
+					content: "\ef08";
+				}
 			}
 		}
 
 		&.sc-capture-button {
-			&:after {
-				content: "\ea80";
-				margin-left: 0.1em;
-				font-size: 1.4em;
+			.sc-icon {
+				&:after {
+					content: "\ea80";
+				}
 			}
 
 			&[data-is-captureable="false"] {
@@ -182,7 +207,7 @@ $borderRadius: 0.33em;
 					opacity: 0.25;
 				}
 
-				&:after {
+				.sc-icon {
 					color: #ff0000;
 					opacity: 1;
 				}
@@ -190,50 +215,60 @@ $borderRadius: 0.33em;
 		}
 
 		&.sc-capture-video-button {
-			&:after {
-				content: "\ec92";
-				margin-left: 0.25em;
-				font-size: 1.2em;
-				font-weight: 400;
+			.sc-icon {
+				&:after {
+					content: "\ec92";
+				}
 			}
 		}
 
 		&.sc-play-all-button {
-			&:after {
-				content: "\eca8";
-				margin-left: 0.25em;
-				font-size: 1.2em;
+			.sc-icon {
+				&:after {
+					content: "\eca8";
+				}
 			}
 		}
 
 		&.sc-play-button {
-			&:after {
-				content: "\eca6";
-				margin-left: 0.33em;
-				font-size: 1em;
+			.sc-icon {
+				&:after {
+					content: "\eca6";
+				}
 			}
 		}
 
 		&.sc-test-button {
-			&:after {
-				content: "\eca6";
-				margin-left: 0.33em;
-				font-size: 1em;
+			.sc-icon {
+				&:after {
+					content: "\eca6";
+				}
 			}
 
 			&[data-is-playing="true"] {
 				opacity: 0.25;
 
-				&:after {
+				.sc-icon {
 					opacity: 1;
 				}
 			}
 		}
 
 		&.sc-close-button {
-			&:after {
-				content: "\ec4f";
-				margin-left: 0.5em;
+			.sc-icon {
+				&:after {
+					content: "\ec4f";
+					font-size: 0.75em;
+				}
+			}
+		}
+
+		&.sc-back-button {
+			.sc-icon {
+				&:after {
+					content: "\ea6c";
+					// transform: rotate(180deg);
+				}
 			}
 		}
 	}
@@ -309,10 +344,10 @@ $borderRadius: 0.33em;
 			// content: "\ec74";
 			// transform: rotate(90deg);
 			position: absolute;
-			font-size: 1em;
+			font-size: 1.2em;
 			top: calc(50% - 0.5em);
 			font-family: IcoFont;
-			right: 0.75em;
+			right: 0.5em;
 			pointer-events: none;
 			opacity: 0.5;
 		}
@@ -440,20 +475,7 @@ $borderRadius: 0.33em;
 						max-width: 152px;
 						height: auto !important;
 					}
-
-					.sc-icon {
-						display: inline-block;
-						vertical-align: middle;
-						width: auto;
-						height: 1em;
-						margin-left: 0.5em;
-
-						.sc-icon-shape {
-							fill: #ffffff;
-						}
-
-					}
-
+					
 					input {
 						background-color: transparent;
 						color: inherit;
@@ -577,7 +599,8 @@ $borderRadius: 0.33em;
 			flex-grow: 0;
 			white-space: nowrap;
 			text-align: left;
-			padding-top: 0.5em;
+			display: inline-flex;
+			align-items: center;
 			height: 2em;
 		}
 
@@ -793,8 +816,11 @@ $borderRadius: 0.33em;
 			justify-content: center;
 			align-items: center;
 
-			&:after {
-				content: "\ec3e";
+			.sc-icon {
+				&:after {
+					content: "\ec3e";
+					font-size: 0.75em;
+				}
 			}
 		}
 	}

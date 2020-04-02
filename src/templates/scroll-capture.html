@@ -14,7 +14,9 @@
 				</span>
 			</div>
 			<div class="sc-tab">
-				<button class="sc-close-button" is="router-button" data-path=""></button>
+				<button class="sc-close-button" is="router-button" data-path="">
+					<span class="sc-icon"></span>
+				</button>
 			</div>
 		</div>
 
@@ -33,14 +35,18 @@
 					<div class="sc-controls" is="ui-component" data-actions-length="[[actions.length]]">
 						<!-- <button class="sc-test-button" is="ui-button" data-click="playSelectedAction" data-is-playing="[[selectedActionIsPlaying]]">
 							<span class="sc-label">Play</span>
+							<span class="sc-icon"></span>
 						</button> -->
-						<button class="sc-play-all-button" is="ui-button" data-click="play">
+						<button class="sc-play-all-button" is="ui-button" data-click="play" title="Play">
+							<span class="sc-icon"></span>
 							<span class="sc-label">Play</span>
 						</button>
-						<button class="sc-capture-video-button" is="ui-button" data-click="playAndCapture">
+						<button class="sc-capture-video-button" is="ui-button" data-click="playAndCapture" title="Record">
+							<span class="sc-icon"></span>
 							<span class="sc-label">Record</span>
 						</button>
-						<button class="sc-trash-button" is="ui-button" data-click="clear">
+						<button class="sc-clear-button" is="ui-button" data-click="clear" title="Clear">
+							<span class="sc-icon"></span>
 							<span class="sc-label">Clear</span>
 						</button>
 					</div>
@@ -57,21 +63,27 @@
 												<input size="[[data.name.length]]" is="ui-input" data-model="data.name" />
 											</span>
 										</span>
+									</div>
+									<div class="sc-tabs">
 										<span class="sc-tab" data-visible="[[data.isCaptureable]]" is="ui-component">
 											<div class="ui-list-drag-area"></div>
-											<button class="sc-capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]">
+											<button class="sc-capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]" title="Capture">
+												<span class="sc-icon"></span>
 												<span class="sc-label">Capture</span>
 											</button>
 										</span>
 										<span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
 											<div class="ui-list-drag-area"></div>
-											<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]">
+											<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]" title="Play">
+												<span class="sc-icon"></span>
 												<span class="sc-label">Play</span>
 											</button>
 										</span>
-									</div>
-									<div class="sc-tab">
-										<button class="sc-trash-button sc-delete-action-button" data-model="data" is="ui-button"></button>
+										<div class="sc-tab">
+											<button class="sc-trash-button sc-delete-action-button" data-model="data" is="ui-button" title="Delete">
+												<span class="sc-icon"></span>
+											</button>
+										</div>
 									</div>
 								</div>
 								<div class="sc-window-content" is="ui-component">
@@ -194,7 +206,9 @@
 										</template>
 									</select>
 								</div>
-								<button class="sc-add-button" is="ui-button" data-click="actions.addSelectedType"></button>
+								<button class="sc-add-button" is="ui-button" data-click="actions.addSelectedType">
+									<span class="sc-icon"></span>
+								</button>
 							</div>
 						</div>
 					</sc-select-action>
