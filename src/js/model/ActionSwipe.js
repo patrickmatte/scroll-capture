@@ -110,7 +110,8 @@ export default class ActionSwipe extends ActionTween {
 	}
 
 	capture() {
-		this.isCapturing.value = true;
+		console.log("ActionSwipe.capture");
+		super.capture();
 		document.body.addEventListener(events.mousedown, this.captureDownHandler);
 	}
 

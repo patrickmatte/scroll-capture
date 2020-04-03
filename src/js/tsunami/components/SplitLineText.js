@@ -25,7 +25,6 @@ export default class SplitLineText extends UIComponent {
 		let listSelector = this.element.getAttribute("data-list-selector");
 		if (listSelector) {
 			this.list = this.element.querySelector(listSelector).component;
-			// this.list.debug = true;
 		}
 		super.scope = value;
 	}

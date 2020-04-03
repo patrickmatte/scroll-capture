@@ -3,13 +3,12 @@ import Main from "./main";
 let main;
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+	if (!main) {
+		main = new Main(document.body);
+	}
 	switch(msg.txt) {
-		case "scrollCaptureScenario":
-			if (!main) {
-				main = new Main(document.body);
-			} else {
-				main.router.location = "scrollCapture/scenario";
-			}
+		case "scrollCaptureLocation":
+			main.router.location = msg.location;
 			break;
 	}
 });

@@ -11,10 +11,13 @@ export default class EventDispatcher {
 
     removeEventListener(type, func) {
         let newListeners = [];
-        for (let i = 0 ; i < this.listeners.length; i++) {
-            let listener = this.listeners[i];
-            if (listener.type == type && listener.func == func) {
 
+        let listeners = this.listeners.slice();
+        for (let i = 0; i < listeners.length; i++) {
+            let listener = listeners[i];
+            let sameType = (listener.type == type);
+            let sameFunc = (listener.func == func);
+            if (sameType && sameFunc) {
             } else {
                 newListeners.push(listener);
             }

@@ -7,11 +7,15 @@ import {app} from "../main";
 import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
 import WindowContentMain from "./WindowContentMain";
+import Data from "../tsunami/data/Data";
 
 export default class ScrollCapture extends UIComponent {
 
 	constructor(element) {
 		super(element);
+
+		this.positionChangeHandler = this.positionChangeHandler.bind(this);
+
 		this.style = new Style(this.element.style);
 		this.style.right = 50;
 		this.style.top = 50;
@@ -29,9 +33,23 @@ export default class ScrollCapture extends UIComponent {
 		this.branches["video"] = this.windowContent.sections.video;
 	}
 
+	get model() {
+		return super.model;
+	}
+
+	set model(value) {
+		if(this.model) {
+			this.model.settings.position.removeEventListener(Data.CHANGE, this.positionChangeHandler);
+		}
+		super.model = value;
+		this.model.settings.position.addEventListener(Data.CHANGE, this.positionChangeHandler);
+	}
+
 	windowResize(windowSize) {
 		super.windowResize(windowSize);
-		this.move(this.style.right, this.style.top);
+		let x = this.model.settings.position.x.value;
+		let y = this.model.settings.position.y.value;
+		this.move(x, y);
 	}
 	
 	showDelayComplete() {
@@ -48,7 +66,7 @@ export default class ScrollCapture extends UIComponent {
 
 	dragStart(event) {
 		event.preventDefault();
-		this.startPosition = new Point(this.style.right, this.style.top);
+		this.startPosition = new Point(this.model.settings.position.x.value, this.model.settings.position.y.value);
 		this.startPoint = this.getTouchPoint(event);
 		document.body.addEventListener(events.mousemove, this.dragMove);
 		document.body.addEventListener(events.mouseup, this.dragEnd);
@@ -57,13 +75,19 @@ export default class ScrollCapture extends UIComponent {
 	dragMove(event) {
 		let point = this.getTouchPoint(event);
 		let diff = this.startPoint.subtract(point);
-		this.move(this.startPosition.x + diff.x, this.startPosition.y - diff.y);
+		this.model.settings.position.x.value = this.startPosition.x + diff.x;
+		this.model.settings.position.y.value = this.startPosition.y - diff.y;
+		// this.move(, );
 	}
 
 	dragEnd(event) {
 		document.body.removeEventListener(events.mousemove, this.dragMove);
 		document.body.removeEventListener(events.mouseup, this.dragEnd);
 		app.save();
+	}
+
+	positionChangeHandler(event) {
+		this.move(event.data.x.value, event.data.y.value);
 	}
 
 	move(x, y) {
@@ -74,15 +98,6 @@ export default class ScrollCapture extends UIComponent {
 	}
 
 	deserialize(obj) {
-		this.move(obj.right, obj.top);
-	}
-
-	serialize() {
-		let obj = {
-			right:this.style.right,
-			top:this.style.top
-		};
-		return obj;
 	}
 
 }

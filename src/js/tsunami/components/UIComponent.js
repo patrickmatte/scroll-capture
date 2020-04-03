@@ -16,6 +16,9 @@ export default class UIComponent extends Branch {
     constructor(element) {
 		super();
 
+
+		this.modelChange = this.modelChange.bind(this);
+
 		if(element) {
 			this.debug = (element.getAttribute("data-debug") == "true");
 			this.doChildrenAnimationFrame = (element.getAttribute("data-children-animation-frame") == "true");
@@ -24,6 +27,9 @@ export default class UIComponent extends Branch {
 		}
 
 		this.element = element;
+
+		this.componentID = new Date().getTime();
+		this.element.setAttribute("data-componentId", this.componentID);
 
 		this.calculateGlobalPosition = false;
 
@@ -35,7 +41,6 @@ export default class UIComponent extends Branch {
 
 		this.attributes = {};
 
-        this.modelChange = this.modelChange.bind(this);
 
 		this.showDuration = 0;
 		this.showDelay = 0;
@@ -54,18 +59,6 @@ export default class UIComponent extends Branch {
 	set element(value) {
 		this._element = value;
 		if(value) value.component = this;
-	}
-
-	getBranch(slug) {
-		let branch;
-		if (this.branches[slug]) {
-			branch = this.branches[slug];
-		} else if (this.branches["*"]) {
-			branch = this.branches["*"];
-		} else {
-			branch = new Branch();
-		}
-		return branch;
 	}
 
 	get componentContainer() {
@@ -172,9 +165,7 @@ export default class UIComponent extends Branch {
     set scope(value) {
         this._scope = value;
 
-		if (this.debug) {
-			console.log("UIComponent.scope", value);
-		}
+		if (this.debug) console.log("UIComponent.scope", value);
 
 		let showDuration = this.element.getAttribute("data-show-duration");
 		if (showDuration) {
@@ -198,9 +189,7 @@ export default class UIComponent extends Branch {
 
 		for (let i = 0; i < this.element.attributes.length; i++) {
 			let attribute = this.element.attributes[i];
-			if(this.debug) {
-				console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
-			}
+			// if(this.debug) console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
 			
 			if(attribute.name.indexOf("data-event-") != -1) {
 				this._createEventHandler(attribute, value);
@@ -226,7 +215,7 @@ export default class UIComponent extends Branch {
 	}
 
 	_createEventHandler(attribute, scope) {
-		if(this.debug) console.log("_createEventHandler attribute", attribute, "scope", scope);
+		// if(this.debug) console.log("UIComponent._createEventHandler attribute", attribute, "scope", scope);
 		let eventType = attribute.name.split("data-event-")[1];
 		let handler = evalProperty(attribute.value, scope);
 		let eventHandler = new EventHandler(this.element, eventType, handler, this.debug);
@@ -238,12 +227,10 @@ export default class UIComponent extends Branch {
     }
 
     set model(value) {
-    	if (this.debug) {
-    		console.log("set model", value);
-		}
+    	if (this.debug) console.log("UIComponent.model", value);
         if (this._model) {
             if (this._model instanceof Data) {
-                this._model.removeEventListener(Data.CHANGE, this.modelChange);
+				this._model.removeEventListener(Data.CHANGE, this.modelChange);
             }
         }
         this._model = value;
@@ -260,9 +247,6 @@ export default class UIComponent extends Branch {
     }
 
     modelChange(event) {
-    	if (this.debug) {
-    		console.log("UIComponent.modelChange", this.model.value);
-		}
         this.updateValue(this.model.value);
     }
 
@@ -445,14 +429,14 @@ export default class UIComponent extends Branch {
 	}
 
 	destroy() {
-        this.model = null;
-        this.style.destroy();
-        this.style = null;
-        this.scope = null;
         for (let i in this.attributes) {
         	let attribute = this.attributes[i];
         	attribute.destroy();
 		}
+        this.model = null;
+        this.style.destroy();
+        this.style = null;
+        this.scope = null;
         if (this.element.parentNode) {
             this.element.parentNode.removeChild(this.element);
         }

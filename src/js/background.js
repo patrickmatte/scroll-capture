@@ -23,7 +23,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
     }
     selectedTabId = tab.id;
     window.selectedTabId = selectedTabId;
-    let msg = { txt: "scrollCaptureScenario" };
+    let msg = { txt: "scrollCaptureLocation", location:"scrollCapture/scenario" };
     chrome.tabs.sendMessage(selectedTabId, msg);
 });
 

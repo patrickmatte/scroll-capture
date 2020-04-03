@@ -65,7 +65,7 @@ export default class ActionMouseEvent extends Action {
 	}
 
 	capture() {
-		this.isCapturing.value = true;
+		super.capture();
 		setTimeout(() => {
 			document.body.addEventListener("click", this.captureMouseEventHandler);
 		}, 33);

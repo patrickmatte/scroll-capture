@@ -81,20 +81,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 21:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(22);
+module.exports = __webpack_require__(23);
 
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /***/ (function(module, exports) {
 
 // let page = chrome.extension.getBackgroundPage();
@@ -122,7 +122,8 @@ chrome.browserAction.onClicked.addListener(function (tab) {
   selectedTabId = tab.id;
   window.selectedTabId = selectedTabId;
   var msg = {
-    txt: "scrollCaptureScenario"
+    txt: "scrollCaptureLocation",
+    location: "scrollCapture/scenario"
   };
   chrome.tabs.sendMessage(selectedTabId, msg);
 });

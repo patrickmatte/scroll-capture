@@ -25,6 +25,14 @@ export default class CubicBezierPoints extends Data {
 		}
 	}
 
+	copy(obj) {
+		if (!obj) return;
+		this.p0.copy(obj.p0);
+		this.p1.copy(obj.p1);
+		this.p2.copy(obj.p2);
+		this.p3.copy(obj.p3);
+	}
+
 	changeHandler() {
 		this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
 	}

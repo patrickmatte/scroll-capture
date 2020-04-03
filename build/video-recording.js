@@ -81,28 +81,28 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 23:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(26);
-module.exports = __webpack_require__(24);
+__webpack_require__(27);
+module.exports = __webpack_require__(25);
 
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -304,7 +304,8 @@ player.addEventListener('canplay', function () {
 var backButton = document.querySelector(".sc-back-button");
 backButton.addEventListener("click", function () {
   var msg = {
-    txt: "scrollCaptureScenario"
+    txt: "scrollCaptureLocation",
+    location: "scrollCapture/scenario"
   };
   chrome.tabs.sendMessage(page.selectedTabId, msg);
 });

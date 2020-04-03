@@ -8,6 +8,10 @@ import { app } from "../main";
 export default class Action {
 
 	constructor(type = "Action", name = "Action") {
+
+		this.capture = this.capture.bind(this);
+		this.play = this.play.bind(this);
+
 		this.type = type;
 		this.name = new StringData();
 		this.name.length = new NumberData();
@@ -20,16 +24,15 @@ export default class Action {
 		this.isCapturing = new BooleanData();
 		this.changeCursorOnCapture = new BooleanData();
 		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
+			console.log("isCapturing change!!!!!!");
 			if (this.changeCursorOnCapture.value) {
-				app.showCaptureIcon.value = event.value;
+				app.showCaptureIcon.value = event.data;
 			}
 		});
 		this.isPlaying = new BooleanData();
 		this.delay = new NumberData(0);
 		this.isSelectedItem = new BooleanData();
 
-		this.capture = this.capture.bind(this);
-		this.play = this.play.bind(this);
 
 		this.array = [this];
 	}
@@ -70,6 +73,7 @@ export default class Action {
 	}
 
 	capture() {
+		this.isCapturing.value = true;
 	}
 
 	captureComplete() {
@@ -85,6 +89,7 @@ export default class Action {
 		let promise1 = this.trigger();
 		let promise2 = promise1.then(() => {
 			this.isPlaying.value = false;
+			app.save();
 		});
 		return promise2;
 	}

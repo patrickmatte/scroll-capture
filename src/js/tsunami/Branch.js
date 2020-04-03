@@ -36,6 +36,7 @@ export default class Branch extends EventDispatcher {
 			branch = this.branches["*"];
 		} else {
 			branch = new Branch();
+			console.log("No branch named " + slug + ", default branch was created");
 		}
 		return branch;
 	}

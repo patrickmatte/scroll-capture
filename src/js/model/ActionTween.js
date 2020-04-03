@@ -77,8 +77,11 @@ export default class ActionTween extends Action {
 		this.endX.value = action.endX.value;
 		this.endY.value = action.endY.value;
 		this.duration.value = action.duration.value;
-		this.cubicBezierPoints.p1.copy(action.cubicBezierPoints.p1);
-		this.cubicBezierPoints.p2.copy(action.cubicBezierPoints.p2);
+		this.cubicBezierPoints.p1.debug = true;
+		this.cubicBezierPoints.p2.debug = true;
+		this.cubicBezierPoints.copy(action.cubicBezierPoints);
+		// this.cubicBezierPoints.p1.copy(action.cubicBezierPoints.p1);
+		// this.cubicBezierPoints.p2.copy(action.cubicBezierPoints.p2);
 	}
 
 	trigger() {

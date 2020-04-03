@@ -3,6 +3,7 @@ import {importTemplate} from "./tsunami/tsunami";
 import ScrollCapture from "./view/ScrollCapture";
 import App from "./tsunami/App";
 import Actions from "./model/Actions";
+import Settings from "./model/Settings";
 import BooleanData from "./tsunami/data/BooleanData";
 import Data from "./tsunami/data/Data";
 import ArrayData from "./tsunami/data/ArrayData";
@@ -15,10 +16,16 @@ export default class Main extends App {
 
 	constructor(element) {
 		super(element);
-		
-		this.router = new Router(this);
+	
+		this.save = this.save.bind(this);
+		this.play = this.play.bind(this);
+		this.playSelectedAction = this.playSelectedAction.bind(this);
+		this.playAndCapture = this.playAndCapture.bind(this);
+		this.clear = this.clear.bind(this);
 
 		app = this;
+
+		this.router = new Router(this);
 
 		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
 		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo-Regular.woff');
@@ -48,44 +55,29 @@ export default class Main extends App {
 		`;
 		document.head.appendChild(fonts);
 
-		this.save = this.save.bind(this);
-		this.play = this.play.bind(this);
-		this.playSelectedAction = this.playSelectedAction.bind(this);
-		this.playAndCapture = this.playAndCapture.bind(this);
-		this.clear = this.clear.bind(this);
-
 		this.showCaptureIcon = new BooleanData();
 		this.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
-			if(event.value) {
+			if (event.data) {
 				document.body.classList.add("is-capturing");
 			} else {
 				document.body.classList.remove("is-capturing");
 			}
 		})
 		this.isSaving = new BooleanData();
-		this.actions = new Actions();
-
 		this.selectedActionIsPlaying = new BooleanData();
+		this.settings = new Settings();
+		this.actions = new Actions();
+		this.actions.addEventListener("add", (event) => {
+			this.save();
+		});
+		this.actions.addEventListener("remove", (event) => {
+			this.save();
+		});
 
 		this.capturedVideo = new ArrayData("test.mp4");
 
-		chrome.storage.sync.get(["json"], (result) => {
-			this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
-			this.branches["scrollCapture"] = this.scrollCapture;
-
-			let json = result.json;
-			if(json) {
-				this.deserialize(JSON.parse(json));
-			}
-			this.actions.addEventListener("add", (event) => {
-				this.save();
-			});
-			this.actions.addEventListener("remove", (event) => {
-				this.save();
-			});
-
-			this.router.location = "scrollCapture/scenario";
-		});
+		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
+		this.branches["scrollCapture"] = this.scrollCapture;
 
 		// this.actions.value = [
 		// 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
@@ -97,9 +89,17 @@ export default class Main extends App {
 		// ];
 	}
 
-	getBranch(id) {
-		let branch = super.getBranch(id);
-		return branch
+	load() {
+		let promise = new Promise((resolve, reject) => {
+			chrome.storage.sync.get(["json"], (result) => {
+				resolve(result.json);
+			});
+		});
+		return promise.then((json) => {
+			let data = JSON.parse(json);
+			this.actions.deserialize(data.actions);
+			this.settings.deserialize(data.settings);
+		});
 	}
 
 	show() {
@@ -107,23 +107,13 @@ export default class Main extends App {
 
 	hide() {
 	}
-
-	deserialize(obj) {
-		this.actions.deserialize(obj.actions);
-		this.scrollCapture.deserialize(obj.scrollCapture);
-	}
-
-	serialize() {
-		let obj = {
-			actions:this.actions.serialize(),
-			scrollCapture:this.scrollCapture.serialize()
-		};
-		return obj;
-	}
-
+	
 	save() {
 		this.isSaving.value = true;
-		let obj = this.serialize();
+		let obj = {
+			actions: this.actions.serialize(),
+			settings: this.settings.serialize()
+		};
 		let json = JSON.stringify(obj);
 		chrome.storage.sync.set({json:json}, () => {
 			setTimeout(()=> {
@@ -137,7 +127,6 @@ export default class Main extends App {
 	}
 
 	playSelectedAction() {
-		console.log("playSelectedAction");
 		this.selectedActionIsPlaying.value = true;
 		let promise = this.actions.selectedItem.value.play();
 		promise.then(()=> {
@@ -192,7 +181,7 @@ export default class Main extends App {
 			this.allComplete();
 		}
 	}
-
+	
 	allComplete() {
 		if(this.doCapture) {
 			let msg = { txt: "scrollCaptureStopRecording" };

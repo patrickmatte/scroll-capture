@@ -14,7 +14,7 @@ player.addEventListener('canplay', function () {
 
 let backButton = document.querySelector(".sc-back-button");
 backButton.addEventListener("click", () => {
-    let msg = { txt: "scrollCaptureScenario" };
+    let msg = { txt: "scrollCaptureLocation", location: "scrollCapture/scenario" };
     chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 

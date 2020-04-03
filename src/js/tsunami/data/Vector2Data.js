@@ -1,22 +1,37 @@
 import NumberData from "./NumberData";
 import Data from "./Data";
-import EventDispatcher from "../EventDispatcher";
+import DataModel from "./DataModel";
 import BaseEvent from "../events";
 import Point from "../geom/Point";
 
-export default class Vector2Data extends EventDispatcher {
+export default class Vector2Data extends DataModel {
 
 	constructor(x = 0, y = 0) {
 		super();
-		this.dispatchChangeEvent = this.dispatchChangeEvent.bind(this);
+		
+		this.dataChangeHandler = this.dataChangeHandler.bind(this);
+
 		this.x = new NumberData(x);
-		this.x.addEventListener(Data.CHANGE, this.dispatchChangeEvent);
+		this.x.addEventListener(Data.CHANGE, this.dataChangeHandler);
+
 		this.y = new NumberData(y);
-		this.y.addEventListener(Data.CHANGE, this.dispatchChangeEvent);
+		this.y.addEventListener(Data.CHANGE, this.dataChangeHandler);
 	}
 
-	dispatchChangeEvent(event) {
-		this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
+	dataChangeHandler() {
+		this.dispatchChangeEvent();
+	}
+
+	destroy() {
+		this.x.removeEventListener(Data.CHANGE, this.dataChangeHandler);
+		this.y.removeEventListener(Data.CHANGE, this.dataChangeHandler);
+		return super.destroy();
+	}
+
+	copy(obj) {
+		if (!obj) return;
+		this.x.copy(obj.x);
+		this.y.copy(obj.y);
 	}
 
 	clone() {
@@ -25,19 +40,14 @@ export default class Vector2Data extends EventDispatcher {
 		return point;
 	}
 
-	copy(point) {
-		this.x.copy(point.x);
-		this.y.copy(point.y);
+	get point() {
+		return new Point(this.x.value, this.y.value);
 	}
 
 	serialize() {
 		return {x:this.x.value, y:this.y.value};
 	}
-
-	get point() {
-		return new Point(this.x.value, this.y.value);
-	}
-
+	
 	deserialize(data) {
 		if(data) {
 			this.x.value = data.x;

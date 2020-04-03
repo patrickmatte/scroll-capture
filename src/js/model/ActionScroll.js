@@ -118,10 +118,10 @@ export default class ActionScroll extends ActionTween {
 	}
 
 	capture() {
+		super.capture();
+
 		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
 		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
-
-		this.isCapturing.value = true;
 		
 		let scroll = new Point();
 		let maxScroll = new Point();
