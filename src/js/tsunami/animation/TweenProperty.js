@@ -10,9 +10,13 @@ export default class TweenProperty {
 		this.debug = debug;
 	}
 
-	calculate(time, duration) {
-		let value = this.ease(time, this.startValue, this.endValue - this.startValue, duration);
-		this.target[this.name] = Math.round(value * this.roundingValue) / this.roundingValue;
+	calculate(time, duration, debug = false) {
+		let roundedValue = this.endValue;
+		if (duration > 0) {
+			let value = this.ease(time, this.startValue, this.endValue - this.startValue, duration);
+			roundedValue = Math.round(value * this.roundingValue) / this.roundingValue;
+		}
+		this.target[this.name] = roundedValue;
 	}
 
 }

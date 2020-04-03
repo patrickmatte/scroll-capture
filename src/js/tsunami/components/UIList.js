@@ -360,6 +360,7 @@ export default class UIList extends UIComponent {
 			new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, 10),
 			new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, 10)
 		]);
+		this.tween.debug = true;
 		return this.tween.start();
 	}
 

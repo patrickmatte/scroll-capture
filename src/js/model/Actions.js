@@ -36,12 +36,7 @@ export default class Actions extends ArrayData {
 			let index = this.selectedIndex.value + 1;
 			if(isNaN(index)) index = this.value.length;
 			this.splice(index, 0, action);
-			// this.push(action);
 			this.selectedIndex.value = index;
-
-			// if(this.length.value == 1) {
-			// 	action.delay.value = 0;
-			// }
 		}
 		// this.types.selectedItem.value = this.types.value[0];
 	}
@@ -66,7 +61,6 @@ export default class Actions extends ArrayData {
 			actions.push(action);
 		}
 		this.value = actions;
-		this.selectedIndex.value = actions.length - 1;
 	}
 
 }

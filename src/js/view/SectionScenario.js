@@ -7,9 +7,11 @@ export default class SectionScenario extends Section {
 
     constructor(element) {
         super(element);
-        this.branches["*"] = new SectionScenarioDefault();
+        this.branches["default"] = new SectionScenarioDefault();
+        this.defaultChild = "default";
         this.branches.play = new SectionScenarioPlay();
         this.branches.record = new SectionScenarioRecord();
+        
     }
 
 }

@@ -11,6 +11,7 @@ export default class Action {
 
 		this.capture = this.capture.bind(this);
 		this.play = this.play.bind(this);
+		this.deleteAction = this.deleteAction.bind(this);
 
 		this.type = type;
 		this.name = new StringData();
@@ -24,7 +25,6 @@ export default class Action {
 		this.isCapturing = new BooleanData();
 		this.changeCursorOnCapture = new BooleanData();
 		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
-			console.log("isCapturing change!!!!!!");
 			if (this.changeCursorOnCapture.value) {
 				app.showCaptureIcon.value = event.data;
 			}
@@ -94,4 +94,10 @@ export default class Action {
 		return promise2;
 	}
 
+	deleteAction() {
+		let index = app.actions.indexOf(this);
+		app.actions.remove(this);
+		let newIndex = Math.max(index - 1, 0);
+		app.actions.selectedIndex.value = Math.min(newIndex, app.actions.value.length - 1);
+	}
 }

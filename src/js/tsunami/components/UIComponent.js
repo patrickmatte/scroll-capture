@@ -16,7 +16,6 @@ export default class UIComponent extends Branch {
     constructor(element) {
 		super();
 
-
 		this.modelChange = this.modelChange.bind(this);
 
 		if(element) {
@@ -29,7 +28,7 @@ export default class UIComponent extends Branch {
 		this.element = element;
 
 		this.componentID = new Date().getTime();
-		this.element.setAttribute("data-componentId", this.componentID);
+		if(this.debug) this.element.setAttribute("data-componentId", this.componentID);
 
 		this.calculateGlobalPosition = false;
 
@@ -429,6 +428,7 @@ export default class UIComponent extends Branch {
 	}
 
 	destroy() {
+		if (this.debug) console.log("UIComponent.destroy", this.element);
         for (let i in this.attributes) {
         	let attribute = this.attributes[i];
         	attribute.destroy();

@@ -36,56 +36,27 @@ export default class Tween extends EventDispatcher {
 		this.dispatchEvent(new BaseEvent(Tween.CHANGE))
 	}
 
-	static get COMPLETE() {
-		return "complete";
-	}
-
-	static get UPDATE() {
-		return "update";
-	}
-
-	static get CHANGE() {
-		return "change";
-	}
-
 	start() {
-		let tween = this;
-		let promise;
-		if (Promise) {
-			promise = new Promise(function(resolve, reject) {
-				let tweenComplete = function(event) {
-					tween.removeEventListener(Tween.COMPLETE, tweenComplete);
-					resolve(tween);
-				};
-				tween.addEventListener(Tween.COMPLETE, tweenComplete);
-			});
-		}
-		this.clockStartTime = NaN;
+		let promise = new Promise((resolve, reject) => {
+			let tweenComplete = (event) => {
+				this.removeEventListener(Tween.COMPLETE, tweenComplete);
+				resolve(this);
+			};
+			this.addEventListener(Tween.COMPLETE, tweenComplete);
+		});
+		this._tweenTime = NaN;
+		this.clockStartTime = clock.time;
 		clock.addEventListener(Clock.TICK, this.tick);
+		this.time = 0;
 		return promise;
 	}
 
 	tick(event) {
-		if (isNaN(this.clockStartTime)) {
-			this.clockStartTime = clock.time;
-		}
-		let clockTime = (clock.time - this.clockStartTime) / 1000;
-		if (clockTime >= this.startTime + this.duration) {
-			clockTime = this.startTime + this.duration;
-			this.time = clockTime;
-			this.stop();
-			if (this.completeHandler) {
-				this.completeHandler();
-			}
-			this.dispatchEvent({type:Tween.COMPLETE, target:this});
-		} else {
-			this.time = clockTime;
-		}
+		this.time = (clock.time - this.clockStartTime) / 1000;
 	}
 
 	stop() {
 		clock.removeEventListener(Clock.TICK, this.tick);
-		this.dispatchEvent({type:Tween.COMPLETE, target:this});
 	}
 
 	get time() {
@@ -104,7 +75,7 @@ export default class Tween extends EventDispatcher {
 			this._tweenTime = tweenTime;
 			for (let i = 0; i < this.tweenProps.length; i++) {
 				let tweenProp = this.tweenProps[i];
-				tweenProp.calculate(tweenTime, this.duration);
+				tweenProp.calculate(tweenTime, this.duration, this.debug);
 			}
 			let updateEvent = {type:Tween.UPDATE, target:this, currentTarget:this};
 			if (this.updateHandler) {
@@ -112,6 +83,25 @@ export default class Tween extends EventDispatcher {
 			}
 			this.dispatchEvent(updateEvent);
 		}
+		if (tweenTime >= this.duration) {
+			if (this.completeHandler) {
+				this.completeHandler();
+			}
+			this.stop();
+			this.dispatchEvent({ type: Tween.COMPLETE, target: this });
+		}
+	}
+
+	static get COMPLETE() {
+		return "complete";
+	}
+
+	static get UPDATE() {
+		return "update";
+	}
+
+	static get CHANGE() {
+		return "change";
 	}
 
 }
