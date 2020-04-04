@@ -302,13 +302,16 @@ player.addEventListener('canplay', function () {
   chrome.tabs.sendMessage(page.selectedTabId, msg);
 });
 var backButton = document.querySelector(".sc-back-button");
-backButton.addEventListener("click", function () {
-  var msg = {
-    txt: "scrollCaptureLocation",
-    location: "scroll-capture/scenario"
-  };
-  chrome.tabs.sendMessage(page.selectedTabId, msg);
-});
+
+if (backButton) {
+  backButton.addEventListener("click", function () {
+    var msg = {
+      txt: "scrollCaptureLocation",
+      location: "scroll-capture/scenario"
+    };
+    chrome.tabs.sendMessage(page.selectedTabId, msg);
+  });
+}
 
 if (page.videoURL) {
   player.src = page.videoURL;

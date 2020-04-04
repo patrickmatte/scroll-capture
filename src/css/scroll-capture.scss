@@ -230,6 +230,14 @@ $borderRadius: 0.33em;
 			}
 		}
 
+		&.sc-actions-button {
+			.sc-icon {
+				&:after {
+					content: "\ef75";
+				}
+			}
+		}
+
 		&.sc-play-button {
 			.sc-icon {
 				&:after {
@@ -410,7 +418,7 @@ $borderRadius: 0.33em;
 			}
 		}
 
-		button {
+		a, button {
 			display: inline-flex;
 			padding: 0;
 			align-items: center;

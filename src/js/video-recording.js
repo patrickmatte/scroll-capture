@@ -13,10 +13,12 @@ player.addEventListener('canplay', function () {
 });
 
 let backButton = document.querySelector(".sc-back-button");
-backButton.addEventListener("click", () => {
-    let msg = { txt: "scrollCaptureLocation", location: "scroll-capture/scenario" };
-    chrome.tabs.sendMessage(page.selectedTabId, msg);
-});
+if (backButton) {
+    backButton.addEventListener("click", () => {
+        let msg = { txt: "scrollCaptureLocation", location: "scroll-capture/scenario" };
+        chrome.tabs.sendMessage(page.selectedTabId, msg);
+    });
+}
 
 if (page.videoURL) {
     player.src = page.videoURL;
