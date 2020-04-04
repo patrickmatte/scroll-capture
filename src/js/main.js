@@ -9,6 +9,8 @@ import Data from "./tsunami/data/Data";
 import ArrayData from "./tsunami/data/ArrayData";
 import Router from "./tsunami/Router";
 import RouterButton from "./view/RouterButton";
+import PlayState from "./view/PlayState";
+import PlayRecordState from "./view/PlayRecordState";
 
 export let app;
 
@@ -16,7 +18,7 @@ export default class Main extends App {
 
 	constructor(element) {
 		super(element);
-	
+
 		this.save = this.save.bind(this);
 		this.play = this.play.bind(this);
 		this.playSelectedAction = this.playSelectedAction.bind(this);
@@ -24,6 +26,8 @@ export default class Main extends App {
 		this.clear = this.clear.bind(this);
 
 		app = this;
+
+		this.startLocation = "scroll-capture/scenario";
 
 		this.router = new Router(this);
 
@@ -77,7 +81,11 @@ export default class Main extends App {
 		this.capturedVideo = new ArrayData("test.mp4");
 
 		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
-		this.branches["scrollCapture"] = this.scrollCapture;
+		this.branches = {
+			"scroll-capture": this.scrollCapture,
+			"play": new PlayState(),
+			"record":new PlayRecordState()
+		}
 
 		// this.actions.value = [
 		// 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
@@ -123,7 +131,11 @@ export default class Main extends App {
 	}
 
 	play() {
-		this.doPlay();
+		this.router.location = "play";
+	}
+
+	playAndCapture() {
+		this.router.location = "record";
 	}
 
 	playSelectedAction() {
@@ -135,22 +147,7 @@ export default class Main extends App {
 		});
 	}
 
-	playAndCapture() {
-		this.doPlay(true);
-	}
-
 	doPlay(doCapture = false) {
-		this.doCapture = doCapture;
-		this.save();
-		this.router.location = "";
-		this.actions.selectedIndex.value = 0;
-		if (doCapture) {
-			let msg = { txt: "scrollCaptureStartRecording" };
-			chrome.runtime.sendMessage(msg);
-		}
-		setTimeout(() => {
-			this.triggerAction();
-		}, 250);
 		// let json = JSON.stringify(data);
 		// let code = `window.startActions('${json}')`;
 		// chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
@@ -161,35 +158,6 @@ export default class Main extends App {
 	clear() {
 		this.actions.value = [];
 		this.save();
-	}
-
-	triggerAction() {
-		let action = this.actions.selectedItem.value;
-		if(action) {
-			let promise = action.triggerDelay();
-			promise.then(this.actionComplete.bind(this));
-		} else {
-			this.allComplete();
-		}
-	}
-
-	actionComplete() {
-		if(this.actions.selectedIndex.value < (this.actions.value.length - 1)) {
-			this.actions.selectedIndex.value = (this.actions.selectedIndex.value + 1);
-			this.triggerAction();
-		} else {
-			this.allComplete();
-		}
-	}
-	
-	allComplete() {
-		if(this.doCapture) {
-			let msg = { txt: "scrollCaptureStopRecording" };
-			chrome.runtime.sendMessage(msg);
-			this.router.location = "scrollCapture/video";
-		} else {
-			this.router.location = "scrollCapture/scenario";
-		}
 	}
 
 }

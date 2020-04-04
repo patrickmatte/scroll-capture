@@ -305,7 +305,7 @@ var backButton = document.querySelector(".sc-back-button");
 backButton.addEventListener("click", function () {
   var msg = {
     txt: "scrollCaptureLocation",
-    location: "scrollCapture/scenario"
+    location: "scroll-capture/scenario"
   };
   chrome.tabs.sendMessage(page.selectedTabId, msg);
 });

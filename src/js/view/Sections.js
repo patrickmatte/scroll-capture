@@ -3,6 +3,7 @@ import SectionVideo from "./SectionVideo";
 import SectionScenario from "./SectionScenario";
 import * as tsunami from "../tsunami/tsunami";
 import Style from "../tsunami/components/Style";
+import SectionSettings from "./SectionSettings";
 
 export default class Sections extends UIComponent {
 
@@ -16,9 +17,13 @@ export default class Sections extends UIComponent {
 
         this.video = this.element.querySelector("sc-video").component;
         this.removeChild(this.video.element);
+
+        this.settings = this.element.querySelector("sc-settings").component;
+        this.removeChild(this.settings.element);
     }
 
 }
 
 tsunami.define("sc-scenario", SectionScenario);
 tsunami.define("sc-video", SectionVideo);
+tsunami.define("sc-settings", SectionSettings);

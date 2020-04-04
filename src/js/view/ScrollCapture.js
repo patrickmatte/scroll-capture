@@ -31,6 +31,7 @@ export default class ScrollCapture extends UIComponent {
 
 		this.branches["scenario"] = this.windowContent.sections.scenario;
 		this.branches["video"] = this.windowContent.sections.video;
+		this.branches["settings"] = this.windowContent.sections.settings;
 	}
 
 	get model() {

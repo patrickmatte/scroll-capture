@@ -115,15 +115,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   }
 });
 chrome.browserAction.onClicked.addListener(function (tab) {
-  if (isRecording) {
-    stopRecording();
-  }
-
+  // if(isRecording) stopRecording();
   selectedTabId = tab.id;
   window.selectedTabId = selectedTabId;
   var msg = {
-    txt: "scrollCaptureLocation",
-    location: "scrollCapture/scenario"
+    txt: "scrollCaptureBrowserAction"
   };
   chrome.tabs.sendMessage(selectedTabId, msg);
 });

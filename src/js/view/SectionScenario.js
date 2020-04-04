@@ -1,17 +1,22 @@
 import Section from "./Section";
-import SectionScenarioPlay from "./SectionScenarioPlay";
-import SectionScenarioDefault from "./SectionScenarioDefault";
-import SectionScenarioRecord from "./SectionScenarioRecord";
+import { app } from "../main";
 
 export default class SectionScenario extends Section {
 
     constructor(element) {
         super(element);
-        this.branches["default"] = new SectionScenarioDefault();
-        this.defaultChild = "default";
-        this.branches.play = new SectionScenarioPlay();
-        this.branches.record = new SectionScenarioRecord();
-        
+    }
+
+    showDelayComplete() {
+        let promise = super.showDelayComplete();
+        app.startLocation = this.path;
+        let lastIndex = app.actions.length.value - 1;
+        app.actions.selectedIndex.value = lastIndex;
+        let actionsViewElement = app.scrollCapture.windowContent.sections.element.querySelector("actions-view");
+        let actionsView = actionsViewElement.component;
+        let element = actionsView.getElementByModel(app.actions.selectedItem.value);
+        // actionsView.scrollToElement(element, 0);
+        return promise;
     }
 
 }

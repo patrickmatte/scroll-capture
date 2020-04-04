@@ -18,12 +18,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 chrome.browserAction.onClicked.addListener((tab) => {
-    if(isRecording) {
-        stopRecording();
-    }
+    // if(isRecording) stopRecording();
     selectedTabId = tab.id;
     window.selectedTabId = selectedTabId;
-    let msg = { txt: "scrollCaptureLocation", location:"scrollCapture/scenario" };
+    let msg = { txt: "scrollCaptureBrowserAction"};
     chrome.tabs.sendMessage(selectedTabId, msg);
 });
 

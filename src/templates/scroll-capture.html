@@ -13,10 +13,17 @@
 					</svg> -->
 				</span>
 			</div>
-			<div class="sc-tab">
-				<button class="sc-close-button" is="router-button" data-path="">
-					<span class="sc-icon"></span>
-				</button>
+			<div class="sc-tabs">
+				<div class="sc-tab">
+					<a class="sc-settings-button" is="router-button" data-path="scroll-capture/settings">
+						<span class="sc-icon"></span>
+					</a>
+				</div>
+				<div class="sc-tab">
+					<button class="sc-close-button" is="router-button" data-path="">
+						<span class="sc-icon"></span>
+					</button>
+				</div>
 			</div>
 		</div>
 
@@ -214,6 +221,49 @@
 					</sc-select-action>
 
 				</sc-scenario>
+				
+				<sc-settings class="sc-fields">
+					<div>
+						<div class="sc-window">
+							<div class="sc-title">
+								<div class="sc-drag-area ui-list-drag-area"></div>
+								<div class="sc-tabs">
+									<span class="sc-tab sc-title-tab">
+										<span class="sc-label">Settings</span>
+									</span>
+								</div>
+								<div class="sc-tabs">
+									<span class="sc-tab">
+										<a class="sc-back-button" is="router-button" data-path="scroll-capture/scenario">
+											<span class="sc-icon"></span>
+											<span class="sc-label">Back</span>
+										</a>
+									</span>
+								</div>
+							</div>
+							<div class="sc-window-content" is="ui-component">
+								<div class="sc-fields" is="ui-component">
+									<div class="sc-field">
+										<span class="sc-label">Video:</span>
+										<input type="range" min="1" max="16" step="1" data-model="settings.videoBitsPerSecond" is="ui-input"/>
+										<span class="sc-label">
+											<span is="ui-text" data-model="settings.videoBitsPerSecond"></span>
+											<span class="unit">Mbps</span>
+										</span>
+									</div>
+									<div class="sc-field">
+										<span class="sc-label">Audio:</span>
+										<input type="range" min="32" max="128" step="32" data-model="settings.audioBitsPerSecond" is="ui-input"/>
+										<span class="sc-label">
+											<span is="ui-text" data-model="settings.audioBitsPerSecond"></span>
+											<span class="unit">Kbps</span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</sc-settings>
 
 			</sc-sections>
 

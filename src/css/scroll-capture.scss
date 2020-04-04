@@ -262,6 +262,14 @@ $borderRadius: 0.33em;
 				}
 			}
 		}
+		&.sc-settings-button {
+			.sc-icon {
+				&:after {
+					content: "\ef3b";
+					// font-size: 0.75em;
+				}
+			}
+		}
 
 		&.sc-back-button {
 			.sc-icon {
@@ -616,10 +624,13 @@ $borderRadius: 0.33em;
 		}
 
 		.unit {
-			width: 3em;
-			flex-shrink: 0;
-			flex-grow: 0;
-			padding-left: 0.5em;
+			&:before {
+				content:"\00a0";
+			}
+			// width: 3em;
+			// flex-shrink: 0;
+			// flex-grow: 0;
+			// padding-left: 0.5em;
 		}
 	}
 
