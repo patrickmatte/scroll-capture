@@ -115,7 +115,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   }
 });
 chrome.browserAction.onClicked.addListener(function (tab) {
-  // if(isRecording) stopRecording();
+  if (isRecording) stopRecording();
   selectedTabId = tab.id;
   window.selectedTabId = selectedTabId;
   var msg = {
@@ -137,6 +137,7 @@ function startRecording() {
 function _startTabCapture(tab) {
   isRecording = true; // Note: this method must be invoked by the user as defined
   // in https://crbug.com/489258, e.g. chrome.browserAction.onClicked.
+  // console.log("getSupportedConstraints", navigator.mediaDevices.getSupportedConstraints());
 
   var captureOptions = {
     audio: true,
@@ -166,9 +167,8 @@ function _setStream(stream) {
     mediaStream = stream;
   } else {
     alert('Stream creation failed: ' + chrome.runtime.lastError.message);
-  }
-
-  var tracks = mediaStream.getTracks(); // for (var i = 0; i < tracks.length; ++i) {
+  } // let tracks = mediaStream.getTracks();
+  // for (var i = 0; i < tracks.length; ++i) {
   //     let track = tracks[i];
   //     console.log("---- track", track);
   //     for (let j in track) console.log(j, "=", track[j]);
@@ -177,10 +177,32 @@ function _setStream(stream) {
   //     for (let k in settings) console.log(k, "=", settings[k]);
   // }
 
+
   recordedBlobs = [];
+  chrome.storage.sync.get(["json"], _createMediaRecorder);
+}
+
+function _createMediaRecorder(result) {
+  var videoCodec = "vp8";
+  var audioCodec = "opus";
+  var videoBitsPerSecond = 8;
+  var audioBitsPerSecond = 128;
+
+  if (result.json) {
+    var data = JSON.parse(result.json);
+
+    if (data.settings) {
+      videoCodec = data.settings.videoCodec || videoCodec;
+      audioCodec = data.settings.audioCodec || audioCodec;
+      audioBitsPerSecond = data.settings.audioBitsPerSecond || audioBitsPerSecond;
+      videoBitsPerSecond = data.settings.videoBitsPerSecond || videoBitsPerSecond;
+    }
+  } // let options = { mimeType: "video/webm;codecs=h264" };
+
+
   var options = {
-    mimeType: 'video/webm;codecs=vp9'
-  }; // let options = { mimeType: "video/webm;codecs=h264" };
+    mimeType: 'video/webm;codecs=' + videoCodec + "," + audioCodec
+  };
 
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     options = {
@@ -206,9 +228,9 @@ function _setStream(stream) {
     }
   }
 
-  options.audioBitsPerSecond = 128000; // 128 Kbit/sec
+  options.audioBitsPerSecond = audioBitsPerSecond * 1000; // 128 Kbit/sec
 
-  options.videoBitsPerSecond = 8000000; // 8 Mbit/sec
+  options.videoBitsPerSecond = videoBitsPerSecond * 1000000; // 8 Mbit/sec
 
   try {
     mediaRecorder = new MediaRecorder(mediaStream, options);
@@ -217,9 +239,6 @@ function _setStream(stream) {
     console.log("Exception while creating MediaRecorder: ".concat(JSON.stringify(e)));
     return;
   } // console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
-  // recordButton.textContent = 'Stop Recording';
-  // playButton.disabled = true;
-  // downloadButton.disabled = true;
 
 
   mediaRecorder.onstop = function (event) {// console.log('Recorder stopped: ', event);
@@ -231,15 +250,18 @@ function _setStream(stream) {
 }
 
 function stopRecording() {
-  mediaRecorder.stop();
+  if (mediaRecorder) mediaRecorder.stop();
   var videoBlob = new Blob(recordedBlobs, {
     type: 'video/webm'
   });
   window.videoURL = window.URL.createObjectURL(videoBlob);
-  var tracks = mediaStream.getTracks();
 
-  for (var i = 0; i < tracks.length; ++i) {
-    tracks[i].stop();
+  if (mediaStream) {
+    var tracks = mediaStream.getTracks();
+
+    for (var i = 0; i < tracks.length; ++i) {
+      tracks[i].stop();
+    }
   }
 
   mediaRecorder = null;

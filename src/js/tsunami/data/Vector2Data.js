@@ -18,6 +18,14 @@ export default class Vector2Data extends DataModel {
 		this.y.addEventListener(Data.CHANGE, this.dataChangeHandler);
 	}
 
+	get value() {
+		return this;
+	}
+
+	set value(value) {
+		
+	}
+
 	dataChangeHandler() {
 		this.dispatchChangeEvent();
 	}
@@ -49,10 +57,9 @@ export default class Vector2Data extends DataModel {
 	}
 	
 	deserialize(data) {
-		if(data) {
-			this.x.value = data.x;
-			this.y.value = data.y;
-		}
+		if(!data) return 
+		this.x.value = data.x;
+		this.y.value = data.y;
 	}
 
 }

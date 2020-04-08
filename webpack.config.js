@@ -11,9 +11,9 @@ let entry = {};
 if(isDev) {
 	entry.test = ["./js/test.js", "./css/test.scss"];
 } else {
-	entry.content = ["./js/content.js", "./css/scroll-capture.scss"];
+	entry.content = ["./js/content.js", "./css/content.scss"];
 	entry.background = ["./js/background.js"];
-	entry["video-recording"] = ["./js/video-recording.js", "./css/video-recording.scss"];
+	entry["video-recording"] = ["./js/video-recording.js"];
 }
 
 module.exports = {

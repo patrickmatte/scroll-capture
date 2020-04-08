@@ -14,6 +14,7 @@ export default class ActionSwipe extends ActionTween {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionSwipe";
 		this.name.value = "Swipe";
+		this.description.value = "Add a swipe gesture";
 		this.points = new ArrayData();
 		this.points.dataClass = Vector2Data;
 		while(points.length < 2) {
@@ -24,7 +25,8 @@ export default class ActionSwipe extends ActionTween {
 		this.isTestable.value = true;
 		this.smoothness = new NumberData(20);
 		this.changeCursorOnCapture.value = true;
-		
+		this.icon.value = "fas fa-arrows-alt";
+	
 		this.captureDownHandler = this.captureDownHandler.bind(this);
 		this.captureMoveHandler = this.captureMoveHandler.bind(this);
 		this.captureUpHandler = this.captureUpHandler.bind(this);
@@ -110,7 +112,6 @@ export default class ActionSwipe extends ActionTween {
 	}
 
 	capture() {
-		console.log("ActionSwipe.capture");
 		super.capture();
 		document.body.addEventListener(events.mousedown, this.captureDownHandler);
 	}
@@ -124,6 +125,7 @@ export default class ActionSwipe extends ActionTween {
 		this.capturedPoints = [new Vector2Data(point.x, point.y)];
 
 		this.lastPoint = point;
+		this.startDate = new Date();
 
 		document.body.removeEventListener(events.mousedown, this.captureDownHandler);
 		document.body.addEventListener(events.mousemove, this.captureMoveHandler);
@@ -155,10 +157,18 @@ export default class ActionSwipe extends ActionTween {
 		}
 		this.points.value = this.capturedPoints;
 		this.capturedPoints = [];
+
+		let duration = NumberData.roundDecimal1((new Date() - this.startDate) / 1000);
+		this.duration.value = duration;
 		
 		document.body.removeEventListener(events.mousemove, this.captureMoveHandler);
 		document.body.removeEventListener(events.mouseup, this.captureUpHandler);
 		this.captureComplete();
 	}
 
+	captureAtInit() {
+		super.captureAtInit();
+		this.capture();
+	}
+	
 }

@@ -11,8 +11,8 @@ export default class CubicBezierPoints extends Data {
 		this.changeHandler = this.changeHandler.bind(this);
 
 		this.p0 = new Vector2Data(0,0);
-		this.p1 = new Vector2Data(CubicBezierEasing.quadratic.easeInOut.p1.x, CubicBezierEasing.quadratic.easeInOut.p1.y);
-		this.p2 = new Vector2Data(CubicBezierEasing.quadratic.easeInOut.p2.x, CubicBezierEasing.quadratic.easeInOut.p2.y);
+		this.p1 = new Vector2Data(CubicBezierEasing.quad.easeInOut.p1.x, CubicBezierEasing.quad.easeInOut.p1.y);
+		this.p2 = new Vector2Data(CubicBezierEasing.quad.easeInOut.p2.x, CubicBezierEasing.quad.easeInOut.p2.y);
 		this.p3 = new Vector2Data(1, 1);
 		this.p0.addEventListener(Data.CHANGE, this.changeHandler);
 		this.p1.addEventListener(Data.CHANGE, this.changeHandler);

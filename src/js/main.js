@@ -20,9 +20,9 @@ export default class Main extends App {
 		super(element);
 
 		this.save = this.save.bind(this);
-		this.play = this.play.bind(this);
-		this.playSelectedAction = this.playSelectedAction.bind(this);
-		this.playAndCapture = this.playAndCapture.bind(this);
+		// this.playSelected = this.playSelected.bind(this);
+		// this.captureSelected = this.captureSelected.bind(this);
+		// this.deleteSelected = this.deleteSelected.bind(this);
 		this.clear = this.clear.bind(this);
 
 		app = this;
@@ -31,61 +31,22 @@ export default class Main extends App {
 
 		this.router = new Router(this);
 
-		let icoFont = chrome.extension.getURL('assets/fonts/icofont.woff');
-		let DefaultFontRegular = chrome.extension.getURL('assets/fonts/Menlo-Regular.woff');
-		let defaultFontBold = chrome.extension.getURL('assets/fonts/Menlo-Bold.woff');
-		let customCursor = chrome.extension.getURL('assets/images/customCursor.png');
-		let fonts = document.createElement('style');
-		fonts.type = 'text/css';
-		fonts.textContent = `
-		@font-face {
-			font-family: IcoFont;
-			src: url("${icoFont}");
-		}
-		@font-face {
-			font-family: DefaultFont;
-			font-weight: 400;
-			src: url("${DefaultFontRegular}");
-		}
-		@font-face {
-			font-family: DefaultFont;
-			font-weight: 700;
-			src: url("${defaultFontBold}");
-		}
-
-		body.is-capturing * {
-			cursor: url('${customCursor}'), auto !important;
-		}
-		`;
-		document.head.appendChild(fonts);
-
 		this.showCaptureIcon = new BooleanData();
 		this.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
+			let className = "is-capturing";
 			if (event.data) {
-				document.body.classList.add("is-capturing");
+				document.body.classList.add(className);
 			} else {
-				document.body.classList.remove("is-capturing");
+				document.body.classList.remove(className);
 			}
 		})
+
 		this.isSaving = new BooleanData();
-		this.selectedActionIsPlaying = new BooleanData();
+		// this.isPlayingSelected = new BooleanData();
+		// this.isCapturingSelected = new BooleanData();
+
 		this.settings = new Settings();
 		this.actions = new Actions();
-		this.actions.addEventListener("add", (event) => {
-			this.save();
-		});
-		this.actions.addEventListener("remove", (event) => {
-			this.save();
-		});
-
-		this.capturedVideo = new ArrayData("test.mp4");
-
-		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
-		this.branches = {
-			"scroll-capture": this.scrollCapture,
-			"play": new PlayState(),
-			"record":new PlayRecordState()
-		}
 
 		// this.actions.value = [
 		// 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
@@ -95,18 +56,36 @@ export default class Main extends App {
 		// 	// new ActionScroll(".scrollpane", "%", 0, 100),
 		// 	// new ActionMouseEvent("click", 0, 0),
 		// ];
+
+		this.actions.addEventListener("add", (event) => {
+			this.save();
+		});
+		this.actions.addEventListener("remove", (event) => {
+			this.save();
+		});
+		
+		this.capturedVideo = new ArrayData("test.mp4");
+
+		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
+		this.branches = {
+			"scroll-capture": this.scrollCapture,
+			"play": new PlayState(),
+			"record":new PlayRecordState()
+		}
 	}
 
 	load() {
 		let promise = new Promise((resolve, reject) => {
 			chrome.storage.sync.get(["json"], (result) => {
-				resolve(result.json);
+				resolve(result);
 			});
 		});
-		return promise.then((json) => {
-			let data = JSON.parse(json);
-			this.actions.deserialize(data.actions);
-			this.settings.deserialize(data.settings);
+		return promise.then((result) => {
+			if (result.json) {
+				let data = JSON.parse(result.json)
+				this.actions.deserialize(data.actions);
+				this.settings.deserialize(data.settings);
+			}
 		});
 	}
 
@@ -130,31 +109,23 @@ export default class Main extends App {
 		});
 	}
 
-	play() {
-		this.router.location = "play";
-	}
+	// playSelected() {
+	// 	this.isPlayingSelected.value = true;
+	// 	let promise = this.actions.selectedItem.value.play();
+	// 	promise.then(()=> {
+	// 		this.isPlayingSelected.value = false;
+	// 		this.save();
+	// 	});
+	// }
 
-	playAndCapture() {
-		this.router.location = "record";
-	}
+	// captureSelected() {
 
-	playSelectedAction() {
-		this.selectedActionIsPlaying.value = true;
-		let promise = this.actions.selectedItem.value.play();
-		promise.then(()=> {
-			this.selectedActionIsPlaying.value = false;
-			this.save();
-		});
-	}
+	// }
 
-	doPlay(doCapture = false) {
-		// let json = JSON.stringify(data);
-		// let code = `window.startActions('${json}')`;
-		// chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-		// 	chrome.tabs.executeScript(tabs[0].id, {code: code});
-		// });
-	}
-
+	// deleteSelected() {
+	// 	this.actions.selectedItem.value.deleteAction();
+	// }
+	
 	clear() {
 		this.actions.value = [];
 		this.save();

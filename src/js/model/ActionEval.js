@@ -1,12 +1,7 @@
 import Action from "./Action";
 import StringData from "../tsunami/data/StringData";
 
-export default class ActionEval extends Action {
-
-	constructor(code = '') {
-		super("ActionEval", "Eval");
-		if(!code) {
-			code = `/* Example */
+let example = `/* Example */
 let promise = new Promise(function(resolve, reject) {
     console.log("Wait for 1 second");
     setTimeout(function() {
@@ -17,8 +12,14 @@ return promise.then(function() {
     console.log("1 second has passed");
 });
 `;
-		}
+
+export default class ActionEval extends Action {
+
+	constructor(code = '') {
+		super("ActionEval", "Javascript", "Add your own javascript");
+		if(!code) code = example;
 		this.code = new StringData(code);
+		this.icon.value = "fab fa-js-square";
 		this.isTestable.value = true;
 	}
 
@@ -34,7 +35,6 @@ return promise.then(function() {
 
 	trigger() {
 		let expression = this.code.value;
-		// let promise = eval('(function() {' + expression + '}())');
 		let promise = new Function(expression)();
 		let isPromise = (promise instanceof Promise);
 		if(!isPromise) {

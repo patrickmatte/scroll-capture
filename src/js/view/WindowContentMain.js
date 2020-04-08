@@ -12,7 +12,7 @@ export default class WindowContentMain extends UIComponent {
 
         this.position = new Point();
 
-        this.sections = this.element.querySelector("sc-sections").component;
+        this.sections = this.element.querySelector("div[is='sc-sections']").component;
         this.sections.element.addEventListener("ui-resize", (event) => {
             let height = this.sections.element.offsetHeight;
             this.element.style.height = height + "px";

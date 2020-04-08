@@ -30,7 +30,7 @@ CubicBezierEasing.sine = {
 	easeOut: new CubicBezierEasing(0.61, 1, 0.88, 1)
 };
 
-CubicBezierEasing.quadratic = {
+CubicBezierEasing.quad = {
 	easeInOut: new CubicBezierEasing(0.45, 0, 0.55, 1),
 	easeIn: new CubicBezierEasing(0.11, 0, 0.5, 0),
 	easeOut: new CubicBezierEasing(0.5, 1, 0.89, 1)
@@ -42,19 +42,19 @@ CubicBezierEasing.cubic = {
 	easeOut: new CubicBezierEasing(0.33, 1, 0.68, 1)
 };
 
-CubicBezierEasing.quartic = {
+CubicBezierEasing.quart = {
 	easeInOut: new CubicBezierEasing(0.76, 0, 0.24, 1),
 	easeIn: new CubicBezierEasing(0.5, 0, 0.75, 0),
 	easeOut: new CubicBezierEasing(0.25, 1, 0.5, 1)
 };
 
-CubicBezierEasing.quintic = {
+CubicBezierEasing.quint = {
 	easeInOut: new CubicBezierEasing(0.83, 0, 0.17, 1),
 	easeIn: new CubicBezierEasing(0.64, 0, 0.78, 0),
 	easeOut: new CubicBezierEasing(0.22, 1, 0.36, 1)
 };
 
-CubicBezierEasing.exponential = {
+CubicBezierEasing.expo = {
 	easeInOut: new CubicBezierEasing(0.87, 0, 0.13, 1),
 	easeIn: new CubicBezierEasing(0.7, 0, 0.84, 0),
 	easeOut: new CubicBezierEasing(0.16, 1, 0.3, 1)
@@ -66,7 +66,7 @@ CubicBezierEasing.back = {
 	easeOut: new CubicBezierEasing(0.34, 1.56, 0.64, 1)
 };
 
-CubicBezierEasing.circular = {
+CubicBezierEasing.circ = {
 	easeInOut: new CubicBezierEasing(0.85, 0, 0.15, 1),
 	easeIn: new CubicBezierEasing(0.55, 0, 1, 0.45),
 	easeOut: new CubicBezierEasing(0, 0.55, 0.45, 1)

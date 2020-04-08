@@ -4,38 +4,60 @@
     <meta charset="UTF-8">
     <title>Video Capture</title>
     <link rel="stylesheet" href="content.css">
-    <link rel="stylesheet" href="video-recording.css">
+    <link rel="stylesheet" href="fontawesome.css">
+    <link rel="stylesheet" href="icofont.css">
 </head>
-<body>
-    <div class="sc-video-recording sc-default">
+<body class="sc-video-recording">
+    <div class="sc-default">
         <div class="sc-window" is="ui-component">
             <div class="sc-title">
-                <div class="sc-drag-area"></div>
                 <div class="sc-tabs">
+                    <span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
+                        <button is="sendMessage-button" data-path="record" title="Actions">
+                            <span class="sc-icon fas fa-sliders-h"></span>
+                        </button>
+                    </span>
                     <span class="sc-tab sc-title-tab">
-                        <span class="sc-label">Video</span>
+                        <span class="sc-icon fas fa-video"></span>
+                        <span class="sc-label">Capture</span>
+                    </span>
+                    <span class="sc-tab">
+                        <button is="sendMessage-button" data-path="scroll-capture/settings" title="Settings">
+                            <span class="sc-icon fas fa-cog"></span>
+                        </button>
                     </span>
                 </div>
                 <div class="sc-tabs">
-                    <span class="sc-tab">
-                        <a class="sc-download-button">
-                            <span class="sc-icon"></span>
-                            <!-- <span class="sc-label">Download</span> -->
-                        </a>
-                    </span>
-                    <!-- <span class="sc-tab">
-                        <button class="sc-back-button">
-                            <span class="sc-icon"></span>
-                            <span class="sc-label">Back</span>
-                       </button>
-                    </span> -->
                 </div>
             </div>
             <div class="sc-window-content" is="ui-component">
                 <div class="sc-fields">
-                    <div class="sc-video-player-container">
-                        <video class="sc-video-player" controls muted></video>
-                    </div>
+                    <div>
+                        <div class="sc-window" is="ui-component">
+                            <div class="sc-title">
+                                <div class="sc-tabs">
+                                    <span class="sc-tab sc-title-tab">
+                                        <span class="sc-icon fas fa-video"></span>
+                                        <span class="sc-label">Video</span>
+                                    </span>
+                                </div>
+                                <div class="sc-tabs">
+                                    <span class="sc-tab">
+                                        <a class="sc-download-button" title="Download">
+                                            <span class="sc-icon fas fa-download"></span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="sc-window-content" is="ui-component">
+                                <div class="sc-fields">
+                                    <div class="sc-video-player-container">
+                                        <video class="sc-video-player" controls muted></video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import { app } from "../main";
 export default class Section extends UIComponent {
 
     showDelayComplete() {
-        app.scrollCapture.windowContent.sections.appendChild(this.element);
+        app.scrollCapture.windowContent.sections.appendChildAt(this.element, 0);
         this.dispatchResizeEvent();
         return super.showDelayComplete();
     }

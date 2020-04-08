@@ -1,0 +1,68 @@
+@font-face {
+	font-family: Menlo;
+	font-weight: 400;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Menlo-Regular.woff");
+}
+@font-face {
+	font-family: Menlo;
+	font-weight: 700;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Menlo-Bold.woff");
+}
+
+@font-face {
+	font-family: SFMono;
+	font-weight: 400;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/SFMono-Regular.woff");
+}
+@font-face {
+	font-family: SFMono;
+	font-weight: 700;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/SFMono-Bold.woff");
+}
+
+@font-face {
+	font-family: "IcoFont";
+	font-weight: normal;
+	font-style: "Regular";
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/icofont.woff");
+}
+
+@font-face {
+	font-family: 'Font Awesome 5 Brands';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/fa-brands-400.woff") format("woff");
+}
+
+.fab {
+	font-family: 'Font Awesome 5 Brands';
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Font Awesome 5 Free';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/fa-regular-400.woff") format("woff");
+}
+
+.far {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Font Awesome 5 Free';
+	font-style: normal;
+	font-weight: 900;
+	font-display: block;
+	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/fa-solid-900.woff") format("woff");
+}
+
+.fa,
+.fas {
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+}

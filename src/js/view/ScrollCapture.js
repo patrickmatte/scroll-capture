@@ -27,7 +27,7 @@ export default class ScrollCapture extends UIComponent {
 		let dragArea = this.element.querySelector("* > .sc-window .sc-drag-area");
 		dragArea.addEventListener(events.mousedown, this.dragStart);
 
-		this.windowContent = this.element.querySelector(".sc-window-content").component;
+		this.windowContent = this.element.querySelector(".sc-window-content[is='sc-window-content-main']").component;
 
 		this.branches["scenario"] = this.windowContent.sections.scenario;
 		this.branches["video"] = this.windowContent.sections.video;
@@ -105,5 +105,5 @@ export default class ScrollCapture extends UIComponent {
 
 ScrollCapture.template = template;
 
-tsunami.define("actions-view", ActionsView);
+tsunami.define("sc-actions-view", ActionsView);
 tsunami.define("sc-window-content-main", WindowContentMain);

@@ -26,4 +26,4 @@ export default class ActionsView extends UIList {
 
 }
 
-tsunami.define("action-view", ActionView);
+tsunami.define("sc-action-view", ActionView);

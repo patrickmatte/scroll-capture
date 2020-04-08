@@ -7,7 +7,7 @@ import ArrayData from "../tsunami/data/ArrayData";
 export default class ActionMouseEvent extends Action {
 
 	constructor(eventType = "click", x = 0, y = 0) {
-		super("ActionMouseEvent", "MouseEvent");
+		super("ActionMouseEvent", "MouseEvent", "Add a MouseEvent");
 		this.x = new NumberData(x);
 		this.y = new NumberData(y);
 		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
@@ -16,6 +16,7 @@ export default class ActionMouseEvent extends Action {
 		this.isCaptureable.value = true;
 		this.changeCursorOnCapture.value = true;
 		this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
+		this.icon.value = "fas fa-hand-pointer";
 	}
 
 	clone() {
@@ -45,7 +46,11 @@ export default class ActionMouseEvent extends Action {
 			x: point.x,
 			y: point.y
 		});
-		el.dispatchEvent(event);
+		if (el) {
+			el.dispatchEvent(event);
+		} else {
+			console.log("MouseEvent action cannot find element at pageX " + this.x.value + " and pageY " + this.y.value);
+		}
 		return Promise.resolve();
 	}
 
@@ -92,4 +97,9 @@ export default class ActionMouseEvent extends Action {
 		this.captureComplete();
 	}
 
+	captureAtInit() {
+		super.captureAtInit();
+		this.capture();
+	}
+	
 }

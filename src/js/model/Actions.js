@@ -12,6 +12,8 @@ export default class Actions extends ArrayData {
 		super();
 		this.push.apply(this, arguments);
 
+		this.selectedData = new Action();
+
 		this.addSelectedType = this.addSelectedType.bind(this);
 
 		this.types = new ArrayData();
@@ -19,8 +21,8 @@ export default class Actions extends ArrayData {
 			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),
-			new ActionWait(),
-			new ActionEval()
+			new ActionEval(),
+			new ActionWait()
 		];
 		this.types.selectedItem.value = this.types.value[0];
 	}

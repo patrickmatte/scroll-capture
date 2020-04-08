@@ -1,0 +1,267 @@
+.sc-default {
+	display: block;
+	font-family: SFMono, 'Courier New', Courier, monospace !important;
+	color: white;
+    background-color: transparent;
+	font-weight: 400;
+	user-select: none;
+	border-radius: $borderRadius;
+	margin: 0;
+	box-sizing: border-box;
+
+	* {
+		text-transform: none;
+		box-shadow: none;
+		border: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		box-sizing: border-box;
+		font-size: inherit;
+		line-height: inherit;
+		-webkit-font-smoothing: antialiased;
+		-webkit-text-size-adjust: none;
+		position: relative;
+		visibility: inherit;
+
+		&:before,
+		&:after {
+			box-sizing: border-box;
+		}
+	}
+
+	img {
+		display: inline-block;
+	}
+
+	span {
+		display: inline-block;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: inherit;
+		margin: 0;
+		padding: 0;
+		font-size: inherit;
+		line-height: inherit;
+	}
+
+	p {
+		margin: 0 0 1em 0;
+		padding: 0;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	ul {
+		list-style-type: none;
+	}
+
+	sup {
+		vertical-align: text-top;
+		font-size: 0.75em;
+	}
+	
+	a, button {
+		color: inherit;
+		margin: 0;
+		padding: 0;
+		font: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		//outline: none;
+		text-decoration: none;
+		border-radius: $borderRadius;
+		white-space: nowrap;
+		background-color: transparent;
+		background: transparent;
+		box-shadow: none !important;
+		border: none !important;
+		line-height: 1;
+		display: inline-flex;
+		align-items: center;
+		height: auto;
+		cursor: pointer;
+		
+		> * {
+			pointer-events: none;
+			vertical-align: middle;
+		}
+
+		.sc-label {
+			display: inline-block;
+			vertical-align: middle;
+			opacity: 0.5;
+			transition: opacity 0.25s ease 0s;
+			font-weight: 700;
+		}
+		
+		.sc-icon {
+			transition: opacity 0.25s ease 0s, color 0.25s ease 0s;
+			opacity: 0.5;
+			font-size: 1.2em;
+		}
+
+		&:hover {
+			.sc-icon {
+				opacity: 1;
+			}
+			.sc-label {
+				opacity: 1;
+			}
+		}
+	}
+
+	select, input, textarea {
+		color: inherit !important;
+		margin-bottom: 0 !important;
+		margin-top: 0 !important;
+		box-shadow: none !important;
+		border: none !important;
+		line-height: 1;
+		min-height: auto !important;
+		font-size: inherit !important;
+		font-family: inherit;
+	}
+
+	select, input {
+		height: 2em !important;
+	}
+
+	input, textarea {
+		background: $inputColorDark;
+		background-color: $inputColorDark;
+	}
+
+	select {
+		background: transparent;
+		background-color: transparent;
+	}
+
+	textarea {
+		resize: none;
+		white-space: pre;
+		overflow-wrap: normal;
+		overflow-x: scroll;
+		line-height: 1.2;
+	}
+
+	*[data-visible="false"] {
+		display: none !important;
+	}
+
+	*[data-actions-length="0"] {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	*[data-enabled="false"] {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	.sc-icon {
+		display: inline-block;
+		vertical-align: middle;
+		
+		&:after {
+			font-family: "IcoFont";
+			display: block;
+			font-size: 1.2em;
+			font-weight: 400;
+		}
+
+		.sc-icon-shape {
+			fill: $textColorDark;
+		}
+	}
+
+	* + .sc-icon {
+		margin-left: 0.5em;
+	}
+
+	.sc-icon + * {
+		margin-left: 0.5em;
+	}
+
+	.sc-select {
+		width: 100%;
+		height: 100%;
+		background: $inputColorDark;
+		background-color: $inputColorDark;
+		border-radius: $borderRadius;
+		display: inline-block;
+
+		&:after {
+			content: "\f107";
+			position: absolute;
+			font-size: 1.2em;
+			top: calc(50% - 0.5em);
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 900;
+			right: 0.5em;
+			pointer-events: none;
+			opacity: 0.5;
+		}
+
+		&:hover {
+			&:after {
+				opacity: 1;
+			}
+		}
+
+		select {
+			-webkit-appearance: none;
+			appearance: none;
+			background: none;
+			border: none;
+			padding: 0.5em !important;
+			color: #fff;
+			display: block;
+			width: 100%;
+			height: 100%;
+			font-family: inherit;
+
+			option {
+				line-height: 1;
+			}
+		}
+	}
+
+		.ui-list-element {
+		&.smooth-transform {
+			transition: transform 0.3s ease 0s;
+			
+			&.is-dragged {
+				transition: transform 0s ease 0s;
+			}
+		}
+	}
+
+	.sc-label, .unit {
+		border: none;
+	}
+
+	.sc-tab {
+		border: none;
+		display: inline-flex;
+
+		.ui-list-drag-area {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+		}
+	}
+}

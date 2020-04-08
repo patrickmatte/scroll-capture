@@ -241,13 +241,13 @@ export class Linear {
 
 }
 
-Easing.quadratic = new Quadratic();
+Easing.quad = new Quadratic();
 Easing.cubic = new Cubic();
-Easing.quartic = new Quartic();
-Easing.quintic = new Quintic();
+Easing.quart = new Quartic();
+Easing.quint = new Quintic();
 Easing.sine = new Sine();
-Easing.exponential = new Exponential();
-Easing.circular = new Circular();
+Easing.expo = new Exponential();
+Easing.circ = new Circular();
 Easing.elastic = new Elastic();
 Easing.back = new Back();
 Easing.bounce = new Bounce();

@@ -8,6 +8,10 @@ export default class Vector3Data extends Vector2Data {
 		this.z = new NumberData(z);
 	}
 
+	get value() {
+		return this;
+	}
+
 	clone() {
 		let point = new Vector3Data();
 		point.copy(this);

@@ -1,0 +1,98 @@
+.sc-default {
+    .sc-window {
+		border-radius: $borderRadius;
+		background-color: $windowColorDark;
+		transition: background-color 0.3s ease 0s;
+		width: 100%;
+		font-size: 0.9em !important;
+		margin: 0.75em 0;
+		display: block;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.sc-title {
+			font-weight: bold;
+			display: flex;
+			justify-content: space-between;
+
+			.sc-drag-area {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.sc-tabs {
+				display: inline-flex;
+			}
+
+			.sc-tab {
+				display: inline-flex;
+				border-radius: $borderRadius $borderRadius 0 0;
+				padding: 0em 0.75em;
+				font-weight: bold;
+				align-items: center;
+
+				.sc-label {
+					vertical-align: middle;
+				}
+				
+				&.sc-title-tab {
+					background-color: $windowColorFrontDark;
+					margin-right: 0.5em;
+					transition: background-color 0.3s ease 0s;
+					padding: 0.75em 0.75em 0.25em 0.75em;
+
+					> * {
+						font-size: 1.18em;
+					}
+
+					input {
+						max-width: 152px;
+						height: auto !important;
+					}
+					
+					input {
+						background-color: transparent;
+						color: inherit;
+						font-weight: inherit;
+					}
+				}
+			}
+		}
+
+		.sc-window-content {
+			display: block;
+			background-color: $windowColorFrontDark;
+			transition: background-color 0.3s ease 0s;
+			border-radius: $borderRadius;
+		}
+
+		.sc-title + .sc-window-content {
+			border-radius: 0 $borderRadius $borderRadius $borderRadius;
+		}
+
+		&[data-selected="true"] {
+			// background-color: rgba(255, 255, 255, 0.15);
+			
+			&:after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				box-shadow: inset 0 0 0 1px $windowBorderDark;
+				pointer-events: none;
+				border-radius: $borderRadius;
+			}
+		}
+    }
+}

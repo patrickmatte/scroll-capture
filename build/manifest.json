@@ -19,7 +19,9 @@
 				"content.js"
 			],
 			"css": [
-				"content.css"
+				"content.css",
+				"fontawesome.css",
+				"icofont.css"
 			],
 			"matches": [
 				"http://*/*",

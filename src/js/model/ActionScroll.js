@@ -11,6 +11,7 @@ export default class ActionScroll extends ActionTween {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionScroll";
 		this.name.value = "Scroll";
+		this.description.value = "Add a scroll animation";
 		this.target = new StringData(target);
 		this.unitX = new NumberData(x);
 		this.unitY = new NumberData(y);
@@ -18,6 +19,7 @@ export default class ActionScroll extends ActionTween {
 		this.units.selectedItem.value = units;
 		this.isCaptureable.value = true;
 		this.isTestable.value = true;
+		this.icon.value = "fas fa-scroll";
 
 		this.doScroll = this.doScroll.bind(this);
 		this.unitX.addEventListener(Data.CHANGE, this.doScroll);

@@ -15,7 +15,7 @@ export default class BooleanData extends Data {
 	set value(value) {
 		if (value != this._value) {
 			this._value = value;
-			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+			this.dispatchChangeEvent();
 		}
 	}
 

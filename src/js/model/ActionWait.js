@@ -3,8 +3,9 @@ import Action from "./Action";
 export default class ActionWait extends Action {
 
 	constructor() {
-		super("ActionWait", "Pause");
+		super("ActionWait", "Timeout", "Add a timeout");
 		this.delay.value = 1;
+		this.icon.value = "fas fa-clock";
 	}
 
 	clone() {

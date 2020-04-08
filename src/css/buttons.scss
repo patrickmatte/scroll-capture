@@ -1,0 +1,32 @@
+.sc-default {
+    a, button {
+		&.sc-capture-button {
+			&[data-is-captureable="false"] {
+				opacity: 0.25;
+				pointer-events: none;
+				display: none;
+			}
+
+			&[data-is-capturing="true"] {
+				span {
+					opacity: 0.25;
+				}
+
+				.sc-icon {
+					color: #ff0000;
+					opacity: 1;
+				}
+			}
+		}
+
+		&.sc-test-button {
+			&[data-is-playing="true"] {
+				opacity: 0.25;
+
+				.sc-icon {
+					opacity: 1;
+				}
+			}
+		}
+    }
+}

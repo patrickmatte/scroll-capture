@@ -7,11 +7,12 @@ import { app } from "../main";
 
 export default class Action {
 
-	constructor(type = "Action", name = "Action") {
+	constructor(type = "Action", name = "Action", description = "Add an Action") {
 
 		this.capture = this.capture.bind(this);
 		this.play = this.play.bind(this);
 		this.deleteAction = this.deleteAction.bind(this);
+		this.addAction = this.addAction.bind(this);
 
 		this.type = type;
 		this.name = new StringData();
@@ -20,14 +21,15 @@ export default class Action {
 			this.name.length.value = Math.max(this.name.value.length, 4);
 		});
 		this.name.value = name;
+		this.icon = new StringData();
+		this.description = new StringData(description);
+		this.captureDescription = new StringData();
 		this.isTestable = new BooleanData();
 		this.isCaptureable = new BooleanData();
 		this.isCapturing = new BooleanData();
 		this.changeCursorOnCapture = new BooleanData();
 		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
-			if (this.changeCursorOnCapture.value) {
-				app.showCaptureIcon.value = event.data;
-			}
+			if (this.changeCursorOnCapture.value) app.showCaptureIcon.value = event.data;
 		});
 		this.isPlaying = new BooleanData();
 		this.delay = new NumberData(0);
@@ -37,13 +39,20 @@ export default class Action {
 		this.array = [this];
 	}
 
+	addAction() {
+		app.actions.types.selectedItem.value = this;
+		app.actions.addSelectedType();
+	}
+
 	clone() {
 
 	}
 
 	copy(action) {
+		if(!action) return;
 		this.delay.value = action.delay.value;
-		this.name.value = action.name.value;
+		this.isCaptureable.value = action.isCaptureable.value;
+		this.isTestable.value = action.isTestable.value;
 	}
 
 	triggerDelay() {

@@ -1,40 +1,18 @@
-@font-face {
-    font-family: IcoFont;
-    src: url("../../build/assets/fonts/icofont.woff");
-}
-@font-face {
-    font-family: DefaultFont;
-    font-weight: 400;
-    src: url("../../build/assets/fonts/Menlo-Regular.woff");
-}
-@font-face {
-    font-family: DefaultFont;
-    font-weight: 700;
-    src: url("../../build/assets/fonts/Menlo-Bold.woff");
-}
-
-html, body {
+body.sc-video-recording {
     margin: 0;
     padding: 0;
-}
-
-.sc-video-recording {
-    font-family: DefaultFont, 'Courier New', Courier, monospace;
-    font-size: 13px;
-    color: #ffffff;
-    background-color: transparent;
-
-    .sc-controls {
-        font-size: 13px;
-    }
-
-    .sc-video-player-container {
-        width: 100%;
-    }
     
-	video.sc-video-player {
-        display: block;
-        border-radius: 0.25em;
-        width: 100%;
+    .sc-default {
+	    font-size: 14.81px;
+
+        .sc-video-player-container {
+            width: 100%;
+        }
+        
+        video.sc-video-player {
+            display: block;
+            border-radius: 0.25em;
+            width: 100%;
+        }
     }
 }

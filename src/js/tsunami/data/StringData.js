@@ -27,7 +27,7 @@ export default class StringData extends Data {
 		}
 		if (value != this._value) {
 			this._value = value;
-			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+			this.dispatchChangeEvent();
 		}
 	}
 

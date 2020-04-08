@@ -38,8 +38,7 @@ export default class NumberData extends Data {
 		}
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;
-			let event = new BaseEvent(Data.CHANGE, value);
-			this.dispatchEvent(event);
+			this.dispatchChangeEvent();
 		}
 	}
 
