@@ -13,10 +13,11 @@ export default class WindowContentMain extends UIComponent {
         this.position = new Point();
 
         this.sections = this.element.querySelector("div[is='sc-sections']").component;
+        this.removeChild(this.sections.element);
         this.sections.element.addEventListener("ui-resize", (event) => {
             let height = this.sections.element.offsetHeight;
             this.element.style.height = height + "px";
-       });
+        });
 
         this._children = [this.sections.element];
     }
@@ -27,9 +28,9 @@ export default class WindowContentMain extends UIComponent {
         this.position = localToGlobal(this.element, app.scrollCapture.element);
     }
 
-    get children() {
-        return this._children;
-    }
+    // get children() {
+    //     return this._children;
+    // }
 
 }
 

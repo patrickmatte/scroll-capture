@@ -14,7 +14,7 @@ export default class SectionScenario extends Section {
             let lastIndex = app.actions.length.value - 1;
             app.actions.selectedIndex.value = lastIndex;
         }
-        let actionsViewElement = app.scrollCapture.windowContent.sections.element.querySelector("sc-actions-view");
+        let actionsViewElement = app.scrollCapture.windowContent.element.querySelector("sc-actions-view");
         let actionsView = actionsViewElement.component;
         let element = actionsView.getElementByModel(app.actions.selectedItem.value);
         if (element) actionsView.scrollToElement(element, 0);

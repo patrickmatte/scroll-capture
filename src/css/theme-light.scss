@@ -1,6 +1,6 @@
 .sc-default {
     &[data-theme-light="true"] {
-        color: black;
+        color: $textColorLight;
 
         &[is="scroll-capture"] {
             background-color: $backgroundColorLight;

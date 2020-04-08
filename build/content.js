@@ -1632,14 +1632,15 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
     key: "appendChildAt",
     value: function appendChildAt(child) {
       var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-      if (child.parentNode == this.element) {
-        this.element.removeChild(child);
-      }
-
+      // if(child.parentNode) {
+      // 	child.parentNode.removeChild(child);
+      // }
       var children = this.children;
+      console.log("appendChildAt element", this.element, "child", child);
+      console.log("index", index, "children.length", children.length);
+      console.log("children", children);
 
-      if (index > children.length - 1) {
+      if (index >= children.length) {
         this.appendChild(child);
       } else {
         var beforeChild = children[index];
@@ -6605,14 +6606,16 @@ var Section_Section = /*#__PURE__*/function (_UIComponent) {
   Section_createClass(Section, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      app.scrollCapture.windowContent.sections.appendChildAt(this.element, 0);
+      // app.scrollCapture.windowContent.sections.appendChildAt(this.element, 0);
+      app.scrollCapture.windowContent.appendChildAt(this.element, 0);
       this.dispatchResizeEvent();
       return Section_get(Section_getPrototypeOf(Section.prototype), "showDelayComplete", this).call(this);
     }
   }, {
     key: "hideComplete",
     value: function hideComplete() {
-      app.scrollCapture.windowContent.sections.removeChild(this.element);
+      // app.scrollCapture.windowContent.sections.removeChild(this.element);
+      app.scrollCapture.windowContent.removeChild(this.element);
       this.dispatchResizeEvent();
       return Section_get(Section_getPrototypeOf(Section.prototype), "hideComplete", this).call(this);
     }
@@ -6773,7 +6776,7 @@ var SectionScenario_SectionScenario = /*#__PURE__*/function (_Section) {
         app.actions.selectedIndex.value = lastIndex;
       }
 
-      var actionsViewElement = app.scrollCapture.windowContent.sections.element.querySelector("sc-actions-view");
+      var actionsViewElement = app.scrollCapture.windowContent.element.querySelector("sc-actions-view");
       var actionsView = actionsViewElement.component;
       var element = actionsView.getElementByModel(app.actions.selectedItem.value);
       if (element) actionsView.scrollToElement(element, 0);
@@ -6954,6 +6957,8 @@ var WindowContentMain_WindowContentMain = /*#__PURE__*/function (_UIComponent) {
     _this.position = new Point["a" /* default */]();
     _this.sections = _this.element.querySelector("div[is='sc-sections']").component;
 
+    _this.removeChild(_this.sections.element);
+
     _this.sections.element.addEventListener("ui-resize", function (event) {
       var height = _this.sections.element.offsetHeight;
       _this.element.style.height = height + "px";
@@ -6970,12 +6975,10 @@ var WindowContentMain_WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 
       this.sections.element.style.width = this.element.offsetWidth + "px";
       this.position = Object(tsunami_window["b" /* localToGlobal */])(this.element, app.scrollCapture.element);
-    }
-  }, {
-    key: "children",
-    get: function get() {
-      return this._children;
-    }
+    } // get children() {
+    //     return this._children;
+    // }
+
   }]);
 
   return WindowContentMain;

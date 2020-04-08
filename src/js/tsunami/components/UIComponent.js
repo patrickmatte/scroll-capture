@@ -101,11 +101,14 @@ export default class UIComponent extends Branch {
 	}
 
 	appendChildAt(child, index = 0) {
-    	if(child.parentNode == this.element) {
-    		this.element.removeChild(child);
-		}
+    	// if(child.parentNode) {
+		// 	child.parentNode.removeChild(child);
+		// }
 		let children = this.children;
-		if (index > children.length - 1) {
+		console.log("appendChildAt element", this.element, "child", child);
+		console.log("index", index, "children.length", children.length);
+		console.log("children", children);
+		if (index >= children.length) {
 			this.appendChild(child);
 		} else {
 			let beforeChild = children[index];
