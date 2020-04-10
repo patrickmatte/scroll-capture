@@ -130,7 +130,20 @@ function handleDataAvailable(event) {
   }
 }
 
+function changeIcon() {
+  var color = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  chrome.browserAction.setIcon({
+    path: {
+      '16': chrome.extension.getURL("assets/images/get_started16" + color + ".png"),
+      '32': chrome.extension.getURL("assets/images/get_started32" + color + ".png"),
+      '48': chrome.extension.getURL("assets/images/get_started48" + color + ".png"),
+      '128': chrome.extension.getURL("assets/images/get_started128" + color + ".png")
+    }
+  });
+}
+
 function startRecording() {
+  changeIcon("_red");
   chrome.tabs.get(selectedTabId, _startTabCapture);
 }
 
@@ -250,6 +263,7 @@ function _createMediaRecorder(result) {
 }
 
 function stopRecording() {
+  changeIcon();
   if (mediaRecorder) mediaRecorder.stop();
   var videoBlob = new Blob(recordedBlobs, {
     type: 'video/webm'

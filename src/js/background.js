@@ -31,7 +31,19 @@ function handleDataAvailable(event) {
     }
 }
 
+function changeIcon(color = "") {
+    chrome.browserAction.setIcon({
+        path: {
+            '16': chrome.extension.getURL("assets/images/get_started16" + color + ".png"),
+            '32': chrome.extension.getURL("assets/images/get_started32" + color + ".png"),
+            '48': chrome.extension.getURL("assets/images/get_started48" + color + ".png"),
+            '128': chrome.extension.getURL("assets/images/get_started128" + color + ".png"),
+        }
+    });
+}
+
 function startRecording() {
+    changeIcon("_red");
     chrome.tabs.get(selectedTabId, _startTabCapture);
 }
 
@@ -143,7 +155,8 @@ function _createMediaRecorder(result) {
 }
 
 function stopRecording() {
-   if (mediaRecorder) mediaRecorder.stop();
+    changeIcon();
+    if (mediaRecorder) mediaRecorder.stop();
     let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
     window.videoURL = window.URL.createObjectURL(videoBlob);
 

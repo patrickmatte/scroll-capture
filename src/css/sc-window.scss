@@ -53,16 +53,14 @@
 					> * {
 						font-size: 1.18em;
 					}
-
+					
 					input {
 						max-width: 152px;
 						height: auto !important;
-					}
-					
-					input {
 						background-color: transparent;
 						color: inherit;
 						font-weight: inherit;
+						font-family: Menlo, 'Courier New', Courier, monospace !important;
 					}
 				}
 			}

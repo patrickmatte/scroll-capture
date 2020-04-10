@@ -1,6 +1,6 @@
 .sc-default {
 	display: block;
-	font-family: SFMono, 'Courier New', Courier, monospace !important;
+	font-family: Menlo, 'Courier New', Courier, monospace !important;
 	color: $textColorDark;
     background-color: transparent;
 	font-weight: 400;
@@ -133,6 +133,8 @@
 		min-height: auto !important;
 		font-size: inherit !important;
 		font-family: inherit;
+		font-weight: 700;
+		font-family: SFMono, 'Courier New', Courier, monospace !important;
 	}
 
 	select, input {
