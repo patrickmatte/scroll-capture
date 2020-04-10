@@ -1636,9 +1636,6 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
       // 	child.parentNode.removeChild(child);
       // }
       var children = this.children;
-      console.log("appendChildAt element", this.element, "child", child);
-      console.log("index", index, "children.length", children.length);
-      console.log("children", children);
 
       if (index >= children.length) {
         this.appendChild(child);
