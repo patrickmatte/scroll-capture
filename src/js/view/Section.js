@@ -20,7 +20,7 @@ export default class Section extends UIComponent {
     hideComplete() {
         let tab = app.scrollCapture.element.querySelector(".sc-window-sections .sc-tab[data-id='" + this.tabId + "']");
         tab.classList.remove("sc-title-tab");
-       // app.scrollCapture.windowContent.sections.removeChild(this.element);
+        // app.scrollCapture.windowContent.sections.removeChild(this.element);
         app.scrollCapture.windowContent.removeChild(this.element);
         this.dispatchResizeEvent();
         return super.hideComplete();

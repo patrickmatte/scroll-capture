@@ -16,6 +16,10 @@ body.is-capturing * {
 
 		.sc-buttons {
 			padding: 0;
+
+			> * {
+				font-size: 1.18em;
+			}
 		}
 
 		a, button {
@@ -177,23 +181,23 @@ body.is-capturing * {
 		line-height: 1;
 		padding: 3px;
 		z-index: 200000000;
-		-webkit-backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(15px);
 		backdrop-filter: blur(15px);
-		mix-blend-mode: luminosity;
+		// mix-blend-mode: luminosity;
 		background-color: $backgroundColorDark;
 	}
 
-	&[is="sc-sections"] {
-		font-size: 14.81px;
-		position: fixed !important;
-		right: 0;
-		top: 0;
-		z-index: 200000001;
-		background: transparent !important;
-		background-color: transparent !important;
-		border: none !important;
-		outline: none !important;
-	}
+	// &[is="sc-sections"] {
+	// 	font-size: 14.81px;
+	// 	position: fixed !important;
+	// 	right: 0;
+	// 	top: 0;
+	// 	z-index: 200000001;
+	// 	background: transparent !important;
+	// 	background-color: transparent !important;
+	// 	border: none !important;
+	// 	outline: none !important;
+	// }
 
 	sc-video {
 		iframe {

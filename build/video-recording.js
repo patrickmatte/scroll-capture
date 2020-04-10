@@ -281,6 +281,17 @@ function getFamiliarTimeBetween(startDate, endDate) {
 // CONCATENATED MODULE: ./js/video-recording.js
 
 
+chrome.storage.sync.get(["json"], function (result) {
+  var data = JSON.parse(result.json);
+  document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.theme);
+});
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+  switch (msg.txt) {
+    case "scrollCaptureColorTheme":
+      document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.theme);
+      break;
+  }
+});
 var page = chrome.extension.getBackgroundPage();
 var player = document.querySelector('.sc-video-player');
 player.addEventListener('canplay', function () {

@@ -16,7 +16,7 @@ return promise.then(function() {
 export default class ActionEval extends Action {
 
 	constructor(code = '') {
-		super("ActionEval", "Javascript", "Add your own javascript");
+		super("ActionEval", "Javascript", "Add javascript code");
 		if(!code) code = example;
 		this.code = new StringData(code);
 		this.icon.value = "fab fa-js-square";

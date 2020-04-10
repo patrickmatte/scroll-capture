@@ -29,9 +29,9 @@ export default class ScrollCapture extends UIComponent {
 
 		this.windowContent = this.element.querySelector(".sc-window-content[is='sc-window-content-main']").component;
 
-		this.branches["scenario"] = this.windowContent.sections.scenario;
-		this.branches["video"] = this.windowContent.sections.video;
-		this.branches["settings"] = this.windowContent.sections.settings;
+		this.branches["scenario"] = this.windowContent.scenario;
+		this.branches["video"] = this.windowContent.video;
+		this.branches["settings"] = this.windowContent.settings;
 	}
 
 	get model() {
@@ -55,13 +55,13 @@ export default class ScrollCapture extends UIComponent {
 	
 	showDelayComplete() {
 		app.appendChild(this.element);
-		app.appendChild(this.windowContent.sections.element);
+		// app.appendChild(this.windowContent.sections.element);
 		return super.showDelayComplete();
 	}
 
 	hideComplete() {
 		app.removeChild(this.element);
-		app.removeChild(this.windowContent.sections.element);
+		// app.removeChild(this.windowContent.sections.element);
 		return super.hideComplete();
 	}
 
@@ -94,8 +94,8 @@ export default class ScrollCapture extends UIComponent {
 	move(x, y) {
 		this.style.right = x;
 		this.style.top = y;
-		this.windowContent.sections.style.right = x + this.windowContent.position.x;
-		this.windowContent.sections.style.top = y + this.windowContent.position.y;
+		// this.windowContent.sections.style.right = x + this.windowContent.position.x;
+		// this.windowContent.sections.style.top = y + this.windowContent.position.y;
 	}
 
 	deserialize(obj) {

@@ -7,7 +7,7 @@ import ArrayData from "../tsunami/data/ArrayData";
 export default class ActionMouseEvent extends Action {
 
 	constructor(eventType = "click", x = 0, y = 0) {
-		super("ActionMouseEvent", "MouseEvent", "Add a MouseEvent");
+		super("ActionMouseEvent", "MouseEvent", "Add a mouse event");
 		this.x = new NumberData(x);
 		this.y = new NumberData(y);
 		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");

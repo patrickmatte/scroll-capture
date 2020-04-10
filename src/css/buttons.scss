@@ -9,11 +9,12 @@
 
 			&[data-is-capturing="true"] {
 				span {
-					opacity: 0.25;
+					opacity: 1;
 				}
 
 				.sc-icon {
-					opacity: 0.25;
+					opacity: 1;
+					color: #ff0000;
 				}
 			}
 		}

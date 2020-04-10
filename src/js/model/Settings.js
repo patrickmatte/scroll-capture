@@ -3,6 +3,8 @@ import NumberData from "../tsunami/data/NumberData";
 import StringData from "../tsunami/data/StringData";
 import ArrayData from "../tsunami/data/ArrayData";
 import BooleanData from "../tsunami/data/BooleanData";
+import Data from "../tsunami/data/Data";
+import { app } from "../main";
 
 export default class Settings {
 
@@ -18,6 +20,11 @@ export default class Settings {
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
 
         this.theme = new BooleanData();
+        this.theme.addEventListener(Data.CHANGE, (event) => {
+            app.save();
+            let msg = { txt: "scrollCaptureColorTheme", theme: event.data};
+            chrome.runtime.sendMessage(msg);
+        })
     }
 
     serialize() {
@@ -27,6 +34,7 @@ export default class Settings {
             videoCodec: this.videoCodecs.selectedItem.serialize(),
             audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
             audioCodec: this.audioCodecs.selectedItem.serialize(),
+            theme: this.theme.serialize(),
         };
     }
 
@@ -36,6 +44,7 @@ export default class Settings {
         this.videoCodecs.selectedItem.deserialize(obj.videoCodec);
         this.audioBitsPerSecond.deserialize(obj.audioBitsPerSecond);
         this.audioCodecs.selectedItem.deserialize(obj.audioCodec);
+        this.theme.deserialize(obj.theme);
     }
 
 }

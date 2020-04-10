@@ -40,6 +40,10 @@
 				font-weight: bold;
 				align-items: center;
 
+				> * {
+					font-size: 1.18em;
+				}
+
 				.sc-label {
 					vertical-align: middle;
 					display: none;
@@ -64,9 +68,6 @@
 						display: inline-block;
 					}
 
-					> * {
-						font-size: 1.18em;
-					}
 					
 					input {
 						max-width: 205px;

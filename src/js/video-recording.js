@@ -1,6 +1,21 @@
 import { timeAMPM } from "./tsunami/utils/date";
 import { addLeadingZero } from "./tsunami/utils/number";
 
+chrome.storage.sync.get(["json"], (result) => {
+    let data = JSON.parse(result.json);
+    document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.theme);
+});
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    switch (msg.txt) {
+        case "scrollCaptureColorTheme":
+            document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.theme);
+            break;
+    }
+});
+
+
+
 let page = chrome.extension.getBackgroundPage();
 
 let player = document.querySelector('.sc-video-player');

@@ -32,15 +32,17 @@ export default class Actions extends ArrayData {
 			return;
 		}
 		let action = this.types.selectedItem.value.clone();
-		if(action) {
-			action.captureAtInit();
-
-			let index = this.selectedIndex.value + 1;
-			if(isNaN(index)) index = this.value.length;
-			this.splice(index, 0, action);
-			this.selectedIndex.value = index;
-		}
+		this.addAction(action);
 		// this.types.selectedItem.value = this.types.value[0];
+	}
+
+	addAction(action) {
+		if (!action) return;
+		action.captureAtInit();
+		let index = this.selectedIndex.value + 1;
+		if (isNaN(index)) index = this.value.length;
+		this.splice(index, 0, action);
+		this.selectedIndex.value = index;
 	}
 
 	serialize() {
