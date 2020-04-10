@@ -5,6 +5,7 @@ export default class SectionScenario extends Section {
 
     constructor(element) {
         super(element);
+        this.tabId = "scenario";
     }
 
     showDelayComplete() {

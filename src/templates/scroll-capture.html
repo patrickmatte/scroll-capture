@@ -32,65 +32,69 @@
 			</span>
 		</div>
 
-		<div class="sc-window-content" is="sc-window-content-main">
+		<div class="sc-window-content">
 
-			<div class="sc-default" is="sc-sections" data-theme-light="[[settings.theme]]">
-
-				<sc-scenario class="sc-fields">
-					<div is="ui-component">
-						<div class="sc-window" is="ui-component">
-							<div class="sc-title">
-								<span class="sc-tabs">
-									<span class="sc-tab sc-title-tab">
+			<div class="sc-fields">
+				<div is="ui-component">
+					<div class="sc-window sc-window-sections" is="ui-component">
+						<div class="sc-title">
+							<span class="sc-tabs">
+								<span class="sc-tab" data-id="scenario">
+									<button is="router-button" data-path="scroll-capture/scenario" title="Actions">
 										<span class="sc-icon fas fa-sliders-h"></span>
 										<span class="sc-label">Actions</span>
-									</span>
-									<span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
-										<button class="sc-capture-video-button" is="router-button" data-path="record" title="Capture">
-											<span class="sc-icon fas fa-video"></span>
-										</button>
-									</span>
-									<span class="sc-tab">
-										<button class="sc-settings-button" is="router-button" data-path="scroll-capture/settings" title="Settings">
-											<span class="sc-icon fas fa-cog"></span>
-										</button>
-									</span>
+									</button>
 								</span>
-								<span class="sc-tabs" is="ui-component">
-									<!-- <span class="sc-tab" data-enabled="[[actions.selectedData.isCaptureable]]" is="ui-component">
-										<button class="sc-capture-button" is="ui-button" data-click="captureSelected" data-is-capturing="[[isCapturingSelected]]" title="Capture">
-											<span class="sc-icon"></span>
-										</button>
-									</span>
-									<span class="sc-tab" data-enabled="[[actions.selectedData.isTestable]]" is="ui-component">
-										<button class="sc-play-button" is="ui-button" data-click="playSelected" data-is-playing="[[isPlayingSelected]]" title="Play">
-											<span class="sc-icon"></span>
-										</button>
-									</span>
-									<span class="sc-tab">
-										<button class="sc-trash-button" is="ui-button" data-click="deleteSelected" title="Delete">
-											<span class="sc-icon fa-trash-alt"></span>
-										</button>
-									</span> -->
-									<!-- <span class="sc-tab">
-										<button class="sc-play-button" is="router-button" data-path="play" title="Play All">
-											<span class="sc-icon"></span>
-										</button>
-									</span> -->
-									<!-- <span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
-										<button class="sc-play-button" is="router-button" data-path="play" title="Play all">
-											<span class="sc-icon fas fa-play-circle"></span>
-										</button>
-									</span> -->
-									<!-- <span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
-										<button class="sc-trash-button" is="ui-button" data-event-click="clear" title="Delete All">
-											<span class="sc-icon fas fa-trash-alt"></span>
-										</button>
-									</span> -->
+								<span class="sc-tab" data-id="settings">
+									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
+										<span class="sc-icon fas fa-cog"></span>
+										<span class="sc-label">Settings</span>
+									</button>
 								</span>
-							</div>
-							<div class="sc-window-content" is="ui-component">
-								<div class="sc-fields" is="ui-component">
+								<span class="sc-tab" data-id="video" data-actions-length="[[actions.length]]" is="ui-component">
+									<button is="router-button" data-path="record" title="Capture">
+										<span class="sc-icon fas fa-video"></span>
+										<span class="sc-label">Capture</span>
+									</button>
+								</span>
+							</span>
+							<span class="sc-tabs" is="ui-component">
+								<!-- <span class="sc-tab" data-enabled="[[actions.selectedData.isCaptureable]]" is="ui-component">
+									<button class="sc-set-button" is="ui-button" data-click="captureSelected" data-is-capturing="[[isCapturingSelected]]" title="Capture">
+										<span class="sc-icon"></span>
+									</button>
+								</span>
+								<span class="sc-tab" data-enabled="[[actions.selectedData.isTestable]]" is="ui-component">
+									<button class="sc-play-button" is="ui-button" data-click="playSelected" data-is-playing="[[isPlayingSelected]]" title="Play">
+										<span class="sc-icon"></span>
+									</button>
+								</span>
+								<span class="sc-tab">
+									<button class="sc-trash-button" is="ui-button" data-click="deleteSelected" title="Delete">
+										<span class="sc-icon fa-trash-alt"></span>
+									</button>
+								</span> -->
+								<!-- <span class="sc-tab">
+									<button class="sc-play-button" is="router-button" data-path="play" title="Play All">
+										<span class="sc-icon"></span>
+									</button>
+								</span> -->
+								<!-- <span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
+									<button class="sc-play-button" is="router-button" data-path="play" title="Play all">
+										<span class="sc-icon fas fa-play-circle"></span>
+									</button>
+								</span> -->
+								<!-- <span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
+									<button class="sc-trash-button" is="ui-button" data-event-click="clear" title="Delete All">
+										<span class="sc-icon fas fa-trash-alt"></span>
+									</button>
+								</span> -->
+							</span>
+						</div>
+						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
+							<div class="sc-default" is="sc-sections" data-theme-light="[[settings.theme]]">
+
+								<sc-scenario class="sc-fields" is="ui-component">
 									<sc-actions-view data-provider="actions" data-actions-length="[[actions.length]]">
 										<template>
 											<sc-action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data" data-selected="[[data.isSelectedItem]]">
@@ -99,15 +103,18 @@
 													<span class="sc-tabs">
 														<span class="sc-tab sc-title-tab">
 															<div class="ui-list-drag-area"></div>
-															<span class="sc-label">
-																<input size="[[data.name.length]]" is="ui-input" data-model="data.name" />
-															</span>
+															<button>
+																<span class="sc-icon [[data.icon]]" is=ui-component></span>
+																<span class="sc-label">
+																	<input size="[[data.name.length]]" is="ui-input" data-model="data.name" />
+																</span>
+															</button>
 														</span>
 													</span>
 													<span class="sc-tabs">
 														<span class="sc-tab" data-visible="[[data.isCaptureable]]" is="ui-component">
 															<div class="ui-list-drag-area"></div>
-															<button class="sc-capture-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]" title="Set">
+															<button class="sc-set-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]" title="Set">
 																<span class="sc-icon fas fa-bullseye"></span>
 															</button>
 														</span>
@@ -244,55 +251,21 @@
 											</template>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div>
-						<sc-credits><a href="http://www.patrickmatte.com" target="_blank"></a></sc-credits>
-					</div>
-				</sc-scenario>
-				
-				<sc-video class="sc-fields">
-					<div>
-						<iframe></iframe>
-					</div>
-					<div>
-						<sc-credits><a href="http://www.patrickmatte.com" target="_blank"></a></sc-credits>
-					</div>
-				</sc-video>
+								</sc-scenario>
 
-				<sc-settings class="sc-fields">
-					<div>
-						<div class="sc-window">
-							<div class="sc-title">
-								<div class="sc-drag-area ui-list-drag-area"></div>
-								<span class="sc-tabs">
-									<span class="sc-tab">
-										<button is="router-button" data-path="scroll-capture/scenario" title="Capture">
-											<span class="sc-icon fas fa-sliders-h"></span>
-										</button>
-									</span>
-									<span class="sc-tab" data-actions-length="[[actions.length]]" is="ui-component">
-										<button is="router-button" data-path="record" title="Video">
-											<span class="sc-icon fas fa-video"></span>
-										</button>
-									</span>
-									<span class="sc-tab sc-title-tab">
-										<span class="sc-icon fas fa-cog"></span>
-										<span class="sc-label">Settings</span>
-									</span>
-								</span>
-								<span class="sc-tabs">
-								</span>
-							</div>
-							<div class="sc-window-content" is="ui-component">
-								<div class="sc-fields" is="ui-component">
+								<sc-video class="sc-fields">
+									<div>
+										<iframe></iframe>
+									</div>
+								</sc-video>
+
+								<sc-settings class="sc-fields" is="ui-component">
 									<div>
 										<div class="sc-window">
 											<div class="sc-title">
 												<span class="sc-tabs">
 													<span class="sc-tab sc-title-tab">
+														<span class="sc-icon fas fa-video"></span>
 														<span class="sc-label">Video</span>
 													</span>
 												</span>
@@ -325,6 +298,7 @@
 											<div class="sc-title">
 												<span class="sc-tabs">
 													<span class="sc-tab sc-title-tab">
+														<span class="sc-icon fas fa-volume-up"></span>
 														<span class="sc-label">Audio</span>
 													</span>
 												</span>
@@ -352,17 +326,15 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</sc-settings>
 							</div>
 						</div>
 					</div>
-					<div>
-						<sc-credits><a href="http://www.patrickmatte.com" target="_blank"></a></sc-credits>
-					</div>
-				</sc-settings>
-
+				</div>
+				<div>
+					<sc-credits><a href="http://www.patrickmatte.com" target="_blank"></a></sc-credits>
+				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 .sc-default {
     a, button {
-		&.sc-capture-button {
+		&.sc-set-button {
 			&[data-is-captureable="false"] {
 				opacity: 0.25;
 				pointer-events: none;
@@ -13,8 +13,7 @@
 				}
 
 				.sc-icon {
-					color: #ff0000;
-					opacity: 1;
+					opacity: 0.25;
 				}
 			}
 		}

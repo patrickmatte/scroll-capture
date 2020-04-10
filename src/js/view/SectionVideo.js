@@ -7,6 +7,7 @@ export default class SectionVideo extends Section {
 
     constructor(element) {
         super(element);
+        this.tabId = "video";
         this.iframe = this.element.querySelector("iframe");
 
         chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {

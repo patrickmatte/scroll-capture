@@ -36,26 +36,40 @@
 			.sc-tab {
 				display: inline-flex;
 				border-radius: $borderRadius $borderRadius 0 0;
-				padding: 0em 0.75em;
+				padding: 0.75em;
 				font-weight: bold;
 				align-items: center;
 
 				.sc-label {
 					vertical-align: middle;
+					display: none;
 				}
 				
 				&.sc-title-tab {
 					background-color: $windowColorFrontDark;
 					margin-right: 0.5em;
 					transition: background-color 0.3s ease 0s;
-					padding: 0.75em 0.75em 0.25em 0.75em;
+
+					a, button {
+						.sc-label {
+							opacity: 1;
+						}
+						
+						.sc-icon {
+							opacity: 1;
+						}
+					}
+					
+					.sc-label {
+						display: inline-block;
+					}
 
 					> * {
 						font-size: 1.18em;
 					}
 					
 					input {
-						max-width: 152px;
+						max-width: 205px;
 						height: auto !important;
 						background-color: transparent;
 						color: inherit;
