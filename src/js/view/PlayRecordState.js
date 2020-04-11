@@ -31,7 +31,6 @@ export default class PlayRecordState extends PlayState {
     }
 
     hide() {
-        console.log("PlayRecordState.hide");
         window.removeEventListener("onbeforeunload", this.onBeforeUnloadHandler);
         if (this.isPlaying) this.stopTheRecording();
         if (this.timeout) {
