@@ -61241,7 +61241,6 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
   }, {
     key: "hide",
     value: function hide() {
-      console.log("PlayRecordState.hide");
       window.removeEventListener("onbeforeunload", this.onBeforeUnloadHandler);
       if (this.isPlaying) this.stopTheRecording();
 
