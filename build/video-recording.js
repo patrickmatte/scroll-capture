@@ -318,7 +318,7 @@ player.addEventListener('canplay', function () {
     txt: "scrollCaptureVideoHeigth",
     height: document.body.scrollHeight
   };
-  chrome.tabs.sendMessage(page.selectedTabId, msg);
+  chrome.tabs.sendMessage(page.selectedTab.id, msg);
 });
 var backButton = document.querySelector(".sc-back-button");
 
@@ -328,7 +328,7 @@ if (backButton) {
       txt: "scrollCaptureLocation",
       location: "scroll-capture/scenario"
     };
-    chrome.tabs.sendMessage(page.selectedTabId, msg);
+    chrome.tabs.sendMessage(page.selectedTab.id, msg);
   });
 }
 

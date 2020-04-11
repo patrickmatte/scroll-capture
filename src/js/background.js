@@ -1,10 +1,10 @@
 // let page = chrome.extension.getBackgroundPage();
 
-let mediaStream = null;
-let selectedTabId = null;
-let isRecording = false;
-let mediaRecorder = null;
-let recordedBlobs = [];
+let mediaStream;
+let selectedTab;
+let isRecording;
+let mediaRecorder;
+let recordedBlobs;
 
 let startLocation = "scroll-capture/scenario";
 
@@ -24,10 +24,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
     if (isRecording) stopRecording();
-    selectedTabId = tab.id;
-    window.selectedTabId = selectedTabId;
+    selectedTab = tab;
+    window.selectedTab = selectedTab;
     let msg = { txt: "scrollCaptureLocation", location:startLocation};
-    chrome.tabs.sendMessage(selectedTabId, msg);
+    chrome.tabs.sendMessage(selectedTab.id, msg);
 });
 
 function handleDataAvailable(event) {
@@ -49,7 +49,7 @@ function changeIcon(color = "") {
 
 function startRecording() {
     changeIcon("_red");
-    chrome.tabs.get(selectedTabId, _startTabCapture);
+    chrome.tabs.get(selectedTab.id, _startTabCapture);
     // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 

@@ -55,8 +55,17 @@
 				
 				&.sc-title-tab {
 					background-color: $windowColorFrontDark;
-					margin-right: 0.5em;
+					margin-left: 0.75em;
+					margin-right: 0.75em;
 					transition: background-color 0.3s ease 0s;
+					
+					&:first-child {
+						margin-left: 0;
+					}
+
+					&:last-child {
+						margin-right: 0;
+					}
 
 					a, button {
 						.sc-label {

@@ -11,7 +11,7 @@ export default class Actions extends ArrayData {
 	constructor() {
 		super();
 		this.push.apply(this, arguments);
-
+		
 		this.selectedData = new Action();
 
 		this.addSelectedType = this.addSelectedType.bind(this);

@@ -11,11 +11,13 @@ body.is-capturing * {
 	}
 
 	.sc-action-buttons {
-		display: block;
+		display: flex;
 		width: 100%;
+		justify-content: space-between;
 
 		.sc-buttons {
 			padding: 0;
+			display: inline-flex;
 
 			> * {
 				font-size: 1.18em;

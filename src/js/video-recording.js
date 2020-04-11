@@ -37,14 +37,14 @@ player.addEventListener('canplay', function () {
     player.setAttribute('controls', '1');
     this.play();
     let msg = { txt: "scrollCaptureVideoHeigth", height:document.body.scrollHeight};
-    chrome.tabs.sendMessage(page.selectedTabId, msg);
+    chrome.tabs.sendMessage(page.selectedTab.id, msg);
 });
 
 let backButton = document.querySelector(".sc-back-button");
 if (backButton) {
     backButton.addEventListener("click", () => {
         let msg = { txt: "scrollCaptureLocation", location: "scroll-capture/scenario" };
-        chrome.tabs.sendMessage(page.selectedTabId, msg);
+        chrome.tabs.sendMessage(page.selectedTab.id, msg);
     });
 }
 

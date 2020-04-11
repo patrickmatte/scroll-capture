@@ -98,11 +98,11 @@ module.exports = __webpack_require__(23);
 /***/ (function(module, exports) {
 
 // let page = chrome.extension.getBackgroundPage();
-var mediaStream = null;
-var selectedTabId = null;
-var isRecording = false;
-var mediaRecorder = null;
-var recordedBlobs = [];
+var mediaStream;
+var selectedTab;
+var isRecording;
+var mediaRecorder;
+var recordedBlobs;
 var startLocation = "scroll-capture/scenario";
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   switch (msg.txt) {
@@ -121,13 +121,13 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 });
 chrome.browserAction.onClicked.addListener(function (tab) {
   if (isRecording) stopRecording();
-  selectedTabId = tab.id;
-  window.selectedTabId = selectedTabId;
+  selectedTab = tab;
+  window.selectedTab = selectedTab;
   var msg = {
     txt: "scrollCaptureLocation",
     location: startLocation
   };
-  chrome.tabs.sendMessage(selectedTabId, msg);
+  chrome.tabs.sendMessage(selectedTab.id, msg);
 });
 
 function handleDataAvailable(event) {
@@ -150,7 +150,7 @@ function changeIcon() {
 
 function startRecording() {
   changeIcon("_red");
-  chrome.tabs.get(selectedTabId, _startTabCapture); // chrome.tabs.query({ active: true }, _startTabCapture);
+  chrome.tabs.get(selectedTab.id, _startTabCapture); // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 
 function _startTabCapture(tab) {

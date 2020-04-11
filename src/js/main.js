@@ -27,7 +27,7 @@ export default class Main extends App {
 		// this.playSelected = this.playSelected.bind(this);
 		// this.captureSelected = this.captureSelected.bind(this);
 		// this.deleteSelected = this.deleteSelected.bind(this);
-		this.clear = this.clear.bind(this);
+		this.clearActions = this.clearActions.bind(this);
 
 		app = this;
 
@@ -130,7 +130,7 @@ export default class Main extends App {
 	// 	this.actions.selectedItem.value.deleteAction();
 	// }
 	
-	clear() {
+	clearActions() {
 		this.actions.value = [];
 		this.save();
 	}

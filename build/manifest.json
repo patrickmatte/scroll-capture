@@ -5,8 +5,7 @@
 	"permissions": [
 		"activeTab",
 		"storage",
-		"tabCapture",
-		"tabs"
+		"tabCapture"
 	],
 	"background": {
 		"scripts": [

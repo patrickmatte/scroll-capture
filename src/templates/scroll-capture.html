@@ -40,16 +40,22 @@
 										<span class="sc-label">Actions</span>
 									</button>
 								</span>
+								<!-- <span class="sc-tab" data-id="play" is="ui-component">
+									<button is="router-button" data-path="play" title="Play">
+										<span class="sc-icon fas fa-play"></span>
+										<span class="sc-label">Play</span>
+									</button>
+								</span> -->
+								<span class="sc-tab" data-id="video" is="ui-component">
+									<button is="router-button" data-path="record" title="Record">
+										<span class="sc-icon fas fa-video"></span>
+										<span class="sc-label">Record</span>
+									</button>
+								</span>
 								<span class="sc-tab" data-id="settings">
 									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
 										<span class="sc-icon fas fa-cogs"></span>
 										<span class="sc-label">Settings</span>
-									</button>
-								</span>
-								<span class="sc-tab" data-id="video" is="ui-component">
-									<button is="router-button" data-path="record" title="Capture">
-										<span class="sc-icon fas fa-video"></span>
-										<span class="sc-label">Capture</span>
 									</button>
 								</span>
 							</span>
@@ -243,6 +249,11 @@
 													<span class="sc-icon [[data.icon]]" is="ui-component"></span>
 												</button>
 											</template>
+										</div>
+										<div class="sc-buttons">
+											<button is="ui-button" data-event-click="clearActions" title="Delete all">
+												<span class="sc-icon fas fa-recycle"></span>
+											</button>
 										</div>
 									</div>
 								</sc-scenario>
