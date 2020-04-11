@@ -150,7 +150,7 @@ function changeIcon() {
 
 function startRecording() {
   changeIcon("_red");
-  chrome.tabs.get(selectedTabId, _startTabCapture);
+  chrome.tabs.get(selectedTabId, _startTabCapture); // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 
 function _startTabCapture(tab) {

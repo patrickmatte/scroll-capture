@@ -50,9 +50,11 @@ function changeIcon(color = "") {
 function startRecording() {
     changeIcon("_red");
     chrome.tabs.get(selectedTabId, _startTabCapture);
+    // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 
 function _startTabCapture(tab) {
+
     isRecording = true;
 
     // Note: this method must be invoked by the user as defined
