@@ -3,7 +3,20 @@ import { addLeadingZero } from "./tsunami/utils/number";
 
 chrome.storage.sync.get(["json"], (result) => {
     let data = JSON.parse(result.json);
-    document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.isColorThemeLight);
+    let colorTheme = data.settings.colorThemes;
+    let isColorThemeLight;
+    switch (colorTheme) {
+        case "Dark":
+        case "Light":
+            isColorThemeLight = (colorTheme == "Light");
+            break;
+        default:
+            let darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+            let isDarkMode = darkModeMatchMedia.matches;
+            isColorThemeLight = !isDarkMode;
+            break;
+    }
+    document.body.querySelector(".sc-default").setAttribute("data-theme-light", isColorThemeLight);
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {

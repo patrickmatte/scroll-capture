@@ -22,9 +22,13 @@ export default class Settings {
         this.audioCodecs = new ArrayData("opus");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
 
-        this.darkModeMathMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        this.darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
         this.isColorThemeLight = new BooleanData();
+        this.isColorThemeLight.addEventListener(Data.CHANGE, (event) => {
+            let msg = { txt: "scrollCaptureColorTheme", isColorThemeLight: event.data };
+            chrome.runtime.sendMessage(msg);
+        });
 
         this.colorThemes = new ArrayData("Auto", "Dark", "Light");
         this.colorThemes.selectedItem.value = "Auto";
@@ -32,30 +36,25 @@ export default class Settings {
         this.colorThemes.selectedItem.addEventListener(Data.CHANGE, ()=> {
             this.switchColorTheme();
         });
-
-        this.isColorThemeLight.addEventListener(Data.CHANGE, (event) => {
-            let msg = { txt: "scrollCaptureColorTheme", isColorThemeLight: event.data };
-            chrome.runtime.sendMessage(msg);
-        });
     }
 
     switchColorTheme() {
-        let colorTheme = this.colorThemes.selectedItem.value
+        let colorTheme = this.colorThemes.selectedItem.value;
         switch (colorTheme) {
-            case "Auto":
-                this.darkModeMathMedia.addEventListener('change', this.darkModeChangeHandler);
-                this.darkModeChangeHandler();
-                break;
             case "Dark":
             case "Light":
-                this.darkModeMathMedia.removeEventListener('change', this.darkModeChangeHandler);
+                this.darkModeMatchMedia.removeEventListener('change', this.darkModeChangeHandler);
                 this.isColorThemeLight.value = (colorTheme == "Light");
+                break;
+            default:
+                this.darkModeMatchMedia.addEventListener('change', this.darkModeChangeHandler);
+                this.darkModeChangeHandler();
                 break;
         }
     }
 
     darkModeChangeHandler() {
-        let isDarkMode = this.darkModeMathMedia.matches;
+        let isDarkMode = this.darkModeMatchMedia.matches;
         this.isColorThemeLight.value = !isDarkMode;
     }
 
@@ -66,7 +65,6 @@ export default class Settings {
             videoCodec: this.videoCodecs.selectedItem.serialize(),
             audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
             audioCodec: this.audioCodecs.selectedItem.serialize(),
-            isColorThemeLight: this.isColorThemeLight.value,
             colorThemes: this.colorThemes.selectedItem.value
         };
     }
@@ -77,9 +75,6 @@ export default class Settings {
         this.videoCodecs.selectedItem.deserialize(obj.videoCodec);
         this.audioBitsPerSecond.deserialize(obj.audioBitsPerSecond);
         this.audioCodecs.selectedItem.deserialize(obj.audioCodec);
-        if (obj.hasOwnProperty("isColorThemeLight")) {
-            this.isColorThemeLight.value = obj.isColorThemeLight;
-        }
         if (obj.hasOwnProperty("colorThemes")) {
             this.colorThemes.selectedItem.value = obj.colorThemes;
         }

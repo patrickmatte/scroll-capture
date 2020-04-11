@@ -283,7 +283,23 @@ function getFamiliarTimeBetween(startDate, endDate) {
 
 chrome.storage.sync.get(["json"], function (result) {
   var data = JSON.parse(result.json);
-  document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.isColorThemeLight);
+  var colorTheme = data.settings.colorThemes;
+  var isColorThemeLight;
+
+  switch (colorTheme) {
+    case "Dark":
+    case "Light":
+      isColorThemeLight = colorTheme == "Light";
+      break;
+
+    default:
+      var darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+      var isDarkMode = darkModeMatchMedia.matches;
+      isColorThemeLight = !isDarkMode;
+      break;
+  }
+
+  document.body.querySelector(".sc-default").setAttribute("data-theme-light", isColorThemeLight);
 });
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   switch (msg.txt) {

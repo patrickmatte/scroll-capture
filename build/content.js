@@ -60361,20 +60361,20 @@ var Settings_Settings = /*#__PURE__*/function () {
     this.audioBitsPerSecond = new NumberData["a" /* default */](128);
     this.audioCodecs = new ArrayData["a" /* default */]("opus");
     this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
-    this.darkModeMathMedia = window.matchMedia('(prefers-color-scheme: dark)');
+    this.darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
     this.isColorThemeLight = new BooleanData["a" /* default */]();
-    this.colorThemes = new ArrayData["a" /* default */]("Auto", "Dark", "Light");
-    this.colorThemes.selectedItem.value = "Auto";
-    this.switchColorTheme();
-    this.colorThemes.selectedItem.addEventListener(Data["a" /* default */].CHANGE, function () {
-      _this.switchColorTheme();
-    });
     this.isColorThemeLight.addEventListener(Data["a" /* default */].CHANGE, function (event) {
       var msg = {
         txt: "scrollCaptureColorTheme",
         isColorThemeLight: event.data
       };
       chrome.runtime.sendMessage(msg);
+    });
+    this.colorThemes = new ArrayData["a" /* default */]("Auto", "Dark", "Light");
+    this.colorThemes.selectedItem.value = "Auto";
+    this.switchColorTheme();
+    this.colorThemes.selectedItem.addEventListener(Data["a" /* default */].CHANGE, function () {
+      _this.switchColorTheme();
     });
   }
 
@@ -60384,22 +60384,22 @@ var Settings_Settings = /*#__PURE__*/function () {
       var colorTheme = this.colorThemes.selectedItem.value;
 
       switch (colorTheme) {
-        case "Auto":
-          this.darkModeMathMedia.addEventListener('change', this.darkModeChangeHandler);
-          this.darkModeChangeHandler();
-          break;
-
         case "Dark":
         case "Light":
-          this.darkModeMathMedia.removeEventListener('change', this.darkModeChangeHandler);
+          this.darkModeMatchMedia.removeEventListener('change', this.darkModeChangeHandler);
           this.isColorThemeLight.value = colorTheme == "Light";
+          break;
+
+        default:
+          this.darkModeMatchMedia.addEventListener('change', this.darkModeChangeHandler);
+          this.darkModeChangeHandler();
           break;
       }
     }
   }, {
     key: "darkModeChangeHandler",
     value: function darkModeChangeHandler() {
-      var isDarkMode = this.darkModeMathMedia.matches;
+      var isDarkMode = this.darkModeMatchMedia.matches;
       this.isColorThemeLight.value = !isDarkMode;
     }
   }, {
@@ -60411,7 +60411,6 @@ var Settings_Settings = /*#__PURE__*/function () {
         videoCodec: this.videoCodecs.selectedItem.serialize(),
         audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
         audioCodec: this.audioCodecs.selectedItem.serialize(),
-        isColorThemeLight: this.isColorThemeLight.value,
         colorThemes: this.colorThemes.selectedItem.value
       };
     }
@@ -60423,10 +60422,6 @@ var Settings_Settings = /*#__PURE__*/function () {
       this.videoCodecs.selectedItem.deserialize(obj.videoCodec);
       this.audioBitsPerSecond.deserialize(obj.audioBitsPerSecond);
       this.audioCodecs.selectedItem.deserialize(obj.audioCodec);
-
-      if (obj.hasOwnProperty("isColorThemeLight")) {
-        this.isColorThemeLight.value = obj.isColorThemeLight;
-      }
 
       if (obj.hasOwnProperty("colorThemes")) {
         this.colorThemes.selectedItem.value = obj.colorThemes;
