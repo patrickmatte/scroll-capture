@@ -14,5 +14,11 @@ body.sc-video-recording {
             border-radius: 0.25em;
             width: 100%;
         }
+
+        .sc-video-filename {
+            > * {
+                font-size: 0.8em;
+            }
+        }
     }
 }

@@ -3,13 +3,13 @@ import { addLeadingZero } from "./tsunami/utils/number";
 
 chrome.storage.sync.get(["json"], (result) => {
     let data = JSON.parse(result.json);
-    document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.theme);
+    document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.isColorThemeLight);
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg.txt) {
         case "scrollCaptureColorTheme":
-            document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.theme);
+            document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.isColorThemeLight);
             break;
     }
 });
@@ -37,8 +37,6 @@ if (backButton) {
 
 if (page.videoURL) {
     player.src = page.videoURL;
-    let button = document.querySelector(".sc-download-button");
-    button.href = page.videoURL;
     let date = new Date();
     let ampmTime = timeAMPM(date);
     // Screen Shot 2020-03-20 at 4.35.14 PM
@@ -49,5 +47,12 @@ if (page.videoURL) {
     };
     ampmTime.ampm = ampmTime.ampm.toUpperCase();
     let download = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
-    button.download = download;
+    let buttons = document.querySelectorAll("a.sc-download-button");
+    for (let i = 0; i < buttons.length; i++) {
+        let button = buttons[i];
+        button.href = page.videoURL;
+        button.download = download;
+    }
+    let fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
+    fileNameButton.innerHTML = download;
 }

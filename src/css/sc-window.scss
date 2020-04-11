@@ -44,6 +44,10 @@
 					font-size: 1.18em;
 				}
 
+				.sc-tab-wrapper {
+					display: inline-flex;
+				}
+
 				.sc-label {
 					vertical-align: middle;
 					display: none;
@@ -70,7 +74,7 @@
 
 					
 					input {
-						max-width: 205px;
+						max-width: 183px;
 						height: auto !important;
 						background-color: transparent;
 						color: inherit;

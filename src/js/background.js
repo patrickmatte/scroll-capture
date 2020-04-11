@@ -6,6 +6,8 @@ let isRecording = false;
 let mediaRecorder = null;
 let recordedBlobs = [];
 
+let startLocation = "scroll-capture/scenario";
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg.txt) {
         case "scrollCaptureStartRecording":
@@ -14,6 +16,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case "scrollCaptureStopRecording":
             stopRecording();
             break;
+        case "scrollCaptureChangeStartLocation":
+            startLocation = msg.startLocation;
+            break;
     }
 });
 
@@ -21,7 +26,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
     if (isRecording) stopRecording();
     selectedTabId = tab.id;
     window.selectedTabId = selectedTabId;
-    let msg = { txt: "scrollCaptureBrowserAction"};
+    let msg = { txt: "scrollCaptureLocation", location:startLocation};
     chrome.tabs.sendMessage(selectedTabId, msg);
 });
 
@@ -173,3 +178,18 @@ function stopRecording() {
     // let msg = { txt: "scrollCaptureVideoSource", videoBlob: videoBlob, videoURL: videoURL };
     // chrome.tabs.sendMessage(selectedTabId, msg);
 }
+
+// if (chrome.tabs) {
+//     chrome.tabs.onUpdated.addListener((event) => { console.log("tabs.onUpdated", event) });
+//     chrome.tabs.onZoomChange.addListener((event) => { console.log("tabs.onZoomChange", event) });
+//     chrome.tabs.onUpdated.addListener((event) => { console.log("tabs.onUpdated", event) });
+// }
+// if (chrome.webNavigation) {
+//     chrome.webNavigation.onBeforeNavigate.addListener((event) => { console.log("webNavigation.onBeforeNavigate", event) });
+//     chrome.webNavigation.onCommitted.addListener((event) => { console.log("webNavigation.onCommitted", event) });
+//     chrome.webNavigation.onDOMContentLoaded.addListener((event) => { console.log("webNavigation.onDOMContentLoaded", event) });
+//     chrome.webNavigation.onCompleted.addListener((event) => { console.log("webNavigation.onCompleted", event) });
+// }
+// if (chrome.history) {
+//     chrome.history.onVisited.addListener((event) => { console.log("history.onVisited", event) });
+// }

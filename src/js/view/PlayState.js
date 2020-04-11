@@ -12,7 +12,9 @@ export default class PlayState extends Branch {
 
     show() {
         this.isPlaying = true;
-        app.startLocation = this.startLocation;
+        
+        chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation:this.startLocation });
+
         app.save();
         app.actions.selectedIndex.value = 0;
         let promise1 = awaitTimeout(250);
@@ -43,7 +45,7 @@ export default class PlayState extends Branch {
     allComplete() {
         if (!this.isPlaying) return;
         this.isPlaying = false;
-        this.router.location = app.startLocation;
+        this.router.location = this.startLocation;
     }
 
     hide() {

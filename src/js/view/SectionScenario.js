@@ -10,7 +10,9 @@ export default class SectionScenario extends Section {
 
     showDelayComplete() {
         let promise = super.showDelayComplete();
-        app.startLocation = this.path;
+
+        chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation: this.path });
+
         if (!app.actions.selectedItem.value) {
             let lastIndex = app.actions.length.value - 1;
             app.actions.selectedIndex.value = lastIndex;

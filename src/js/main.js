@@ -19,6 +19,10 @@ export default class Main extends App {
 	constructor(element) {
 		super(element);
 
+		window.onbeforeunload = ()=> {
+			this.router.location = "";
+		}
+
 		this.save = this.save.bind(this);
 		// this.playSelected = this.playSelected.bind(this);
 		// this.captureSelected = this.captureSelected.bind(this);
@@ -27,7 +31,7 @@ export default class Main extends App {
 
 		app = this;
 
-		this.startLocation = "scroll-capture/scenario";
+		// this.startLocation = "scroll-capture/scenario";
 
 		this.router = new Router(this);
 

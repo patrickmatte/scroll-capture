@@ -158,6 +158,15 @@
 		line-height: 1.2;
 	}
 
+	label.sc-radio {
+		white-space: nowrap;
+
+		> * {
+			display: inline-block;
+			vertical-align: middle;
+		}
+	}
+
 	*[data-visible="false"] {
 		display: none !important;
 	}

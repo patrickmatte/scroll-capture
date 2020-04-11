@@ -7,11 +7,10 @@ export default class PlayRecordState extends PlayState {
     constructor() {
         super();
         this.startLocation = "scroll-capture/video";
-   }
+    }
 
     show() {
         if(app.actions.value.length < 1) {
-            console.log("No actions!");
             this.timeout = new ActionWait();
             this.timeout.delay.value = 60 * 5;
             app.actions.addAction(this.timeout);
@@ -32,6 +31,8 @@ export default class PlayRecordState extends PlayState {
     }
 
     hide() {
+        console.log("PlayRecordState.hide");
+        window.removeEventListener("onbeforeunload", this.onBeforeUnloadHandler);
         if (this.isPlaying) this.stopTheRecording();
         if (this.timeout) {
             this.timeout.deleteAction();

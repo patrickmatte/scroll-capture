@@ -9,6 +9,9 @@ import { app } from "../main";
 export default class Settings {
 
     constructor() {
+
+        this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
+
         this.position = new Vector2Data(50, 50);
 
         this.videoBitsPerSecond = new NumberData(8);
@@ -19,12 +22,41 @@ export default class Settings {
         this.audioCodecs = new ArrayData("opus");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
 
-        this.theme = new BooleanData();
-        this.theme.addEventListener(Data.CHANGE, (event) => {
-            app.save();
-            let msg = { txt: "scrollCaptureColorTheme", theme: event.data};
+        this.darkModeMathMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+        this.isColorThemeLight = new BooleanData();
+
+        this.colorThemes = new ArrayData("Auto", "Dark", "Light");
+        this.colorThemes.selectedItem.value = "Auto";
+        this.switchColorTheme();
+        this.colorThemes.selectedItem.addEventListener(Data.CHANGE, ()=> {
+            this.switchColorTheme();
+        });
+
+        this.isColorThemeLight.addEventListener(Data.CHANGE, (event) => {
+            let msg = { txt: "scrollCaptureColorTheme", isColorThemeLight: event.data };
             chrome.runtime.sendMessage(msg);
-        })
+        });
+    }
+
+    switchColorTheme() {
+        let colorTheme = this.colorThemes.selectedItem.value
+        switch (colorTheme) {
+            case "Auto":
+                this.darkModeMathMedia.addEventListener('change', this.darkModeChangeHandler);
+                this.darkModeChangeHandler();
+                break;
+            case "Dark":
+            case "Light":
+                this.darkModeMathMedia.removeEventListener('change', this.darkModeChangeHandler);
+                this.isColorThemeLight.value = (colorTheme == "Light");
+                break;
+        }
+    }
+
+    darkModeChangeHandler() {
+        let isDarkMode = this.darkModeMathMedia.matches;
+        this.isColorThemeLight.value = !isDarkMode;
     }
 
     serialize() {
@@ -34,7 +66,8 @@ export default class Settings {
             videoCodec: this.videoCodecs.selectedItem.serialize(),
             audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
             audioCodec: this.audioCodecs.selectedItem.serialize(),
-            theme: this.theme.serialize(),
+            isColorThemeLight: this.isColorThemeLight.value,
+            colorThemes: this.colorThemes.selectedItem.value
         };
     }
 
@@ -44,7 +77,12 @@ export default class Settings {
         this.videoCodecs.selectedItem.deserialize(obj.videoCodec);
         this.audioBitsPerSecond.deserialize(obj.audioBitsPerSecond);
         this.audioCodecs.selectedItem.deserialize(obj.audioCodec);
-        this.theme.deserialize(obj.theme);
+        if (obj.hasOwnProperty("isColorThemeLight")) {
+            this.isColorThemeLight.value = obj.isColorThemeLight;
+        }
+        if (obj.hasOwnProperty("colorThemes")) {
+            this.colorThemes.selectedItem.value = obj.colorThemes;
+        }
     }
 
 }

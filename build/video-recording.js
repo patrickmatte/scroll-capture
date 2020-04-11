@@ -283,12 +283,12 @@ function getFamiliarTimeBetween(startDate, endDate) {
 
 chrome.storage.sync.get(["json"], function (result) {
   var data = JSON.parse(result.json);
-  document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.theme);
+  document.body.querySelector(".sc-default").setAttribute("data-theme-light", data.settings.isColorThemeLight);
 });
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   switch (msg.txt) {
     case "scrollCaptureColorTheme":
-      document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.theme);
+      document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.isColorThemeLight);
       break;
   }
 });
@@ -318,8 +318,6 @@ if (backButton) {
 
 if (page.videoURL) {
   player.src = page.videoURL;
-  var video_recording_button = document.querySelector(".sc-download-button");
-  video_recording_button.href = page.videoURL;
   var video_recording_date = new Date();
   var ampmTime = timeAMPM(video_recording_date); // Screen Shot 2020-03-20 at 4.35.14 PM
 
@@ -330,7 +328,16 @@ if (page.videoURL) {
   };
   ampmTime.ampm = ampmTime.ampm.toUpperCase();
   var download = "Scroll Capture ".concat(dateData.year, "-").concat(dateData.month, "-").concat(dateData.date, " at ").concat(ampmTime.hours, ".").concat(ampmTime.minutes, ".").concat(ampmTime.seconds, " ").concat(ampmTime.ampm, ".webm");
-  video_recording_button.download = download;
+  var buttons = document.querySelectorAll("a.sc-download-button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    var video_recording_button = buttons[i];
+    video_recording_button.href = page.videoURL;
+    video_recording_button.download = download;
+  }
+
+  var fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
+  fileNameButton.innerHTML = download;
 }
 
 /***/ }),
