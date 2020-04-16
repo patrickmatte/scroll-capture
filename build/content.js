@@ -608,7 +608,7 @@ var events = {
   animationend: 'animationend'
 };
 
-if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "a"]) {
+if (_window__WEBPACK_IMPORTED_MODULE_0__[/* isTouch */ "b"]) {
   events.mouseover = "touchstart";
   events.mouseout = "touchend";
   events.mousedown = "touchstart";
@@ -1458,7 +1458,7 @@ var Attribute_Attribute = /*#__PURE__*/function () {
 var Style = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(10);
+var tsunami_await = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayData.js
 var ArrayData = __webpack_require__(5);
@@ -1467,7 +1467,7 @@ var ArrayData = __webpack_require__(5);
 var ArrayDataOperation = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
-var Rectangle = __webpack_require__(11);
+var Rectangle = __webpack_require__(10);
 
 // EXTERNAL MODULE: ./js/tsunami/window.js
 var tsunami_window = __webpack_require__(9);
@@ -1820,7 +1820,7 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
       this.globalRectangle.height = this.rectangle.height;
 
       if (this.calculateGlobalPosition) {
-        this.globalRectangle.position = Object(tsunami_window["b" /* localToGlobal */])(this.element, document.body);
+        this.globalRectangle.position = Object(tsunami_window["c" /* localToGlobal */])(this.element, document.body);
       }
 
       var children = this.children;
@@ -1971,7 +1971,7 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
     value: function getTouchPoint(event) {
       var touch = event;
 
-      if (tsunami_window["a" /* isTouch */]) {
+      if (tsunami_window["b" /* isTouch */]) {
         touch = event.touches[0];
       }
 
@@ -2163,7 +2163,7 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
       var rectangle = new Rectangle["a" /* default */](0, 0, element.offsetWidth, element.offsetHeight);
 
       if (element.parentNode) {
-        rectangle.position = Object(tsunami_window["b" /* localToGlobal */])(element, parent, null, debug);
+        rectangle.position = Object(tsunami_window["c" /* localToGlobal */])(element, parent, null, debug);
       }
 
       return rectangle;
@@ -2774,12 +2774,12 @@ function hexToRgb(hex) {
 
 "use strict";
 /* unused harmony export isMobile */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return isTouch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isTouch; });
 /* unused harmony export getCookie */
 /* unused harmony export serialize */
-/* unused harmony export getSearchParams */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getSearchParams; });
 /* unused harmony export getRect */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return localToGlobal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return localToGlobal; });
 /* unused harmony export localToGlobalX */
 /* unused harmony export localToGlobalY */
 /* unused harmony export isHidden */
@@ -2787,7 +2787,7 @@ function hexToRgb(hex) {
 /* unused harmony export forceProtocol */
 /* unused harmony export fileExists */
 /* unused harmony export getElementSelector */
-/* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 
 
@@ -3008,190 +3008,6 @@ function getElementSelector(element) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export awaitEvent */
-/* unused harmony export awaitTransition */
-/* unused harmony export awaitAnimation */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return awaitTimeout; });
-/* unused harmony export awaitCallback */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitAnimationFrame; });
-/* unused harmony export awaitVideoFirstFrame */
-function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventHandler = function eventHandler(event) {
-      event.stopPropagation();
-
-      if (stopPropagation) {
-        event.stopPropagation();
-      }
-
-      if (stopImmediatePropagation) {
-        event.stopImmediatePropagation();
-      }
-
-      if (preventDefault) {
-        event.preventDefault();
-      }
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTransition(dispatcher, cssProperties) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "transitionend";
-    var eventNames = {
-      'OTransition': 'otransitionend',
-      'WebkitTransition': 'webkitTransitionEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      var isProperty;
-
-      for (var _i = 0; _i < cssProperties.length; _i++) {
-        var prop = cssProperties[_i];
-
-        if (prop === event.propertyName) {
-          isProperty = true;
-        }
-      }
-
-      if (!isProperty) {
-        return;
-      }
-
-      event.stopPropagation(); //event.stopImmediatePropagation();
-      //event.preventDefault();
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitAnimation(dispatcher, animationName) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "animationend";
-    var eventNames = {
-      'OTransition': 'oanimationend',
-      'MozTransition': 'moznimationend',
-      'WebkitTransition': 'webkitAnimationEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      if (animationName != event.animationName || dispatcher != event.target) {
-        return;
-      }
-
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTimeout() {
-  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-  if (isNaN(milliseconds) || milliseconds <= 0) {
-    return Promise.resolve();
-  } else {
-    return new Promise(function (resolve, reject) {
-      var timeout = setTimeout(function () {
-        resolve();
-      }, milliseconds);
-    });
-  }
-}
-function awaitCallback(target, method) {
-  var _arguments = arguments;
-  var promise = new Promise(function (resolve, reject) {
-    target[method] = function () {
-      delete target[method];
-      resolve(_arguments);
-    };
-  });
-  return promise;
-}
-function awaitAnimationFrame() {
-  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  total = Math.max(1, Math.round(total));
-  var count = 0;
-  var promise = new Promise(function (resolve, reject) {
-    function animationFrame() {
-      count++;
-
-      if (count >= total) {
-        resolve();
-      } else {
-        window.requestAnimationFrame(animationFrame);
-      }
-    }
-
-    window.requestAnimationFrame(animationFrame);
-  });
-  return promise;
-}
-function awaitVideoFirstFrame(video) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
-  var debug = arguments.length > 2 ? arguments[2] : undefined;
-  var loadedmetadata = awaitEvent(video, "loadedmetadata");
-  var loadedmetadataTimeout = awaitTimeout(timeout);
-  var promise = Promise.race([loadedmetadata]);
-  return promise.then(function (event) {
-    if (debug) {
-      console.log("loadedmetadata");
-    }
-
-    var loadeddataPromise = awaitEvent(video, "loadeddata");
-    var playPromise = video.play();
-
-    if (!playPromise) {
-      playPromise = loadeddataPromise;
-    }
-
-    var playPromiseTimeout = awaitTimeout(timeout);
-    var promise = Promise.race([playPromise]);
-    return promise.then(function () {
-      if (debug) {
-        console.log("playPromise or loadeddata");
-      }
-
-      video.pause();
-      return video;
-    });
-  });
-}
-
-/***/ }),
-/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3433,6 +3249,190 @@ var Rectangle = /*#__PURE__*/function () {
 }();
 
 
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export awaitEvent */
+/* unused harmony export awaitTransition */
+/* unused harmony export awaitAnimation */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return awaitTimeout; });
+/* unused harmony export awaitCallback */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return awaitAnimationFrame; });
+/* unused harmony export awaitVideoFirstFrame */
+function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventHandler = function eventHandler(event) {
+      event.stopPropagation();
+
+      if (stopPropagation) {
+        event.stopPropagation();
+      }
+
+      if (stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTransition(dispatcher, cssProperties) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "transitionend";
+    var eventNames = {
+      'OTransition': 'otransitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      var isProperty;
+
+      for (var _i = 0; _i < cssProperties.length; _i++) {
+        var prop = cssProperties[_i];
+
+        if (prop === event.propertyName) {
+          isProperty = true;
+        }
+      }
+
+      if (!isProperty) {
+        return;
+      }
+
+      event.stopPropagation(); //event.stopImmediatePropagation();
+      //event.preventDefault();
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitAnimation(dispatcher, animationName) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "animationend";
+    var eventNames = {
+      'OTransition': 'oanimationend',
+      'MozTransition': 'moznimationend',
+      'WebkitTransition': 'webkitAnimationEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      if (animationName != event.animationName || dispatcher != event.target) {
+        return;
+      }
+
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTimeout() {
+  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+  if (isNaN(milliseconds) || milliseconds <= 0) {
+    return Promise.resolve();
+  } else {
+    return new Promise(function (resolve, reject) {
+      var timeout = setTimeout(function () {
+        resolve();
+      }, milliseconds);
+    });
+  }
+}
+function awaitCallback(target, method) {
+  var _arguments = arguments;
+  var promise = new Promise(function (resolve, reject) {
+    target[method] = function () {
+      delete target[method];
+      resolve(_arguments);
+    };
+  });
+  return promise;
+}
+function awaitAnimationFrame() {
+  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  total = Math.max(1, Math.round(total));
+  var count = 0;
+  var promise = new Promise(function (resolve, reject) {
+    function animationFrame() {
+      count++;
+
+      if (count >= total) {
+        resolve();
+      } else {
+        window.requestAnimationFrame(animationFrame);
+      }
+    }
+
+    window.requestAnimationFrame(animationFrame);
+  });
+  return promise;
+}
+function awaitVideoFirstFrame(video) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
+  var debug = arguments.length > 2 ? arguments[2] : undefined;
+  var loadedmetadata = awaitEvent(video, "loadedmetadata");
+  var loadedmetadataTimeout = awaitTimeout(timeout);
+  var promise = Promise.race([loadedmetadata]);
+  return promise.then(function (event) {
+    if (debug) {
+      console.log("loadedmetadata");
+    }
+
+    var loadeddataPromise = awaitEvent(video, "loadeddata");
+    var playPromise = video.play();
+
+    if (!playPromise) {
+      playPromise = loadeddataPromise;
+    }
+
+    var playPromiseTimeout = awaitTimeout(timeout);
+    var promise = Promise.race([playPromise]);
+    return promise.then(function () {
+      if (debug) {
+        console.log("playPromise or loadeddata");
+      }
+
+      video.pause();
+      return video;
+    });
+  });
+}
 
 /***/ }),
 /* 12 */
@@ -5581,7 +5581,7 @@ Easing.back = new Back();
 Easing.bounce = new Bounce();
 Easing.linear = new Linear();
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
-var Rectangle = __webpack_require__(11);
+var Rectangle = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIList.js
 function UIList_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIList_typeof = function _typeof(obj) { return typeof obj; }; } else { UIList_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIList_typeof(obj); }
@@ -5766,6 +5766,9 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
     key: "_providerAdd",
     value: function _providerAdd(event) {
       if (this.debug) console.log("UIList._providerAdd");
+
+      this._saveChildrenPositions();
+
       var addedElements = [];
       var start = event.index;
       var end = event.index + event.total;
@@ -5775,7 +5778,14 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
         addedElements.push(model);
       }
 
-      return this._addElements(addedElements, start);
+      this._addElements(addedElements, start);
+
+      this.windowResize(this.windowSize);
+
+      this._setChildrenTransform();
+
+      setTimeout(this._resetChildrenTransform.bind(this), 0);
+      return addedElements;
     }
   }, {
     key: "_providerRemove",
@@ -6558,7 +6568,7 @@ var ActionsView_ActionsView = /*#__PURE__*/function (_UIList) {
 
 tsunami["a" /* define */]("sc-action-view", ActionView);
 // CONCATENATED MODULE: ./templates/scroll-capture.html
-/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\" data-model=\".\" data-theme-light=\"[[settings.isColorThemeLight]]\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<!-- <svg class=\"sc-icon sc-logo\" x=\"0px\" y=\"0px\" viewBox=\"0 0 55 133\">\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"14.5\" r=\"14.5\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"53.26\" r=\"20\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"105.38\" r=\"27.5\" />\n\t\t\t\t\t</svg> -->\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<!-- <span class=\"sc-tab\">\n\t\t\t\t\t<button title=\"Toggle color theme\" is=\"ui-toggle\" data-model=\"settings.isColorThemeLight\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span> -->\n\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t<button is=\"router-button\" data-path=\"\" title=\"Close\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-times-circle\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\n\t\t<div class=\"sc-window-content\">\n\n\t\t\t<div class=\"sc-fields\">\n\t\t\t\t<div is=\"ui-component\">\n\t\t\t\t\t<div class=\"sc-window sc-window-sections\" is=\"ui-component\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"scenario\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/scenario\" title=\"Actions\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-sliders-h\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Actions</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-id=\"play\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"play\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"video\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"record\" title=\"Record\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"settings\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/settings\" title=\"Settings\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-cogs\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Settings</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t<span class=\"sc-tabs\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-enabled=\"[[actions.selectedData.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"captureSelected\" data-is-capturing=\"[[isCapturingSelected]]\" title=\"Capture\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-enabled=\"[[actions.selectedData.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"playSelected\" data-is-playing=\"[[isPlayingSelected]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"deleteSelected\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"router-button\" data-path=\"play\" title=\"Play All\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-actions-length=\"[[actions.length]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"router-button\" data-path=\"play\" title=\"Play all\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-actions-length=\"[[actions.length]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-event-click=\"clear\" title=\"Delete All\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"sc-window-content-main\" is=\"ui-component\">\n\n\t\t\t\t\t\t\t\t<sc-scenario class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<sc-actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<sc-action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab-wrapper\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=ui-component></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\" title=\"Set\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-bullseye\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" data-model=\"data\" is=\"ui-button\" data-event-click=\"data.deleteAction\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!--\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t-->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span>PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span>PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</sc-action-view>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</sc-actions-view>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\" is=\"ui-list\" data-provider=\"actions.types\">\n\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-action-button\" data-type=\"[[data.type]]\" data-model=\"data\" is=\"ui-button\" title=\"[[data.description]]\" data-click=\"data.addAction\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\">\n\t\t\t\t\t\t\t\t\t\t\t<button is=\"ui-button\" data-event-click=\"clearActions\" title=\"Delete all\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-recycle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</sc-scenario>\n\n\t\t\t\t\t\t\t\t<sc-video class=\"sc-fields\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</sc-video>\n\n\t\t\t\t\t\t\t\t<sc-settings class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Color theme</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-color-themes\" data-provider=\"settings.colorThemes\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label class=\"sc-radio\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"radio\" name=\"color-theme\" is=\"ui-input\" value=\"[[data]]\" data-model=\"parent.settings.colorThemes.selectedItem\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"data\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Video</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codec:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.videoCodecs\" data-model=\"settings.videoCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Bitrate:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"1\" max=\"8\" step=\"1\" data-model=\"settings.videoBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"settings.videoBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"unit\">Mbps</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-volume-up\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Audio</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codec:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.audioCodecs\" data-model=\"settings.audioCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Bitrate:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"16\" max=\"128\" step=\"16\" data-model=\"settings.audioBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"settings.audioBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"unit\">Kbps</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</sc-settings>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div>\n\t\t\t\t\t<sc-credits><a href=\"http://www.patrickmatte.com\" target=\"_blank\"></a></sc-credits>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>");
+/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\" data-model=\".\" data-theme-light=\"[[settings.isColorThemeLight]]\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<!-- <svg class=\"sc-icon sc-logo\" x=\"0px\" y=\"0px\" viewBox=\"0 0 55 133\">\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"14.5\" r=\"14.5\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"53.26\" r=\"20\" />\n\t\t\t\t\t\t<circle class=\"sc-icon-shape\" cx=\"27.5\" cy=\"105.38\" r=\"27.5\" />\n\t\t\t\t\t</svg> -->\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<!-- <span class=\"sc-tab\">\n\t\t\t\t\t<button title=\"Toggle color theme\" is=\"ui-toggle\" data-model=\"settings.isColorThemeLight\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span> -->\n\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t<button is=\"router-button\" data-path=\"\" title=\"Close\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-times-circle\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\n\t\t<div class=\"sc-window-content\">\n\n\t\t\t<div class=\"sc-fields\">\n\t\t\t\t<div is=\"ui-component\">\n\t\t\t\t\t<div class=\"sc-window sc-window-sections\" is=\"ui-component\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"scenario\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/scenario\" title=\"Timeline\">\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-icon fas fa-sliders-h\"></span> -->\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-stream\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Timeline</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-id=\"play\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"play\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"video\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"record\" title=\"Record\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Record</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"settings\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/settings\" title=\"Settings\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-cogs\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Settings</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t<span class=\"sc-tabs\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-enabled=\"[[actions.selectedData.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"captureSelected\" data-is-capturing=\"[[isCapturingSelected]]\" title=\"Capture\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-enabled=\"[[actions.selectedData.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"ui-button\" data-click=\"playSelected\" data-is-playing=\"[[isPlayingSelected]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-click=\"deleteSelected\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"router-button\" data-path=\"play\" title=\"Play All\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-actions-length=\"[[actions.length]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-play-button\" is=\"router-button\" data-path=\"play\" title=\"Play all\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-actions-length=\"[[actions.length]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" is=\"ui-button\" data-event-click=\"clear\" title=\"Delete All\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"sc-window-content-main\" is=\"ui-component\">\n\n\t\t\t\t\t\t\t\t<sc-scenario class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<sc-actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<sc-action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab-wrapper\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=ui-component></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\" title=\"Set\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-bullseye\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" data-model=\"data\" is=\"ui-button\" data-event-click=\"data.deleteAction\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<!--\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">units</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.units\" data-model=\"data.units.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t-->\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Selector:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Left:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitX\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Top:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" data-model=\"data.unitY\" is=\"ui-input\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tdata-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span>PageX<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\" is=\"ui-text\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span>PageY<sup>[[index1]]</sup>:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageX:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">PageY:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Type:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Duration:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Delay:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</sc-action-view>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</sc-actions-view>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\" is=\"ui-list\" data-provider=\"actions.types\">\n\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-action-button\" data-type=\"[[data.type]]\" data-model=\"data\" is=\"ui-button\" title=\"[[data.description]]\" data-click=\"data.addAction\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\">\n\t\t\t\t\t\t\t\t\t\t\t<button is=\"ui-button\" data-event-click=\"clearActions\" title=\"Delete all\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</sc-scenario>\n\n\t\t\t\t\t\t\t\t<sc-video class=\"sc-fields\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</sc-video>\n\n\t\t\t\t\t\t\t\t<sc-settings class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Color theme</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-color-themes\" data-provider=\"settings.colorThemes\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label class=\"sc-radio\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"radio\" name=\"color-theme\" is=\"ui-input\" value=\"[[data]]\" data-model=\"parent.settings.colorThemes.selectedItem\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"data\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Video</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codec:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.videoCodecs\" data-model=\"settings.videoCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Bitrate:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"1\" max=\"8\" step=\"1\" data-model=\"settings.videoBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"settings.videoBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"unit\">Mbps</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-volume-up\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Audio</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codec:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.audioCodecs\" data-model=\"settings.audioCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Bitrate:</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"16\" max=\"128\" step=\"16\" data-model=\"settings.audioBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"settings.audioBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"unit\">Kbps</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</sc-settings>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div>\n\t\t\t\t\t<sc-credits><a href=\"http://www.patrickmatte.com\" target=\"_blank\"></a></sc-credits>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>");
 // CONCATENATED MODULE: ./js/view/Section.js
 function Section_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Section_typeof = function _typeof(obj) { return typeof obj; }; } else { Section_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Section_typeof(obj); }
 
@@ -6657,11 +6667,12 @@ function SectionVideo_inherits(subClass, superClass) { if (typeof superClass !==
 
 function SectionVideo_setPrototypeOf(o, p) { SectionVideo_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return SectionVideo_setPrototypeOf(o, p); }
 
+
  // import { localToGlobal } from "../tsunami/window";
 // import { app } from "../main";
 // import Point from "../tsunami/geom/Point";
 
-var SectionVideo = /*#__PURE__*/function (_Section) {
+var SectionVideo_SectionVideo = /*#__PURE__*/function (_Section) {
   SectionVideo_inherits(SectionVideo, _Section);
 
   var _super = SectionVideo_createSuper(SectionVideo);
@@ -6692,7 +6703,7 @@ var SectionVideo = /*#__PURE__*/function (_Section) {
     value: function showDelayComplete() {
       var promise = SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "showDelayComplete", this).call(this);
 
-      this.iframe.src = chrome.extension.getURL('video-recording.html');
+      this.iframe.src = chrome.extension.getURL('video-recording.html?tabId=' + app.tabId);
       return promise;
     }
   }, {
@@ -6909,7 +6920,7 @@ var Sections_Sections = /*#__PURE__*/function (_UIComponent) {
 
 
 tsunami["a" /* define */]("sc-scenario", SectionScenario_SectionScenario);
-tsunami["a" /* define */]("sc-video", SectionVideo);
+tsunami["a" /* define */]("sc-video", SectionVideo_SectionVideo);
 tsunami["a" /* define */]("sc-settings", SectionSettings_SectionSettings);
 // EXTERNAL MODULE: ./js/tsunami/window.js
 var tsunami_window = __webpack_require__(9);
@@ -7937,7 +7948,7 @@ var UIScrollPane_UIScrollPane = /*#__PURE__*/function (_UIComponent) {
         return;
       }
 
-      if (!tsunami_window["a" /* isTouch */]) {
+      if (!tsunami_window["b" /* isTouch */]) {
         event.preventDefault();
       }
 
@@ -8349,7 +8360,7 @@ tsunami["a" /* define */]("ui-scroll-pane", UIScrollPane_UIScrollPane);
 tsunami["a" /* define */]("ui-media", UIMedia_UIMedia);
 tsunami["a" /* define */]("ui-toggle", UIToggle);
 // EXTERNAL MODULE: ./js/tsunami/await.js
-var tsunami_await = __webpack_require__(10);
+var tsunami_await = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./js/tsunami/data/Validation.js
 var Validation = __webpack_require__(13);
@@ -9714,7 +9725,7 @@ var ActionMouseEvent_ActionMouseEvent = /*#__PURE__*/function (_Action) {
       // }
       var touch = event;
 
-      if (tsunami_window["a" /* isTouch */]) {
+      if (tsunami_window["b" /* isTouch */]) {
         touch = event.touches[0];
       }
 
@@ -60099,7 +60110,7 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
     value: function captureDownHandler(event) {
       var touch = event;
 
-      if (tsunami_window["a" /* isTouch */]) {
+      if (tsunami_window["b" /* isTouch */]) {
         touch = event.touches[0];
       }
 
@@ -60116,7 +60127,7 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
     value: function captureMoveHandler(event) {
       var touch = event;
 
-      if (tsunami_window["a" /* isTouch */]) {
+      if (tsunami_window["b" /* isTouch */]) {
         touch = event.touches[0];
       }
 
@@ -60133,7 +60144,7 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
     value: function captureUpHandler(event) {
       var touch = event;
 
-      if (tsunami_window["a" /* isTouch */]) {
+      if (tsunami_window["b" /* isTouch */]) {
         touch = event.touches[0];
       }
 
@@ -60200,7 +60211,7 @@ var ActionWait = /*#__PURE__*/function (_Action) {
 
     ActionWait_classCallCheck(this, ActionWait);
 
-    _this = _super.call(this, "ActionWait", "Timeout", "Add a timeout");
+    _this = _super.call(this, "ActionWait", "Pause", "Add a pause");
     _this.delay.value = 1;
     _this.icon.value = "fas fa-clock";
     return _this;
@@ -61214,8 +61225,14 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
       var promise = PlayRecordState_get(PlayRecordState_getPrototypeOf(PlayRecordState.prototype), "show", this).call(this);
 
       chrome.runtime.sendMessage({
-        txt: "scrollCaptureStartRecording"
+        txt: "scrollCaptureStartRecording",
+        tabId: app.tabId
       });
+      this.keepAliveTimeout = setInterval(function () {
+        chrome.runtime.sendMessage({
+          txt: "scrollCaptureKeepAlive"
+        });
+      }, 1000 * 10);
       return promise;
     }
   }, {
@@ -61229,6 +61246,7 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
   }, {
     key: "stopTheRecording",
     value: function stopTheRecording() {
+      clearInterval(this.keepAliveTimeout);
       chrome.runtime.sendMessage({
         txt: "scrollCaptureStopRecording"
       });
@@ -61301,6 +61319,7 @@ var main_Main = /*#__PURE__*/function (_App) {
     main_classCallCheck(this, Main);
 
     _this = _super.call(this, element);
+    _this.tabId = NaN;
 
     window.onbeforeunload = function () {
       _this.router.location = "";
@@ -61438,9 +61457,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   }
 
   switch (msg.txt) {
-    // case "scrollCaptureBrowserAction":
-    // 	main.router.location = main.startLocation;
-    // 	break;
+    case "scrollCaptureBrowserAction":
+      main.tabId = msg.tabId;
+      main.router.location = msg.location;
+      break;
+
     case "scrollCaptureLocation":
       main.router.location = msg.location;
       break;

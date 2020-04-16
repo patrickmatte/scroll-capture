@@ -1,17 +1,20 @@
+import { timeAMPM } from "./tsunami/utils/date";
+import { addLeadingZero } from "./tsunami/utils/number";
+
 // let page = chrome.extension.getBackgroundPage();
 
 let mediaStream;
-let selectedTab;
 let isRecording;
 let mediaRecorder;
 let recordedBlobs;
+let tabId;
 
 let startLocation = "scroll-capture/scenario";
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg.txt) {
         case "scrollCaptureStartRecording":
-            startRecording();
+            startRecording(msg.tabId);
             break;
         case "scrollCaptureStopRecording":
             stopRecording();
@@ -24,10 +27,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
     if (isRecording) stopRecording();
-    selectedTab = tab;
-    window.selectedTab = selectedTab;
-    let msg = { txt: "scrollCaptureLocation", location:startLocation};
-    chrome.tabs.sendMessage(selectedTab.id, msg);
+    tabId = tab.id;
+    let msg = { txt: "scrollCaptureBrowserAction", location: startLocation, tabId: tab.id};
+    chrome.tabs.sendMessage(tab.id, msg);
 });
 
 function handleDataAvailable(event) {
@@ -47,14 +49,17 @@ function changeIcon(color = "") {
     });
 }
 
-function startRecording() {
+
+function startRecording(tabId) {
+    console.log("startRecording", tabId);
+
     changeIcon("_red");
-    chrome.tabs.get(selectedTab.id, _startTabCapture);
+    chrome.tabs.get(tabId, _startTabCapture);
     // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 
 function _startTabCapture(tab) {
-
+    console.log("_startTabCapture", tab);
     isRecording = true;
 
     // Note: this method must be invoked by the user as defined
@@ -86,6 +91,7 @@ function _startTabCapture(tab) {
 }
 
 function _setStream(stream) {
+    console.log("_setStream", stream);
     if(stream) {
         mediaStream = stream;
     } else {
@@ -108,7 +114,8 @@ function _setStream(stream) {
 }
 
 function _createMediaRecorder(result) {
-    
+    console.log("_createMediaRecorder", result);
+   
     let videoCodec = "vp8";
     let audioCodec = "opus";
     let videoBitsPerSecond = 8;
@@ -140,12 +147,12 @@ function _createMediaRecorder(result) {
         }
     }
 
-
     options.audioBitsPerSecond = audioBitsPerSecond * 1000; // 128 Kbit/sec
     options.videoBitsPerSecond = videoBitsPerSecond * 1000000; // 8 Mbit/sec
 
     try {
         mediaRecorder = new MediaRecorder(mediaStream, options);
+        console.log("mediaRecorder", mediaRecorder);
     } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
         console.log(`Exception while creating MediaRecorder: ${JSON.stringify(e)}`);
@@ -153,19 +160,35 @@ function _createMediaRecorder(result) {
     }
 
     // console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
-    mediaRecorder.onstop = (event) => {
-        // console.log('Recorder stopped: ', event);
-        // console.log('Recorded Blobs: ', recordedBlobs);
-    };
+    // mediaRecorder.onstop = (event) => {
+    //     console.log('Recorder stopped: ', event);
+    //     console.log('Recorded Blobs: ', recordedBlobs);
+    // };
     mediaRecorder.ondataavailable = handleDataAvailable;
     mediaRecorder.start(10); // collect 10ms of data
 }
 
 function stopRecording() {
+    console.log("stopRecording");
     changeIcon();
+    console.log("mediaRecorder", mediaRecorder);
     if (mediaRecorder) mediaRecorder.stop();
+    console.log("recordedBlobs", recordedBlobs);
     let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
+    console.log("videoBlob", videoBlob);
     window.videoURL = window.URL.createObjectURL(videoBlob);
+
+    let date = new Date();
+    let ampmTime = timeAMPM(date);
+    // Screen Shot 2020-03-20 at 4.35.14 PM
+    let dateData = {
+        year: date.getFullYear(),
+        month: addLeadingZero(date.getMonth() + 1),
+        date: addLeadingZero(date.getDate())
+    };
+    ampmTime.ampm = ampmTime.ampm.toUpperCase();
+    window.videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
+
 
     if (mediaStream) {
         let tracks = mediaStream.getTracks();
@@ -176,9 +199,6 @@ function stopRecording() {
     mediaRecorder = null;
     mediaStream = null;
     isRecording = false;
-
-    // let msg = { txt: "scrollCaptureVideoSource", videoBlob: videoBlob, videoURL: videoURL };
-    // chrome.tabs.sendMessage(selectedTabId, msg);
 }
 
 // if (chrome.tabs) {

@@ -44,14 +44,15 @@
 			}
 		}
 
-		.unit {
-			&:before {
-				content:"\00a0";
-			}
-			// width: 3em;
-			// flex-shrink: 0;
-			// flex-grow: 0;
-			// padding-left: 0.5em;
+		.sc-unit {
+			width: 3em;
+			vertical-align: middle;
+			flex-shrink: 0;
+			flex-grow: 0;
+			text-align: left;
+			display: inline-flex;
+			align-items: center;
+			height: 2em;
 		}
 	}
 }

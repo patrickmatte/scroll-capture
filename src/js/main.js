@@ -19,7 +19,9 @@ export default class Main extends App {
 	constructor(element) {
 		super(element);
 
-		window.onbeforeunload = ()=> {
+		this.tabId = NaN;
+
+		window.onbeforeunload = () => {
 			this.router.location = "";
 		}
 

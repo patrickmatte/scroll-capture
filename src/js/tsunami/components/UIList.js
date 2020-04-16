@@ -163,6 +163,7 @@ export default class UIList extends UIComponent {
 
 	_providerAdd(event) {
 		if (this.debug) console.log("UIList._providerAdd");
+		this._saveChildrenPositions();
 		let addedElements = [];
 		let start = event.index;
 		let end = event.index + event.total;
@@ -170,7 +171,11 @@ export default class UIList extends UIComponent {
 			let model = this.dataProvider.value[i];
 			addedElements.push(model);
 		}
-		return this._addElements(addedElements, start);
+		this._addElements(addedElements, start);
+		this.windowResize(this.windowSize);
+		this._setChildrenTransform();
+		setTimeout(this._resetChildrenTransform.bind(this), 0);
+		return addedElements;
 	}
 
 	_providerRemove(event) {

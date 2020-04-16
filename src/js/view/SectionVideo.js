@@ -1,4 +1,5 @@
 import Section from "./Section";
+import { app } from "../main";
 // import { localToGlobal } from "../tsunami/window";
 // import { app } from "../main";
 // import Point from "../tsunami/geom/Point";
@@ -22,7 +23,7 @@ export default class SectionVideo extends Section {
 
     showDelayComplete() {
         let promise = super.showDelayComplete();
-        this.iframe.src = chrome.extension.getURL('video-recording.html');
+        this.iframe.src = chrome.extension.getURL('video-recording.html?tabId=' + app.tabId);
         return promise;
     }
 

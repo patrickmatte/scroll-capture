@@ -3,7 +3,7 @@ import Action from "./Action";
 export default class ActionWait extends Action {
 
 	constructor() {
-		super("ActionWait", "Timeout", "Add a timeout");
+		super("ActionWait", "Pause", "Add a pause");
 		this.delay.value = 1;
 		this.icon.value = "fas fa-clock";
 	}
@@ -13,5 +13,5 @@ export default class ActionWait extends Action {
 		action.copy(this);
 		return action;
 	}
-
+	
 }
