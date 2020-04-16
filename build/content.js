@@ -5811,6 +5811,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
       this._setChildrenTransform();
 
       setTimeout(this._resetChildrenTransform.bind(this), 0);
+      return removedElements;
     }
   }, {
     key: "_providerSort",
@@ -6788,12 +6789,13 @@ var SectionScenario_SectionScenario = /*#__PURE__*/function (_Section) {
   SectionScenario_createClass(SectionScenario, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      var promise = SectionScenario_get(SectionScenario_getPrototypeOf(SectionScenario.prototype), "showDelayComplete", this).call(this);
+      var promise = SectionScenario_get(SectionScenario_getPrototypeOf(SectionScenario.prototype), "showDelayComplete", this).call(this); // chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation: this.path });
+      // chrome.storage.sync.set({ 'startLocation': this.path }, () => {
+      //     message('startLocation saved', this.path);
+      // });
 
-      chrome.runtime.sendMessage({
-        txt: "scrollCaptureChangeStartLocation",
-        startLocation: this.path
-      });
+
+      app.startLocation = this.path;
 
       if (!app.actions.selectedItem.value) {
         var lastIndex = app.actions.length.value - 1;
@@ -61107,11 +61109,12 @@ var PlayState_PlayState = /*#__PURE__*/function (_Branch) {
     value: function show() {
       var _this2 = this;
 
-      this.isPlaying = true;
-      chrome.runtime.sendMessage({
-        txt: "scrollCaptureChangeStartLocation",
-        startLocation: this.startLocation
-      });
+      this.isPlaying = true; // chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation:this.startLocation });
+      // chrome.storage.sync.set({ 'startLocation': this.startLocation }, () => {
+      //     message('startLocation saved', this.startLocation);
+      // });
+
+      app.startLocation = this.startLocation;
       app.save();
       app.actions.selectedIndex.value = 0;
       var promise1 = Object(tsunami_await["b" /* awaitTimeout */])(250);
@@ -61330,8 +61333,8 @@ var main_Main = /*#__PURE__*/function (_App) {
     // this.deleteSelected = this.deleteSelected.bind(this);
 
     _this.clearActions = _this.clearActions.bind(main_assertThisInitialized(_this));
-    app = main_assertThisInitialized(_this); // this.startLocation = "scroll-capture/scenario";
-
+    app = main_assertThisInitialized(_this);
+    _this.startLocation = "scroll-capture/scenario";
     _this.router = new Router_Router(main_assertThisInitialized(_this));
     _this.showCaptureIcon = new BooleanData["a" /* default */]();
 
@@ -61382,7 +61385,7 @@ var main_Main = /*#__PURE__*/function (_App) {
       var _this2 = this;
 
       var promise = new Promise(function (resolve, reject) {
-        chrome.storage.sync.get(["json"], function (result) {
+        chrome.storage.local.get(["json"], function (result) {
           resolve(result);
         });
       });
@@ -61413,7 +61416,7 @@ var main_Main = /*#__PURE__*/function (_App) {
         settings: this.settings.serialize()
       };
       var json = JSON.stringify(obj);
-      chrome.storage.sync.set({
+      chrome.storage.local.set({
         json: json
       }, function () {
         setTimeout(function () {
@@ -61459,7 +61462,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   switch (msg.txt) {
     case "scrollCaptureBrowserAction":
       main.tabId = msg.tabId;
-      main.router.location = msg.location;
+      main.router.location = main.startLocation;
       break;
 
     case "scrollCaptureLocation":

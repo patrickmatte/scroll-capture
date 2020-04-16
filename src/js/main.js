@@ -33,7 +33,7 @@ export default class Main extends App {
 
 		app = this;
 
-		// this.startLocation = "scroll-capture/scenario";
+		this.startLocation = "scroll-capture/scenario";
 
 		this.router = new Router(this);
 
@@ -82,7 +82,7 @@ export default class Main extends App {
 
 	load() {
 		let promise = new Promise((resolve, reject) => {
-			chrome.storage.sync.get(["json"], (result) => {
+			chrome.storage.local.get(["json"], (result) => {
 				resolve(result);
 			});
 		});
@@ -108,7 +108,7 @@ export default class Main extends App {
 			settings: this.settings.serialize()
 		};
 		let json = JSON.stringify(obj);
-		chrome.storage.sync.set({json:json}, () => {
+		chrome.storage.local.set({json:json}, () => {
 			setTimeout(()=> {
 				this.isSaving.value = false;
 			}, 100);

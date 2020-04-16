@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 	switch(msg.txt) {
 		case "scrollCaptureBrowserAction":
 			main.tabId = msg.tabId;
-			main.router.location = msg.location;
+			main.router.location = main.startLocation;
 			break;
 		case "scrollCaptureLocation":
 			main.router.location = msg.location;

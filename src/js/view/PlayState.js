@@ -13,7 +13,11 @@ export default class PlayState extends Branch {
     show() {
         this.isPlaying = true;
         
-        chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation:this.startLocation });
+        // chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation:this.startLocation });
+        // chrome.storage.sync.set({ 'startLocation': this.startLocation }, () => {
+        //     message('startLocation saved', this.startLocation);
+        // });
+        app.startLocation = this.startLocation;
 
         app.save();
         app.actions.selectedIndex.value = 0;

@@ -1,5 +1,3 @@
-import { timeAMPM } from "./tsunami/utils/date";
-import { addLeadingZero } from "./tsunami/utils/number";
 
 // let page = chrome.extension.getBackgroundPage();
 
@@ -7,9 +5,6 @@ let mediaStream;
 let isRecording;
 let mediaRecorder;
 let recordedBlobs;
-let tabId;
-
-let startLocation = "scroll-capture/scenario";
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg.txt) {
@@ -19,16 +14,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case "scrollCaptureStopRecording":
             stopRecording();
             break;
-        case "scrollCaptureChangeStartLocation":
-            startLocation = msg.startLocation;
-            break;
     }
 });
 
 chrome.browserAction.onClicked.addListener((tab) => {
     if (isRecording) stopRecording();
-    tabId = tab.id;
-    let msg = { txt: "scrollCaptureBrowserAction", location: startLocation, tabId: tab.id};
+    let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
     chrome.tabs.sendMessage(tab.id, msg);
 });
 
@@ -110,7 +101,7 @@ function _setStream(stream) {
     
     recordedBlobs = [];
 
-    chrome.storage.sync.get(["json"], _createMediaRecorder);
+    chrome.storage.local.get(["json"], _createMediaRecorder);
 }
 
 function _createMediaRecorder(result) {
@@ -177,18 +168,6 @@ function stopRecording() {
     let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
     console.log("videoBlob", videoBlob);
     window.videoURL = window.URL.createObjectURL(videoBlob);
-
-    let date = new Date();
-    let ampmTime = timeAMPM(date);
-    // Screen Shot 2020-03-20 at 4.35.14 PM
-    let dateData = {
-        year: date.getFullYear(),
-        month: addLeadingZero(date.getMonth() + 1),
-        date: addLeadingZero(date.getDate())
-    };
-    ampmTime.ampm = ampmTime.ampm.toUpperCase();
-    window.videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
-
 
     if (mediaStream) {
         let tracks = mediaStream.getTracks();

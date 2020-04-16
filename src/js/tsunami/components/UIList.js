@@ -193,6 +193,7 @@ export default class UIList extends UIComponent {
 		this.windowResize(this.windowSize);
 		this._setChildrenTransform();
 		setTimeout(this._resetChildrenTransform.bind(this), 0);
+		return removedElements;
 	}
 
 	_providerSort(event) {
