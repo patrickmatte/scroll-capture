@@ -52,18 +52,6 @@ export default class ScrollCapture extends UIComponent {
 		let y = this.model.settings.position.y.value;
 		this.move(x, y);
 	}
-	
-	showDelayComplete() {
-		app.appendChild(this.element);
-		// app.appendChild(this.windowContent.sections.element);
-		return super.showDelayComplete();
-	}
-
-	hideComplete() {
-		app.removeChild(this.element);
-		// app.removeChild(this.windowContent.sections.element);
-		return super.hideComplete();
-	}
 
 	dragStart(event) {
 		event.preventDefault();

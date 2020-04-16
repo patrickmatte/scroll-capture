@@ -7,19 +7,14 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 let isDev = (ENV == "development");
 
-let entry = {};
-if(isDev) {
-	entry.test = ["./js/test.js", "./css/test.scss"];
-} else {
-	entry.content = ["./js/content.js", "./css/content.scss"];
-	entry.background = ["./js/background.js"];
-	entry["video-recording"] = ["./js/video-recording.js"];
-}
-
 module.exports = {
 	context: path.resolve(__dirname, "src"),
 	devtool: `[name].${ENV == "development" ? "inline-source-map" : "none"}`,
-	entry: entry,
+	entry: {
+		"content" : ["./js/content.js", "./css/content.scss"],
+		"background" : ["./js/background.js"],
+		"video-recording" : ["./js/video-recording.js"]
+	},
 	output: {
 		path: path.resolve(__dirname, "build"),
 		filename: "[name].js",

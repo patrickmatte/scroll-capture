@@ -10,11 +10,7 @@ export default class SectionScenario extends Section {
 
     showDelayComplete() {
         let promise = super.showDelayComplete();
-
-        // chrome.runtime.sendMessage({ txt: "scrollCaptureChangeStartLocation", startLocation: this.path });
-        // chrome.storage.sync.set({ 'startLocation': this.path }, () => {
-        //     message('startLocation saved', this.path);
-        // });
+        
         app.startLocation = this.path;
 
         if (!app.actions.selectedItem.value) {
@@ -30,6 +26,7 @@ export default class SectionScenario extends Section {
 
     hideDelayComplete() {
         app.actions.selectedItem.value = null;
+        return super.hideDelayComplete();
     }
 
 }

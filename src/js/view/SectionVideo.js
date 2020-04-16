@@ -10,6 +10,7 @@ export default class SectionVideo extends Section {
         super(element);
         this.tabId = "video";
         this.iframe = this.element.querySelector("iframe");
+        this.iframe.src = chrome.extension.getURL('video-recording.html?tabId=' + app.tabId);
 
         chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             switch (msg.txt) {
@@ -20,41 +21,5 @@ export default class SectionVideo extends Section {
             }
         });
     }
-
-    showDelayComplete() {
-        let promise = super.showDelayComplete();
-        this.iframe.src = chrome.extension.getURL('video-recording.html?tabId=' + app.tabId);
-        return promise;
-    }
-
-    hideComplete() {
-        let promise = super.hideComplete();
-        this.iframe.src = "";
-        return promise;
-    }
-
-    // iframePositionUpdate() {
-    //     this.iframe.style.right = app.scrollCapture.style.right + this.iframeOffset.x + "px";
-    //     this.iframe.style.top = app.scrollCapture.style.top + this.iframeOffset.y + "px";
-    // }
-
-    // windowResize(windowSize) {
-    //     super.windowResize(windowSize);
-    //     this.iframe.style.width = this.iframeContainer.offsetWidth + "px";
-    //     this.iframeOffset = localToGlobal(this.iframeContainer, app.scrollCapture.element);
-    // }
-
-    // showDelayComplete() {
-    //     app.scrollCapture.windowContent.component.appendChild(this.element);
-    //     this.iframePositionUpdate();
-    //     document.body.appendChild(this.iframe);
-    //     return super.showDelayComplete();
-    // }
-
-    // hideComplete() {
-    //     document.body.removeChild(this.iframe);
-    //     app.scrollCapture.windowContent.component.removeChild(this.element);
-    //     return super.hideComplete();
-    // }
 
 }

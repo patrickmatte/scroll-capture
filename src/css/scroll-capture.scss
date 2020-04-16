@@ -55,10 +55,6 @@ body.is-capturing * {
 		}
 	}
 
-	.sc-section {
-		display: block;
-	}
-
 	.sc-fields-list {
 		> * {
 			margin-bottom: $fieldMargin;
@@ -193,7 +189,7 @@ body.is-capturing * {
 		right: 4px;
 		top: 4px;
 		width: 375px;
-		display: flex;
+		display: none;
 		flex-direction: column;
 		line-height: 1;
 		padding: 3px;
@@ -202,6 +198,18 @@ body.is-capturing * {
 		backdrop-filter: blur(15px);
 		// mix-blend-mode: luminosity;
 		background-color: $backgroundColorDark;
+
+		&[data-state="show"] {
+			display: flex;
+		}
+	}
+	
+	.sc-section {
+		display: none;
+		
+		&[data-state="show"] {
+			display: block;
+		}
 	}
 
 	// &[is="sc-sections"] {

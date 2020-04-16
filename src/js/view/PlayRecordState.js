@@ -32,6 +32,7 @@ export default class PlayRecordState extends PlayState {
     stopTheRecording() {
         clearInterval(this.keepAliveTimeout);
         chrome.runtime.sendMessage({ txt: "scrollCaptureStopRecording" });
+        chrome.runtime.sendMessage({ txt: "scrollCaptureUpdateVideo" });
     }
 
     hide() {

@@ -28,6 +28,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case "scrollCaptureColorTheme":
             document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.isColorThemeLight);
             break;
+        case "scrollCaptureUpdateVideo":
+            updateVideo();
+            break;
     }
 });
 
@@ -48,29 +51,29 @@ player.addEventListener('canplay', function () {
 //     });
 // }
 
-chrome.runtime.getBackgroundPage((page) => {
-    if (page.videoURL) {
-        console.log("page.videoURL", page.videoURL);
-        player.src = page.videoURL;
-        let date = new Date();
-        let ampmTime = timeAMPM(date);
-        // Screen Shot 2020-03-20 at 4.35.14 PM
-        let dateData = {
-            year: date.getFullYear(),
-            month: addLeadingZero(date.getMonth() + 1),
-            date: addLeadingZero(date.getDate())
-        };
-        ampmTime.ampm = ampmTime.ampm.toUpperCase();
-        let videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
-        
-        let buttons = document.querySelectorAll("a.sc-download-button");
-        for (let i = 0; i < buttons.length; i++) {
-            let button = buttons[i];
-            button.href = page.videoURL;
-            button.download = videoFileName;
-        }
-        let fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
-        fileNameButton.innerHTML = videoFileName;
-    }
-});
+function updateVideo() {
+    chrome.runtime.getBackgroundPage((page) => {
+        if (page.videoURL) {
+            player.src = page.videoURL;
+            let date = new Date();
+            let ampmTime = timeAMPM(date);
+            // Screen Shot 2020-03-20 at 4.35.14 PM
+            let dateData = {
+                year: date.getFullYear(),
+                month: addLeadingZero(date.getMonth() + 1),
+                date: addLeadingZero(date.getDate())
+            };
+            ampmTime.ampm = ampmTime.ampm.toUpperCase();
+            let videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
 
+            let buttons = document.querySelectorAll("a.sc-download-button");
+            for (let i = 0; i < buttons.length; i++) {
+                let button = buttons[i];
+                button.href = page.videoURL;
+                button.download = videoFileName;
+            }
+            let fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
+            fileNameButton.innerHTML = videoFileName;
+        }
+    });
+}

@@ -16,10 +16,10 @@ export let app;
 
 export default class Main extends App {
 
-	constructor(element) {
+	constructor(element, tabId) {
 		super(element);
 
-		this.tabId = NaN;
+		this.tabId = tabId;
 
 		window.onbeforeunload = () => {
 			this.router.location = "";
@@ -73,6 +73,7 @@ export default class Main extends App {
 		this.capturedVideo = new ArrayData("test.mp4");
 
 		this.scrollCapture = importTemplate(ScrollCapture.template, this).component;
+		
 		this.branches = {
 			"scroll-capture": this.scrollCapture,
 			"play": new PlayState(),
@@ -81,6 +82,8 @@ export default class Main extends App {
 	}
 
 	load() {
+		this.appendChild(this.scrollCapture.element);
+
 		let promise = new Promise((resolve, reject) => {
 			chrome.storage.local.get(["json"], (result) => {
 				resolve(result);

@@ -11,13 +11,13 @@ export default class WindowContentMain extends UIComponent {
         super(element);
 
         this.scenario = this.element.querySelector("sc-scenario").component;
-        this.removeChild(this.scenario.element);
+        // this.removeChild(this.scenario.element);
 
         this.video = this.element.querySelector("sc-video").component;
-        this.removeChild(this.video.element);
+        // this.removeChild(this.video.element);
 
         this.settings = this.element.querySelector("sc-settings").component;
-        this.removeChild(this.settings.element);
+        // this.removeChild(this.settings.element);
 
         // this.position = new Point();
 

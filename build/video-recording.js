@@ -718,6 +718,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     case "scrollCaptureColorTheme":
       document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.isColorThemeLight);
       break;
+
+    case "scrollCaptureUpdateVideo":
+      updateVideo();
+      break;
   }
 });
 var player = document.querySelector('.sc-video-player');
@@ -738,32 +742,33 @@ player.addEventListener('canplay', function () {
 //     });
 // }
 
-chrome.runtime.getBackgroundPage(function (page) {
-  if (page.videoURL) {
-    console.log("page.videoURL", page.videoURL);
-    player.src = page.videoURL;
-    var date = new Date();
-    var ampmTime = timeAMPM(date); // Screen Shot 2020-03-20 at 4.35.14 PM
+function updateVideo() {
+  chrome.runtime.getBackgroundPage(function (page) {
+    if (page.videoURL) {
+      player.src = page.videoURL;
+      var date = new Date();
+      var ampmTime = timeAMPM(date); // Screen Shot 2020-03-20 at 4.35.14 PM
 
-    var dateData = {
-      year: date.getFullYear(),
-      month: Object(number["a" /* addLeadingZero */])(date.getMonth() + 1),
-      date: Object(number["a" /* addLeadingZero */])(date.getDate())
-    };
-    ampmTime.ampm = ampmTime.ampm.toUpperCase();
-    var videoFileName = "Scroll Capture ".concat(dateData.year, "-").concat(dateData.month, "-").concat(dateData.date, " at ").concat(ampmTime.hours, ".").concat(ampmTime.minutes, ".").concat(ampmTime.seconds, " ").concat(ampmTime.ampm, ".webm");
-    var buttons = document.querySelectorAll("a.sc-download-button");
+      var dateData = {
+        year: date.getFullYear(),
+        month: Object(number["a" /* addLeadingZero */])(date.getMonth() + 1),
+        date: Object(number["a" /* addLeadingZero */])(date.getDate())
+      };
+      ampmTime.ampm = ampmTime.ampm.toUpperCase();
+      var videoFileName = "Scroll Capture ".concat(dateData.year, "-").concat(dateData.month, "-").concat(dateData.date, " at ").concat(ampmTime.hours, ".").concat(ampmTime.minutes, ".").concat(ampmTime.seconds, " ").concat(ampmTime.ampm, ".webm");
+      var buttons = document.querySelectorAll("a.sc-download-button");
 
-    for (var i = 0; i < buttons.length; i++) {
-      var button = buttons[i];
-      button.href = page.videoURL;
-      button.download = videoFileName;
+      for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        button.href = page.videoURL;
+        button.download = videoFileName;
+      }
+
+      var fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
+      fileNameButton.innerHTML = videoFileName;
     }
-
-    var fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
-    fileNameButton.innerHTML = videoFileName;
-  }
-});
+  });
+}
 
 /***/ }),
 

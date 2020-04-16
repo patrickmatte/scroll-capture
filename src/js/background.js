@@ -42,15 +42,12 @@ function changeIcon(color = "") {
 
 
 function startRecording(tabId) {
-    console.log("startRecording", tabId);
-
     changeIcon("_red");
     chrome.tabs.get(tabId, _startTabCapture);
     // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 
 function _startTabCapture(tab) {
-    console.log("_startTabCapture", tab);
     isRecording = true;
 
     // Note: this method must be invoked by the user as defined
@@ -82,7 +79,6 @@ function _startTabCapture(tab) {
 }
 
 function _setStream(stream) {
-    console.log("_setStream", stream);
     if(stream) {
         mediaStream = stream;
     } else {
@@ -105,7 +101,6 @@ function _setStream(stream) {
 }
 
 function _createMediaRecorder(result) {
-    console.log("_createMediaRecorder", result);
    
     let videoCodec = "vp8";
     let audioCodec = "opus";
@@ -143,7 +138,6 @@ function _createMediaRecorder(result) {
 
     try {
         mediaRecorder = new MediaRecorder(mediaStream, options);
-        console.log("mediaRecorder", mediaRecorder);
     } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
         console.log(`Exception while creating MediaRecorder: ${JSON.stringify(e)}`);
@@ -160,13 +154,9 @@ function _createMediaRecorder(result) {
 }
 
 function stopRecording() {
-    console.log("stopRecording");
     changeIcon();
-    console.log("mediaRecorder", mediaRecorder);
     if (mediaRecorder) mediaRecorder.stop();
-    console.log("recordedBlobs", recordedBlobs);
     let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
-    console.log("videoBlob", videoBlob);
     window.videoURL = window.URL.createObjectURL(videoBlob);
 
     if (mediaStream) {
@@ -179,18 +169,3 @@ function stopRecording() {
     mediaStream = null;
     isRecording = false;
 }
-
-// if (chrome.tabs) {
-//     chrome.tabs.onUpdated.addListener((event) => { console.log("tabs.onUpdated", event) });
-//     chrome.tabs.onZoomChange.addListener((event) => { console.log("tabs.onZoomChange", event) });
-//     chrome.tabs.onUpdated.addListener((event) => { console.log("tabs.onUpdated", event) });
-// }
-// if (chrome.webNavigation) {
-//     chrome.webNavigation.onBeforeNavigate.addListener((event) => { console.log("webNavigation.onBeforeNavigate", event) });
-//     chrome.webNavigation.onCommitted.addListener((event) => { console.log("webNavigation.onCommitted", event) });
-//     chrome.webNavigation.onDOMContentLoaded.addListener((event) => { console.log("webNavigation.onDOMContentLoaded", event) });
-//     chrome.webNavigation.onCompleted.addListener((event) => { console.log("webNavigation.onCompleted", event) });
-// }
-// if (chrome.history) {
-//     chrome.history.onVisited.addListener((event) => { console.log("history.onVisited", event) });
-// }

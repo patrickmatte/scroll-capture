@@ -5,11 +5,6 @@
 			<div class="sc-drag-area"></div>
 			<span class="sc-tabs">
 				<span class="sc-tab sc-title-tab">
-					<!-- <svg class="sc-icon sc-logo" x="0px" y="0px" viewBox="0 0 55 133">
-						<circle class="sc-icon-shape" cx="27.5" cy="14.5" r="14.5" />
-						<circle class="sc-icon-shape" cx="27.5" cy="53.26" r="20" />
-						<circle class="sc-icon-shape" cx="27.5" cy="105.38" r="27.5" />
-					</svg> -->
 					<span class="sc-label">Scroll Capture</span>
 				</span>
 			</span>
@@ -95,7 +90,7 @@
 						</div>
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
 
-								<sc-scenario class="sc-fields" is="ui-component">
+								<sc-scenario class="sc-section sc-fields" is="ui-component">
 									<sc-actions-view data-provider="actions" data-actions-length="[[actions.length]]">
 										<template>
 											<sc-action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data" data-selected="[[data.isSelectedItem]]">
@@ -259,13 +254,13 @@
 									</div>
 								</sc-scenario>
 
-								<sc-video class="sc-fields">
+								<sc-video class="sc-section sc-fields">
 									<div>
 										<iframe></iframe>
 									</div>
 								</sc-video>
 
-								<sc-settings class="sc-fields" is="ui-component">
+								<sc-settings class="sc-section sc-fields" is="ui-component">
 									<div>
 										<div class="sc-window">
 											<div class="sc-title">
