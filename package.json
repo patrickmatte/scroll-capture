@@ -1,6 +1,6 @@
 {
 	"name": "scroll-capture",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"author": "Patrick Matte <patrick.matte@gmail.com>",
 	"description": "A chrome extension to automate scrolling and mouse actions for your portfolio screen captures.",
 	"scripts": {
@@ -39,7 +39,6 @@
 		"webpack-cli": "^3.3.11"
 	},
 	"dependencies": {
-		"mustache": "^4.0.1",
 		"three": "^0.115.0"
 	}
 }

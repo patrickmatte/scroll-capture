@@ -734,13 +734,7 @@ player.addEventListener('canplay', function () {
     height: document.body.scrollHeight
   };
   chrome.tabs.sendMessage(tabId, msg);
-}); // let backButton = document.querySelector(".sc-back-button");
-// if (backButton) {
-//     backButton.addEventListener("click", () => {
-//         let msg = { txt: "scrollCaptureLocation", location: "scroll-capture/scenario" };
-//         chrome.tabs.sendMessage(tabId, msg);
-//     });
-// }
+});
 
 function updateVideo() {
   chrome.runtime.getBackgroundPage(function (page) {

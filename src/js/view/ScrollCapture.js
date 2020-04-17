@@ -34,6 +34,12 @@ export default class ScrollCapture extends UIComponent {
 		this.branches["settings"] = this.windowContent.settings;
 	}
 
+	showDelayComplete() {
+		let promise = super.showDelayComplete();
+		this.windowResize(this.windowSize);
+		return promise;
+	}
+
 	get model() {
 		return super.model;
 	}
@@ -66,7 +72,6 @@ export default class ScrollCapture extends UIComponent {
 		let diff = this.startPoint.subtract(point);
 		this.model.settings.position.x.value = this.startPosition.x + diff.x;
 		this.model.settings.position.y.value = this.startPosition.y - diff.y;
-		// this.move(, );
 	}
 
 	dragEnd(event) {
@@ -82,8 +87,6 @@ export default class ScrollCapture extends UIComponent {
 	move(x, y) {
 		this.style.right = x;
 		this.style.top = y;
-		// this.windowContent.sections.style.right = x + this.windowContent.position.x;
-		// this.windowContent.sections.style.top = y + this.windowContent.position.y;
 	}
 
 	deserialize(obj) {

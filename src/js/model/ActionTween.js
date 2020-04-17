@@ -36,7 +36,7 @@ export default class ActionTween extends Action {
 				this.easingPresets.push(easingPreset);
 			}
 		}
-		this.resetEasing();
+		this.easingPresets.selectedItem.value = "quad.easeInOut";
 		this.tweenUpdateHandler = this.tweenUpdateHandler.bind(this);
 		this.tweenCompleteHandler = this.tweenCompleteHandler.bind(this);
 
@@ -77,11 +77,7 @@ export default class ActionTween extends Action {
 		this.endX.value = action.endX.value;
 		this.endY.value = action.endY.value;
 		this.duration.value = action.duration.value;
-		this.cubicBezierPoints.p1.debug = true;
-		this.cubicBezierPoints.p2.debug = true;
 		this.cubicBezierPoints.copy(action.cubicBezierPoints);
-		// this.cubicBezierPoints.p1.copy(action.cubicBezierPoints.p1);
-		// this.cubicBezierPoints.p2.copy(action.cubicBezierPoints.p2);
 	}
 
 	trigger() {
@@ -112,6 +108,7 @@ export default class ActionTween extends Action {
 		data.delay = this.delay.value;
 		data.p1 = this.cubicBezierPoints.p1.serialize();
 		data.p2 = this.cubicBezierPoints.p2.serialize();
+		data.easing = this.easingPresets.selectedItem.value;
 		return data;
 	}
 
@@ -125,6 +122,7 @@ export default class ActionTween extends Action {
 		this.delay.value = data.delay;
 		this.cubicBezierPoints.p1.deserialize(data.p1);
 		this.cubicBezierPoints.p2.deserialize(data.p2);
+		this.easingPresets.selectedItem.value = data.easing || "quad.easeInOut";
 	}
 
 }

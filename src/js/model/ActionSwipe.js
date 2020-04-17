@@ -13,8 +13,8 @@ export default class ActionSwipe extends ActionTween {
 	constructor(points = [], duration = 1, delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionSwipe";
-		this.name.value = "Swipe";
-		this.description.value = "Add a swipe gesture";
+		this.name.value = "Mouse gesture";
+		this.description.value = "Add a mouse gesture";
 		this.points = new ArrayData();
 		this.points.dataClass = Vector2Data;
 		while(points.length < 2) {

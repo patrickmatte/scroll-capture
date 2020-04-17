@@ -1,5 +1,4 @@
 import UIComponent from "../tsunami/components/UIComponent";
-import {app} from "../main";
 import * as tsunami from "../tsunami/tsunami";
 import ActionTweenView from "./ActionTweenView";
 

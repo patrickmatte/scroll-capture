@@ -5,24 +5,20 @@ export default class Section extends UIComponent {
 
     constructor(element) {
         super(element);
-        this.tabId = "";
+        this.tabDataId = "";
     }
-    
+
     showDelayComplete() {
-        let tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.tabId + "']");
+        let tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.tabDataId + "']");
         if (tab) tab.classList.add("sc-title-tab");
-        // app.scrollCapture.windowContent.sections.appendChildAt(this.element, 0);
-        // app.scrollCapture.windowContent.appendChildAt(this.element, 0);
-        this.dispatchResizeEvent();
-        return super.showDelayComplete();
+        let promise = super.showDelayComplete();
+        this.windowResize(this.windowSize);
+        return promise;
     }
 
     hideComplete() {
-        let tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.tabId + "']");
+        let tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.tabDataId + "']");
         if (tab) tab.classList.remove("sc-title-tab");
-        // app.scrollCapture.windowContent.sections.removeChild(this.element);
-        // app.scrollCapture.windowContent.removeChild(this.element);
-        this.dispatchResizeEvent();
         return super.hideComplete();
     }
     

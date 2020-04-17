@@ -43,14 +43,6 @@ player.addEventListener('canplay', function () {
     chrome.tabs.sendMessage(tabId, msg);
 });
 
-// let backButton = document.querySelector(".sc-back-button");
-// if (backButton) {
-//     backButton.addEventListener("click", () => {
-//         let msg = { txt: "scrollCaptureLocation", location: "scroll-capture/scenario" };
-//         chrome.tabs.sendMessage(tabId, msg);
-//     });
-// }
-
 function updateVideo() {
     chrome.runtime.getBackgroundPage((page) => {
         if (page.videoURL) {
