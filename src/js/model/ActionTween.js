@@ -10,6 +10,7 @@ import {evalProperty} from "../tsunami/tsunami";
 import CubicBezierPoints from "./CubicBezierPoints";
 import Easing from "../tsunami/animation/Easing";
 import ObjectData from "../tsunami/data/ObjectData";
+import StringData from "../tsunami/data/StringData";
 
 export default class ActionTween extends Action {
 
@@ -19,7 +20,7 @@ export default class ActionTween extends Action {
 		this.startY = new NumberData(startY);
 		this.endX = new NumberData(x);
 		this.endY = new NumberData(y);
-		this.duration = new NumberData(duration);
+		this.duration = new StringData(duration);
 		this.cubicBezierPoints = new CubicBezierPoints();
 		this.easing = new CubicBezierEasing();
 		this.cubicBezierPointsChange();

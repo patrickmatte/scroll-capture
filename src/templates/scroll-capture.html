@@ -70,7 +70,7 @@
 														<span class="sc-tab sc-title-tab">
 															<div class="ui-list-drag-area"></div>
 															<span class="sc-tab-wrapper">
-																<span class="sc-icon [[data.icon]]" is=ui-component></span>
+																<span class="sc-icon [[data.icon]]" is="ui-component"></span>
 																<span class="sc-label">
 																	<input size="[[data.name.length]]" is="ui-input" data-model="data.name" />
 																</span>
@@ -115,17 +115,16 @@
 																		<span class="sc-label">Selector:</span>
 																		<input type="text" data-model="data.target" is="ui-input" />
 																	</div>
-																	<div class="sc-field-group">
-																		<div class="sc-field">
-																			<span class="sc-label">Left:</span>
-																			<input type="number" step="1" data-model="data.unitX" is="ui-input"
-																				data-event-focus="data.doScroll" />
-																		</div>
-																		<div class="sc-field">
-																			<span class="sc-label">Top:</span>
-																			<input type="number" step="1" data-model="data.unitY" is="ui-input"
-																				data-event-focus="data.doScroll" />
-																		</div>
+																	<div class="sc-field">
+																		<span class="sc-label">Coords:</span>
+																		<span class="sc-input">
+																			<input type="number" step="1" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" title="Left"/>
+																			<span class="sc-unit">px</span>
+																		</span>
+																		<span class="sc-input">
+																			<input type="number" step="1" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" title="Top"/>
+																			<span class="sc-unit">px</span>
+																		</span>
 																	</div>
 																</div>
 															</template>
@@ -133,19 +132,18 @@
 																<div class="sc-action sc-fields-list" is="action-tween">
 																	<div class="sc-points-list sc-field-column" data-provider="data.points" is="ui-list">
 																		<template>
-																			<div class="sc-field-group">
-																				<div class="sc-field">
-																					<span class="sc-label" is="ui-text">
-																						<span>PageX<sup>[[index1]]</sup>:</span>
-																					</span>
-																					<input type="number" data-model="data.x" is="ui-input" />
-																				</div>
-																				<div class="sc-field">
-																					<span class="sc-label" is="ui-text">
-																						<span>PageY<sup>[[index1]]</sup>:</span>
-																					</span>
-																					<input type="number" data-model="data.y" is="ui-input" />
-																				</div>
+																			<div class="sc-field">
+																				<span class="sc-label" is="ui-text">
+																					<span>Coords[<span>[[index]]</span>]:</span>
+																				</span>
+																				<span class="sc-input">
+																					<input type="number" step="1" data-model="data.x" is="ui-input" title="PageX" />
+																					<span class="sc-unit">px</span>
+																				</span>
+																				<span class="sc-input">
+																					<input type="number" step="1" data-model="data.y" is="ui-input" title="PageY" />
+																					<span class="sc-unit">px</span>
+																				</span>
 																			</div>
 																		</template>
 																	</div>
@@ -153,38 +151,38 @@
 															</template>
 															<template data-type="ActionMouseEvent">
 																<div class="sc-action sc-fields-list">
-																	<div class="sc-field-group">
-																		<div class="sc-field">
-																			<span class="sc-label">PageX:</span>
-																			<input type="text" data-model="data.x" is="ui-input" />
-																		</div>
-																		<div class="sc-field">
-																			<span class="sc-label">PageY:</span>
-																			<input type="text" data-model="data.y" is="ui-input" />
+																	<div class="sc-field">
+																		<span class="sc-label">Type:</span>
+																		<div class="sc-select">
+																			<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select" title="Type"></select>
 																		</div>
 																	</div>
-																	<div class="sc-field-group">
-																		<div class="sc-field">
-																			<span class="sc-label">Type:</span>
-																			<div class="sc-select">
-																				<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
-																			</div>
-																		</div>
-																		<div class="sc-field">
-																			<span class="sc-label">Delay:</span>
-																			<input type="number" step="0.25" data-model="data.delay" is="ui-input" />
-																		</div>
+																	<div class="sc-field">
+																		<span class="sc-label">Coords:</span>
+																		<span class="sc-input">
+																			<input type="number" step="1" data-model="data.x" is="ui-input" title="PageX"/>
+																			<span class="sc-unit">px</span>
+																		</span>
+																		<span class="sc-input">
+																			<input type="number" step="1" data-model="data.y" is="ui-input" title="PageY"/>
+																			<span class="sc-unit">px</span>
+																		</span>
+																	</div>
+																	<div class="sc-field">
+																		<span class="sc-label">Delay:</span>
+																		<span class="sc-input">
+																			<input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Delay" />
+																			<span class="sc-unit">sec</span>
+																		</span>
 																	</div>
 																</div>
 															</template>
 															<template data-type="ActionWait">
 																<div class="sc-action sc-fields-list">
-																	<div class="sc-field-group">
-																		<div class="sc-field">
-																			<span class="sc-label">Duration:</span>
-																			<input type="number" step="0.25" data-model="data.delay" is="ui-input" />
-																		</div>
-																		<div></div>
+																	<div class="sc-field">
+																		<span class="sc-label">Duration:</span>
+																		<input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Duration" />
+																		<span class="sc-unit">sec</span>
 																	</div>
 																</div>
 															</template>
@@ -193,12 +191,10 @@
 																	<div class="sc-field">
 																		<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
 																	</div>
-																	<div class="sc-field-group">
-																		<div class="sc-field">
-																			<span class="sc-label">Delay:</span>
-																			<input type="number" step="0.25" data-model="data.delay" is="ui-input" />
-																		</div>
-																		<div></div>
+																	<div class="sc-field">
+																		<span class="sc-label">Delay:</span>
+																		<input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Duration"/>
+																		<span class="sc-unit">sec</span>
 																	</div>
 																</div>
 															</template>
@@ -248,6 +244,9 @@
 														<template>
 															<label class="sc-radio">
 																<input type="radio" name="color-theme" is="ui-input" value="[[data]]" data-model="parent.settings.colorThemes.selectedItem" />
+																<span class="box">
+																	<span class="icon fas fa-check"></span>
+																</span>
 																<span is="ui-text" data-model="data"></span>
 															</label>
 														</template>
@@ -282,7 +281,7 @@
 														<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" />
 														<span class="sc-label">
 															<span is="ui-text" data-model="settings.videoBitsPerSecond"></span>
-															<span class="unit">Mbps</span>
+															<span class="unit">&nbsp;Mbps</span>
 														</span>
 													</div>
 												</div>
@@ -315,7 +314,7 @@
 														<input type="range" min="16" max="128" step="16" data-model="settings.audioBitsPerSecond" is="ui-input" />
 														<span class="sc-label">
 															<span is="ui-text" data-model="settings.audioBitsPerSecond"></span>
-															<span class="unit">Kbps</span>
+															<span class="unit">&nbsp;Kbps</span>
 														</span>
 													</div>
 												</div>

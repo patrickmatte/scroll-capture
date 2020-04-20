@@ -1,11 +1,13 @@
 import Data from "./Data";
 import Validation from "./Validation";
+import NumberData from "./NumberData";
 
 export default class StringData extends Data {
 
 	constructor(value = "", modifiers = []) {
 		super();
 		this.modifiers = modifiers;
+		this.length = new NumberData();
 		this.value = value;
 	}
 
@@ -27,6 +29,7 @@ export default class StringData extends Data {
 		}
 		if (value != this._value) {
 			this._value = value;
+			this.length.value = value.toString().length;
 			this.dispatchChangeEvent();
 		}
 	}

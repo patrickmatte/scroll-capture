@@ -30,9 +30,21 @@
 			height: 2em;
 		}
 
+		.sc-input, .sc-select {
+			width: 50%;
+			flex-shrink: 1;
+			flex-grow: 1;
+
+			input[size] {
+				flex-grow: 0;
+				flex-shrink: 1;
+				width: unset;
+			}
+		}
+
 		input, textarea {
-			width: 40%;
-			flex-shrink: 0;
+			width: 50%;
+			flex-shrink: 1;
 			flex-grow: 1;
 			color:select #fff;
 			padding: 0.5em !important;
@@ -45,7 +57,7 @@
 		}
 
 		.sc-unit {
-			width: 3em;
+			width: auto;
 			vertical-align: middle;
 			flex-shrink: 0;
 			flex-grow: 0;

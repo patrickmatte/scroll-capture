@@ -16,7 +16,6 @@ export default class Action {
 
 		this.type = type;
 		this.name = new StringData();
-		this.name.length = new NumberData();
 		this.name.addEventListener(Data.CHANGE, () => {
 			this.name.length.value = Math.max(this.name.value.length, 4);
 		});
@@ -32,7 +31,7 @@ export default class Action {
 			if (this.changeCursorOnCapture.value) app.showCaptureIcon.value = event.data;
 		});
 		this.isPlaying = new BooleanData();
-		this.delay = new NumberData(0);
+		this.delay = new StringData("0");
 		this.isSelectedItem = new BooleanData();
 
 
@@ -70,14 +69,14 @@ export default class Action {
 	serialize() {
 		return {
 			type:this.type,
-			delay:this.delay.value,
+			delay:this.delay.value.toString() || "0",
 			name:this.name.value
 		}
 	}
 
 	deserialize(data) {
 		this.type = data.type;
-		this.delay.value = data.delay;
+		this.delay.value = data.delay || "0";
 		this.name.value = data.name;
 	}
 

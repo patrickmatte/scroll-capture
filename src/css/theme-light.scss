@@ -77,5 +77,73 @@
             background: $inputColorLight;
             background-color: $inputColorLight;
         }
+
+        .sc-input {
+            background: $inputColorLight;
+            background-color: $inputColorLight;
+
+            input {
+                background: transparent;
+                background-color: transparent;
+            }
+        }
+
+        label.sc-radio {
+            .box {
+                background-color: $inputColorLight;
+            }
+        }
+        
+        
+        input[type=range] {
+		    background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            background: $inputColorLight;
+            border-radius: $borderRadius;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            border: 1px solid $inputColorLight;
+            background: $textColorLight;
+            opacity: 0.1;
+        }
+        
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: $inputColorLight;
+        }
+        
+        input[type=range]::-moz-range-track {
+            background: $inputColorLight;
+        }
+        
+        input[type=range]::-moz-range-thumb {
+            border: 1px solid $inputColorLight;
+            background: $textColorLight;
+            opacity: 0.1;
+        }
+                
+        input[type=range]::-ms-fill-lower {
+            background: $inputColorLight;
+        }
+        
+        input[type=range]::-ms-fill-upper {
+            background: $inputColorLight;
+        }
+        
+        input[type=range]::-ms-thumb {
+            border: 1px solid $inputColorLight;
+            background: $textColorLight;
+            opacity: 0.1;
+        }
+        
+        input[type=range]:focus::-ms-fill-lower {
+            background: $inputColorLight;
+        }
+        
+        input[type=range]:focus::-ms-fill-upper {
+            background: $inputColorLight;
+        }
     }
 }

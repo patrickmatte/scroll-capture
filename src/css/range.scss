@@ -1,0 +1,102 @@
+.sc-default {
+	input[type=range] {
+		-webkit-appearance: none;
+		width: 100%;
+        margin: 0 0;
+		background: transparent;
+    }
+    
+	input[type=range]:focus {
+		outline: none;
+    }
+    
+	input[type=range]::-webkit-slider-runnable-track {
+		width: 100%;
+		height: 2em;
+		cursor: pointer;
+		box-shadow: none;
+		background: $inputColorDark;
+		border-radius: $borderRadius;
+		border:none;
+    }
+    
+	input[type=range]::-webkit-slider-thumb {
+		box-shadow: none;
+		border: 1px solid $inputColorDark;
+		width: 2em;
+		height: 2em;
+		border-radius: $borderRadius;
+		background: $textColorDark;
+		cursor: pointer;
+		-webkit-appearance: none;
+        margin-top: 0px;
+        opacity: 0.2;
+    }
+    
+	input[type=range]:focus::-webkit-slider-runnable-track {
+		background: $inputColorDark;
+    }
+    
+	input[type=range]::-moz-range-track {
+		width: 100%;
+		height: 2em;
+		cursor: pointer;
+		box-shadow: none;
+		background: $inputColorDark;
+		border-radius: $borderRadius;
+		border: none;
+    }
+    
+	input[type=range]::-moz-range-thumb {
+		box-shadow: none;
+		border: 1px solid $inputColorDark;
+		width: 2em;
+		height: 2em;
+		border-radius: $borderRadius;
+		background: $textColorDark;
+		cursor: pointer;
+        opacity: 0.2;
+    }
+    
+	input[type=range]::-ms-track {
+		width: 100%;
+		height: 2em;
+		cursor: pointer;
+		background: transparent;
+		border-color: transparent;
+		color: transparent;
+    }
+    
+	input[type=range]::-ms-fill-lower {
+		background: $inputColorDark;
+		border: none;
+		border-radius: $borderRadius;
+		box-shadow: none;
+    }
+    
+	input[type=range]::-ms-fill-upper {
+		background: $inputColorDark;
+		border: none;
+		border-radius: $borderRadius;
+		box-shadow: none;
+    }
+    
+	input[type=range]::-ms-thumb {
+		box-shadow: none;
+		border: 1px solid $inputColorDark;
+		width: 2em;
+		height: 2em;
+		border-radius: $borderRadius;
+		background: $textColorDark;
+		cursor: pointer;
+        opacity: 0.2;
+    }
+    
+	input[type=range]:focus::-ms-fill-lower {
+		background: $inputColorDark;
+    }
+    
+	input[type=range]:focus::-ms-fill-upper {
+		background: $inputColorDark;
+	}
+}

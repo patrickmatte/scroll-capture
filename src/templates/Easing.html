@@ -1,15 +1,27 @@
 <div class="sc-fields-list" is="ui-component">
-    <div class="sc-field-group">
-        <div class="sc-field">
-            <span class="sc-label">Duration:</span><input type="number" step="0.25" data-model="data.duration" is="ui-input"/>
-        </div>
-        <div class="sc-field">
-            <span class="sc-label">Delay:</span><input type="number" step="0.25" data-model="data.delay" is="ui-input"/>
+    <div class="sc-field">
+        <span class="sc-label">Duration:</span>
+        <span class="sc-input">
+            <input type="number" step="0.25" data-model="data.duration" is="ui-input" title="Duration" />
+            <span class="sc-unit">sec</span>
+        </span>
+    </div>
+    <div class="sc-field">
+        <span class="sc-label">Delay:</span>
+        <span class="sc-input">
+            <input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Delay" />
+            <span class="sc-unit">sec</span>
+        </span>
+    </div>
+    <div class="sc-field">
+        <span class="sc-label">Easing:</span>
+        <div class="sc-select">
+            <select data-provider="data.easingPresets" data-model="data.easingPresets.selectedItem" is="ui-select" title="Easing"></select>
         </div>
     </div>
     <div class="sc-field-group" is="ui-component">
         <div class="sc-field" is="ui-component">
-            <span class="sc-label">Easing:</span>
+            <span class="sc-label"></span>
             <div is="ui-component" class="easing-graph-container">
                 <div is="easing-graph" data-model="data.cubicBezierPoints">
                     <!-- <svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
@@ -43,17 +55,24 @@
         </div>
         <div class="sc-field-column">
             <div class="sc-field">
-                <div class="sc-select">
-                    <select data-provider="data.easingPresets" data-model="data.easingPresets.selectedItem" is="ui-select"></select>
-                </div>
+                <span class="sc-input">
+                    <!-- <span class="sc-icon">x</span> -->
+                    <input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.x" is="ui-input" title="Point1.x" />
+                </span>
+                <span class="sc-input">
+                    <!-- <span class="sc-icon">y</span> -->
+                    <input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.y" is="ui-input" title="Point1.y" />
+                </span>
             </div>
             <div class="sc-field">
-                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.x" is="ui-input"/>
-                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p1.y" is="ui-input"/>
-            </div>
-            <div class="sc-field">
-                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.x" is="ui-input"/>
-                <input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.y" is="ui-input"/>
+                <span class="sc-input">
+                    <!-- <span class="sc-icon">x</span> -->
+                    <input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.x" is="ui-input" title="Point2.x" />
+                </span>
+                <span class="sc-input">
+                    <!-- <span class="sc-icon">y</span> -->
+                    <input type="number" step="0.005" data-model="data.cubicBezierPoints.p2.y" is="ui-input" title="Point2.y" />
+                </span>
             </div>
         </div>
     </div>
