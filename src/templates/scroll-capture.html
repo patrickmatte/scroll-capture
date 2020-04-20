@@ -233,23 +233,24 @@
 												<span class="sc-tabs">
 													<span class="sc-tab sc-title-tab">
 														<span class="sc-icon fas fa-adjust"></span>
-														<span class="sc-label">Color theme</span>
+														<span class="sc-label">Color</span>
 													</span>
 												</span>
 												<span class="sc-tabs"></span>
 											</div>
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
-													<div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
-														<template>
-															<label class="sc-radio">
-																<input type="radio" name="color-theme" is="ui-input" value="[[data]]" data-model="parent.settings.colorThemes.selectedItem" />
-																<span class="box">
-																	<span class="icon fas fa-check"></span>
-																</span>
-																<span is="ui-text" data-model="data"></span>
-															</label>
-														</template>
+													<div class="sc-field">
+														<span class="sc-label">Themes:</span>
+														<div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
+															<template>
+																<label class="sc-radio">
+																	<input type="radio" name="color-theme" is="ui-input" value="[[data]]" data-model="parent.settings.colorThemes.selectedItem" />
+																	<span class="sc-icon fas fa-check"></span>
+																	<span is="ui-text" data-model="data"></span>
+																</label>
+															</template>
+														</div>
 													</div>
 												</div>
 											</div>

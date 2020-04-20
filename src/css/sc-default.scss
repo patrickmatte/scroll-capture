@@ -160,6 +160,11 @@
 
 	label.sc-radio {
 		white-space: nowrap;
+		background-color: $inputColorDark;
+		border-radius: $borderRadius;
+		padding: 0.5em;
+		display: inline-flex;
+		align-items: center;
 
 		> * {
 			display: inline-block;
@@ -174,25 +179,12 @@
 			width: 0;
 		}
 
-		input:checked ~ .box {
-			.icon {
-				display: block;
-			}
+		.sc-icon {
+			display: none;
 		}
 
-		.box {
-			width: 2em;
-			height: 2em;
+		input:checked ~ .sc-icon {
 			display: inline-block;
-			background-color: $inputColorDark;
-			border-radius: $borderRadius;
-
-			.icon {
-				position: absolute;
-				left: calc(50% - 0.5em);
-				top: calc(50% - 0.5em);
-				display: none;
-			}
 		}
 	}
 
