@@ -165,10 +165,12 @@
 		padding: 0.5em;
 		display: inline-flex;
 		align-items: center;
+		font-weight: 700;
 
 		> * {
 			display: inline-block;
 			vertical-align: middle;
+			margin-left: 0;
 		}
 		
 		input {
@@ -181,6 +183,7 @@
 
 		.sc-icon {
 			display: none;
+			margin-right: 0.5em;
 		}
 
 		input:checked ~ .sc-icon {
@@ -219,6 +222,12 @@
 		margin-left: 0.5em;
 	}
 
+	.sc-unit {
+		font-family: SFMono, 'Courier New', Courier, monospace !important;
+		font-weight: 700;
+		white-space: pre;
+	}
+
 	.sc-input {
 		width: 100%;
 		height: 100%;
@@ -230,23 +239,27 @@
 		height: 2em;
 		font-family: SFMono, 'Courier New', Courier, monospace !important;
 		font-weight: 700;
+		padding: 0.5em;
 
 		.sc-icon,
 		.sc-unit {
 			opacity: 0.5;
+			// margin-left: 0.5em;
+			// margin-right: 0.5em;
 			
-			&:first-child {
-				margin-left: 0.5em;
-			}
-			&:last-child {
-				margin-right: 0.5em;
-			}
+			// &:first-child {
+			// 	margin-left: 0.5em;
+			// }
+			// &:last-child {
+			// 	margin-right: 0.5em;
+			// }
 		}
 
 		input {
 			background: transparent;
 			background-color: transparent;
 			flex-grow: 0;
+			padding: 0;
 		}
 	}
 

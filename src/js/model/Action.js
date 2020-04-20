@@ -8,7 +8,6 @@ import { app } from "../main";
 export default class Action {
 
 	constructor(type = "Action", name = "Action", description = "Add an Action") {
-
 		this.capture = this.capture.bind(this);
 		this.play = this.play.bind(this);
 		this.deleteAction = this.deleteAction.bind(this);

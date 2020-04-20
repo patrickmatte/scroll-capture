@@ -9,11 +9,6 @@
 				</span>
 			</span>
 			<span class="sc-tabs">
-				<!-- <span class="sc-tab">
-					<button title="Toggle color theme" is="ui-toggle" data-model="settings.isColorThemeLight">
-						<span class="sc-icon fas fa-adjust"></span>
-					</button>
-				</span> -->
 				<span class="sc-tab">
 					<button is="router-button" data-path="" title="Close">
 						<span class="sc-icon fas fa-times-circle"></span>
@@ -118,11 +113,11 @@
 																	<div class="sc-field">
 																		<span class="sc-label">Coords:</span>
 																		<span class="sc-input">
-																			<input type="number" step="1" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" title="Left"/>
+																			<input data-model="data.unitX" size="[[data.unitX.length]]" is="ui-input" data-event-focus="data.doScroll" title="Left"/>
 																			<span class="sc-unit">px</span>
 																		</span>
 																		<span class="sc-input">
-																			<input type="number" step="1" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" title="Top"/>
+																			<input data-model="data.unitY" size="[[data.unitY.length]]" is="ui-input" data-event-focus="data.doScroll" title="Top"/>
 																			<span class="sc-unit">px</span>
 																		</span>
 																	</div>
@@ -137,11 +132,11 @@
 																					<span>Coords[<span>[[index]]</span>]:</span>
 																				</span>
 																				<span class="sc-input">
-																					<input type="number" step="1" data-model="data.x" is="ui-input" title="PageX" />
+																					<input type="" step="1" data-model="data.x" size="[[data.x.length]]" is="ui-input" title="PageX" />
 																					<span class="sc-unit">px</span>
 																				</span>
 																				<span class="sc-input">
-																					<input type="number" step="1" data-model="data.y" is="ui-input" title="PageY" />
+																					<input type="" step="1" data-model="data.y" size="[[data.y.length]]" is="ui-input" title="PageY" />
 																					<span class="sc-unit">px</span>
 																				</span>
 																			</div>
@@ -160,18 +155,18 @@
 																	<div class="sc-field">
 																		<span class="sc-label">Coords:</span>
 																		<span class="sc-input">
-																			<input type="number" step="1" data-model="data.x" is="ui-input" title="PageX"/>
+																			<input type="" step="1" data-model="data.x" size="[[data.x.length]]" is="ui-input" title="PageX"/>
 																			<span class="sc-unit">px</span>
 																		</span>
 																		<span class="sc-input">
-																			<input type="number" step="1" data-model="data.y" is="ui-input" title="PageY"/>
+																			<input type="" step="1" data-model="data.y" size="[[data.y.length]]" is="ui-input" title="PageY"/>
 																			<span class="sc-unit">px</span>
 																		</span>
 																	</div>
 																	<div class="sc-field">
 																		<span class="sc-label">Delay:</span>
 																		<span class="sc-input">
-																			<input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Delay" />
+																			<input type="" step="0.25" data-model="data.delay" size="[[data.delay.length]]" is="ui-input" title="Delay" />
 																			<span class="sc-unit">s</span>
 																		</span>
 																	</div>
@@ -181,8 +176,10 @@
 																<div class="sc-action sc-fields-list">
 																	<div class="sc-field">
 																		<span class="sc-label">Duration:</span>
-																		<input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Duration" />
-																		<span class="sc-unit">s</span>
+																		<span class="sc-input">
+																			<input type="" step="0.25" data-model="data.delay" size="[[data.delay.length]]" is="ui-input" title="Duration" size="[[data.delay.length]]" />
+																			<span class="sc-unit">s</span>
+																		</div>
 																	</div>
 																</div>
 															</template>
@@ -193,8 +190,10 @@
 																	</div>
 																	<div class="sc-field">
 																		<span class="sc-label">Delay:</span>
-																		<input type="number" step="0.25" data-model="data.delay" is="ui-input" title="Duration"/>
-																		<span class="sc-unit">s</span>
+																		<span class="sc-input">
+																			<input type="" step="0.25" data-model="data.delay" size="[[data.delay.length]]" is="ui-input" title="Duration"/>
+																			<span class="sc-unit">s</span>
+																		</span>
 																	</div>
 																</div>
 															</template>
@@ -269,21 +268,19 @@
 											</div>
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
-													<div class="sc-field-group">
-														<div class="sc-field">
-															<span class="sc-label">Codec:</span>
-															<div class="sc-select">
-																<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
-															</div>
+													<div class="sc-field">
+														<span class="sc-label">Codec:</span>
+														<div class="sc-select">
+															<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
 														</div>
 													</div>
 													<div class="sc-field">
 														<span class="sc-label">Bitrate:</span>
-														<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" />
-														<span class="sc-label">
-															<span is="ui-text" data-model="settings.videoBitsPerSecond"></span>
-															<span class="unit">&nbsp;Mbps</span>
-														</span>
+														<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" />
+														<div class="sc-input sc-quarter">
+															<input step="1" disabled data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" size="[[settings.videoBitsPerSecond.length]]"/>
+															<span class="sc-unit">Mbps</span>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -302,21 +299,19 @@
 											</div>
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
-													<div class="sc-field-group">
-														<div class="sc-field">
-															<span class="sc-label">Codec:</span>
-															<div class="sc-select">
-																<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
-															</div>
+													<div class="sc-field">
+														<span class="sc-label">Codec:</span>
+														<div class="sc-select">
+															<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
 														</div>
 													</div>
 													<div class="sc-field">
 														<span class="sc-label">Bitrate:</span>
 														<input type="range" min="16" max="128" step="16" data-model="settings.audioBitsPerSecond" is="ui-input" />
-														<span class="sc-label">
-															<span is="ui-text" data-model="settings.audioBitsPerSecond"></span>
-															<span class="unit">&nbsp;Kbps</span>
-														</span>
+														<div class="sc-input sc-quarter">
+															<input step="16" disabled data-model="settings.audioBitsPerSecond" is="ui-input" title="Bitrate" size="[[settings.audioBitsPerSecond.length]]"/>
+															<span class="sc-unit">kbps</span>
+														</div>
 													</div>
 												</div>
 											</div>

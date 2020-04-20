@@ -14,7 +14,7 @@ import StringData from "../tsunami/data/StringData";
 
 export default class ActionTween extends Action {
 
-	constructor(startX, startY, x = 0, y = 0, duration = 1, delay = 0) {
+	constructor(startX, startY, x = 0, y = 0, duration = "1", delay = "0") {
 		super("ActionTween", "ActionTween");
 		this.startX = new NumberData(startX);
 		this.startY = new NumberData(startY);
@@ -106,7 +106,6 @@ export default class ActionTween extends Action {
 		data.endX = this.endX.value;
 		data.endY = this.endY.value;
 		data.duration = this.duration.value;
-		data.delay = this.delay.value;
 		data.p1 = this.cubicBezierPoints.p1.serialize();
 		data.p2 = this.cubicBezierPoints.p2.serialize();
 		data.easing = this.easingPresets.selectedItem.value;
@@ -120,7 +119,6 @@ export default class ActionTween extends Action {
 		this.endX.value = data.endX;
 		this.endY.value = data.endY;
 		this.duration.value = data.duration;
-		this.delay.value = data.delay;
 		this.cubicBezierPoints.p1.deserialize(data.p1);
 		this.cubicBezierPoints.p2.deserialize(data.p2);
 		this.easingPresets.selectedItem.value = data.easing || "quad.easeInOut";

@@ -14,11 +14,11 @@ export default class Settings {
 
         this.position = new Vector2Data(50, 50);
 
-        this.videoBitsPerSecond = new NumberData(8);
+        this.videoBitsPerSecond = new StringData(8);
         this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
 
-        this.audioBitsPerSecond = new NumberData(128);
+        this.audioBitsPerSecond = new StringData(128);
         this.audioCodecs = new ArrayData("opus");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
 

@@ -1,12 +1,12 @@
 import Data from "./Data";
 import Validation from "./Validation";
-import BaseEvent from "../events";
 
 export default class NumberData extends Data {
 
 	constructor(value = NaN, modifiers = []) {
 		super();
 		this.modifiers = modifiers;
+		this.length = new Data();
 		this.value = value;
 	}
 
@@ -38,6 +38,7 @@ export default class NumberData extends Data {
 		}
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;
+			this.length.value = value.toString().length;
 			this.dispatchChangeEvent();
 		}
 	}

@@ -7,14 +7,14 @@ import Data from "../tsunami/data/Data";
 
 export default class ActionScroll extends ActionTween {
 
-	constructor(target = "window", units = "px", x = 0, y = 0, duration = 1, delay = 0) {
+	constructor(target = "window", units = "px", x = "0", y = "0", duration = "1", delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionScroll";
 		this.name.value = "Scroll";
 		this.description.value = "Add a scroll animation";
 		this.target = new StringData(target);
-		this.unitX = new NumberData(x);
-		this.unitY = new NumberData(y);
+		this.unitX = new StringData(x);
+		this.unitY = new StringData(y);
 		this.units = new ArrayData("%", "px");
 		this.units.selectedItem.value = units;
 		this.isCaptureable.value = true;
@@ -112,8 +112,8 @@ export default class ActionScroll extends ActionTween {
 		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 		super.deserialize(data);
 		this.target.value = data.target;
-		this.unitX.value = data.unitX;
-		this.unitY.value = data.unitY;
+		this.unitX.value = data.unitX || "0";
+		this.unitY.value = data.unitY || "0";
 		this.units.selectedItem.value = data.units;
 		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
 		this.unitY.addEventListener(Data.CHANGE, this.doScroll);

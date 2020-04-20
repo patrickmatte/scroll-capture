@@ -1,5 +1,5 @@
 .sc-default {
-    	.sc-field {
+    .sc-field {
 		display: flex;
 		flex-grow: 1;
 		flex-shrink: 1;
@@ -39,6 +39,21 @@
 				flex-grow: 0;
 				flex-shrink: 1;
 				width: unset;
+			}
+		}
+
+		.sc-auto {
+			width: auto !important;
+    		flex-grow: 0 !important;
+		}
+
+		.sc-quarter {
+			width: 25% !important;
+		}
+
+		.sc-input {
+			input, textarea, input[type="range"] {
+				padding: 0 !important;
 			}
 		}
 

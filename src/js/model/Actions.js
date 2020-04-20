@@ -11,8 +11,6 @@ export default class Actions extends ArrayData {
 	constructor() {
 		super();
 		this.push.apply(this, arguments);
-		
-		this.selectedData = new Action();
 
 		this.addSelectedType = this.addSelectedType.bind(this);
 
@@ -60,7 +58,6 @@ export default class Actions extends ArrayData {
 			let action = this.types.find((type) => {
 				return type.type == data.type;
 			}).clone();
-			// let action = new classRef();
 			action.deserialize(data);
 			actions.push(action);
 		}
