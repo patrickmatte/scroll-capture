@@ -30,8 +30,8 @@ export default class Settings {
             chrome.runtime.sendMessage(msg);
         });
 
-        this.colorThemes = new ArrayData("Auto", "Dark", "Light");
-        this.colorThemes.selectedItem.value = "Auto";
+        this.colorThemes = new ArrayData("Dark", "Light", "Auto");
+        this.colorThemes.selectedItem.value = "Dark";
         this.switchColorTheme();
         this.colorThemes.selectedItem.addEventListener(Data.CHANGE, ()=> {
             this.switchColorTheme();
