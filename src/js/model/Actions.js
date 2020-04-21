@@ -2,7 +2,6 @@ import ArrayData from "../tsunami/data/ArrayData";
 import ActionScroll from "./ActionScroll";
 import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
-import Action from "./Action";
 import ActionSwipe from "./ActionSwipe";
 import ActionWait from "./ActionWait";
 

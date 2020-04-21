@@ -38,7 +38,7 @@ export default class NumberData extends Data {
 		}
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;
-			this.length.value = value.toString().length;
+			this.length.value = Math.max(1, value.toString().length);
 			this.dispatchChangeEvent();
 		}
 	}

@@ -24,7 +24,7 @@ export default class Main extends App {
 		window.onbeforeunload = () => {
 			this.router.location = "";
 		}
-
+		
 		this.save = this.save.bind(this);
 		// this.playSelected = this.playSelected.bind(this);
 		// this.captureSelected = this.captureSelected.bind(this);

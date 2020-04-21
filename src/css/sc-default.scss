@@ -144,6 +144,21 @@
 		background: $inputColorDark;
 		background-color: $inputColorDark;
 	}
+	
+	// input::-webkit-outer-spin-button,
+	// input::-webkit-inner-spin-button {
+	// 	-webkit-appearance: none;
+	// 	margin: 0;
+	// 	padding: 0;
+	// 	width: auto;
+	// 	display: none;
+	// }
+
+	// /* Firefox */
+	// input[type=number] {
+	// 	-webkit-appearance: none;
+	// 	-moz-appearance: textfield;
+	// }
 
 	select {
 		background: transparent;
@@ -228,6 +243,24 @@
 		white-space: pre;
 	}
 
+	.sc-space {
+		display: inline-flex;
+		padding: 0.5em;
+		
+		.sc-icon,
+		.sc-unit {
+			opacity: 0.5;
+			
+			&:first-child {
+				margin-right: 0.5em;
+			}
+			&:last-child {
+				margin-left: 0.5em;
+			}
+		}
+	}
+
+
 	.sc-input {
 		width: 100%;
 		height: 100%;
@@ -241,18 +274,22 @@
 		font-weight: 700;
 		padding: 0.5em;
 
+		// & > * {
+		// 	margin-left: 0.5em;
+		// 	margin-right: 0.5em;
+
+		// 	&:first-child {
+		// 		margin-left: 0;
+		// 	}
+
+		// 	&:last-child {
+		// 		margin-right: 0;
+		// 	}
+		// }
+
 		.sc-icon,
 		.sc-unit {
 			opacity: 0.5;
-			// margin-left: 0.5em;
-			// margin-right: 0.5em;
-			
-			// &:first-child {
-			// 	margin-left: 0.5em;
-			// }
-			// &:last-child {
-			// 	margin-right: 0.5em;
-			// }
 		}
 
 		input {
@@ -260,6 +297,26 @@
 			background-color: transparent;
 			flex-grow: 0;
 			padding: 0;
+		}
+	}
+
+	.sc-input-unit {
+		position: absolute;
+		padding: 0.5em;
+		top: 0;
+		left: 0;
+		height: 2em;
+		display: inline-flex;
+		align-items: center;
+		justify-content: flex-start;
+		white-space: pre;
+		color: transparent;
+		
+		&:after {
+			color: $textColorDark;
+			opacity: 0.5;
+			margin-left: 0.25em;
+			content: attr(data-unit);
 		}
 	}
 
@@ -308,7 +365,7 @@
 		}
 	}
 
-		.ui-list-element {
+	.ui-list-element {
 		&.smooth-transform {
 			transition: transform 0.3s ease 0s;
 			

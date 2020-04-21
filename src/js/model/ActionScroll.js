@@ -7,7 +7,7 @@ import Data from "../tsunami/data/Data";
 
 export default class ActionScroll extends ActionTween {
 
-	constructor(target = "window", units = "px", x = "0", y = "0", duration = "1", delay = 0) {
+	constructor(target = "window", units = "px", x = 0, y = 0, duration = "1", delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionScroll";
 		this.name.value = "Scroll";
@@ -112,8 +112,8 @@ export default class ActionScroll extends ActionTween {
 		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 		super.deserialize(data);
 		this.target.value = data.target;
-		this.unitX.value = data.unitX || "0";
-		this.unitY.value = data.unitY || "0";
+		this.unitX.value = data.unitX;
+		this.unitY.value = data.unitY;
 		this.units.selectedItem.value = data.units;
 		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
 		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
@@ -142,6 +142,8 @@ export default class ActionScroll extends ActionTween {
 				maxScroll.y = element.scrollHeight - element.clientHeight;
 				break;
 		}
+		console.log("scroll.x", scroll.x, "scroll.y", scroll.y);
+		console.log("maxScroll.x", maxScroll.x, "maxScroll.y", maxScroll.y);
 		let unit = new Point();
 		switch(this.units.selectedItem.value) {
 			case "px":
@@ -153,11 +155,15 @@ export default class ActionScroll extends ActionTween {
 				unit.y = Math.round(scroll.y / maxScroll.y * 100);
 				break;
 		}
+		console.log("unit.x", unit.x, "unit.y", unit.y);
+
 		if(isNaN(unit.x)) unit.x = 0;
 		if(isNaN(unit.y)) unit.y = 0;
 
 		this.unitX.value = unit.x;
 		this.unitY.value = unit.y;
+
+		console.log("this.unitX.value", this.unitX.value, "this.unitY.value", this.unitY.value);
 
 		setTimeout(()=> {
 			this.unitX.addEventListener(Data.CHANGE, this.doScroll);

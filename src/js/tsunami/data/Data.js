@@ -14,7 +14,11 @@ export default class Data extends EventDispatcher {
 	}
 
 	set value(val) {
-		this._value = val;
+		// this._value = val;
+		if (val != this._value) {
+			this._value = val;
+			this.dispatchChangeEvent();
+		}
 	}
 
 	serialize() {

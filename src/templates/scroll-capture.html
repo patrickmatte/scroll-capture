@@ -55,193 +55,188 @@
 						</div>
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
 
-								<sc-scenario class="sc-section sc-fields" is="ui-component">
-									<sc-actions-view data-provider="actions" data-actions-length="[[actions.length]]">
-										<template>
-											<sc-action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data" data-selected="[[data.isSelectedItem]]">
-												<div class="sc-title">
-													<div class="sc-drag-area ui-list-drag-area"></div>
-													<span class="sc-tabs">
-														<span class="sc-tab sc-title-tab">
-															<div class="ui-list-drag-area"></div>
-															<span class="sc-tab-wrapper">
-																<span class="sc-icon [[data.icon]]" is="ui-component"></span>
-																<span class="sc-label">
-																	<input size="[[data.name.length]]" is="ui-input" data-model="data.name" />
-																</span>
+							<sc-scenario class="sc-section sc-fields" is="ui-component">
+								<sc-actions-view data-provider="actions" data-actions-length="[[actions.length]]">
+									<template>
+										<sc-action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data" data-selected="[[data.isSelectedItem]]">
+											<div class="sc-title">
+												<div class="sc-drag-area ui-list-drag-area"></div>
+												<span class="sc-tabs">
+													<span class="sc-tab sc-title-tab">
+														<div class="ui-list-drag-area"></div>
+														<span class="sc-tab-wrapper">
+															<span class="sc-icon [[data.icon]]" is="ui-component"></span>
+															<span class="sc-label">
+																<input size="[[data.name.length]]" is="ui-input" data-model="data.name" />
 															</span>
 														</span>
 													</span>
-													<span class="sc-tabs">
-														<span class="sc-tab" data-visible="[[data.isCaptureable]]" is="ui-component">
-															<div class="ui-list-drag-area"></div>
-															<button class="sc-set-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]" title="Set">
-																<span class="sc-icon fas fa-bullseye"></span>
-															</button>
-														</span>
-														<span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
-															<div class="ui-list-drag-area"></div>
-															<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]" title="Play">
-																<span class="sc-icon fas fa-play-circle"></span>
-															</button>
-														</span>
-														<span class="sc-tab">
-															<div class="ui-list-drag-area"></div>
-															<button class="sc-trash-button" data-model="data" is="ui-button" data-event-click="data.deleteAction" title="Delete">
-																<span class="sc-icon fas fa-trash-alt"></span>
-															</button>
-														</span>
-													</span>
-												</div>
-												<div class="sc-window-content" is="ui-component">
-													<div class="sc-fields" is="ui-component">
-														<div class="sc-action-fields" is="ui-list" data-provider="data.array">
-															<template data-type="ActionScroll">
-																<div class="sc-action sc-fields-list" is="action-tween">
-																	<!--
-																	<div class="sc-field">
-																		<span class="sc-label">units</span>
-																		<div class="sc-select">
-																			<select data-provider="data.units" data-model="data.units.selectedItem" is="ui-select"></select>
-																		</div>
-																	</div>
-																	-->
-																	<div class="sc-field">
-																		<span class="sc-label">Selector:</span>
-																		<input type="text" data-model="data.target" is="ui-input" />
-																	</div>
-																	<div class="sc-field">
-																		<span class="sc-label">Coords:</span>
-																		<span class="sc-input" is="sc-input">
-																			<input data-model="data.unitX" size="[[data.unitX.length]]" is="ui-input" data-event-focus="data.doScroll" title="Left"/>
-																			<span class="sc-unit">px</span>
-																		</span>
-																		<span class="sc-input" is="sc-input">
-																			<input data-model="data.unitY" size="[[data.unitY.length]]" is="ui-input" data-event-focus="data.doScroll" title="Top"/>
-																			<span class="sc-unit">px</span>
-																		</span>
-																	</div>
-																</div>
-															</template>
-															<template data-type="ActionSwipe">
-																<div class="sc-action sc-fields-list" is="action-tween">
-																	<div class="sc-points-list sc-field-column" data-provider="data.points" is="ui-list">
-																		<template>
-																			<div class="sc-field">
-																				<span class="sc-label" is="ui-text">
-																					<span>Coords[<span>[[index]]</span>]:</span>
-																				</span>
-																				<span class="sc-input" is="sc-input">
-																					<input type="" step="1" data-model="data.x" size="[[data.x.length]]" is="ui-input" title="PageX" />
-																					<span class="sc-unit">px</span>
-																				</span>
-																				<span class="sc-input" is="sc-input">
-																					<input type="" step="1" data-model="data.y" size="[[data.y.length]]" is="ui-input" title="PageY" />
-																					<span class="sc-unit">px</span>
-																				</span>
-																			</div>
-																		</template>
-																	</div>
-																</div>
-															</template>
-															<template data-type="ActionMouseEvent">
-																<div class="sc-action sc-fields-list">
-																	<div class="sc-field">
-																		<span class="sc-label">Type:</span>
-																		<div class="sc-select">
-																			<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select" title="Type"></select>
-																		</div>
-																	</div>
-																	<div class="sc-field">
-																		<span class="sc-label">Coords:</span>
-																		<span class="sc-input" is="sc-input">
-																			<input type="" step="1" data-model="data.x" size="[[data.x.length]]" is="ui-input" title="PageX"/>
-																			<span class="sc-unit">px</span>
-																		</span>
-																		<span class="sc-input" is="sc-input">
-																			<input type="" step="1" data-model="data.y" size="[[data.y.length]]" is="ui-input" title="PageY"/>
-																			<span class="sc-unit">px</span>
-																		</span>
-																	</div>
-																	<div class="sc-field">
-																		<span class="sc-label">Delay:</span>
-																		<span class="sc-input" is="sc-input">
-																			<input type="" step="0.25" data-model="data.delay" size="[[data.delay.length]]" is="ui-input" title="Delay" />
-																			<span class="sc-unit">s</span>
-																		</span>
-																	</div>
-																</div>
-															</template>
-															<template data-type="ActionWait">
-																<div class="sc-action sc-fields-list">
-																	<div class="sc-field">
-																		<span class="sc-label">Duration:</span>
-																		<span class="sc-input" is="sc-input">
-																			<input type="" step="0.25" data-model="data.delay" size="[[data.delay.length]]" is="ui-input" title="Duration" size="[[data.delay.length]]" />
-																			<span class="sc-unit">s</span>
-																		</div>
-																	</div>
-																</div>
-															</template>
-															<template data-type="ActionEval">
-																<div class="sc-action sc-fields-list">
-																	<div class="sc-field">
-																		<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
-																	</div>
-																	<div class="sc-field">
-																		<span class="sc-label">Delay:</span>
-																		<span class="sc-input" is="sc-input">
-																			<input type="" step="0.25" data-model="data.delay" size="[[data.delay.length]]" is="ui-input" title="Duration"/>
-																			<span class="sc-unit">s</span>
-																		</span>
-																	</div>
-																</div>
-															</template>
-														</div>
-													</div>
-												</div>
-											</sc-action-view>
-										</template>
-									</sc-actions-view>
-									<div class="sc-action-buttons">
-										<div class="sc-buttons" is="ui-list" data-provider="actions.types">
-											<template>
-												<button class="sc-action-button" data-type="[[data.type]]" data-model="data" is="ui-button" title="[[data.description]]" data-click="data.addAction">
-													<span class="sc-icon [[data.icon]]" is="ui-component"></span>
-												</button>
-											</template>
-										</div>
-										<div class="sc-buttons">
-											<button is="ui-button" data-event-click="clearActions" title="Delete all">
-												<span class="sc-icon fas fa-trash-alt"></span>
-											</button>
-										</div>
-									</div>
-								</sc-scenario>
-
-								<sc-video class="sc-section sc-fields">
-									<div>
-										<iframe></iframe>
-									</div>
-								</sc-video>
-
-								<sc-settings class="sc-section sc-fields" is="ui-component">
-									<div>
-										<div class="sc-window">
-											<div class="sc-title">
+												</span>
 												<span class="sc-tabs">
-													<span class="sc-tab sc-title-tab">
-														<span class="sc-icon fas fa-adjust"></span>
-														<span class="sc-label">Color</span>
+													<span class="sc-tab" data-visible="[[data.isCaptureable]]" is="ui-component">
+														<div class="ui-list-drag-area"></div>
+														<button class="sc-set-button" is="ui-button" data-click="data.capture" data-is-capturing="[[data.isCapturing]]" title="Set">
+															<span class="sc-icon fas fa-bullseye"></span>
+														</button>
+													</span>
+													<span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
+														<div class="ui-list-drag-area"></div>
+														<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]" title="Play">
+															<span class="sc-icon fas fa-play-circle"></span>
+														</button>
+													</span>
+													<span class="sc-tab">
+														<div class="ui-list-drag-area"></div>
+														<button class="sc-trash-button" data-model="data" is="ui-button" data-event-click="data.deleteAction" title="Delete">
+															<span class="sc-icon fas fa-trash-alt"></span>
+														</button>
 													</span>
 												</span>
-												<span class="sc-tabs"></span>
 											</div>
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
-													<div class="sc-field">
-														<span class="sc-label">Themes:</span>
-														<div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
+													<div class="sc-action-fields" is="ui-list" data-provider="data.array">
+														<template data-type="ActionScroll">
+															<div class="sc-action sc-fields-list" is="action-tween">
+																<div class="sc-field">
+																	<span class="sc-label">Selector:</span>
+																	<input type="text" data-model="data.target" is="ui-input" />
+																</div>
+																<div class="sc-field">
+																	<span class="sc-label">Coords:</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitX"></span>
+																		<input type="number" min="0" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" title="Left" />
+																	</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitY"></span>
+																		<input type="number" min="0" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" title="Top" />
+																	</span>
+																</div>
+															</div>
+														</template>
+														<template data-type="ActionSwipe">
+															<div class="sc-action sc-fields-list" is="action-tween">
+																<div class="sc-points-list sc-field-column" data-provider="data.points" is="ui-list">
+																	<template>
+																		<div class="sc-field">
+																			<span class="sc-label" is="ui-text">
+																				<span>Coords[<span>[[index]]</span>]:</span>
+																			</span>
+																			<span class="sc-input">
+																				<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.x"></span>
+																				<input type="number" min="0" step="1" data-model="data.x" is="ui-input" title="PageX" />
+																			</span>
+																			<span class="sc-input">
+																				<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.y"></span>
+																				<input type="number" min="0" step="1" data-model="data.y" is="ui-input" title="PageY" />
+																			</span>
+																		</div>
+																	</template>
+																</div>
+															</div>
+														</template>
+														<template data-type="ActionMouseEvent">
+															<div class="sc-action sc-fields-list">
+																<div class="sc-field">
+																	<span class="sc-label">Type:</span>
+																	<div class="sc-select">
+																		<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select" title="Type"></select>
+																	</div>
+																</div>
+																<div class="sc-field">
+																	<span class="sc-label">Coords:</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.x"></span>
+																		<input type="number" step="1" min="0" data-model="data.x" is="ui-input" title="PageX" />
+																	</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.y"></span>
+																		<input type="number" step="1" min="0" data-model="data.y" is="ui-input" title="PageY" />
+																	</span>
+																</div>
+																<div class="sc-field">
+																	<span class="sc-label">Delay:</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
+																		<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" title="Delay" />
+																	</span>
+																	<span class="sc-space"></span>
+																</div>
+															</div>
+														</template>
+														<template data-type="ActionWait">
+															<div class="sc-action sc-fields-list">
+																<div class="sc-field">
+																	<span class="sc-label">Duration:</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
+																		<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" title="Duration" />
+																	</span>
+																	<span class="sc-space"></span>
+																</div>
+															</div>
+														</template>
+														<template data-type="ActionEval">
+															<div class="sc-action sc-fields-list">
+																<div class="sc-field">
+																	<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
+																</div>
+																<div class="sc-field">
+																	<span class="sc-label">Delay:</span>
+																	<span class="sc-input">
+																		<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
+																		<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" title="Duration" />
+																	</span>
+																	<span class="sc-space"></span>
+																</div>
+															</div>
+														</template>
+													</div>
+												</div>
+											</div>
+										</sc-action-view>
+									</template>
+								</sc-actions-view>
+								<div class="sc-action-buttons">
+									<div class="sc-buttons" is="ui-list" data-provider="actions.types">
+										<template>
+											<button class="sc-action-button" data-type="[[data.type]]" data-model="data" is="ui-button" title="[[data.description]]" data-click="data.addAction">
+												<span class="sc-icon [[data.icon]]" is="ui-component"></span>
+											</button>
+										</template>
+									</div>
+									<div class="sc-buttons">
+										<button is="ui-button" data-event-click="clearActions" title="Delete all">
+											<span class="sc-icon fas fa-trash-alt"></span>
+										</button>
+									</div>
+								</div>
+							</sc-scenario>
+
+							<sc-video class="sc-section sc-fields">
+								<div>
+									<iframe></iframe>
+								</div>
+							</sc-video>
+
+							<sc-settings class="sc-section sc-fields" is="ui-component">
+								<div>
+									<div class="sc-window">
+										<div class="sc-title">
+											<span class="sc-tabs">
+												<span class="sc-tab sc-title-tab">
+													<span class="sc-icon fas fa-adjust"></span>
+													<span class="sc-label">Color</span>
+												</span>
+											</span>
+											<span class="sc-tabs"></span>
+										</div>
+										<div class="sc-window-content" is="ui-component">
+											<div class="sc-fields" is="ui-component">
+												<div class="sc-field">
+													<span class="sc-label">Theme:</span>
+													<!-- <div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
 															<template>
 																<label class="sc-radio">
 																	<input type="radio" name="color-theme" is="ui-input" value="[[data]]" data-model="parent.settings.colorThemes.selectedItem" />
@@ -249,75 +244,81 @@
 																	<span is="ui-text" data-model="data"></span>
 																</label>
 															</template>
-														</div>
+														</div> -->
+													<div class="sc-select">
+														<select data-provider="settings.colorThemes" data-model="settings.colorThemes.selectedItem" is="ui-select"></select>
 													</div>
+													<div class="sc-space"></div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div>
-										<div class="sc-window">
-											<div class="sc-title">
-												<span class="sc-tabs">
-													<span class="sc-tab sc-title-tab">
-														<span class="sc-icon fas fa-video"></span>
-														<span class="sc-label">Video</span>
-													</span>
+								</div>
+								<div>
+									<div class="sc-window">
+										<div class="sc-title">
+											<span class="sc-tabs">
+												<span class="sc-tab sc-title-tab">
+													<span class="sc-icon fas fa-video"></span>
+													<span class="sc-label">Video</span>
 												</span>
-												<span class="sc-tabs"></span>
-											</div>
-											<div class="sc-window-content" is="ui-component">
-												<div class="sc-fields" is="ui-component">
-													<div class="sc-field">
-														<span class="sc-label">Codec:</span>
-														<div class="sc-select">
-															<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
-														</div>
+											</span>
+											<span class="sc-tabs"></span>
+										</div>
+										<div class="sc-window-content" is="ui-component">
+											<div class="sc-fields" is="ui-component">
+												<div class="sc-field">
+													<span class="sc-label">Codec:</span>
+													<div class="sc-select">
+														<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
 													</div>
-													<div class="sc-field">
-														<span class="sc-label">Bitrate:</span>
-														<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" />
-														<div class="sc-input sc-quarter">
-															<input step="1" disabled data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" size="[[settings.videoBitsPerSecond.length]]"/>
-															<span class="sc-unit">Mbps</span>
-														</div>
+													<span class="sc-space"></span>
+												</div>
+												<div class="sc-field">
+													<span class="sc-label">Bitrate:</span>
+													<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" />
+													<div class="sc-input">
+														<span class="sc-input-unit" is="ui-text" data-unit="Mbps" data-model="settings.videoBitsPerSecond"></span>
+														<span data-model="settings.videoBitsPerSecond" is="ui-text"></span>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div>
-										<div class="sc-window">
-											<div class="sc-title">
-												<span class="sc-tabs">
-													<span class="sc-tab sc-title-tab">
-														<span class="sc-icon fas fa-volume-up"></span>
-														<span class="sc-label">Audio</span>
-													</span>
+								</div>
+								<div>
+									<div class="sc-window">
+										<div class="sc-title">
+											<span class="sc-tabs">
+												<span class="sc-tab sc-title-tab">
+													<span class="sc-icon fas fa-volume-up"></span>
+													<span class="sc-label">Audio</span>
 												</span>
-												<span class="sc-tabs"></span>
-											</div>
-											<div class="sc-window-content" is="ui-component">
-												<div class="sc-fields" is="ui-component">
-													<div class="sc-field">
-														<span class="sc-label">Codec:</span>
-														<div class="sc-select">
-															<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
-														</div>
+											</span>
+											<span class="sc-tabs"></span>
+										</div>
+										<div class="sc-window-content" is="ui-component">
+											<div class="sc-fields" is="ui-component">
+												<div class="sc-field">
+													<span class="sc-label">Codec:</span>
+													<div class="sc-select">
+														<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
 													</div>
-													<div class="sc-field">
-														<span class="sc-label">Bitrate:</span>
-														<input type="range" min="16" max="128" step="16" data-model="settings.audioBitsPerSecond" is="ui-input" />
-														<div class="sc-input sc-quarter">
-															<input step="16" disabled data-model="settings.audioBitsPerSecond" is="ui-input" title="Bitrate" size="[[settings.audioBitsPerSecond.length]]"/>
-															<span class="sc-unit">kbps</span>
-														</div>
+													<span class="sc-space"></span>
+												</div>
+												<div class="sc-field">
+													<span class="sc-label">Bitrate:</span>
+													<input type="range" min="16" max="128" step="16" data-model="settings.audioBitsPerSecond" is="ui-input" />
+													<div class="sc-input">
+														<span class="sc-input-unit" is="ui-text" data-unit="kbps" data-model="settings.audioBitsPerSecond"></span>
+														<span data-model="settings.audioBitsPerSecond" is="ui-text"></span>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</sc-settings>
+								</div>
+							</sc-settings>
 
 						</div>
 					</div>

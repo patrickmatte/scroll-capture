@@ -19,6 +19,7 @@ export default class StringData extends Data {
 	}
 
 	set value(value) {
+		value = value.toString();
 		if (!value) {
 			value = "";
 		}
@@ -28,7 +29,7 @@ export default class StringData extends Data {
 		}
 		if (value != this._value) {
 			this._value = value;
-			this.length.value = value.toString().length;
+			this.length.value = Math.max(1, value.toString().length);
 			this.dispatchChangeEvent();
 		}
 	}
