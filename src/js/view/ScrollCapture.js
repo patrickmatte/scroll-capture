@@ -8,7 +8,6 @@ import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
 import WindowContentMain from "./WindowContentMain";
 import Data from "../tsunami/data/Data";
-import SCInput from "./SCInput";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -99,4 +98,4 @@ ScrollCapture.template = template;
 
 tsunami.define("sc-actions-view", ActionsView);
 tsunami.define("sc-window-content-main", WindowContentMain);
-tsunami.define("sc-input", SCInput);
+

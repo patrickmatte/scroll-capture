@@ -6873,60 +6873,6 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 tsunami["a" /* define */]("sc-scenario", SectionScenario_SectionScenario);
 tsunami["a" /* define */]("sc-video", SectionVideo_SectionVideo);
 tsunami["a" /* define */]("sc-settings", SectionSettings_SectionSettings);
-// CONCATENATED MODULE: ./js/view/SCInput.js
-function SCInput_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SCInput_typeof = function _typeof(obj) { return typeof obj; }; } else { SCInput_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SCInput_typeof(obj); }
-
-function SCInput_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function SCInput_createSuper(Derived) { return function () { var Super = SCInput_getPrototypeOf(Derived), result; if (SCInput_isNativeReflectConstruct()) { var NewTarget = SCInput_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SCInput_possibleConstructorReturn(this, result); }; }
-
-function SCInput_possibleConstructorReturn(self, call) { if (call && (SCInput_typeof(call) === "object" || typeof call === "function")) { return call; } return SCInput_assertThisInitialized(self); }
-
-function SCInput_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function SCInput_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function SCInput_getPrototypeOf(o) { SCInput_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return SCInput_getPrototypeOf(o); }
-
-function SCInput_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) SCInput_setPrototypeOf(subClass, superClass); }
-
-function SCInput_setPrototypeOf(o, p) { SCInput_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return SCInput_setPrototypeOf(o, p); }
-
-
-
-
-var SCInput_SCInput = /*#__PURE__*/function (_UIComponent) {
-  SCInput_inherits(SCInput, _UIComponent);
-
-  var _super = SCInput_createSuper(SCInput);
-
-  function SCInput(element) {
-    var _this;
-
-    SCInput_classCallCheck(this, SCInput);
-
-    _this = _super.call(this, element);
-    _this.input = _this.element.querySelector("input");
-
-    _this.element.addEventListener(events["b" /* events */].click, function (event) {
-      if (_this.input) {
-        if (event.target != _this.input) _this.input.focus();
-      }
-    });
-
-    _this.element.addEventListener("dblclick", function (event) {
-      if (_this.input) {
-        if (event.target != _this.input) _this.input.select();
-      }
-    });
-
-    return _this;
-  }
-
-  return SCInput;
-}(UIComponent["a" /* default */]);
-
-
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
@@ -6959,7 +6905,6 @@ function ScrollCapture_getPrototypeOf(o) { ScrollCapture_getPrototypeOf = Object
 function ScrollCapture_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) ScrollCapture_setPrototypeOf(subClass, superClass); }
 
 function ScrollCapture_setPrototypeOf(o, p) { ScrollCapture_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return ScrollCapture_setPrototypeOf(o, p); }
-
 
 
 
@@ -7079,7 +7024,6 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
 ScrollCapture_ScrollCapture.template = scroll_capture;
 tsunami["a" /* define */]("sc-actions-view", ActionsView_ActionsView);
 tsunami["a" /* define */]("sc-window-content-main", WindowContentMain);
-tsunami["a" /* define */]("sc-input", SCInput_SCInput);
 // EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
 var UIButton = __webpack_require__(14);
 
@@ -8213,73 +8157,6 @@ var UIToggle = /*#__PURE__*/function (_UIButton) {
 }(UIButton["a" /* default */]);
 
 
-// CONCATENATED MODULE: ./js/tsunami/components/UIInputNumber.js
-function UIInputNumber_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIInputNumber_typeof = function _typeof(obj) { return typeof obj; }; } else { UIInputNumber_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIInputNumber_typeof(obj); }
-
-function UIInputNumber_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function UIInputNumber_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function UIInputNumber_createClass(Constructor, protoProps, staticProps) { if (protoProps) UIInputNumber_defineProperties(Constructor.prototype, protoProps); if (staticProps) UIInputNumber_defineProperties(Constructor, staticProps); return Constructor; }
-
-function UIInputNumber_createSuper(Derived) { return function () { var Super = UIInputNumber_getPrototypeOf(Derived), result; if (UIInputNumber_isNativeReflectConstruct()) { var NewTarget = UIInputNumber_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return UIInputNumber_possibleConstructorReturn(this, result); }; }
-
-function UIInputNumber_possibleConstructorReturn(self, call) { if (call && (UIInputNumber_typeof(call) === "object" || typeof call === "function")) { return call; } return UIInputNumber_assertThisInitialized(self); }
-
-function UIInputNumber_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function UIInputNumber_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function UIInputNumber_getPrototypeOf(o) { UIInputNumber_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return UIInputNumber_getPrototypeOf(o); }
-
-function UIInputNumber_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) UIInputNumber_setPrototypeOf(subClass, superClass); }
-
-function UIInputNumber_setPrototypeOf(o, p) { UIInputNumber_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return UIInputNumber_setPrototypeOf(o, p); }
-
-
-
-
-var UIInputNumber_UIInputNumber = /*#__PURE__*/function (_UIInput) {
-  UIInputNumber_inherits(UIInputNumber, _UIInput);
-
-  var _super = UIInputNumber_createSuper(UIInputNumber);
-
-  function UIInputNumber(element) {
-    var _this;
-
-    UIInputNumber_classCallCheck(this, UIInputNumber);
-
-    _this = _super.call(this, element);
-    _this.defaultCharacter = "0";
-
-    _this.inputFilter = function (value) {
-      return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp
-    };
-
-    _this.blurHandler = _this.blurHandler.bind(UIInputNumber_assertThisInitialized(_this));
-
-    _this.element.addEventListener("blur", _this.blurHandler);
-
-    return _this;
-  }
-
-  UIInputNumber_createClass(UIInputNumber, [{
-    key: "blurHandler",
-    value: function blurHandler() {
-      if (!this.element.value) {
-        if (this.model) {
-          if (this.model instanceof Data["a" /* default */]) {
-            this.model.value = this.defaultCharacter;
-          }
-        }
-      }
-    }
-  }]);
-
-  return UIInputNumber;
-}(UIInput_UIInput);
-
-
 // CONCATENATED MODULE: ./js/tsunami/App.js
 function App_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { App_typeof = function _typeof(obj) { return typeof obj; }; } else { App_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return App_typeof(obj); }
 
@@ -8302,7 +8179,6 @@ function App_getPrototypeOf(o) { App_getPrototypeOf = Object.setPrototypeOf ? Ob
 function App_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) App_setPrototypeOf(subClass, superClass); }
 
 function App_setPrototypeOf(o, p) { App_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return App_setPrototypeOf(o, p); }
-
 
 
 
@@ -8367,7 +8243,6 @@ tsunami["a" /* define */]("ui-component", UIComponent["a" /* default */]);
 tsunami["a" /* define */]("ui-button", UIButton["a" /* default */]);
 tsunami["a" /* define */]("ui-list", UIList_UIList);
 tsunami["a" /* define */]("ui-input", UIInput_UIInput);
-tsunami["a" /* define */]("ui-input-number", UIInputNumber_UIInputNumber);
 tsunami["a" /* define */]("ui-select", UISelect_UISelect);
 tsunami["a" /* define */]("ui-text", UIText_UIText);
 tsunami["a" /* define */]("ui-number", UINumber_UINumber);
@@ -60272,7 +60147,6 @@ function Actions_getPrototypeOf(o) { Actions_getPrototypeOf = Object.setPrototyp
 function Actions_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Actions_setPrototypeOf(subClass, superClass); }
 
 function Actions_setPrototypeOf(o, p) { Actions_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Actions_setPrototypeOf(o, p); }
-
 
 
 
