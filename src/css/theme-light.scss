@@ -10,9 +10,14 @@
             background-color: $windowColorLight;
 
             .sc-title {
-                .sc-tab {
-                    &.sc-title-tab {
-                        background-color: $windowColorFrontLight;
+                .sc-tabs {
+
+                    &:nth-child(1) {
+                        .sc-tab {
+                            &.sc-title-tab {
+                                background-color: $windowColorFrontLight;
+                            }
+                        }
                     }
                 }
             }
@@ -78,6 +83,10 @@
         .sc-input {
             background: $inputColorLight;
             background-color: $inputColorLight;
+        }
+
+        .sc-input,
+        .sc-space {
 
             input {
                 background: transparent;

@@ -260,12 +260,13 @@
 		}
 	}
 
-
 	.sc-input {
-		width: 100%;
-		height: 2em;
 		background: $inputColorDark;
 		background-color: $inputColorDark;
+	}
+
+	.sc-input, .sc-space {
+		height: 2em;
 		border-radius: $borderRadius;
 		display: inline-flex;
 		align-items: center;
