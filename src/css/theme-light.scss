@@ -43,8 +43,10 @@
             background-color: $inputColorLight;
         }
 
-
         [is="easing-graph"] {
+            border-left: 1px dotted rgba(0, 0, 0, 0.5);
+            border-bottom: 1px dotted rgba(0, 0, 0, 0.5);
+           
             [is="control-point-lines"] {
                 [is="control-point-line"] {
                     background-color: $textColorLight;
