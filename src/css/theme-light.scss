@@ -34,10 +34,12 @@
             }
         }
 
+        .easing-graph-container {
+            background-color: $inputColorLight;
+        }
+
 
         [is="easing-graph"] {
-            background-color: $inputColorLight;
-
             [is="control-point-lines"] {
                 [is="control-point-line"] {
                     background-color: $textColorLight;
@@ -80,6 +82,12 @@
             input {
                 background: transparent;
                 background-color: transparent;
+            }
+
+            .sc-input-unit {
+                &:after {
+                    color: $textColorLight;
+                }
             }
         }
 

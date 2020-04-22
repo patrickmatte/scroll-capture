@@ -276,6 +276,22 @@
 		.sc-icon {
 			// width: 1em;
 			text-align: center;
+
+			&[data-theme="Dark"] {
+				&:before {
+					content: "\f186";
+				}
+			}
+			&[data-theme="Light"] {
+				&:before {
+					content: "\f185";
+				}
+			}
+			&[data-theme="Auto"] {
+				&:before {
+					content: "\f042";
+				}
+			}
 		}
 
 		.sc-icon,

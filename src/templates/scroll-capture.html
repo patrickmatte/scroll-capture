@@ -2,8 +2,8 @@
 	<div class="sc-window sc-window-main" is="ui-component">
 
 		<div class="sc-title">
-			<div class="sc-drag-area"></div>
 			<span class="sc-tabs">
+				<div class="sc-drag-area"></div>
 				<span class="sc-tab sc-title-tab">
 					<span class="sc-label">Scroll Capture</span>
 				</span>
@@ -38,19 +38,19 @@
 									</button>
 								</span> -->
 								<span class="sc-tab" data-id="video" is="ui-component">
-									<button is="router-button" data-path="record" title="Record">
+									<button is="router-button" data-path="record" title="Capture">
 										<span class="sc-icon fas fa-video"></span>
-										<span class="sc-label">Record</span>
-									</button>
-								</span>
-								<span class="sc-tab" data-id="settings">
-									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
-										<span class="sc-icon fas fa-cogs"></span>
-										<span class="sc-label">Settings</span>
+										<span class="sc-label">Capture</span>
 									</button>
 								</span>
 							</span>
 							<span class="sc-tabs" is="ui-component">
+								<span class="sc-tab" data-id="settings">
+									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
+										<span class="sc-icon fas fa-cogs"></span>
+										<!-- <span class="sc-label">Settings</span> -->
+									</button>
+								</span>
 							</span>
 						</div>
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
@@ -60,8 +60,8 @@
 									<template>
 										<sc-action-view class="sc-window ui-list-element" data-type="[[data.type]]" data-model="data" data-selected="[[data.isSelectedItem]]">
 											<div class="sc-title">
-												<div class="sc-drag-area ui-list-drag-area"></div>
 												<span class="sc-tabs">
+													<div class="sc-drag-area ui-list-drag-area"></div>
 													<span class="sc-tab sc-title-tab">
 														<div class="ui-list-drag-area"></div>
 														<span class="sc-tab-wrapper">
@@ -245,7 +245,7 @@
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
 													<span class="sc-icon fas fa-adjust"></span>
-													<span class="sc-label">Color</span>
+													<span class="sc-label">Color theme</span>
 												</span>
 											</span>
 											<span class="sc-tabs"></span>
@@ -253,7 +253,7 @@
 										<div class="sc-window-content" is="ui-component">
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field">
-													<span class="sc-label">Theme:</span>
+													<!-- <span class="sc-label">Theme:</span> -->
 													<!-- <div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
 															<template>
 																<label class="sc-radio">
@@ -264,6 +264,7 @@
 															</template>
 														</div> -->
 													<div class="sc-input sc-select">
+														<span class="sc-icon fas" data-theme="[[settings.colorThemes.selectedItem]]" is="ui-component"></span>
 														<select data-provider="settings.colorThemes" data-model="settings.colorThemes.selectedItem" is="ui-select"></select>
 													</div>
 													<div class="sc-space"></div>
@@ -277,59 +278,42 @@
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fas fa-video"></span>
-													<span class="sc-label">Video</span>
+													<span class="sc-icon fas fa-film"></span>
+													<span class="sc-label">Codecs</span>
 												</span>
 											</span>
 											<span class="sc-tabs"></span>
 										</div>
 										<div class="sc-window-content" is="ui-component">
 											<div class="sc-fields" is="ui-component">
-												<div class="sc-field">
-													<span class="sc-label">Codec:</span>
-													<div class="sc-input sc-select">
-														<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
+												<div class="sc-field-group">
+													<div class="sc-field">
+														<div class="sc-input sc-select">
+															<span class="sc-icon fas fa-video"></span>
+															<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
+														</div>
 													</div>
-													<span class="sc-space"></span>
-												</div>
-												<div class="sc-field">
-													<span class="sc-label">Bitrate:</span>
-													<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" />
-													<div class="sc-input">
-														<span class="sc-input-unit" is="ui-text" data-unit="Mbps" data-model="settings.videoBitsPerSecond"></span>
-														<span data-model="settings.videoBitsPerSecond" is="ui-text"></span>
+													<div class="sc-field">
+														<input type="range" min="1" max="8" step="1" data-model="settings.videoBitsPerSecond" is="ui-input" title="Bitrate" />
+														<div class="sc-input">
+															<span class="sc-input-unit" is="ui-text" data-unit="Mbps" data-model="settings.videoBitsPerSecond"></span>
+															<span data-model="settings.videoBitsPerSecond" is="ui-text"></span>
+														</div>
 													</div>
 												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div>
-									<div class="sc-window">
-										<div class="sc-title">
-											<span class="sc-tabs">
-												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fas fa-volume-up"></span>
-													<span class="sc-label">Audio</span>
-												</span>
-											</span>
-											<span class="sc-tabs"></span>
-										</div>
-										<div class="sc-window-content" is="ui-component">
-											<div class="sc-fields" is="ui-component">
-												<div class="sc-field">
-													<span class="sc-label">Codec:</span>
-													<div class="sc-input sc-select">
-														<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
+												<div class="sc-field-group">
+													<div class="sc-field">
+														<div class="sc-input sc-select">
+															<span class="sc-icon fas fa-volume-up"></span>
+															<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
+														</div>
 													</div>
-													<span class="sc-space"></span>
-												</div>
-												<div class="sc-field">
-													<span class="sc-label">Bitrate:</span>
-													<input type="range" min="16" max="128" step="16" data-model="settings.audioBitsPerSecond" is="ui-input" />
-													<div class="sc-input">
-														<span class="sc-input-unit" is="ui-text" data-unit="kbps" data-model="settings.audioBitsPerSecond"></span>
-														<span data-model="settings.audioBitsPerSecond" is="ui-text"></span>
+													<div class="sc-field">
+														<input type="range" min="16" max="128" step="16" data-model="settings.audioBitsPerSecond" is="ui-input" />
+														<div class="sc-input">
+															<span class="sc-input-unit" is="ui-text" data-unit="kbps" data-model="settings.audioBitsPerSecond"></span>
+															<span data-model="settings.audioBitsPerSecond" is="ui-text"></span>
+														</div>
 													</div>
 												</div>
 											</div>
