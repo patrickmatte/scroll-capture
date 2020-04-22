@@ -137,7 +137,7 @@ export class EasingGraphCurve extends UIComponent {
 
 	render() {
 		let easing = this.model.value;
-		let totalPoints = 15;
+		let totalPoints = 20;
 		let points = [];
 		let pointsString = "";
 		for(let i = 0; i < totalPoints; i++) {
@@ -160,7 +160,7 @@ export class EasingGraphPoints extends UIComponent {
 	render() {
 		let easing = this.model.value;
 		this.element.innerHTML = "";
-		let totalPoints = 15;
+		let totalPoints = 20;
 		let points = [];
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);

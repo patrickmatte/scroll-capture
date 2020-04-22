@@ -20,8 +20,8 @@ export default class CubicBezierPoints extends Data {
 		this.p3.addEventListener(Data.CHANGE, this.changeHandler);
 		for(let i = 0; i < 4; i++) {
 			let vec = this["p" + i];
-			vec.x.modifiers = [NumberData.roundDecimal3];
-			vec.y.modifiers = [NumberData.roundDecimal3];
+			vec.x.modifiers = [NumberData.roundDecimal2];
+			vec.y.modifiers = [NumberData.roundDecimal2];
 		}
 	}
 

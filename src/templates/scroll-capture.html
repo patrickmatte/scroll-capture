@@ -99,18 +99,25 @@
 														<template data-type="ActionScroll">
 															<div class="sc-action sc-fields-list" is="action-tween">
 																<div class="sc-field">
-																	<span class="sc-label">Selector:</span>
-																	<input type="text" data-model="data.target" is="ui-input" />
+																	<span class="sc-input" title="ScrollLeft">
+																		<span class="sc-icon">X</span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitX"></span>
+																			<input type="number" min="0" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" />
+																		</span>
+																	</span>
+																	<span class="sc-input" title="ScrollTop">
+																		<span class="sc-icon">Y</span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitY"></span>
+																			<input type="number" min="0" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" />
+																		</span>
+																	</span>
 																</div>
 																<div class="sc-field">
-																	<span class="sc-label">Coords:</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitX"></span>
-																		<input type="number" min="0" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" title="Left" />
-																	</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitY"></span>
-																		<input type="number" min="0" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" title="Top" />
+																	<span class="sc-input" title="Target Selector">
+																		<span class="sc-icon far fa-dot-circle"></span>
+																		<input type="text" data-model="data.target" is="ui-input" />
 																	</span>
 																</div>
 															</div>
@@ -120,16 +127,19 @@
 																<div class="sc-points-list sc-field-column" data-provider="data.points" is="ui-list">
 																	<template>
 																		<div class="sc-field">
-																			<span class="sc-label" is="ui-text">
-																				<span>Coords[<span>[[index]]</span>]:</span>
+																			<span class="sc-input" title="PageX">
+																				<span class="sc-icon">X</span>
+																				<span class="sc-input-group">
+																					<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.x"></span>
+																					<input type="number" min="0" step="1" data-model="data.x" is="ui-input" />
+																				</span>
 																			</span>
-																			<span class="sc-input">
-																				<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.x"></span>
-																				<input type="number" min="0" step="1" data-model="data.x" is="ui-input" title="PageX" />
-																			</span>
-																			<span class="sc-input">
-																				<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.y"></span>
-																				<input type="number" min="0" step="1" data-model="data.y" is="ui-input" title="PageY" />
+																			<span class="sc-input" title="PageY">
+																				<span class="sc-icon">X</span>
+																				<span class="sc-input-group">
+																					<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.y"></span>
+																					<input type="number" min="0" step="1" data-model="data.y" is="ui-input" />
+																				</span>
 																			</span>
 																		</div>
 																	</template>
@@ -139,39 +149,45 @@
 														<template data-type="ActionMouseEvent">
 															<div class="sc-action sc-fields-list">
 																<div class="sc-field">
-																	<span class="sc-label">Type:</span>
-																	<div class="sc-select">
-																		<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select" title="Type"></select>
-																	</div>
+																	<span class="sc-input">
+																		<span class="sc-icon">X</span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.x"></span>
+																			<input type="number" step="1" min="0" data-model="data.x" is="ui-input" title="PageX" />
+																		</span>
+																	</span>
+																	<span class="sc-input">
+																		<span class="sc-icon">Y</span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.y"></span>
+																			<input type="number" step="1" min="0" data-model="data.y" is="ui-input" title="PageY" />
+																		</span>
+																	</span>
 																</div>
 																<div class="sc-field">
-																	<span class="sc-label">Coords:</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.x"></span>
-																		<input type="number" step="1" min="0" data-model="data.x" is="ui-input" title="PageX" />
+																	<span class="sc-input sc-select" title="MouseEvent Type">
+																		<span class="sc-icon fas fa-mouse-pointer"></span>
+																		<select data-provider="data.eventTypes" data-model="data.eventTypes.selectedItem" is="ui-select"></select>
 																	</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.y"></span>
-																		<input type="number" step="1" min="0" data-model="data.y" is="ui-input" title="PageY" />
+																	<span class="sc-input" title="Delay">
+																		<span class="sc-icon fas fa-hourglass-half"></span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
+																			<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" />
+																		</span>
 																	</span>
-																</div>
-																<div class="sc-field">
-																	<span class="sc-label">Delay:</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
-																		<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" title="Delay" />
-																	</span>
-																	<span class="sc-space"></span>
 																</div>
 															</div>
 														</template>
 														<template data-type="ActionWait">
 															<div class="sc-action sc-fields-list">
 																<div class="sc-field">
-																	<span class="sc-label">Duration:</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
-																		<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" title="Duration" />
+																	<span class="sc-input" title="Duration">
+																		<span class="sc-icon fas fa-clock"></span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
+																			<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" />
+																		</span>
 																	</span>
 																	<span class="sc-space"></span>
 																</div>
@@ -183,10 +199,12 @@
 																	<textarea rows="5" data-model="data.code" is="ui-input"></textarea>
 																</div>
 																<div class="sc-field">
-																	<span class="sc-label">Delay:</span>
-																	<span class="sc-input">
-																		<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
-																		<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" title="Duration" />
+																	<span class="sc-input" title="Delay">
+																		<span class="sc-icon fas fa-hourglass-half"></span>
+																		<span class="sc-input-group">
+																			<span class="sc-input-unit" is="ui-text" data-unit="s" data-model="data.delay"></span>
+																			<input type="number" step="0.25" min="0" data-model="data.delay" is="ui-input" />
+																		</span>
 																	</span>
 																	<span class="sc-space"></span>
 																</div>
@@ -245,7 +263,7 @@
 																</label>
 															</template>
 														</div> -->
-													<div class="sc-select">
+													<div class="sc-input sc-select">
 														<select data-provider="settings.colorThemes" data-model="settings.colorThemes.selectedItem" is="ui-select"></select>
 													</div>
 													<div class="sc-space"></div>
@@ -269,7 +287,7 @@
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field">
 													<span class="sc-label">Codec:</span>
-													<div class="sc-select">
+													<div class="sc-input sc-select">
 														<select data-provider="settings.videoCodecs" data-model="settings.videoCodecs.selectedItem" is="ui-select"></select>
 													</div>
 													<span class="sc-space"></span>
@@ -301,7 +319,7 @@
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field">
 													<span class="sc-label">Codec:</span>
-													<div class="sc-select">
+													<div class="sc-input sc-select">
 														<select data-provider="settings.audioCodecs" data-model="settings.audioCodecs.selectedItem" is="ui-select"></select>
 													</div>
 													<span class="sc-space"></span>

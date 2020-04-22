@@ -30,7 +30,7 @@
 			height: 2em;
 		}
 
-		.sc-input, .sc-select, .sc-space {
+		.sc-input, .sc-space {
 			width: 50%;
 			flex-shrink: 1;
 			flex-grow: 1;
@@ -80,6 +80,40 @@
 			display: inline-flex;
 			align-items: center;
 			height: 2em;
+		}
+	}
+
+	.sc-field-group {
+		display: flex;
+		margin-bottom: $fieldMargin;
+
+		&:last-child {
+			// margin-bottom: 0;
+		}
+
+		> .sc-field {
+			margin-bottom: 0;
+
+			.sc-label {
+				width: 50%;
+			}
+		}
+
+		> * {
+			width: calc(50% - 0.25em);
+			margin-bottom: 0;
+			flex-grow: 0;
+			flex-shrink: 0;
+			margin-left: 0.25em;
+			margin-right: 0.25em;
+
+			&:nth-child(odd) {
+				margin-left: 0;
+			}
+
+			&:nth-child(even) {
+				margin-right: 0;
+			}
 		}
 	}
 }

@@ -3,14 +3,15 @@
 		display: inline-block;
 		flex-grow: 1;
 		flex-shrink: 0;
+		padding: 0 2.9em;
+		background-color: $inputColorDark;
+		border-radius: $borderRadius;
 	}
 
 	[is="easing-graph"] {
 		width: 100%;
 		padding-bottom: 100%;
 		display: inline-block;
-		background-color: $inputColorDark;
-		border-radius: $borderRadius;
 
 		[is="control-point-lines"] {
 			position: absolute;

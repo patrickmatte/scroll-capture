@@ -263,88 +263,89 @@
 
 	.sc-input {
 		width: 100%;
-		height: 100%;
+		height: 2em;
 		background: $inputColorDark;
 		background-color: $inputColorDark;
 		border-radius: $borderRadius;
 		display: inline-flex;
 		align-items: center;
-		height: 2em;
 		font-family: SFMono, 'Courier New', Courier, monospace !important;
 		font-weight: 700;
 		padding: 0.5em;
 
-		// & > * {
-		// 	margin-left: 0.5em;
-		// 	margin-right: 0.5em;
-
-		// 	&:first-child {
-		// 		margin-left: 0;
-		// 	}
-
-		// 	&:last-child {
-		// 		margin-right: 0;
-		// 	}
-		// }
+		.sc-icon {
+			// width: 1em;
+			text-align: center;
+		}
 
 		.sc-icon,
 		.sc-unit {
 			opacity: 0.5;
 		}
 
+		.sc-input-group {
+			display: inline-flex;
+			align-items: center;
+			justify-content: flex-start;
+
+			& > * {
+				margin-left: 0.25em;
+				margin-right: 0.25em;
+
+				&:first-child {
+					margin-left: 0;
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+
+		.sc-input-unit {
+			position: absolute;
+			padding: 0.5em;
+			top: 0;
+			left: 0;
+			height: 2em;
+			display: inline-flex;
+			align-items: center;
+			justify-content: flex-start;
+			white-space: pre;
+			color: transparent;
+			
+			&:after {
+				color: $textColorDark;
+				opacity: 0.5;
+				margin-left: 0.25em;
+				content: attr(data-unit);
+			}
+		}
+
+		&.sc-select {
+			&:after {
+				content: "\f107";
+				position: absolute;
+				font-size: 1.2em;
+				top: calc(50% - 0.5em);
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				right: 0.5em;
+				pointer-events: none;
+				opacity: 0.5;
+			}
+
+			&:hover {
+				&:after {
+					opacity: 1;
+				}
+			}
+		}
+
 		input {
 			background: transparent;
 			background-color: transparent;
-			flex-grow: 0;
 			padding: 0;
-		}
-	}
-
-	.sc-input-unit {
-		position: absolute;
-		padding: 0.5em;
-		top: 0;
-		left: 0;
-		height: 2em;
-		display: inline-flex;
-		align-items: center;
-		justify-content: flex-start;
-		white-space: pre;
-		color: transparent;
-		
-		&:after {
-			color: $textColorDark;
-			opacity: 0.5;
-			margin-left: 0.25em;
-			content: attr(data-unit);
-		}
-	}
-
-	.sc-select {
-		width: 100%;
-		height: 100%;
-		background: $inputColorDark;
-		background-color: $inputColorDark;
-		border-radius: $borderRadius;
-		display: inline-flex;
-		align-items: center;
-
-		&:after {
-			content: "\f107";
-			position: absolute;
-			font-size: 1.2em;
-			top: calc(50% - 0.5em);
-			font-family: 'Font Awesome 5 Free';
-			font-weight: 900;
-			right: 0.5em;
-			pointer-events: none;
-			opacity: 0.5;
-		}
-
-		&:hover {
-			&:after {
-				opacity: 1;
-			}
 		}
 
 		select {
@@ -352,12 +353,11 @@
 			appearance: none;
 			background: none;
 			border: none;
-			padding: 0.5em !important;
-			color: #fff;
-			display: block;
-			width: 100%;
-			height: 100%;
+			padding: 0;
+			color: inherit;
+			display: inline-block;
 			font-family: inherit;
+			flex-grow: 1;
 
 			option {
 				line-height: 1;
