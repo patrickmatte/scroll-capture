@@ -81,12 +81,11 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 1:
+/******/ ([
+/* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -246,527 +245,7 @@ var Point_Point = /*#__PURE__*/function () {
 
 
 /***/ }),
-
-/***/ 10:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rectangle; });
-/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Rectangle = /*#__PURE__*/function () {
-  function Rectangle() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-
-    _classCallCheck(this, Rectangle);
-
-    this._position = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this._size = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this.center = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this.halfSize = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-  }
-
-  _createClass(Rectangle, [{
-    key: "contains",
-    value: function contains(point) {
-      var hit = point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height ? true : false;
-      return hit;
-    }
-  }, {
-    key: "intersects",
-    value: function intersects(rect) {
-      return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
-    }
-  }, {
-    key: "intersect",
-    value: function intersect(b) {
-      var a = this;
-      var x = Math.max(a.x, b.x);
-      var num1 = Math.min(a.x + a.width, b.x + b.width);
-      var y = Math.max(a.y, b.y);
-      var num2 = Math.min(a.y + a.height, b.y + b.height);
-      var result;
-
-      if (num1 >= x && num2 >= y) {
-        result = new Rectangle(x, y, num1 - x, num2 - y);
-      } else {
-        result = new Rectangle();
-      }
-
-      return result;
-    }
-  }, {
-    key: "equals",
-    value: function equals(rect) {
-      return this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      return new Rectangle(this.x, this.y, this.width, this.height);
-    }
-  }, {
-    key: "copyFrom",
-    value: function copyFrom(rect) {
-      this.x = rect.x;
-      this.y = rect.y;
-      this.width = rect.width;
-      this.height = rect.height;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[Rectangle" + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + "]";
-    }
-  }, {
-    key: "scaleWidth",
-    value: function scaleWidth(height) {
-      return new Rectangle(this.x, this.y, height * this.widthToHeight, height);
-    }
-  }, {
-    key: "scaleHeight",
-    value: function scaleHeight(width) {
-      return new Rectangle(this.x, this.y, width, width * this.heightToWidth);
-    }
-  }, {
-    key: "scaleToFillRect",
-    value: function scaleToFillRect(rect) {
-      // let scaled = this.scaleHeight(rect.width);
-      //
-      // if (scaled.height < rect.height) {
-      // 	scaled = this.scaleWidth(rect.height);
-      // }
-      var amount = this.getScaleToFill(rect);
-      return this.scale(amount, amount);
-    }
-  }, {
-    key: "scaleToFitRect",
-    value: function scaleToFitRect(rect) {
-      // let scaled = this.scaleHeight(rect.width);
-      //
-      // if (scaled.height > rect.height) {
-      // 	scaled = this.scaleWidth(rect.height);
-      // }
-      // scaled.x = (rect.width - scaled.width) / 2;
-      // scaled.y = (rect.height - scaled.height) / 2;
-      var amount = this.getScaleToFitRect(rect);
-      return this.scale(amount, amount);
-    }
-  }, {
-    key: "scale",
-    value: function scale(x, y) {
-      return new Rectangle(this.x, this.y, this.width * x, this.height * y);
-    }
-  }, {
-    key: "scaleToArea",
-    value: function scaleToArea(area) {
-      var height = Math.sqrt(area / this.widthToHeight);
-      var width = area / height;
-      return new Rectangle(0, 0, width, height);
-    }
-  }, {
-    key: "getScaleToFill",
-    value: function getScaleToFill(rect) {
-      var scale;
-
-      if (this.widthToHeight > rect.widthToHeight) {
-        scale = rect.height / this.height;
-      } else {
-        scale = rect.width / this.width;
-      }
-
-      return scale;
-    }
-  }, {
-    key: "getScaleToFitRect",
-    value: function getScaleToFitRect(rect) {
-      var scale;
-
-      if (this.widthToHeight > rect.widthToHeight) {
-        scale = rect.width / this.width;
-      } else {
-        scale = rect.height / this.height;
-      }
-
-      return scale;
-    }
-  }, {
-    key: "x",
-    get: function get() {
-      return this.position.x;
-    },
-    set: function set(value) {
-      this.position.x = value;
-      this.center.x = this.position.x + this.halfSize.x;
-    }
-  }, {
-    key: "y",
-    get: function get() {
-      return this.position.y;
-    },
-    set: function set(value) {
-      this.position.y = value;
-      this.center.y = this.position.y + this.halfSize.y;
-    }
-  }, {
-    key: "width",
-    get: function get() {
-      return this.size.x;
-    },
-    set: function set(value) {
-      this.size.x = value;
-      this.halfSize.x = value / 2;
-      this.center.x = this.position.x + this.halfSize.x;
-    }
-  }, {
-    key: "height",
-    get: function get() {
-      return this.size.y;
-    },
-    set: function set(value) {
-      this.size.y = value;
-      this.halfSize.y = value / 2;
-      this.center.y = this.position.y + this.halfSize.y;
-    }
-  }, {
-    key: "position",
-    get: function get() {
-      return this._position;
-    },
-    set: function set(value) {
-      this._position = value;
-    }
-  }, {
-    key: "size",
-    get: function get() {
-      return this._size;
-    },
-    set: function set(value) {
-      this._size = value;
-    }
-  }, {
-    key: "area",
-    get: function get() {
-      return this.size.x * this.size.y;
-    }
-  }, {
-    key: "widthToHeight",
-    get: function get() {
-      return this.width / this.height;
-    }
-  }, {
-    key: "heightToWidth",
-    get: function get() {
-      return this.height / this.width;
-    }
-  }, {
-    key: "isPortrait",
-    get: function get() {
-      return this.width <= this.height;
-    }
-  }, {
-    key: "isLandscape",
-    get: function get() {
-      return this.height <= this.width;
-    }
-  }]);
-
-  return Rectangle;
-}();
-
-
-
-/***/ }),
-
-/***/ 24:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(26);
-
-
-/***/ }),
-
-/***/ 26:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(9);
-
-// EXTERNAL MODULE: ./js/tsunami/utils/number.js
-var number = __webpack_require__(8);
-
-// CONCATENATED MODULE: ./js/tsunami/utils/date.js
-
-function timeAMPM(date) {
-  var hours = date.getHours();
-  var ampm = hours >= 12 ? 'pm' : 'am';
-  var minutes = Object(number["a" /* addLeadingZero */])(date.getMinutes());
-  var seconds = Object(number["a" /* addLeadingZero */])(date.getSeconds());
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-
-  return {
-    hours: hours,
-    minutes: minutes,
-    seconds: seconds,
-    ampm: ampm
-  };
-}
-function formatAMPM(date) {
-  var spaceBetween = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
-  var dateData = timeAMPM(date);
-  var strTime = dateData.hours + ':' + dateData.minutes + spaceBetween + ampm;
-  return strTime;
-}
-function toUnixString(date) {
-  return date.getFullYear() + "-" + Object(number["a" /* addLeadingZero */])(date.getMonth() + 1) + "-" + Object(number["a" /* addLeadingZero */])(date.getDate()) + " " + Object(number["a" /* addLeadingZero */])(date.getHours()) + ":" + Object(number["a" /* addLeadingZero */])(date.getMinutes()) + ":" + Object(number["a" /* addLeadingZero */])(date.getSeconds());
-}
-function toUnixUTCString(date) {
-  return date.getUTCFullYear() + "-" + Object(number["a" /* addLeadingZero */])(date.getUTCMonth() + 1) + "-" + Object(number["a" /* addLeadingZero */])(date.getUTCDate()) + " " + Object(number["a" /* addLeadingZero */])(date.getUTCHours()) + ":" + Object(number["a" /* addLeadingZero */])(date.getUTCMinutes()) + ":" + Object(number["a" /* addLeadingZero */])(date.getUTCSeconds());
-}
-function addHours(date, hours) {
-  date.setTime(date.getTime() + hours * 60 * 60 * 1000);
-  return date;
-}
-function addDays(date, days) {
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  return date;
-}
-var months = {
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-};
-function getMonth(date, language) {
-  if (!language) {
-    language = "en";
-  }
-
-  var month;
-
-  switch (language) {
-    case "en":
-      month = months[language][date.getMonth()];
-      break;
-  }
-
-  return month;
-}
-function getAge(birthDate) {
-  var today = new Date();
-  var age = today.getFullYear() - birthDate.getFullYear();
-  var m = today.getMonth() - birthDate.getMonth();
-
-  if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
-    age--;
-  }
-
-  return age;
-}
-function treatAsUTC(date) {
-  var result = new Date(date);
-  result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
-  return result;
-}
-function minutesBetween(startDate, endDate) {
-  var millisecondsPerMinute = 60 * 1000;
-  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerMinute;
-}
-function hoursBetween(startDate, endDate) {
-  var millisecondsPerHour = 60 * 60 * 1000;
-  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerHour;
-}
-function daysBetween(startDate, endDate) {
-  var millisecondsPerDay = 24 * 60 * 60 * 1000;
-  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
-}
-function weeksBetween(startDate, endDate) {
-  var millisecondsPerWeek = 7 * 24 * 60 * 60 * 1000;
-  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerWeek;
-}
-function monthsBetween(startDate, endDate) {
-  var millisecondsPerMonth = 365 / 12 * 24 * 60 * 60 * 1000;
-  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerMonth;
-}
-function yearsBetween(startDate, endDate) {
-  var millisecondsPerYear = 365 * 24 * 60 * 60 * 1000;
-  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerYear;
-}
-function getFamiliarTimeBetween(startDate, endDate) {
-  var text = "";
-  var yearsBetween = yearsBetween(startDate, endDate);
-
-  if (yearsBetween >= 1) {
-    var yearsBetweenFloor = Math.floor(yearsBetween);
-
-    if (yearsBetweenFloor > 1) {
-      text = yearsBetweenFloor.toString() + " years ago";
-    } else {
-      text = yearsBetweenFloor.toString() + " year ago";
-    }
-  } else {
-    var _monthsBetween = _monthsBetween(startDate, endDate);
-
-    if (_monthsBetween >= 1) {
-      var monthsBetweenFloor = Math.floor(_monthsBetween);
-
-      if (monthsBetweenFloor > 1) {
-        text = monthsBetweenFloor.toString() + " months ago";
-      } else {
-        text = monthsBetweenFloor.toString() + " month ago";
-      }
-    } else {
-      var _weeksBetween = _weeksBetween(startDate, endDate);
-
-      if (_weeksBetween >= 1) {
-        var weeksBetweenFloor = Math.floor(_weeksBetween);
-
-        if (weeksBetweenFloor > 1) {
-          text = weeksBetweenFloor.toString() + " weeks ago";
-        } else {
-          text = weeksBetweenFloor.toString() + " week ago";
-        }
-      } else {
-        var _daysBetween = _daysBetween(startDate, endDate);
-
-        if (_daysBetween >= 1) {
-          var daysBetweenFloor = Math.floor(_daysBetween);
-
-          if (daysBetweenFloor > 1) {
-            text = daysBetweenFloor.toString() + " days ago";
-          } else {
-            text = daysBetweenFloor.toString() + " day ago";
-          }
-        } else {
-          var _hoursBetween = _hoursBetween(startDate, endDate);
-
-          if (_hoursBetween >= 1) {
-            var hoursBetweenFloor = Math.floor(_hoursBetween);
-
-            if (hoursBetweenFloor > 1) {
-              text = hoursBetweenFloor.toString() + " hours ago";
-            } else {
-              text = hoursBetweenFloor.toString() + " hour ago";
-            }
-          } else {
-            var _minutesBetween = _minutesBetween(startDate, endDate);
-
-            if (_minutesBetween > 1) {
-              var minutesBetweenFloor = Math.floor(_minutesBetween);
-
-              if (minutesBetweenFloor > 1) {
-                text = minutesBetweenFloor.toString() + " minutes ago";
-              } else {
-                text = minutesBetweenFloor.toString() + " minute ago";
-              }
-            } else {
-              text = "Just now";
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return text;
-}
-// CONCATENATED MODULE: ./js/video-recording.js
-
-
-
-var params = Object(tsunami_window["a" /* getSearchParams */])();
-var tabId = Number(params.tabId);
-chrome.storage.local.get(["json"], function (result) {
-  var data = JSON.parse(result.json);
-  var colorTheme = data.settings.colorThemes;
-  var isColorThemeLight;
-
-  switch (colorTheme) {
-    case "Dark":
-    case "Light":
-      isColorThemeLight = colorTheme == "Light";
-      break;
-
-    default:
-      var darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
-      var isDarkMode = darkModeMatchMedia.matches;
-      isColorThemeLight = !isDarkMode;
-      break;
-  }
-
-  document.body.querySelector(".sc-default").setAttribute("data-theme-light", isColorThemeLight);
-});
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  switch (msg.txt) {
-    case "scrollCaptureColorTheme":
-      document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.isColorThemeLight);
-      break;
-
-    case "scrollCaptureUpdateVideo":
-      updateVideo();
-      break;
-  }
-});
-var player = document.querySelector('.sc-video-player');
-player.addEventListener('canplay', function () {
-  this.muted = true;
-  player.setAttribute('controls', '1');
-  this.play();
-  var msg = {
-    txt: "scrollCaptureVideoHeigth",
-    height: document.body.scrollHeight
-  };
-  chrome.tabs.sendMessage(tabId, msg);
-});
-
-function updateVideo() {
-  chrome.runtime.getBackgroundPage(function (page) {
-    if (page.videoURL) {
-      player.src = page.videoURL;
-      var date = new Date();
-      var ampmTime = timeAMPM(date); // Screen Shot 2020-03-20 at 4.35.14 PM
-
-      var dateData = {
-        year: date.getFullYear(),
-        month: Object(number["a" /* addLeadingZero */])(date.getMonth() + 1),
-        date: Object(number["a" /* addLeadingZero */])(date.getDate())
-      };
-      ampmTime.ampm = ampmTime.ampm.toUpperCase();
-      var videoFileName = "Scroll Capture ".concat(dateData.year, "-").concat(dateData.month, "-").concat(dateData.date, " at ").concat(ampmTime.hours, ".").concat(ampmTime.minutes, ".").concat(ampmTime.seconds, " ").concat(ampmTime.ampm, ".webm");
-      var buttons = document.querySelectorAll("a.sc-download-button");
-
-      for (var i = 0; i < buttons.length; i++) {
-        var button = buttons[i];
-        button.href = page.videoURL;
-        button.download = videoFileName;
-      }
-
-      var fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
-      fileNameButton.innerHTML = videoFileName;
-    }
-  });
-}
-
-/***/ }),
-
-/***/ 8:
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1267,8 +746,7 @@ function hexToRgb(hex) {
 }
 
 /***/ }),
-
-/***/ 9:
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1286,8 +764,8 @@ function hexToRgb(hex) {
 /* unused harmony export forceProtocol */
 /* unused harmony export fileExists */
 /* unused harmony export getElementSelector */
-/* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
+/* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
 
 
 var isMobile = {
@@ -1505,6 +983,526 @@ function getElementSelector(element) {
   return selector;
 }
 
-/***/ })
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/******/ });
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rectangle; });
+/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Rectangle = /*#__PURE__*/function () {
+  function Rectangle() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+    _classCallCheck(this, Rectangle);
+
+    this._position = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this._size = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.center = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.halfSize = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  _createClass(Rectangle, [{
+    key: "contains",
+    value: function contains(point) {
+      var hit = point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height ? true : false;
+      return hit;
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(rect) {
+      return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
+    }
+  }, {
+    key: "intersect",
+    value: function intersect(b) {
+      var a = this;
+      var x = Math.max(a.x, b.x);
+      var num1 = Math.min(a.x + a.width, b.x + b.width);
+      var y = Math.max(a.y, b.y);
+      var num2 = Math.min(a.y + a.height, b.y + b.height);
+      var result;
+
+      if (num1 >= x && num2 >= y) {
+        result = new Rectangle(x, y, num1 - x, num2 - y);
+      } else {
+        result = new Rectangle();
+      }
+
+      return result;
+    }
+  }, {
+    key: "equals",
+    value: function equals(rect) {
+      return this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Rectangle(this.x, this.y, this.width, this.height);
+    }
+  }, {
+    key: "copyFrom",
+    value: function copyFrom(rect) {
+      this.x = rect.x;
+      this.y = rect.y;
+      this.width = rect.width;
+      this.height = rect.height;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Rectangle" + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + "]";
+    }
+  }, {
+    key: "scaleWidth",
+    value: function scaleWidth(height) {
+      return new Rectangle(this.x, this.y, height * this.widthToHeight, height);
+    }
+  }, {
+    key: "scaleHeight",
+    value: function scaleHeight(width) {
+      return new Rectangle(this.x, this.y, width, width * this.heightToWidth);
+    }
+  }, {
+    key: "scaleToFillRect",
+    value: function scaleToFillRect(rect) {
+      // let scaled = this.scaleHeight(rect.width);
+      //
+      // if (scaled.height < rect.height) {
+      // 	scaled = this.scaleWidth(rect.height);
+      // }
+      var amount = this.getScaleToFill(rect);
+      return this.scale(amount, amount);
+    }
+  }, {
+    key: "scaleToFitRect",
+    value: function scaleToFitRect(rect) {
+      // let scaled = this.scaleHeight(rect.width);
+      //
+      // if (scaled.height > rect.height) {
+      // 	scaled = this.scaleWidth(rect.height);
+      // }
+      // scaled.x = (rect.width - scaled.width) / 2;
+      // scaled.y = (rect.height - scaled.height) / 2;
+      var amount = this.getScaleToFitRect(rect);
+      return this.scale(amount, amount);
+    }
+  }, {
+    key: "scale",
+    value: function scale(x, y) {
+      return new Rectangle(this.x, this.y, this.width * x, this.height * y);
+    }
+  }, {
+    key: "scaleToArea",
+    value: function scaleToArea(area) {
+      var height = Math.sqrt(area / this.widthToHeight);
+      var width = area / height;
+      return new Rectangle(0, 0, width, height);
+    }
+  }, {
+    key: "getScaleToFill",
+    value: function getScaleToFill(rect) {
+      var scale;
+
+      if (this.widthToHeight > rect.widthToHeight) {
+        scale = rect.height / this.height;
+      } else {
+        scale = rect.width / this.width;
+      }
+
+      return scale;
+    }
+  }, {
+    key: "getScaleToFitRect",
+    value: function getScaleToFitRect(rect) {
+      var scale;
+
+      if (this.widthToHeight > rect.widthToHeight) {
+        scale = rect.width / this.width;
+      } else {
+        scale = rect.height / this.height;
+      }
+
+      return scale;
+    }
+  }, {
+    key: "x",
+    get: function get() {
+      return this.position.x;
+    },
+    set: function set(value) {
+      this.position.x = value;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "y",
+    get: function get() {
+      return this.position.y;
+    },
+    set: function set(value) {
+      this.position.y = value;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "width",
+    get: function get() {
+      return this.size.x;
+    },
+    set: function set(value) {
+      this.size.x = value;
+      this.halfSize.x = value / 2;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "height",
+    get: function get() {
+      return this.size.y;
+    },
+    set: function set(value) {
+      this.size.y = value;
+      this.halfSize.y = value / 2;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "position",
+    get: function get() {
+      return this._position;
+    },
+    set: function set(value) {
+      this._position = value;
+    }
+  }, {
+    key: "size",
+    get: function get() {
+      return this._size;
+    },
+    set: function set(value) {
+      this._size = value;
+    }
+  }, {
+    key: "area",
+    get: function get() {
+      return this.size.x * this.size.y;
+    }
+  }, {
+    key: "widthToHeight",
+    get: function get() {
+      return this.width / this.height;
+    }
+  }, {
+    key: "heightToWidth",
+    get: function get() {
+      return this.height / this.width;
+    }
+  }, {
+    key: "isPortrait",
+    get: function get() {
+      return this.width <= this.height;
+    }
+  }, {
+    key: "isLandscape",
+    get: function get() {
+      return this.height <= this.width;
+    }
+  }]);
+
+  return Rectangle;
+}();
+
+
+
+/***/ }),
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(10);
+
+
+/***/ }),
+/* 9 */,
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./js/tsunami/window.js
+var tsunami_window = __webpack_require__(2);
+
+// EXTERNAL MODULE: ./js/tsunami/utils/number.js
+var number = __webpack_require__(1);
+
+// CONCATENATED MODULE: ./js/tsunami/utils/date.js
+
+function timeAMPM(date) {
+  var hours = date.getHours();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  var minutes = Object(number["a" /* addLeadingZero */])(date.getMinutes());
+  var seconds = Object(number["a" /* addLeadingZero */])(date.getSeconds());
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+
+  return {
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds,
+    ampm: ampm
+  };
+}
+function formatAMPM(date) {
+  var spaceBetween = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var dateData = timeAMPM(date);
+  var strTime = dateData.hours + ':' + dateData.minutes + spaceBetween + ampm;
+  return strTime;
+}
+function toUnixString(date) {
+  return date.getFullYear() + "-" + Object(number["a" /* addLeadingZero */])(date.getMonth() + 1) + "-" + Object(number["a" /* addLeadingZero */])(date.getDate()) + " " + Object(number["a" /* addLeadingZero */])(date.getHours()) + ":" + Object(number["a" /* addLeadingZero */])(date.getMinutes()) + ":" + Object(number["a" /* addLeadingZero */])(date.getSeconds());
+}
+function toUnixUTCString(date) {
+  return date.getUTCFullYear() + "-" + Object(number["a" /* addLeadingZero */])(date.getUTCMonth() + 1) + "-" + Object(number["a" /* addLeadingZero */])(date.getUTCDate()) + " " + Object(number["a" /* addLeadingZero */])(date.getUTCHours()) + ":" + Object(number["a" /* addLeadingZero */])(date.getUTCMinutes()) + ":" + Object(number["a" /* addLeadingZero */])(date.getUTCSeconds());
+}
+function addHours(date, hours) {
+  date.setTime(date.getTime() + hours * 60 * 60 * 1000);
+  return date;
+}
+function addDays(date, days) {
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  return date;
+}
+var months = {
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+};
+function getMonth(date, language) {
+  if (!language) {
+    language = "en";
+  }
+
+  var month;
+
+  switch (language) {
+    case "en":
+      month = months[language][date.getMonth()];
+      break;
+  }
+
+  return month;
+}
+function getAge(birthDate) {
+  var today = new Date();
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || m === 0 && today.getDate() < birthDate.getDate()) {
+    age--;
+  }
+
+  return age;
+}
+function treatAsUTC(date) {
+  var result = new Date(date);
+  result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+  return result;
+}
+function minutesBetween(startDate, endDate) {
+  var millisecondsPerMinute = 60 * 1000;
+  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerMinute;
+}
+function hoursBetween(startDate, endDate) {
+  var millisecondsPerHour = 60 * 60 * 1000;
+  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerHour;
+}
+function daysBetween(startDate, endDate) {
+  var millisecondsPerDay = 24 * 60 * 60 * 1000;
+  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
+}
+function weeksBetween(startDate, endDate) {
+  var millisecondsPerWeek = 7 * 24 * 60 * 60 * 1000;
+  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerWeek;
+}
+function monthsBetween(startDate, endDate) {
+  var millisecondsPerMonth = 365 / 12 * 24 * 60 * 60 * 1000;
+  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerMonth;
+}
+function yearsBetween(startDate, endDate) {
+  var millisecondsPerYear = 365 * 24 * 60 * 60 * 1000;
+  return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerYear;
+}
+function getFamiliarTimeBetween(startDate, endDate) {
+  var text = "";
+  var yearsBetween = yearsBetween(startDate, endDate);
+
+  if (yearsBetween >= 1) {
+    var yearsBetweenFloor = Math.floor(yearsBetween);
+
+    if (yearsBetweenFloor > 1) {
+      text = yearsBetweenFloor.toString() + " years ago";
+    } else {
+      text = yearsBetweenFloor.toString() + " year ago";
+    }
+  } else {
+    var _monthsBetween = _monthsBetween(startDate, endDate);
+
+    if (_monthsBetween >= 1) {
+      var monthsBetweenFloor = Math.floor(_monthsBetween);
+
+      if (monthsBetweenFloor > 1) {
+        text = monthsBetweenFloor.toString() + " months ago";
+      } else {
+        text = monthsBetweenFloor.toString() + " month ago";
+      }
+    } else {
+      var _weeksBetween = _weeksBetween(startDate, endDate);
+
+      if (_weeksBetween >= 1) {
+        var weeksBetweenFloor = Math.floor(_weeksBetween);
+
+        if (weeksBetweenFloor > 1) {
+          text = weeksBetweenFloor.toString() + " weeks ago";
+        } else {
+          text = weeksBetweenFloor.toString() + " week ago";
+        }
+      } else {
+        var _daysBetween = _daysBetween(startDate, endDate);
+
+        if (_daysBetween >= 1) {
+          var daysBetweenFloor = Math.floor(_daysBetween);
+
+          if (daysBetweenFloor > 1) {
+            text = daysBetweenFloor.toString() + " days ago";
+          } else {
+            text = daysBetweenFloor.toString() + " day ago";
+          }
+        } else {
+          var _hoursBetween = _hoursBetween(startDate, endDate);
+
+          if (_hoursBetween >= 1) {
+            var hoursBetweenFloor = Math.floor(_hoursBetween);
+
+            if (hoursBetweenFloor > 1) {
+              text = hoursBetweenFloor.toString() + " hours ago";
+            } else {
+              text = hoursBetweenFloor.toString() + " hour ago";
+            }
+          } else {
+            var _minutesBetween = _minutesBetween(startDate, endDate);
+
+            if (_minutesBetween > 1) {
+              var minutesBetweenFloor = Math.floor(_minutesBetween);
+
+              if (minutesBetweenFloor > 1) {
+                text = minutesBetweenFloor.toString() + " minutes ago";
+              } else {
+                text = minutesBetweenFloor.toString() + " minute ago";
+              }
+            } else {
+              text = "Just now";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return text;
+}
+// CONCATENATED MODULE: ./js/video-recording.js
+
+
+
+var params = Object(tsunami_window["a" /* getSearchParams */])();
+var tabId = Number(params.tabId);
+chrome.storage.local.get(["json"], function (result) {
+  var data = JSON.parse(result.json);
+  var colorTheme = data.settings.colorThemes;
+  var isColorThemeLight;
+
+  switch (colorTheme) {
+    case "Dark":
+    case "Light":
+      isColorThemeLight = colorTheme == "Light";
+      break;
+
+    default:
+      var darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+      var isDarkMode = darkModeMatchMedia.matches;
+      isColorThemeLight = !isDarkMode;
+      break;
+  }
+
+  document.body.querySelector(".sc-default").setAttribute("data-theme-light", isColorThemeLight);
+});
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+  switch (msg.txt) {
+    case "scrollCaptureColorTheme":
+      document.body.querySelector(".sc-default").setAttribute("data-theme-light", msg.isColorThemeLight);
+      break;
+
+    case "scrollCaptureUpdateVideo":
+      updateVideo();
+      break;
+  }
+});
+var player = document.querySelector('.sc-video-player');
+player.addEventListener('canplay', function () {
+  this.muted = true;
+  player.setAttribute('controls', '1');
+  this.play();
+  var msg = {
+    txt: "scrollCaptureVideoHeigth",
+    height: document.body.scrollHeight
+  };
+  chrome.tabs.sendMessage(tabId, msg);
+});
+
+function updateVideo() {
+  chrome.runtime.getBackgroundPage(function (page) {
+    if (page.videoURL) {
+      player.src = page.videoURL;
+      var date = new Date();
+      var ampmTime = timeAMPM(date); // Screen Shot 2020-03-20 at 4.35.14 PM
+
+      var dateData = {
+        year: date.getFullYear(),
+        month: Object(number["a" /* addLeadingZero */])(date.getMonth() + 1),
+        date: Object(number["a" /* addLeadingZero */])(date.getDate())
+      };
+      ampmTime.ampm = ampmTime.ampm.toUpperCase();
+      var videoFileName = "Scroll Capture ".concat(dateData.year, "-").concat(dateData.month, "-").concat(dateData.date, " at ").concat(ampmTime.hours, ".").concat(ampmTime.minutes, ".").concat(ampmTime.seconds, " ").concat(ampmTime.ampm, ".webm");
+      var buttons = document.querySelectorAll("a.sc-download-button");
+
+      for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
+        button.href = page.videoURL;
+        button.download = videoFileName;
+      }
+
+      var fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
+      fileNameButton.innerHTML = videoFileName;
+    }
+  });
+}
+
+/***/ })
+/******/ ]);
