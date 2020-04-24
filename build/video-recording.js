@@ -825,6 +825,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     case "scrollCaptureUpdateVideo":
       updateVideo();
       break;
+
+    case "scrollCaptureUnloadVideo":
+      unloadVideo();
+      break;
   }
 });
 var player = document.querySelector('.sc-video-player');
@@ -867,6 +871,12 @@ function updateVideo() {
       fileNameButton.innerHTML = videoFileName;
     }
   });
+}
+
+function unloadVideo() {
+  player.pause();
+  player.removeAttribute('src');
+  player.load();
 }
 
 /***/ })

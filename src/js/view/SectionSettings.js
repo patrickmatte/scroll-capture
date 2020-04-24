@@ -8,4 +8,14 @@ export default class SectionSettings extends Section {
         this.tabDataId = "settings";
    }
 
+    showDelayComplete() {
+        let promise = super.showDelayComplete();
+
+        this.router.redirect("default", () => { return this.path });
+
+        app.save();
+
+        return promise;
+    }
+
 }

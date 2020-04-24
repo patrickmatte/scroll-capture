@@ -34,6 +34,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case "scrollCaptureUpdateVideo":
             updateVideo();
             break;
+        case "scrollCaptureUnloadVideo":
+            unloadVideo();
+            break;
     }
 });
 
@@ -73,4 +76,10 @@ function updateVideo() {
             fileNameButton.innerHTML = videoFileName;
         }
     });
+}
+
+function unloadVideo() {
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
 }

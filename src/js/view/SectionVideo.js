@@ -17,4 +17,9 @@ export default class SectionVideo extends Section {
         });
     }
 
+    hideComplete() {
+        chrome.runtime.sendMessage({ txt:"scrollCaptureUnloadVideo"});
+        return super.hideComplete();
+    }
+
 }

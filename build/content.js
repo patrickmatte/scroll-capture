@@ -6520,6 +6520,14 @@ function SectionSettings_typeof(obj) { "@babel/helpers - typeof"; if (typeof Sym
 
 function SectionSettings_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function SectionSettings_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function SectionSettings_createClass(Constructor, protoProps, staticProps) { if (protoProps) SectionSettings_defineProperties(Constructor.prototype, protoProps); if (staticProps) SectionSettings_defineProperties(Constructor, staticProps); return Constructor; }
+
+function SectionSettings_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { SectionSettings_get = Reflect.get; } else { SectionSettings_get = function _get(target, property, receiver) { var base = SectionSettings_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return SectionSettings_get(target, property, receiver || target); }
+
+function SectionSettings_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = SectionSettings_getPrototypeOf(object); if (object === null) break; } return object; }
+
 function SectionSettings_createSuper(Derived) { return function () { var Super = SectionSettings_getPrototypeOf(Derived), result; if (SectionSettings_isNativeReflectConstruct()) { var NewTarget = SectionSettings_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SectionSettings_possibleConstructorReturn(this, result); }; }
 
 function SectionSettings_possibleConstructorReturn(self, call) { if (call && (SectionSettings_typeof(call) === "object" || typeof call === "function")) { return call; } return SectionSettings_assertThisInitialized(self); }
@@ -6537,7 +6545,7 @@ function SectionSettings_setPrototypeOf(o, p) { SectionSettings_setPrototypeOf =
 
 
 
-var SectionSettings = /*#__PURE__*/function (_Section) {
+var SectionSettings_SectionSettings = /*#__PURE__*/function (_Section) {
   SectionSettings_inherits(SectionSettings, _Section);
 
   var _super = SectionSettings_createSuper(SectionSettings);
@@ -6552,6 +6560,21 @@ var SectionSettings = /*#__PURE__*/function (_Section) {
     return _this;
   }
 
+  SectionSettings_createClass(SectionSettings, [{
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      var _this2 = this;
+
+      var promise = SectionSettings_get(SectionSettings_getPrototypeOf(SectionSettings.prototype), "showDelayComplete", this).call(this);
+
+      this.router.redirect("default", function () {
+        return _this2.path;
+      });
+      app.save();
+      return promise;
+    }
+  }]);
+
   return SectionSettings;
 }(Section_Section);
 
@@ -6560,6 +6583,14 @@ var SectionSettings = /*#__PURE__*/function (_Section) {
 function SectionVideo_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { SectionVideo_typeof = function _typeof(obj) { return typeof obj; }; } else { SectionVideo_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return SectionVideo_typeof(obj); }
 
 function SectionVideo_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function SectionVideo_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function SectionVideo_createClass(Constructor, protoProps, staticProps) { if (protoProps) SectionVideo_defineProperties(Constructor.prototype, protoProps); if (staticProps) SectionVideo_defineProperties(Constructor, staticProps); return Constructor; }
+
+function SectionVideo_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { SectionVideo_get = Reflect.get; } else { SectionVideo_get = function _get(target, property, receiver) { var base = SectionVideo_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return SectionVideo_get(target, property, receiver || target); }
+
+function SectionVideo_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = SectionVideo_getPrototypeOf(object); if (object === null) break; } return object; }
 
 function SectionVideo_createSuper(Derived) { return function () { var Super = SectionVideo_getPrototypeOf(Derived), result; if (SectionVideo_isNativeReflectConstruct()) { var NewTarget = SectionVideo_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SectionVideo_possibleConstructorReturn(this, result); }; }
 
@@ -6600,6 +6631,16 @@ var SectionVideo = /*#__PURE__*/function (_Section) {
     });
     return _this;
   }
+
+  SectionVideo_createClass(SectionVideo, [{
+    key: "hideComplete",
+    value: function hideComplete() {
+      chrome.runtime.sendMessage({
+        txt: "scrollCaptureUnloadVideo"
+      });
+      return SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "hideComplete", this).call(this);
+    }
+  }]);
 
   return SectionVideo;
 }(Section_Section);
@@ -6733,7 +6774,7 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 
 define("sc-scenario", SectionScenario_SectionScenario);
 define("sc-video", SectionVideo);
-define("sc-settings", SectionSettings);
+define("sc-settings", SectionSettings_SectionSettings);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
