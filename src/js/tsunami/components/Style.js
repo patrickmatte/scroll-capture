@@ -14,7 +14,7 @@ export default class Style {
 	}
 
 	get bottom() {
-		return eval(this.style.bottom.split(this.units.bottom)[0]) || 0;
+		return Number(this.style.bottom.split(this.units.bottom)[0]) || 0;
 	}
 
 	set bottom(value) {
@@ -22,7 +22,7 @@ export default class Style {
 	}
 
 	get fontSize() {
-		return eval(this.style.fontSize.split(this.units.fontSize)[0]) || 0;
+		return Number(this.style.fontSize.split(this.units.fontSize)[0]) || 0;
 	}
 
 	set fontSize(value) {
@@ -30,7 +30,7 @@ export default class Style {
 	}
 
 	get height() {
-		return eval(this.style.height.split(this.units.height)[0]) || 0;
+		return Number(this.style.height.split(this.units.height)[0]) || 0;
 	}
 
 	set height(value) {
@@ -38,7 +38,7 @@ export default class Style {
 	}
 
 	get left() {
-		return eval(this.style.left.split(this.units.left)[0]) || 0;
+		return Number(this.style.left.split(this.units.left)[0]) || 0;
 	}
 
 	set left(value) {
@@ -46,7 +46,7 @@ export default class Style {
 	}
 
 	get marginBottom() {
-		return eval(this.style.marginBottom.split(this.units.marginBottom)[0]) || 0;
+		return Number(this.style.marginBottom.split(this.units.marginBottom)[0]) || 0;
 	}
 
 	set marginBottom(value) {
@@ -54,7 +54,7 @@ export default class Style {
 	}
 
 	get marginLeft() {
-		return eval(this.style.marginLeft.split(this.units.marginLeft)[0]) || 0;
+		return Number(this.style.marginLeft.split(this.units.marginLeft)[0]) || 0;
 	}
 
 	set marginLeft(value) {
@@ -62,7 +62,7 @@ export default class Style {
 	}
 
 	get marginRight() {
-		return eval(this.style.marginRight.split(this.units.marginRight)[0]) || 0;
+		return Number(this.style.marginRight.split(this.units.marginRight)[0]) || 0;
 	}
 
 	set marginRight(value) {
@@ -70,7 +70,7 @@ export default class Style {
 	}
 
 	get marginTop() {
-		return eval(this.style.marginTop.split(this.units.marginTop)[0]) || 0;
+		return Number(this.style.marginTop.split(this.units.marginTop)[0]) || 0;
 	}
 
 	set marginTop(value) {
@@ -78,7 +78,7 @@ export default class Style {
 	}
 
 	get maxHeight() {
-		return eval(this.style.maxHeight.split(this.units.maxHeight)[0]) || 0;
+		return Number(this.style.maxHeight.split(this.units.maxHeight)[0]) || 0;
 	}
 
 	set maxHeight(value) {
@@ -96,7 +96,7 @@ export default class Style {
 	}
 
 	get paddingBottom() {
-		return eval(this.style.paddingBottom.split(this.units.paddingBottom)[0]) || 0;
+		return Number(this.style.paddingBottom.split(this.units.paddingBottom)[0]) || 0;
 	}
 
 	set paddingBottom(value) {
@@ -104,7 +104,7 @@ export default class Style {
 	}
 
 	get paddingLeft() {
-		return eval(this.style.paddingLeft.split(this.units.paddingLeft)[0]) || 0;
+		return Number(this.style.paddingLeft.split(this.units.paddingLeft)[0]) || 0;
 	}
 
 	set paddingLeft(value) {
@@ -112,7 +112,7 @@ export default class Style {
 	}
 
 	get paddingRight() {
-		return eval(this.style.paddingRight.split(this.units.paddingRight)[0]) || 0;
+		return Number(this.style.paddingRight.split(this.units.paddingRight)[0]) || 0;
 	}
 
 	set paddingRight(value) {
@@ -120,7 +120,7 @@ export default class Style {
 	}
 
 	get paddingTop() {
-		return eval(this.style.paddingTop.split(this.units.paddingTop)[0]) || 0;
+		return Number(this.style.paddingTop.split(this.units.paddingTop)[0]) || 0;
 	}
 
 	set paddingTop(value) {
@@ -136,7 +136,7 @@ export default class Style {
 	}
 
 	get right() {
-		return eval(this.style.right.split(this.units.right)[0]) || 0;
+		return Number(this.style.right.split(this.units.right)[0]) || 0;
 	}
 
 	set right(value) {
@@ -144,7 +144,7 @@ export default class Style {
 	}
 
 	get top() {
-		return eval(this.style.top.split(this.units.top)[0]) || 0;
+		return Number(this.style.top.split(this.units.top)[0]) || 0;
 	}
 
 	set top(value) {
@@ -152,7 +152,7 @@ export default class Style {
 	}
 
 	get width() {
-		return eval(this.style.width.split(this.units.width)[0]) || 0;
+		return Number(this.style.width.split(this.units.width)[0]) || 0;
 	}
 
 	set width(value) {

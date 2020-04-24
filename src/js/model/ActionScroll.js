@@ -142,8 +142,6 @@ export default class ActionScroll extends ActionTween {
 				maxScroll.y = element.scrollHeight - element.clientHeight;
 				break;
 		}
-		console.log("scroll.x", scroll.x, "scroll.y", scroll.y);
-		console.log("maxScroll.x", maxScroll.x, "maxScroll.y", maxScroll.y);
 		let unit = new Point();
 		switch(this.units.selectedItem.value) {
 			case "px":
@@ -155,15 +153,12 @@ export default class ActionScroll extends ActionTween {
 				unit.y = Math.round(scroll.y / maxScroll.y * 100);
 				break;
 		}
-		console.log("unit.x", unit.x, "unit.y", unit.y);
 
 		if(isNaN(unit.x)) unit.x = 0;
 		if(isNaN(unit.y)) unit.y = 0;
 
 		this.unitX.value = unit.x;
 		this.unitY.value = unit.y;
-
-		console.log("this.unitX.value", this.unitX.value, "this.unitY.value", this.unitY.value);
 
 		setTimeout(()=> {
 			this.unitX.addEventListener(Data.CHANGE, this.doScroll);

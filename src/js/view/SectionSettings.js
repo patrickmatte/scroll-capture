@@ -8,9 +8,4 @@ export default class SectionSettings extends Section {
         this.tabDataId = "settings";
    }
 
-    hideComplete() {
-        app.save();
-        return super.hideComplete();
-    }
-
 }

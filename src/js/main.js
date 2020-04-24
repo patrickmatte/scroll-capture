@@ -11,6 +11,7 @@ import Router from "./tsunami/Router";
 import RouterButton from "./view/RouterButton";
 import PlayState from "./view/PlayState";
 import PlayRecordState from "./view/PlayRecordState";
+import CloseState from "./view/CloseState";
 
 export let app;
 
@@ -36,6 +37,9 @@ export default class Main extends App {
 		this.startLocation = "scroll-capture/scenario";
 
 		this.router = new Router(this);
+		// this.router.addEventListener(Router.COMPLETE, (e)=> {
+		// 	console.log(e.type, this.router.location);
+		// })
 
 		this.showCaptureIcon = new BooleanData();
 		this.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
@@ -77,7 +81,8 @@ export default class Main extends App {
 		this.branches = {
 			"scroll-capture": this.scrollCapture,
 			"play": new PlayState(),
-			"record":new PlayRecordState()
+			"record": new PlayRecordState(),
+			"closed": new CloseState()
 		}
 	}
 

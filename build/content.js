@@ -698,7 +698,7 @@ var BaseEvent = /*#__PURE__*/function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArrayData; });
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var _NumberData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
-/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
+/* harmony import */ var _ObjectData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(16);
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1330,7 +1330,7 @@ var tsunami_await = __webpack_require__(11);
 var ArrayData = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
-var ArrayDataOperation = __webpack_require__(16);
+var ArrayDataOperation = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
 var Rectangle = __webpack_require__(10);
@@ -1339,7 +1339,7 @@ var Rectangle = __webpack_require__(10);
 var tsunami_window = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./js/tsunami/Branch.js
-var Branch = __webpack_require__(17);
+var Branch = __webpack_require__(14);
 
 // EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
 var Point = __webpack_require__(1);
@@ -3640,6 +3640,143 @@ var Validation = /*#__PURE__*/function (_BooleanData) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Branch; });
+/* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Branch = /*#__PURE__*/function (_EventDispatcher) {
+  _inherits(Branch, _EventDispatcher);
+
+  var _super = _createSuper(Branch);
+
+  function Branch() {
+    var _this;
+
+    _classCallCheck(this, Branch);
+
+    _this = _super.call(this);
+    _this.branches = {};
+    _this.slug = null;
+    _this.parent = null;
+    _this._router = null;
+    _this.path = null;
+    _this.arrowKeyHandler = _this.arrowKeyHandler.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Branch, [{
+    key: "getBranch",
+    value: function getBranch(slug) {
+      var branch;
+
+      if (this.branches[slug]) {
+        branch = this.branches[slug];
+      } else if (this.branches["*"]) {
+        branch = this.branches["*"];
+      } else {
+        branch = new Branch();
+        console.log("No branch named " + slug + ", default branch was created");
+      }
+
+      return branch;
+    }
+  }, {
+    key: "load",
+    value: function load(assetList) {
+      return Promise.resolve();
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      return Promise.resolve();
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      return Promise.resolve();
+    }
+  }, {
+    key: "arrowKeyHandler",
+    value: function arrowKeyHandler(event) {
+      var increment = 0;
+
+      switch (event.keyCode) {
+        case 37:
+        case 38:
+          increment = -1;
+          break;
+
+        case 39:
+        case 40:
+          increment = 1;
+          break;
+      }
+
+      return increment;
+    }
+  }, {
+    key: "router",
+    get: function get() {
+      return this._router;
+    },
+    set: function set(value) {
+      this._router = value;
+    }
+  }, {
+    key: "defaultChild",
+    get: function get() {
+      return this._defaultChild;
+    },
+    set: function set(value) {
+      this._defaultChild = value;
+    }
+  }, {
+    key: "arrowKeyNavigation",
+    get: function get() {
+      return this._arrowKeyNavigation;
+    },
+    set: function set(value) {
+      this._arrowKeyNavigation = value;
+      window.removeEventListener("keyup", this.arrowKeyHandler);
+
+      if (value) {
+        window.addEventListener("keyup", this.arrowKeyHandler);
+      }
+    }
+  }]);
+
+  return Branch;
+}(_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
+
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIButton; });
 /* harmony import */ var _events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _UIComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
@@ -3753,7 +3890,7 @@ var UIButton = /*#__PURE__*/function (_UIComponent) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3854,7 +3991,7 @@ var ObjectData = /*#__PURE__*/function (_Data) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4093,143 +4230,6 @@ var ArrayDataOperation = /*#__PURE__*/function (_Data) {
 
   return ArrayDataOperation;
 }(_Data__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
-
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Branch; });
-/* harmony import */ var _EventDispatcher__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var Branch = /*#__PURE__*/function (_EventDispatcher) {
-  _inherits(Branch, _EventDispatcher);
-
-  var _super = _createSuper(Branch);
-
-  function Branch() {
-    var _this;
-
-    _classCallCheck(this, Branch);
-
-    _this = _super.call(this);
-    _this.branches = {};
-    _this.slug = null;
-    _this.parent = null;
-    _this._router = null;
-    _this.path = null;
-    _this.arrowKeyHandler = _this.arrowKeyHandler.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(Branch, [{
-    key: "getBranch",
-    value: function getBranch(slug) {
-      var branch;
-
-      if (this.branches[slug]) {
-        branch = this.branches[slug];
-      } else if (this.branches["*"]) {
-        branch = this.branches["*"];
-      } else {
-        branch = new Branch();
-        console.log("No branch named " + slug + ", default branch was created");
-      }
-
-      return branch;
-    }
-  }, {
-    key: "load",
-    value: function load(assetList) {
-      return Promise.resolve();
-    }
-  }, {
-    key: "show",
-    value: function show() {
-      return Promise.resolve();
-    }
-  }, {
-    key: "hide",
-    value: function hide() {
-      return Promise.resolve();
-    }
-  }, {
-    key: "arrowKeyHandler",
-    value: function arrowKeyHandler(event) {
-      var increment = 0;
-
-      switch (event.keyCode) {
-        case 37:
-        case 38:
-          increment = -1;
-          break;
-
-        case 39:
-        case 40:
-          increment = 1;
-          break;
-      }
-
-      return increment;
-    }
-  }, {
-    key: "router",
-    get: function get() {
-      return this._router;
-    },
-    set: function set(value) {
-      this._router = value;
-    }
-  }, {
-    key: "defaultChild",
-    get: function get() {
-      return this._defaultChild;
-    },
-    set: function set(value) {
-      this._defaultChild = value;
-    }
-  }, {
-    key: "arrowKeyNavigation",
-    get: function get() {
-      return this._arrowKeyNavigation;
-    },
-    set: function set(value) {
-      this._arrowKeyNavigation = value;
-      window.removeEventListener("keyup", this.arrowKeyHandler);
-
-      if (value) {
-        window.addEventListener("keyup", this.arrowKeyHandler);
-      }
-    }
-  }]);
-
-  return Branch;
-}(_EventDispatcher__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]);
 
 
 
@@ -4631,7 +4631,7 @@ var StyleUnits = function StyleUnits() {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UIRouterButton; });
-/* harmony import */ var _UIButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var _UIButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6572,7 +6572,7 @@ var ActionsView_ActionsView = /*#__PURE__*/function (_UIList) {
 
 tsunami["a" /* define */]("sc-action-view", ActionView);
 // CONCATENATED MODULE: ./templates/scroll-capture.html
-/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\" data-model=\".\" data-theme-light=\"[[settings.isColorThemeLight]]\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t<button is=\"router-button\" data-path=\"\" title=\"Close\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-times-circle\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\n\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t<div is=\"ui-component\">\n\t\t\t\t\t<div class=\"sc-window sc-window-sections\" is=\"ui-component\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"scenario\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/scenario\" title=\"Timeline\">\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-icon fas fa-sliders-h\"></span> -->\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-stream\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Timeline</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-id=\"play\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"play\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"video\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"record\" title=\"Capture\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t<span class=\"sc-tabs\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"settings\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/settings\" title=\"Settings\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-cogs\"></span>\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Settings</span> -->\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"sc-window-content-main\" is=\"ui-component\">\n\n\t\t\t\t\t\t\t<sc-scenario class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<sc-actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<sc-action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab-wrapper\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\" title=\"Set\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-bullseye\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" data-model=\"data\" is=\"ui-button\" data-event-click=\"data.deleteAction\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollLeft\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitX\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollTop\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitY\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Target Selector\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon far fa-dot-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageX\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageY\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.x\" is=\"ui-input\" title=\"PageX\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.y\" is=\"ui-input\" title=\"PageY\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input sc-select\" title=\"MouseEvent Type\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-mouse-pointer\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Duration\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-clock\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</sc-action-view>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</sc-actions-view>\n\t\t\t\t\t\t\t\t<div class=\"sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\" is=\"ui-list\" data-provider=\"actions.types\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-action-button\" data-type=\"[[data.type]]\" data-model=\"data\" is=\"ui-button\" title=\"[[data.description]]\" data-click=\"data.addAction\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\">\n\t\t\t\t\t\t\t\t\t\t<button is=\"ui-button\" data-event-click=\"clearActions\" title=\"Delete all\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-scenario>\n\n\t\t\t\t\t\t\t<sc-video class=\"sc-section sc-fields\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-video>\n\n\t\t\t\t\t\t\t<sc-settings class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Color theme</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Theme:</span> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-color-themes\" data-provider=\"settings.colorThemes\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label class=\"sc-radio\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"radio\" name=\"color-theme\" is=\"ui-input\" value=\"[[data]]\" data-model=\"parent.settings.colorThemes.selectedItem\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-check\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"data\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas\" data-theme=\"[[settings.colorThemes.selectedItem]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.colorThemes\" data-model=\"settings.colorThemes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-film\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codecs</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.videoCodecs\" data-model=\"settings.videoCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"1\" max=\"8\" step=\"1\" data-model=\"settings.videoBitsPerSecond\" is=\"ui-input\" title=\"Bitrate\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"Mbps\" data-model=\"settings.videoBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.videoBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-volume-up\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.audioCodecs\" data-model=\"settings.audioCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"16\" max=\"128\" step=\"16\" data-model=\"settings.audioBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"kbps\" data-model=\"settings.audioBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.audioBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-settings>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div>\n\t\t\t\t\t<sc-credits><a href=\"http://www.patrickmatte.com\" target=\"_blank\"></a></sc-credits>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>");
+/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\" data-model=\".\" data-theme-light=\"[[settings.isColorThemeLight]]\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t<button is=\"router-button\" data-path=\"closed\" title=\"Close\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-times-circle\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\n\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t<div is=\"ui-component\">\n\t\t\t\t\t<div class=\"sc-window sc-window-sections\" is=\"ui-component\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"scenario\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/scenario\" title=\"Timeline\">\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-icon fas fa-sliders-h\"></span> -->\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-stream\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Timeline</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-id=\"play\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"play\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"video\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"record\" title=\"Capture\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t<span class=\"sc-tabs\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"settings\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/settings\" title=\"Settings\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-cogs\"></span>\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Settings</span> -->\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"sc-window-content-main\" is=\"ui-component\">\n\n\t\t\t\t\t\t\t<sc-scenario class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<sc-actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<sc-action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab-wrapper\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\" title=\"Set\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-bullseye\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" data-model=\"data\" is=\"ui-button\" data-event-click=\"data.deleteAction\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollLeft\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitX\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollTop\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitY\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Target Selector\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon far fa-dot-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageX\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageY\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.x\" is=\"ui-input\" title=\"PageX\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.y\" is=\"ui-input\" title=\"PageY\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input sc-select\" title=\"MouseEvent Type\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-mouse-pointer\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Duration\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-clock\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</sc-action-view>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</sc-actions-view>\n\t\t\t\t\t\t\t\t<div class=\"sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\" is=\"ui-list\" data-provider=\"actions.types\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-action-button\" data-type=\"[[data.type]]\" data-model=\"data\" is=\"ui-button\" title=\"[[data.description]]\" data-click=\"data.addAction\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\">\n\t\t\t\t\t\t\t\t\t\t<button is=\"ui-button\" data-event-click=\"clearActions\" title=\"Delete all\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-scenario>\n\n\t\t\t\t\t\t\t<sc-video class=\"sc-section sc-fields\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-video>\n\n\t\t\t\t\t\t\t<sc-settings class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Color theme</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Theme:</span> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-color-themes\" data-provider=\"settings.colorThemes\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label class=\"sc-radio\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"radio\" name=\"color-theme\" is=\"ui-input\" value=\"[[data]]\" data-model=\"parent.settings.colorThemes.selectedItem\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-check\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"data\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas\" data-theme=\"[[settings.colorThemes.selectedItem]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.colorThemes\" data-model=\"settings.colorThemes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-film\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codecs</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.videoCodecs\" data-model=\"settings.videoCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"1\" max=\"8\" step=\"1\" data-model=\"settings.videoBitsPerSecond\" is=\"ui-input\" title=\"Bitrate\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"Mbps\" data-model=\"settings.videoBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.videoBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-volume-up\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.audioCodecs\" data-model=\"settings.audioCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"16\" max=\"128\" step=\"16\" data-model=\"settings.audioBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"kbps\" data-model=\"settings.audioBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.audioBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-settings>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div>\n\t\t\t\t\t<sc-credits><a href=\"http://www.patrickmatte.com\" target=\"_blank\"></a></sc-credits>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>");
 // CONCATENATED MODULE: ./js/view/Section.js
 function Section_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Section_typeof = function _typeof(obj) { return typeof obj; }; } else { Section_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Section_typeof(obj); }
 
@@ -6648,14 +6648,6 @@ function SectionSettings_typeof(obj) { "@babel/helpers - typeof"; if (typeof Sym
 
 function SectionSettings_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function SectionSettings_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function SectionSettings_createClass(Constructor, protoProps, staticProps) { if (protoProps) SectionSettings_defineProperties(Constructor.prototype, protoProps); if (staticProps) SectionSettings_defineProperties(Constructor, staticProps); return Constructor; }
-
-function SectionSettings_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { SectionSettings_get = Reflect.get; } else { SectionSettings_get = function _get(target, property, receiver) { var base = SectionSettings_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return SectionSettings_get(target, property, receiver || target); }
-
-function SectionSettings_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = SectionSettings_getPrototypeOf(object); if (object === null) break; } return object; }
-
 function SectionSettings_createSuper(Derived) { return function () { var Super = SectionSettings_getPrototypeOf(Derived), result; if (SectionSettings_isNativeReflectConstruct()) { var NewTarget = SectionSettings_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return SectionSettings_possibleConstructorReturn(this, result); }; }
 
 function SectionSettings_possibleConstructorReturn(self, call) { if (call && (SectionSettings_typeof(call) === "object" || typeof call === "function")) { return call; } return SectionSettings_assertThisInitialized(self); }
@@ -6673,7 +6665,7 @@ function SectionSettings_setPrototypeOf(o, p) { SectionSettings_setPrototypeOf =
 
 
 
-var SectionSettings_SectionSettings = /*#__PURE__*/function (_Section) {
+var SectionSettings = /*#__PURE__*/function (_Section) {
   SectionSettings_inherits(SectionSettings, _Section);
 
   var _super = SectionSettings_createSuper(SectionSettings);
@@ -6687,14 +6679,6 @@ var SectionSettings_SectionSettings = /*#__PURE__*/function (_Section) {
     _this.tabDataId = "settings";
     return _this;
   }
-
-  SectionSettings_createClass(SectionSettings, [{
-    key: "hideComplete",
-    value: function hideComplete() {
-      app.save();
-      return SectionSettings_get(SectionSettings_getPrototypeOf(SectionSettings.prototype), "hideComplete", this).call(this);
-    }
-  }]);
 
   return SectionSettings;
 }(Section_Section);
@@ -6805,11 +6789,12 @@ var SectionScenario_SectionScenario = /*#__PURE__*/function (_Section) {
       if (!app.actions.selectedItem.value) {
         var lastIndex = app.actions.length.value - 1;
         app.actions.selectedIndex.value = lastIndex;
-      } // let actionsViewElement = app.scrollCapture.windowContent.element.querySelector("sc-actions-view");
+      }
+
+      app.save(); // let actionsViewElement = app.scrollCapture.windowContent.element.querySelector("sc-actions-view");
       // let actionsView = actionsViewElement.component;
       // let element = actionsView.getElementByModel(app.actions.selectedItem.value);
       // if (element) actionsView.scrollToElement(element, 0);
-
 
       return promise;
     }
@@ -6873,7 +6858,7 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 
 tsunami["a" /* define */]("sc-scenario", SectionScenario_SectionScenario);
 tsunami["a" /* define */]("sc-video", SectionVideo_SectionVideo);
-tsunami["a" /* define */]("sc-settings", SectionSettings_SectionSettings);
+tsunami["a" /* define */]("sc-settings", SectionSettings);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
 
@@ -7026,7 +7011,7 @@ ScrollCapture_ScrollCapture.template = scroll_capture;
 tsunami["a" /* define */]("sc-actions-view", ActionsView_ActionsView);
 tsunami["a" /* define */]("sc-window-content-main", WindowContentMain);
 // EXTERNAL MODULE: ./js/tsunami/components/UIButton.js
-var UIButton = __webpack_require__(14);
+var UIButton = __webpack_require__(15);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIInput.js
 function UIInput_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIInput_typeof = function _typeof(obj) { return typeof obj; }; } else { UIInput_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIInput_typeof(obj); }
@@ -7271,7 +7256,7 @@ var UISelect_UISelect = /*#__PURE__*/function (_UIList) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/data/ArrayDataOperation.js
-var ArrayDataOperation = __webpack_require__(16);
+var ArrayDataOperation = __webpack_require__(17);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UIText.js
 function UIText_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UIText_typeof = function _typeof(obj) { return typeof obj; }; } else { UIText_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UIText_typeof(obj); }
@@ -9023,7 +9008,7 @@ var CubicBezierPoints_CubicBezierPoints = /*#__PURE__*/function (_Data) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/data/ObjectData.js
-var ObjectData = __webpack_require__(15);
+var ObjectData = __webpack_require__(16);
 
 // CONCATENATED MODULE: ./js/model/ActionTween.js
 function ActionTween_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ActionTween_typeof = function _typeof(obj) { return typeof obj; }; } else { ActionTween_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ActionTween_typeof(obj); }
@@ -9432,8 +9417,6 @@ var ActionScroll_ActionScroll = /*#__PURE__*/function (_ActionTween) {
           break;
       }
 
-      console.log("scroll.x", scroll.x, "scroll.y", scroll.y);
-      console.log("maxScroll.x", maxScroll.x, "maxScroll.y", maxScroll.y);
       var unit = new Point["a" /* default */]();
 
       switch (this.units.selectedItem.value) {
@@ -9448,12 +9431,10 @@ var ActionScroll_ActionScroll = /*#__PURE__*/function (_ActionTween) {
           break;
       }
 
-      console.log("unit.x", unit.x, "unit.y", unit.y);
       if (isNaN(unit.x)) unit.x = 0;
       if (isNaN(unit.y)) unit.y = 0;
       this.unitX.value = unit.x;
       this.unitY.value = unit.y;
-      console.log("this.unitX.value", this.unitX.value, "this.unitY.value", this.unitY.value);
       setTimeout(function () {
         _this2.unitX.addEventListener(Data["a" /* default */].CHANGE, _this2.doScroll);
 
@@ -60946,7 +60927,7 @@ var RouterButton_RouterButton = /*#__PURE__*/function (_UIRouterButton) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/Branch.js
-var Branch = __webpack_require__(17);
+var Branch = __webpack_require__(14);
 
 // CONCATENATED MODULE: ./js/view/PlayState.js
 function PlayState_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { PlayState_typeof = function _typeof(obj) { return typeof obj; }; } else { PlayState_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return PlayState_typeof(obj); }
@@ -61004,8 +60985,7 @@ var PlayState_PlayState = /*#__PURE__*/function (_Branch) {
       app.startLocation = this.startLocation;
       app.save();
       app.actions.selectedIndex.value = 0;
-      var promise1 = Object(tsunami_await["b" /* awaitTimeout */])(250);
-      return promise1.then(function () {
+      return Object(tsunami_await["b" /* awaitTimeout */])(250).then(function () {
         return _this2.triggerAction();
       });
     }
@@ -61088,6 +61068,7 @@ function PlayRecordState_setPrototypeOf(o, p) { PlayRecordState_setPrototypeOf =
 
 
 
+
 var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
   PlayRecordState_inherits(PlayRecordState, _PlayState);
 
@@ -61106,23 +61087,24 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
   PlayRecordState_createClass(PlayRecordState, [{
     key: "show",
     value: function show() {
+      var _this2 = this;
+
       if (app.actions.value.length < 1) {
         this.timeout = new ActionWait();
         this.timeout.delay.value = 60 * 5;
         app.actions.addAction(this.timeout);
       }
 
-      var promise = PlayRecordState_get(PlayRecordState_getPrototypeOf(PlayRecordState.prototype), "show", this).call(this);
-
-      chrome.runtime.sendMessage({
-        txt: "scrollCaptureStartRecording",
-        tabId: app.tabId
-      });
-      this.keepAliveTimeout = setInterval(function () {
+      var promise = Object(tsunami_await["b" /* awaitTimeout */])(250).then(function () {
         chrome.runtime.sendMessage({
-          txt: "scrollCaptureKeepAlive"
+          txt: "scrollCaptureStartRecording",
+          tabId: app.tabId
         });
-      }, 1000 * 10);
+        return PlayRecordState_get(PlayRecordState_getPrototypeOf(PlayRecordState.prototype), "show", _this2).call(_this2);
+      }); // this.keepAliveTimeout = setInterval(() => {
+      //     chrome.runtime.sendMessage({ txt: "scrollCaptureKeepAlive" });
+      // }, 1000 * 10);
+
       return promise;
     }
   }, {
@@ -61136,7 +61118,7 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
   }, {
     key: "stopTheRecording",
     value: function stopTheRecording() {
-      clearInterval(this.keepAliveTimeout);
+      // clearInterval(this.keepAliveTimeout);
       chrome.runtime.sendMessage({
         txt: "scrollCaptureStopRecording"
       });
@@ -61163,6 +61145,54 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
 }(PlayState_PlayState);
 
 
+// CONCATENATED MODULE: ./js/view/CloseState.js
+function CloseState_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { CloseState_typeof = function _typeof(obj) { return typeof obj; }; } else { CloseState_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return CloseState_typeof(obj); }
+
+function CloseState_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function CloseState_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function CloseState_createClass(Constructor, protoProps, staticProps) { if (protoProps) CloseState_defineProperties(Constructor.prototype, protoProps); if (staticProps) CloseState_defineProperties(Constructor, staticProps); return Constructor; }
+
+function CloseState_createSuper(Derived) { return function () { var Super = CloseState_getPrototypeOf(Derived), result; if (CloseState_isNativeReflectConstruct()) { var NewTarget = CloseState_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return CloseState_possibleConstructorReturn(this, result); }; }
+
+function CloseState_possibleConstructorReturn(self, call) { if (call && (CloseState_typeof(call) === "object" || typeof call === "function")) { return call; } return CloseState_assertThisInitialized(self); }
+
+function CloseState_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function CloseState_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function CloseState_getPrototypeOf(o) { CloseState_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return CloseState_getPrototypeOf(o); }
+
+function CloseState_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) CloseState_setPrototypeOf(subClass, superClass); }
+
+function CloseState_setPrototypeOf(o, p) { CloseState_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return CloseState_setPrototypeOf(o, p); }
+
+
+
+
+var CloseState_CloseState = /*#__PURE__*/function (_Branch) {
+  CloseState_inherits(CloseState, _Branch);
+
+  var _super = CloseState_createSuper(CloseState);
+
+  function CloseState() {
+    CloseState_classCallCheck(this, CloseState);
+
+    return _super.call(this);
+  }
+
+  CloseState_createClass(CloseState, [{
+    key: "show",
+    value: function show() {
+      app.save();
+    }
+  }]);
+
+  return CloseState;
+}(Branch["a" /* default */]);
+
+
 // CONCATENATED MODULE: ./js/main.js
 function main_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { main_typeof = function _typeof(obj) { return typeof obj; }; } else { main_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return main_typeof(obj); }
 
@@ -61185,6 +61215,7 @@ function main_getPrototypeOf(o) { main_getPrototypeOf = Object.setPrototypeOf ? 
 function main_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) main_setPrototypeOf(subClass, superClass); }
 
 function main_setPrototypeOf(o, p) { main_setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return main_setPrototypeOf(o, p); }
+
 
 
 
@@ -61225,7 +61256,10 @@ var main_Main = /*#__PURE__*/function (_App) {
     _this.clearActions = _this.clearActions.bind(main_assertThisInitialized(_this));
     app = main_assertThisInitialized(_this);
     _this.startLocation = "scroll-capture/scenario";
-    _this.router = new Router_Router(main_assertThisInitialized(_this));
+    _this.router = new Router_Router(main_assertThisInitialized(_this)); // this.router.addEventListener(Router.COMPLETE, (e)=> {
+    // 	console.log(e.type, this.router.location);
+    // })
+
     _this.showCaptureIcon = new BooleanData["a" /* default */]();
 
     _this.showCaptureIcon.addEventListener(Data["a" /* default */].CHANGE, function (event) {
@@ -61264,7 +61298,8 @@ var main_Main = /*#__PURE__*/function (_App) {
     _this.branches = {
       "scroll-capture": _this.scrollCapture,
       "play": new PlayState_PlayState(),
-      "record": new PlayRecordState_PlayRecordState()
+      "record": new PlayRecordState_PlayRecordState(),
+      "closed": new CloseState_CloseState()
     };
     return _this;
   }

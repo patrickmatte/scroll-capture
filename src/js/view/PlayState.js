@@ -17,8 +17,7 @@ export default class PlayState extends Branch {
 
         app.save();
         app.actions.selectedIndex.value = 0;
-        let promise1 = awaitTimeout(250);
-        return promise1.then(() => this.triggerAction());
+        return awaitTimeout(250).then(() => this.triggerAction());
     }
 
     triggerAction() {

@@ -1,6 +1,7 @@
 import PlayState from "./PlayState";
 import { app } from "../main";
 import ActionWait from "../model/ActionWait";
+import { awaitTimeout } from "../tsunami/await";
 
 export default class PlayRecordState extends PlayState {
 
@@ -15,11 +16,13 @@ export default class PlayRecordState extends PlayState {
             this.timeout.delay.value = 60 * 5;
             app.actions.addAction(this.timeout);
         }
-        let promise = super.show();
-        chrome.runtime.sendMessage({ txt: "scrollCaptureStartRecording", tabId: app.tabId });
-        this.keepAliveTimeout = setInterval(() => {
-            chrome.runtime.sendMessage({ txt: "scrollCaptureKeepAlive" });
-        }, 1000 * 10);
+        let promise = awaitTimeout(250).then(() => {
+            chrome.runtime.sendMessage({ txt: "scrollCaptureStartRecording", tabId: app.tabId });
+            return super.show();
+        });
+        // this.keepAliveTimeout = setInterval(() => {
+        //     chrome.runtime.sendMessage({ txt: "scrollCaptureKeepAlive" });
+        // }, 1000 * 10);
         return promise;
     }
 
@@ -30,7 +33,7 @@ export default class PlayRecordState extends PlayState {
     }
 
     stopTheRecording() {
-        clearInterval(this.keepAliveTimeout);
+        // clearInterval(this.keepAliveTimeout);
         chrome.runtime.sendMessage({ txt: "scrollCaptureStopRecording" });
         chrome.runtime.sendMessage({ txt: "scrollCaptureUpdateVideo" });
     }

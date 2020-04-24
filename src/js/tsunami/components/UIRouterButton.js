@@ -17,12 +17,12 @@ export default class UIRouterButton extends UIButton {
 
 		let pushState = this.element.hasAttribute("data-pushstate");
 		if (pushState) {
-			this.pushState = eval(pushState);
+			this.pushState = Boolean(pushState);
 		}
 
 		let clickDelay = this.element.hasAttribute("data-click-delay");
 		if (clickDelay) {
-			this.clickDelay = eval(clickDelay);
+			this.clickDelay = Boolean(clickDelay);
 		}
 	}
 
