@@ -1,7 +1,7 @@
 {
 	"name": "Scroll Capture",
 	"version": "0.0.1",
-	"description": "Automate scrolling and mouse actions for your portfolio screen captures.",
+	"description": "Record your websites and automate scrolling and mouse actions for your portfolio screen captures.",
 	"permissions": [
 		"activeTab",
 		"storage",
