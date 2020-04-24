@@ -1,5 +1,4 @@
 import Section from "./Section";
-import { app } from "../main";
 
 export default class SectionVideo extends Section {
 
@@ -7,7 +6,7 @@ export default class SectionVideo extends Section {
         super(element);
         this.tabDataId = "video";
         this.iframe = this.element.querySelector("iframe");
-        this.iframe.src = chrome.extension.getURL('video-recording.html?tabId=' + app.tabId);
+        this.iframe.src = chrome.extension.getURL('video-recording.html');
 
         chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             switch (msg.txt) {

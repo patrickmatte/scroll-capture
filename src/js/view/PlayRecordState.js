@@ -17,7 +17,7 @@ export default class PlayRecordState extends PlayState {
             app.actions.addAction(this.timeout);
         }
         let promise = awaitTimeout(250).then(() => {
-            chrome.runtime.sendMessage({ txt: "scrollCaptureStartRecording", tabId: app.tabId });
+            chrome.runtime.sendMessage({ txt: "scrollCaptureStartRecording"});
             return super.show();
         });
         // this.keepAliveTimeout = setInterval(() => {

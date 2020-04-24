@@ -81,20 +81,21 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 6:
+/******/ ([
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
-
-/***/ 7:
+/* 4 */
 /***/ (function(module, exports) {
 
 // let page = chrome.extension.getBackgroundPage();
@@ -115,11 +116,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 });
 chrome.browserAction.onClicked.addListener(function (tab) {
   if (isRecording) stopRecording();
-  var msg = {
-    txt: "scrollCaptureBrowserAction",
-    tabId: tab.id
-  };
-  chrome.tabs.sendMessage(tab.id, msg);
+  chrome.tabs.executeScript({
+    file: 'content.js'
+  });
+  window.tabId = tab.id; // let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
+  // chrome.tabs.sendMessage(tab.id, msg);
 });
 
 function handleDataAvailable(event) {
@@ -140,9 +141,9 @@ function changeIcon() {
   });
 }
 
-function startRecording(tabId) {
+function startRecording() {
   changeIcon("_red");
-  chrome.tabs.get(tabId, _startTabCapture); // chrome.tabs.query({ active: true }, _startTabCapture);
+  chrome.tabs.get(window.tabId, _startTabCapture); // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 
 function _startTabCapture(tab) {
@@ -282,5 +283,4 @@ function stopRecording() {
 }
 
 /***/ })
-
-/******/ });
+/******/ ]);

@@ -1,5 +1,5 @@
-import * as tsunami from "./tsunami/tsunami";
-import {importTemplate} from "./tsunami/tsunami";
+import { importTemplate, define } from "./tsunami/tsunami";
+import {loadStyle} from "./tsunami/load";
 import ScrollCapture from "./view/ScrollCapture";
 import App from "./tsunami/App";
 import Actions from "./model/Actions";
@@ -17,11 +17,9 @@ export let app;
 
 export default class Main extends App {
 
-	constructor(element, tabId) {
+	constructor(element) {
 		super(element);
-
-		this.tabId = tabId;
-
+		
 		window.onbeforeunload = () => {
 			this.router.location = "";
 		}
@@ -34,12 +32,10 @@ export default class Main extends App {
 
 		app = this;
 
-		this.startLocation = "scroll-capture/scenario";
-
 		this.router = new Router(this);
-		// this.router.addEventListener(Router.COMPLETE, (e)=> {
-		// 	console.log(e.type, this.router.location);
-		// })
+		this.router.redirect("default", () => { return "scroll-capture/scenario" });
+		// this.router.addEventListener(Router.CHANGE, (e) => {console.log(e.type, this.router.location);});
+		// this.router.addEventListener(Router.COMPLETE, (e) => {console.log(e.type, this.router.location);});
 
 		this.showCaptureIcon = new BooleanData();
 		this.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
@@ -87,6 +83,11 @@ export default class Main extends App {
 	}
 
 	load() {
+		let contentCSS = chrome.extension.getURL("content.css");
+		let contentCSSPromise = loadStyle(contentCSS);
+		let fontawesomeCSS = chrome.extension.getURL("fontawesome.css");
+		let fontawesomeCSSPromise = loadStyle(fontawesomeCSS);
+
 		this.appendChild(this.scrollCapture.element);
 
 		let promise = new Promise((resolve, reject) => {
@@ -94,11 +95,14 @@ export default class Main extends App {
 				resolve(result);
 			});
 		});
-		return promise.then((result) => {
-			if (result.json) {
-				let data = JSON.parse(result.json)
-				this.actions.deserialize(data.actions);
-				this.settings.deserialize(data.settings);
+		return Promise.all([promise, contentCSSPromise, fontawesomeCSSPromise]).then((results) => {
+			if (results[0]) {
+				let json = results[0].json;
+				if (json) {
+					let data = JSON.parse(json)
+					this.actions.deserialize(data.actions);
+					this.settings.deserialize(data.settings);
+				}
 			}
 		});
 	}
@@ -147,5 +151,5 @@ export default class Main extends App {
 
 }
 
-tsunami.define("router-button", RouterButton);
-tsunami.define("scroll-capture", ScrollCapture);
+define("router-button", RouterButton);
+define("scroll-capture", ScrollCapture);

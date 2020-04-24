@@ -11,8 +11,8 @@ export default class SectionScenario extends Section {
     showDelayComplete() {
         let promise = super.showDelayComplete();
         
-        app.startLocation = this.path;
-
+        this.router.redirect("default", () => { return this.path });
+        
         if (!app.actions.selectedItem.value) {
             let lastIndex = app.actions.length.value - 1;
             app.actions.selectedIndex.value = lastIndex;

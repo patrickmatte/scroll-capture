@@ -81,171 +81,11 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ Point_Point; });
-
-// CONCATENATED MODULE: ./js/tsunami/geom/math.js
-function math_lerp(a, b, t) {
-  return a + t * (b - a); // return a(1-t) + bt
-}
-// CONCATENATED MODULE: ./js/tsunami/geom/Point.js
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Point_Point = /*#__PURE__*/function () {
-  function Point() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    _classCallCheck(this, Point);
-
-    this.x = x;
-    this.y = y;
-  }
-
-  _createClass(Point, [{
-    key: "add",
-    value: function add(p) {
-      return new Point(this.x + p.x, this.y + p.y);
-    }
-  }, {
-    key: "abs",
-    value: function abs() {
-      return new Point(Math.abs(this.x), Math.abs(this.y));
-    }
-  }, {
-    key: "clamp",
-    value: function clamp(minX, maxX, minY, maxY) {
-      this.clampX(minX, maxX);
-      this.clampY(minY, maxY);
-    }
-  }, {
-    key: "clampX",
-    value: function clampX(min, max) {
-      this.x = Math.max(this.x, min);
-      this.x = Math.min(this.x, max);
-    }
-  }, {
-    key: "clampY",
-    value: function clampY(min, max) {
-      this.y = Math.max(this.y, min);
-      this.y = Math.min(this.y, max);
-    }
-  }, {
-    key: "copyFrom",
-    value: function copyFrom(p) {
-      this.x = p.x;
-      this.y = p.y;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      return new Point(this.x, this.y);
-    }
-  }, {
-    key: "equals",
-    value: function equals(point) {
-      return this.x == point.x && this.y == point.y;
-    }
-  }, {
-    key: "divide",
-    value: function divide(p) {
-      return new Point(this.x / p.x, this.y / p.y);
-    }
-  }, {
-    key: "divideScalar",
-    value: function divideScalar(scalar) {
-      return new Point(this.x / scalar, this.y / scalar);
-    }
-  }, {
-    key: "multiply",
-    value: function multiply(p) {
-      return new Point(this.x * p.x, this.y * p.y);
-    }
-  }, {
-    key: "multiplyScalar",
-    value: function multiplyScalar(scalar) {
-      return new Point(this.x * scalar, this.y * scalar);
-    }
-  }, {
-    key: "set",
-    value: function set(x, y) {
-      this.x = x;
-      this.y = y;
-    }
-  }, {
-    key: "subtract",
-    value: function subtract(p) {
-      return new Point(this.x - p.x, this.y - p.y);
-    }
-  }, {
-    key: "serialize",
-    value: function serialize() {
-      return {
-        x: this.x,
-        y: this.y
-      };
-    }
-  }, {
-    key: "deserialize",
-    value: function deserialize(obj) {
-      this.copyFrom(obj);
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[Point" + " x=" + this.x + " y=" + this.y + "]";
-    }
-  }, {
-    key: "magnitude",
-    get: function get() {
-      return Point.distance(this);
-    }
-  }], [{
-    key: "lerp",
-    value: function lerp(p0, p1, t) {
-      return new Point(math_lerp(p0.x, p1.x, t), math_lerp(p0.y, p1.y, t));
-    }
-  }, {
-    key: "distance",
-    value: function distance(p1) {
-      var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
-      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
-    }
-  }, {
-    key: "polar",
-    value: function polar(len, radians) {
-      return new Point(len * Math.cos(radians), len * Math.sin(radians));
-    }
-  }, {
-    key: "getAngle",
-    value: function getAngle(point) {
-      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
-      return Math.atan2(point.y - center.y, point.x - center.x);
-    }
-  }]);
-
-  return Point;
-}();
-
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -746,506 +586,24 @@ function hexToRgb(hex) {
 }
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export isMobile */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return isTouch; });
-/* unused harmony export getCookie */
-/* unused harmony export serialize */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getSearchParams; });
-/* unused harmony export getRect */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return localToGlobal; });
-/* unused harmony export localToGlobalX */
-/* unused harmony export localToGlobalY */
-/* unused harmony export isHidden */
-/* unused harmony export getDeviceMotionDifference */
-/* unused harmony export forceProtocol */
-/* unused harmony export fileExists */
-/* unused harmony export getElementSelector */
-/* harmony import */ var _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
-/* harmony import */ var _geom_Point__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0);
-
-
-var isMobile = {
-  android: navigator.userAgent.match(/Android/i) ? true : false,
-  blackBerry: navigator.userAgent.match(/BlackBerry/i) ? true : false,
-  iOS: navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false,
-  windows: navigator.userAgent.match(/IEMobile/i) ? true : false
-};
-isMobile.any = isMobile.android || isMobile.blackBerry || isMobile.iOS || isMobile.windows;
-var isTouch = ("ontouchend" in window);
-function getCookie(cname) {
-  var name = cname + "=";
-  var ca = document.cookie.split(';');
-
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-
-    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-  }
-
-  return "";
-}
-function serialize(obj) {
-  var str = [];
-
-  for (var p in obj) {
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    }
-  }
-
-  return str.join("&");
-}
-function getSearchParams(url, dontDecodeURI) {
-  var obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-  if (!url) {
-    url = window.location.href;
-  }
-
-  if (url.indexOf('?') != -1) {
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-
-    for (var i = 0; i < hashes.length; i++) {
-      var string = hashes[i];
-      var equalIndex = string.indexOf("=");
-
-      if (equalIndex != -1) {
-        var hash = []; //let hash = hashes[i].split('=');
-
-        hash[0] = string.substr(0, equalIndex);
-        hash[1] = string.substr(equalIndex + 1);
-
-        if (dontDecodeURI) {
-          obj[hash[0]] = hash[1];
-        } else {
-          obj[hash[0]] = decodeURI(hash[1]);
-        }
-      } else {
-        obj[string] = null;
-      }
-    }
-  }
-
-  return obj;
-}
-function getRect() {
-  var rectangle = new _geom_Rectangle__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-  rectangle.width = window.innerWidth;
-  rectangle.height = window.innerHeight;
-  return rectangle;
-}
-function localToGlobal(element, root, point) {
-  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  if (!point) {
-    point = new _geom_Point__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"]();
-  }
-
-  while (element && element != root) {
-    //point.x += element.offsetLeft - element.parentNode.scrollLeft;
-    //point.y += element.offsetTop - element.parentNode.scrollTop;
-    // if (debug) {
-    // 	console.log("localToGlobal element", element.className, element.offsetTop);
-    // }
-    point.x += element.offsetLeft;
-    point.y += element.offsetTop;
-    element = element.parentNode;
-  }
-
-  return point;
-}
-function localToGlobalX(element, root) {
-  var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  while (element != root) {
-    // if (debug) {
-    // 	console.log("element", element.className, element.offsetLeft);
-    // }
-    x += element.offsetLeft;
-    element = element.parentNode;
-  }
-
-  return x;
-}
-function localToGlobalY(element, root) {
-  var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  while (element != root) {
-    // if (debug) {
-    // 	console.log("element", element.nodeName, element.className, element.offsetTop);
-    // }
-    y += element.offsetTop;
-    element = element.parentNode;
-  }
-
-  return y;
-}
-function isHidden() {
-  return document[window.hidden];
-}
-var devideOrientation = "";
-var deviceDirection = "";
-function getDeviceMotionDifference(event) {
-  var width = window.innerWidth;
-  var height = window.innerHeight;
-  var devideOrientation = "landscape";
-  var deviceDirection = "up";
-  var x = 0;
-  var y = 0;
-
-  if (height > width) {
-    devideOrientation = "portrait";
-  }
-
-  if (devideOrientation == "portrait") {
-    if (event.accelerationIncludingGravity.y > 0) {
-      deviceDirection = "down";
-    }
-
-    x = event.accelerationIncludingGravity.x;
-    y = event.accelerationIncludingGravity.z;
-  }
-
-  if (devideOrientation == "landscape") {
-    if (event.accelerationIncludingGravity.x > 0) {
-      deviceDirection = "down";
-    }
-
-    x = event.accelerationIncludingGravity.y;
-    y = event.accelerationIncludingGravity.z;
-  }
-
-  if (devideOrientation != devideOrientation || deviceDirection != deviceDirection) {
-    devideOrientation = devideOrientation;
-    deviceDirection = deviceDirection;
-    this.initialAccelerationIncludingGravity = {
-      x: x,
-      y: y
-    };
-  }
-
-  var diff = {
-    x: x - this.initialAccelerationIncludingGravity.x,
-    y: y - this.initialAccelerationIncludingGravity.y
-  };
-  return diff;
-}
-function forceProtocol(url, protocol) {
-  var isHttps = protocol.indexOf("https") != -1;
-  var urlIsHttps = url.indexOf("https") != -1;
-
-  if (isHttps && !urlIsHttps) {
-    url = url.split("http").join("https");
-  } else if (!isHttps && urlIsHttps) {
-    url = url.split("https").join("http");
-  }
-
-  return url;
-}
-function fileExists(url) {
-  var req = new XMLHttpRequest();
-  req.open('HEAD', url, false);
-  req.send();
-  return req.status !== 404;
-}
-function getElementSelector(element) {
-  var names = [];
-
-  while (element) {
-    var elSelector = element.nodeName;
-    var className = element.className;
-
-    if (className) {
-      elSelector = elSelector + "." + className.split(" ").join(".");
-    }
-
-    names.push(elSelector);
-
-    if (element != document.body) {
-      element = element.parentNode;
-    } else {
-      element = null;
-    }
-  }
-
-  names = names.reverse();
-  var selector = names.join(" > ");
-  return selector;
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Rectangle; });
-/* harmony import */ var _Point__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Rectangle = /*#__PURE__*/function () {
-  function Rectangle() {
-    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-
-    _classCallCheck(this, Rectangle);
-
-    this._position = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this._size = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this.center = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this.halfSize = new _Point__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]();
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-  }
-
-  _createClass(Rectangle, [{
-    key: "contains",
-    value: function contains(point) {
-      var hit = point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height ? true : false;
-      return hit;
-    }
-  }, {
-    key: "intersects",
-    value: function intersects(rect) {
-      return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
-    }
-  }, {
-    key: "intersect",
-    value: function intersect(b) {
-      var a = this;
-      var x = Math.max(a.x, b.x);
-      var num1 = Math.min(a.x + a.width, b.x + b.width);
-      var y = Math.max(a.y, b.y);
-      var num2 = Math.min(a.y + a.height, b.y + b.height);
-      var result;
-
-      if (num1 >= x && num2 >= y) {
-        result = new Rectangle(x, y, num1 - x, num2 - y);
-      } else {
-        result = new Rectangle();
-      }
-
-      return result;
-    }
-  }, {
-    key: "equals",
-    value: function equals(rect) {
-      return this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height;
-    }
-  }, {
-    key: "clone",
-    value: function clone() {
-      return new Rectangle(this.x, this.y, this.width, this.height);
-    }
-  }, {
-    key: "copyFrom",
-    value: function copyFrom(rect) {
-      this.x = rect.x;
-      this.y = rect.y;
-      this.width = rect.width;
-      this.height = rect.height;
-    }
-  }, {
-    key: "toString",
-    value: function toString() {
-      return "[Rectangle" + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + "]";
-    }
-  }, {
-    key: "scaleWidth",
-    value: function scaleWidth(height) {
-      return new Rectangle(this.x, this.y, height * this.widthToHeight, height);
-    }
-  }, {
-    key: "scaleHeight",
-    value: function scaleHeight(width) {
-      return new Rectangle(this.x, this.y, width, width * this.heightToWidth);
-    }
-  }, {
-    key: "scaleToFillRect",
-    value: function scaleToFillRect(rect) {
-      // let scaled = this.scaleHeight(rect.width);
-      //
-      // if (scaled.height < rect.height) {
-      // 	scaled = this.scaleWidth(rect.height);
-      // }
-      var amount = this.getScaleToFill(rect);
-      return this.scale(amount, amount);
-    }
-  }, {
-    key: "scaleToFitRect",
-    value: function scaleToFitRect(rect) {
-      // let scaled = this.scaleHeight(rect.width);
-      //
-      // if (scaled.height > rect.height) {
-      // 	scaled = this.scaleWidth(rect.height);
-      // }
-      // scaled.x = (rect.width - scaled.width) / 2;
-      // scaled.y = (rect.height - scaled.height) / 2;
-      var amount = this.getScaleToFitRect(rect);
-      return this.scale(amount, amount);
-    }
-  }, {
-    key: "scale",
-    value: function scale(x, y) {
-      return new Rectangle(this.x, this.y, this.width * x, this.height * y);
-    }
-  }, {
-    key: "scaleToArea",
-    value: function scaleToArea(area) {
-      var height = Math.sqrt(area / this.widthToHeight);
-      var width = area / height;
-      return new Rectangle(0, 0, width, height);
-    }
-  }, {
-    key: "getScaleToFill",
-    value: function getScaleToFill(rect) {
-      var scale;
-
-      if (this.widthToHeight > rect.widthToHeight) {
-        scale = rect.height / this.height;
-      } else {
-        scale = rect.width / this.width;
-      }
-
-      return scale;
-    }
-  }, {
-    key: "getScaleToFitRect",
-    value: function getScaleToFitRect(rect) {
-      var scale;
-
-      if (this.widthToHeight > rect.widthToHeight) {
-        scale = rect.width / this.width;
-      } else {
-        scale = rect.height / this.height;
-      }
-
-      return scale;
-    }
-  }, {
-    key: "x",
-    get: function get() {
-      return this.position.x;
-    },
-    set: function set(value) {
-      this.position.x = value;
-      this.center.x = this.position.x + this.halfSize.x;
-    }
-  }, {
-    key: "y",
-    get: function get() {
-      return this.position.y;
-    },
-    set: function set(value) {
-      this.position.y = value;
-      this.center.y = this.position.y + this.halfSize.y;
-    }
-  }, {
-    key: "width",
-    get: function get() {
-      return this.size.x;
-    },
-    set: function set(value) {
-      this.size.x = value;
-      this.halfSize.x = value / 2;
-      this.center.x = this.position.x + this.halfSize.x;
-    }
-  }, {
-    key: "height",
-    get: function get() {
-      return this.size.y;
-    },
-    set: function set(value) {
-      this.size.y = value;
-      this.halfSize.y = value / 2;
-      this.center.y = this.position.y + this.halfSize.y;
-    }
-  }, {
-    key: "position",
-    get: function get() {
-      return this._position;
-    },
-    set: function set(value) {
-      this._position = value;
-    }
-  }, {
-    key: "size",
-    get: function get() {
-      return this._size;
-    },
-    set: function set(value) {
-      this._size = value;
-    }
-  }, {
-    key: "area",
-    get: function get() {
-      return this.size.x * this.size.y;
-    }
-  }, {
-    key: "widthToHeight",
-    get: function get() {
-      return this.width / this.height;
-    }
-  }, {
-    key: "heightToWidth",
-    get: function get() {
-      return this.height / this.width;
-    }
-  }, {
-    key: "isPortrait",
-    get: function get() {
-      return this.width <= this.height;
-    }
-  }, {
-    key: "isLandscape",
-    get: function get() {
-      return this.height <= this.width;
-    }
-  }]);
-
-  return Rectangle;
-}();
-
-
-
-/***/ }),
-/* 4 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
-module.exports = __webpack_require__(5);
+__webpack_require__(6);
+module.exports = __webpack_require__(2);
 
 
 /***/ }),
-/* 5 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1456,6 +814,510 @@ function getAllObjects(parent, array) {
 
   return array;
 }
+// CONCATENATED MODULE: ./js/tsunami/await.js
+function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventHandler = function eventHandler(event) {
+      event.stopPropagation();
+
+      if (stopPropagation) {
+        event.stopPropagation();
+      }
+
+      if (stopImmediatePropagation) {
+        event.stopImmediatePropagation();
+      }
+
+      if (preventDefault) {
+        event.preventDefault();
+      }
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTransition(dispatcher, cssProperties) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "transitionend";
+    var eventNames = {
+      'OTransition': 'otransitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      var isProperty;
+
+      for (var _i = 0; _i < cssProperties.length; _i++) {
+        var prop = cssProperties[_i];
+
+        if (prop === event.propertyName) {
+          isProperty = true;
+        }
+      }
+
+      if (!isProperty) {
+        return;
+      }
+
+      event.stopPropagation(); //event.stopImmediatePropagation();
+      //event.preventDefault();
+
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitAnimation(dispatcher, animationName) {
+  var promise;
+  promise = new Promise(function (resolve, reject) {
+    var eventName = "animationend";
+    var eventNames = {
+      'OTransition': 'oanimationend',
+      'MozTransition': 'moznimationend',
+      'WebkitTransition': 'webkitAnimationEnd'
+    };
+
+    for (var i in eventNames) {
+      if (document.body.style[i] !== undefined) {
+        eventName = eventNames[i];
+      }
+    }
+
+    var eventHandler = function eventHandler(event) {
+      if (animationName != event.animationName || dispatcher != event.target) {
+        return;
+      }
+
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      dispatcher.removeEventListener(eventName, eventHandler);
+      resolve(event);
+    };
+
+    dispatcher.addEventListener(eventName, eventHandler);
+  });
+  return promise;
+}
+function awaitTimeout() {
+  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+  if (isNaN(milliseconds) || milliseconds <= 0) {
+    return Promise.resolve();
+  } else {
+    return new Promise(function (resolve, reject) {
+      var timeout = setTimeout(function () {
+        resolve();
+      }, milliseconds);
+    });
+  }
+}
+function awaitCallback(target, method) {
+  var _arguments = arguments;
+  var promise = new Promise(function (resolve, reject) {
+    target[method] = function () {
+      delete target[method];
+      resolve(_arguments);
+    };
+  });
+  return promise;
+}
+function awaitAnimationFrame() {
+  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  total = Math.max(1, Math.round(total));
+  var count = 0;
+  var promise = new Promise(function (resolve, reject) {
+    function animationFrame() {
+      count++;
+
+      if (count >= total) {
+        resolve();
+      } else {
+        window.requestAnimationFrame(animationFrame);
+      }
+    }
+
+    window.requestAnimationFrame(animationFrame);
+  });
+  return promise;
+}
+function awaitVideoFirstFrame(video) {
+  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
+  var debug = arguments.length > 2 ? arguments[2] : undefined;
+  var loadedmetadata = awaitEvent(video, "loadedmetadata");
+  var loadedmetadataTimeout = awaitTimeout(timeout);
+  var promise = Promise.race([loadedmetadata]);
+  return promise.then(function (event) {
+    if (debug) {
+      console.log("loadedmetadata");
+    }
+
+    var loadeddataPromise = awaitEvent(video, "loadeddata");
+    var playPromise = video.play();
+
+    if (!playPromise) {
+      playPromise = loadeddataPromise;
+    }
+
+    var playPromiseTimeout = awaitTimeout(timeout);
+    var promise = Promise.race([playPromise]);
+    return promise.then(function () {
+      if (debug) {
+        console.log("playPromise or loadeddata");
+      }
+
+      video.pause();
+      return video;
+    });
+  });
+}
+// CONCATENATED MODULE: ./js/tsunami/load.js
+
+function loadImage(url, img) {
+  var crossorigin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+
+  if (!img) {
+    img = new Image();
+  }
+
+  if (crossorigin) {
+    img.setAttribute('crossorigin', crossorigin);
+  }
+
+  var promise = new Promise(function (resolve, reject) {
+    var loadHandler = function loadHandler() {
+      img.removeEventListener("load", loadHandler);
+      img.removeEventListener("error", errorHandler);
+      promise.progress = 1;
+      resolve(img);
+    };
+
+    var errorHandler = function errorHandler(event) {
+      img.removeEventListener("load", loadHandler);
+      img.removeEventListener("error", errorHandler);
+      promise.progress = 1;
+      resolve(new Error("404"));
+    };
+
+    img.addEventListener("load", loadHandler);
+    img.addEventListener("error", errorHandler);
+
+    try {
+      img.src = url;
+    } catch (error) {
+      resolve(img);
+    } //setTimeout(function() {img.src = url;}, Math.random() * 1000);
+
+  });
+  promise.progress = 0;
+  return promise;
+}
+function loadImageWithProgress(url, img) {
+  if (!img) {
+    img = new Image();
+  }
+
+  var promise = loadXHR(url, "GET", null, null, "blob", false);
+  var promise2 = promise.then(function (xhr) {
+    return new Promise(function (resolve, reject) {
+      img.onload = function () {
+        URL.revokeObjectURL(img.src);
+        resolve(img);
+      };
+
+      img.src = URL.createObjectURL(xhr.response);
+    });
+  });
+  Object.defineProperty(promise2, "progress", {
+    get: function get() {
+      return promise.progress;
+    }
+  });
+  return promise2;
+}
+function loadXHR(url) {
+  var method = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "GET";
+  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  var requestHeaders = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+  var responseType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  var noCache = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+  var timeout = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 15000;
+  var maxTimeoutAttempt = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 5;
+  var promise = new Promise(function (resolve, reject) {
+    var timeoutAttempt = 0;
+    var xhr;
+
+    var createXHR = function createXHR() {
+      xhr = new XMLHttpRequest();
+
+      if (responseType) {
+        xhr.responseType = responseType;
+      }
+
+      xhr.onload = function (event) {
+        promise.progress = 1;
+
+        if (xhr.status == 200) {
+          resolve(xhr);
+        } else {
+          reject(event);
+        }
+      };
+
+      xhr.onprogress = function (event) {
+        if (event.lengthComputable) {
+          promise.progress = event.loaded / event.total;
+        }
+      };
+
+      xhr.onerror = function (event) {
+        promise.progress = 1;
+        reject(event);
+      };
+
+      xhr.onreadystatechange = function (event) {//console.log("xhr.status", this.xhr.status);
+        //console.log("xhr.readyState", this.xhr.readyState);
+      };
+
+      var url2 = url;
+
+      if (noCache) {
+        var random = Math.round(Math.random() * 1000000000);
+
+        if (url2.indexOf("?") == -1) {
+          url2 += "?";
+        } else {
+          url2 += "&";
+        }
+
+        url2 += "nocache=" + random.toString();
+      }
+
+      xhr.open(method, url2, true);
+
+      xhr.ontimeout = function (e) {
+        timeoutAttempt++;
+
+        if (timeoutAttempt > maxTimeoutAttempt) {
+          promise.progress = 1;
+          reject(event);
+        } else {
+          createXHR();
+        }
+      };
+
+      xhr.timeout = timeout;
+
+      if (requestHeaders) {
+        for (var i = 0; i < requestHeaders.length; i++) {
+          var requestHeader = requestHeaders[i];
+          xhr.setRequestHeader(requestHeader[0], requestHeader[1]);
+        }
+      }
+
+      if (data) {
+        xhr.send(data);
+      } else {
+        xhr.send();
+      }
+    };
+
+    createXHR();
+  });
+  promise.progress = 0;
+  return promise;
+}
+function loadTemplates(url) {
+  var promise = loadXHR(url, "GET", null, null, null, null);
+  var promise2 = promise.then(function (xhr) {
+    var object = {};
+    var container = document.createElement("div");
+    container.innerHTML = xhr.response;
+    var scripts = container.querySelectorAll("script");
+
+    for (var i = 0; i < scripts.length; i++) {
+      var script = scripts.item(i);
+      object[script.id] = script.text;
+    }
+
+    return object;
+  });
+  Object.defineProperty(promise2, "progress", {
+    get: function get() {
+      return promise.progress;
+    }
+  });
+  return promise2;
+}
+function loadHTML(url) {
+  var promise = loadXHR(url, "GET", null, null, null, null);
+  var promise2 = promise.then(function (xhr) {
+    return xhr.response;
+  });
+  Object.defineProperty(promise2, "progress", {
+    get: function get() {
+      return promise.progress;
+    }
+  });
+  return promise2;
+}
+function loadJSON(url, method, data, requestHeaders, noCache) {
+  var promise = loadXHR(url, method, data, requestHeaders, null, noCache);
+  var promise2 = promise.then(function (xhr) {
+    var obj;
+
+    try {
+      obj = JSON.parse(xhr.response);
+    } catch (e) {
+      console.log(e, " in " + url);
+    }
+
+    return obj;
+  }, function () {
+    return null;
+  });
+  Object.defineProperty(promise2, "progress", {
+    get: function get() {
+      return promise.progress;
+    }
+  });
+  return promise2;
+}
+function loadJSONP(url, callback) {
+  var promise = new Promise(function (resolve, reject) {
+    window[callback] = function (object) {
+      promise.progress = 1;
+      resolve(object);
+    };
+
+    var script = document.createElement("script");
+    script.src = url;
+    document.querySelector("head").appendChild(script);
+  });
+  promise.progress = 0;
+  return promise;
+}
+function loadScript(url, id, noCache) {
+  var promise = loadXHR(url, "GET", null, null, null, noCache);
+  var promise2 = promise.then(function (xhr) {
+    var script = document.createElement("script");
+    script.language = "javascript";
+    script.type = "text/javascript";
+
+    if (id) {
+      script.id = id;
+    }
+
+    document.querySelector("head").appendChild(script);
+
+    try {
+      script.text = xhr.response;
+    } catch (e) {
+      console.log(e, " in " + url);
+    }
+
+    return script;
+  });
+  Object.defineProperty(promise2, "progress", {
+    get: function get() {
+      return promise.progress;
+    }
+  });
+  return promise2;
+}
+function loadStyle(url, id, noCache) {
+  var promise = loadXHR(url, "GET", null, null, null, noCache);
+  var promise2 = promise.then(function (xhr) {
+    var style = document.createElement("style");
+    style.type = 'text/css';
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = xhr.response;
+    } else {
+      style.appendChild(document.createTextNode(xhr.response));
+    }
+
+    document.querySelector("head").appendChild(style);
+    return style;
+  });
+  Object.defineProperty(promise2, "progress", {
+    get: function get() {
+      return promise.progress;
+    }
+  });
+  return promise2;
+}
+function loadWebAudio(url, context, loop, volume) {
+  if (!context) {
+    if (!window.webaudioContext) {
+      window.AudioContext = window.AudioContext || window["webkitAudioContext"];
+
+      if (window.AudioContext) {
+        window.webaudioContext = new AudioContext();
+      }
+    }
+
+    context = window.webaudioContext;
+  }
+
+  var promise2 = Promise.resolve(null);
+
+  if (context) {
+    var promise = loadXHR(url, "GET", null, null, "arraybuffer", null);
+    promise2 = promise.then(function (xhr) {
+      return new Promise(function (resolve, reject) {
+        context.decodeAudioData(xhr.response, function (buffer) {
+          if (!buffer) {
+            alert('error decoding file data: ' + url);
+            reject();
+            return;
+          }
+
+          var sound = {};
+          sound.source = context.createBufferSource();
+          sound.gainNode = context.createGain();
+          sound.gainNode.gain.value = volume;
+          sound.source.buffer = buffer;
+          sound.source.connect(sound.gainNode);
+          sound.gainNode.connect(context.destination);
+          sound.source.loop = loop;
+          resolve(sound);
+        }, function (error) {
+          reject();
+        });
+      });
+    });
+    Object.defineProperty(promise2, "progress", {
+      get: function get() {
+        return promise.progress;
+      }
+    });
+  }
+
+  return promise2;
+}
+function loadVideoBlob(url) {
+  var promise1 = loadXHR(url, "GET", null, null, "blob");
+  var promise2 = promise1.then(function (xhr) {
+    return URL.createObjectURL(xhr.response);
+  });
+  return promise2;
+}
 // CONCATENATED MODULE: ./js/tsunami/EventDispatcher.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1539,9 +1401,610 @@ var EventDispatcher = /*#__PURE__*/function () {
 }();
 
 
-// EXTERNAL MODULE: ./js/tsunami/window.js
-var tsunami_window = __webpack_require__(2);
+// CONCATENATED MODULE: ./js/tsunami/geom/math.js
+function math_lerp(a, b, t) {
+  return a + t * (b - a); // return a(1-t) + bt
+}
+// CONCATENATED MODULE: ./js/tsunami/geom/Point.js
+function Point_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function Point_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Point_createClass(Constructor, protoProps, staticProps) { if (protoProps) Point_defineProperties(Constructor.prototype, protoProps); if (staticProps) Point_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Point_Point = /*#__PURE__*/function () {
+  function Point() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    Point_classCallCheck(this, Point);
+
+    this.x = x;
+    this.y = y;
+  }
+
+  Point_createClass(Point, [{
+    key: "add",
+    value: function add(p) {
+      return new Point(this.x + p.x, this.y + p.y);
+    }
+  }, {
+    key: "abs",
+    value: function abs() {
+      return new Point(Math.abs(this.x), Math.abs(this.y));
+    }
+  }, {
+    key: "clamp",
+    value: function clamp(minX, maxX, minY, maxY) {
+      this.clampX(minX, maxX);
+      this.clampY(minY, maxY);
+    }
+  }, {
+    key: "clampX",
+    value: function clampX(min, max) {
+      this.x = Math.max(this.x, min);
+      this.x = Math.min(this.x, max);
+    }
+  }, {
+    key: "clampY",
+    value: function clampY(min, max) {
+      this.y = Math.max(this.y, min);
+      this.y = Math.min(this.y, max);
+    }
+  }, {
+    key: "copyFrom",
+    value: function copyFrom(p) {
+      this.x = p.x;
+      this.y = p.y;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Point(this.x, this.y);
+    }
+  }, {
+    key: "equals",
+    value: function equals(point) {
+      return this.x == point.x && this.y == point.y;
+    }
+  }, {
+    key: "divide",
+    value: function divide(p) {
+      return new Point(this.x / p.x, this.y / p.y);
+    }
+  }, {
+    key: "divideScalar",
+    value: function divideScalar(scalar) {
+      return new Point(this.x / scalar, this.y / scalar);
+    }
+  }, {
+    key: "multiply",
+    value: function multiply(p) {
+      return new Point(this.x * p.x, this.y * p.y);
+    }
+  }, {
+    key: "multiplyScalar",
+    value: function multiplyScalar(scalar) {
+      return new Point(this.x * scalar, this.y * scalar);
+    }
+  }, {
+    key: "set",
+    value: function set(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  }, {
+    key: "subtract",
+    value: function subtract(p) {
+      return new Point(this.x - p.x, this.y - p.y);
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      return {
+        x: this.x,
+        y: this.y
+      };
+    }
+  }, {
+    key: "deserialize",
+    value: function deserialize(obj) {
+      this.copyFrom(obj);
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Point" + " x=" + this.x + " y=" + this.y + "]";
+    }
+  }, {
+    key: "magnitude",
+    get: function get() {
+      return Point.distance(this);
+    }
+  }], [{
+    key: "lerp",
+    value: function lerp(p0, p1, t) {
+      return new Point(math_lerp(p0.x, p1.x, t), math_lerp(p0.y, p1.y, t));
+    }
+  }, {
+    key: "distance",
+    value: function distance(p1) {
+      var p2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
+      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+    }
+  }, {
+    key: "polar",
+    value: function polar(len, radians) {
+      return new Point(len * Math.cos(radians), len * Math.sin(radians));
+    }
+  }, {
+    key: "getAngle",
+    value: function getAngle(point) {
+      var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Point();
+      return Math.atan2(point.y - center.y, point.x - center.x);
+    }
+  }]);
+
+  return Point;
+}();
+
+
+// CONCATENATED MODULE: ./js/tsunami/geom/Rectangle.js
+function Rectangle_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Rectangle_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Rectangle_createClass(Constructor, protoProps, staticProps) { if (protoProps) Rectangle_defineProperties(Constructor.prototype, protoProps); if (staticProps) Rectangle_defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Rectangle_Rectangle = /*#__PURE__*/function () {
+  function Rectangle() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var width = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var height = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+    Rectangle_classCallCheck(this, Rectangle);
+
+    this._position = new Point_Point();
+    this._size = new Point_Point();
+    this.center = new Point_Point();
+    this.halfSize = new Point_Point();
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  Rectangle_createClass(Rectangle, [{
+    key: "contains",
+    value: function contains(point) {
+      var hit = point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height ? true : false;
+      return hit;
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(rect) {
+      return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
+    }
+  }, {
+    key: "intersect",
+    value: function intersect(b) {
+      var a = this;
+      var x = Math.max(a.x, b.x);
+      var num1 = Math.min(a.x + a.width, b.x + b.width);
+      var y = Math.max(a.y, b.y);
+      var num2 = Math.min(a.y + a.height, b.y + b.height);
+      var result;
+
+      if (num1 >= x && num2 >= y) {
+        result = new Rectangle(x, y, num1 - x, num2 - y);
+      } else {
+        result = new Rectangle();
+      }
+
+      return result;
+    }
+  }, {
+    key: "equals",
+    value: function equals(rect) {
+      return this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      return new Rectangle(this.x, this.y, this.width, this.height);
+    }
+  }, {
+    key: "copyFrom",
+    value: function copyFrom(rect) {
+      this.x = rect.x;
+      this.y = rect.y;
+      this.width = rect.width;
+      this.height = rect.height;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[Rectangle" + " x=" + this.x + " y=" + this.y + " width=" + this.width + " height=" + this.height + "]";
+    }
+  }, {
+    key: "scaleWidth",
+    value: function scaleWidth(height) {
+      return new Rectangle(this.x, this.y, height * this.widthToHeight, height);
+    }
+  }, {
+    key: "scaleHeight",
+    value: function scaleHeight(width) {
+      return new Rectangle(this.x, this.y, width, width * this.heightToWidth);
+    }
+  }, {
+    key: "scaleToFillRect",
+    value: function scaleToFillRect(rect) {
+      // let scaled = this.scaleHeight(rect.width);
+      //
+      // if (scaled.height < rect.height) {
+      // 	scaled = this.scaleWidth(rect.height);
+      // }
+      var amount = this.getScaleToFill(rect);
+      return this.scale(amount, amount);
+    }
+  }, {
+    key: "scaleToFitRect",
+    value: function scaleToFitRect(rect) {
+      // let scaled = this.scaleHeight(rect.width);
+      //
+      // if (scaled.height > rect.height) {
+      // 	scaled = this.scaleWidth(rect.height);
+      // }
+      // scaled.x = (rect.width - scaled.width) / 2;
+      // scaled.y = (rect.height - scaled.height) / 2;
+      var amount = this.getScaleToFitRect(rect);
+      return this.scale(amount, amount);
+    }
+  }, {
+    key: "scale",
+    value: function scale(x, y) {
+      return new Rectangle(this.x, this.y, this.width * x, this.height * y);
+    }
+  }, {
+    key: "scaleToArea",
+    value: function scaleToArea(area) {
+      var height = Math.sqrt(area / this.widthToHeight);
+      var width = area / height;
+      return new Rectangle(0, 0, width, height);
+    }
+  }, {
+    key: "getScaleToFill",
+    value: function getScaleToFill(rect) {
+      var scale;
+
+      if (this.widthToHeight > rect.widthToHeight) {
+        scale = rect.height / this.height;
+      } else {
+        scale = rect.width / this.width;
+      }
+
+      return scale;
+    }
+  }, {
+    key: "getScaleToFitRect",
+    value: function getScaleToFitRect(rect) {
+      var scale;
+
+      if (this.widthToHeight > rect.widthToHeight) {
+        scale = rect.width / this.width;
+      } else {
+        scale = rect.height / this.height;
+      }
+
+      return scale;
+    }
+  }, {
+    key: "x",
+    get: function get() {
+      return this.position.x;
+    },
+    set: function set(value) {
+      this.position.x = value;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "y",
+    get: function get() {
+      return this.position.y;
+    },
+    set: function set(value) {
+      this.position.y = value;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "width",
+    get: function get() {
+      return this.size.x;
+    },
+    set: function set(value) {
+      this.size.x = value;
+      this.halfSize.x = value / 2;
+      this.center.x = this.position.x + this.halfSize.x;
+    }
+  }, {
+    key: "height",
+    get: function get() {
+      return this.size.y;
+    },
+    set: function set(value) {
+      this.size.y = value;
+      this.halfSize.y = value / 2;
+      this.center.y = this.position.y + this.halfSize.y;
+    }
+  }, {
+    key: "position",
+    get: function get() {
+      return this._position;
+    },
+    set: function set(value) {
+      this._position = value;
+    }
+  }, {
+    key: "size",
+    get: function get() {
+      return this._size;
+    },
+    set: function set(value) {
+      this._size = value;
+    }
+  }, {
+    key: "area",
+    get: function get() {
+      return this.size.x * this.size.y;
+    }
+  }, {
+    key: "widthToHeight",
+    get: function get() {
+      return this.width / this.height;
+    }
+  }, {
+    key: "heightToWidth",
+    get: function get() {
+      return this.height / this.width;
+    }
+  }, {
+    key: "isPortrait",
+    get: function get() {
+      return this.width <= this.height;
+    }
+  }, {
+    key: "isLandscape",
+    get: function get() {
+      return this.height <= this.width;
+    }
+  }]);
+
+  return Rectangle;
+}();
+
+
+// CONCATENATED MODULE: ./js/tsunami/window.js
+
+
+var isMobile = {
+  android: navigator.userAgent.match(/Android/i) ? true : false,
+  blackBerry: navigator.userAgent.match(/BlackBerry/i) ? true : false,
+  iOS: navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false,
+  windows: navigator.userAgent.match(/IEMobile/i) ? true : false
+};
+isMobile.any = isMobile.android || isMobile.blackBerry || isMobile.iOS || isMobile.windows;
+var isTouch = ("ontouchend" in window);
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+  }
+
+  return "";
+}
+function serialize(obj) {
+  var str = [];
+
+  for (var p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  }
+
+  return str.join("&");
+}
+function getSearchParams(url, dontDecodeURI) {
+  var obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (!url) {
+    url = window.location.href;
+  }
+
+  if (url.indexOf('?') != -1) {
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+    for (var i = 0; i < hashes.length; i++) {
+      var string = hashes[i];
+      var equalIndex = string.indexOf("=");
+
+      if (equalIndex != -1) {
+        var hash = []; //let hash = hashes[i].split('=');
+
+        hash[0] = string.substr(0, equalIndex);
+        hash[1] = string.substr(equalIndex + 1);
+
+        if (dontDecodeURI) {
+          obj[hash[0]] = hash[1];
+        } else {
+          obj[hash[0]] = decodeURI(hash[1]);
+        }
+      } else {
+        obj[string] = null;
+      }
+    }
+  }
+
+  return obj;
+}
+function window_getRect() {
+  var rectangle = new Rectangle_Rectangle();
+  rectangle.width = window.innerWidth;
+  rectangle.height = window.innerHeight;
+  return rectangle;
+}
+function localToGlobal(element, root, point) {
+  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  if (!point) {
+    point = new Point_Point();
+  }
+
+  while (element && element != root) {
+    //point.x += element.offsetLeft - element.parentNode.scrollLeft;
+    //point.y += element.offsetTop - element.parentNode.scrollTop;
+    // if (debug) {
+    // 	console.log("localToGlobal element", element.className, element.offsetTop);
+    // }
+    point.x += element.offsetLeft;
+    point.y += element.offsetTop;
+    element = element.parentNode;
+  }
+
+  return point;
+}
+function localToGlobalX(element, root) {
+  var x = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  while (element != root) {
+    // if (debug) {
+    // 	console.log("element", element.className, element.offsetLeft);
+    // }
+    x += element.offsetLeft;
+    element = element.parentNode;
+  }
+
+  return x;
+}
+function localToGlobalY(element, root) {
+  var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var debug = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+  while (element != root) {
+    // if (debug) {
+    // 	console.log("element", element.nodeName, element.className, element.offsetTop);
+    // }
+    y += element.offsetTop;
+    element = element.parentNode;
+  }
+
+  return y;
+}
+function isHidden() {
+  return document[window.hidden];
+}
+var devideOrientation = "";
+var deviceDirection = "";
+function getDeviceMotionDifference(event) {
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+  var devideOrientation = "landscape";
+  var deviceDirection = "up";
+  var x = 0;
+  var y = 0;
+
+  if (height > width) {
+    devideOrientation = "portrait";
+  }
+
+  if (devideOrientation == "portrait") {
+    if (event.accelerationIncludingGravity.y > 0) {
+      deviceDirection = "down";
+    }
+
+    x = event.accelerationIncludingGravity.x;
+    y = event.accelerationIncludingGravity.z;
+  }
+
+  if (devideOrientation == "landscape") {
+    if (event.accelerationIncludingGravity.x > 0) {
+      deviceDirection = "down";
+    }
+
+    x = event.accelerationIncludingGravity.y;
+    y = event.accelerationIncludingGravity.z;
+  }
+
+  if (devideOrientation != devideOrientation || deviceDirection != deviceDirection) {
+    devideOrientation = devideOrientation;
+    deviceDirection = deviceDirection;
+    this.initialAccelerationIncludingGravity = {
+      x: x,
+      y: y
+    };
+  }
+
+  var diff = {
+    x: x - this.initialAccelerationIncludingGravity.x,
+    y: y - this.initialAccelerationIncludingGravity.y
+  };
+  return diff;
+}
+function forceProtocol(url, protocol) {
+  var isHttps = protocol.indexOf("https") != -1;
+  var urlIsHttps = url.indexOf("https") != -1;
+
+  if (isHttps && !urlIsHttps) {
+    url = url.split("http").join("https");
+  } else if (!isHttps && urlIsHttps) {
+    url = url.split("https").join("http");
+  }
+
+  return url;
+}
+function fileExists(url) {
+  var req = new XMLHttpRequest();
+  req.open('HEAD', url, false);
+  req.send();
+  return req.status !== 404;
+}
+function getElementSelector(element) {
+  var names = [];
+
+  while (element) {
+    var elSelector = element.nodeName;
+    var className = element.className;
+
+    if (className) {
+      elSelector = elSelector + "." + className.split(" ").join(".");
+    }
+
+    names.push(elSelector);
+
+    if (element != document.body) {
+      element = element.parentNode;
+    } else {
+      element = null;
+    }
+  }
+
+  names = names.reverse();
+  var selector = names.join(" > ");
+  return selector;
+}
 // CONCATENATED MODULE: ./js/tsunami/events.js
 function events_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1563,7 +2026,7 @@ var events = {
   animationend: 'animationend'
 };
 
-if (tsunami_window["b" /* isTouch */]) {
+if (isTouch) {
   events.mouseover = "touchstart";
   events.mouseout = "touchend";
   events.mousedown = "touchstart";
@@ -2210,178 +2673,6 @@ var StyleUnits = function StyleUnits() {
   this.translateY = "px";
   this.translateZ = "px";
 };
-// CONCATENATED MODULE: ./js/tsunami/await.js
-function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventHandler = function eventHandler(event) {
-      event.stopPropagation();
-
-      if (stopPropagation) {
-        event.stopPropagation();
-      }
-
-      if (stopImmediatePropagation) {
-        event.stopImmediatePropagation();
-      }
-
-      if (preventDefault) {
-        event.preventDefault();
-      }
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTransition(dispatcher, cssProperties) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "transitionend";
-    var eventNames = {
-      'OTransition': 'otransitionend',
-      'WebkitTransition': 'webkitTransitionEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      var isProperty;
-
-      for (var _i = 0; _i < cssProperties.length; _i++) {
-        var prop = cssProperties[_i];
-
-        if (prop === event.propertyName) {
-          isProperty = true;
-        }
-      }
-
-      if (!isProperty) {
-        return;
-      }
-
-      event.stopPropagation(); //event.stopImmediatePropagation();
-      //event.preventDefault();
-
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitAnimation(dispatcher, animationName) {
-  var promise;
-  promise = new Promise(function (resolve, reject) {
-    var eventName = "animationend";
-    var eventNames = {
-      'OTransition': 'oanimationend',
-      'MozTransition': 'moznimationend',
-      'WebkitTransition': 'webkitAnimationEnd'
-    };
-
-    for (var i in eventNames) {
-      if (document.body.style[i] !== undefined) {
-        eventName = eventNames[i];
-      }
-    }
-
-    var eventHandler = function eventHandler(event) {
-      if (animationName != event.animationName || dispatcher != event.target) {
-        return;
-      }
-
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      event.preventDefault();
-      dispatcher.removeEventListener(eventName, eventHandler);
-      resolve(event);
-    };
-
-    dispatcher.addEventListener(eventName, eventHandler);
-  });
-  return promise;
-}
-function awaitTimeout() {
-  var milliseconds = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-  if (isNaN(milliseconds) || milliseconds <= 0) {
-    return Promise.resolve();
-  } else {
-    return new Promise(function (resolve, reject) {
-      var timeout = setTimeout(function () {
-        resolve();
-      }, milliseconds);
-    });
-  }
-}
-function awaitCallback(target, method) {
-  var _arguments = arguments;
-  var promise = new Promise(function (resolve, reject) {
-    target[method] = function () {
-      delete target[method];
-      resolve(_arguments);
-    };
-  });
-  return promise;
-}
-function awaitAnimationFrame() {
-  var total = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  total = Math.max(1, Math.round(total));
-  var count = 0;
-  var promise = new Promise(function (resolve, reject) {
-    function animationFrame() {
-      count++;
-
-      if (count >= total) {
-        resolve();
-      } else {
-        window.requestAnimationFrame(animationFrame);
-      }
-    }
-
-    window.requestAnimationFrame(animationFrame);
-  });
-  return promise;
-}
-function awaitVideoFirstFrame(video) {
-  var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5000;
-  var debug = arguments.length > 2 ? arguments[2] : undefined;
-  var loadedmetadata = awaitEvent(video, "loadedmetadata");
-  var loadedmetadataTimeout = awaitTimeout(timeout);
-  var promise = Promise.race([loadedmetadata]);
-  return promise.then(function (event) {
-    if (debug) {
-      console.log("loadedmetadata");
-    }
-
-    var loadeddataPromise = awaitEvent(video, "loadeddata");
-    var playPromise = video.play();
-
-    if (!playPromise) {
-      playPromise = loadeddataPromise;
-    }
-
-    var playPromiseTimeout = awaitTimeout(timeout);
-    var promise = Promise.race([playPromise]);
-    return promise.then(function () {
-      if (debug) {
-        console.log("playPromise or loadeddata");
-      }
-
-      video.pause();
-      return video;
-    });
-  });
-}
 // CONCATENATED MODULE: ./js/tsunami/data/BooleanData.js
 function BooleanData_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { BooleanData_typeof = function _typeof(obj) { return typeof obj; }; } else { BooleanData_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return BooleanData_typeof(obj); }
 
@@ -3552,9 +3843,6 @@ var ArrayDataOperation_ArrayDataOperation = /*#__PURE__*/function (_Data) {
 }(Data_Data);
 
 
-// EXTERNAL MODULE: ./js/tsunami/geom/Rectangle.js
-var Rectangle = __webpack_require__(3);
-
 // CONCATENATED MODULE: ./js/tsunami/Branch.js
 function Branch_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Branch_typeof = function _typeof(obj) { return typeof obj; }; } else { Branch_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Branch_typeof(obj); }
 
@@ -3685,9 +3973,6 @@ var Branch = /*#__PURE__*/function (_EventDispatcher) {
 }(EventDispatcher);
 
 
-// EXTERNAL MODULE: ./js/tsunami/geom/Point.js + 1 modules
-var Point = __webpack_require__(0);
-
 // CONCATENATED MODULE: ./js/tsunami/components/EventHandler.js
 function EventHandler_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3781,8 +4066,8 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
     if (_this.debug) _this.element.setAttribute("data-componentId", _this.componentID);
     _this.calculateGlobalPosition = false;
     _this.childrenSelector = ":scope > *";
-    _this.rectangle = new Rectangle["a" /* default */]();
-    _this.globalRectangle = new Rectangle["a" /* default */]();
+    _this.rectangle = new Rectangle_Rectangle();
+    _this.globalRectangle = new Rectangle_Rectangle();
     _this.windowSize = {};
     _this.attributes = {};
     _this.showDuration = 0;
@@ -4030,7 +4315,7 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
       this.globalRectangle.height = this.rectangle.height;
 
       if (this.calculateGlobalPosition) {
-        this.globalRectangle.position = Object(tsunami_window["c" /* localToGlobal */])(this.element, document.body);
+        this.globalRectangle.position = localToGlobal(this.element, document.body);
       }
 
       var children = this.children;
@@ -4181,11 +4466,11 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
     value: function getTouchPoint(event) {
       var touch = event;
 
-      if (tsunami_window["b" /* isTouch */]) {
+      if (isTouch) {
         touch = event.touches[0];
       }
 
-      return new Point["a" /* default */](touch.pageX, touch.pageY);
+      return new Point_Point(touch.pageX, touch.pageY);
     }
   }, {
     key: "dispatchResizeEvent",
@@ -4370,10 +4655,10 @@ var UIComponent_UIComponent = /*#__PURE__*/function (_Branch) {
         parent = document.body;
       }
 
-      var rectangle = new Rectangle["a" /* default */](0, 0, element.offsetWidth, element.offsetHeight);
+      var rectangle = new Rectangle_Rectangle(0, 0, element.offsetWidth, element.offsetHeight);
 
       if (element.parentNode) {
-        rectangle.position = Object(tsunami_window["c" /* localToGlobal */])(element, parent, null, debug);
+        rectangle.position = localToGlobal(element, parent, null, debug);
       }
 
       return rectangle;
@@ -5452,7 +5737,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
       this.children.map(function (child) {
         _this2.childrenPositions.push({
           child: child,
-          position: new Point["a" /* default */](child.offsetLeft, child.offsetTop)
+          position: new Point_Point(child.offsetLeft, child.offsetTop)
         });
       });
     }
@@ -5460,7 +5745,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
     key: "_setChildrenTransform",
     value: function _setChildrenTransform() {
       this.childrenPositions.map(function (obj, index) {
-        var newPosition = new Point["a" /* default */](obj.child.offsetLeft, obj.child.offsetTop);
+        var newPosition = new Point_Point(obj.child.offsetLeft, obj.child.offsetTop);
         var offset = obj.position.subtract(newPosition);
         var magnitude = offset.magnitude;
 
@@ -5514,7 +5799,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
 
           this.dragElement = selectedChild;
           this.dragIndex = selectedIndex;
-          this.dragElementStartPos = new Point["a" /* default */](this.dragElement.offsetLeft, this.dragElement.offsetTop);
+          this.dragElementStartPos = new Point_Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
           this.dragElementsMinHeight = Number.MAX_VALUE;
           this.children.map(function (child) {
             _this3.dragElementsMinHeight = Math.min(_this3.dragElementsMinHeight, child.component.rectangle.height);
@@ -5528,7 +5813,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
     key: "_dragMove",
     value: function _dragMove(event) {
       var point = this.getTouchPoint(event);
-      var distance = Point["a" /* default */].distance(point, this.dragStartPoint);
+      var distance = Point_Point.distance(point, this.dragStartPoint);
 
       if (distance > 0) {
         document.body.removeEventListener(events.mousemove, this._dragMove);
@@ -5568,7 +5853,7 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
       if (index != this.dragIndex) {
         this.dataProvider.swap(this.dragIndex, index);
         var oldPos = this.dragElementStartPos;
-        this.dragElementStartPos = new Point["a" /* default */](this.dragElement.offsetLeft, this.dragElement.offsetTop);
+        this.dragElementStartPos = new Point_Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
         var posDiff = this.dragElementStartPos.subtract(oldPos);
         this.dragStartPoint = this.dragStartPoint.add(posDiff);
         dragDiff = point.subtract(this.dragStartPoint);
@@ -5593,11 +5878,11 @@ var UIList_UIList = /*#__PURE__*/function (_UIComponent) {
   }, {
     key: "scrollToElement",
     value: function scrollToElement(element, duration) {
-      var pos = new Point["a" /* default */]();
-      var maxScroll = new Point["a" /* default */]();
+      var pos = new Point_Point();
+      var maxScroll = new Point_Point();
       maxScroll.x = this.element.scrollWidth - this.element.clientWidth;
       maxScroll.y = this.element.scrollHeight - this.element.clientHeight;
-      var elementRect = new Rectangle["a" /* default */](element.offsetLeft, element.offsetTop, element.offsetWidth, element.offsetHeight);
+      var elementRect = new Rectangle_Rectangle(element.offsetLeft, element.offsetTop, element.offsetWidth, element.offsetHeight);
       pos.x = Math.min(elementRect.x, maxScroll.x);
       pos.y = Math.min(elementRect.y, maxScroll.y);
       return this.scrollTo(pos.x, pos.y, duration);
@@ -5895,9 +6180,9 @@ var EasingGraph_EasingGraphControlPointLine = /*#__PURE__*/function (_UIComponen
       point0.y = 1 - point0.y;
       var point1 = this.model[1].point;
       point1.y = 1 - point1.y;
-      var scale = Point["a" /* default */].distance(point0, point1);
-      var angle = NumberData_NumberData.roundDecimal2(Point["a" /* default */].getAngle(point1, point0) * 180 / Math.PI);
-      var position = new Point["a" /* default */](point0.x * parentRectangle.width, point0.y * parentRectangle.height);
+      var scale = Point_Point.distance(point0, point1);
+      var angle = NumberData_NumberData.roundDecimal2(Point_Point.getAngle(point1, point0) * 180 / Math.PI);
+      var position = new Point_Point(point0.x * parentRectangle.width, point0.y * parentRectangle.height);
       var transform = "translateX(".concat(position.x, "px) translateY(").concat(position.y, "px) rotate(").concat(angle, "deg) scaleX(").concat(scale, ")");
       this.element.style.transform = transform;
     }
@@ -5926,7 +6211,7 @@ var EasingGraph_EasingGraphCurve = /*#__PURE__*/function (_UIComponent3) {
 
       for (var i = 0; i < totalPoints; i++) {
         var x = i / (totalPoints - 1);
-        var point = new Point["a" /* default */](x, easing(x, 0, 1, 1));
+        var point = new Point_Point(x, easing(x, 0, 1, 1));
         points.push(point);
         pointsString += NumberData_NumberData.roundDecimal3(point.x * 200) + "," + NumberData_NumberData.roundDecimal3(200 - point.y * 200) + " ";
       }
@@ -5958,7 +6243,7 @@ var EasingGraph_EasingGraphPoints = /*#__PURE__*/function (_UIComponent4) {
 
       for (var i = 0; i < totalPoints; i++) {
         var x = i / (totalPoints - 1);
-        var point = new Point["a" /* default */](x, easing(x, 0, 1, 1));
+        var point = new Point_Point(x, easing(x, 0, 1, 1));
         points.push(point);
       }
 
@@ -6292,8 +6577,7 @@ function SectionVideo_setPrototypeOf(o, p) { SectionVideo_setPrototypeOf = Objec
 
 
 
-
-var SectionVideo_SectionVideo = /*#__PURE__*/function (_Section) {
+var SectionVideo = /*#__PURE__*/function (_Section) {
   SectionVideo_inherits(SectionVideo, _Section);
 
   var _super = SectionVideo_createSuper(SectionVideo);
@@ -6306,7 +6590,7 @@ var SectionVideo_SectionVideo = /*#__PURE__*/function (_Section) {
     _this = _super.call(this, element);
     _this.tabDataId = "video";
     _this.iframe = _this.element.querySelector("iframe");
-    _this.iframe.src = chrome.extension.getURL('video-recording.html?tabId=' + app.tabId);
+    _this.iframe.src = chrome.extension.getURL('video-recording.html');
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       switch (msg.txt) {
         case "scrollCaptureVideoHeigth":
@@ -6369,9 +6653,13 @@ var SectionScenario_SectionScenario = /*#__PURE__*/function (_Section) {
   SectionScenario_createClass(SectionScenario, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
+      var _this2 = this;
+
       var promise = SectionScenario_get(SectionScenario_getPrototypeOf(SectionScenario.prototype), "showDelayComplete", this).call(this);
 
-      app.startLocation = this.path;
+      this.router.redirect("default", function () {
+        return _this2.path;
+      });
 
       if (!app.actions.selectedItem.value) {
         var lastIndex = app.actions.length.value - 1;
@@ -6444,7 +6732,7 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 
 
 define("sc-scenario", SectionScenario_SectionScenario);
-define("sc-video", SectionVideo_SectionVideo);
+define("sc-video", SectionVideo);
 define("sc-settings", SectionSettings);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
@@ -6540,7 +6828,7 @@ var ScrollCapture_ScrollCapture = /*#__PURE__*/function (_UIComponent) {
     key: "dragStart",
     value: function dragStart(event) {
       event.preventDefault();
-      this.startPosition = new Point["a" /* default */](this.model.settings.position.x.value, this.model.settings.position.y.value);
+      this.startPosition = new Point_Point(this.model.settings.position.x.value, this.model.settings.position.y.value);
       this.startPoint = this.getTouchPoint(event);
       document.body.addEventListener(events.mousemove, this.dragMove);
       document.body.addEventListener(events.mouseup, this.dragEnd);
@@ -7022,7 +7310,7 @@ var UIText_UIText = /*#__PURE__*/function (_UIComponent) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/utils/number.js
-var number = __webpack_require__(1);
+var number = __webpack_require__(0);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UINumber.js
 function UINumber_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UINumber_typeof = function _typeof(obj) { return typeof obj; }; } else { UINumber_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UINumber_typeof(obj); }
@@ -7199,21 +7487,21 @@ var UIScrollPane_UIScrollPane = /*#__PURE__*/function (_UIComponent) {
       x: false,
       y: false
     };
-    _this.loopPoint = new Point["a" /* default */](0, 0);
+    _this.loopPoint = new Point_Point(0, 0);
     _this.autoScrollSpeed = 1;
-    _this.scrollTarget = new Point["a" /* default */]();
-    _this.scroll = new Point["a" /* default */]();
-    _this.speed = new Point["a" /* default */]();
-    _this.momentum = new Point["a" /* default */]();
-    _this.minScroll = new Point["a" /* default */]();
-    _this.maxScroll = new Point["a" /* default */]();
-    _this.size = new Rectangle["a" /* default */]();
-    _this.panelSize = new Rectangle["a" /* default */]();
-    _this.startTouchDiff = new Point["a" /* default */]();
+    _this.scrollTarget = new Point_Point();
+    _this.scroll = new Point_Point();
+    _this.speed = new Point_Point();
+    _this.momentum = new Point_Point();
+    _this.minScroll = new Point_Point();
+    _this.maxScroll = new Point_Point();
+    _this.size = new Rectangle_Rectangle();
+    _this.panelSize = new Rectangle_Rectangle();
+    _this.startTouchDiff = new Point_Point();
     _this.springiness = 0;
     _this.inertia = 1;
     _this.elasticScrollInertia = 0.1;
-    _this.elasticScrollElasticity = new Point["a" /* default */](0.15, 0);
+    _this.elasticScrollElasticity = new Point_Point(0.15, 0);
     _this.momentumFriction = 0.965;
     _this.momentumScaleLimit = 0.5;
     _this.maxScrollReached = {
@@ -7507,7 +7795,7 @@ var UIScrollPane_UIScrollPane = /*#__PURE__*/function (_UIComponent) {
         return;
       }
 
-      if (!tsunami_window["b" /* isTouch */]) {
+      if (!isTouch) {
         event.preventDefault();
       }
 
@@ -7529,7 +7817,7 @@ var UIScrollPane_UIScrollPane = /*#__PURE__*/function (_UIComponent) {
       event.preventDefault(); // }
 
       var touchNew = this.getTouchPoint(event);
-      var distance = Point["a" /* default */].distance(touchNew, this.touchStart);
+      var distance = Point_Point.distance(touchNew, this.touchStart);
 
       if (Math.abs(distance) > 2 && !this.isDragging) {
         this.isDragging = true;
@@ -7538,7 +7826,7 @@ var UIScrollPane_UIScrollPane = /*#__PURE__*/function (_UIComponent) {
 
       this.momentum = this.touchPrevious.subtract(touchNew);
       this.startTouchDiff = this.touchStart.subtract(touchNew);
-      this.scrollTarget = new Point["a" /* default */](this.scrollStart.x + this.startTouchDiff.x, this.scrollStart.y + this.startTouchDiff.y);
+      this.scrollTarget = new Point_Point(this.scrollStart.x + this.startTouchDiff.x, this.scrollStart.y + this.startTouchDiff.y);
       this.touchPrevious = touchNew;
       var clamp = {
         x: NaN,
@@ -8179,10 +8467,10 @@ var CubicBezier_CubicBezier = /*#__PURE__*/function () {
 
     CubicBezier_classCallCheck(this, CubicBezier);
 
-    this.p0 = p0 || new Point["a" /* default */](0, 0);
-    this.p1 = p1 || new Point["a" /* default */](0, 0);
-    this.p2 = p2 || new Point["a" /* default */](1, 1);
-    this.p3 = p3 || new Point["a" /* default */](1, 1);
+    this.p0 = p0 || new Point_Point(0, 0);
+    this.p1 = p1 || new Point_Point(0, 0);
+    this.p2 = p2 || new Point_Point(1, 1);
+    this.p3 = p3 || new Point_Point(1, 1);
     this.samples = samples;
     this.calculateLength();
   }
@@ -8219,12 +8507,12 @@ var CubicBezier_CubicBezier = /*#__PURE__*/function () {
   }, {
     key: "getPoint",
     value: function getPoint(t) {
-      var a = Point["a" /* default */].lerp(this.p0, this.p1, t);
-      var b = Point["a" /* default */].lerp(this.p1, this.p2, t);
-      var c = Point["a" /* default */].lerp(this.p2, this.p3, t);
-      var d = Point["a" /* default */].lerp(a, b, t);
-      var e = Point["a" /* default */].lerp(b, c, t);
-      var point = Point["a" /* default */].lerp(d, e, t);
+      var a = Point_Point.lerp(this.p0, this.p1, t);
+      var b = Point_Point.lerp(this.p1, this.p2, t);
+      var c = Point_Point.lerp(this.p2, this.p3, t);
+      var d = Point_Point.lerp(a, b, t);
+      var e = Point_Point.lerp(b, c, t);
+      var point = Point_Point.lerp(d, e, t);
       return point;
     }
   }, {
@@ -8345,7 +8633,7 @@ var CubicBezierEasing_CubicBezierEasing = /*#__PURE__*/function (_CubicBezier) {
 
     CubicBezierEasing_classCallCheck(this, CubicBezierEasing);
 
-    _this = _super.call(this, new Point["a" /* default */](0, 0), new Point["a" /* default */](x1, y1), new Point["a" /* default */](x2, y2), new Point["a" /* default */](1, 1), samples);
+    _this = _super.call(this, new Point_Point(0, 0), new Point_Point(x1, y1), new Point_Point(x2, y2), new Point_Point(1, 1), samples);
     _this.ease = _this.ease.bind(CubicBezierEasing_assertThisInitialized(_this));
     return _this;
   }
@@ -8593,7 +8881,7 @@ var Vector2Data_Vector2Data = /*#__PURE__*/function (_DataModel) {
   }, {
     key: "point",
     get: function get() {
-      return new Point["a" /* default */](this.x.value, this.y.value);
+      return new Point_Point(this.x.value, this.y.value);
     }
   }]);
 
@@ -8775,7 +9063,7 @@ var ActionTween_ActionTween = /*#__PURE__*/function (_Action) {
     _this.easingPresets.selectedItem.value = "quad.easeInOut";
     _this.tweenUpdateHandler = _this.tweenUpdateHandler.bind(ActionTween_assertThisInitialized(_this));
     _this.tweenCompleteHandler = _this.tweenCompleteHandler.bind(ActionTween_assertThisInitialized(_this));
-    _this.pos = new Point["a" /* default */]();
+    _this.pos = new Point_Point();
     return _this;
   }
 
@@ -9071,8 +9359,8 @@ var ActionScroll_ActionScroll = /*#__PURE__*/function (_ActionTween) {
 
       this.unitX.removeEventListener(Data_Data.CHANGE, this.doScroll);
       this.unitY.removeEventListener(Data_Data.CHANGE, this.doScroll);
-      var scroll = new Point["a" /* default */]();
-      var maxScroll = new Point["a" /* default */]();
+      var scroll = new Point_Point();
+      var maxScroll = new Point_Point();
 
       switch (this.target.value) {
         case "window":
@@ -9091,7 +9379,7 @@ var ActionScroll_ActionScroll = /*#__PURE__*/function (_ActionTween) {
           break;
       }
 
-      var unit = new Point["a" /* default */]();
+      var unit = new Point_Point();
 
       switch (this.units.selectedItem.value) {
         case "px":
@@ -9210,7 +9498,7 @@ var ActionMouseEvent_ActionMouseEvent = /*#__PURE__*/function (_Action) {
   }, {
     key: "trigger",
     value: function trigger() {
-      var point = new Point["a" /* default */](this.x.value - window.scrollX, this.y.value - window.scrollY);
+      var point = new Point_Point(this.x.value - window.scrollX, this.y.value - window.scrollY);
       var el = document.elementFromPoint(point.x, point.y);
       var event = new MouseEvent(this.eventTypes.selectedItem.value, {
         bubbles: true,
@@ -9276,11 +9564,11 @@ var ActionMouseEvent_ActionMouseEvent = /*#__PURE__*/function (_Action) {
       // }
       var touch = event;
 
-      if (tsunami_window["b" /* isTouch */]) {
+      if (isTouch) {
         touch = event.touches[0];
       }
 
-      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
+      var point = new Point_Point(touch.pageX, touch.pageY);
       this.x.value = point.x;
       this.y.value = point.y;
       document.body.removeEventListener("click", this.captureMouseEventHandler);
@@ -50655,7 +50943,7 @@ FontLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
 
 var _context;
 
-var AudioContext = {
+var three_module_AudioContext = {
 
 	getContext: function () {
 
@@ -50702,7 +50990,7 @@ AudioLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			// detaches the buffer when complete, preventing reuse.
 			var bufferCopy = buffer.slice( 0 );
 
-			var context = AudioContext.getContext();
+			var context = three_module_AudioContext.getContext();
 			context.decodeAudioData( bufferCopy, function ( audioBuffer ) {
 
 				onLoad( audioBuffer );
@@ -51284,7 +51572,7 @@ function AudioListener() {
 
 	this.type = 'AudioListener';
 
-	this.context = AudioContext.getContext();
+	this.context = three_module_AudioContext.getContext();
 
 	this.gain = this.context.createGain();
 	this.gain.connect( this.context.destination );
@@ -59661,11 +59949,11 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
     value: function captureDownHandler(event) {
       var touch = event;
 
-      if (tsunami_window["b" /* isTouch */]) {
+      if (isTouch) {
         touch = event.touches[0];
       }
 
-      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
+      var point = new Point_Point(touch.pageX, touch.pageY);
       this.capturedPoints = [new Vector2Data_Vector2Data(point.x, point.y)];
       this.lastPoint = point;
       this.startDate = new Date();
@@ -59678,12 +59966,12 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
     value: function captureMoveHandler(event) {
       var touch = event;
 
-      if (tsunami_window["b" /* isTouch */]) {
+      if (isTouch) {
         touch = event.touches[0];
       }
 
-      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
-      var distance = Point["a" /* default */].distance(this.lastPoint, point);
+      var point = new Point_Point(touch.pageX, touch.pageY);
+      var distance = Point_Point.distance(this.lastPoint, point);
 
       if (distance > this.smoothness.value) {
         this.lastPoint = point;
@@ -59695,12 +59983,12 @@ var ActionSwipe_ActionSwipe = /*#__PURE__*/function (_ActionTween) {
     value: function captureUpHandler(event) {
       var touch = event;
 
-      if (tsunami_window["b" /* isTouch */]) {
+      if (isTouch) {
         touch = event.touches[0];
       }
 
-      var point = new Point["a" /* default */](touch.pageX, touch.pageY);
-      var distance = Point["a" /* default */].distance(this.lastPoint, point);
+      var point = new Point_Point(touch.pageX, touch.pageY);
+      var distance = Point_Point.distance(this.lastPoint, point);
 
       if (distance > 0) {
         this.capturedPoints.push(new Vector2Data_Vector2Data(point.x, point.y));
@@ -60760,7 +61048,9 @@ var PlayState_PlayState = /*#__PURE__*/function (_Branch) {
       var _this2 = this;
 
       this.isPlaying = true;
-      app.startLocation = this.startLocation;
+      this.router.redirect("default", function () {
+        return _this2.startLocation;
+      });
       app.save();
       app.actions.selectedIndex.value = 0;
       return awaitTimeout(250).then(function () {
@@ -60875,8 +61165,7 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
 
       var promise = awaitTimeout(250).then(function () {
         chrome.runtime.sendMessage({
-          txt: "scrollCaptureStartRecording",
-          tabId: app.tabId
+          txt: "scrollCaptureStartRecording"
         });
         return PlayRecordState_get(PlayRecordState_getPrototypeOf(PlayRecordState.prototype), "show", _this2).call(_this2);
       }); // this.keepAliveTimeout = setInterval(() => {
@@ -61015,13 +61304,12 @@ var main_Main = /*#__PURE__*/function (_App) {
 
   var _super = main_createSuper(Main);
 
-  function Main(element, tabId) {
+  function Main(element) {
     var _this;
 
     main_classCallCheck(this, Main);
 
     _this = _super.call(this, element);
-    _this.tabId = tabId;
 
     window.onbeforeunload = function () {
       _this.router.location = "";
@@ -61033,10 +61321,13 @@ var main_Main = /*#__PURE__*/function (_App) {
 
     _this.clearActions = _this.clearActions.bind(main_assertThisInitialized(_this));
     app = main_assertThisInitialized(_this);
-    _this.startLocation = "scroll-capture/scenario";
-    _this.router = new Router_Router(main_assertThisInitialized(_this)); // this.router.addEventListener(Router.COMPLETE, (e)=> {
-    // 	console.log(e.type, this.router.location);
-    // })
+    _this.router = new Router_Router(main_assertThisInitialized(_this));
+
+    _this.router.redirect("default", function () {
+      return "scroll-capture/scenario";
+    }); // this.router.addEventListener(Router.CHANGE, (e) => {console.log(e.type, this.router.location);});
+    // this.router.addEventListener(Router.COMPLETE, (e) => {console.log(e.type, this.router.location);});
+
 
     _this.showCaptureIcon = new BooleanData_BooleanData();
 
@@ -61087,19 +61378,27 @@ var main_Main = /*#__PURE__*/function (_App) {
     value: function load() {
       var _this2 = this;
 
+      var contentCSS = chrome.extension.getURL("content.css");
+      var contentCSSPromise = loadStyle(contentCSS);
+      var fontawesomeCSS = chrome.extension.getURL("fontawesome.css");
+      var fontawesomeCSSPromise = loadStyle(fontawesomeCSS);
       this.appendChild(this.scrollCapture.element);
       var promise = new Promise(function (resolve, reject) {
         chrome.storage.local.get(["json"], function (result) {
           resolve(result);
         });
       });
-      return promise.then(function (result) {
-        if (result.json) {
-          var data = JSON.parse(result.json);
+      return Promise.all([promise, contentCSSPromise, fontawesomeCSSPromise]).then(function (results) {
+        if (results[0]) {
+          var json = results[0].json;
 
-          _this2.actions.deserialize(data.actions);
+          if (json) {
+            var data = JSON.parse(json);
 
-          _this2.settings.deserialize(data.settings);
+            _this2.actions.deserialize(data.actions);
+
+            _this2.settings.deserialize(data.settings);
+          }
         }
       });
     }
@@ -61157,22 +61456,14 @@ define("router-button", RouterButton_RouterButton);
 define("scroll-capture", ScrollCapture_ScrollCapture);
 // CONCATENATED MODULE: ./js/content.js
 
-var main;
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  if (!main) {
-    main = new main_Main(document.body, msg.tabId);
-  }
-
-  switch (msg.txt) {
-    case "scrollCaptureBrowserAction":
-      main.router.location = main.startLocation;
-      break;
-
-    case "scrollCaptureLocation":
-      main.router.location = msg.location;
-      break;
-  }
-});
+if (!window.main) window.main = new main_Main(document.body);
+window.main.router.location = "default"; // chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+// 	switch(msg.txt) {
+// 		case "scrollCaptureBrowserAction":
+// 			this.router.location = main.startLocation;
+// 			break;
+// 	}
+// });
 
 /***/ })
 /******/ ]);

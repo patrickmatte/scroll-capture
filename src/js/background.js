@@ -19,8 +19,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 chrome.browserAction.onClicked.addListener((tab) => {
     if (isRecording) stopRecording();
-    let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
-    chrome.tabs.sendMessage(tab.id, msg);
+    
+    chrome.tabs.executeScript({
+        file: 'content.js'
+    });
+
+    window.tabId = tab.id;
+
+    // let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
+    // chrome.tabs.sendMessage(tab.id, msg);
 });
 
 function handleDataAvailable(event) {
@@ -41,9 +48,9 @@ function changeIcon(color = "") {
 }
 
 
-function startRecording(tabId) {
+function startRecording() {
     changeIcon("_red");
-    chrome.tabs.get(tabId, _startTabCapture);
+    chrome.tabs.get(window.tabId, _startTabCapture);
     // chrome.tabs.query({ active: true }, _startTabCapture);
 }
 

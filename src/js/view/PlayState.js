@@ -13,7 +13,7 @@ export default class PlayState extends Branch {
     show() {
         this.isPlaying = true;
         
-        app.startLocation = this.startLocation;
+        this.router.redirect("default", () => { return this.startLocation });
 
         app.save();
         app.actions.selectedIndex.value = 0;

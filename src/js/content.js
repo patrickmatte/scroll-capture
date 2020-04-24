@@ -1,17 +1,12 @@
 import Main from "./main";
 
-let main;
+if(!window.main) window.main = new Main(document.body);
+window.main.router.location = "default";
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-	if (!main) {
-		main = new Main(document.body, msg.tabId);
-	}
-	switch(msg.txt) {
-		case "scrollCaptureBrowserAction":
-			main.router.location = main.startLocation;
-			break;
-		case "scrollCaptureLocation":
-			main.router.location = msg.location;
-			break;
-	}
-});
+// chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+// 	switch(msg.txt) {
+// 		case "scrollCaptureBrowserAction":
+// 			this.router.location = main.startLocation;
+// 			break;
+// 	}
+// });

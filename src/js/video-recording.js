@@ -1,13 +1,16 @@
-import { getSearchParams } from "./tsunami/window";
 import { timeAMPM } from "./tsunami/utils/date";
 import { addLeadingZero } from "./tsunami/utils/number";
 
-let params = getSearchParams();
-let tabId = Number(params.tabId);
-
 chrome.storage.local.get(["json"], (result) => {
-    let data = JSON.parse(result.json);
-    let colorTheme = data.settings.colorThemes;
+    let colorTheme = "Dark";
+    if(result) {
+        if (result.json) {
+            let data = JSON.parse(result.json);
+            if (data.settings) {
+                colorTheme = data.settings.colorThemes;
+            }
+        }
+    };
     let isColorThemeLight;
     switch (colorTheme) {
         case "Dark":
@@ -39,8 +42,10 @@ player.addEventListener('canplay', function () {
     this.muted = true;
     player.setAttribute('controls', '1');
     this.play();
-    let msg = { txt: "scrollCaptureVideoHeigth", height: document.body.scrollHeight };
-    chrome.tabs.sendMessage(tabId, msg);
+    chrome.runtime.getBackgroundPage((page) => {
+        let msg = { txt: "scrollCaptureVideoHeigth", height: document.body.scrollHeight };
+        chrome.tabs.sendMessage(page.tabId, msg);
+    });
 });
 
 function updateVideo() {

@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"description": "Record your websites and automate scrolling and mouse actions for your portfolio screen captures.",
 	"permissions": [
+		"activeTab",
 		"storage",
 		"tabCapture"
 	],
@@ -12,27 +13,27 @@
 		],
 		"persistent": false
 	},
-	"content_scripts": [
-		{
-			"js": [
-				"content.js"
-			],
-			"css": [
-				"content.css",
-				"fontawesome.css",
-				"icofont.css"
-			],
-			"matches": [
-				"http://*/*",
-				"https://*/*"
-			]
-		}
-	],
+	"content_scripts": [],
 	"web_accessible_resources":[
+		"content.css",
+		"fontawesome.css",
 		"video-recording.html",
-		"assets/fonts/*",
-		"assets/fonts/*/*",
-		"assets/images/*"
+		"assets/fonts/fa-brands-400.woff",
+		"assets/fonts/fa-regular-400.woff",
+		"assets/fonts/fa-solid-900.woff",
+		"assets/fonts/Menlo-Bold.woff",
+		"assets/fonts/Menlo-Regular.woff",
+		"assets/fonts/SFMono-Bold.woff",
+		"assets/fonts/SFMono-Regular.woff",
+		"assets/images/customCursor.png",
+		"assets/images/get_started16_red.png",
+		"assets/images/get_started16.png",
+		"assets/images/get_started32_red.png",
+		"assets/images/get_started32.png",
+		"assets/images/get_started48_red.png",
+		"assets/images/get_started48.png",
+		"assets/images/get_started128_red.png",
+		"assets/images/get_started128.png"
 	],
 	"browser_action": {
 		"default_icon": {
