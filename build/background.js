@@ -110,9 +110,9 @@ __webpack_require__.r(__webpack_exports__);
  * Add your Analytics tracking ID here.
  */
 // dev
-var _analyticsID = 'UA-161404627-1'; // prod
-// let _analyticsID =  = 'UA-161404627-2';
-
+// let _analyticsID = 'UA-161404627-1';
+// prod
+var _analyticsID = 'UA-161404627-2';
 /**
  * Below is a modified version of the Google Analytics asynchronous tracking
  * code snippet.  It has been modified to pull the HTTPS version of ga.js

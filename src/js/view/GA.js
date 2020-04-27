@@ -6,10 +6,10 @@
  * Add your Analytics tracking ID here.
  */
 // dev
-let _analyticsID = 'UA-161404627-1';
+// let _analyticsID = 'UA-161404627-1';
 
 // prod
-// let _analyticsID =  = 'UA-161404627-2';
+let _analyticsID = 'UA-161404627-2';
 
 /**
  * Below is a modified version of the Google Analytics asynchronous tracking
