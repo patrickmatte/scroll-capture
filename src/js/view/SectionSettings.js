@@ -5,7 +5,6 @@ export default class SectionSettings extends Section {
     
     constructor(element) {
         super(element);
-        this.tabDataId = "settings";
    }
 
     showDelayComplete() {

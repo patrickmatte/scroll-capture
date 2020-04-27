@@ -1,5 +1,6 @@
 import { timeAMPM } from "./tsunami/utils/date";
 import { addLeadingZero } from "./tsunami/utils/number";
+import { sendTrackEventMessage } from "./view/GABridge";
 
 chrome.storage.local.get(["json"], (result) => {
     let colorTheme = "Dark";
@@ -26,6 +27,10 @@ chrome.storage.local.get(["json"], (result) => {
     document.body.querySelector(".sc-default").setAttribute("data-theme-light", isColorThemeLight);
 });
 
+window.addEventListener("resize", ()=> {
+    dispatchVideoHeigth();
+})
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     switch (msg.txt) {
         case "scrollCaptureColorTheme":
@@ -37,19 +42,27 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case "scrollCaptureUnloadVideo":
             unloadVideo();
             break;
+        case "scrollCaptureShowVideo":
+            dispatchVideoHeigth();
+            break;
     }
 });
 
 let player = document.querySelector('.sc-video-player');
-player.addEventListener('canplay', function () {
-    this.muted = true;
-    player.setAttribute('controls', '1');
-    this.play();
+player.setAttribute("muted", "true");
+player.setAttribute("autoplay", "true");
+player.setAttribute("playsinline", "true");
+player.setAttribute('controls', '1');
+player.addEventListener('canplay', () => {
+    dispatchVideoHeigth();
+});
+
+function dispatchVideoHeigth() {
     chrome.runtime.getBackgroundPage((page) => {
-        let msg = { txt: "scrollCaptureVideoHeigth", height: document.body.scrollHeight };
+        let msg = { txt: "scrollCaptureVideoHeight", height: document.body.scrollHeight };
         chrome.tabs.sendMessage(page.tabId, msg);
     });
-});
+}
 
 function updateVideo() {
     chrome.runtime.getBackgroundPage((page) => {
@@ -71,6 +84,9 @@ function updateVideo() {
                 let button = buttons[i];
                 button.href = page.videoURL;
                 button.download = videoFileName;
+                button.addEventListener("click", () => {
+                    sendTrackEventMessage("download", "click");
+                });
             }
             let fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
             fileNameButton.innerHTML = videoFileName;
@@ -80,6 +96,6 @@ function updateVideo() {
 
 function unloadVideo() {
     player.pause();
-    player.removeAttribute('src');
-    player.load();
+    // player.removeAttribute('src');
+    // player.load();
 }

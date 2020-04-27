@@ -81,24 +81,79 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */
+/******/ ({
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
 
+/***/ 7:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./js/view/GA.js
+// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/**
+ * Add your Analytics tracking ID here.
+ */
+// dev
+var _analyticsID = 'UA-161404627-1'; // prod
+// let _analyticsID =  = 'UA-161404627-2';
+
+/**
+ * Below is a modified version of the Google Analytics asynchronous tracking
+ * code snippet.  It has been modified to pull the HTTPS version of ga.js
+ * instead of the default HTTP version.  It is recommended that you use this
+ * snippet instead of the standard tracking snippet provided when setting up
+ * a Google Analytics account.
+ */
+
+window._gaq = window._gaq || [];
+
+window._gaq.push(['_setAccount', _analyticsID]);
+
+window._gaq.push(['_trackPageview']);
+
+var ga = document.createElement('script');
+ga.type = 'text/javascript';
+ga.async = true;
+ga.src = 'https://ssl.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(ga, s);
+/**
+ * Track a click on a button using the asynchronous tracking API.
+ * See http://code.google.com/apis/analytics/docs/tracking/asyncTracking.html
+ * for information on how to use the asynchronous tracking API.
+ */
+
+function trackEvent(category, action) {
+  var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+  var event = ['_trackEvent', category, action];
+  if (label) event.push(label);
+
+  window._gaq.push(event);
+}
+function trackPage(path) {
+  window._gaq.push(['_set', 'page', path]);
+
+  window._gaq.push(['_trackPageview']);
+}
+// CONCATENATED MODULE: ./js/background.js
 // let page = chrome.extension.getBackgroundPage();
+
 var mediaStream;
 var isRecording;
 var mediaRecorder;
@@ -111,6 +166,14 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
     case "scrollCaptureStopRecording":
       stopRecording();
+      break;
+
+    case "scrollCaptureTrackEvent":
+      trackEvent(msg.category, msg.action, msg.label);
+      break;
+
+    case "scrollCaptureTrackPage":
+      trackPage(msg.path);
       break;
   }
 });
@@ -283,4 +346,5 @@ function stopRecording() {
 }
 
 /***/ })
-/******/ ]);
+
+/******/ });

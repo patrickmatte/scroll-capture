@@ -81,11 +81,34 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendTrackEventMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return sendTrackPageMessage; });
+function sendTrackEventMessage(category, action) {
+  var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+  chrome.runtime.sendMessage({
+    txt: "scrollCaptureTrackEvent",
+    category: category,
+    action: action,
+    label: label
+  });
+}
+function sendTrackPageMessage(path) {
+  chrome.runtime.sendMessage({
+    txt: "scrollCaptureTrackPage",
+    path: path
+  });
+}
+
+/***/ }),
+/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -586,21 +609,20 @@ function hexToRgb(hex) {
 }
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(6);
-module.exports = __webpack_require__(2);
+module.exports = __webpack_require__(3);
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 
 /***/ }),
-/* 3 */,
 /* 4 */,
 /* 5 */,
 /* 6 */
@@ -1318,6 +1340,9 @@ function loadVideoBlob(url) {
   });
   return promise2;
 }
+// EXTERNAL MODULE: ./js/view/GABridge.js
+var GABridge = __webpack_require__(0);
+
 // CONCATENATED MODULE: ./js/tsunami/EventDispatcher.js
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6444,7 +6469,7 @@ var ActionsView_ActionsView = /*#__PURE__*/function (_UIList) {
 
 define("sc-action-view", ActionView);
 // CONCATENATED MODULE: ./templates/scroll-capture.html
-/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\" data-model=\".\" data-theme-light=\"[[settings.isColorThemeLight]]\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t<button is=\"router-button\" data-path=\"closed\" title=\"Close\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-times-circle\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\n\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t<div is=\"ui-component\">\n\t\t\t\t\t<div class=\"sc-window sc-window-sections\" is=\"ui-component\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"scenario\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/scenario\" title=\"Timeline\">\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-icon fas fa-sliders-h\"></span> -->\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-stream\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Timeline</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-id=\"play\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"play\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"video\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"record\" title=\"Capture\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t<span class=\"sc-tabs\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"settings\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/settings\" title=\"Settings\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-cogs\"></span>\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Settings</span> -->\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"sc-window-content-main\" is=\"ui-component\">\n\n\t\t\t\t\t\t\t<sc-scenario class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<sc-actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<sc-action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab-wrapper\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"data.capture\" data-is-capturing=\"[[data.isCapturing]]\" title=\"Set\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-bullseye\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" data-model=\"data\" is=\"ui-button\" data-event-click=\"data.deleteAction\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollLeft\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitX\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollTop\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitY\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Target Selector\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon far fa-dot-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageX\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageY\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.x\" is=\"ui-input\" title=\"PageX\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.y\" is=\"ui-input\" title=\"PageY\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input sc-select\" title=\"MouseEvent Type\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-mouse-pointer\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Duration\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-clock\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</sc-action-view>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</sc-actions-view>\n\t\t\t\t\t\t\t\t<div class=\"sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\" is=\"ui-list\" data-provider=\"actions.types\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-action-button\" data-type=\"[[data.type]]\" data-model=\"data\" is=\"ui-button\" title=\"[[data.description]]\" data-click=\"data.addAction\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\">\n\t\t\t\t\t\t\t\t\t\t<button is=\"ui-button\" data-event-click=\"clearActions\" title=\"Delete all\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-scenario>\n\n\t\t\t\t\t\t\t<sc-video class=\"sc-section sc-fields\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-video>\n\n\t\t\t\t\t\t\t<sc-settings class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Color theme</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Theme:</span> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-color-themes\" data-provider=\"settings.colorThemes\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label class=\"sc-radio\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"radio\" name=\"color-theme\" is=\"ui-input\" value=\"[[data]]\" data-model=\"parent.settings.colorThemes.selectedItem\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-check\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"data\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas\" data-theme=\"[[settings.colorThemes.selectedItem]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.colorThemes\" data-model=\"settings.colorThemes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-film\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codecs</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.videoCodecs\" data-model=\"settings.videoCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"1\" max=\"8\" step=\"1\" data-model=\"settings.videoBitsPerSecond\" is=\"ui-input\" title=\"Bitrate\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"Mbps\" data-model=\"settings.videoBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.videoBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-volume-up\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.audioCodecs\" data-model=\"settings.audioCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"16\" max=\"128\" step=\"16\" data-model=\"settings.audioBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"kbps\" data-model=\"settings.audioBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.audioBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-settings>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div>\n\t\t\t\t\t<sc-credits><a href=\"http://www.patrickmatte.com\" target=\"_blank\"></a></sc-credits>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>");
+/* harmony default export */ var scroll_capture = ("<div class=\"sc-default\" is=\"scroll-capture\" data-model=\".\" data-theme-light=\"[[settings.isColorThemeLight]]\">\n\t<div class=\"sc-window sc-window-main\" is=\"ui-component\">\n\n\t\t<div class=\"sc-title\">\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<div class=\"sc-drag-area\"></div>\n\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t<span class=\"sc-label\">Scroll Capture</span>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t<button is=\"router-button\" data-path=\"closed\" title=\"Close\">\n\t\t\t\t\t\t<span class=\"sc-icon fas fa-times-circle\"></span>\n\t\t\t\t\t</button>\n\t\t\t\t</span>\n\t\t\t</span>\n\t\t</div>\n\n\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\n\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t<div is=\"ui-component\">\n\t\t\t\t\t<div class=\"sc-window sc-window-sections\" is=\"ui-component\">\n\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"scenario\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/scenario\" title=\"Timeline\">\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-icon fas fa-sliders-h\"></span> -->\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-stream\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Timeline</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t<!-- <span class=\"sc-tab\" data-id=\"play\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"play\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Play</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span> -->\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"video\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"record\" title=\"Capture\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Capture</span>\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t<span class=\"sc-tabs\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-id=\"settings\">\n\t\t\t\t\t\t\t\t\t<button is=\"router-button\" data-path=\"scroll-capture/settings\" title=\"Settings\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-cogs\"></span>\n\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Settings</span> -->\n\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"sc-window-content-main\" is=\"ui-component\">\n\n\t\t\t\t\t\t\t<sc-scenario class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<sc-actions-view data-provider=\"actions\" data-actions-length=\"[[actions.length]]\">\n\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t<sc-action-view class=\"sc-window ui-list-element\" data-type=\"[[data.type]]\" data-model=\"data\" data-selected=\"[[data.isSelectedItem]]\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-drag-area ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab-wrapper\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input size=\"[[data.name.length]]\" is=\"ui-input\" data-model=\"data.name\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isCaptureable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-set-button\" is=\"ui-button\" data-click=\"data.reCapture\" data-is-capturing=\"[[data.isCapturing]]\" title=\"Set\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-bullseye\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\" data-visible=\"[[data.isTestable]]\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-test-button\" is=\"ui-button\" data-click=\"data.play\" data-is-playing=\"[[data.isPlaying]]\" title=\"Play\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-play-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"ui-list-drag-area\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-trash-button\" data-model=\"data\" is=\"ui-button\" data-event-click=\"data.deleteAction\" title=\"Delete\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action-fields\" is=\"ui-list\" data-provider=\"data.array\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionScroll\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollLeft\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitX\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitX\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"ScrollTop\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.unitY\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" data-model=\"data.unitY\" is=\"ui-input\" data-event-focus=\"data.doScroll\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Target Selector\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon far fa-dot-circle\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"text\" data-model=\"data.target\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionSwipe\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\" is=\"action-tween\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-points-list sc-field-column\" data-provider=\"data.points\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageX\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.x\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"PageY\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" min=\"0\" step=\"1\" data-model=\"data.y\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionMouseEvent\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">X</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.x\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.x\" is=\"ui-input\" title=\"PageX\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon\">Y</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"px\" data-model=\"data.y\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"1\" min=\"0\" data-model=\"data.y\" is=\"ui-input\" title=\"PageY\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input sc-select\" title=\"MouseEvent Type\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-mouse-pointer\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"data.eventTypes\" data-model=\"data.eventTypes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionWait\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Duration\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-clock\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template data-type=\"ActionEval\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-action sc-fields-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<textarea rows=\"5\" data-model=\"data.code\" is=\"ui-input\"></textarea>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input\" title=\"Delay\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-hourglass-half\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"s\" data-model=\"data.delay\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"number\" step=\"0.25\" min=\"0\" data-model=\"data.delay\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-space\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</sc-action-view>\n\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t</sc-actions-view>\n\t\t\t\t\t\t\t\t<div class=\"sc-action-buttons\">\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\" is=\"ui-list\" data-provider=\"actions.types\">\n\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t<button class=\"sc-action-button\" data-type=\"[[data.type]]\" data-model=\"data\" is=\"ui-button\" title=\"[[data.description]]\" data-click=\"data.addAction\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon [[data.icon]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-buttons\">\n\t\t\t\t\t\t\t\t\t\t<button is=\"ui-button\" data-event-click=\"clearActions\" title=\"Delete all\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-trash-alt\"></span>\n\t\t\t\t\t\t\t\t\t\t</button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-scenario>\n\n\t\t\t\t\t\t\t<sc-video class=\"sc-section sc-fields\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<iframe></iframe>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-video>\n\n\t\t\t\t\t\t\t<sc-settings class=\"sc-section sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-adjust\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Color theme</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <span class=\"sc-label\">Theme:</span> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<!-- <div class=\"sc-color-themes\" data-provider=\"settings.colorThemes\" is=\"ui-list\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<label class=\"sc-radio\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"radio\" name=\"color-theme\" is=\"ui-input\" value=\"[[data]]\" data-model=\"parent.settings.colorThemes.selectedItem\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-check\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span is=\"ui-text\" data-model=\"data\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</template>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div> -->\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas\" data-theme=\"[[settings.colorThemes.selectedItem]]\" is=\"ui-component\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.colorThemes\" data-model=\"settings.colorThemes.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\"></div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t<div class=\"sc-window\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-title\">\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tab sc-title-tab\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-film\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-label\">Codecs</span>\n\t\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-tabs\"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"sc-window-content\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-fields\" is=\"ui-component\">\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-video\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.videoCodecs\" data-model=\"settings.videoCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"1\" max=\"8\" step=\"1\" data-model=\"settings.videoBitsPerSecond\" is=\"ui-input\" title=\"Bitrate\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"Mbps\" data-model=\"settings.videoBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.videoBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field-group\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-input sc-select\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-icon fas fa-volume-up\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<select data-provider=\"settings.audioCodecs\" data-model=\"settings.audioCodecs.selectedItem\" is=\"ui-select\"></select>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-field\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<input type=\"range\" min=\"16\" max=\"128\" step=\"16\" data-model=\"settings.audioBitsPerSecond\" is=\"ui-input\" />\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"sc-space\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class=\"sc-input-unit\" is=\"ui-text\" data-unit=\"kbps\" data-model=\"settings.audioBitsPerSecond\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span data-model=\"settings.audioBitsPerSecond\" is=\"ui-text\"></span>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</sc-settings>\n\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div>\n\t\t\t\t\t<sc-credits><a href=\"http://www.patrickmatte.com\" target=\"_blank\"></a></sc-credits>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>");
 // CONCATENATED MODULE: ./js/view/Section.js
 function Section_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { Section_typeof = function _typeof(obj) { return typeof obj; }; } else { Section_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return Section_typeof(obj); }
 
@@ -6481,20 +6506,16 @@ var Section_Section = /*#__PURE__*/function (_UIComponent) {
   var _super = Section_createSuper(Section);
 
   function Section(element) {
-    var _this;
-
     Section_classCallCheck(this, Section);
 
-    _this = _super.call(this, element);
-    _this.tabDataId = "";
-    return _this;
+    return _super.call(this, element);
   }
 
   Section_createClass(Section, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      // let tab = app.scrollCapture.element.querySelector(".sc-window.sc-window-sections .sc-tab[data-id='" + this.tabDataId + "']");
-      var tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.tabDataId + "']");
+      // let tab = app.scrollCapture.element.querySelector(".sc-window.sc-window-sections .sc-tab[data-id='" + this.slug + "']");
+      var tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.slug + "']");
       if (tab) tab.classList.add("sc-title-tab");
 
       var promise = Section_get(Section_getPrototypeOf(Section.prototype), "showDelayComplete", this).call(this);
@@ -6505,7 +6526,7 @@ var Section_Section = /*#__PURE__*/function (_UIComponent) {
   }, {
     key: "hideComplete",
     value: function hideComplete() {
-      var tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.tabDataId + "']");
+      var tab = app.scrollCapture.element.querySelector(".sc-tab[data-id='" + this.slug + "']");
       if (tab) tab.classList.remove("sc-title-tab");
       return Section_get(Section_getPrototypeOf(Section.prototype), "hideComplete", this).call(this);
     }
@@ -6551,24 +6572,20 @@ var SectionSettings_SectionSettings = /*#__PURE__*/function (_Section) {
   var _super = SectionSettings_createSuper(SectionSettings);
 
   function SectionSettings(element) {
-    var _this;
-
     SectionSettings_classCallCheck(this, SectionSettings);
 
-    _this = _super.call(this, element);
-    _this.tabDataId = "settings";
-    return _this;
+    return _super.call(this, element);
   }
 
   SectionSettings_createClass(SectionSettings, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      var _this2 = this;
+      var _this = this;
 
       var promise = SectionSettings_get(SectionSettings_getPrototypeOf(SectionSettings.prototype), "showDelayComplete", this).call(this);
 
       this.router.redirect("default", function () {
-        return _this2.path;
+        return _this.path;
       });
       app.save();
       return promise;
@@ -6608,7 +6625,8 @@ function SectionVideo_setPrototypeOf(o, p) { SectionVideo_setPrototypeOf = Objec
 
 
 
-var SectionVideo = /*#__PURE__*/function (_Section) {
+
+var SectionVideo_SectionVideo = /*#__PURE__*/function (_Section) {
   SectionVideo_inherits(SectionVideo, _Section);
 
   var _super = SectionVideo_createSuper(SectionVideo);
@@ -6619,12 +6637,11 @@ var SectionVideo = /*#__PURE__*/function (_Section) {
     SectionVideo_classCallCheck(this, SectionVideo);
 
     _this = _super.call(this, element);
-    _this.tabDataId = "video";
     _this.iframe = _this.element.querySelector("iframe");
     _this.iframe.src = chrome.extension.getURL('video-recording.html');
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       switch (msg.txt) {
-        case "scrollCaptureVideoHeigth":
+        case "scrollCaptureVideoHeight":
           _this.iframe.style.height = msg.height + "px";
           break;
       }
@@ -6633,9 +6650,19 @@ var SectionVideo = /*#__PURE__*/function (_Section) {
   }
 
   SectionVideo_createClass(SectionVideo, [{
+    key: "showDelayComplete",
+    value: function showDelayComplete() {
+      var promise = SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "showDelayComplete", this).call(this);
+
+      app.sendMessage({
+        txt: "scrollCaptureShowVideo"
+      });
+      return promise;
+    }
+  }, {
     key: "hideComplete",
     value: function hideComplete() {
-      chrome.runtime.sendMessage({
+      app.sendMessage({
         txt: "scrollCaptureUnloadVideo"
       });
       return SectionVideo_get(SectionVideo_getPrototypeOf(SectionVideo.prototype), "hideComplete", this).call(this);
@@ -6682,24 +6709,20 @@ var SectionScenario_SectionScenario = /*#__PURE__*/function (_Section) {
   var _super = SectionScenario_createSuper(SectionScenario);
 
   function SectionScenario(element) {
-    var _this;
-
     SectionScenario_classCallCheck(this, SectionScenario);
 
-    _this = _super.call(this, element);
-    _this.tabDataId = "scenario";
-    return _this;
+    return _super.call(this, element);
   }
 
   SectionScenario_createClass(SectionScenario, [{
     key: "showDelayComplete",
     value: function showDelayComplete() {
-      var _this2 = this;
+      var _this = this;
 
       var promise = SectionScenario_get(SectionScenario_getPrototypeOf(SectionScenario.prototype), "showDelayComplete", this).call(this);
 
       this.router.redirect("default", function () {
-        return _this2.path;
+        return _this.path;
       });
 
       if (!app.actions.selectedItem.value) {
@@ -6773,7 +6796,7 @@ var WindowContentMain = /*#__PURE__*/function (_UIComponent) {
 
 
 define("sc-scenario", SectionScenario_SectionScenario);
-define("sc-video", SectionVideo);
+define("sc-video", SectionVideo_SectionVideo);
 define("sc-settings", SectionSettings_SectionSettings);
 // CONCATENATED MODULE: ./js/view/ScrollCapture.js
 function ScrollCapture_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { ScrollCapture_typeof = function _typeof(obj) { return typeof obj; }; } else { ScrollCapture_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return ScrollCapture_typeof(obj); }
@@ -7351,7 +7374,7 @@ var UIText_UIText = /*#__PURE__*/function (_UIComponent) {
 
 
 // EXTERNAL MODULE: ./js/tsunami/utils/number.js
-var number = __webpack_require__(0);
+var number = __webpack_require__(1);
 
 // CONCATENATED MODULE: ./js/tsunami/components/UINumber.js
 function UINumber_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { UINumber_typeof = function _typeof(obj) { return typeof obj; }; } else { UINumber_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return UINumber_typeof(obj); }
@@ -8367,6 +8390,7 @@ function Action_createClass(Constructor, protoProps, staticProps) { if (protoPro
 
 
 
+
 var Action_Action = /*#__PURE__*/function () {
   function Action() {
     var _this = this;
@@ -8381,6 +8405,7 @@ var Action_Action = /*#__PURE__*/function () {
     this.play = this.play.bind(this);
     this.deleteAction = this.deleteAction.bind(this);
     this.addAction = this.addAction.bind(this);
+    this.reCapture = this.reCapture.bind(this);
     this.type = type;
     this.name = new StringData_StringData();
     this.name.addEventListener(Data_Data.CHANGE, function () {
@@ -8458,6 +8483,12 @@ var Action_Action = /*#__PURE__*/function () {
       this.isCapturing.value = true;
     }
   }, {
+    key: "reCapture",
+    value: function reCapture() {
+      Object(GABridge["a" /* sendTrackEventMessage */])("Action", "reCapture", this.type);
+      this.capture();
+    }
+  }, {
     key: "captureComplete",
     value: function captureComplete() {
       this.isCapturing.value = false;
@@ -8471,6 +8502,7 @@ var Action_Action = /*#__PURE__*/function () {
     value: function play() {
       var _this3 = this;
 
+      Object(GABridge["a" /* sendTrackEventMessage */])("Action", "play", this.type);
       this.isPlaying.value = true;
       var promise1 = this.trigger();
       var promise2 = promise1.then(function () {
@@ -8482,6 +8514,7 @@ var Action_Action = /*#__PURE__*/function () {
   }, {
     key: "deleteAction",
     value: function deleteAction() {
+      Object(GABridge["a" /* sendTrackEventMessage */])("Action", "delete", this.type);
       var index = app.actions.indexOf(this);
       app.actions.remove(this);
       var newIndex = Math.max(index - 1, 0);
@@ -60140,6 +60173,7 @@ function Actions_setPrototypeOf(o, p) { Actions_setPrototypeOf = Object.setProto
 
 
 
+
 var Actions_Actions = /*#__PURE__*/function (_ArrayData) {
   Actions_inherits(Actions, _ArrayData);
 
@@ -60169,6 +60203,7 @@ var Actions_Actions = /*#__PURE__*/function (_ArrayData) {
       }
 
       var action = this.types.selectedItem.value.clone();
+      Object(GABridge["a" /* sendTrackEventMessage */])("Action", "add", action.type);
       this.addAction(action); // this.types.selectedItem.value = this.types.value[0];
     }
   }, {
@@ -60220,12 +60255,62 @@ var Actions_Actions = /*#__PURE__*/function (_ArrayData) {
 }(ArrayData_ArrayData);
 
 
+// CONCATENATED MODULE: ./js/tsunami/utils/Throttle.js
+function Throttle_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Throttle_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function Throttle_createClass(Constructor, protoProps, staticProps) { if (protoProps) Throttle_defineProperties(Constructor.prototype, protoProps); if (staticProps) Throttle_defineProperties(Constructor, staticProps); return Constructor; }
+
+var Throttle = /*#__PURE__*/function () {
+  function Throttle(callback) {
+    var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
+
+    Throttle_classCallCheck(this, Throttle);
+
+    this.callback = callback;
+    this.timeout = timeout;
+    this.throttle = this.throttle.bind(this);
+    this.timeoutComplete = this.timeoutComplete.bind(this);
+    this.isWaiting = false;
+    this.doCallback = false;
+  }
+
+  Throttle_createClass(Throttle, [{
+    key: "throttle",
+    value: function throttle(data) {
+      this.data = data;
+      this.doCallback = true;
+
+      if (!this.isWaiting) {
+        this.timeoutComplete();
+      }
+    }
+  }, {
+    key: "timeoutComplete",
+    value: function timeoutComplete() {
+      if (this.doCallback) {
+        this.isWaiting = true;
+        this.callback(this.data);
+        this.doCallback = false;
+        setTimeout(this.timeoutComplete, this.timeout);
+      } else {
+        this.isWaiting = false;
+      }
+    }
+  }]);
+
+  return Throttle;
+}();
+
+
 // CONCATENATED MODULE: ./js/model/Settings.js
 function Settings_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function Settings_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function Settings_createClass(Constructor, protoProps, staticProps) { if (protoProps) Settings_defineProperties(Constructor.prototype, protoProps); if (staticProps) Settings_defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -60243,12 +60328,26 @@ var Settings_Settings = /*#__PURE__*/function () {
 
     this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
     this.position = new Vector2Data_Vector2Data(50, 50);
+    this.videoBitsPerSecondThrottle = new Throttle(function () {
+      Object(GABridge["a" /* sendTrackEventMessage */])("settings", "videoBitsPerSecond", _this.videoBitsPerSecond.value);
+    }, 1000);
     this.videoBitsPerSecond = new StringData_StringData(8);
+    this.videoBitsPerSecond.addEventListener(Data_Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
     this.videoCodecs = new ArrayData_ArrayData("vp8", "vp9", "h264");
     this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
+    this.videoCodecs.selectedItem.addEventListener(Data_Data.CHANGE, function () {
+      Object(GABridge["a" /* sendTrackEventMessage */])("settings", "videoCodec", _this.videoCodecs.selectedItem.value);
+    });
+    this.audioBitsPerSecondThrottle = new Throttle(function () {
+      Object(GABridge["a" /* sendTrackEventMessage */])("settings", "audioBitsPerSecond", _this.audioBitsPerSecond.value);
+    }, 1000);
     this.audioBitsPerSecond = new StringData_StringData(128);
+    this.audioBitsPerSecond.addEventListener(Data_Data.CHANGE, this.audioBitsPerSecondThrottle.throttle);
     this.audioCodecs = new ArrayData_ArrayData("opus");
     this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
+    this.audioCodecs.selectedItem.addEventListener(Data_Data.CHANGE, function () {
+      Object(GABridge["a" /* sendTrackEventMessage */])("settings", "audioCodec", _this.audioCodecs.selectedItem.value);
+    });
     this.darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
     this.isColorThemeLight = new BooleanData_BooleanData();
     this.isColorThemeLight.addEventListener(Data_Data.CHANGE, function (event) {
@@ -60256,12 +60355,14 @@ var Settings_Settings = /*#__PURE__*/function () {
         txt: "scrollCaptureColorTheme",
         isColorThemeLight: event.data
       };
-      chrome.runtime.sendMessage(msg);
+      app.sendMessage(msg);
     });
     this.colorThemes = new ArrayData_ArrayData("Dark", "Light", "Auto");
     this.colorThemes.selectedItem.value = "Dark";
     this.switchColorTheme();
     this.colorThemes.selectedItem.addEventListener(Data_Data.CHANGE, function () {
+      Object(GABridge["a" /* sendTrackEventMessage */])("settings", "colorTheme", _this.colorThemes.selectedItem.value);
+
       _this.switchColorTheme();
     });
   }
@@ -61178,6 +61279,7 @@ function PlayRecordState_setPrototypeOf(o, p) { PlayRecordState_setPrototypeOf =
 
 
 
+
 var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
   PlayRecordState_inherits(PlayRecordState, _PlayState);
 
@@ -61198,6 +61300,8 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
     value: function show() {
       var _this2 = this;
 
+      Object(GABridge["a" /* sendTrackEventMessage */])("record-actions-length", app.actions.value.length.toString());
+
       if (app.actions.value.length < 1) {
         this.timeout = new ActionWait();
         this.timeout.delay.value = 60 * 5;
@@ -61205,7 +61309,7 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
       }
 
       var promise = awaitTimeout(250).then(function () {
-        chrome.runtime.sendMessage({
+        app.sendMessage({
           txt: "scrollCaptureStartRecording"
         });
         return PlayRecordState_get(PlayRecordState_getPrototypeOf(PlayRecordState.prototype), "show", _this2).call(_this2);
@@ -61227,10 +61331,10 @@ var PlayRecordState_PlayRecordState = /*#__PURE__*/function (_PlayState) {
     key: "stopTheRecording",
     value: function stopTheRecording() {
       // clearInterval(this.keepAliveTimeout);
-      chrome.runtime.sendMessage({
+      app.sendMessage({
         txt: "scrollCaptureStopRecording"
       });
-      chrome.runtime.sendMessage({
+      app.sendMessage({
         txt: "scrollCaptureUpdateVideo"
       });
     }
@@ -61261,6 +61365,10 @@ function CloseState_classCallCheck(instance, Constructor) { if (!(instance insta
 function CloseState_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function CloseState_createClass(Constructor, protoProps, staticProps) { if (protoProps) CloseState_defineProperties(Constructor.prototype, protoProps); if (staticProps) CloseState_defineProperties(Constructor, staticProps); return Constructor; }
+
+function CloseState_get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { CloseState_get = Reflect.get; } else { CloseState_get = function _get(target, property, receiver) { var base = CloseState_superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return CloseState_get(target, property, receiver || target); }
+
+function CloseState_superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = CloseState_getPrototypeOf(object); if (object === null) break; } return object; }
 
 function CloseState_createSuper(Derived) { return function () { var Super = CloseState_getPrototypeOf(Derived), result; if (CloseState_isNativeReflectConstruct()) { var NewTarget = CloseState_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return CloseState_possibleConstructorReturn(this, result); }; }
 
@@ -61294,6 +61402,7 @@ var CloseState_CloseState = /*#__PURE__*/function (_Branch) {
     key: "show",
     value: function show() {
       app.save();
+      return CloseState_get(CloseState_getPrototypeOf(CloseState.prototype), "show", this).call(this);
     }
   }]);
 
@@ -61338,6 +61447,7 @@ function main_setPrototypeOf(o, p) { main_setPrototypeOf = Object.setPrototypeOf
 
 
 
+
 var app;
 
 var main_Main = /*#__PURE__*/function (_App) {
@@ -61351,8 +61461,13 @@ var main_Main = /*#__PURE__*/function (_App) {
     main_classCallCheck(this, Main);
 
     _this = _super.call(this, element);
+    _this.isActive = true;
 
     window.onbeforeunload = function () {
+      _this.isActive = false;
+
+      _this.router.removeEventListener(Router_Router.CHANGE, _this.trackRouterLocation);
+
       _this.router.location = "";
     };
 
@@ -61361,13 +61476,15 @@ var main_Main = /*#__PURE__*/function (_App) {
     // this.deleteSelected = this.deleteSelected.bind(this);
 
     _this.clearActions = _this.clearActions.bind(main_assertThisInitialized(_this));
+    _this.trackRouterLocation = _this.trackRouterLocation.bind(main_assertThisInitialized(_this));
     app = main_assertThisInitialized(_this);
     _this.router = new Router_Router(main_assertThisInitialized(_this));
 
     _this.router.redirect("default", function () {
       return "scroll-capture/scenario";
-    }); // this.router.addEventListener(Router.CHANGE, (e) => {console.log(e.type, this.router.location);});
-    // this.router.addEventListener(Router.COMPLETE, (e) => {console.log(e.type, this.router.location);});
+    });
+
+    _this.router.addEventListener(Router_Router.CHANGE, _this.trackRouterLocation); // this.router.addEventListener(Router.COMPLETE, (e) => {console.log(e.type, this.router.location);});
 
 
     _this.showCaptureIcon = new BooleanData_BooleanData();
@@ -61415,6 +61532,19 @@ var main_Main = /*#__PURE__*/function (_App) {
   }
 
   main_createClass(Main, [{
+    key: "sendMessage",
+    value: function sendMessage(message) {
+      if (this.isActive) {
+        chrome.runtime.sendMessage(message);
+      }
+    }
+  }, {
+    key: "trackRouterLocation",
+    value: function trackRouterLocation() {
+      // console.log(e.type, this.router.location);
+      Object(GABridge["b" /* sendTrackPageMessage */])("/" + this.router.location);
+    }
+  }, {
     key: "load",
     value: function load() {
       var _this2 = this;
@@ -61445,7 +61575,9 @@ var main_Main = /*#__PURE__*/function (_App) {
     }
   }, {
     key: "show",
-    value: function show() {}
+    value: function show() {
+      Object(GABridge["a" /* sendTrackEventMessage */])("ScrollCaptureStart", window.location.origin + window.location.pathname);
+    }
   }, {
     key: "hide",
     value: function hide() {}
@@ -61484,6 +61616,7 @@ var main_Main = /*#__PURE__*/function (_App) {
   }, {
     key: "clearActions",
     value: function clearActions() {
+      Object(GABridge["a" /* sendTrackEventMessage */])("clearActions", "click");
       this.actions.value = [];
       this.save();
     }
@@ -61498,13 +61631,7 @@ define("scroll-capture", ScrollCapture_ScrollCapture);
 // CONCATENATED MODULE: ./js/content.js
 
 if (!window.main) window.main = new main_Main(document.body);
-window.main.router.location = "default"; // chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-// 	switch(msg.txt) {
-// 		case "scrollCaptureBrowserAction":
-// 			this.router.location = main.startLocation;
-// 			break;
-// 	}
-// });
+window.main.router.location = "default";
 
 /***/ })
 /******/ ]);

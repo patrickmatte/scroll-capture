@@ -89,6 +89,29 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return sendTrackEventMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return sendTrackPageMessage; });
+function sendTrackEventMessage(category, action) {
+  var label = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+  chrome.runtime.sendMessage({
+    txt: "scrollCaptureTrackEvent",
+    category: category,
+    action: action,
+    label: label
+  });
+}
+function sendTrackPageMessage(path) {
+  chrome.runtime.sendMessage({
+    txt: "scrollCaptureTrackPage",
+    path: path
+  });
+}
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* unused harmony export getRandomArbitrary */
 /* unused harmony export getRandomInt */
 /* unused harmony export getRandomIntInclusive */
@@ -586,19 +609,19 @@ function hexToRgb(hex) {
 }
 
 /***/ }),
-/* 1 */,
 /* 2 */,
 /* 3 */,
 /* 4 */,
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
 /* 6 */,
-/* 7 */
+/* 7 */,
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -606,7 +629,7 @@ module.exports = __webpack_require__(7);
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./js/tsunami/utils/number.js
-var number = __webpack_require__(0);
+var number = __webpack_require__(1);
 
 // CONCATENATED MODULE: ./js/tsunami/utils/date.js
 
@@ -782,7 +805,11 @@ function getFamiliarTimeBetween(startDate, endDate) {
 
   return text;
 }
+// EXTERNAL MODULE: ./js/view/GABridge.js
+var GABridge = __webpack_require__(0);
+
 // CONCATENATED MODULE: ./js/video-recording.js
+
 
 
 chrome.storage.local.get(["json"], function (result) {
@@ -816,6 +843,9 @@ chrome.storage.local.get(["json"], function (result) {
 
   document.body.querySelector(".sc-default").setAttribute("data-theme-light", isColorThemeLight);
 });
+window.addEventListener("resize", function () {
+  dispatchVideoHeigth();
+});
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   switch (msg.txt) {
     case "scrollCaptureColorTheme":
@@ -829,21 +859,30 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     case "scrollCaptureUnloadVideo":
       unloadVideo();
       break;
+
+    case "scrollCaptureShowVideo":
+      dispatchVideoHeigth();
+      break;
   }
 });
 var player = document.querySelector('.sc-video-player');
+player.setAttribute("muted", "true");
+player.setAttribute("autoplay", "true");
+player.setAttribute("playsinline", "true");
+player.setAttribute('controls', '1');
 player.addEventListener('canplay', function () {
-  this.muted = true;
-  player.setAttribute('controls', '1');
-  this.play();
+  dispatchVideoHeigth();
+});
+
+function dispatchVideoHeigth() {
   chrome.runtime.getBackgroundPage(function (page) {
     var msg = {
-      txt: "scrollCaptureVideoHeigth",
+      txt: "scrollCaptureVideoHeight",
       height: document.body.scrollHeight
     };
     chrome.tabs.sendMessage(page.tabId, msg);
   });
-});
+}
 
 function updateVideo() {
   chrome.runtime.getBackgroundPage(function (page) {
@@ -865,6 +904,9 @@ function updateVideo() {
         var button = buttons[i];
         button.href = page.videoURL;
         button.download = videoFileName;
+        button.addEventListener("click", function () {
+          Object(GABridge["a" /* sendTrackEventMessage */])("download", "click");
+        });
       }
 
       var fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
@@ -874,9 +916,8 @@ function updateVideo() {
 }
 
 function unloadVideo() {
-  player.pause();
-  player.removeAttribute('src');
-  player.load();
+  player.pause(); // player.removeAttribute('src');
+  // player.load();
 }
 
 /***/ })

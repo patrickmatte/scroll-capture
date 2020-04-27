@@ -49,5 +49,6 @@
 		"48": "assets/images/get_started48.png",
 		"128": "assets/images/get_started128.png"
 	},
-	"manifest_version": 2
+	"manifest_version": 2,
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

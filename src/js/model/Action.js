@@ -4,6 +4,7 @@ import {awaitTimeout} from "../tsunami/await";
 import StringData from "../tsunami/data/StringData";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
+import { sendTrackEventMessage } from "../view/GABridge";
 
 export default class Action {
 
@@ -12,6 +13,7 @@ export default class Action {
 		this.play = this.play.bind(this);
 		this.deleteAction = this.deleteAction.bind(this);
 		this.addAction = this.addAction.bind(this);
+		this.reCapture = this.reCapture.bind(this);
 
 		this.type = type;
 		this.name = new StringData();
@@ -83,6 +85,11 @@ export default class Action {
 		this.isCapturing.value = true;
 	}
 
+	reCapture() {
+		sendTrackEventMessage("Action", "reCapture", this.type);
+		this.capture();
+	}
+
 	captureComplete() {
 		this.isCapturing.value = false;
 		app.save();
@@ -92,6 +99,7 @@ export default class Action {
 	}
 
 	play() {
+		sendTrackEventMessage("Action", "play", this.type);
 		this.isPlaying.value = true;
 		let promise1 = this.trigger();
 		let promise2 = promise1.then(() => {
@@ -102,6 +110,7 @@ export default class Action {
 	}
 
 	deleteAction() {
+		sendTrackEventMessage("Action", "delete", this.type);
 		let index = app.actions.indexOf(this);
 		app.actions.remove(this);
 		let newIndex = Math.max(index - 1, 0);

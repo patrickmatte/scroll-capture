@@ -1,5 +1,6 @@
 import { importTemplate, define } from "./tsunami/tsunami";
-import {loadStyle} from "./tsunami/load";
+import { loadStyle } from "./tsunami/load";
+import { sendTrackPageMessage, sendTrackEventMessage } from "./view/GABridge";
 import ScrollCapture from "./view/ScrollCapture";
 import App from "./tsunami/App";
 import Actions from "./model/Actions";
@@ -20,7 +21,11 @@ export default class Main extends App {
 	constructor(element) {
 		super(element);
 		
+		this.isActive = true;
+
 		window.onbeforeunload = () => {
+			this.isActive = false;
+			this.router.removeEventListener(Router.CHANGE, this.trackRouterLocation);
 			this.router.location = "";
 		}
 		
@@ -29,12 +34,13 @@ export default class Main extends App {
 		// this.captureSelected = this.captureSelected.bind(this);
 		// this.deleteSelected = this.deleteSelected.bind(this);
 		this.clearActions = this.clearActions.bind(this);
+		this.trackRouterLocation = this.trackRouterLocation.bind(this);
 
 		app = this;
 
 		this.router = new Router(this);
 		this.router.redirect("default", () => { return "scroll-capture/scenario" });
-		// this.router.addEventListener(Router.CHANGE, (e) => {console.log(e.type, this.router.location);});
+		this.router.addEventListener(Router.CHANGE, this.trackRouterLocation);
 		// this.router.addEventListener(Router.COMPLETE, (e) => {console.log(e.type, this.router.location);});
 
 		this.showCaptureIcon = new BooleanData();
@@ -82,6 +88,17 @@ export default class Main extends App {
 		}
 	}
 
+	sendMessage(message) {
+		if (this.isActive) {
+			chrome.runtime.sendMessage(message);
+		}
+	}
+
+	trackRouterLocation() {
+		// console.log(e.type, this.router.location);
+		sendTrackPageMessage("/" + this.router.location);
+	}
+
 	load() {
 		let contentCSS = chrome.extension.getURL("content.css");
 		let contentCSSPromise = loadStyle(contentCSS);
@@ -95,6 +112,7 @@ export default class Main extends App {
 				resolve(result);
 			});
 		});
+
 		return Promise.all([promise, contentCSSPromise, fontawesomeCSSPromise]).then((results) => {
 			if (results[0]) {
 				let json = results[0].json;
@@ -108,6 +126,7 @@ export default class Main extends App {
 	}
 
 	show() {
+		sendTrackEventMessage("ScrollCaptureStart", window.location.origin + window.location.pathname);
 	}
 
 	hide() {
@@ -145,6 +164,7 @@ export default class Main extends App {
 	// }
 	
 	clearActions() {
+		sendTrackEventMessage("clearActions", "click");
 		this.actions.value = [];
 		this.save();
 	}

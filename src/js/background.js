@@ -1,6 +1,8 @@
 
 // let page = chrome.extension.getBackgroundPage();
 
+import { trackEvent, trackPage } from "./view/GA";
+
 let mediaStream;
 let isRecording;
 let mediaRecorder;
@@ -13,6 +15,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             break;
         case "scrollCaptureStopRecording":
             stopRecording();
+            break;
+        case "scrollCaptureTrackEvent":
+            trackEvent(msg.category, msg.action, msg.label);
+            break;
+        case "scrollCaptureTrackPage":
+            trackPage(msg.path);
             break;
     }
 });

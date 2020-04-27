@@ -4,6 +4,7 @@ import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
 import ActionSwipe from "./ActionSwipe";
 import ActionWait from "./ActionWait";
+import { sendTrackEventMessage } from "../view/GABridge";
 
 export default class Actions extends ArrayData {
 
@@ -29,6 +30,7 @@ export default class Actions extends ArrayData {
 			return;
 		}
 		let action = this.types.selectedItem.value.clone();
+		sendTrackEventMessage("Action", "add", action.type);
 		this.addAction(action);
 		// this.types.selectedItem.value = this.types.value[0];
 	}

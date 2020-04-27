@@ -9,6 +9,7 @@ export default class CloseState extends Branch {
 
     show() {
         app.save();
+        return super.show();
     }
 
 }
