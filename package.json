@@ -1,10 +1,11 @@
 {
 	"name": "scroll-capture",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"author": "Patrick Matte <patrick.matte@gmail.com>",
 	"description": "A chrome extension to automate scrolling and mouse actions for your portfolio screen captures.",
 	"scripts": {
-		"build": "cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
+		"dev": "webpack -p --env=development --progress --config webpack.config.js",
+		"build": "webpack -p --env=production --progress --config webpack.config.js"
 	},
 	"browserslist": "> 1%, last 2 versions, IE 11",
 	"babel": {
@@ -13,6 +14,7 @@
 			"@babel/preset-env"
 		]
 	},
+	"license": "UNLICENSED",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/patrickmatte/screen-capture-scenario"
@@ -22,9 +24,7 @@
 		"@babel/preset-env": "^7.9.0",
 		"babel-loader": "^8.1.0",
 		"copy-webpack-plugin": "^5.1.1",
-		"cross-env": "^7.0.2",
 		"css-loader": "^3.4.2",
-		"dotenv-webpack": "^1.7.0",
 		"file-loader": "^6.0.0",
 		"mini-css-extract-plugin": "^0.9.0",
 		"node-sass": "^4.13.1",

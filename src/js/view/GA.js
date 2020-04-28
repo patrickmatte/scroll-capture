@@ -2,16 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/**
- * Add your Analytics tracking ID here.
- */
-// dev
-// let _analyticsID = 'UA-161404627-1';
-
-// prod
-let _analyticsID = 'UA-161404627-2';
-
-/**
+ /**
  * Below is a modified version of the Google Analytics asynchronous tracking
  * code snippet.  It has been modified to pull the HTTPS version of ga.js
  * instead of the default HTTP version.  It is recommended that you use this
@@ -19,16 +10,19 @@ let _analyticsID = 'UA-161404627-2';
  * a Google Analytics account.
  */
 
-window._gaq = window._gaq || [];
-window._gaq.push(['_setAccount', _analyticsID]);
-window._gaq.push(['_trackPageview']);
+export function initAnalytics(analyticsID) {
+    console.log("initAnalytics", analyticsID);
+    window._gaq = window._gaq || [];
+    window._gaq.push(['_setAccount', analyticsID]);
+    window._gaq.push(['_trackPageview']);
 
-let ga = document.createElement('script');
-ga.type = 'text/javascript';
-ga.async = true;
-ga.src = 'https://ssl.google-analytics.com/ga.js';
-let s = document.getElementsByTagName('script')[0];
-s.parentNode.insertBefore(ga, s);
+    let ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    let s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+ }
 
 /**
  * Track a click on a button using the asynchronous tracking API.

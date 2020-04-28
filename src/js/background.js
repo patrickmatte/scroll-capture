@@ -25,18 +25,20 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
 });
 
-chrome.browserAction.onClicked.addListener((tab) => {
-    if (isRecording) stopRecording();
-    
-    chrome.tabs.executeScript({
-        file: 'content.js'
+export function initBackgroundPage() {
+    chrome.browserAction.onClicked.addListener((tab) => {
+        if (isRecording) stopRecording();
+
+        chrome.tabs.executeScript({
+            file: 'content.js'
+        });
+
+        window.tabId = tab.id;
+
+        // let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
+        // chrome.tabs.sendMessage(tab.id, msg);
     });
-
-    window.tabId = tab.id;
-
-    // let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
-    // chrome.tabs.sendMessage(tab.id, msg);
-});
+}
 
 function handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
