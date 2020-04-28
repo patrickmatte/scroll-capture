@@ -13,19 +13,13 @@ export default class UINumber extends UIText {
 		this.easing = Easing.cubic.easeOut;
 
 		let isRank = this.element.getAttribute("data-is-rank");
-		if(isRank == "true") {
-			this.isRank = true;
-		}
+		this.isRank = (isRank == "true");
 
 		let roundDecimal = this.element.getAttribute("data-round-decimal");
-		if (roundDecimal) {
-			this.roundDecimal = Number(roundDecimal);
-		}
+		if (roundDecimal) this.roundDecimal = Number(roundDecimal);
 
 		let format = this.element.getAttribute("data-format");
-		if (format) {
-			this.applyFormat = Boolean(format);
-		}
+		this.applyFormat = (format == "true");
 	}
 
 	updateValue(value) {

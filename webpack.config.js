@@ -10,7 +10,7 @@ module.exports = (env) => {
 		context: path.resolve(__dirname, "src"),
 		devtool: `[name].${(isDev) ? "inline-source-map" : "none"}`,
 		entry: {
-			"content": ["./js/content.js", "./css/content.scss"],
+			"content": ["./js/main.js", "./css/content.scss"],
 			"background": [`./js/background-${env}.js`],
 			"video-recording": ["./js/video-recording.js"]
 		},

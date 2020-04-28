@@ -15,14 +15,14 @@ export default class UIRouterButton extends UIButton {
 	set scope(value) {
 		super.scope = value;
 
-		let pushState = this.element.hasAttribute("data-pushstate");
+		let pushState = this.element.getAttribute("data-pushstate");
 		if (pushState) {
-			this.pushState = Boolean(pushState);
+			this.pushState = (pushState == "true");
 		}
 
-		let clickDelay = this.element.hasAttribute("data-click-delay");
+		let clickDelay = this.element.getAttribute("data-click-delay");
 		if (clickDelay) {
-			this.clickDelay = Boolean(clickDelay);
+			this.clickDelay = (clickDelay == "true");
 		}
 	}
 

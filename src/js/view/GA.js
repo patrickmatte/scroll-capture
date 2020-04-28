@@ -11,7 +11,6 @@
  */
 
 export function initAnalytics(analyticsID) {
-    console.log("initAnalytics", analyticsID);
     window._gaq = window._gaq || [];
     window._gaq.push(['_setAccount', analyticsID]);
     window._gaq.push(['_trackPageview']);
