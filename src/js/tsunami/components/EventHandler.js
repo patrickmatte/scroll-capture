@@ -1,17 +1,17 @@
 export default class EventHandler {
 
-	constructor(eventDispatcher, type, eventHandler, debug = false) {
-		this.eventDispatcher = eventDispatcher;
-		this.type = type;
-		this.eventHandler = eventHandler;
-		this.eventDispatcher.addEventListener(this.type, this.eventHandler);
-	}
+    constructor(eventDispatcher, type, expression, scope) {
+        this.eventDispatcher = eventDispatcher;
+        this.type = type;
+        this.eventHandler = new Function("event", expression).bind(scope);
+        this.eventDispatcher.addEventListener(this.type, this.eventHandler);
+    }
 
-	destroy() {
-		this.eventDispatcher.removeEventListener(this.type, this.eventHandler);
-		this.eventDispatcher = null;
-		this.type = null;
-		this.eventHandler = null;
-	}
+    destroy() {
+        this.eventDispatcher.removeEventListener(this.type, this.eventHandler);
+        this.eventDispatcher = null;
+        this.type = null;
+        this.eventHandler = null;
+    }
 
 }
