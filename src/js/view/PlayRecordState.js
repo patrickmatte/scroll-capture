@@ -44,7 +44,7 @@ export default class PlayRecordState extends PlayState {
         window.removeEventListener("onbeforeunload", this.onBeforeUnloadHandler);
         if (this.isPlaying) this.stopTheRecording();
         if (this.timeout) {
-            this.timeout.deleteAction();
+            app.actions.removeAction(this.timeout);
             this.timeout = null;
         }
         return super.hide();

@@ -11,8 +11,6 @@ export default class Action {
 	constructor(type = "Action", name = "Action", description = "Add an Action") {
 		this.capture = this.capture.bind(this);
 		this.play = this.play.bind(this);
-		this.deleteAction = this.deleteAction.bind(this);
-		this.addAction = this.addAction.bind(this);
 		this.reCapture = this.reCapture.bind(this);
 
 		this.type = type;
@@ -37,11 +35,6 @@ export default class Action {
 
 
 		this.array = [this];
-	}
-
-	addAction() {
-		app.actions.types.selectedItem.value = this;
-		app.actions.addSelectedType();
 	}
 
 	clone() {
@@ -107,13 +100,5 @@ export default class Action {
 			app.save();
 		});
 		return promise2;
-	}
-
-	deleteAction() {
-		sendTrackEventMessage("Action", "delete", this.type);
-		let index = app.actions.indexOf(this);
-		app.actions.remove(this);
-		let newIndex = Math.max(index - 1, 0);
-		app.actions.selectedIndex.value = Math.min(newIndex, app.actions.value.length - 1);
 	}
 }

@@ -75,19 +75,19 @@
 												<span class="sc-tabs">
 													<span class="sc-tab" data-visible="[[data.isCaptureable]]" is="ui-component">
 														<div class="ui-list-drag-area"></div>
-														<button class="sc-set-button" is="ui-button" data-click="data.reCapture" data-is-capturing="[[data.isCapturing]]" title="Set">
+														<button class="sc-set-button" is="ui-button" data-model="data" data-on-click="this.model.reCapture()" data-is-capturing="[[data.isCapturing]]" title="Set">
 															<span class="sc-icon fas fa-bullseye"></span>
 														</button>
 													</span>
 													<span class="sc-tab" data-visible="[[data.isTestable]]" is="ui-component">
 														<div class="ui-list-drag-area"></div>
-														<button class="sc-test-button" is="ui-button" data-click="data.play" data-is-playing="[[data.isPlaying]]" title="Play">
+														<button class="sc-test-button" is="ui-button" data-model="data" data-on-click="this.model.play()" data-is-playing="[[data.isPlaying]]" title="Play">
 															<span class="sc-icon fas fa-play-circle"></span>
 														</button>
 													</span>
 													<span class="sc-tab">
 														<div class="ui-list-drag-area"></div>
-														<button class="sc-trash-button" data-model="data" is="ui-button" data-event-click="data.deleteAction" title="Delete">
+														<button class="sc-trash-button" is="ui-button" data-model="data" data-on-click="this.scope.rootScope.actions.removeAction(this.model);" title="Delete">
 															<span class="sc-icon fas fa-trash-alt"></span>
 														</button>
 													</span>
@@ -103,14 +103,14 @@
 																		<span class="sc-icon">X</span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitX"></span>
-																			<input type="number" min="0" data-model="data.unitX" is="ui-input" data-event-focus="data.doScroll" />
+																			<input type="number" min="0" data-model="data.unitX" is="ui-input" data-on-focus="this.scope.data.doScroll()" />
 																		</span>
 																	</span>
 																	<span class="sc-input" title="ScrollTop">
 																		<span class="sc-icon">Y</span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px" data-model="data.unitY"></span>
-																			<input type="number" min="0" data-model="data.unitY" is="ui-input" data-event-focus="data.doScroll" />
+																			<input type="number" min="0" data-model="data.unitY" is="ui-input" data-on-focus="this.scope.data.doScroll()" />
 																		</span>
 																	</span>
 																</div>
@@ -219,13 +219,13 @@
 								<div class="sc-action-buttons">
 									<div class="sc-buttons" is="ui-list" data-provider="actions.types">
 										<template>
-											<button class="sc-action-button" data-type="[[data.type]]" data-model="data" is="ui-button" title="[[data.description]]" data-click="data.addAction">
+											<button class="sc-action-button" data-type="[[data.type]]" data-model="data" is="ui-button" title="[[data.description]]" data-on-click="this.scope.rootScope.actions.cloneAction(this.model);">
 												<span class="sc-icon [[data.icon]]" is="ui-component"></span>
 											</button>
 										</template>
 									</div>
 									<div class="sc-buttons">
-										<button is="ui-button" data-event-click="clearActions" title="Delete all">
+										<button is="ui-button" data-on-click="this.scope.clearActions()" title="Delete all">
 											<span class="sc-icon fas fa-trash-alt"></span>
 										</button>
 									</div>
@@ -257,7 +257,7 @@
 													<!-- <div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
 															<template>
 																<label class="sc-radio">
-																	<input type="radio" name="color-theme" is="ui-input" value="[[data]]" data-model="parent.settings.colorThemes.selectedItem" />
+																	<input type="radio" name="color-theme" is="ui-input" value="[[data]]" data-model="parentScope.settings.colorThemes.selectedItem" />
 																	<span class="sc-icon fas fa-check"></span>
 																	<span is="ui-text" data-model="data"></span>
 																</label>

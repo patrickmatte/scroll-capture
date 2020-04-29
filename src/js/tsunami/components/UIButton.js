@@ -9,6 +9,10 @@ export default class UIButton extends UIComponent {
 		this.onRelease = () => {};
 		this.clickHandler = this.clickHandler.bind(this);
 		this.pressHandler = this.pressHandler.bind(this);
+		this.clickDelayComplete = this.clickDelayComplete.bind(this)
+
+		this.clickDelay = 0;
+
 		this.element.addEventListener(events.click, this.clickHandler);
 		this.element.addEventListener(events.mousedown, this.pressHandler);
 	}
@@ -19,6 +23,10 @@ export default class UIButton extends UIComponent {
 
 	set scope(value) {
 		super.scope = value;
+
+		let clickDelay = this.element.getAttribute("data-click-delay");
+		if (clickDelay) this.clickDelay = Number(clickDelay);
+
 		let click = this.element.getAttribute("data-click");
 		if(click) {
 			this.onRelease = (event) => {
@@ -34,6 +42,15 @@ export default class UIButton extends UIComponent {
 
 	clickHandler(event) {
 		this.element.setAttribute("data-event", "click");
+
+		if (this.clickDelay > 0) {
+			setTimeout(this.clickDelayComplete, this.clickDelay * 1000, event);
+		} else {
+			this.clickDelayComplete(event);
+		}
+	}
+
+	clickDelayComplete(event) {
 		if (this.onRelease) {
 			this.onRelease(event);
 		}

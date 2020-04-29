@@ -5,9 +5,8 @@ export default class UIRouterButton extends UIButton {
 	constructor(element) {
 		super(element);
 		this.pushState = true;
-		this.clickDelay = 0;
 	}
-
+	
 	get scope() {
 		return super.scope;
 	}
@@ -19,32 +18,16 @@ export default class UIRouterButton extends UIButton {
 		if (pushState) {
 			this.pushState = (pushState == "true");
 		}
-
-		let clickDelay = this.element.getAttribute("data-click-delay");
-		if (clickDelay) {
-			this.clickDelay = (clickDelay == "true");
-		}
 	}
 
 	clickHandler(event) {
 		event.preventDefault();
 
-		if (this.cancelClick) {
-			this.cancelClick = false;
-			return;
-		}
-
 		super.clickHandler(event);
-
-		if (this.clickDelay > 0) {
-			setTimeout(this.clickDelayComplete.bind(this), this.clickDelay * 1000);
-		} else {
-			this.clickDelayComplete();
-		}
-
 	}
 
-	clickDelayComplete() {
+	clickDelayComplete(event) {
+		super.clickDelayComplete(event);
 		let href = this.element.href;
 		if (href) {
 			let path = href.substr(this.router.absoluteBasePath.length);

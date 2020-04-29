@@ -10,6 +10,7 @@ import {isTouch, localToGlobal} from "../window";
 import Branch from "../Branch";
 import Point from "../geom/Point";
 import EventHandler from "./EventHandler";
+import EventHandler2 from "./EventHandler2";
 
 export default class UIComponent extends Branch {
 
@@ -190,10 +191,14 @@ export default class UIComponent extends Branch {
 			let attribute = this.element.attributes[i];
 			// if(this.debug) console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
 			
-			if(attribute.name.indexOf("data-event-") != -1) {
+			if (attribute.name.indexOf("data-event-") != -1) {
 				this._createEventHandler(attribute, value);
 			}
-			
+
+			if (attribute.name.indexOf("data-on-") != -1) {
+				this._onEventHandler(attribute, value);
+			}
+
 			if (attribute.value.indexOf("[[") != -1) {
 				let attributeData = new ArrayDataOperation();
 				attributeData.parseString(attribute.value, value);
@@ -218,6 +223,12 @@ export default class UIComponent extends Branch {
 		let eventType = attribute.name.split("data-event-")[1];
 		let handler = evalProperty(attribute.value, scope);
 		let eventHandler = new EventHandler(this.element, eventType, handler, this.debug);
+		this.attributes[attribute.name] = eventHandler;
+	}
+
+	_onEventHandler(attribute, scope) {
+		let eventType = attribute.name.split("data-on-")[1];
+		let eventHandler = new EventHandler2(this.element, eventType, attribute.value, this);
 		this.attributes[attribute.name] = eventHandler;
 	}
 

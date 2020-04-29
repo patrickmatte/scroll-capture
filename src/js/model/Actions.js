@@ -12,7 +12,7 @@ export default class Actions extends ArrayData {
 		super();
 		this.push.apply(this, arguments);
 
-		this.addSelectedType = this.addSelectedType.bind(this);
+		// this.addSelectedType = this.addSelectedType.bind(this);
 
 		this.types = new ArrayData();
 		this.types.value = [
@@ -22,27 +22,42 @@ export default class Actions extends ArrayData {
 			new ActionEval(),
 			new ActionWait()
 		];
-		this.types.selectedItem.value = this.types.value[0];
-	}
-
-	addSelectedType() {
-		if(!this.types.selectedItem.value) {
-			return;
-		}
-		let action = this.types.selectedItem.value.clone();
-		sendTrackEventMessage("Action", "add", action.type);
-		this.addAction(action);
 		// this.types.selectedItem.value = this.types.value[0];
 	}
 
+	cloneAction(action) {
+		let clone = action.clone();
+		this.addAction(clone);
+	}
+
+	// addSelectedType() {
+	// 	if(!this.types.selectedItem.value) {
+	// 		return;
+	// 	}
+	// 	let action = this.types.selectedItem.value.clone();
+	// 	sendTrackEventMessage("Action", "add", action.type);
+	// 	this.addAction(action);
+	// 	// this.types.selectedItem.value = this.types.value[0];
+	// }
+
 	addAction(action) {
 		if (!action) return;
+		sendTrackEventMessage("Action", "add", action.type);
 		action.captureAtInit();
 		let index = this.selectedIndex.value + 1;
 		if (isNaN(index)) index = this.value.length;
 		this.splice(index, 0, action);
 		this.selectedIndex.value = index;
 	}
+
+	removeAction(action) {
+		sendTrackEventMessage("Action", "remove", action.type);
+		let index = this.indexOf(action);
+		this.remove(action);
+		let newIndex = Math.max(index - 1, 0);
+		this.selectedIndex.value = Math.min(newIndex, this.value.length - 1);
+	}
+
 
 	serialize() {
 		let actions = [];
