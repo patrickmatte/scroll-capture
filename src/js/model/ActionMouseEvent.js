@@ -7,10 +7,10 @@ import StringData from "../tsunami/data/StringData";
 
 export default class ActionMouseEvent extends Action {
 
-	constructor(eventType = "click", x = "0", y = "0") {
+	constructor(eventType = "click", x = 0, y = 0) {
 		super("ActionMouseEvent", "MouseEvent", "Add a mouse event");
-		this.x = new StringData(x);
-		this.y = new StringData(y);
+		this.x = new NumberData(x);
+		this.y = new NumberData(y);
 		this.eventTypes = new ArrayData("click", "mousedown", "mouseup", "mouseover", "mouseout", "dblclick", "mousemove", "mouseenter", "mouseleave", "contextmenu", "touchstart", "touchmove", "touchend");
 		this.eventTypes.selectedItem.value = this.eventTypes.value[0];
 		this.isTestable.value = true;
@@ -58,16 +58,17 @@ export default class ActionMouseEvent extends Action {
 	serialize() {
 		let data = super.serialize();
 		data.eventType = this.eventTypes.selectedItem.value;
-		data.x = this.x.value.toString();
-		data.y = this.y.value.toString();
+		data.x = this.x.value;
+		data.y = this.y.value;
 		return data;
 	}
 
 	deserialize(data) {
+		if (!data) return;
 		super.deserialize(data);
 		this.eventTypes.selectedItem.value = data.eventType;
-		this.x.value = data.x || "0";
-		this.y.value = data.y || "0";
+		this.x.deserialize(data.x);
+		this.y.deserialize(data.y);
 	}
 
 	capture() {

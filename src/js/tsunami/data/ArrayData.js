@@ -135,7 +135,7 @@ export default class ArrayData extends Data {
 			}
 		}
 		this.length.value = this._value.length;
-		this.dispatchEvent({type:"reset", value:this._value});
+		// this.dispatchEvent({type:"reset", value:this._value});
 		this.dispatchChangeEvent();
 		if(this.includes(this.selectedItem.value)) {
 			this.updateSelectedIndex();
@@ -174,7 +174,7 @@ export default class ArrayData extends Data {
 		}
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"remove", value:[item], index:this.value.length, total:1});
-		this.dispatchChangeEvent();
+		// this.dispatchChangeEvent();
 		if(item == this.selectedItem.value) {
 			this.selectedItem.value = null;
 		} else {
@@ -199,7 +199,7 @@ export default class ArrayData extends Data {
 		}
 		if (added.length > 0) {
 			this.dispatchEvent({type:"add", value:added, index:previousLength, total:arguments.length});
-			this.dispatchChangeEvent();
+			// this.dispatchChangeEvent();
 		}
 		return length;
 	}
@@ -207,7 +207,7 @@ export default class ArrayData extends Data {
 	reverse() {
 		this._value.reverse();
 		this.dispatchEvent({type:"reverse", value:this._value});
-		this.dispatchChangeEvent();
+		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
 
@@ -218,7 +218,7 @@ export default class ArrayData extends Data {
 		}
 		this.length.value = this._value.length;
 		this.dispatchEvent({type:"remove", value:[item], index:0, total:1});
-		this.dispatchChangeEvent();
+		// this.dispatchChangeEvent();
 		if(item == this.selectedItem.value) {
 			this.selectedItem.value = null;
 		} else {
@@ -232,14 +232,14 @@ export default class ArrayData extends Data {
 		this._value[index_A] = this._value[index_B];
 		this._value[index_B] = temp;
 		this.dispatchEvent({type:"sort", value:this._value});
-		this.dispatchChangeEvent();
+		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
 
 	sort(compareFunction) {
 		this._value.sort(compareFunction);
 		this.dispatchEvent({type:"sort", value:this._value});
-		this.dispatchChangeEvent();
+		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
 
@@ -269,9 +269,9 @@ export default class ArrayData extends Data {
 		if (added.length > 0) {
 			this.dispatchEvent({type:"add", value:added, index:index, total:added.length});
 		}
-		if (elements.length > 0 || added.length > 0) {
-			this.dispatchChangeEvent();
-		}
+		// if (elements.length > 0 || added.length > 0) {
+		// 	this.dispatchChangeEvent();
+		// }
 		if(this.includes(this.selectedItem.value)) {
 			this.updateSelectedIndex();
 		} else {
@@ -302,7 +302,7 @@ export default class ArrayData extends Data {
 		}
 		if (added.length > 0) {
 			this.dispatchEvent({type:"add", value:added, index:0, total:arguments.length});
-			this.dispatchChangeEvent();
+			// this.dispatchChangeEvent();
 		}
 		this.updateSelectedIndex();
 		return length;
@@ -310,7 +310,7 @@ export default class ArrayData extends Data {
 
 	dispatchChangeEvent() {
 		this.dataItemChangeHandler(null);
-		this.dispatchEvent({type:Data.CHANGE, value:this._value});
+		super.dispatchChangeEvent();
 	}
 
 	includes(element) {

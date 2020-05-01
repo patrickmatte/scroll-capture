@@ -30,7 +30,7 @@ export default class UIList extends UIComponent {
 		this.dragIndex = NaN;
 		this.dragElementClass = "ui-list-drag-area";
 
-		this.template = `<li><span is="ui-text">[[data]]</span></li>`;
+		this.template = `<li><span is="ui-text" data-model="data"></span></li>`;
 		this.templates = {};
 		this._provider = [];
 
@@ -75,7 +75,7 @@ export default class UIList extends UIComponent {
 			if (this._provider instanceof ArrayData) {
 				this._provider.removeEventListener("add", this._providerAdd);
 				this._provider.removeEventListener("remove", this._providerRemove);
-				this._provider.removeEventListener("reset", this._providerChange);
+				this._provider.removeEventListener("change", this._providerChange);
 				this._provider.removeEventListener("sort", this._providerSort);
 			}
 		}
@@ -85,7 +85,7 @@ export default class UIList extends UIComponent {
 			if (this._provider instanceof ArrayData) {
 				this._provider.addEventListener("add", this._providerAdd);
 				this._provider.addEventListener("remove", this._providerRemove);
-				this._provider.addEventListener("reset", this._providerChange);
+				this._provider.addEventListener("change", this._providerChange);
 				this._provider.addEventListener("sort", this._providerSort);
 				this._addElements(this._provider.value);
 			} else {

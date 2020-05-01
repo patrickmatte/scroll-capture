@@ -14,13 +14,13 @@ import StringData from "../tsunami/data/StringData";
 
 export default class ActionTween extends Action {
 
-	constructor(startX, startY, x = 0, y = 0, duration = "1", delay = "0") {
+	constructor(startX, startY, x = 0, y = 0, duration = 1, delay = 0) {
 		super("ActionTween", "ActionTween");
 		this.startX = new NumberData(startX);
 		this.startY = new NumberData(startY);
 		this.endX = new NumberData(x);
 		this.endY = new NumberData(y);
-		this.duration = new StringData(duration);
+		this.duration = new NumberData(duration);
 		this.cubicBezierPoints = new CubicBezierPoints();
 		this.easing = new CubicBezierEasing();
 		this.cubicBezierPointsChange();
@@ -101,7 +101,7 @@ export default class ActionTween extends Action {
 
 	serialize() {
 		let data = super.serialize();
-		data.startX = this.startX.value;
+		data.startX = this.startX.serialize();
 		data.startY = this.startY.value;
 		data.endX = this.endX.value;
 		data.endY = this.endY.value;
@@ -113,12 +113,13 @@ export default class ActionTween extends Action {
 	}
 
 	deserialize(data) {
+		if (!data) return;
 		super.deserialize(data);
-		this.startX.value = data.startX;
-		this.startY.value = data.startY;
-		this.endX.value = data.endX;
-		this.endY.value = data.endY;
-		this.duration.value = data.duration;
+		this.startX.deserialize(data.startX);
+		this.startY.deserialize(data.startY);
+		this.endX.deserialize(data.endX);
+		this.endY.deserialize(data.endY);
+		this.duration.deserialize(data.duration);
 		this.cubicBezierPoints.p1.deserialize(data.p1);
 		this.cubicBezierPoints.p2.deserialize(data.p2);
 		this.easingPresets.selectedItem.value = data.easing || "quad.easeInOut";

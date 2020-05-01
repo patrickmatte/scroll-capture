@@ -8,6 +8,7 @@ import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
 import WindowContentMain from "./WindowContentMain";
 import Data from "../tsunami/data/Data";
+import SCTest from "./SCTest";
 
 export default class ScrollCapture extends UIComponent {
 
@@ -40,28 +41,30 @@ export default class ScrollCapture extends UIComponent {
 		return promise;
 	}
 
-	get model() {
-		return super.model;
+	get scope() {
+		return super.scope;
 	}
 
-	set model(value) {
-		if(this.model) {
-			this.model.settings.position.removeEventListener(Data.CHANGE, this.positionChangeHandler);
+	set scope(value) {
+		if (this.scope) {
+			this.scope.settings.position.removeEventListener(Data.CHANGE, this.positionChangeHandler);
 		}
-		super.model = value;
-		this.model.settings.position.addEventListener(Data.CHANGE, this.positionChangeHandler);
+		super.scope = value;
+		if (this.scope) {
+			this.scope.settings.position.addEventListener(Data.CHANGE, this.positionChangeHandler);
+		}
 	}
 
 	windowResize(windowSize) {
 		super.windowResize(windowSize);
-		let x = this.model.settings.position.x.value;
-		let y = this.model.settings.position.y.value;
+		let x = this.scope.settings.position.x.value;
+		let y = this.scope.settings.position.y.value;
 		this.move(x, y);
 	}
 
 	dragStart(event) {
 		event.preventDefault();
-		this.startPosition = new Point(this.model.settings.position.x.value, this.model.settings.position.y.value);
+		this.startPosition = new Point(this.scope.settings.position.x.value, this.scope.settings.position.y.value);
 		this.startPoint = this.getTouchPoint(event);
 		document.body.addEventListener(events.mousemove, this.dragMove);
 		document.body.addEventListener(events.mouseup, this.dragEnd);
@@ -70,8 +73,8 @@ export default class ScrollCapture extends UIComponent {
 	dragMove(event) {
 		let point = this.getTouchPoint(event);
 		let diff = this.startPoint.subtract(point);
-		this.model.settings.position.x.value = this.startPosition.x + diff.x;
-		this.model.settings.position.y.value = this.startPosition.y - diff.y;
+		this.scope.settings.position.x.value = this.startPosition.x + diff.x;
+		this.scope.settings.position.y.value = this.startPosition.y - diff.y;
 	}
 
 	dragEnd(event) {
@@ -98,4 +101,5 @@ ScrollCapture.template = template;
 
 tsunami.define("sc-actions-view", ActionsView);
 tsunami.define("sc-window-content-main", WindowContentMain);
+tsunami.define("sc-test", SCTest);
 

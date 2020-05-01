@@ -50,6 +50,7 @@ export default class ActionEval extends Action {
 	}
 
 	deserialize(data) {
+		if (!data) return;
 		super.deserialize(data);
 		this.code.value = decodeURIComponent(data.code);
 	}

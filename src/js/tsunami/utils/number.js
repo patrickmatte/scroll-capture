@@ -121,11 +121,24 @@ export function isPrime(value) {
  console.log(roundToPlace(3.14159, 3)); // Traces 3.142
  </code>
  */
-export function roundDecimalToPlace(value, place) {
+export function roundDecimalToPlace(value, place = 1) {
 	var p = Math.pow(10, place);
 
 	return Math.round(value * p) / p;
 }
+
+export function roundDecimalTo1(value) {
+	return roundDecimalToPlace(value, 1);
+}
+
+export function roundDecimalTo2(value) {
+	return roundDecimalToPlace(value, 2);
+}
+
+export function roundDecimalTo3(value) {
+	return roundDecimalToPlace(value, 3);
+}
+
 
 /**
  Determines if index is included within the collection length otherwise the index loops to the beginning or end of the range and continues.
@@ -367,7 +380,7 @@ export function formatCurrency(value, forceDecimals, kDelim) {
  @return Returns the suffix for the number, 2 characters.
  @example
  <code>
- console.log32 + getOrdinalSuffix(32)); // Traces 32nd
+ console.log(32 + getOrdinalSuffix(32)); // Traces 32nd
  </code>
  */
 export function getOrdinalSuffix(value) {

@@ -5,11 +5,7 @@ export default class UIInput extends UIComponent {
 
 	constructor(element) {
 		super(element);
-
-		// this.inputFilter = function() {
-		// 	return true;
-		// }
-
+		
 		this.inputHandler = this.inputHandler.bind(this);
 		this.element.addEventListener("input", this.inputHandler);
 
@@ -48,19 +44,6 @@ export default class UIInput extends UIComponent {
 						value = this.element.value;
 						break;
 				}
-				
-				// if (this.inputFilter(this.element.value)) {
-				// 	this.oldValue = this.element.value;
-				// 	this.oldSelectionStart = this.element.selectionStart;
-				// 	this.oldSelectionEnd = this.element.selectionEnd;
-				// } else if (this.oldValue) {
-				// 	value = this.oldValue;
-				// 	this.element.value = value;
-				// 	this.element.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-				// } else {
-				// 	value = "";
-				// 	this.element.value = value;
-				// }
 				
 				this._model.value = value;
 				

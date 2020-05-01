@@ -10,6 +10,7 @@ import {isTouch, localToGlobal} from "../window";
 import Branch from "../Branch";
 import Point from "../geom/Point";
 import EventHandler from "./EventHandler";
+import ExpressionBinding from "./ExpressionBinding";
 
 export default class UIComponent extends Branch {
 
@@ -185,26 +186,20 @@ export default class UIComponent extends Branch {
 		if (hideChildrenDelay) {
 			this.hideChildrenDelay = Number(hideChildrenDelay);
 		}
-
+		
 		for (let i = 0; i < this.element.attributes.length; i++) {
 			let attribute = this.element.attributes[i];
-			// if(this.debug) console.log("attribute.name", attribute.name, "attribute.value", attribute.value);
-
-			if (attribute.name.indexOf("data-on-") != -1) {
-				let eventType = attribute.name.split("data-on-")[1];
-				let eventHandler = new EventHandler(this.element, eventType, attribute.value, this);
-				this.attributes[attribute.name] = eventHandler;
-			}
-			
-			if (attribute.value.indexOf("[[") != -1) {
-				let attributeData = new ArrayDataOperation();
-				attributeData.parseString(attribute.value, value);
-				let attr = new Attribute(this.element, attribute.name, attributeData, "");
-				attr.debug = this.debug;
-				this.attributes[attribute.name] = attr;
-			}
+			this._parseAttributeSetProperty(attribute, value);
 		}
-		
+		for (let i = 0; i < this.element.attributes.length; i++) {
+			let attribute = this.element.attributes[i];
+			this._parseAttributeEventHandler(attribute, value);
+		}
+		for (let i = 0; i < this.element.attributes.length; i++) {
+			let attribute = this.element.attributes[i];
+			this._parseAttributeValue(attribute, value);
+		}
+
 		if (this.element.hasAttribute("data-model")) {
 			let model = this.element.getAttribute("data-model");
 			if (model) {
@@ -212,6 +207,39 @@ export default class UIComponent extends Branch {
 			} else {
 				this.model = value;
 			}
+		}
+	}
+
+	_parseAttributeSetProperty(attribute, scope) {
+		if (attribute.name.indexOf("data-set-") != -1) {
+			let propertyName = attribute.name.split("data-set-")[1];
+			let setValue = (value) => {
+				this[propertyName] = value;
+			}
+			let expression = attribute.value;
+			let attr = new ExpressionBinding(setValue, expression, scope);
+			this.attributes[attribute.name] = attr;
+			this.element.removeAttribute(attribute.name);
+		}
+	}
+
+	_parseAttributeEventHandler(attribute, scope) {
+		if (attribute.name.indexOf("data-on-") != -1) {
+			let type = attribute.name.split("data-on-")[1];
+			let expression = attribute.value;
+			let func = new Function("event", expression).bind(this);
+			let eventHandler = new EventHandler(this.element, type, func);
+			this.attributes[attribute.name] = eventHandler;
+			this.element.removeAttribute(attribute.name);
+		}
+	}
+
+	_parseAttributeValue(attribute, scope) {
+		if (attribute.value.indexOf("[[") != -1) {
+			let attributeData = new ArrayDataOperation();
+			attributeData.parseString(attribute.value, scope);
+			let attr = new Attribute(this.element, attribute.name, attributeData);
+			this.attributes[attribute.name] = attr;
 		}
 	}
 

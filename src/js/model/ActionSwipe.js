@@ -7,6 +7,7 @@ import {isTouch} from "../tsunami/window";
 import NumberData from "../tsunami/data/NumberData";
 import { events } from "../tsunami/events";
 import { Vector3, CatmullRomCurve3 } from "three";
+import { roundDecimalToPlace } from "../tsunami/utils/number";
 
 export default class ActionSwipe extends ActionTween {
 
@@ -54,6 +55,7 @@ export default class ActionSwipe extends ActionTween {
 	}
 
 	deserialize(data) {
+		if (!data) return;
 		super.deserialize(data);
 		this.points.deserialize(data.points);
 	}
@@ -158,7 +160,7 @@ export default class ActionSwipe extends ActionTween {
 		this.points.value = this.capturedPoints;
 		this.capturedPoints = [];
 
-		let duration = NumberData.roundDecimal1((new Date() - this.startDate) / 1000);
+		let duration = roundDecimalToPlace((new Date() - this.startDate) / 1000, 1);
 		this.duration.value = duration;
 		
 		document.body.removeEventListener(events.mousemove, this.captureMoveHandler);

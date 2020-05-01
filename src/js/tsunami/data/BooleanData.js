@@ -13,6 +13,7 @@ export default class BooleanData extends Data {
 	}
 
 	set value(value) {
+		value = (value.toString() == "true");
 		if (value != this._value) {
 			this._value = value;
 			this.dispatchChangeEvent();

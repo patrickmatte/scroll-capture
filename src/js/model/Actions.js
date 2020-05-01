@@ -58,7 +58,6 @@ export default class Actions extends ArrayData {
 		this.selectedIndex.value = Math.min(newIndex, this.value.length - 1);
 	}
 
-
 	serialize() {
 		let actions = [];
 		this.map((action) => {
@@ -68,6 +67,7 @@ export default class Actions extends ArrayData {
 	}
 
 	deserialize(json) {
+		if (!json) return;
 		let actions = [];
 		for(let i = 0; i < json.length; i++) {
 			let data = json[i];

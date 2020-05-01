@@ -10,28 +10,13 @@ export default class NumberData extends Data {
 		this.value = value;
 	}
 
-	static roundDecimal(val, divider = 10) {
-		return Math.round(val * divider) / divider;
-	}
-
-	static roundDecimal1(val) {
-		return NumberData.roundDecimal(val, 10);
-	}
-
-	static roundDecimal2(val) {
-		return NumberData.roundDecimal(val, 100);
-	}
-
-	static roundDecimal3(val) {
-		return NumberData.roundDecimal(val, 1000);
-	}
-
 	get value() {
 		return this._value;
 	}
 
 	set value (value) {
-		value = Number(value);
+		value = Number(value.toString());
+		// if(isNaN(value)) value = 0;
 		for (let i = 0; i < this.modifiers.length; i++) {
 			let modifier = this.modifiers[i];
 			value = modifier(value);
@@ -67,5 +52,5 @@ export default class NumberData extends Data {
 		this.validation = null;
 		return super.destroy();
 	}
-
+	
 }

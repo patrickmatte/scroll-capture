@@ -26,7 +26,6 @@ export default class Data extends EventDispatcher {
 	}
 
 	deserialize(value) {
-		if (!value) return;
 		this.value = value;
 	}
 	
@@ -40,9 +39,9 @@ export default class Data extends EventDispatcher {
 		return super.destroy();
 	}
 
-	dispatchChangeEvent(data) {
-		if (!data) data = this.value;
-		this.dispatchEvent(new BaseEvent(Data.CHANGE, data));
+	dispatchChangeEvent() {
+		// if (!data) data = this.value;
+		this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
 	}
 
 	static get CHANGE() {

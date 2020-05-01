@@ -114,7 +114,7 @@ export function importTemplate(template, scope = {}, debug = false) {
 	if(factory.children.length > 0) {
 		child = factory.children.item(0);
 	}
-	scope.scopeElement = child;
+	// scope.scopeElement = child;
 	applyDirectives(child, scope);
 	return child;
 }

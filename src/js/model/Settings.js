@@ -6,6 +6,7 @@ import Data from "../tsunami/data/Data";
 import { app } from "../main";
 import { sendTrackEventMessage } from "../view/GABridge";
 import Throttle from "../tsunami/utils/Throttle";
+import NumberData from "../tsunami/data/NumberData";
 
 export default class Settings {
 
@@ -18,7 +19,7 @@ export default class Settings {
         this.videoBitsPerSecondThrottle = new Throttle(() => {
             sendTrackEventMessage("settings", "videoBitsPerSecond", this.videoBitsPerSecond.value);
         }, 1000);
-        this.videoBitsPerSecond = new StringData(8);
+        this.videoBitsPerSecond = new NumberData(8);
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
         this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
@@ -29,7 +30,7 @@ export default class Settings {
         this.audioBitsPerSecondThrottle = new Throttle(() => {
             sendTrackEventMessage("settings", "audioBitsPerSecond", this.audioBitsPerSecond.value);
         }, 1000);
-        this.audioBitsPerSecond = new StringData(128);
+        this.audioBitsPerSecond = new NumberData(128);
         this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.audioBitsPerSecondThrottle.throttle);
         this.audioCodecs = new ArrayData("opus");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
@@ -85,14 +86,15 @@ export default class Settings {
         };
     }
 
-    deserialize(obj) {
-        this.position.deserialize(obj.position);
-        this.videoBitsPerSecond.deserialize(obj.videoBitsPerSecond);
-        this.videoCodecs.selectedItem.deserialize(obj.videoCodec);
-        this.audioBitsPerSecond.deserialize(obj.audioBitsPerSecond);
-        this.audioCodecs.selectedItem.deserialize(obj.audioCodec);
-        if (obj.hasOwnProperty("colorThemes")) {
-            this.colorThemes.selectedItem.value = obj.colorThemes;
+    deserialize(data) {
+        if (!data) return;
+        this.position.deserialize(data.position);
+        this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
+        this.videoCodecs.selectedItem.deserialize(data.videoCodec);
+        this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
+        this.audioCodecs.selectedItem.deserialize(data.audioCodec);
+        if (data.hasOwnProperty("colorThemes")) {
+            this.colorThemes.selectedItem.value = data.colorThemes;
         }
     }
 

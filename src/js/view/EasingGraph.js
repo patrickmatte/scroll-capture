@@ -6,13 +6,12 @@ import Point from "../tsunami/geom/Point";
 import UIList from "../tsunami/components/UIList";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
+import { roundDecimalTo2, roundDecimalTo3 } from "../tsunami/utils/number";
 
 export default class EasingGraph extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		this.controlPoints = this.element.querySelector(".control-points").component;
-		this.controlPointLines = this.element.querySelector('[is="control-point-lines"]').component;
 		this.curves = ArrayData.nodeListToArray(this.element.querySelectorAll(".curve polyline"));
 		this.points = ArrayData.nodeListToArray(this.element.querySelectorAll(".points"));
 	}
@@ -23,8 +22,6 @@ export default class EasingGraph extends UIComponent {
 
 	set model(value) {
 		super.model = value;
-		this.controlPoints.dataProvider = [value.p1, value.p2];
-		this.controlPointLines.dataProvider = [[value.p0, value.p1], [value.p2, value.p3]];
 	}
 
 	updateValue(value) {
@@ -121,7 +118,7 @@ export class EasingGraphControlPointLine extends UIComponent {
 		let point1 = this.model[1].point;
 		point1.y = 1 - point1.y;
 		let scale = Point.distance(point0, point1);
-		let angle = NumberData.roundDecimal2(Point.getAngle(point1, point0) * 180 / Math.PI);
+		let angle = roundDecimalTo2(Point.getAngle(point1, point0) * 180 / Math.PI);
 		let position = new Point(point0.x * parentRectangle.width, point0.y * parentRectangle.height);
 		let transform = `translateX(${position.x}px) translateY(${position.y}px) rotate(${angle}deg) scaleX(${scale})`;
 		this.element.style.transform = transform;
@@ -144,7 +141,7 @@ export class EasingGraphCurve extends UIComponent {
 			let x = i / (totalPoints - 1);
 			let point = new Point(x, easing(x, 0, 1, 1));
 			points.push(point);
-			pointsString += NumberData.roundDecimal3(point.x * 200) + "," + NumberData.roundDecimal3(200 - (point.y * 200)) + " ";
+			pointsString += roundDecimalTo3(point.x * 200) + "," + roundDecimalTo3(200 - (point.y * 200)) + " ";
 		}
 		this.element.setAttribute("points", pointsString);
 	}

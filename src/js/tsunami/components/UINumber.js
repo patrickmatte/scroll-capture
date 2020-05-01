@@ -2,14 +2,14 @@ import UIText from "./UIText";
 import Tween from "../animation/Tween";
 import TweenProperty from "../animation/TweenProperty";
 import Easing from "../animation/Easing";
-import {getOrdinalSuffix, format} from "../utils/number";
+import {getOrdinalSuffix, format, roundDecimalToPlace} from "../utils/number";
 
 export default class UINumber extends UIText {
 
 	constructor(element) {
 		super(element);
 		this._currentValue = 0;
-		this.roundDecimal = 10;
+		this.roundDecimal = 1;
 		this.easing = Easing.cubic.easeOut;
 
 		let isRank = this.element.getAttribute("data-is-rank");
@@ -17,7 +17,7 @@ export default class UINumber extends UIText {
 
 		let roundDecimal = this.element.getAttribute("data-round-decimal");
 		if (roundDecimal) this.roundDecimal = Number(roundDecimal);
-
+		
 		let format = this.element.getAttribute("data-format");
 		this.applyFormat = (format == "true");
 	}
@@ -36,7 +36,8 @@ export default class UINumber extends UIText {
 
 	set currentValue(value) {
 		this._currentValue = value;
-		let newValue = Math.round(value * this.roundDecimal) / this.roundDecimal;
+		// let newValue = Math.round(value * this.roundDecimal) / this.roundDecimal;
+		let newValue = roundDecimalToPlace(value, this.roundDecimal);
 		this.updateCurrentValue(newValue);
 	}
 

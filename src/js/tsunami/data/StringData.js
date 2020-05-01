@@ -18,11 +18,8 @@ export default class StringData extends Data {
 		return this._value;
 	}
 
-	set value(value) {
+	set value(value = "") {
 		value = value.toString();
-		if (!value) {
-			value = "";
-		}
 		for (let i = 0; i < this.modifiers.length; i++) {
 			let modifier = this.modifiers[i];
 			value = modifier(value);

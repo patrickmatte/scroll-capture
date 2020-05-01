@@ -1,9 +1,9 @@
 export default class EventHandler {
 
-    constructor(eventDispatcher, type, expression, scope) {
+    constructor(eventDispatcher, type, eventHandler) {
         this.eventDispatcher = eventDispatcher;
         this.type = type;
-        this.eventHandler = new Function("event", expression).bind(scope);
+        this.eventHandler = eventHandler;
         this.eventDispatcher.addEventListener(this.type, this.eventHandler);
     }
 

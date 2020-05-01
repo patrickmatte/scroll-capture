@@ -59,16 +59,16 @@
                         </g>
                     </svg>
                     <div class="points" is="easing-graph-points" data-model="data.easingMethod"></div>
-                    <div is="control-point-lines" is="ui-list">
+                    <div is="control-point-lines" is="ui-list" data-provider="data.cubicBezierPoints.controlPointsLines">
                         <template>
                             <div is="control-point-line" data-model="data"></div>
                         </template>
                     </div>
-                    <div class="control-points" is="easing-graph-control-points">
+                    <div class="control-points" is="easing-graph-control-points" data-provider="data.cubicBezierPoints.controlPoints">
                         <template>
                             <div class="control-point" is="ui-component" data-model="data" style="left:calc([[data.x]] * 100%); top:calc(100% - [[data.y]] * 100%)">
                                 <span class="shape">
-                                    <span class="shape-label" is="ui-text">[[index1]]</span>
+                                    <span class="shape-label" is="ui-text" data-model="index1"></span>
                                 </span>
                             </div>
                         </template>

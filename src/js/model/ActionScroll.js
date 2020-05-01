@@ -7,14 +7,14 @@ import Data from "../tsunami/data/Data";
 
 export default class ActionScroll extends ActionTween {
 
-	constructor(target = "window", units = "px", x = 0, y = 0, duration = "1", delay = 0) {
+	constructor(target = "window", units = "px", x = 0, y = 0, duration = 1, delay = 0) {
 		super(0, 0, 0, 0, duration, delay);
 		this.type = "ActionScroll";
 		this.name.value = "Scroll";
 		this.description.value = "Add a scroll animation";
 		this.target = new StringData(target);
-		this.unitX = new StringData(x);
-		this.unitY = new StringData(y);
+		this.unitX = new NumberData(x);
+		this.unitY = new NumberData(y);
 		this.units = new ArrayData("%", "px");
 		this.units.selectedItem.value = units;
 		this.isCaptureable.value = true;
@@ -100,20 +100,21 @@ export default class ActionScroll extends ActionTween {
 
 	serialize() {
 		let data = super.serialize();
-		data.target = this.target.value;
-		data.unitX = this.unitX.value;
-		data.unitY = this.unitY.value;
+		data.target = this.target.serialize();
+		data.unitX = this.unitX.serialize();
+		data.unitY = this.unitY.serialize();
 		data.units = this.units.selectedItem.value;
 		return data;
 	}
 
 	deserialize(data) {
+		if (!data) return;
 		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
 		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 		super.deserialize(data);
-		this.target.value = data.target;
-		this.unitX.value = data.unitX;
-		this.unitY.value = data.unitY;
+		this.target.deserialize(data.target);
+		this.unitX.deserialize(data.unitX);
+		this.unitY.deserialize(data.unitY);
 		this.units.selectedItem.value = data.units;
 		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
 		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
