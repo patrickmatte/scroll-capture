@@ -33,8 +33,9 @@ export default class UIComponent extends Branch {
 
 		this.calculateGlobalPosition = false;
 
-		this.childrenSelector = ":scope > *";
+		// this.childrenSelector = ":scope > *";
 
+		this._model = null;
 		this.rectangle = new Rectangle();
 		this.globalRectangle = new Rectangle();
 		this.windowSize = {};

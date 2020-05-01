@@ -10,7 +10,7 @@
 			</span>
 			<span class="sc-tabs">
 				<span class="sc-tab">
-					<input type="number" is="sc-test" data-set-model="[[this.settings.videoBitsPerSecond]]"/>
+				<input type="number" is="ui-input2" min="[[settings.videoBitsPerSecondMin]]" max="[[settings.videoBitsPerSecondMax]]" placeholder="[[settings.videoBitsPerSecondMax]]" style="width:calc(50px + [[settings.audioBitsPerSecond]]px)" data-set-model="[[this.settings.videoBitsPerSecond]]"/>
 				</span>
 				<span class="sc-tab">
 					<button is="router-button" data-path="closed" title="Close">

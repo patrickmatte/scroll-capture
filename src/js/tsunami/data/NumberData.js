@@ -15,12 +15,13 @@ export default class NumberData extends Data {
 	}
 
 	set value (value) {
-		value = Number(value.toString());
-		// if(isNaN(value)) value = 0;
+		if (this.debug) console.log("-----NumberData.value", value);
+		if (this.debug) console.log("Number(value.toString())", value);
 		for (let i = 0; i < this.modifiers.length; i++) {
 			let modifier = this.modifiers[i];
 			value = modifier(value);
 		}
+		if (this.debug) console.log("this._value", this._value, "value", value);
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;
 			this.length.value = Math.max(1, value.toString().length);

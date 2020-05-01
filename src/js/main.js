@@ -22,7 +22,7 @@ export default class Main extends App {
 		super(element);
 		
 		this.isActive = true;
-		
+
 		window.addEventListener("beforeunload", () => {
 			this.isActive = false;
 			this.router.removeEventListener(Router.CHANGE, this.trackRouterLocation);
