@@ -11,6 +11,7 @@ import Branch from "../Branch";
 import Point from "../geom/Point";
 import EventHandler from "./EventHandler";
 import ExpressionBinding from "./ExpressionBinding";
+import AttributeBinding from "./AttributeBinding";
 
 export default class UIComponent extends Branch {
 
@@ -200,15 +201,6 @@ export default class UIComponent extends Branch {
 			let attribute = this.element.attributes[i];
 			this._parseAttributeValue(attribute, value);
 		}
-
-		if (this.element.hasAttribute("data-model")) {
-			let model = this.element.getAttribute("data-model");
-			if (model) {
-				this.model = evalProperty(model, value);
-			} else {
-				this.model = value;
-			}
-		}
 	}
 
 	_parseAttributeSetProperty(attribute, scope) {
@@ -236,12 +228,16 @@ export default class UIComponent extends Branch {
 	}
 
 	_parseAttributeValue(attribute, scope) {
-		if (attribute.value.indexOf("[[") != -1) {
-			let attributeData = new ArrayDataOperation();
-			attributeData.parseString(attribute.value, scope);
-			let attr = new Attribute(this.element, attribute.name, attributeData);
-			this.attributes[attribute.name] = attr;
+		if (attribute.value.indexOf("`") != -1) {
+			let attributeBinding = AttributeBinding.create(this.element, attribute.name, attribute.value, scope);
+			this.attributes[attribute.name] = attributeBinding;
 		}
+		// if (attribute.value.indexOf("[[") != -1) {
+		// 	let attributeData = new ArrayDataOperation();
+		// 	attributeData.parseString(attribute.value, scope);
+		// 	let attr = new Attribute(this.element, attribute.name, attributeData);
+		// 	this.attributes[attribute.name] = attr;
+		// }
 	}
 
     get model() {

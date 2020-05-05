@@ -30,7 +30,7 @@ export default class UIList extends UIComponent {
 		this.dragIndex = NaN;
 		this.dragElementClass = "ui-list-drag-area";
 
-		this.template = `<li><span is="ui-text" data-model="data"></span></li>`;
+		this.template = '<li><span is="ui-text" data-set-model="scope.data"></span></li>';
 		this.templates = {};
 		this._provider = [];
 

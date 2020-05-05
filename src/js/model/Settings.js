@@ -22,7 +22,6 @@ export default class Settings {
         this.videoBitsPerSecondMin = 1;
         this.videoBitsPerSecondMax = 8;
         this.videoBitsPerSecond = new NumberData(8);
-        this.videoBitsPerSecond.debug = true;
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
         this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];

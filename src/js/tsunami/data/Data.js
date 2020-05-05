@@ -13,12 +13,20 @@ export default class Data extends EventDispatcher {
 		return this._value;
 	}
 
-	set value(val) {
-		// this._value = val;
-		if (val != this._value) {
-			this._value = val;
+	
+	set value(value) {
+		if (value != this._value || this.forceChangeEvent) {
+			this._value = value;
 			this.dispatchChangeEvent();
 		}
+	}
+
+	reset(value) {
+		this.value = value;
+	}
+
+	toString() {
+		return this.value.toString();
 	}
 
 	serialize() {
@@ -46,15 +54,6 @@ export default class Data extends EventDispatcher {
 
 	static get CHANGE() {
 		return "change";
-	}
-
-	static serialize(obj) {
-		let str = [];
-		for(let p in obj)
-			if (obj.hasOwnProperty(p)) {
-				str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-			}
-		return str.join("&");
 	}
 
 }

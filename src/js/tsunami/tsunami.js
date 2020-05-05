@@ -182,3 +182,10 @@ export function getAllObjects(parent, array) {
 	}
 	return array;
 }
+
+export let supportsTemplateLiterals = false;
+
+try {
+	eval("`foo`");
+	supportsTemplateLiterals = true;
+} catch (e) {}

@@ -2,7 +2,7 @@ import UIComponent from "./UIComponent";
 import ArrayDataOperation from "../data/ArrayDataOperation";
 
 export default class UIText extends UIComponent {
-
+	
 	constructor(element) {
 		super(element);
 	}
@@ -14,16 +14,16 @@ export default class UIText extends UIComponent {
 	set scope(value) {
 		super.scope = value;
 
-		let innerHTML = this.element.innerHTML;
-		if (innerHTML.indexOf("[[") != -1) {
+		let textContent = this.element.textContent;
+		if (textContent.indexOf("[[") != -1) {
 			let arrayOperation = new ArrayDataOperation();
-			arrayOperation.parseString(innerHTML, value);
+			arrayOperation.parseString(textContent, value);
 			this.model = arrayOperation;
 		}
 	}
 
 	updateValue(value) {
-		this.element.innerHTML = value;
+		this.element.textContent = value;
 	}
 
 }

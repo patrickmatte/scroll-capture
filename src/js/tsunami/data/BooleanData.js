@@ -1,39 +1,22 @@
-import Data from "./Data";
-import Validation from "./Validation";
+import DataPrimitive from "./DataPrimitive";
+import { boolify } from "../utils/string";
 
-export default class BooleanData extends Data {
+export default class BooleanData extends DataPrimitive {
 
-	constructor(value = false) {
-		super();
-		this.value = value;
+	constructor(value = false, modifiers = []) {
+		super(value, modifiers);
 	}
 
 	get value() {
-		return this._value;
+		return super.value;
 	}
 
-	set value(value) {
-		value = (value.toString() == "true");
-		if (value != this._value) {
-			this._value = value;
-			this.dispatchChangeEvent();
-		}
+	set value(value = false) {
+		super.value = boolify(value);
 	}
 
-	toString() {
-		return this.value.toString();
-	}
-
-	reset() {
-		this.value = true;
-	}
-
-	destroy() {
-		if(this.validation instanceof Validation) {
-			this.validation.destroy();
-		}
-		this.validation = null;
-		return super.destroy();
+	reset(value = false) {
+		super.reset(value);
 	}
 
 }

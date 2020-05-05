@@ -27,7 +27,6 @@ export default class UIInput2 extends UIComponent {
     }
 
     set model(value) {
-        console.log("UIInput2.model", value);
         this._model = value;
         if (value instanceof Data) value = value.value;
         switch (this.element.type) {
@@ -47,7 +46,6 @@ export default class UIInput2 extends UIComponent {
     }
 
     inputHandler(event) {
-        console.log("UIInput2.inputHandler", this.element.value);
         if (this.model instanceof Data) {
             let value;
             switch (this.element.type) {

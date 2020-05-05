@@ -89,7 +89,7 @@ function updateVideo() {
                 });
             }
             let fileNameButton = document.querySelector(".sc-video-filename a.sc-download-button");
-            fileNameButton.innerHTML = videoFileName;
+            fileNameButton.textContent = videoFileName;
         }
     });
 }

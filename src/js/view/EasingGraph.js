@@ -16,14 +16,6 @@ export default class EasingGraph extends UIComponent {
 		this.points = ArrayData.nodeListToArray(this.element.querySelectorAll(".points"));
 	}
 
-	get model() {
-		return super.model;
-	}
-
-	set model(value) {
-		super.model = value;
-	}
-
 	updateValue(value) {
 		super.updateValue(value);
 		this.curves.map((curve) => {

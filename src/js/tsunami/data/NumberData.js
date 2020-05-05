@@ -1,57 +1,29 @@
-import Data from "./Data";
-import Validation from "./Validation";
+import DataPrimitive from "./DataPrimitive";
 
-export default class NumberData extends Data {
+export default class NumberData extends DataPrimitive {
 
 	constructor(value = NaN, modifiers = []) {
-		super();
-		this.modifiers = modifiers;
-		this.length = new Data();
-		this.value = value;
+		super(value, modifiers);
 	}
 
 	get value() {
-		return this._value;
+		return super.value;
 	}
 
-	set value (value) {
-		if (this.debug) console.log("-----NumberData.value", value);
-		if (this.debug) console.log("Number(value.toString())", value);
-		for (let i = 0; i < this.modifiers.length; i++) {
-			let modifier = this.modifiers[i];
-			value = modifier(value);
-		}
-		if (this.debug) console.log("this._value", this._value, "value", value);
-		if (value != this._value || this.forceChangeEvent) {
-			this._value = value;
-			this.length.value = Math.max(1, value.toString().length);
-			this.dispatchChangeEvent();
-		}
+	set value(value = NaN) {
+		super.value = Number(value);
+	}
+
+	reset(value = 0) {
+		super.reset(value);
 	}
 
 	add(value = 1) {
-		this.value = this._value + value;
+		this.value += value;
 	}
 
 	subtract(value = 1) {
-		this.value = this._value - value;
+		this.value -= value;
 	}
 
-	toString() {
-		return this.value.toString();
-	}
-
-	reset() {
-		this.value = 0;
-	}
-
-	destroy() {
-		this.modifiers = [];
-		if(this.validation instanceof Validation) {
-			this.validation.destroy();
-		}
-		this.validation = null;
-		return super.destroy();
-	}
-	
 }

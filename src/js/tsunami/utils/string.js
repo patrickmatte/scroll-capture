@@ -1,8 +1,8 @@
-export function truncate(str, length, addAfter) {
-	if (str.length > length) {
-		str = str.substr(0, 30) + addAfter;
+export function truncate(string, maxLength, addAfter = "") {
+	if (string.length > maxLength) {
+		string = string.substr(0, (maxLength - addAfter.length)) + addAfter;
 	}
-	return str;
+	return string;
 }
 
 export function numberWithCommas (x) {
@@ -13,3 +13,19 @@ export function capitalize(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function isLengthMinimum1(string) {
+	return string.length > 0;
+}
+
+export function boolify(value = false) {
+	return ["true", "1", "yes", "y", "on"].indexOf(String(value).toLowerCase()) != -1;
+}
+
+export function serialize(obj) {
+	let str = [];
+	for (let p in obj)
+		if (obj.hasOwnProperty(p)) {
+			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		}
+	return str.join("&");
+}

@@ -1,0 +1,38 @@
+import Data from "./Data";
+
+export default class DataPrimitive extends Data {
+
+    constructor(value, modifiers = []) {
+        super();
+        this.modifiers = modifiers;
+        this.length = new Data();
+        this.value = value;
+    }
+
+    get value() {
+        return super.value;
+    }
+
+    set value(value) {
+        for (let i = 0; i < this.modifiers.length; i++) {
+            let modifier = this.modifiers[i];
+            value = modifier(value);
+        }
+        super.value = value;
+        this.length.value = Math.max(1, this.value.toString().length);
+    }
+
+    destroy() {
+        this.modifiers = [];
+        if (this.validation) {
+            try {
+                this.validation.destroy();
+            } catch(e) {
+                
+            }
+        }
+        this.validation = null;
+        return super.destroy();
+    }
+
+}
