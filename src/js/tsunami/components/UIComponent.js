@@ -232,12 +232,6 @@ export default class UIComponent extends Branch {
 			let attributeBinding = AttributeBinding.create(this.element, attribute.name, attribute.value, scope);
 			this.attributes[attribute.name] = attributeBinding;
 		}
-		// if (attribute.value.indexOf("[[") != -1) {
-		// 	let attributeData = new ArrayDataOperation();
-		// 	attributeData.parseString(attribute.value, scope);
-		// 	let attr = new Attribute(this.element, attribute.name, attributeData);
-		// 	this.attributes[attribute.name] = attr;
-		// }
 	}
 
     get model() {
