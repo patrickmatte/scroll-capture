@@ -3,7 +3,7 @@ import Data from "../data/Data";
 
 export default class ExpressionBinding {
 
-    constructor(setValue, expression, scope, debug = false) {
+    constructor(setValue, expression, scope) {
         this.setValue = setValue;
 
         this.changeEventHandlers = [];

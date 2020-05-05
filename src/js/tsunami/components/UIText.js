@@ -5,6 +5,7 @@ export default class UIText extends UIComponent {
 	
 	constructor(element) {
 		super(element);
+		console.log("UIText");
 	}
 
 	get scope() {

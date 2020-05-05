@@ -5,13 +5,12 @@ import {app} from "../main";
 import ActionsView from "./ActionsView";
 import template from "../../templates/scroll-capture.html";
 import WindowContentMain from "./WindowContentMain";
-import UIInput2 from "../tsunami/components/UIInput2";
 
 export default class ScrollCapture extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		
+
 		this.position = null;
 
 		this.dragStart = this.dragStart.bind(this);
@@ -57,5 +56,4 @@ ScrollCapture.template = template;
 
 tsunami.define("sc-actions-view", ActionsView);
 tsunami.define("sc-window-content-main", WindowContentMain);
-tsunami.define("ui-input2", UIInput2);
 

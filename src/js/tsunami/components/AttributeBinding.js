@@ -8,7 +8,7 @@ export default class AttributeBinding extends ExpressionBinding {
         let setValue = (value) => {
             element.setAttribute(attributeName, value);
         }
-        super(setValue, expression, scope, true);
+        super(setValue, expression, scope);
     }
     
     static bindComponentAttributes(component, scope) {

@@ -24,7 +24,6 @@ export default class UIComponent extends Branch {
 			this.debug = (element.getAttribute("data-debug") == "true");
 			this.doChildrenAnimationFrame = (element.getAttribute("data-children-animation-frame") == "true");
 			this.alsoShowChildren = (element.getAttribute("data-also-show-children") == "true");
-			// this.style = new Style(element.style);
 		}
 
 		this.element = element;
@@ -438,8 +437,6 @@ export default class UIComponent extends Branch {
         	attribute.destroy();
 		}
         this.model = null;
-        this.style.destroy();
-        this.style = null;
         this.scope = null;
         if (this.element.parentNode) {
             this.element.parentNode.removeChild(this.element);

@@ -10,6 +10,9 @@ import UIScrollPane from "./components/UIScrollPane";
 import UIMedia from "./components/UIMedia";
 import UIToggle from "./components/UIToggle";
 import Clock, {clock} from "./animation/Clock";
+import UIInput2 from "./components/UIInput2";
+import UIText2 from "./components/UIText2";
+import UIHTML from "./components/UIHTML";
 
 export default class App extends UIComponent {
 
@@ -51,7 +54,10 @@ tsunami.define("ui-list", UIList);
 tsunami.define("ui-input", UIInput);
 tsunami.define("ui-select", UISelect);
 tsunami.define("ui-text", UIText);
+tsunami.define("ui-text2", UIText2);
+tsunami.define("ui-html", UIHTML);
 tsunami.define("ui-number", UINumber);
 tsunami.define("ui-scroll-pane", UIScrollPane);
 tsunami.define("ui-media", UIMedia);
 tsunami.define("ui-toggle", UIToggle);
+tsunami.define("ui-input2", UIInput2);
