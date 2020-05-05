@@ -96,6 +96,6 @@ function updateVideo() {
 
 function unloadVideo() {
     player.pause();
-    player.removeAttribute('src');
-    player.load();
+    // player.removeAttribute('src');
+    // player.load();
 }
