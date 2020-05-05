@@ -189,6 +189,8 @@ export default class UIComponent extends Branch {
 			this.hideChildrenDelay = Number(hideChildrenDelay);
 		}
 		
+		AttributeBinding.bindComponentAttributes(this, value);
+
 		for (let i = 0; i < this.element.attributes.length; i++) {
 			let attribute = this.element.attributes[i];
 			this._parseAttributeSetProperty(attribute, value);
@@ -196,10 +198,6 @@ export default class UIComponent extends Branch {
 		for (let i = 0; i < this.element.attributes.length; i++) {
 			let attribute = this.element.attributes[i];
 			this._parseAttributeEventHandler(attribute, value);
-		}
-		for (let i = 0; i < this.element.attributes.length; i++) {
-			let attribute = this.element.attributes[i];
-			this._parseAttributeValue(attribute, value);
 		}
 	}
 
@@ -224,13 +222,6 @@ export default class UIComponent extends Branch {
 			let eventHandler = new EventHandler(this.element, type, func);
 			this.attributes[attribute.name] = eventHandler;
 			this.element.removeAttribute(attribute.name);
-		}
-	}
-
-	_parseAttributeValue(attribute, scope) {
-		if (attribute.value.indexOf("`") != -1) {
-			let attributeBinding = AttributeBinding.create(this.element, attribute.name, attribute.value, scope);
-			this.attributes[attribute.name] = attributeBinding;
 		}
 	}
 

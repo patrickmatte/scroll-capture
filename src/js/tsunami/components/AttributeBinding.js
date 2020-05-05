@@ -1,24 +1,26 @@
-import { supportsTemplateLiterals } from "../tsunami";
 import ExpressionBinding from "./ExpressionBinding";
+import { transformLiterals } from "../utils/transformLiterals";
 
 export default class AttributeBinding extends ExpressionBinding {
 
     constructor(element, attributeName, expression, scope) {
-        if (expression.indexOf("${") == -1) {
-            expression = expression.split("`").join("");
-        }
+        expression = transformLiterals(expression);
         let setValue = (value) => {
             element.setAttribute(attributeName, value);
         }
         super(setValue, expression, scope, true);
     }
-
-    static create(element, attributeName, expression, scope) {
-        let instance;
-        if (expression.indexOf("`") != -1) {
-            instance = new AttributeBinding(element, attributeName, expression, scope);
+    
+    static bindComponentAttributes(component, scope) {
+        let element = component.element;
+        for (let i = 0; i < element.attributes.length; i++) {
+            let attribute = element.attributes[i];
+            let name = attribute.name;
+            let expression = attribute.value;
+            if (expression.indexOf("`") != -1) {
+                let attributeBinding = new AttributeBinding(element, name, expression, scope);
+                component.attributes[name] = attributeBinding;
+            }
         }
-        return instance
     }
-
 }
