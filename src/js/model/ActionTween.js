@@ -22,10 +22,8 @@ export default class ActionTween extends Action {
 		this.endY = new NumberData(y);
 		this.duration = new NumberData(duration);
 		this.cubicBezierPoints = new CubicBezierPoints();
-		this.easing = new CubicBezierEasing();
-		this.cubicBezierPointsChange();
-		this.debugEasing = Easing.cubic.easeInOut;
-		this.cubicBezierPoints.addEventListener(Data.CHANGE, this.cubicBezierPointsChange.bind(this));
+		// this.cubicBezierPointsChange();
+		// this.cubicBezierPoints.addEventListener(Data.CHANGE, this.cubicBezierPointsChange.bind(this));
 		this.easingPresets = new ArrayData("Select a preset");
 		this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));
 		this.easingPresets.selectedItem.forceChangeEvent = true;
@@ -47,19 +45,19 @@ export default class ActionTween extends Action {
 		this.easingPresets.selectedItem.value = this.easingPresets.value[0];
 	}
 
-	cubicBezierPointsChange() {
-		this.easing.p1.x = this.cubicBezierPoints.p1.x.value;
-		this.easing.p1.y = this.cubicBezierPoints.p1.y.value;
-		this.easing.p2.x = this.cubicBezierPoints.p2.x.value;
-		this.easing.p2.y = this.cubicBezierPoints.p2.y.value;
-		this.easing.calculateLength();
-	}
+	// cubicBezierPointsChange() {
+	// 	this.easing.p1.x = this.cubicBezierPoints.p1.x.value;
+	// 	this.easing.p1.y = this.cubicBezierPoints.p1.y.value;
+	// 	this.easing.p2.x = this.cubicBezierPoints.p2.x.value;
+	// 	this.easing.p2.y = this.cubicBezierPoints.p2.y.value;
+	// 	this.easing.calculateLength();
+	// }
 
 	easingPresetChange() {
 		let value = this.easingPresets.selectedItem.value;
 		let debugEasingMethod = evalProperty(value, Easing);
 		if(debugEasingMethod) {
-			this.debugEasing.value = debugEasingMethod;
+			this.cubicBezierPoints.debugEasing.value = debugEasingMethod;
 		}
 		let cb = evalProperty(value, CubicBezierEasing);
 		if(cb) {
@@ -82,8 +80,8 @@ export default class ActionTween extends Action {
 
 	trigger() {
 		this.tween = new Tween(0, this.duration.value, [
-			new TweenProperty(this.pos, "x", this.startX.value, this.endX.value, this.easing.ease),
-			new TweenProperty(this.pos, "y", this.startY.value, this.endY.value, this.easing.ease),
+			new TweenProperty(this.pos, "x", this.startX.value, this.endX.value, this.cubicBezierPoints.easing.ease),
+			new TweenProperty(this.pos, "y", this.startY.value, this.endY.value, this.cubicBezierPoints.easing.ease),
 		]);
 		this.tween.addEventListener(Tween.UPDATE, this.tweenUpdateHandler);
 		this.tween.addEventListener(Tween.COMPLETE, this.tweenCompleteHandler);

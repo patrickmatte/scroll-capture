@@ -55,10 +55,10 @@
                     <div class="points js" is="easing-graph-points" data-set-easing="scope.data.debugEasing"></div> -->
                     <svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
                         <g>
-                            <polyline is="easing-graph-curve" data-set-easing="scope.data.easing.ease" data-set-model="[[scope.data.cubicBezierPoints]]" points=""></polyline>
+                            <polyline is="easing-graph-curve" data-set-model="[[scope.data.cubicBezierPoints]].easing.ease" points=""></polyline>
                         </g>
                     </svg>
-                    <div class="points" is="easing-graph-points" data-set-easing="scope.data.easing.ease" data-set-model="[[scope.data.cubicBezierPoints]]"></div>
+                    <div class="points" is="easing-graph-points" data-set-model="[[scope.data.cubicBezierPoints]].easing.ease"></div>
                     <div is="control-point-lines" is="ui-list" data-provider="data.cubicBezierPoints.controlPointsLines">
                         <template>
                             <div is="control-point-line" data-set-model="scope.data"></div>

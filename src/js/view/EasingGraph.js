@@ -123,7 +123,7 @@ export class EasingGraphCurve extends UIComponent {
 		let pointsString = "";
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);
-			let point = new Point(x, this.easing(x, 0, 1, 1));
+			let point = new Point(x, value(x, 0, 1, 1));
 			points.push(point);
 			pointsString += roundDecimalTo3(point.x * 200) + "," + roundDecimalTo3(200 - (point.y * 200)) + " ";
 		}
@@ -149,7 +149,7 @@ export class EasingGraphPoints extends UIComponent {
 		let points = [];
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);
-			let point = new Point(x, this.easing(x, 0, 1, 1));
+			let point = new Point(x, value(x, 0, 1, 1));
 			points.push(point);
 		}
 		for(let i = 0; i < points.length; i++) {

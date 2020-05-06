@@ -4,6 +4,7 @@ import BaseEvent from "../tsunami/events";
 import NumberData from "../tsunami/data/NumberData";
 import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
 import { roundDecimalTo2 } from "../tsunami/utils/number";
+import Easing from "../tsunami/animation/Easing";
 
 export default class CubicBezierPoints extends Data {
 
@@ -29,6 +30,11 @@ export default class CubicBezierPoints extends Data {
 		
 		this.controlPoints = [this.p1, this.p2];
 		this.controlPointsLines = [[this.p0, this.p1], [this.p3, this.p2]];
+
+		this.easing = new CubicBezierEasing();
+		this.debugEasing = Easing.quad.easeInOut;
+
+		this.changeHandler();
 	}
 
 	copy(obj) {
@@ -40,6 +46,11 @@ export default class CubicBezierPoints extends Data {
 	}
 
 	changeHandler() {
+		this.easing.p1.x = this.p1.x.value;
+		this.easing.p1.y = this.p1.y.value;
+		this.easing.p2.x = this.p2.x.value;
+		this.easing.p2.y = this.p2.y.value;
+		this.easing.calculateLength();
 		// this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
 		this.dispatchChangeEvent();
 	}
