@@ -55,10 +55,12 @@ export default class ActionTween extends Action {
 
 	easingPresetChange() {
 		let value = this.easingPresets.selectedItem.value;
+
 		let debugEasingMethod = evalProperty(value, Easing);
 		if(debugEasingMethod) {
-			this.cubicBezierPoints.debugEasing.value = debugEasingMethod;
+			this.cubicBezierPoints.debugEasing = debugEasingMethod;
 		}
+
 		let cb = evalProperty(value, CubicBezierEasing);
 		if(cb) {
 			this.cubicBezierPoints.p1.x.value = cb.p1.x;

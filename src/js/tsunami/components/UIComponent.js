@@ -22,16 +22,12 @@ export default class UIComponent extends Branch {
 
 		if(element) {
 			this.debug = (element.getAttribute("data-debug") == "true");
-			this.doChildrenAnimationFrame = (element.getAttribute("data-children-animation-frame") == "true");
-			this.alsoShowChildren = (element.getAttribute("data-also-show-children") == "true");
 		}
 
 		this.element = element;
 
 		this.componentID = new Date().getTime();
 		if(this.debug) this.element.setAttribute("data-componentId", this.componentID);
-
-		this.calculateGlobalPosition = false;
 
 		// this.childrenSelector = ":scope > *";
 
@@ -42,7 +38,6 @@ export default class UIComponent extends Branch {
 
 		this.attributes = {};
 
-
 		this.showDuration = 0;
 		this.showDelay = 0;
 		this.hideDuration = 0;
@@ -50,7 +45,9 @@ export default class UIComponent extends Branch {
 		this.showChildrenDelay = NaN;
 		this.hideChildrenDelay = NaN;
 
+		this.doChildrenAnimationFrame = false;
 		this.alsoShowChildren = false;
+		this.calculateGlobalPosition = false;
 	}
 
 	get element() {
@@ -168,31 +165,13 @@ export default class UIComponent extends Branch {
 
 		if (this.debug) console.log("UIComponent.scope", value);
 
-		let showDuration = this.element.getAttribute("data-show-duration");
-		if (showDuration) {
-			this.showDuration = Number(showDuration);
-		}
-
-		let hideDuration = this.element.getAttribute("data-hide-duration");
-		if (hideDuration) {
-			this.hideDuration = Number(hideDuration);
-		}
-
-		let showChildrenDelay = this.element.getAttribute("data-show-children-delay");
-		if (showChildrenDelay) {
-			this.showChildrenDelay = Number(showChildrenDelay);
-		}
-
-		let hideChildrenDelay = this.element.getAttribute("data-hide-children-delay");
-		if (hideChildrenDelay) {
-			this.hideChildrenDelay = Number(hideChildrenDelay);
-		}
-
 		AttributeBinding.bindComponentAttributes(this, value);
-		this._parseAttributesSetProperty(this, value);
+
 		this._parseAttributesEventHandlers(this, value);
+
+		this._parseAttributesSetProperty(this, value);
 	}
-	
+
 	_parseAttributesSetProperty(component, scope) {
 		let removedAttributes = [];
 		for (let i = 0; i < component.element.attributes.length; i++) {
@@ -437,24 +416,6 @@ export default class UIComponent extends Branch {
 		}
 	}
 
-	destroy() {
-		if (this.debug) console.log("UIComponent.destroy", this.element);
-        for (let i in this.attributes) {
-        	let attribute = this.attributes[i];
-        	attribute.destroy();
-		}
-        this.model = null;
-        this.scope = null;
-        if (this.element.parentNode) {
-            this.element.parentNode.removeChild(this.element);
-        }
-        this.element = null;
-        this.element.compopnent = null;
-        for(let i in this) {
-        	this[i] = null;
-		}
-    }
-
     static getRect(element, parent, debug) {
 		if(!parent) {
 			parent = document.body;
@@ -498,6 +459,24 @@ export default class UIComponent extends Branch {
 	
 	dispatchResizeEvent() {
 		this.element.dispatchEvent(new Event("ui-resize", { bubbles: true, cancelable: true }));
+	}
+
+	destroy() {
+		if (this.debug) console.log("UIComponent.destroy", this.element);
+		for (let i in this.attributes) {
+			let attribute = this.attributes[i];
+			attribute.destroy();
+		}
+		this.model = null;
+		this.scope = null;
+		if (this.element.parentNode) {
+			this.element.parentNode.removeChild(this.element);
+		}
+		this.element = null;
+		this.element.compopnent = null;
+		for (let i in this) {
+			this[i] = null;
+		}
 	}
 
 	// static callElementAdded (element) {

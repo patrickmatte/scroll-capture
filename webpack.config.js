@@ -7,6 +7,7 @@ module.exports = (env) => {
 	let isDev = (env == "development");
 
 	return {
+		watch: true,
 		context: path.resolve(__dirname, "src"),
 		devtool: `[name].${(isDev) ? "inline-source-map" : "none"}`,
 		entry: {
