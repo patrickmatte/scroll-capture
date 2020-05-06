@@ -57,7 +57,6 @@ export default class UIInput2 extends UIComponent {
                     value = this.element.value;
                     break;
             }
-
             this.model.value = value;
         }
     }

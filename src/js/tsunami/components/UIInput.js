@@ -5,6 +5,8 @@ export default class UIInput extends UIComponent {
 
 	constructor(element) {
 		super(element);
+
+		console.log("UIInput");
 		
 		// this.inputHandler = this.inputHandler.bind(this);
 		// this.element.addEventListener("input", this.inputHandler);

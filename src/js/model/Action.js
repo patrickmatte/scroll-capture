@@ -4,7 +4,7 @@ import {awaitTimeout} from "../tsunami/await";
 import StringData from "../tsunami/data/StringData";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
-import { sendTrackEventMessage } from "../view/GABridge";
+import { sendTrackEventMessage } from "./GABridge";
 
 export default class Action {
 

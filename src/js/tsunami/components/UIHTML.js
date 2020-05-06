@@ -1,6 +1,6 @@
-import UIText2 from "./UIText2";
+import UIText from "./UIText";
 
-export default class UIHTML extends UIText2 {
+export default class UIHTML extends UIText {
 
     get model() {
         return this.element.innerHTML;

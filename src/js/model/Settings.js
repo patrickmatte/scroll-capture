@@ -4,7 +4,7 @@ import ArrayData from "../tsunami/data/ArrayData";
 import BooleanData from "../tsunami/data/BooleanData";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
-import { sendTrackEventMessage } from "../view/GABridge";
+import { sendTrackEventMessage } from "./GABridge";
 import Throttle from "../tsunami/utils/Throttle";
 import NumberData from "../tsunami/data/NumberData";
 
@@ -22,6 +22,7 @@ export default class Settings {
         this.videoBitsPerSecondMin = 1;
         this.videoBitsPerSecondMax = 8;
         this.videoBitsPerSecond = new NumberData(8);
+        this.videoBitsPerSecond.debug = true;
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
         this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];

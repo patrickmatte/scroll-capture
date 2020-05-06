@@ -1,6 +1,6 @@
 import { importTemplate, define } from "./tsunami/tsunami";
 import { loadStyle } from "./tsunami/load";
-import { sendTrackPageMessage, sendTrackEventMessage } from "./view/GABridge";
+import { sendTrackPageMessage, sendTrackEventMessage } from "./model/GABridge";
 import Data from "./tsunami/data/Data";
 import BooleanData from "./tsunami/data/BooleanData";
 import ScrollCapture from "./view/ScrollCapture";
@@ -10,9 +10,9 @@ import Settings from "./model/Settings";
 import ArrayData from "./tsunami/data/ArrayData";
 import Router from "./tsunami/Router";
 import RouterButton from "./view/RouterButton";
-import PlayState from "./view/PlayState";
-import PlayRecordState from "./view/PlayRecordState";
-import CloseState from "./view/CloseState";
+import PlayState from "./controller/PlayState";
+import PlayRecordState from "./controller/PlayRecordState";
+import CloseState from "./controller/CloseState";
 import StringData from "./tsunami/data/StringData";
 
 export let app;
@@ -23,7 +23,7 @@ export default class Main extends App {
 		super(element);
 		
 		this.isActive = true;
-		
+
 		this.testString = new StringData("TestString123");
 
 		window.addEventListener("beforeunload", () => {

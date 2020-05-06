@@ -1,6 +1,6 @@
 import { timeAMPM } from "./tsunami/utils/date";
 import { addLeadingZero } from "./tsunami/utils/number";
-import { sendTrackEventMessage } from "./view/GABridge";
+import { sendTrackEventMessage } from "./model/GABridge";
 
 chrome.storage.local.get(["json"], (result) => {
     let colorTheme = "Dark";

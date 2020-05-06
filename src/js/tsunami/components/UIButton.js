@@ -28,7 +28,7 @@ export default class UIButton extends UIComponent {
 		if (clickDelay) this.clickDelay = Number(clickDelay);
 
 		let click = this.element.getAttribute("data-click");
-		if(click) {
+		if (click) {
 			this.onRelease = (event) => {
 				let method = evalProperty(click, this.scope);
 				method(event);

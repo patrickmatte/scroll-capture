@@ -1,7 +1,7 @@
 
 // let page = chrome.extension.getBackgroundPage();
 
-import { trackEvent, trackPage } from "./view/GA";
+import { trackEvent, trackPage } from "./model/GA";
 
 let mediaStream;
 let isRecording;

@@ -24,8 +24,7 @@ export default class ActionTween extends Action {
 		this.cubicBezierPoints = new CubicBezierPoints();
 		this.easing = new CubicBezierEasing();
 		this.cubicBezierPointsChange();
-		this.easingMethod = new ObjectData(this.easing.ease);
-		this.debugEasing = new ObjectData(Easing.cubic.easeInOut);
+		this.debugEasing = Easing.cubic.easeInOut;
 		this.cubicBezierPoints.addEventListener(Data.CHANGE, this.cubicBezierPointsChange.bind(this));
 		this.easingPresets = new ArrayData("Select a preset");
 		this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));

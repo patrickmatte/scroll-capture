@@ -12,18 +12,6 @@ export default class EasingGraph extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		this.curves = ArrayData.nodeListToArray(this.element.querySelectorAll(".curve polyline"));
-		this.points = ArrayData.nodeListToArray(this.element.querySelectorAll(".points"));
-	}
-
-	updateValue(value) {
-		super.updateValue(value);
-		this.curves.map((curve) => {
-			curve.component.render();
-		});
-		this.points.map((curve) => {
-			curve.component.render();
-		});
 	}
 
 }
@@ -124,14 +112,18 @@ export class EasingGraphCurve extends UIComponent {
 		super(element);
 	}
 
-	render() {
-		let easing = this.model.value;
+	get model() {
+		return this._model;
+	}
+
+	set model(value) {
+		this._model = value;
 		let totalPoints = 15;
 		let points = [];
 		let pointsString = "";
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);
-			let point = new Point(x, easing(x, 0, 1, 1));
+			let point = new Point(x, this.easing(x, 0, 1, 1));
 			points.push(point);
 			pointsString += roundDecimalTo3(point.x * 200) + "," + roundDecimalTo3(200 - (point.y * 200)) + " ";
 		}
@@ -146,14 +138,18 @@ export class EasingGraphPoints extends UIComponent {
 		super(element);
 	}
 
-	render() {
-		let easing = this.model.value;
+	get model() {
+		return this._model;
+	}
+
+	set model(value) {
+		this._model = value;
 		this.element.innerHTML = "";
 		let totalPoints = 15;
 		let points = [];
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);
-			let point = new Point(x, easing(x, 0, 1, 1));
+			let point = new Point(x, this.easing(x, 0, 1, 1));
 			points.push(point);
 		}
 		for(let i = 0; i < points.length; i++) {

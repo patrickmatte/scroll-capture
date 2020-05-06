@@ -2,7 +2,7 @@ import PlayState from "./PlayState";
 import { app } from "../main";
 import ActionWait from "../model/ActionWait";
 import { awaitTimeout } from "../tsunami/await";
-import { sendTrackEventMessage } from "./GABridge";
+import { sendTrackEventMessage } from "../model/GABridge";
 
 export default class PlayRecordState extends PlayState {
 

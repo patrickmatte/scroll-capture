@@ -187,41 +187,48 @@ export default class UIComponent extends Branch {
 		if (hideChildrenDelay) {
 			this.hideChildrenDelay = Number(hideChildrenDelay);
 		}
-		
+
 		AttributeBinding.bindComponentAttributes(this, value);
-
-		for (let i = 0; i < this.element.attributes.length; i++) {
-			let attribute = this.element.attributes[i];
-			this._parseAttributeSetProperty(attribute, value);
-		}
-		for (let i = 0; i < this.element.attributes.length; i++) {
-			let attribute = this.element.attributes[i];
-			this._parseAttributeEventHandler(attribute, value);
-		}
+		this._parseAttributesSetProperty(this, value);
+		this._parseAttributesEventHandlers(this, value);
 	}
-
-	_parseAttributeSetProperty(attribute, scope) {
-		if (attribute.name.indexOf("data-set-") != -1) {
-			let propertyName = attribute.name.split("data-set-")[1];
-			let setValue = (value) => {
-				this[propertyName] = value;
+	
+	_parseAttributesSetProperty(component, scope) {
+		let removedAttributes = [];
+		for (let i = 0; i < component.element.attributes.length; i++) {
+			let attribute = component.element.attributes[i];
+			if (attribute.name.indexOf("data-set-") != -1) {
+				let propertyName = attribute.name.split("data-set-")[1];
+				let setValue = (value) => {
+					component[propertyName] = value;
+				}
+				let expression = attribute.value;
+				let attr = new ExpressionBinding(setValue, expression, scope);
+				component.attributes[attribute.name] = attr;
+				removedAttributes.push(attribute.name);
 			}
-			let expression = attribute.value;
-			let attr = new ExpressionBinding(setValue, expression, scope);
-			this.attributes[attribute.name] = attr;
-			this.element.removeAttribute(attribute.name);
 		}
+		removedAttributes.map((attributeName) => {
+			component.element.removeAttribute(attributeName);
+		});
 	}
 
-	_parseAttributeEventHandler(attribute, scope) {
-		if (attribute.name.indexOf("data-on-") != -1) {
-			let type = attribute.name.split("data-on-")[1];
-			let expression = attribute.value;
-			let func = new Function("event", expression).bind(this);
-			let eventHandler = new EventHandler(this.element, type, func);
-			this.attributes[attribute.name] = eventHandler;
-			this.element.removeAttribute(attribute.name);
+	_parseAttributesEventHandlers(component, scope) {
+		let removedAttributes = [];
+		for (let i = 0; i < component.element.attributes.length; i++) {
+			let attribute = component.element.attributes[i];
+			if (attribute.name.indexOf("data-on-") != -1) {
+				let type = attribute.name.split("data-on-")[1];
+				let expression = attribute.value;
+				let func = new Function("event", expression).bind(component);
+				let eventHandler = new EventHandler(component.element, type, func);
+				component.attributes[attribute.name] = eventHandler;
+				removedAttributes.push(attribute.name);
+			}
 		}
+		removedAttributes.map((attributeName) => {
+			component.element.removeAttribute(attributeName);
+		});
 	}
 
     get model() {

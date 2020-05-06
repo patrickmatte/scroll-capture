@@ -17,5 +17,5 @@ export default class StringData extends DataPrimitive {
 	reset(value = "") {
 		super.reset(value);
 	}
-
+	
 }

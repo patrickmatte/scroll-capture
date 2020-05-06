@@ -26,6 +26,7 @@ export default class Data extends EventDispatcher {
 	}
 
 	toString() {
+		if(this.debug) console.log("Data.toString", this.value);
 		return this.value.toString();
 	}
 

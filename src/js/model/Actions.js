@@ -4,7 +4,7 @@ import ActionMouseEvent from "./ActionMouseEvent";
 import ActionEval from "./ActionEval";
 import ActionSwipe from "./ActionSwipe";
 import ActionWait from "./ActionWait";
-import { sendTrackEventMessage } from "../view/GABridge";
+import { sendTrackEventMessage } from "./GABridge";
 
 export default class Actions extends ArrayData {
 
