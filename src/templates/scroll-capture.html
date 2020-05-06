@@ -63,7 +63,7 @@
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
 
 							<sc-scenario class="sc-section sc-fields" is="ui-component">
-								<sc-actions-view data-provider="actions" data-actions-length="`${[[scope.actions.length]]}`">
+								<sc-actions-view data-actions-length="`${[[scope.actions.length]]}`" data-set-provider="scope.actions">
 									<template>
 										<sc-action-view class="sc-window ui-list-element" data-type="`${[[scope.data.type]]}`" data-set-model="scope.data" data-selected="`${[[scope.data.isSelectedItem]]}`">
 											<div class="sc-title">
@@ -74,7 +74,7 @@
 														<span class="sc-tab-wrapper">
 															<span class="`sc-icon ${[[scope.data.icon]]}`" is="ui-component"></span>
 															<span class="sc-label">
-																<input size="`${[[scope.data.name.length]]}`" data-debug="true" is="ui-input" data-set-model="[[scope.data.name]]" />
+																<input size="`${[[scope.data.name.length]]}`" is="ui-input" data-set-model="[[scope.data.name]]" />
 															</span>
 														</span>
 													</span>
@@ -102,7 +102,7 @@
 											</div>
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
-													<div class="sc-action-fields" is="ui-list" data-provider="data.array">
+													<div class="sc-action-fields" is="ui-list" data-set-provider="scope.data.array">
 														<template data-type="ActionScroll">
 															<div class="sc-action sc-fields-list" is="action-tween">
 																<div class="sc-field">
@@ -131,7 +131,7 @@
 														</template>
 														<template data-type="ActionSwipe">
 															<div class="sc-action sc-fields-list" is="action-tween">
-																<div class="sc-points-list sc-field-column" data-provider="data.points" is="ui-list">
+																<div class="sc-points-list sc-field-column" is="ui-list" data-set-provider="scope.data.points">
 																	<template>
 																		<div class="sc-field">
 																			<span class="sc-input" title="PageX">
@@ -174,7 +174,7 @@
 																<div class="sc-field">
 																	<span class="sc-input sc-select" title="MouseEvent Type">
 																		<span class="sc-icon fas fa-mouse-pointer"></span>
-																		<select data-provider="data.eventTypes" data-set-model="scope.data.eventTypes.selectedItem" is="ui-select"></select>
+																		<select is="ui-select" data-set-model="scope.data.eventTypes.selectedItem" data-set-provider="scope.data.eventTypes"></select>
 																	</span>
 																	<span class="sc-input" title="Delay">
 																		<span class="sc-icon fas fa-hourglass-half"></span>
@@ -224,7 +224,7 @@
 									</template>
 								</sc-actions-view>
 								<div class="sc-action-buttons">
-									<div class="sc-buttons" is="ui-list" data-provider="actions.types">
+									<div class="sc-buttons" is="ui-list" data-set-provider="scope.actions.types">
 										<template>
 											<button class="sc-action-button" data-type="`${[[scope.data.type]]}`" data-set-model="scope.data" is="ui-button" title="`${[[scope.data.description]]}`" data-on-click="this.scope.rootScope.actions.cloneAction(this.model);">
 												<span class="`sc-icon ${[[scope.data.icon]]}`" is="ui-component"></span>
@@ -261,7 +261,7 @@
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field">
 													<!-- <span class="sc-label">Theme:</span> -->
-													<!-- <div class="sc-color-themes" data-provider="settings.colorThemes" is="ui-list">
+													<!-- <div class="sc-color-themes" is="ui-list" data-set-provider="scope.settings.colorThemes">
 															<template>
 																<label class="sc-radio">
 																	<input type="radio" name="color-theme" value="`${[[scope.data]]}`" is="ui-input" data-set-model="[[scope.parentScope.settings.colorThemes.selectedItem]]" />
@@ -272,7 +272,7 @@
 														</div> -->
 													<div class="sc-input sc-select">
 														<span class="sc-icon fas" data-theme="`${[[scope.settings.colorThemes.selectedItem]]}`" is="ui-component"></span>
-														<select data-provider="settings.colorThemes" data-set-model="scope.settings.colorThemes.selectedItem" is="ui-select"></select>
+														<select is="ui-select" data-set-model="scope.settings.colorThemes.selectedItem" data-set-provider="scope.settings.colorThemes"></select>
 													</div>
 													<div class="sc-space"></div>
 												</div>
@@ -297,7 +297,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-video"></span>
-															<select data-provider="settings.videoCodecs" data-set-model="scope.settings.videoCodecs.selectedItem" is="ui-select"></select>
+															<select is="ui-select" data-set-model="scope.settings.videoCodecs.selectedItem" data-set-provider="scope.settings.videoCodecs"></select>
 														</div>
 													</div>
 													<div class="sc-field">
@@ -312,7 +312,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-volume-up"></span>
-															<select data-provider="settings.audioCodecs" data-set-model="scope.settings.audioCodecs.selectedItem" is="ui-select"></select>
+															<select is="ui-select" data-set-model="scope.settings.audioCodecs.selectedItem" data-set-provider="scope.settings.audioCodecs"></select>
 														</div>
 													</div>
 													<div class="sc-field">

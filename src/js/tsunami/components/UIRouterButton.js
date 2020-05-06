@@ -7,18 +7,16 @@ export default class UIRouterButton extends UIButton {
 		this.pushState = true;
 	}
 	
-	get scope() {
-		return super.scope;
-	}
+	// get scope() {
+	// 	return super.scope;
+	// }
 
-	set scope(value) {
-		super.scope = value;
+	// set scope(value) {
+	// 	super.scope = value;
 
-		let pushState = this.element.getAttribute("data-pushstate");
-		if (pushState) {
-			this.pushState = (pushState == "true");
-		}
-	}
+		// let pushState = this.element.getAttribute("data-pushstate");
+		// if (pushState) this.pushState = (pushState == "true");
+	// }
 
 	clickHandler(event) {
 		event.preventDefault();

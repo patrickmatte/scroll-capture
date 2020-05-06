@@ -5,7 +5,7 @@ export default class SplitLetters extends UIList {
 	constructor(element) {
 		super(element);
 
-		this.template = `<span class="letter" is="ui-component">{{data}}</span>`;
+		this.template = '<span class="letter" is="ui-text">`${[[scope.data]]}`</span>';
 	}
 
 	updateValue(value) {
@@ -13,7 +13,7 @@ export default class SplitLetters extends UIList {
 		for(let i = 0; i < value.length; i++) {
 			array.push(value.charAt(i));
 		}
-		this.dataProvider = array;
+		this.provider = array;
 	}
 
 }

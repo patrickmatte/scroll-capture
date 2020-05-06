@@ -52,25 +52,25 @@ export default class UIList extends UIComponent {
 		this.element.addEventListener(events.mousedown, this._mouseDownHandler);
 	}
 
-	get scope() {
-		return super.scope;
-	}
+	// get scope() {
+	// 	return super.scope;
+	// }
 
-	set scope(value) {
-		this._scope = value;
-		let dataProvider = this.element.getAttribute("data-provider");
-		if (dataProvider) {
-			this.dataProvider = evalProperty(dataProvider, value);
-		}
-		super.scope = value;
-	}
+	// set scope(value) {
+	// 	this._scope = value;
+	// 	let provider = this.element.getAttribute("data-provider");
+	// 	if (provider) {
+	// 		this.provider = evalProperty(provider, value);
+	// 	}
+	// 	super.scope = value;
+	// }
 
-	get dataProvider() {
+	get provider() {
 		return this._provider;
 	}
 
-	set dataProvider(value) {
-		if(this.debug) console.log("dataProvider", value);
+	set provider(value) {
+		if (this.debug) console.log("provider", value);
 		if (this._provider) {
 			if (this._provider instanceof ArrayData) {
 				this._provider.removeEventListener("add", this._providerAdd);
@@ -168,7 +168,7 @@ export default class UIList extends UIComponent {
 		let start = event.index;
 		let end = event.index + event.total;
 		for (let i = start; i < end; i++ ) {
-			let model = this.dataProvider.value[i];
+			let model = this.provider.value[i];
 			addedElements.push(model);
 		}
 		this._addElements(addedElements, start);
@@ -198,7 +198,7 @@ export default class UIList extends UIComponent {
 
 	_providerSort(event) {
 		this._saveChildrenPositions();
-		let array = this.dataProvider.value;
+		let array = this.provider.value;
 		for (let i = 0; i < array.length; i++ ) {
 			let model = array[i];
 			let child = this.getElementByModel(model);
@@ -262,8 +262,8 @@ export default class UIList extends UIComponent {
 		// if(this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
 		if(selectedChild) {
 			if(this.selectItemOnMouseDown) {
-				if(this.dataProvider.selectedIndex) {
-					this.dataProvider.selectedIndex.value = selectedIndex;
+				if (this.provider.selectedIndex) {
+					this.provider.selectedIndex.value = selectedIndex;
 				}
 			}
 			let isDragElement = event.target.classList.contains(this.dragElementClass);
@@ -320,7 +320,7 @@ export default class UIList extends UIComponent {
 			}
 		}
 		if(index != this.dragIndex) {
-			this.dataProvider.swap(this.dragIndex, index);
+			this.provider.swap(this.dragIndex, index);
 
 			let oldPos = this.dragElementStartPos;
 			this.dragElementStartPos = new Point(this.dragElement.offsetLeft, this.dragElement.offsetTop);
@@ -377,7 +377,7 @@ export default class UIList extends UIComponent {
 
 	destroy() {
 		this.childrenPositions = null;
-		this.dataProvider = null;
+		this.provider = null;
 		super.destroy();
 	}
 

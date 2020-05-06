@@ -50,12 +50,12 @@ export class EasingGraphControlPointLines extends UIList {
 	}
 
 
-	get dataProvider() {
-		return super.dataProvider;
+	get provider() {
+		return super.provider;
 	}
 
-	set dataProvider(value) {
-		super.dataProvider = value;
+	set provider(value) {
+		super.provider = value;
 		for(let i in value) {
 			let pair = value[i];
 			for(let j in pair) {

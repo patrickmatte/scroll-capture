@@ -86,6 +86,6 @@ export default class SplitLineText extends UIComponent {
 			lines.push(textLine);
 		}
 		this.list.element.innerHTML = "";
-		this.list.dataProvider = lines;
+		this.list.provider = lines;
 	}
 }

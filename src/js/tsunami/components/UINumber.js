@@ -12,14 +12,14 @@ export default class UINumber extends UIText {
 		this.roundDecimal = 1;
 		this.easing = Easing.cubic.easeOut;
 
-		let isRank = this.element.getAttribute("data-is-rank");
-		this.isRank = (isRank == "true");
+		// let isRank = this.element.getAttribute("data-is-rank");
+		// this.isRank = (isRank == "true");
 
-		let roundDecimal = this.element.getAttribute("data-round-decimal");
-		if (roundDecimal) this.roundDecimal = Number(roundDecimal);
+		// let roundDecimal = this.element.getAttribute("data-round-decimal");
+		// if (roundDecimal) this.roundDecimal = Number(roundDecimal);
 		
-		let format = this.element.getAttribute("data-format");
-		this.applyFormat = (format == "true");
+		// let format = this.element.getAttribute("data-format");
+		// this.applyFormat = (format == "true");
 	}
 
 	updateValue(value) {

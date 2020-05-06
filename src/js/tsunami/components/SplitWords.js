@@ -7,15 +7,15 @@ export default class SplitWords extends UIList {
 	constructor(element) {
 		super(element);
 		this.alsoShowChildren = true;
-		this.wordTemplate = `<span class="word" is="ui-component">{{data}}</span>`;
-		this.spaceTemplate = `<span class="space">&nbsp;</span>`;
+		this.wordTemplate = '<span class="word" is="ui-text">`${scope.data}`</span>';
+		this.spaceTemplate = '<span class="space">&nbsp;</span>';
 		this.showChildrenDelay = 25;
 		this.hideChildrenDelay = 25;
 	}
 
 	updateValue(value) {
 		let array = value.split(" ").join("- -").split("-");
-		this.dataProvider = array;
+		this.provider = array;
 	}
 
 	getTemplateForModel(model) {

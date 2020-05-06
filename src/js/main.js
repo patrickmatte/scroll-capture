@@ -23,11 +23,9 @@ export default class Main extends App {
 		super(element);
 		
 		this.isActive = true;
-
-		this.testString = new StringData("TestString123");
-
+		
 		window.addEventListener("beforeunload", () => {
-			this.isActive = false;
+			// this.isActive = false;
 			this.router.removeEventListener(Router.CHANGE, this.trackRouterLocation);
 			this.router.location = "";
 		});

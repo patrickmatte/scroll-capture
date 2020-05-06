@@ -12,10 +12,10 @@ export default class SVGPath extends UIComponent {
 		this.showDuration = 1000;
 		this.hideDuration = 1000;
 
-		let dataDashOffset = this.element.getAttribute("data-dash-offset");
-		if (dataDashOffset) {
-			this.dashOffset = Number(dataDashOffset);
-		}
+		// let dataDashOffset = this.element.getAttribute("data-dash-offset");
+		// if (dataDashOffset) {
+		// 	this.dashOffset = Number(dataDashOffset);
+		// }
 	}
 
 	get dashArray() {

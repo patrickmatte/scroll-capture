@@ -1,10 +1,6 @@
-import {evalProperty, getAllObjects} from "../tsunami";
-import Attribute from "./Attribute";
-import Style from "./Style";
 import Data from "../data/Data";
 import {awaitTimeout} from "../await";
 import ArrayData from "../data/ArrayData";
-import ArrayDataOperation from "../data/ArrayDataOperation";
 import Rectangle from "../geom/Rectangle";
 import {isTouch, localToGlobal} from "../window";
 import Branch from "../Branch";
