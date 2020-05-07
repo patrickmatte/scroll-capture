@@ -5,7 +5,7 @@ export default class UIInput extends UIComponent {
 
     constructor(element) {
         super(element);
-
+        
         this.inputHandler = this.inputHandler.bind(this);
         this.blurHandler = this.blurHandler.bind(this);
         
