@@ -13,7 +13,6 @@ import RouterButton from "./view/RouterButton";
 import PlayState from "./controller/PlayState";
 import PlayRecordState from "./controller/PlayRecordState";
 import CloseState from "./controller/CloseState";
-import StringData from "./tsunami/data/StringData";
 
 export let app;
 

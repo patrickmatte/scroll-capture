@@ -22,7 +22,7 @@ export default class Switch extends UIComponent {
 		}
 	}
 
-	updateValue(value) {
+	modelUpdate(value) {
 		value = value.toString();
 
 		this.hideElement(this.selectedElement);

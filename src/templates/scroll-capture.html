@@ -10,12 +10,6 @@
 				</span>
 			</span>
 			<span class="sc-tabs">
-				<!-- <span class="sc-tab">
-					<input type="number" is="ui-input" min="`${[[scope.settings.videoBitsPerSecondMin]]}`" max="`${[[scope.settings.videoBitsPerSecondMax]]}`" placeholder="`${[[scope.settings.videoBitsPerSecondMax]]}`" style="`width:calc(50px + ${[[scope.settings.audioBitsPerSecond]]}px)`" data-set-model="[[scope.settings.videoBitsPerSecond]]" />
-				</span> -->
-				<!-- <span class="sc-tab">
-					<input type="number" is="ui-input" min="`${[[scope.settings.videoBitsPerSecondMin]]}`" max="`${[[scope.settings.videoBitsPerSecondMax]]}`" placeholder="`${[[scope.settings.videoBitsPerSecondMax]]}`" style="`width:calc(50px + ${[[scope.settings.audioBitsPerSecond]]}px)`" data-set-model="[[scope.settings.videoBitsPerSecond]]" />
-				</span> -->
 				<span class="sc-tab">
 					<span class="sc-drag-area"></span>
 					<button is="router-button" data-path="closed" title="Close">
@@ -63,9 +57,10 @@
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
 
 							<sc-scenario class="sc-section sc-fields" is="ui-component">
-								<sc-actions-view data-actions-length="`${[[scope.actions.length]]}`" data-set-provider="scope.actions">
+								<sc-actions-view data-actions-length="`${[[scope.actions.length]]}`" data-set-provider="[[scope.actions]]">
 									<template>
-										<sc-action-view class="sc-window ui-list-element" data-type="`${[[scope.data.type]]}`" data-set-model="scope.data" data-selected="`${[[scope.data.isSelectedItem]]}`">
+										<sc-action-view class="sc-window ui-list-element" data-type="`${[[scope.data.type]]}`" data-set-model="[[scope.data]]" data-selected="`${[[scope.data.isSelectedItem]]}`">
+											<div is="ui-component" data-debug="true" data-set-model="console.log('testtesttest', scope, this)"></div>
 											<div class="sc-title">
 												<span class="sc-tabs">
 													<div class="sc-drag-area ui-list-drag-area"></div>
@@ -82,19 +77,19 @@
 												<span class="sc-tabs">
 													<span class="sc-tab" data-visible="`${[[scope.data.isCaptureable]]}`" is="ui-component">
 														<div class="ui-list-drag-area"></div>
-														<button class="sc-set-button" is="ui-button" data-set-model="scope.data" data-on-click="this.model.reCapture()" data-is-capturing="`${[[scope.data.isCapturing]]}`" title="Set">
+														<button class="sc-set-button" is="ui-button" data-is-capturing="`${[[scope.data.isCapturing]]}`" data-set-model="[[scope.data]]" data-on-click="this.model.reCapture()" title="Set">
 															<span class="sc-icon fas fa-bullseye"></span>
 														</button>
 													</span>
 													<span class="sc-tab" data-visible="`${[[scope.data.isTestable]]}`" is="ui-component">
 														<div class="ui-list-drag-area"></div>
-														<button class="sc-test-button" is="ui-button" data-set-model="scope.data" data-on-click="this.model.play()" data-is-playing="`${[[scope.data.isPlaying]]}`" title="Play">
+														<button class="sc-test-button" is="ui-button" data-set-model="[[scope.data]]" data-on-click="this.model.play()" data-is-playing="`${[[scope.data.isPlaying]]}`" title="Play">
 															<span class="sc-icon fas fa-play-circle"></span>
 														</button>
 													</span>
 													<span class="sc-tab">
 														<div class="ui-list-drag-area"></div>
-														<button class="sc-trash-button" is="ui-button" data-set-model="scope.data" data-on-click="this.scope.rootScope.actions.removeAction(this.model);" title="Delete">
+														<button class="sc-trash-button" is="ui-button" data-set-model="[[scope.data]]" data-on-click="this.scope.rootScope.actions.removeAction(this.model);" title="Delete">
 															<span class="sc-icon fas fa-trash-alt"></span>
 														</button>
 													</span>
@@ -102,7 +97,7 @@
 											</div>
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
-													<div class="sc-action-fields" is="ui-list" data-set-provider="scope.data.array">
+													<div class="sc-action-fields" is="ui-list" data-set-provider="[[scope.data.array]]">
 														<template data-type="ActionScroll">
 															<div class="sc-action sc-fields-list" is="action-tween">
 																<div class="sc-field">
@@ -131,7 +126,7 @@
 														</template>
 														<template data-type="ActionSwipe">
 															<div class="sc-action sc-fields-list" is="action-tween">
-																<div class="sc-points-list sc-field-column" is="ui-list" data-set-provider="scope.data.points">
+																<div class="sc-points-list sc-field-column" is="ui-list" data-set-provider="[[scope.data.points]]">
 																	<template>
 																		<div class="sc-field">
 																			<span class="sc-input" title="PageX">
@@ -174,7 +169,7 @@
 																<div class="sc-field">
 																	<span class="sc-input sc-select" title="MouseEvent Type">
 																		<span class="sc-icon fas fa-mouse-pointer"></span>
-																		<select is="ui-select" data-set-model="scope.data.eventTypes.selectedItem" data-set-provider="scope.data.eventTypes"></select>
+																		<select is="ui-select" data-set-model="[[scope.data.eventTypes.selectedItem]]" data-set-provider="[[scope.data.eventTypes]]"></select>
 																	</span>
 																	<span class="sc-input" title="Delay">
 																		<span class="sc-icon fas fa-hourglass-half"></span>
@@ -224,9 +219,9 @@
 									</template>
 								</sc-actions-view>
 								<div class="sc-action-buttons">
-									<div class="sc-buttons" is="ui-list" data-set-provider="scope.actions.types">
+									<div class="sc-buttons" is="ui-list" data-set-provider="[[scope.actions.types]]">
 										<template>
-											<button class="sc-action-button" data-type="`${[[scope.data.type]]}`" data-set-model="scope.data" is="ui-button" title="`${[[scope.data.description]]}`" data-on-click="this.scope.rootScope.actions.cloneAction(this.model);">
+											<button class="sc-action-button" data-type="`${[[scope.data.type]]}`" data-set-model="[[scope.data]]" is="ui-button" title="`${[[scope.data.description]]}`" data-on-click="this.scope.rootScope.actions.cloneAction(this.model);">
 												<span class="`sc-icon ${[[scope.data.icon]]}`" is="ui-component"></span>
 											</button>
 										</template>
@@ -261,7 +256,7 @@
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field">
 													<!-- <span class="sc-label">Theme:</span> -->
-													<!-- <div class="sc-color-themes" is="ui-list" data-set-provider="scope.settings.colorThemes">
+													<!-- <div class="sc-color-themes" is="ui-list" data-set-provider="[[scope.settings.colorThemes]]">
 															<template>
 																<label class="sc-radio">
 																	<input type="radio" name="color-theme" value="`${[[scope.data]]}`" is="ui-input" data-set-model="[[scope.parentScope.settings.colorThemes.selectedItem]]" />
@@ -272,7 +267,7 @@
 														</div> -->
 													<div class="sc-input sc-select">
 														<span class="sc-icon fas" data-theme="`${[[scope.settings.colorThemes.selectedItem]]}`" is="ui-component"></span>
-														<select is="ui-select" data-set-model="scope.settings.colorThemes.selectedItem" data-set-provider="scope.settings.colorThemes"></select>
+														<select is="ui-select" data-set-model="[[scope.settings.colorThemes.selectedItem]]" data-set-provider="[[scope.settings.colorThemes]]"></select>
 													</div>
 													<div class="sc-space"></div>
 												</div>
@@ -297,7 +292,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-video"></span>
-															<select is="ui-select" data-set-model="scope.settings.videoCodecs.selectedItem" data-set-provider="scope.settings.videoCodecs"></select>
+															<select is="ui-select" data-set-model="[[scope.settings.videoCodecs.selectedItem]]" data-set-provider="[[scope.settings.videoCodecs]]"></select>
 														</div>
 													</div>
 													<div class="sc-field">
@@ -312,7 +307,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-volume-up"></span>
-															<select is="ui-select" data-set-model="scope.settings.audioCodecs.selectedItem" data-set-provider="scope.settings.audioCodecs"></select>
+															<select is="ui-select" data-set-model="[[scope.settings.audioCodecs.selectedItem]]" data-set-provider="[[scope.settings.audioCodecs]]"></select>
 														</div>
 													</div>
 													<div class="sc-field">

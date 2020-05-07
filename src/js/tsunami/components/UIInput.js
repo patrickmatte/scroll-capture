@@ -18,17 +18,11 @@ export default class UIInput extends UIComponent {
                 this.element.addEventListener("input", this.inputHandler);
                 break;
         }
-
+        
         this.element.addEventListener("blur", this.blurHandler);
     }
-
-    get model() {
-        return this._model;
-    }
-
-    set model(value) {
-        this._model = value;
-        if (value instanceof Data) value = value.value;
+    
+    modelUpdate(value) {
         switch (this.element.type) {
             case "checkbox":
                 this.element.checked = value;

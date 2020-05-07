@@ -29,8 +29,8 @@ export default class SplitLineText extends UIComponent {
 		super.scope = value;
 	}
 
-	updateValue(value) {
-		if (this.debug) console.log("SplitLineText.updateValue", value);
+	modelUpdate(value) {
+		if (this.debug) console.log("SplitLineText.modelUpdate", value);
 		this.modelValue = value;
 		if (this.isAdded) {
 			this.updateList();

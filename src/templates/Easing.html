@@ -20,7 +20,7 @@
             <div class="sc-field">
                 <div class="sc-input" title="Easing">
                     <span class="sc-icon fa fa-bezier-curve"></span>
-                    <select is="ui-select" data-set-model="scope.data.easingPresets.selectedItem" data-set-provider="scope.data.easingPresets"></select>
+                    <select is="ui-select" data-set-model="[[scope.data.easingPresets.selectedItem]]" data-set-provider="[[scope.data.easingPresets]]"></select>
                 </div>
             </div>
             <div class="sc-field">
@@ -59,14 +59,14 @@
                         </g>
                     </svg>
                     <div class="points" is="easing-graph-points" data-set-model="[[scope.data.cubicBezierPoints]].easing.ease"></div>
-                    <div is="control-point-lines" is="ui-list" data-set-provider="scope.data.cubicBezierPoints.controlPointsLines">
+                    <div is="control-point-lines" is="ui-list" data-set-provider="[[scope.data.cubicBezierPoints.controlPointsLines]]">
                         <template>
-                            <div is="control-point-line" data-set-model="scope.data"></div>
+                            <div is="control-point-line" data-set-model="[[scope.data]]"></div>
                         </template>
                     </div>
-                    <div class="control-points" is="easing-graph-control-points" data-set-provider="scope.data.cubicBezierPoints.controlPoints">
+                    <div class="control-points" is="easing-graph-control-points" data-set-provider="[[scope.data.cubicBezierPoints.controlPoints]]">
                         <template>
-                            <div class="control-point" is="ui-component" data-set-model="scope.data" style="`left:calc(${[[scope.data.x]]} * 100%); top:calc(100% - ${[[scope.data.y]]} * 100%)`">
+                            <div class="control-point" is="ui-component" data-set-model="[[scope.data]]" style="`left:calc(${[[scope.data.x]]} * 100%); top:calc(100% - ${[[scope.data.y]]} * 100%)`">
                                 <span class="shape">
                                     <span class="shape-label" is="ui-text">`${[[scope.index]] + 1}`</span>
                                 </span>

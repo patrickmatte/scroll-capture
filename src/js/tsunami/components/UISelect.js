@@ -13,10 +13,19 @@ export default class UISelect extends UIList {
 		this.element.addEventListener("input", this.inputHandler);
 	}
 
-	updateValue(model) {
-		if (model) {
-			let value = evalProperty(this.valuePath, model);
-			this.element.value = value;
+	get valuePath() {
+		return this._valuePath;
+	}
+
+	set valuePath(value) {
+		this._valuePath = value;
+		this.model = this.model;
+	}
+
+	modelUpdate(value) {
+		if (value) {
+			let propValue = evalProperty(this.valuePath, value);
+			this.element.value = propValue;
 		}
 	}
 

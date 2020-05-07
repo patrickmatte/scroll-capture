@@ -11,7 +11,6 @@ import NumberData from "../tsunami/data/NumberData";
 export default class Settings {
 
     constructor() {
-
         this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
 
         this.position = new Vector2Data(50, 50);
@@ -21,8 +20,8 @@ export default class Settings {
         }, 1000);
         this.videoBitsPerSecondMin = 1;
         this.videoBitsPerSecondMax = 8;
-        this.videoBitsPerSecond = new NumberData(8);
-        this.videoBitsPerSecond.debug = true;
+        this.videoBitsPerSecond = new NumberData();
+        this.videoBitsPerSecond.value = 8;
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
         this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];

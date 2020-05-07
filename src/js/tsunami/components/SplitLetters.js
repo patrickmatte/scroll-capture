@@ -8,7 +8,7 @@ export default class SplitLetters extends UIList {
 		this.template = '<span class="letter" is="ui-text">`${[[scope.data]]}`</span>';
 	}
 
-	updateValue(value) {
+	modelUpdate(value) {
 		let array = new Array();
 		for(let i = 0; i < value.length; i++) {
 			array.push(value.charAt(i));

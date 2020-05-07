@@ -19,7 +19,7 @@ export default class UIList extends UIComponent {
 		this._dragMove = this._dragMove.bind(this);
 		this._dragElementMove = this._dragElementMove.bind(this);
 		this._dragEnd = this._dragEnd.bind(this);
-		this._providerChange = this._providerChange.bind(this);
+		// this._providerChange = this._providerChange.bind(this);
 		this._providerAdd = this._providerAdd.bind(this);
 		this._providerRemove = this._providerRemove.bind(this);
 		this._providerSort = this._providerSort.bind(this);
@@ -75,7 +75,7 @@ export default class UIList extends UIComponent {
 			if (this._provider instanceof ArrayData) {
 				this._provider.removeEventListener("add", this._providerAdd);
 				this._provider.removeEventListener("remove", this._providerRemove);
-				this._provider.removeEventListener("change", this._providerChange);
+				// this._provider.removeEventListener("change", this._providerChange);
 				this._provider.removeEventListener("sort", this._providerSort);
 			}
 		}
@@ -85,15 +85,21 @@ export default class UIList extends UIComponent {
 			if (this._provider instanceof ArrayData) {
 				this._provider.addEventListener("add", this._providerAdd);
 				this._provider.addEventListener("remove", this._providerRemove);
-				this._provider.addEventListener("change", this._providerChange);
+				// this._provider.addEventListener("change", this._providerChange);
 				this._provider.addEventListener("sort", this._providerSort);
 				this._addElements(this._provider.value);
 			} else {
 				this._addElements(this._provider);
 			}
 		}
-		// this.model = this.model;
 	}
+
+	// _providerChange(event) {
+	// 	if (this.debug) console.log("UIList._providerChange");
+	// 	let children = this.children.slice();
+	// 	this._removeElements(children);
+	// 	this._addElements(this._provider.value);
+	// }
 
 	_removeElements(array) {
 		if(this.debug) console.log("UIList._removeElements", array.length);
@@ -152,13 +158,6 @@ export default class UIList extends UIComponent {
 			throw new Error("UIList " + this.element.outerHTML + " has no template");
 		}
 		return selectedTemplate;
-	}
-
-	_providerChange(event) {
-		if (this.debug) console.log("UIList._providerChange");
-		let children = this.children.slice();
-		this._removeElements(children);
-		this._addElements(this._provider.value);
 	}
 
 	_providerAdd(event) {

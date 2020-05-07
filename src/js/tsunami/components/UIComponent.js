@@ -14,7 +14,7 @@ export default class UIComponent extends Branch {
     constructor(element) {
 		super();
 
-		this.modelChange = this.modelChange.bind(this);
+		// this.modelChange = this.modelChange.bind(this);
 
 		if(element) {
 			this.debug = (element.getAttribute("data-debug") == "true");
@@ -38,8 +38,8 @@ export default class UIComponent extends Branch {
 		this.showDelay = 0;
 		this.hideDuration = 0;
 		this.hideDelay = 0;
-		this.showChildrenDelay = NaN;
-		this.hideChildrenDelay = NaN;
+		this.showChildrenDelay = 0;
+		this.hideChildrenDelay = 0;
 
 		this.doChildrenAnimationFrame = false;
 		this.alsoShowChildren = false;
@@ -161,11 +161,11 @@ export default class UIComponent extends Branch {
 
 		if (this.debug) console.log("UIComponent.scope", value);
 
-		AttributeBinding.bindComponentAttributes(this, value);
-
 		this._parseAttributesEventHandlers(this, value);
 
 		this._parseAttributesSetProperty(this, value);
+
+		AttributeBinding.bindComponentAttributes(this, value);
 	}
 
 	_parseAttributesSetProperty(component, scope) {
@@ -206,33 +206,48 @@ export default class UIComponent extends Branch {
 		});
 	}
 
-    get model() {
-        return this._model;
-    }
+	get model() {
+		return this._model;
+	}
 
-    set model(value) {
-    	if (this.debug) console.log("UIComponent.model", value);
-        if (this._model) {
-            if (this._model instanceof Data) {
-				this._model.removeEventListener(Data.CHANGE, this.modelChange);
-            }
-        }
-        this._model = value;
-        if (value) {
-            if (value instanceof Data) {
-				value.addEventListener(Data.CHANGE, this.modelChange);
-                this.modelChange();
-            } else {
-                this.updateValue(value);
-            }
-        } else {
-			this.updateValue(value);
-        }
-    }
+	set model(value) {
+		if (this.debug) console.log("UIComponent.model", value);
+		this._model = value;
+		if (value instanceof Data) value = value.value;
+		this.modelUpdate(value);
+	}
 
-    modelChange(event) {
-        this.updateValue(this.model.value);
-    }
+	modelUpdate(value) {
+
+	}
+
+    // get model() {
+    //     return this._model;
+    // }
+
+    // set model(value) {
+    // 	if (this.debug) console.log("UIComponent.model", value);
+    //     if (this._model) {
+    //         if (this._model instanceof Data) {
+	// 			this._model.removeEventListener(Data.CHANGE, this.modelChange);
+    //         }
+    //     }
+    //     this._model = value;
+    //     if (value) {
+    //         if (value instanceof Data) {
+	// 			value.addEventListener(Data.CHANGE, this.modelChange);
+    //             this.modelChange();
+    //         } else {
+    //             this.modelUpdate(value);
+    //         }
+    //     } else {
+	// 		this.modelUpdate(value);
+    //     }
+    // }
+
+    // modelChange(event) {
+    //     this.modelUpdate(this.model.value);
+    // }
 
 	load() {
 		let promises = [];
@@ -276,7 +291,7 @@ export default class UIComponent extends Branch {
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
 			if(component) {
-				if (!isNaN(this.showChildrenDelay)) {
+				if (this.showChildrenDelay > 0) {
 					component.showDelay = delay;
 					delay += this.showChildrenDelay;
 				}
@@ -316,7 +331,7 @@ export default class UIComponent extends Branch {
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
 			if(component) {
-				if (!isNaN(this.hideChildrenDelay)) {
+				if (this.hideChildrenDelay > 0) {
 					component.hideDelay = delay;
 					delay += this.hideChildrenDelay;
 				}
@@ -325,10 +340,6 @@ export default class UIComponent extends Branch {
 		}
 		return Promise.all(promises);
 	}
-
-	updateValue(value) {
-
-    }
 
 	windowResize(windowSize) {
 		this.windowSize = windowSize;

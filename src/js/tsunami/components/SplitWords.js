@@ -13,7 +13,7 @@ export default class SplitWords extends UIList {
 		this.hideChildrenDelay = 25;
 	}
 
-	updateValue(value) {
+	modelUpdate(value) {
 		let array = value.split(" ").join("- -").split("-");
 		this.provider = array;
 	}

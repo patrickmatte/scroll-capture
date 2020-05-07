@@ -9,25 +9,32 @@ export default class UINumber extends UIText {
 	constructor(element) {
 		super(element);
 		this._currentValue = 0;
+
+		this.isRank = false;
+
 		this.roundDecimal = 1;
+
+		this.applyFormat = false;
+
 		this.easing = Easing.cubic.easeOut;
 
-		// let isRank = this.element.getAttribute("data-is-rank");
-		// this.isRank = (isRank == "true");
-
-		// let roundDecimal = this.element.getAttribute("data-round-decimal");
-		// if (roundDecimal) this.roundDecimal = Number(roundDecimal);
-		
-		// let format = this.element.getAttribute("data-format");
-		// this.applyFormat = (format == "true");
+		this.updateDelay = 0;
+		this.updateDuration = 0;
 	}
 
-	updateValue(value) {
+	modelUpdate(value) {
 		if(isNaN(value)) {
 			value = 0;
 		}
-		let tween = new Tween(0, 0.5, [new TweenProperty(this, "currentValue", this.currentValue, value, this.easing)]);
-		tween.start();
+		if (this.updateDuration > 0) {
+			if (this.updateTween) {
+				this.updateTween.stop();
+			}
+			this.updateTween = new Tween(this.updateDelay, this.updateDuration, [new TweenProperty(this, "currentValue", this.currentValue, value, this.easing)]);
+			this.updateTween.start();
+		} else {
+			super.modelUpdate(value);
+		}
 	}
 
 	get currentValue() {
@@ -56,7 +63,7 @@ export default class UINumber extends UIText {
 		if(this.isRank) {
 			value = value + getOrdinalSuffix(value);
 		}
-		super.updateValue(value);
+		super.modelUpdate(value);
 	}
 
 }

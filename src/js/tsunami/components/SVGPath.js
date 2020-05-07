@@ -9,8 +9,8 @@ export default class SVGPath extends UIComponent {
 		this.dashArray = 1;
 		this.dashOffset = 1;
 
-		this.showDuration = 1000;
-		this.hideDuration = 1000;
+		// this.showDuration = 1000;
+		// this.hideDuration = 1000;
 
 		// let dataDashOffset = this.element.getAttribute("data-dash-offset");
 		// if (dataDashOffset) {
@@ -59,8 +59,8 @@ export default class SVGPath extends UIComponent {
 		return promise;
 	}
 
-	updateValue(value) {
-		this.dashOffset = value;
-	}
+	// modelUpdate(value) {
+	// 	this.dashOffset = value;
+	// }
 
 }

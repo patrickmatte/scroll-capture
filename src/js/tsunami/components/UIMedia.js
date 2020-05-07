@@ -7,23 +7,18 @@ export default class UIMedia extends UIComponent {
 		super(element);
 	}
 
-	updateValue(value) {
-		if (this.debug) console.log("UIMedia.updateValue", value);
+	modelUpdate(value) {
+		if (this.debug) console.log("UIMedia.modelUpdate", value);
 		if (hasValue(value)) {
 			this.element.src = value;
+		} else {
+			this.element.removeAttribute('src');
 		}
 	}
-
+	
 	reload() {
 		let url = this.element.src;
 		this.element.src = url;
-	}
-
-	destroy() {
-		let image = this.element;
-		let result = super.destroy();
-		image.removeAttribute('src');
-		return result;
 	}
 
 }

@@ -7,21 +7,13 @@ export default class UIText extends UIComponent {
 		super(element);
 	}
 
-    get model() {
-        return this.element.textContent;
-    }
-
-    set model(value) {
-        this.element.textContent = value;
-    }
-
     get scope() {
         return super.scope;
     }
 
     set scope(value) {
         super.scope = value;
-        let expression = this.model;
+        let expression = this.element.textContent;
         let hasTemplateLiteral1 = (expression.indexOf("`") != -1);
         let hasTemplateLiteral2 = (expression.indexOf("${") != -1);
         if (hasTemplateLiteral1 && hasTemplateLiteral2) {
@@ -30,6 +22,11 @@ export default class UIText extends UIComponent {
             }
             this.expressionBinding = new ExpressionBinding(setModel, expression, value);
         }
+    }
+
+    modelUpdate(value) {
+        if (this.debug) console.log("UIText.modelUpdate", value);
+        this.element.textContent = value;
     }
 
     destroy() {
