@@ -36,8 +36,6 @@ export default class Main extends App {
 		// this.clearActions = this.clearActions.bind(this);
 		this.trackRouterLocation = this.trackRouterLocation.bind(this);
 
-		app = this;
-
 		this.router = new Router(this);
 		this.router.redirect("default", () => { return "scroll-capture/scenario" });
 		this.router.addEventListener(Router.CHANGE, this.trackRouterLocation);
