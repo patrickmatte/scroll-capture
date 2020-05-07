@@ -25,7 +25,7 @@ export class EasingGraphControlPoints extends UIList {
 
 	_dragElementStart() {
 		super._dragElementStart();
-		app.actions.selectedItem.value.resetEasing();
+		app.model.actions.selectedItem.value.resetEasing();
 	}
 
 	_dragElementMove(event) {

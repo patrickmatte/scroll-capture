@@ -47,7 +47,7 @@ export default class ScrollCapture extends UIComponent {
 	dragEnd(event) {
 		document.body.removeEventListener(events.mousemove, this.dragMove);
 		document.body.removeEventListener(events.mouseup, this.dragEnd);
-		app.save();
+		app.model.save();
 	}
 
 }

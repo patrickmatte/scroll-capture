@@ -45,7 +45,7 @@ export default class Settings {
         this.isColorThemeLight = new BooleanData();
         this.isColorThemeLight.addEventListener(Data.CHANGE, (event) => {
             let msg = { txt: "scrollCaptureColorTheme", isColorThemeLight: event.data };
-            app.sendMessage(msg);
+            app.model.sendMessage(msg);
         });
 
         this.colorThemes = new ArrayData("Dark", "Light", "Auto");

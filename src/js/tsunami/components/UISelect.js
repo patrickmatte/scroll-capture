@@ -30,12 +30,8 @@ export default class UISelect extends UIList {
 	}
 
 	inputHandler(e) {
-		if (this._model) {
-			this._model.removeEventListener(Data.CHANGE, this.modelChange);
+		if (this._model instanceof Data) {
 			this._model.value = this.provider.find(this.getModel);
-			if (this._model) {
-				this._model.addEventListener(Data.CHANGE, this.modelChange);
-			}
 		}
 	}
 

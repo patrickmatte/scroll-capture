@@ -15,14 +15,14 @@ export default class PlayState extends Branch {
         
         this.router.redirect("default", () => { return this.startLocation });
 
-        app.save();
-        app.actions.selectedIndex.value = 0;
+        app.model.save();
+        app.model.actions.selectedIndex.value = 0;
         return awaitTimeout(250).then(() => this.triggerAction());
     }
 
     triggerAction() {
         if (!this.isPlaying) return;
-        let action = app.actions.selectedItem.value;
+        let action = app.model.actions.selectedItem.value;
         if (action) {
             let promise = action.triggerDelay();
             promise.then(() => this.actionComplete());
@@ -33,8 +33,8 @@ export default class PlayState extends Branch {
 
     actionComplete() {
         if (!this.isPlaying) return;
-        if (app.actions.selectedIndex.value < (app.actions.value.length - 1)) {
-            app.actions.selectedIndex.value = (app.actions.selectedIndex.value + 1);
+        if (app.model.actions.selectedIndex.value < (app.model.actions.value.length - 1)) {
+            app.model.actions.selectedIndex.value = (app.model.actions.selectedIndex.value + 1);
             this.triggerAction();
         } else {
             this.allComplete();

@@ -9,8 +9,6 @@ import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
 import {evalProperty} from "../tsunami/tsunami";
 import CubicBezierPoints from "./CubicBezierPoints";
 import Easing from "../tsunami/animation/Easing";
-import ObjectData from "../tsunami/data/ObjectData";
-import StringData from "../tsunami/data/StringData";
 
 export default class ActionTween extends Action {
 
@@ -22,18 +20,20 @@ export default class ActionTween extends Action {
 		this.endY = new NumberData(y);
 		this.duration = new NumberData(duration);
 		this.cubicBezierPoints = new CubicBezierPoints();
-		// this.cubicBezierPointsChange();
-		// this.cubicBezierPoints.addEventListener(Data.CHANGE, this.cubicBezierPointsChange.bind(this));
-		this.easingPresets = new ArrayData("Select a preset");
+		this.easingPresets = new ArrayData();
+		this.easingPresets.debugArray = true;
 		this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));
-		this.easingPresets.selectedItem.forceChangeEvent = true;
+		this.easingPresets.selectedItem.debug = true;
+		// this.easingPresets.selectedItem.forceChangeEvent = true;
+		let presets = ["Select a preset"];
 		for(let i in CubicBezierEasing) {
 			let cubicEasingClass = CubicBezierEasing[i];
 			for(let j in cubicEasingClass) {
 				let easingPreset = i + "." + j;
-				this.easingPresets.push(easingPreset);
+				presets.push(easingPreset);
 			}
 		}
+		this.easingPresets.value = presets;
 		this.easingPresets.selectedItem.value = "quad.easeInOut";
 		this.tweenUpdateHandler = this.tweenUpdateHandler.bind(this);
 		this.tweenCompleteHandler = this.tweenCompleteHandler.bind(this);
@@ -44,15 +44,7 @@ export default class ActionTween extends Action {
 	resetEasing() {
 		this.easingPresets.selectedItem.value = this.easingPresets.value[0];
 	}
-
-	// cubicBezierPointsChange() {
-	// 	this.easing.p1.x = this.cubicBezierPoints.p1.x.value;
-	// 	this.easing.p1.y = this.cubicBezierPoints.p1.y.value;
-	// 	this.easing.p2.x = this.cubicBezierPoints.p2.x.value;
-	// 	this.easing.p2.y = this.cubicBezierPoints.p2.y.value;
-	// 	this.easing.calculateLength();
-	// }
-
+	
 	easingPresetChange() {
 		let value = this.easingPresets.selectedItem.value;
 

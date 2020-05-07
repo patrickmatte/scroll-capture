@@ -27,7 +27,7 @@ export default class Action {
 		this.isCapturing = new BooleanData();
 		this.changeCursorOnCapture = new BooleanData();
 		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
-			if (this.changeCursorOnCapture.value) app.showCaptureIcon.value = event.data;
+			if (this.changeCursorOnCapture.value) app.model.showCaptureIcon.value = event.data;
 		});
 		this.isPlaying = new BooleanData();
 		this.delay = new NumberData(0);
@@ -86,7 +86,7 @@ export default class Action {
 
 	captureComplete() {
 		this.isCapturing.value = false;
-		app.save();
+		app.model.save();
 	}
 
 	captureAtInit() {
@@ -98,7 +98,7 @@ export default class Action {
 		let promise1 = this.trigger();
 		let promise2 = promise1.then(() => {
 			this.isPlaying.value = false;
-			app.save();
+			app.model.save();
 		});
 		return promise2;
 	}

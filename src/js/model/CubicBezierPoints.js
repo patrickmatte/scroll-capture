@@ -1,7 +1,5 @@
 import Vector2Data from "../tsunami/data/Vector2Data";
 import Data from "../tsunami/data/Data";
-import BaseEvent from "../tsunami/events";
-import NumberData from "../tsunami/data/NumberData";
 import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
 import { roundDecimalTo2 } from "../tsunami/utils/number";
 import Easing from "../tsunami/animation/Easing";
@@ -15,8 +13,8 @@ export default class CubicBezierPoints extends Data {
 		this._value = this;
 
 		this.p0 = new Vector2Data(0,0);
-		this.p1 = new Vector2Data(CubicBezierEasing.quad.easeInOut.p1.x, CubicBezierEasing.quad.easeInOut.p1.y);
-		this.p2 = new Vector2Data(CubicBezierEasing.quad.easeInOut.p2.x, CubicBezierEasing.quad.easeInOut.p2.y);
+		this.p1 = new Vector2Data(0, 0);
+		this.p2 = new Vector2Data(1, 1);
 		this.p3 = new Vector2Data(1, 1);
 		this.p0.addEventListener(Data.CHANGE, this.changeHandler);
 		this.p1.addEventListener(Data.CHANGE, this.changeHandler);
@@ -51,7 +49,6 @@ export default class CubicBezierPoints extends Data {
 		this.easing.p2.x = this.p2.x.value;
 		this.easing.p2.y = this.p2.y.value;
 		this.easing.calculateLength();
-		// this.dispatchEvent(new BaseEvent(Data.CHANGE, this));
 		this.dispatchChangeEvent();
 	}
 

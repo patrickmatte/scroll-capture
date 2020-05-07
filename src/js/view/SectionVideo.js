@@ -19,12 +19,12 @@ export default class SectionVideo extends Section {
 
     showDelayComplete() {
         let promise = super.showDelayComplete();
-        app.sendMessage({ txt: "scrollCaptureShowVideo" });
+        app.model.sendMessage({ txt: "scrollCaptureShowVideo" });
         return promise;
     }
 
     hideComplete() {
-        app.sendMessage({ txt:"scrollCaptureUnloadVideo"});
+        app.model.sendMessage({ txt:"scrollCaptureUnloadVideo"});
         return super.hideComplete();
     }
 

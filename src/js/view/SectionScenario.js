@@ -12,22 +12,22 @@ export default class SectionScenario extends Section {
         
         this.router.redirect("default", () => { return this.path });
         
-        if (!app.actions.selectedItem.value) {
-            let lastIndex = app.actions.length.value - 1;
-            app.actions.selectedIndex.value = lastIndex;
+        if (!app.model.actions.selectedItem.value) {
+            let lastIndex = app.model.actions.length.value - 1;
+            app.model.actions.selectedIndex.value = lastIndex;
         }
  
-        app.save();
+        app.model.save();
 
-        // let actionsViewElement = app.scrollCapture.windowContent.element.querySelector("sc-actions-view");
+        // let actionsViewElement = app.view.scrollCapture.windowContent.element.querySelector("sc-actions-view");
         // let actionsView = actionsViewElement.component;
-        // let element = actionsView.getElementByModel(app.actions.selectedItem.value);
+        // let element = actionsView.getElementByModel(app.model.actions.selectedItem.value);
         // if (element) actionsView.scrollToElement(element, 0);
         return promise;
     }
 
     hideDelayComplete() {
-        app.actions.selectedItem.value = null;
+        app.model.actions.selectedItem.value = null;
         return super.hideDelayComplete();
     }
 

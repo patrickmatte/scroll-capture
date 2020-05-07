@@ -75,7 +75,6 @@ export default class UIList extends UIComponent {
 			if (this._provider instanceof ArrayData) {
 				this._provider.removeEventListener("add", this._providerAdd);
 				this._provider.removeEventListener("remove", this._providerRemove);
-				// this._provider.removeEventListener("change", this._providerChange);
 				this._provider.removeEventListener("sort", this._providerSort);
 			}
 		}
@@ -85,7 +84,6 @@ export default class UIList extends UIComponent {
 			if (this._provider instanceof ArrayData) {
 				this._provider.addEventListener("add", this._providerAdd);
 				this._provider.addEventListener("remove", this._providerRemove);
-				// this._provider.addEventListener("change", this._providerChange);
 				this._provider.addEventListener("sort", this._providerSort);
 				this._addElements(this._provider.value);
 			} else {
@@ -93,13 +91,6 @@ export default class UIList extends UIComponent {
 			}
 		}
 	}
-
-	// _providerChange(event) {
-	// 	if (this.debug) console.log("UIList._providerChange");
-	// 	let children = this.children.slice();
-	// 	this._removeElements(children);
-	// 	this._addElements(this._provider.value);
-	// }
 
 	_removeElements(array) {
 		if(this.debug) console.log("UIList._removeElements", array.length);
@@ -365,7 +356,6 @@ export default class UIList extends UIComponent {
 			new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, 10),
 			new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, 10)
 		]);
-		this.tween.debug = true;
 		return this.tween.start();
 	}
 

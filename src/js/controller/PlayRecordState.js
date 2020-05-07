@@ -12,14 +12,14 @@ export default class PlayRecordState extends PlayState {
     }
 
     show() {
-        sendTrackEventMessage("record-actions-length", app.actions.value.length.toString());
-        if(app.actions.value.length < 1) {
+        sendTrackEventMessage("record-actions-length", app.model.actions.value.length.toString());
+        if (app.model.actions.value.length < 1) {
             this.timeout = new ActionWait();
             this.timeout.delay.value = 60 * 5;
-            app.actions.addAction(this.timeout);
+            app.model.actions.addAction(this.timeout);
         }
         let promise = awaitTimeout(250).then(() => {
-            app.sendMessage({ txt: "scrollCaptureStartRecording"});
+            app.model.sendMessage({ txt: "scrollCaptureStartRecording"});
             return super.show();
         });
         // this.keepAliveTimeout = setInterval(() => {
@@ -36,15 +36,15 @@ export default class PlayRecordState extends PlayState {
 
     stopTheRecording() {
         // clearInterval(this.keepAliveTimeout);
-        app.sendMessage({ txt: "scrollCaptureStopRecording" });
-        app.sendMessage({ txt: "scrollCaptureUpdateVideo" });
+        app.model.sendMessage({ txt: "scrollCaptureStopRecording" });
+        app.model.sendMessage({ txt: "scrollCaptureUpdateVideo" });
     }
 
     hide() {
         window.removeEventListener("onbeforeunload", this.onBeforeUnloadHandler);
         if (this.isPlaying) this.stopTheRecording();
         if (this.timeout) {
-            app.actions.removeAction(this.timeout);
+            app.model.actions.removeAction(this.timeout);
             this.timeout = null;
         }
         return super.hide();

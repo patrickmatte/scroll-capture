@@ -12,7 +12,7 @@ export default class SectionSettings extends Section {
 
         this.router.redirect("default", () => { return this.path });
 
-        app.save();
+        app.model.save();
 
         return promise;
     }
