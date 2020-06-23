@@ -22,8 +22,13 @@ export default class UINumber extends UIText {
 		this.updateDuration = 0;
 	}
 
-	modelUpdate(value) {
-		if(isNaN(value)) {
+	get model() {
+		return super.model;
+	}
+
+	set model(value) {
+		if (value instanceof Data) value = value.value;
+		if (isNaN(value)) {
 			value = 0;
 		}
 		if (this.updateDuration > 0) {
@@ -33,7 +38,7 @@ export default class UINumber extends UIText {
 			this.updateTween = new Tween(this.updateDelay, this.updateDuration, [new TweenProperty(this, "currentValue", this.currentValue, value, this.easing)]);
 			this.updateTween.start();
 		} else {
-			super.modelUpdate(value);
+			super.model = value;
 		}
 	}
 
@@ -63,7 +68,7 @@ export default class UINumber extends UIText {
 		if(this.isRank) {
 			value = value + getOrdinalSuffix(value);
 		}
-		super.modelUpdate(value);
+		super.model = value;
 	}
 
 }

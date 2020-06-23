@@ -1,4 +1,5 @@
 import UIComponent from "./UIComponent";
+import Data from "../data/Data";
 
 export default class SplitLineText extends UIComponent {
 
@@ -29,7 +30,13 @@ export default class SplitLineText extends UIComponent {
 		super.scope = value;
 	}
 
-	modelUpdate(value) {
+	get model() {
+		return super.model;
+	}
+
+	set model(value) {
+		super.model = value;
+		if (value instanceof Data) value = value.value;
 		this.modelValue = value;
 		if (this.isAdded) {
 			this.updateList();

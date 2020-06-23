@@ -52,19 +52,6 @@ export default class UIList extends UIComponent {
 		this.element.addEventListener(events.mousedown, this._mouseDownHandler);
 	}
 
-	// get scope() {
-	// 	return super.scope;
-	// }
-
-	// set scope(value) {
-	// 	this._scope = value;
-	// 	let provider = this.element.getAttribute("data-provider");
-	// 	if (provider) {
-	// 		this.provider = evalProperty(provider, value);
-	// 	}
-	// 	super.scope = value;
-	// }
-
 	get provider() {
 		return this._provider;
 	}

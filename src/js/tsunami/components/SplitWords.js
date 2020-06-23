@@ -1,6 +1,7 @@
 import * as tsunami from "../tsunami";
 import SplitLetters from "./SplitLetters";
 import UIList from "./UIList";
+import Data from "../data/Data";
 
 export default class SplitWords extends UIList {
 
@@ -13,7 +14,13 @@ export default class SplitWords extends UIList {
 		this.hideChildrenDelay = 25;
 	}
 
-	modelUpdate(value) {
+	get model() {
+		return super.model;
+	}
+
+	set model(value) {
+		super.model = value;
+		if (value instanceof Data) value = value.value;
 		let array = value.split(" ").join("- -").split("-");
 		this.provider = array;
 	}

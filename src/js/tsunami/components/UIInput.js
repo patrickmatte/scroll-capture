@@ -34,7 +34,13 @@ export default class UIInput extends UIComponent {
         this.element.addEventListener(value, this.inputHandler);
     }
     
-    modelUpdate(value) {
+    get model() {
+        return super.model;
+    }
+
+    set model(value) {
+        super.model = value;
+        if (value instanceof Data) value = value.value;
         switch (this.element.type) {
             case "checkbox":
                 this.element.checked = value;

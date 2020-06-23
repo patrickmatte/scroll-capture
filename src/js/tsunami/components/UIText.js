@@ -1,5 +1,6 @@
 import UIComponent from "./UIComponent";
 import ExpressionBinding from "./ExpressionBinding";
+import Data from "../data/Data";
 
 export default class UIText extends UIComponent {
 
@@ -24,7 +25,12 @@ export default class UIText extends UIComponent {
         }
     }
 
-    modelUpdate(value) {
+    get model() {
+        return this.element.textContent;
+    }
+
+    set model(value) {
+        if (value instanceof Data) value = value.value;
         this.element.textContent = value;
     }
 

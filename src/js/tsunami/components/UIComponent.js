@@ -13,9 +13,7 @@ export default class UIComponent extends Branch {
 
     constructor(element) {
 		super();
-
-		// this.modelChange = this.modelChange.bind(this);
-
+		
 		if(element) {
 			this.debug = (element.getAttribute("data-debug") == "true");
 		}
@@ -224,14 +222,8 @@ export default class UIComponent extends Branch {
 	}
 
 	set model(value) {
-		if (this.debug) console.log("UIComponent.model", value);
 		this._model = value;
-		if (value instanceof Data) value = value.value;
-		this.modelUpdate(value);
-	}
-
-	modelUpdate(value) {
-
+		// if (value instanceof Data) value = value.value;
 	}
 	
 	load() {
@@ -470,49 +462,5 @@ export default class UIComponent extends Branch {
 			this[i] = null;
 		}
 	}
-
-	// static callElementAdded (element) {
-    // 	let component = element.component;
-	// 	if (component) {
-	// 		if (component instanceof UIComponent) {
-	// 			component.elementAdded();
-	// 			if (component.windowResize) {
-	// 				component.windowResize(component.windowSize);
-	// 			}
-	// 		}
-	// 	}
-	// 	let objects = getAllObjects(element);
-	// 	for (let i = 0; i < objects.length; i++) {
-	// 		let object = objects[i];
-	// 		let objectComponent = object.component;
-	// 		if (objectComponent) {
-	// 			if (objectComponent instanceof UIComponent) {
-	// 				objectComponent.elementAdded();
-	// 				if (objectComponent.windowResize && element.component) {
-	// 					objectComponent.windowResize(element.component.windowSize);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// static callElementRemoved (element) {
-	// 	let component = element.component;
-	// 	if (component) {
-	// 		if (component instanceof UIComponent) {
-	// 			component.elementRemoved();
-	// 		}
-	// 	}
-	// 	let objects = getAllObjects(element);
-	// 	for (let i = 0; i < objects.length; i++) {
-	// 		let object = objects[i];
-	// 		let objectComponent = object.component;
-	// 		if (objectComponent) {
-	// 			if (objectComponent instanceof UIComponent) {
-	// 				objectComponent.elementRemoved();
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 }

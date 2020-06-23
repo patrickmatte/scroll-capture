@@ -1,6 +1,7 @@
 import UIList from "./UIList";
 import Data from "../data/Data";
 import {evalProperty} from "../tsunami";
+import { hasValue } from "../utils/validation";
 
 export default class UISelect extends UIList {
 	
@@ -21,8 +22,14 @@ export default class UISelect extends UIList {
 		this.model = this.model;
 	}
 
-	modelUpdate(value) {
-		if (value) {
+	get model() {
+		return super.model;
+	}
+
+	set model(value) {
+		super.model = value;
+		if (value instanceof Data) value = value.value;
+		if (hasValue(value)) {
 			let propValue = evalProperty(this.valuePath, value);
 			this.element.value = propValue;
 		}

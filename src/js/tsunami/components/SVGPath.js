@@ -1,4 +1,5 @@
 import UIComponent from "./UIComponent";
+import Data from "../data/Data";
 
 export default class SVGPath extends UIComponent {
 
@@ -59,8 +60,14 @@ export default class SVGPath extends UIComponent {
 		return promise;
 	}
 
-	// modelUpdate(value) {
-	// 	this.dashOffset = value;
-	// }
+	get model() {
+		return super.model;
+	}
+
+	set model(value) {
+		super.model = value;
+		if (value instanceof Data) value = value.value;
+		this.dashOffset = value;
+	}
 
 }

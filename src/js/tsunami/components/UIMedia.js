@@ -7,7 +7,12 @@ export default class UIMedia extends UIComponent {
 		super(element);
 	}
 
-	modelUpdate(value) {
+	get model() {
+		return this.element.src;
+	}
+
+	set model(value) {
+		if (value instanceof Data) value = value.value;
 		if (hasValue(value)) {
 			this.element.src = value;
 		} else {

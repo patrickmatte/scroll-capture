@@ -1,4 +1,5 @@
 import UIComponent from "./UIComponent";
+import Data from "../data/Data";
 
 export default class Switch extends UIComponent {
 
@@ -22,9 +23,14 @@ export default class Switch extends UIComponent {
 		}
 	}
 
-	modelUpdate(value) {
-		value = value.toString();
+	get model() {
+		return super.model;
+	}
 
+	set model(value) {
+		super.model = value;
+		if (value instanceof Data) value = value.value;
+		value = value.toString();
 		this.hideElement(this.selectedElement);
 		this.selectedElement = this.caseElements[value] || this.defaultElement;
 		this.showElement(this.selectedElement);
