@@ -16,6 +16,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case "scrollCaptureStopRecording":
             stopRecording();
             break;
+        case "scrollCaptureResizeWindow":
+            resizeWindow(msg.width, msg.height);
+            break;
         case "scrollCaptureTrackEvent":
             trackEvent(msg.category, msg.action, msg.label);
             break;
@@ -27,6 +30,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 export function initBackgroundPage() {
     chrome.browserAction.onClicked.addListener((tab) => {
+
         if (isRecording) stopRecording();
 
         chrome.tabs.executeScript({
@@ -35,8 +39,22 @@ export function initBackgroundPage() {
 
         window.tabId = tab.id;
 
+        chrome.windows.getCurrent({ populate: false }, (win) => {
+            window.chromeSize = {
+                width: win.width - tab.width,
+                height: win.height - tab.height
+            };
+        });
+
         // let msg = { txt: "scrollCaptureBrowserAction", tabId: tab.id};
         // chrome.tabs.sendMessage(tab.id, msg);
+    });
+}
+
+function resizeWindow(width, height) {
+    let options = { width: width + window.chromeSize.width, height: height + window.chromeSize.height };
+    chrome.windows.getCurrent({ populate: false }, (win) => {
+        chrome.windows.update(win.id, options);
     });
 }
 

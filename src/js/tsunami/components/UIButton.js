@@ -24,9 +24,6 @@ export default class UIButton extends UIComponent {
 	set scope(value) {
 		super.scope = value;
 
-		// let clickDelay = this.element.getAttribute("data-click-delay");
-		// if (clickDelay) this.clickDelay = Number(clickDelay);
-
 		let click = this.element.getAttribute("data-click");
 		if (click) {
 			this.onRelease = (event) => {

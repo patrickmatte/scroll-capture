@@ -25,7 +25,6 @@ export default class UIText extends UIComponent {
     }
 
     modelUpdate(value) {
-        if (this.debug) console.log("UIText.modelUpdate", value);
         this.element.textContent = value;
     }
 

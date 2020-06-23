@@ -165,7 +165,25 @@ export default class UIComponent extends Branch {
 
 		this._parseAttributesSetProperty(this, value);
 
-		AttributeBinding.bindComponentAttributes(this, value);
+		this._bindComponentAttributes(this, value);
+	}
+
+	_parseAttributesEventHandlers(component, scope) {
+		let removedAttributes = [];
+		for (let i = 0; i < component.element.attributes.length; i++) {
+			let attribute = component.element.attributes[i];
+			if (attribute.name.indexOf("data-on-") != -1) {
+				let type = attribute.name.split("data-on-")[1];
+				let expression = attribute.value;
+				let func = new Function("event", expression).bind(component);
+				let eventHandler = new EventHandler(component.element, type, func);
+				component.attributes[attribute.name] = eventHandler;
+				removedAttributes.push(attribute.name);
+			}
+		}
+		removedAttributes.map((attributeName) => {
+			component.element.removeAttribute(attributeName);
+		});
 	}
 
 	_parseAttributesSetProperty(component, scope) {
@@ -188,22 +206,17 @@ export default class UIComponent extends Branch {
 		});
 	}
 
-	_parseAttributesEventHandlers(component, scope) {
-		let removedAttributes = [];
-		for (let i = 0; i < component.element.attributes.length; i++) {
-			let attribute = component.element.attributes[i];
-			if (attribute.name.indexOf("data-on-") != -1) {
-				let type = attribute.name.split("data-on-")[1];
-				let expression = attribute.value;
-				let func = new Function("event", expression).bind(component);
-				let eventHandler = new EventHandler(component.element, type, func);
-				component.attributes[attribute.name] = eventHandler;
-				removedAttributes.push(attribute.name);
+	_bindComponentAttributes(component, scope) {
+		let element = component.element;
+		for (let i = 0; i < element.attributes.length; i++) {
+			let attribute = element.attributes[i];
+			let name = attribute.name;
+			let expression = attribute.value;
+			if (expression.indexOf("`") != -1) {
+				let attributeBinding = new AttributeBinding(element, name, expression, scope);
+				component.attributes[name] = attributeBinding;
 			}
 		}
-		removedAttributes.map((attributeName) => {
-			component.element.removeAttribute(attributeName);
-		});
 	}
 
 	get model() {
@@ -220,35 +233,7 @@ export default class UIComponent extends Branch {
 	modelUpdate(value) {
 
 	}
-
-    // get model() {
-    //     return this._model;
-    // }
-
-    // set model(value) {
-    // 	if (this.debug) console.log("UIComponent.model", value);
-    //     if (this._model) {
-    //         if (this._model instanceof Data) {
-	// 			this._model.removeEventListener(Data.CHANGE, this.modelChange);
-    //         }
-    //     }
-    //     this._model = value;
-    //     if (value) {
-    //         if (value instanceof Data) {
-	// 			value.addEventListener(Data.CHANGE, this.modelChange);
-    //             this.modelChange();
-    //         } else {
-    //             this.modelUpdate(value);
-    //         }
-    //     } else {
-	// 		this.modelUpdate(value);
-    //     }
-    // }
-
-    // modelChange(event) {
-    //     this.modelUpdate(this.model.value);
-    // }
-
+	
 	load() {
 		let promises = [];
 		let children = this.children;

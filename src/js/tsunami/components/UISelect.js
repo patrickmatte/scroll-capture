@@ -8,7 +8,6 @@ export default class UISelect extends UIList {
 		super(element);
 		this.valuePath = ".";
 		this.template = '<option is="ui-text" value="`${[[scope.data]]}`">`${[[scope.data]]}`</option>';
-		this.getModel = this.getModel.bind(this);
 		this.inputHandler = this.inputHandler.bind(this);
 		this.element.addEventListener("input", this.inputHandler);
 	}
@@ -31,14 +30,11 @@ export default class UISelect extends UIList {
 
 	inputHandler(e) {
 		if (this._model instanceof Data) {
-			this._model.value = this.provider.find(this.getModel);
+			this._model.value = this.provider.find((model) => {
+				let value = evalProperty(this.valuePath, model);
+				return (value == this.element.value);
+			});
 		}
-	}
-
-	getModel(model) {
-		let value = evalProperty(this.valuePath, model);
-		let match = value == this.element.value;
-		return match;
 	}
 
 	destroy() {

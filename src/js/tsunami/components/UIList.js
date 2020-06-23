@@ -14,7 +14,7 @@ export default class UIList extends UIComponent {
 
 	constructor(element) {
 		super(element);
-
+		
 		this._mouseDownHandler = this._mouseDownHandler.bind(this);
 		this._dragMove = this._dragMove.bind(this);
 		this._dragElementMove = this._dragElementMove.bind(this);

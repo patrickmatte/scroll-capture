@@ -30,7 +30,6 @@ export default class SplitLineText extends UIComponent {
 	}
 
 	modelUpdate(value) {
-		if (this.debug) console.log("SplitLineText.modelUpdate", value);
 		this.modelValue = value;
 		if (this.isAdded) {
 			this.updateList();

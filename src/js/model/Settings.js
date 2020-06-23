@@ -15,6 +15,14 @@ export default class Settings {
 
         this.position = new Vector2Data(50, 50);
 
+        this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
+        this.windowResizeHandler = this.windowResizeHandler.bind(this);
+
+        this.windowSize = new Vector2Data(window.innerWidth, window.innerHeight);
+        this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
+
+        window.addEventListener("resize", this.windowResizeHandler);
+
         this.videoBitsPerSecondThrottle = new Throttle(() => {
             sendTrackEventMessage("settings", "videoBitsPerSecond", this.videoBitsPerSecond.value);
         }, 1000);
@@ -56,6 +64,17 @@ export default class Settings {
             this.switchColorTheme();
         });
     }
+
+    windowResizeHandler() {
+        this.windowSize.removeEventListener(Data.CHANGE, this.windowSizeChangeHandler);
+        this.windowSize.x.value = window.innerWidth;
+        this.windowSize.y.value = window.innerHeight;
+        this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
+    }
+
+    windowSizeChangeHandler() {
+        app.model.sendMessage({ txt: "scrollCaptureResizeWindow", width: this.windowSize.x.value, height: this.windowSize.y.value });
+   }
 
     switchColorTheme() {
         let colorTheme = this.colorThemes.selectedItem.value;

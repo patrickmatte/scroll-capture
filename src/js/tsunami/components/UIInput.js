@@ -12,14 +12,26 @@ export default class UIInput extends UIComponent {
         switch (this.element.type) {
             case "radio":
             case "checkbox":
-                this.element.addEventListener("change", this.inputHandler);
+                // this.element.addEventListener("change", this.inputHandler);
+                this.inputType = "change";
             break;
             default:
-                this.element.addEventListener("input", this.inputHandler);
+                // this.element.addEventListener("input", this.inputHandler);
+                this.inputType = "input";
                 break;
         }
         
         this.element.addEventListener("blur", this.blurHandler);
+    }
+
+    get inputType() {
+        return this._inputType;
+    }
+
+    set inputType(value = "input") {
+        this.element.removeEventListener(this.inputType, this.inputHandler);
+        this._inputType = value;
+        this.element.addEventListener(value, this.inputHandler);
     }
     
     modelUpdate(value) {
@@ -67,8 +79,7 @@ export default class UIInput extends UIComponent {
 
     destroy() {
         this.element.removeEventListener("blur", this.blurHandler);
-        this.element.removeEventListener("input", this.inputHandler);
-        this.element.removeEventListener("change", this.inputHandler);
+        this.element.removeEventListener(this.inputtype, this.inputHandler);
         return super.destroy();
     }
 

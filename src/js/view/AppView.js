@@ -10,6 +10,7 @@ export default class AppView extends App {
 
     constructor(scope) {
         super(document.body);
+        
         this.scope = app.model;
         this.scrollCapture = importTemplate(ScrollCapture.template, app.model).component;
         this.appendChild(this.scrollCapture.element);

@@ -11,16 +11,4 @@ export default class AttributeBinding extends ExpressionBinding {
         super(setValue, expression, scope);
     }
     
-    static bindComponentAttributes(component, scope) {
-        let element = component.element;
-        for (let i = 0; i < element.attributes.length; i++) {
-            let attribute = element.attributes[i];
-            let name = attribute.name;
-            let expression = attribute.value;
-            if (expression.indexOf("`") != -1) {
-                let attributeBinding = new AttributeBinding(element, name, expression, scope);
-                component.attributes[name] = attributeBinding;
-            }
-        }
-    }
 }
