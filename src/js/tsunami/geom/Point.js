@@ -1,4 +1,4 @@
-import {lerp} from "./math";
+import {lerp} from "../utils/number";
 
 export default class Point {
 

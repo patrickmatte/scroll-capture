@@ -271,8 +271,11 @@ export function normalize(value, minimum, maximum) {
  </code>
  */
 export function map(value, min1, max1, min2, max2) {
-	return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
+	return lerp(norm(value, min1, max1), min2, max2);
 }
+// export function map(value, min1, max1, min2, max2) {
+// 	return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
+// }
 
 /**
  Low pass filter alogrithm for easing a value toward a destination value. Works best for tweening values when no definite time duration exists and when the destination value changes.
@@ -506,4 +509,65 @@ export function hexToRgb(hex) {
 			return ("r:" + this.r + ",g:" + this.g + ",b:" + this.b)
 		}
 	} : null;
+}
+
+export function degToRad(degrees) {
+	return degrees * Math.PI / 180;
+}
+
+export function radToDeg(rad) {
+	return rad * 180 / Math.PI;
+}
+
+export function smoothstep (value, min, max) {
+	let x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+	return x * x * (3 - 2 * x);
+}
+
+export function lerp(a, b, t) {
+	return a + t * (b - a);
+	// return a(1-t) + bt
+	//return min + (max - min) * value;
+}
+
+export function norm(value, min, max) {
+	return (value - min) / (max - min);
+}
+
+export function clamp(value, min, max) {
+	return Math.max(Math.min(value, max), min);
+}
+
+export function mod(n, m) {
+	return ((n % m) + m) % m;
+}
+
+//a modulo function that handles negatives numbers 'correctly'
+export function modWrap(n, m) {
+	return ((n % m) + m) % m;
+}
+
+//random with seed, returns 0-1 range
+export function random1D(seed) {
+	return modWrap(Math.sin(seed) * 43758.5453, 1);
+}
+
+//returns 0-1 range
+export function noise1D(x) {
+	let i = Math.floor(x);
+	let f = modWrap(x, 1);
+	let u = f * f * (3.0 - 2.0 * f);
+	return lerp(u, random1D(i), random1D(i + 1.0));
+}
+
+export function randomRange(min, max) {
+	return min + Math.random() * (max - min);
+}
+
+export function randomInt(min, max) {
+	return Math.floor(min + Math.random() * (max - min + 1));
+}
+
+export function mapClamp(value, min1, max1, min2, max2) {
+	return clamp(lerp(norm(value, min1, max1), min2, max2), min2, max2);
 }

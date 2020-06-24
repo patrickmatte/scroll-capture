@@ -2,12 +2,18 @@ import Data from "./Data";
 import NumberData from "./NumberData";
 import ObjectData from "./ObjectData";
 import BaseEvent from "../events";
+import { randomInt } from "../utils/number";
 
 export default class ArrayData extends Data {
 
 	static shuffle(o) {
 		for(let j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
 		return o;
+	}
+
+	//return a randomly seleted item in an array
+	static sample(array) {
+		return array[randomInt(0, array.length - 1)];
 	}
 
 	static nodeListToArray(nodeList) {
