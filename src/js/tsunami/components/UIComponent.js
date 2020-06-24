@@ -53,13 +53,13 @@ export default class UIComponent extends Branch {
 		if(value) value.component = this;
 	}
 
-	get componentContainer() {
+	get containerElement() {
 		return this.element;
 	}
 
 	removeChild(value) {
 		if (value) {
-			if (this.componentContainer == value.parentNode) {
+			if (this.containerElement == value.parentNode) {
 				value.parentNode.removeChild(value);
 				let component = value.component;
 				if (component) {
@@ -73,7 +73,7 @@ export default class UIComponent extends Branch {
 
 	appendChild(value) {
 		if (value) {
-			this.componentContainer.appendChild(value);
+			this.containerElement.appendChild(value);
 			let component = value.component;
 			if(component) {
 				if(this.isAdded) {
@@ -109,7 +109,7 @@ export default class UIComponent extends Branch {
 	insertBefore(value, ref) {
 		if (value) {
 			if (ref) {
-				this.componentContainer.insertBefore(value, ref);
+				this.containerElement.insertBefore(value, ref);
 				let component = value.component;
 				if(component) {
 					if (this.isAdded) {
