@@ -210,8 +210,8 @@ export default class UIComponent extends Branch {
 			let attribute = element.attributes[i];
 			let name = attribute.name;
 			let expression = attribute.value;
-			if (expression.indexOf("`") != -1) {
-				let attributeBinding = new AttributeBinding(element, name, expression, scope);
+			if (expression.indexOf("${") != -1) {
+				let attributeBinding = new AttributeBinding(element, name, "`" + expression + "`", scope);
 				component.attributes[name] = attributeBinding;
 			}
 		}

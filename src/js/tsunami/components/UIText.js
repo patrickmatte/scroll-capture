@@ -15,13 +15,12 @@ export default class UIText extends UIComponent {
     set scope(value) {
         super.scope = value;
         let expression = this.element.textContent;
-        let hasTemplateLiteral1 = (expression.indexOf("`") != -1);
         let hasTemplateLiteral2 = (expression.indexOf("${") != -1);
-        if (hasTemplateLiteral1 && hasTemplateLiteral2) {
+        if (hasTemplateLiteral2) {
             let setModel = (value) => {
                 this.model = value;
             }
-            this.expressionBinding = new ExpressionBinding(setModel, expression, value);
+            this.expressionBinding = new ExpressionBinding(setModel, "`" + expression + "`", value);
         }
     }
 

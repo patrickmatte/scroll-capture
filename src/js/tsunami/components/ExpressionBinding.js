@@ -31,10 +31,10 @@ export default class ExpressionBinding {
             }
             expression = chunks.join("");
         }
-        
         getValue = new Function("scope", "return " + expression).bind(scope);
 
-        this.setValue(getValue(scope));
+        let val = getValue(scope);
+        this.setValue(val);
     }
 
     destroy() {
