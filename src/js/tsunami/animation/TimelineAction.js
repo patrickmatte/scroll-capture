@@ -1,33 +1,50 @@
-export default class TimelineAction {
+import EventDispatcher from "../EventDispatcher";
 
-	constructor(method, time, direction, repeat) {
-		this.method = method;
-		this.time = time;
-		if (!direction) {
-			direction = TimelineAction.FORWARDS;
-		}
-		this.direction = direction;
-		if (isNaN(repeat)) {
-			repeat = Infinity;
-		}
-		this.repeat = repeat;
-		this.count = 0;
-	}
+export default class TimelineAction extends EventDispatcher {
 
-	static get FORWARDS() {
-		return "forwards";
-	}
+  constructor(startTime, forward, backward) {
+    super();
+    this._startTime = startTime;
+    this._time = NaN;
+    this.forward = forward;
+    this.backward = backward;
+  }
 
-	static get BACKWARDS() {
-		return "backwards";
-	}
+  get startTime() {
+    return this._startTime;
+  }
 
-	static get BOTH() {
-		return "both";
-	}
+  set startTime(value) {
+    this._startTime = value;
+    this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+  }
 
-	execute() {
-		this.method();
-	}
+  get endTime() {
+    return this.startTime;
+  }
+
+  get duration() {
+    return 0;
+  }
+
+  get time() {
+    return this._time;
+  }
+
+  set time(value) {
+    let previousTime = this.time;
+    // if (previousTime == value) return;
+    let diff = value - previousTime;
+    if (diff > 0) {
+      if (value >= this.startTime && previousTime < this.startTime && this.forward) {
+        this.forward();
+      }
+    } else {
+      if (value <= this.startTime && previousTime > this.startTime && this.backward) {
+        this.backward();
+      }
+    }
+    this._time = value;
+  }
 
 }

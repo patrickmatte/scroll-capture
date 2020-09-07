@@ -5,27 +5,11 @@ export default class Branch extends EventDispatcher {
 	constructor() {
 		super();
 		this.branches = {};
-		this.slug = null;
-		this.parent = null;
+		this._defaultChild = null;
+		this._parent = null;
+		this._path = null;
 		this._router = null;
-		this.path = null;
-		this.arrowKeyHandler = this.arrowKeyHandler.bind(this);
-	}
-
-	get router() {
-		return this._router;
-	}
-
-	set router(value) {
-		this._router = value;
-	}
-
-	get defaultChild() {
-		return this._defaultChild;
-	}
-
-	set defaultChild(value) {
-		this._defaultChild = value;
+		this._slug = null;
 	}
 
 	getBranch(slug) {
@@ -53,31 +37,44 @@ export default class Branch extends EventDispatcher {
 		return Promise.resolve();
 	}
 
-	get arrowKeyNavigation() {
-		return this._arrowKeyNavigation;
+	get defaultChild() {
+		return this._defaultChild;
 	}
 
-	set arrowKeyNavigation(value) {
-		this._arrowKeyNavigation = value;
-		window.removeEventListener("keyup", this.arrowKeyHandler);
-		if(value) {
-			window.addEventListener("keyup", this.arrowKeyHandler);
-		}
+	set defaultChild(value) {
+		this._defaultChild = value;
 	}
 
-	arrowKeyHandler(event) {
-		let increment = 0;
-		switch(event.keyCode) {
-			case 37:
-			case 38:
-				increment = -1;
-				break;
-			case 39:
-			case 40:
-				increment = 1;
-				break;
-		}
-		return increment;
+	get parent() {
+		return this._parent;
+	}
+
+	set parent(value) {
+		this._parent = value;
+	}
+
+	get path() {
+		return this._path;
+	}
+
+	set path(value) {
+		this._path = value;
+	}
+
+	get router() {
+		return this._router;
+	}
+
+	set router(value) {
+		this._router = value;
+	}
+
+	get slug() {
+		return this._slug;
+	}
+
+	set slug(value) {
+		this._slug = value;
 	}
 
 }

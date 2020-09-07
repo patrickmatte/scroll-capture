@@ -1,17 +1,17 @@
 export function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediatePropagation, preventDefault) {
 	let promise;
 
-	promise = new Promise(function(resolve, reject) {
+	promise = new Promise(function (resolve, reject) {
 
-		let eventHandler = function(event) {
-			event.stopPropagation();
-			if (stopPropagation) {
+		let eventHandler = function (event) {
+			// event.stopPropagation();
+			if (stopPropagation && event.stopPropagation) {
 				event.stopPropagation();
 			}
-			if (stopImmediatePropagation) {
+			if (stopImmediatePropagation && event.stopImmediatePropagation) {
 				event.stopImmediatePropagation();
 			}
-			if (preventDefault) {
+			if (preventDefault && event.preventDefault) {
 				event.preventDefault();
 			}
 			dispatcher.removeEventListener(eventName, eventHandler);
@@ -28,12 +28,12 @@ export function awaitEvent(dispatcher, eventName, stopPropagation, stopImmediate
 export function awaitTransition(dispatcher, cssProperties) {
 	let promise;
 
-	promise = new Promise(function(resolve, reject) {
+	promise = new Promise(function (resolve, reject) {
 
 		let eventName = "transitionend";
 		let eventNames = {
-			'OTransition':'otransitionend',
-			'WebkitTransition':'webkitTransitionEnd'
+			'OTransition': 'otransitionend',
+			'WebkitTransition': 'webkitTransitionEnd'
 		};
 		for (let i in eventNames) {
 			if (document.body.style[i] !== undefined) {
@@ -41,7 +41,7 @@ export function awaitTransition(dispatcher, cssProperties) {
 			}
 		}
 
-		let eventHandler = function(event) {
+		let eventHandler = function (event) {
 			let isProperty;
 			for (let i = 0; i < cssProperties.length; i++) {
 				let prop = cssProperties[i];
@@ -70,12 +70,12 @@ export function awaitTransition(dispatcher, cssProperties) {
 export function awaitAnimation(dispatcher, animationName) {
 	let promise;
 
-	promise = new Promise(function(resolve, reject) {
+	promise = new Promise(function (resolve, reject) {
 		let eventName = "animationend";
 		let eventNames = {
-			'OTransition':'oanimationend',
-			'MozTransition':'moznimationend',
-			'WebkitTransition':'webkitAnimationEnd'
+			'OTransition': 'oanimationend',
+			'MozTransition': 'moznimationend',
+			'WebkitTransition': 'webkitAnimationEnd'
 		};
 		for (let i in eventNames) {
 			if (document.body.style[i] !== undefined) {
@@ -83,7 +83,7 @@ export function awaitAnimation(dispatcher, animationName) {
 			}
 		}
 
-		let eventHandler = function(event) {
+		let eventHandler = function (event) {
 			if (animationName != event.animationName || dispatcher != event.target) {
 				return;
 			}
@@ -102,11 +102,11 @@ export function awaitAnimation(dispatcher, animationName) {
 }
 
 export function awaitTimeout(milliseconds = 0) {
-	if(isNaN(milliseconds) || milliseconds <= 0) {
+	if (isNaN(milliseconds) || milliseconds <= 0) {
 		return Promise.resolve();
 	} else {
-		return new Promise(function(resolve, reject) {
-			let timeout = setTimeout(function() {
+		return new Promise(function (resolve, reject) {
+			let timeout = setTimeout(function () {
 				resolve();
 			}, milliseconds);
 		});
@@ -126,7 +126,7 @@ export function awaitCallback(target, method) {
 export function awaitAnimationFrame(total = 1) {
 	total = Math.max(1, Math.round(total));
 	let count = 0;
-	let promise = new Promise(function(resolve, reject){
+	let promise = new Promise(function (resolve, reject) {
 		function animationFrame() {
 			count++;
 			if (count >= total) {
@@ -141,11 +141,11 @@ export function awaitAnimationFrame(total = 1) {
 }
 
 export function awaitVideoFirstFrame(video, timeout = 5000, debug) {
-	let loadedmetadata =  awaitEvent(video, "loadedmetadata");
+	let loadedmetadata = awaitEvent(video, "loadedmetadata");
 	let loadedmetadataTimeout = awaitTimeout(timeout);
 	let promise = Promise.race([loadedmetadata]);
 	return promise.then((event) => {
-		if(debug) {
+		if (debug) {
 			console.log("loadedmetadata");
 		}
 		let loadeddataPromise = awaitEvent(video, "loadeddata");
@@ -155,8 +155,8 @@ export function awaitVideoFirstFrame(video, timeout = 5000, debug) {
 		}
 		let playPromiseTimeout = awaitTimeout(timeout);
 		let promise = Promise.race([playPromise]);
-		return promise.then(()=> {
-			if(debug) {
+		return promise.then(() => {
+			if (debug) {
 				console.log("playPromise or loadeddata");
 			}
 			video.pause();

@@ -2,28 +2,8 @@ import Data from "./Data";
 import NumberData from "./NumberData";
 import ObjectData from "./ObjectData";
 import BaseEvent from "../events";
-import { randomInt } from "../utils/number";
 
 export default class ArrayData extends Data {
-
-	static shuffle(o) {
-		for(let j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-		return o;
-	}
-
-	//return a randomly seleted item in an array
-	static sample(array) {
-		return array[randomInt(0, array.length - 1)];
-	}
-
-	static nodeListToArray(nodeList) {
-		return Array.prototype.slice.call(nodeList);
-		// let array = new Array();
-		// for (let i = 0; i < nodeList.length; i++) {
-		// 	array.push(nodeList.item(i));
-		// }
-		// return array;
-	}
 
 	static get ITEM_CHANGE() {
 		return "item-change";
@@ -38,7 +18,7 @@ export default class ArrayData extends Data {
 
 		this.lastIndex = new NumberData();
 		this.length = new NumberData();
-		this.length.addEventListener(Data.CHANGE, ()=> {
+		this.length.addEventListener(Data.CHANGE, () => {
 			this.lastIndex.value = this.length.value - 1;
 		});
 		this.length.value = arguments.length;
@@ -66,8 +46,8 @@ export default class ArrayData extends Data {
 	}
 
 	setSelectedData(value) {
-		if(this.previousSelectedItem) {
-			if(this.previousSelectedItem.isSelectedItem instanceof Data) {
+		if (this.previousSelectedItem) {
+			if (this.previousSelectedItem.isSelectedItem instanceof Data) {
 				this.previousSelectedItem.isSelectedItem.value = false;
 			}
 		}
@@ -75,29 +55,29 @@ export default class ArrayData extends Data {
 			this.selectedData.copy(value);
 		}
 		this.previousSelectedItem = value;
-		if(this.previousSelectedItem) {
-			if(this.previousSelectedItem.isSelectedItem instanceof Data) {
+		if (this.previousSelectedItem) {
+			if (this.previousSelectedItem.isSelectedItem instanceof Data) {
 				this.previousSelectedItem.isSelectedItem.value = true;
 			}
 		}
 
 		let index = this.selectedIndex.value;
-		
+
 		let nextIndex = index + 1;
-		if(nextIndex > this.value.length - 1) {
+		if (nextIndex > this.value.length - 1) {
 			nextIndex = 0;
 		}
 		this.nextIndex.value = nextIndex;
-		if(this.nextData) {
+		if (this.nextData) {
 			this.nextData.copy(this.value[this.nextIndex.value]);
 		}
 
 		let prevIndex = index - 1;
-		if(prevIndex < 0) {
+		if (prevIndex < 0) {
 			prevIndex = this.value.length - 1;
 		}
 		this.prevIndex.value = prevIndex;
-		if(this.prevData) {
+		if (this.prevData) {
 			this.prevData.copy(this.value[this.prevIndex.value]);
 		}
 	}
@@ -115,7 +95,7 @@ export default class ArrayData extends Data {
 		this.dispatchEvent(event);
 	}
 
-	item (index) {
+	item(index) {
 		return this._value[index];
 	}
 
@@ -130,7 +110,7 @@ export default class ArrayData extends Data {
 				oldItem.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
-		if(!value) {
+		if (!value) {
 			value = [];
 		}
 		this._value = value;
@@ -143,7 +123,7 @@ export default class ArrayData extends Data {
 		this.length.value = this._value.length;
 		// this.dispatchEvent({type:"reset", value:this._value});
 		this.dispatchChangeEvent();
-		if(this.includes(this.selectedItem.value)) {
+		if (this.includes(this.selectedItem.value)) {
 			this.updateSelectedIndex();
 		} else {
 			this.selectedItem.value = null;
@@ -154,7 +134,7 @@ export default class ArrayData extends Data {
 		return this._value.indexOf(searchElement, fromIndex);
 	}
 
-	map (callback) {
+	map(callback) {
 		return this._value.map(callback);
 	}
 
@@ -163,13 +143,13 @@ export default class ArrayData extends Data {
 	}
 
 	findByKey(key, value) {
-		let selected = this.find((element)=> {
+		let selected = this.find((element) => {
 			return (element[key].toString() == value.toString());
 		});
 		return selected;
 	}
 
-	filter (callback) {
+	filter(callback) {
 		return this._value.filter(callback);
 	}
 
@@ -179,9 +159,9 @@ export default class ArrayData extends Data {
 			item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 		}
 		this.length.value = this._value.length;
-		this.dispatchEvent({type:"remove", value:[item], index:this.value.length, total:1});
+		this.dispatchEvent({ type: "remove", value: [item], index: this.value.length, total: 1 });
 		// this.dispatchChangeEvent();
-		if(item == this.selectedItem.value) {
+		if (item == this.selectedItem.value) {
 			this.selectedItem.value = null;
 		} else {
 			this.updateSelectedIndex();
@@ -204,7 +184,7 @@ export default class ArrayData extends Data {
 			}
 		}
 		if (added.length > 0) {
-			this.dispatchEvent({type:"add", value:added, index:previousLength, total:arguments.length});
+			this.dispatchEvent({ type: "add", value: added, index: previousLength, total: arguments.length });
 			// this.dispatchChangeEvent();
 		}
 		return length;
@@ -212,7 +192,7 @@ export default class ArrayData extends Data {
 
 	reverse() {
 		this._value.reverse();
-		this.dispatchEvent({type:"reverse", value:this._value});
+		this.dispatchEvent({ type: "reverse", value: this._value });
 		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
@@ -223,9 +203,9 @@ export default class ArrayData extends Data {
 			item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 		}
 		this.length.value = this._value.length;
-		this.dispatchEvent({type:"remove", value:[item], index:0, total:1});
+		this.dispatchEvent({ type: "remove", value: [item], index: 0, total: 1 });
 		// this.dispatchChangeEvent();
-		if(item == this.selectedItem.value) {
+		if (item == this.selectedItem.value) {
 			this.selectedItem.value = null;
 		} else {
 			this.updateSelectedIndex();
@@ -237,14 +217,14 @@ export default class ArrayData extends Data {
 		let temp = this._value[index_A];
 		this._value[index_A] = this._value[index_B];
 		this._value[index_B] = temp;
-		this.dispatchEvent({type:"sort", value:this._value});
+		this.dispatchEvent({ type: "sort", value: this._value });
 		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
 
 	sort(compareFunction) {
 		this._value.sort(compareFunction);
-		this.dispatchEvent({type:"sort", value:this._value});
+		this.dispatchEvent({ type: "sort", value: this._value });
 		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
@@ -270,15 +250,15 @@ export default class ArrayData extends Data {
 		}
 		let index = arguments[0];
 		if (elements.length > 0) {
-			this.dispatchEvent({type:"remove", value:elements, index:index, total:elements.length});
+			this.dispatchEvent({ type: "remove", value: elements, index: index, total: elements.length });
 		}
 		if (added.length > 0) {
-			this.dispatchEvent({type:"add", value:added, index:index, total:added.length});
+			this.dispatchEvent({ type: "add", value: added, index: index, total: added.length });
 		}
 		// if (elements.length > 0 || added.length > 0) {
 		// 	this.dispatchChangeEvent();
 		// }
-		if(this.includes(this.selectedItem.value)) {
+		if (this.includes(this.selectedItem.value)) {
 			this.updateSelectedIndex();
 		} else {
 			this.selectedItem.value = null;
@@ -288,7 +268,7 @@ export default class ArrayData extends Data {
 
 	remove(element) {
 		let index = this.indexOf(element);
-		if(index != -1) {
+		if (index != -1) {
 			this.splice(index, 1);
 		}
 	}
@@ -307,7 +287,7 @@ export default class ArrayData extends Data {
 			}
 		}
 		if (added.length > 0) {
-			this.dispatchEvent({type:"add", value:added, index:0, total:arguments.length});
+			this.dispatchEvent({ type: "add", value: added, index: 0, total: arguments.length });
 			// this.dispatchChangeEvent();
 		}
 		this.updateSelectedIndex();

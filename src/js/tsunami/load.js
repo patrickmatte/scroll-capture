@@ -297,7 +297,7 @@ export function loadStyle(url, id, noCache) {
 
 }
 
-export function loadWebAudio(url, context, loop, volume) {
+export function loadWebAudio(url, context, volume = 1, loop = false) {
     if (!context) {
         if (!window.webaudioContext) {
             window.AudioContext = window.AudioContext || window["webkitAudioContext"];
@@ -325,7 +325,7 @@ export function loadWebAudio(url, context, loop, volume) {
                             reject();
                             return;
                         }
-                        let sound = {};
+						let sound = {};
                         sound.source = context.createBufferSource();
                         sound.gainNode = context.createGain();
                         sound.gainNode.gain.value = volume;

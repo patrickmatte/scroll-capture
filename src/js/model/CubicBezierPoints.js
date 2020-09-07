@@ -1,7 +1,7 @@
 import Vector2Data from "../tsunami/data/Vector2Data";
 import Data from "../tsunami/data/Data";
 import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
-import { roundDecimalTo2 } from "../tsunami/utils/number";
+import { round2 } from "../tsunami/utils/number";
 import Easing from "../tsunami/animation/Easing";
 
 export default class CubicBezierPoints extends Data {
@@ -22,8 +22,8 @@ export default class CubicBezierPoints extends Data {
 		this.p3.addEventListener(Data.CHANGE, this.changeHandler);
 		for(let i = 0; i < 4; i++) {
 			let vec = this["p" + i];
-			vec.x.modifiers = [roundDecimalTo2];
-			vec.y.modifiers = [roundDecimalTo2];
+			vec.x.modifiers = [round2];
+			vec.y.modifiers = [round2];
 		}
 		
 		this.controlPoints = [this.p1, this.p2];

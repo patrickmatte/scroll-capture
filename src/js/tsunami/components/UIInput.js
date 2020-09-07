@@ -8,6 +8,8 @@ export default class UIInput extends UIComponent {
         
         this.inputHandler = this.inputHandler.bind(this);
         this.blurHandler = this.blurHandler.bind(this);
+
+        // this._valuemultiplier = 1;
         
         switch (this.element.type) {
             case "radio":
@@ -42,6 +44,9 @@ export default class UIInput extends UIComponent {
         super.model = value;
         if (value instanceof Data) value = value.value;
         switch (this.element.type) {
+            // case "range":
+            //     this.element.value = value * this.multiplier;
+            //     break;
             case "checkbox":
                 this.element.checked = value;
                 break;
@@ -61,6 +66,9 @@ export default class UIInput extends UIComponent {
         if (this.model instanceof Data) {
             let value;
             switch (this.element.type) {
+                // case "range":
+                //     value = value / this.multiplier;
+                //     break;
                 case "checkbox":
                     value = this.element.checked;
                     break;
@@ -88,5 +96,31 @@ export default class UIInput extends UIComponent {
         this.element.removeEventListener(this.inputtype, this.inputHandler);
         return super.destroy();
     }
+
+    // get multiplier(value) {
+    //     return this._multiplier;
+    // }
+
+    // set multiplier(value) {
+    //     this._multiplier = value;
+    // }
+
+    // get min(value) {
+    //     return this._min;
+    // }
+
+    // set min(value) {
+    //     this._min = value;
+    //     this.element.setAttribute("min", value * this.multiplier);
+    // }
+
+    // get max(value) {
+    //     return this._max;
+    // }
+
+    // set max(value) {
+    //     this._max = value;
+    //     this.element.setAttribute("max", value * this.multiplier);
+    // }
 
 }

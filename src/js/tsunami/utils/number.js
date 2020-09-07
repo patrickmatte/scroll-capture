@@ -1,19 +1,18 @@
-
 // Returns a random number between min (inclusive) and max (exclusive)
 export function getRandomArbitrary(min, max) {
-	return Math.random() * (max - min) + min;
+  return Math.random() * (max - min) + min;
 }
 
 // Returns a random integer between min (included) and max (excluded)
 // Using Math.round() will give you a non-uniform distribution!
 export function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 // Returns a random integer between min (included) and max (included)
 // Using Math.round() will give you a non-uniform distribution!
 export function getRandomIntInclusive(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -24,7 +23,7 @@ export function getRandomIntInclusive(min, max) {
  @return Returns a random number within the range.
  */
 export function randomWithinRange(min, max) {
-	return min + (Math.random() * (max - min));
+  return min + Math.random() * (max - min);
 }
 
 /**
@@ -35,7 +34,7 @@ export function randomWithinRange(min, max) {
  @return Returns a random integer within the range.
  */
 export function randomIntegerWithinRange(min, max) {
-	return Math.floor(Math.random() * (1 + max - min) + min);
+  return Math.floor(Math.random() * (1 + max - min) + min);
 }
 
 /**
@@ -50,7 +49,7 @@ export function randomIntegerWithinRange(min, max) {
  </code>
  */
 export function isEven(value) {
-	return (value & 1) == 0;
+  return (value & 1) == 0;
 }
 
 /**
@@ -65,7 +64,7 @@ export function isEven(value) {
  </code>
  */
 export function isOdd(value) {
-	return !isEven(value);
+  return !isEven(value);
 }
 
 /**
@@ -80,7 +79,7 @@ export function isOdd(value) {
  </code>
  */
 export function isInteger(value) {
-	return (value % 1) == 0;
+  return value % 1 == 0;
 }
 
 /**
@@ -95,18 +94,14 @@ export function isInteger(value) {
  </code>
  */
 export function isPrime(value) {
-	if (value == 1 || value == 2)
-		return true;
+  if (value == 1 || value == 2) return true;
 
-	if (isEven(value))
-		return false;
+  if (isEven(value)) return false;
 
-	var s = Math.sqrt(value);
-	for (var i = 3; i <= s; i++)
-	if (value % i == 0)
-		return false;
+  var s = Math.sqrt(value);
+  for (var i = 3; i <= s; i++) if (value % i == 0) return false;
 
-	return true;
+  return true;
 }
 
 /**
@@ -122,23 +117,22 @@ export function isPrime(value) {
  </code>
  */
 export function roundDecimalToPlace(value, place = 1) {
-	var p = Math.pow(10, place);
+  var p = Math.pow(10, place);
 
-	return Math.round(value * p) / p;
+  return Math.round(value * p) / p;
 }
 
-export function roundDecimalTo1(value) {
-	return roundDecimalToPlace(value, 1);
+export function round1(value) {
+  return roundDecimalToPlace(value, 1);
 }
 
-export function roundDecimalTo2(value) {
-	return roundDecimalToPlace(value, 2);
+export function round2(value) {
+  return roundDecimalToPlace(value, 2);
 }
 
-export function roundDecimalTo3(value) {
-	return roundDecimalToPlace(value, 3);
+export function round3(value) {
+  return roundDecimalToPlace(value, 3);
 }
-
 
 /**
  Determines if index is included within the collection length otherwise the index loops to the beginning or end of the range and continues.
@@ -156,13 +150,11 @@ export function roundDecimalTo3(value) {
  </code>
  */
 export function loopIndex(index, length) {
-	if (index < 0)
-		index = length + index % length;
+  if (index < 0) index = length + (index % length);
 
-	if (index >= length)
-		return index % length;
+  if (index >= length) return index % length;
 
-	return index;
+  return index;
 }
 
 /**
@@ -180,7 +172,7 @@ export function loopIndex(index, length) {
  </code>
  */
 export function isBetween(value, firstValue, secondValue) {
-	return !(value < Math.min(firstValue, secondValue) || value > Math.max(firstValue, secondValue));
+  return !(value < Math.min(firstValue, secondValue) || value > Math.max(firstValue, secondValue));
 }
 
 /**
@@ -198,7 +190,7 @@ export function isBetween(value, firstValue, secondValue) {
  </code>
  */
 export function constrain(value, firstValue, secondValue) {
-	return Math.min(Math.max(value, Math.min(firstValue, secondValue)), Math.max(firstValue, secondValue));
+  return Math.min(Math.max(value, Math.min(firstValue, secondValue)), Math.max(firstValue, secondValue));
 }
 
 /**
@@ -215,16 +207,15 @@ export function constrain(value, firstValue, secondValue) {
  </code>
  */
 export function createStepsBetween(begin, end, steps) {
-	steps++;
+  steps++;
 
-	var i = 0;
-	var stepsBetween = [];
-	var increment = (end - begin) / steps;
+  var i = 0;
+  var stepsBetween = [];
+  var increment = (end - begin) / steps;
 
-	while (++i < steps)
-		stepsBetween.push((i * increment) + begin);
+  while (++i < steps) stepsBetween.push(i * increment + begin);
 
-	return stepsBetween;
+  return stepsBetween;
 }
 
 /**
@@ -239,7 +230,7 @@ export function createStepsBetween(begin, end, steps) {
  </code>
  */
 export function interpolate(amount, begin, end) {
-	return begin + (end - begin) * amount;
+  return begin + (end - begin) * amount;
 }
 
 /**
@@ -254,7 +245,7 @@ export function interpolate(amount, begin, end) {
  </code>
  */
 export function normalize(value, minimum, maximum) {
-	return new Percent((value - minimum) / (maximum - minimum));
+  return new Percent((value - minimum) / (maximum - minimum));
 }
 
 /**
@@ -271,7 +262,7 @@ export function normalize(value, minimum, maximum) {
  </code>
  */
 export function map(value, min1, max1, min2, max2) {
-	return lerp(norm(value, min1, max1), min2, max2);
+  return lerp(norm(value, min1, max1), min2, max2);
 }
 // export function map(value, min1, max1, min2, max2) {
 // 	return min2 + (max2 - min2) * ((value - min1) / (max1 - min1));
@@ -288,7 +279,7 @@ export function map(value, min1, max1, min2, max2) {
  @return The weighted average.
  */
 export function getWeightedAverage(value, dest, n) {
-	return value + (dest - value) / n;
+  return value + (dest - value) / n;
 }
 
 /**
@@ -305,47 +296,43 @@ export function getWeightedAverage(value, dest, n) {
  </code>
  */
 export function format(value, kDelim, minLength, fillChar) {
-	if (!kDelim) {
-		kDelim = ",";
-	}
-	if (isNaN(minLength)) {
-		minLength = 0;
-	}
-	if (!fillChar) {
-		fillChar = "0";
-	}
-	var remainder = value % 1;
-	var num = Math.floor(value).toString();
-	var len = num.length;
+  if (!kDelim) {
+    kDelim = ",";
+  }
+  if (isNaN(minLength)) {
+    minLength = 0;
+  }
+  if (!fillChar) {
+    fillChar = "0";
+  }
+  var remainder = value % 1;
+  var num = Math.floor(value).toString();
+  var len = num.length;
 
-	if (minLength != 0 && minLength > len) {
-		minLength -= len;
+  if (minLength != 0 && minLength > len) {
+    minLength -= len;
 
-		var addChar = fillChar || '0';
+    var addChar = fillChar || "0";
 
-		while (minLength--)
-			num = addChar + num;
-	}
+    while (minLength--) num = addChar + num;
+  }
 
-	if (kDelim != null && num.length > 3) {
-		var totalDelim  = Math.floor(num.length / 3);
-		var totalRemain = num.length % 3;
-		var numSplit   = num.split('');
-		var i = -1;
+  if (kDelim != null && num.length > 3) {
+    var totalDelim = Math.floor(num.length / 3);
+    var totalRemain = num.length % 3;
+    var numSplit = num.split("");
+    var i = -1;
 
-		while (++i < totalDelim)
-			numSplit.splice(totalRemain + (4 * i), 0, kDelim);
+    while (++i < totalDelim) numSplit.splice(totalRemain + 4 * i, 0, kDelim);
 
-		if (totalRemain == 0)
-			numSplit.shift();
+    if (totalRemain == 0) numSplit.shift();
 
-		num = numSplit.join('');
-	}
+    num = numSplit.join("");
+  }
 
-	if (remainder != 0)
-		num += remainder.toString().substr(1);
+  if (remainder != 0) num += remainder.toString().substr(1);
 
-	return num;
+  return num;
 }
 
 /**
@@ -361,19 +348,18 @@ export function format(value, kDelim, minLength, fillChar) {
  </code>
  */
 export function formatCurrency(value, forceDecimals, kDelim) {
-	if (forceDecimals == null) {
-		forceDecimals = true;
-	}
-	if (!kDelim) {
-		kDelim  = ",";
-	}
-	var remainder = value % 1;
-	var currency = format(Math.floor(value), kDelim);
+  if (forceDecimals == null) {
+    forceDecimals = true;
+  }
+  if (!kDelim) {
+    kDelim = ",";
+  }
+  var remainder = value % 1;
+  var currency = format(Math.floor(value), kDelim);
 
-	if (remainder != 0 || forceDecimals)
-		currency += remainder.toFixed(2).substr(1);
+  if (remainder != 0 || forceDecimals) currency += remainder.toFixed(2).substr(1);
 
-	return currency;
+  return currency;
 }
 
 /**
@@ -387,22 +373,20 @@ export function formatCurrency(value, forceDecimals, kDelim) {
  </code>
  */
 export function getOrdinalSuffix(value) {
-	if (value >= 10 && value <= 20)
-		return 'th';
+  if (value >= 10 && value <= 20) return "th";
 
-	if (value == 0)
-		return '';
+  if (value == 0) return "";
 
-	switch (value % 10) {
-		case 3 :
-			return 'rd';
-		case 2 :
-			return 'nd';
-		case 1 :
-			return 'st';
-		default :
-			return 'th';
-	}
+  switch (value % 10) {
+    case 3:
+      return "rd";
+    case 2:
+      return "nd";
+    case 1:
+      return "st";
+    default:
+      return "th";
+  }
 }
 
 /**
@@ -417,7 +401,7 @@ export function getOrdinalSuffix(value) {
  </code>
  */
 export function addLeadingZero(value) {
-	return (value < 10) ? '0' + value : value.toString();
+  return value < 10 ? "0" + value : value.toString();
 }
 
 /**
@@ -434,140 +418,205 @@ export function addLeadingZero(value) {
  </code>
  */
 export function spell(value) {
-	if (value > 999999999) {
-		throw ('Value too large for this method.');
-	}
+  if (value > 999999999) {
+    throw "Value too large for this method.";
+  }
 
-	var onesSpellings = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-	var tensSpellings = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-	var spelling       = '';
+  var onesSpellings = [
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
+  ];
+  var tensSpellings = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  var spelling = "";
 
-	var millions = value / 1000000;
-	value              %= 1000000;
+  var millions = value / 1000000;
+  value %= 1000000;
 
-	var thousands = value / 1000;
-	value               %= 1000;
+  var thousands = value / 1000;
+  value %= 1000;
 
-	var hundreds = value / 100;
-	value              %= 100;
+  var hundreds = value / 100;
+  value %= 100;
 
-	var tens = value / 10;
-	value          %= 10;
+  var tens = value / 10;
+  value %= 10;
 
-	var ones = value % 10;
+  var ones = value % 10;
 
-	if (millions != 0) {
-		spelling += (spelling.length == 0) ? '' : ', ';
-		spelling += spell(millions) + ' Million';
-	}
+  if (millions != 0) {
+    spelling += spelling.length == 0 ? "" : ", ";
+    spelling += spell(millions) + " Million";
+  }
 
-	if (thousands != 0) {
-		spelling += (spelling.length == 0) ? '' : ', ';
-		spelling += spell(thousands) + ' Thousand';
-	}
+  if (thousands != 0) {
+    spelling += spelling.length == 0 ? "" : ", ";
+    spelling += spell(thousands) + " Thousand";
+  }
 
-	if (hundreds != 0) {
-		spelling += (spelling.length == 0) ? '' : ', ';
-		spelling += spell(hundreds) + ' Hundred';
-	}
+  if (hundreds != 0) {
+    spelling += spelling.length == 0 ? "" : ", ";
+    spelling += spell(hundreds) + " Hundred";
+  }
 
-	if (tens != 0 || ones != 0) {
-		spelling += (spelling.length == 0) ? '' : ' ';
+  if (tens != 0 || ones != 0) {
+    spelling += spelling.length == 0 ? "" : " ";
 
-		if (tens < 2)
-			spelling += onesSpellings[tens * 10 + ones];
-		else {
-			spelling += tensSpellings[tens];
+    if (tens < 2) spelling += onesSpellings[tens * 10 + ones];
+    else {
+      spelling += tensSpellings[tens];
 
-			if (ones != 0)
-				spelling += '-' + onesSpellings[ones];
-		}
-	}
+      if (ones != 0) spelling += "-" + onesSpellings[ones];
+    }
+  }
 
-	if (spelling.length == 0)
-		return 'Zero';
+  if (spelling.length == 0) return "Zero";
 
-	return spelling;
+  return spelling;
 }
 
 export function componentToHex(c) {
-	let hex = c.toString(16);
-	return hex.length == 1 ? "0" + hex : hex;
+  let hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
 }
 
 export function rgbToHex(rgb) {
-	return componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
+  return componentToHex(rgb.r) + componentToHex(rgb.g) + componentToHex(rgb.b);
 }
 
 export function hexToRgb(hex) {
-	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-	return result ? {
-		r: parseInt(result[1], 16),
-		g: parseInt(result[2], 16),
-		b: parseInt(result[3], 16),
-		toString:function(){
-			return ("r:" + this.r + ",g:" + this.g + ",b:" + this.b)
-		}
-	} : null;
+  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+        toString: function () {
+          return "r:" + this.r + ",g:" + this.g + ",b:" + this.b;
+        },
+      }
+    : null;
 }
 
 export function degToRad(degrees) {
-	return degrees * Math.PI / 180;
+  return (degrees * Math.PI) / 180;
 }
 
 export function radToDeg(rad) {
-	return rad * 180 / Math.PI;
+  return (rad * 180) / Math.PI;
 }
 
-export function smoothstep (value, min, max) {
-	let x = Math.max(0, Math.min(1, (value - min) / (max - min)));
-	return x * x * (3 - 2 * x);
+export function smoothstep(value, min, max) {
+  let x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+  return x * x * (3 - 2 * x);
 }
 
 export function lerp(a, b, t) {
-	return a + t * (b - a);
-	// return a(1-t) + bt
-	//return min + (max - min) * value;
+  return a + t * (b - a);
+  // return a(1-t) + bt
+  //return min + (max - min) * value;
+}
+
+export function mix(a, b, t) {
+  return lerp(a, b, t);
 }
 
 export function norm(value, min, max) {
-	return (value - min) / (max - min);
+  return (value - min) / (max - min);
 }
 
 export function clamp(value, min, max) {
-	return Math.max(Math.min(value, max), min);
+  return Math.max(Math.min(value, max), min);
 }
 
 export function mod(n, m) {
-	return ((n % m) + m) % m;
+  return ((n % m) + m) % m;
 }
 
 //a modulo function that handles negatives numbers 'correctly'
 export function modWrap(n, m) {
-	return ((n % m) + m) % m;
+  return ((n % m) + m) % m;
 }
 
 //random with seed, returns 0-1 range
 export function random1D(seed) {
-	return modWrap(Math.sin(seed) * 43758.5453, 1);
+  return modWrap(Math.sin(seed) * 43758.5453, 1);
 }
 
 //returns 0-1 range
 export function noise1D(x) {
-	let i = Math.floor(x);
-	let f = modWrap(x, 1);
-	let u = f * f * (3.0 - 2.0 * f);
-	return lerp(u, random1D(i), random1D(i + 1.0));
+  let i = Math.floor(x);
+  let f = modWrap(x, 1);
+  let u = f * f * (3.0 - 2.0 * f);
+  return lerp(u, random1D(i), random1D(i + 1.0));
 }
 
 export function randomRange(min, max) {
-	return min + Math.random() * (max - min);
+  return min + Math.random() * (max - min);
 }
 
 export function randomInt(min, max) {
-	return Math.floor(min + Math.random() * (max - min + 1));
+  return Math.floor(min + Math.random() * (max - min + 1));
 }
 
 export function mapClamp(value, min1, max1, min2, max2) {
-	return clamp(lerp(norm(value, min1, max1), min2, max2), min2, max2);
+  return clamp(lerp(norm(value, min1, max1), min2, max2), min2, max2);
+}
+
+export function sineWave(angle = 0, frequency = Math.PI, time = 0, speed = 1, amplitude = 1) {
+  return Math.sin(angle * frequency + time * speed) * amplitude;
+}
+
+export function clampTime(time, startTime, duration) {
+  return clamp(time - startTime, 0.0, duration) / duration;
+}
+
+/**
+ Ease a value with some elasticity
+ @param value: The current value
+ @param target: The target value
+ @param friction: The friction from 0 to 1
+ @return The ease value
+ @example
+ <code>
+ value += easeOut(value, target, friction);
+ </code>
+ */
+export function easeOut(value, target, friction = 0.1) {
+  return (target - value) * friction;
+}
+
+/**
+ Ease a value with some elasticity
+ @param value: The current value
+ @param target: The target value
+ @param friction: The friction from 0 to 1
+ @param speed: The current speed
+ @param elasticity: The elasticity from 0 to 1
+ @return The new speed value.
+ @example
+ <code>
+ speed = spring(value, target, friction, speed, elasticity);
+ value += speed;
+ </code>
+ */
+export function spring(value, target = 0, friction = 0.1, speed = 0, elasticity = 0) {
+  return speed * elasticity + (target - value) * friction;
 }

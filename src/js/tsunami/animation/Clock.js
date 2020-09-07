@@ -51,3 +51,6 @@ export default class Clock extends EventDispatcher {
 }
 
 export let clock = new Clock();
+if (typeof window !== "undefined") {
+	clock.start();
+}

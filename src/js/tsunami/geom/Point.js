@@ -1,4 +1,4 @@
-import {lerp} from "../utils/number";
+import { lerp } from "../utils/number";
 
 export default class Point {
 
@@ -21,6 +21,17 @@ export default class Point {
 
 	static getAngle(point, center = new Point()) {
 		return Math.atan2(point.y - center.y, point.x - center.x);
+	}
+
+	static random() {
+		return new Point(Math.random(), Math.random());
+	}
+
+	static rotate(p, a) {
+		let x = Math.cos(a) * p.x - Math.sin(a) * p.y;
+		let y = Math.sin(a) * p.x + Math.cos(a) * p.y;
+		p.x = x;
+		p.y = y;
 	}
 
 	add(p) {
@@ -89,7 +100,7 @@ export default class Point {
 	}
 
 	serialize() {
-		return {x:this.x, y:this.y};
+		return { x: this.x, y: this.y };
 	}
 
 	deserialize(obj) {

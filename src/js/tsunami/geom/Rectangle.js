@@ -52,9 +52,9 @@ export default class Rectangle {
 	}
 
 	contains(point) {
-		let hit = (point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height)?true:false;
+		let hit = (point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height) ? true : false;
 		return hit;
-    }
+	}
 
 	intersects(rect) {
 		return rect.x + rect.width > this.x && rect.y + rect.height > this.y && rect.x < this.x + this.width && rect.y < this.y + this.height;
@@ -74,7 +74,7 @@ export default class Rectangle {
 		}
 		return result;
 	}
-	
+
 	equals(rect) {
 		return (this.x == rect.x && this.y == rect.y && this.width == rect.width && this.height == rect.height);
 	}
@@ -96,6 +96,8 @@ export default class Rectangle {
 
 	set position(value) {
 		this._position = value;
+		this.center.x = this.position.x + this.halfSize.x;
+		this.center.y = this.position.y + this.halfSize.y;
 	}
 
 	get size() {
@@ -188,6 +190,29 @@ export default class Rectangle {
 
 	get isLandscape() {
 		return this.height <= this.width;
+	}
+
+	get topLeft() {
+		return this.position;
+	}
+
+	get topRight() {
+		return new Point(this.x + this.width, this.y);
+	}
+
+	get bottomRight() {
+		return this.position.add(this.size);
+	}
+
+	get bottomLeft() {
+		return new Point(this.x, this.y + this.height);
+	}
+
+	getRandomPoint() {
+		let randomSize = Point.random();
+		randomSize.x *= this.size.x;
+		randomSize.y *= this.size.y;
+		return this.position.add(randomSize);
 	}
 
 }

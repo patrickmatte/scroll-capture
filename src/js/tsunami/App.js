@@ -16,7 +16,11 @@ export default class App extends UIComponent {
 
 	constructor(element) {
 		super(element);
-		
+
+		this.init();
+	}
+
+	init()  {
 		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
 		clock.start();
 
@@ -26,7 +30,7 @@ export default class App extends UIComponent {
 
 	clockTick(event) {
 		let animationData = {
-			time: clock.time
+			time: Math.round(clock.time) / 1000
 		};
 
 		this.animationFrame(animationData);

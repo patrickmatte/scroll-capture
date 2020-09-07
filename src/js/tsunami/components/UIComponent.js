@@ -1,34 +1,34 @@
 import Data from "../data/Data";
-import {awaitTimeout} from "../await";
-import ArrayData from "../data/ArrayData";
+import { awaitTimeout } from "../await";
 import Rectangle from "../geom/Rectangle";
-import {isTouch, localToGlobal} from "../window";
+import { isTouch, localToGlobal } from "../window";
 import Branch from "../Branch";
 import Point from "../geom/Point";
 import EventHandler from "./EventHandler";
 import ExpressionBinding from "./ExpressionBinding";
 import AttributeBinding from "./AttributeBinding";
+import { nodeListToArray } from "../utils/array";
 
 export default class UIComponent extends Branch {
 
-    constructor(element) {
+	constructor(element) {
 		super();
-		
-		if(element) {
+
+		if (element) {
 			this.debug = (element.getAttribute("data-debug") == "true");
 		}
 
 		this.element = element;
 
 		this.componentID = new Date().getTime();
-		if(this.debug) this.element.setAttribute("data-componentId", this.componentID);
+		if (this.debug) this.element.setAttribute("data-componentId", this.componentID);
 
 		// this.childrenSelector = ":scope > *";
 
 		this._model = null;
 		this.rectangle = new Rectangle();
 		this.globalRectangle = new Rectangle();
-		this.windowSize = {};
+		this.windowSize = new Rectangle();
 
 		this.attributes = {};
 
@@ -50,7 +50,7 @@ export default class UIComponent extends Branch {
 
 	set element(value) {
 		this._element = value;
-		if(value) value.component = this;
+		if (value) value.component = this;
 	}
 
 	get containerElement() {
@@ -75,26 +75,29 @@ export default class UIComponent extends Branch {
 		if (value) {
 			this.containerElement.appendChild(value);
 			let component = value.component;
-			if(component) {
-				if(this.isAdded) {
+			if (component) {
+				if (this.isAdded) {
 					component.elementAdded();
 				}
-				if (component.windowResize)  {
+				if (component.windowResize) {
 					component.windowResize(this.windowSize);
 				}
 				if (component.windowScroll) {
 					component.windowScroll(this.windowScrollPoint);
 				}
+				// if (component.animationFrame) {
+				// 	component.animationFrame(this.animationFrameData);
+				// }
 			}
 		}
 	}
 
 	prependChild(child) {
-    	this.appendChildAt(child, 0);
+		this.appendChildAt(child, 0);
 	}
 
 	appendChildAt(child, index = 0) {
-    	// if(child.parentNode) {
+		// if(child.parentNode) {
 		// 	child.parentNode.removeChild(child);
 		// }
 		let children = this.children;
@@ -111,27 +114,40 @@ export default class UIComponent extends Branch {
 			if (ref) {
 				this.containerElement.insertBefore(value, ref);
 				let component = value.component;
-				if(component) {
+				if (component) {
 					if (this.isAdded) {
 						component.elementAdded();
 					}
-					if (component.windowResize)  {
+					if (component.windowResize) {
 						component.windowResize(this.windowSize);
 					}
 					if (component.windowScroll) {
 						component.windowScroll(this.windowScrollPoint);
 					}
+					// if (component.animationFrame) {
+					// 	component.animationFrame(this.animationFrameData);
+					// }
 				}
 			}
 		}
 	}
 
+	insertAfter(value, ref) {
+		let children = this.children;
+		let index = children.indexOf(ref);
+		if (!isNaN(index)) {
+			this.appendChildAt(value, index + 1);
+		} else {
+			console.log("Can't find depth index for", ref);
+		}
+	}
+
 	get isAdded() {
 		let parent;
-		if(this.element) {
+		if (this.element) {
 			parent = this.element.parentNode;
 		}
-		while(parent && parent != document.body) {
+		while (parent && parent != document.body) {
 			parent = parent.parentNode;
 		}
 		let isAdded = (parent == document.body);
@@ -143,21 +159,21 @@ export default class UIComponent extends Branch {
 	}
 
 	get children() {
-    	let array = [];
-    	if(this.element) {
-			array = ArrayData.nodeListToArray(this.element.children);
+		let array = [];
+		if (this.element) {
+			array = nodeListToArray(this.element.children);
 		}
-    	return array;
+		return array;
 	}
 
 	get scope() {
-        return this._scope;
-    }
+		return this._scope;
+	}
 
-    set scope(value) {
-        this._scope = value;
+	set scope(value) {
+		this._scope = value;
 
-		if (this.debug) console.log("UIComponent.scope", value);
+		if (this.debug) console.log("debug UIComponent.scope", value);
 
 		this._parseAttributesEventHandlers(this, value);
 
@@ -191,10 +207,11 @@ export default class UIComponent extends Branch {
 			if (attribute.name.indexOf("data-set-") != -1) {
 				let propertyName = attribute.name.split("data-set-")[1];
 				let setValue = (value) => {
+					if (this.debug) console.log("debug data-set", propertyName, "to", value);
 					component[propertyName] = value;
 				}
 				let expression = attribute.value;
-				let attr = new ExpressionBinding(setValue, expression, scope);
+				let attr = new ExpressionBinding(setValue, expression, scope, this.debug);
 				component.attributes[attribute.name] = attr;
 				removedAttributes.push(attribute.name);
 			}
@@ -225,13 +242,13 @@ export default class UIComponent extends Branch {
 		this._model = value;
 		// if (value instanceof Data) value = value.value;
 	}
-	
+
 	load() {
 		let promises = [];
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
-			if(component) {
+			if (component) {
 				promises.push(component.load());
 			}
 		}
@@ -239,10 +256,10 @@ export default class UIComponent extends Branch {
 	}
 
 	show() {
-    	let promise1 = awaitTimeout(this.showDelay);
+		let promise1 = awaitTimeout(this.showDelay);
 		let promise2 = promise1.then(() => {
 			this.showPromises = [this.showDelayComplete()];
-			if(this.alsoShowChildren) {
+			if (this.alsoShowChildren) {
 				this.showPromises.push(this.showChildren());
 			}
 			return Promise.all(this.showPromises);
@@ -251,14 +268,14 @@ export default class UIComponent extends Branch {
 	}
 
 	showDelayComplete() {
-		if(this.element) {
+		this.isVisible = true;
+		if (this.element) {
 			this.element.setAttribute("data-state", "show");
 		}
 		return awaitTimeout(this.showDuration);
 	}
 
 	showComplete() {
-
 	}
 
 	showChildren() {
@@ -267,7 +284,7 @@ export default class UIComponent extends Branch {
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
-			if(component) {
+			if (component) {
 				if (this.showChildrenDelay > 0) {
 					component.showDelay = delay;
 					delay += this.showChildrenDelay;
@@ -282,7 +299,7 @@ export default class UIComponent extends Branch {
 		let promise1 = awaitTimeout(this.hideDelay);
 		let promise2 = promise1.then(() => {
 			this.hidePromises = [this.hideDelayComplete()];
-			if(this.alsoShowChildren) {
+			if (this.alsoShowChildren) {
 				this.hidePromises.push(this.hideChildren());
 			}
 			return Promise.all(this.hidePromises);
@@ -291,14 +308,14 @@ export default class UIComponent extends Branch {
 	}
 
 	hideDelayComplete() {
-    	if(this.element) {
+		if (this.element) {
 			this.element.setAttribute("data-state", "hide");
 		}
 		return awaitTimeout(this.hideDuration);
 	}
 
 	hideComplete() {
-
+		this.isVisible = false;
 	}
 
 	hideChildren() {
@@ -307,7 +324,7 @@ export default class UIComponent extends Branch {
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
-			if(component) {
+			if (component) {
 				if (this.hideChildrenDelay > 0) {
 					component.hideDelay = delay;
 					delay += this.hideChildrenDelay;
@@ -326,14 +343,14 @@ export default class UIComponent extends Branch {
 		this.rectangle.height = this.element.offsetHeight;
 		this.globalRectangle.width = this.rectangle.width;
 		this.globalRectangle.height = this.rectangle.height;
-		if(this.calculateGlobalPosition) {
+		if (this.calculateGlobalPosition) {
 			this.globalRectangle.position = localToGlobal(this.element, document.body);
 		}
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let child = children[i];
 			let component = child.component;
-			if(component) {
+			if (component) {
 				if (component.windowResize) {
 					component.windowResize(windowSize);
 				}
@@ -342,7 +359,7 @@ export default class UIComponent extends Branch {
 	}
 
 	windowScroll(point) {
-    	this.windowScrollPoint = point;
+		this.windowScrollPoint = point;
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
@@ -355,8 +372,8 @@ export default class UIComponent extends Branch {
 	}
 
 	animationFrame(data) {
-    	this.animationFrameData = data;
-    	if(this.doChildrenAnimationFrame) {
+		this.animationFrameData = data;
+		if (this.doChildrenAnimationFrame) {
 			let children = this.children;
 			for (let i = 0; i < children.length; i++) {
 				let component = children[i].component;
@@ -365,10 +382,10 @@ export default class UIComponent extends Branch {
 				}
 			}
 		}
-    }
+	}
 
 	orientationChange(orientation) {
-    	this.orientation = orientation;
+		this.orientation = orientation;
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
@@ -400,11 +417,11 @@ export default class UIComponent extends Branch {
 		}
 	}
 
-    static getRect(element, parent, debug) {
-		if(!parent) {
+	static getRect(element, parent, debug) {
+		if (!parent) {
 			parent = document.body;
 		}
-		let rectangle = new Rectangle(0,0, element.offsetWidth, element.offsetHeight);
+		let rectangle = new Rectangle(0, 0, element.offsetWidth, element.offsetHeight);
 		if (element.parentNode) {
 			rectangle.position = localToGlobal(element, parent, null, debug);
 		}
@@ -412,12 +429,12 @@ export default class UIComponent extends Branch {
 	}
 
 	getRect(parent, debug) {
-    	return UIComponent.getRect(this.element, parent);
+		return UIComponent.getRect(this.element, parent);
 	}
 
 	querySelector(selector) {
 		let element = this.element.querySelector(selector);
-		if(!element) {
+		if (!element) {
 			console.log("No element with selector " + selector + " in " + this);
 		}
 		return element.component || element;
@@ -426,7 +443,7 @@ export default class UIComponent extends Branch {
 	querySelectorAll(selector) {
 		let array = [];
 		let elements = this.element.querySelectorAll(selector);
-		for(let i = 0; i < elements.length; i++) {
+		for (let i = 0; i < elements.length; i++) {
 			let element = elements.item(i);
 			array.push(element.component || element);
 		}
@@ -440,7 +457,7 @@ export default class UIComponent extends Branch {
 		}
 		return new Point(touch.pageX, touch.pageY);
 	}
-	
+
 	dispatchResizeEvent() {
 		this.element.dispatchEvent(new Event("ui-resize", { bubbles: true, cancelable: true }));
 	}

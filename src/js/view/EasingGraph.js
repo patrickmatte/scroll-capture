@@ -6,7 +6,7 @@ import Point from "../tsunami/geom/Point";
 import UIList from "../tsunami/components/UIList";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
-import { roundDecimalTo2, roundDecimalTo3 } from "../tsunami/utils/number";
+import { round2, round3 } from "../tsunami/utils/number";
 
 export default class EasingGraph extends UIComponent {
 
@@ -98,7 +98,7 @@ export class EasingGraphControlPointLine extends UIComponent {
 		let point1 = this.model[1].point;
 		point1.y = 1 - point1.y;
 		let scale = Point.distance(point0, point1);
-		let angle = roundDecimalTo2(Point.getAngle(point1, point0) * 180 / Math.PI);
+		let angle = round2(Point.getAngle(point1, point0) * 180 / Math.PI);
 		let position = new Point(point0.x * parentRectangle.width, point0.y * parentRectangle.height);
 		let transform = `translateX(${position.x}px) translateY(${position.y}px) rotate(${angle}deg) scaleX(${scale})`;
 		this.element.style.transform = transform;
@@ -125,7 +125,7 @@ export class EasingGraphCurve extends UIComponent {
 			let x = i / (totalPoints - 1);
 			let point = new Point(x, value(x, 0, 1, 1));
 			points.push(point);
-			pointsString += roundDecimalTo3(point.x * 200) + "," + roundDecimalTo3(200 - (point.y * 200)) + " ";
+			pointsString += round3(point.x * 200) + "," + round3(200 - (point.y * 200)) + " ";
 		}
 		this.element.setAttribute("points", pointsString);
 	}

@@ -7,7 +7,7 @@
 		"dev": "webpack -p --env=development --progress --config webpack.config.js",
 		"build": "webpack -p --env=production --progress --config webpack.config.js"
 	},
-	"browserslist": "> 1%, last 2 versions, IE 11",
+	"browserslist": "last 2 Chrome versions",
 	"babel": {
 		"sourceMaps": false,
 		"presets": [

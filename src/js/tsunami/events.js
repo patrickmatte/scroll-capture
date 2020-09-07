@@ -43,17 +43,19 @@ let platforms = {
 	}
 };
 
-window.addEventListener("load", function() {
-	for (let i in platforms) {
-		let data = platforms[i];
-		if (document.body.style[i] !== undefined) {
-			events.transitionend = data.transitionend;
-			events.animationstart = data.animationstart;
-			events.animationiteration = data.animationiteration;
-			events.animationend = data.animationend;
+if (typeof window !== "undefined") {
+	window.addEventListener("load", function() {
+		for (let i in platforms) {
+			let data = platforms[i];
+			if (document.body.style[i] !== undefined) {
+				events.transitionend = data.transitionend;
+				events.animationstart = data.animationstart;
+				events.animationiteration = data.animationiteration;
+				events.animationend = data.animationend;
+			}
 		}
-	}
-});
+	});
+}
 
 export function createCustomEvent (type, params) {
 	let event;

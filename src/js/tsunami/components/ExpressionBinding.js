@@ -3,7 +3,7 @@ import Data from "../data/Data";
 
 export default class ExpressionBinding {
 
-    constructor(setValue, expression, scope) {
+    constructor(setValue, expression, scope, debug) {
         this.setValue = setValue;
 
         this.changeEventHandlers = [];
@@ -32,7 +32,6 @@ export default class ExpressionBinding {
             expression = chunks.join("");
         }
         getValue = new Function("scope", "return " + expression).bind(scope);
-
         let val = getValue(scope);
         this.setValue(val);
     }

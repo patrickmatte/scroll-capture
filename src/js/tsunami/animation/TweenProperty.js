@@ -1,6 +1,6 @@
 export default class TweenProperty {
 
-	constructor(target, name, startValue, endValue, ease, roundingValue = 10000, debug) {
+	constructor(target, name, startValue, endValue, ease, roundingValue = 1000, debug) {
 		this.target = target;
 		this.name = name;
 		this.startValue = startValue;

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-class ShaderPass {
+export default class ShaderPass {
 	constructor(renderer, shader, width, height, format, type, minFilter, magFilter, wrapS, wrapT) {
 		this.renderer = renderer;
 		this.shader = shader;
@@ -23,7 +23,9 @@ class ShaderPass {
 	}
 
 	render(final, renderFBO = this.fbo) {
-		this.renderer.render(this.orthoScene, this.orthoCamera, final ? null : renderFBO);
+		let renderTarget = (final) ? null : renderFBO;
+		this.renderer.setRenderTarget(renderTarget);
+		this.renderer.render(this.orthoScene, this.orthoCamera);
 	}
 
 	setSize(width, height) {
@@ -37,5 +39,3 @@ class ShaderPass {
 		this.orthoCamera.updateProjectionMatrix();
 	}
 }
-
-export default ShaderPass;

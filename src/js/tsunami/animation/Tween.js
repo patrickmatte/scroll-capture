@@ -1,107 +1,106 @@
 import BaseEvent from "../events";
 import EventDispatcher from "../EventDispatcher";
-import Clock, {clock} from "./Clock";
+import Clock, { clock } from "./Clock";
+import { round3 } from "../utils/number";
 
 export default class Tween extends EventDispatcher {
+  constructor(startTime, duration, tweenProps, updateHandler, completeHandler) {
+    super();
+    this.tick = this.tick.bind(this);
+    this.tweenProps = tweenProps;
+    this.updateHandler = updateHandler;
+    this.completeHandler = completeHandler;
+    this._startTime = startTime;
+    this._duration = duration;
+    this._tweenTime = NaN;
+    this.forceUpdate = false;
+  }
 
-	constructor(startTime, duration, tweenProps, updateHandler, completeHandler) {
-		super();
-		this.tick = this.tick.bind(this);
-		this.startTime = startTime;
-		this.duration = duration;
-		this.tweenProps = tweenProps;
-		this.updateHandler = updateHandler;
-		this.completeHandler = completeHandler;
-		this._startTime = startTime;
-		this._duration = duration;
-		this._tweenTime = 0;
-		this.forceUpdate = false;
-	}
+  get startTime() {
+    return this._startTime;
+  }
 
-	get startTime() {
-		return this._startTime;
-	}
+  set startTime(value) {
+    this._startTime = value;
+    this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+  }
 
-	set startTime(value) {
-		this._startTime = value;
-		this.dispatchEvent(new BaseEvent(Tween.CHANGE))
-	}
+  get endTime() {
+    return this.startTime + this.duration;
+  }
 
-	get duration() {
-		return this._duration;
-	}
+  get duration() {
+    return this._duration;
+  }
 
-	set duration(value) {
-		this._duration = value;
-		this.dispatchEvent(new BaseEvent(Tween.CHANGE))
-	}
+  set duration(value) {
+    this._duration = round3(value);
+    this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+  }
 
-	start() {
-		let promise = new Promise((resolve, reject) => {
-			let tweenComplete = (event) => {
-				this.removeEventListener(Tween.COMPLETE, tweenComplete);
-				resolve(this);
-			};
-			this.addEventListener(Tween.COMPLETE, tweenComplete);
-		});
-		this._tweenTime = NaN;
-		this.clockStartTime = clock.time;
-		clock.addEventListener(Clock.TICK, this.tick);
-		this.time = 0;
-		return promise;
-	}
+  start() {
+    let promise = new Promise((resolve, reject) => {
+      let tweenComplete = (event) => {
+        if (this.debug) console.log("tweenComplete");
+        this.removeEventListener(Tween.COMPLETE, tweenComplete);
+        resolve(this);
+      };
+      this.addEventListener(Tween.COMPLETE, tweenComplete);
+    });
+    this._tweenTime = NaN;
+    this.clockStartTime = clock.time;
+    clock.addEventListener(Clock.TICK, this.tick);
+    this.time = 0;
+    return promise;
+  }
 
-	tick(event) {
-		this.time = (clock.time - this.clockStartTime) / 1000;
-	}
+  tick(event) {
+    this.time = (clock.time - this.clockStartTime) / 1000;
+  }
 
-	stop() {
-		clock.removeEventListener(Clock.TICK, this.tick);
-	}
+  stop() {
+    clock.removeEventListener(Clock.TICK, this.tick);
+  }
 
-	get time() {
-		return this._time;
-	}
+  get time() {
+    return this._time;
+  }
 
-	set time(value) {
-		value = Math.min(this.startTime + this.duration, value);
-		value = Math.max(0, value);
-		this._time = value;
-		let tweenTime = value - this.startTime;
-		tweenTime = Math.round(tweenTime * 1000) / 1000;
-		tweenTime = Math.max(tweenTime, 0);
-		tweenTime = Math.min(tweenTime, this.duration);
-		if (tweenTime != this._tweenTime || this.forceUpdate) {
-			this._tweenTime = tweenTime;
-			for (let i = 0; i < this.tweenProps.length; i++) {
-				let tweenProp = this.tweenProps[i];
-				tweenProp.calculate(tweenTime, this.duration, this.debug);
-			}
-			let updateEvent = {type:Tween.UPDATE, target:this, currentTarget:this};
-			if (this.updateHandler) {
-				this.updateHandler(updateEvent);
-			}
-			this.dispatchEvent(updateEvent);
-		}
-		if (tweenTime >= this.duration) {
-			if (this.completeHandler) {
-				this.completeHandler();
-			}
-			this.stop();
-			this.dispatchEvent({ type: Tween.COMPLETE, target: this });
-		}
-	}
+  set time(value) {
+    value = Math.min(this.startTime + this.duration, value);
+    value = Math.max(0, value);
+    this._time = value;
+    let tweenTime = value - this.startTime;
+    tweenTime = Math.max(tweenTime, 0);
+    tweenTime = Math.min(tweenTime, this.duration);
+    if (tweenTime != this._tweenTime || this.forceUpdate) {
+      this._tweenTime = tweenTime;
+      for (let i = 0; i < this.tweenProps.length; i++) {
+        let tweenProp = this.tweenProps[i];
+        tweenProp.calculate(tweenTime, this.duration, this.debug);
+      }
+      let updateEvent = { type: Tween.UPDATE, target: this, currentTarget: this };
+      if (this.updateHandler) {
+        this.updateHandler(updateEvent);
+      }
+      this.dispatchEvent(updateEvent);
+    }
+    if (tweenTime >= this.duration) {
+      if (this.completeHandler) this.completeHandler();
+      this.stop();
+      this.dispatchEvent({ type: Tween.COMPLETE, target: this });
+    }
+  }
 
-	static get COMPLETE() {
-		return "complete";
-	}
+  static get COMPLETE() {
+    return "complete";
+  }
 
-	static get UPDATE() {
-		return "update";
-	}
+  static get UPDATE() {
+    return "update";
+  }
 
-	static get CHANGE() {
-		return "change";
-	}
-
+  static get CHANGE() {
+    return "change";
+  }
 }
