@@ -227,6 +227,7 @@ export default class UIComponent extends Branch {
 			let attribute = element.attributes[i];
 			let name = attribute.name;
 			let expression = attribute.value;
+			expression = expression.split("~{").join("${");
 			if (expression.indexOf("${") != -1) {
 				let attributeBinding = new AttributeBinding(element, name, "`" + expression + "`", scope);
 				component.attributes[name] = attributeBinding;
