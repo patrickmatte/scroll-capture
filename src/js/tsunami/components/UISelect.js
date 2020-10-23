@@ -8,7 +8,7 @@ export default class UISelect extends UIList {
 	constructor(element) {
 		super(element);
 		this.valuePath = ".";
-		this.template = '<option is="ui-text" value="~{[[scope.data]]}">~{[[scope.data]]}</option>';
+		this.template = '<option is="ui-text" value="{[[scope.data]]}">{[[scope.data]]}</option>';
 		this.inputHandler = this.inputHandler.bind(this);
 		this.element.addEventListener("input", this.inputHandler);
 	}

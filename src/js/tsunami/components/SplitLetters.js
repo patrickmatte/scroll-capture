@@ -6,7 +6,7 @@ export default class SplitLetters extends UIList {
 	constructor(element) {
 		super(element);
 
-		this.template = '<span class="letter" is="ui-text">~{[[scope.data]]}</span>';
+		this.template = '<span class="letter" is="ui-text">{[[scope.data]]}</span>';
 	}
 
 	get model() {

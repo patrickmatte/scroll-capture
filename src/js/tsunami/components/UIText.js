@@ -15,7 +15,7 @@ export default class UIText extends UIComponent {
     set scope(value) {
         super.scope = value;
         let expression = this.element.textContent;
-        expression = expression.split("~{").join("${");
+        expression = expression.split("{").join("${");
         if (expression.indexOf("${") != -1) {
             let setModel = (value) => {
                 this.model = value;

@@ -3,6 +3,7 @@ import BooleanData from "../tsunami/data/BooleanData";
 import Actions from "./Actions";
 import Settings from "./Settings";
 import { app } from "../main";
+import NumberData from "../tsunami/data/NumberData";
 
 export default class AppModel {
 
@@ -37,6 +38,9 @@ export default class AppModel {
             this.save();
         });
         
+        this.test1 = new NumberData(1);
+        this.test2 = new NumberData(2);
+        this.test3 = new NumberData(3);
     }
 
     sendMessage(message) {
