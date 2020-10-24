@@ -5,10 +5,13 @@ import StringData from "../tsunami/data/StringData";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
 import { sendTrackEventMessage } from "./GABridge";
+import EventDispatcher from "../tsunami/EventDispatcher";
+import BaseEvent from "../tsunami/events";
 
-export default class Action {
+export default class Action extends EventDispatcher {
 
 	constructor(type = "Action", name = "Action", description = "Add an Action") {
+		super();
 		this.capture = this.capture.bind(this);
 		this.play = this.play.bind(this);
 		this.reCapture = this.reCapture.bind(this);
@@ -34,7 +37,16 @@ export default class Action {
 		this.isSelectedItem = new BooleanData();
 
 
-		this.array = [this];
+		this._array = [this];
+	}
+
+	get array() {
+		return this._array;
+	}
+
+	set array(value) {
+		this._array = value;
+		this.dispatchEvent(new BaseEvent("change_array", value));
 	}
 
 	clone() {

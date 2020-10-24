@@ -4,10 +4,13 @@ import Actions from "./Actions";
 import Settings from "./Settings";
 import { app } from "../main";
 import NumberData from "../tsunami/data/NumberData";
+import EventDispatcher from "../tsunami/EventDispatcher";
+import BaseEvent from "../tsunami/events";
 
-export default class AppModel {
+export default class AppModel extends EventDispatcher {
 
     constructor() {
+		super();
         this.save = this.save.bind(this);
         // this.playSelected = this.playSelected.bind(this);
 		// this.captureSelected = this.captureSelected.bind(this);
@@ -41,6 +44,15 @@ export default class AppModel {
         this.test1 = new NumberData(1);
         this.test2 = new NumberData(2);
         this.test3 = new NumberData(3);
+    }
+
+    get actions() {
+        return this._actions;
+    }
+
+    set actions(value) {
+        this._actions = value;
+		this.dispatchEvent(new BaseEvent("change_actions", value));
     }
 
     sendMessage(message) {

@@ -90,6 +90,10 @@ export default class ArrayData extends Data {
 		this.setSelectedData(this.selectedItem.value);
 	}
 
+	clear() {
+		return this.splice(0, this.value.length);
+	}
+
 	dataItemChangeHandler(e) {
 		let event = new BaseEvent(ArrayData.ITEM_CHANGE, this.value);
 		this.dispatchEvent(event);
