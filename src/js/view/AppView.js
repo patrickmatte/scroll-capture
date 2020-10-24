@@ -16,12 +16,7 @@ export default class AppView extends App {
         this.appendChild(this.scrollCapture.element);
 
         app.model.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
-            let className = "is-capturing";
-            if (event.data) {
-                this.element.classList.add(className);
-            } else {
-                this.element.classList.remove(className);
-            }
+            this.element.setAttribute("is-capturing", event.data);
         });
     }
 

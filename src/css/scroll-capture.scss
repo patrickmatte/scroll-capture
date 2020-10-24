@@ -1,6 +1,6 @@
 
 
-body.is-capturing * {
+body[is-capturing="true"] * {
 	cursor: url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png'), auto !important;
 }
 
