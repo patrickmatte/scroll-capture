@@ -117,13 +117,14 @@ export class EasingGraphCurve extends UIComponent {
 	}
 
 	set model(value) {
+		console.log("EasingGraphCurve.model", value);
 		this._model = value;
 		let totalPoints = 15;
 		let points = [];
 		let pointsString = "";
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);
-			let point = new Point(x, value(x, 0, 1, 1));
+			let point = new Point(x, value.easing.ease(x, 0, 1, 1));
 			points.push(point);
 			pointsString += round3(point.x * 200) + "," + round3(200 - (point.y * 200)) + " ";
 		}
@@ -139,17 +140,17 @@ export class EasingGraphPoints extends UIComponent {
 	}
 
 	get model() {
-		return this._model;
+		return super.model;
 	}
 
 	set model(value) {
-		this._model = value;
+		super.model = value;
 		this.element.innerHTML = "";
 		let totalPoints = 15;
 		let points = [];
 		for(let i = 0; i < totalPoints; i++) {
 			let x = i / (totalPoints - 1);
-			let point = new Point(x, value(x, 0, 1, 1));
+			let point = new Point(x, value.easing.ease(x, 0, 1, 1));
 			points.push(point);
 		}
 		for(let i = 0; i < points.length; i++) {
