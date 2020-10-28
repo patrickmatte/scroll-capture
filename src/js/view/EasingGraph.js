@@ -117,7 +117,6 @@ export class EasingGraphCurve extends UIComponent {
 	}
 
 	set model(value) {
-		console.log("EasingGraphCurve.model", value);
 		this._model = value;
 		let totalPoints = 15;
 		let points = [];
