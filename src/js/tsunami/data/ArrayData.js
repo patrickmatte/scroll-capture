@@ -126,7 +126,7 @@ export default class ArrayData extends Data {
 		}
 		this.length.value = this._value.length;
 		// this.dispatchEvent({type:"reset", value:this._value});
-		this.dispatchChangeEvent();
+		this.dispatchChangeEvent("value", this.value);
 		if (this.includes(this.selectedItem.value)) {
 			this.updateSelectedIndex();
 		} else {
@@ -307,9 +307,9 @@ export default class ArrayData extends Data {
 		return length;
 	}
 
-	dispatchChangeEvent() {
+	dispatchChangeEvent(name, value) {
 		this.dataItemChangeHandler(null);
-		super.dispatchChangeEvent();
+		super.dispatchChangeEvent(name, value);
 	}
 
 	includes(element) {

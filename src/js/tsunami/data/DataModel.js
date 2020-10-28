@@ -4,6 +4,15 @@ export default class DataModel extends Data {
 
 	constructor() {
 		super();
+		this.changeHandler = this.changeHandler.bind(this);
+	}
+
+	get value() {
+		return this;
+	}
+
+	changeHandler() {
+		this.dispatchChangeEvent("value", this);
 	}
 
 	destroy() {

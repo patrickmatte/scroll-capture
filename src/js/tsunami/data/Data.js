@@ -1,4 +1,4 @@
-import BaseEvent from "../events";
+import ChangeEvent from "../ChangeEvent";
 
 export default class Data extends EventTarget {
 
@@ -16,7 +16,7 @@ export default class Data extends EventTarget {
 	set value(value) {
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;
-			this.dispatchChangeEvent();
+			this.dispatchChangeEvent("value", this.value);
 		}
 	}
 
@@ -39,7 +39,7 @@ export default class Data extends EventTarget {
 	
 	copy(data) {
 		this.value = data.value;
-		this.dispatchChangeEvent();
+		this.dispatchChangeEvent("value", this.value);
 	}
 
 	destroy() {
@@ -47,13 +47,13 @@ export default class Data extends EventTarget {
 		return super.destroy();
 	}
 
-	dispatchChangeEvent() {
+	dispatchChangeEvent(name, value) {
 		// if (!data) data = this.value;
-		this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
+		this.dispatchEvent(new ChangeEvent(name, value));
 	}
 
 	static get CHANGE() {
-		return "change";
+		return "value";
 	}
 
 }

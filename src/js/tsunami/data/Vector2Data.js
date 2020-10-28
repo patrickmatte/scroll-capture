@@ -8,31 +8,17 @@ export default class Vector2Data extends DataModel {
 
 	constructor(x = 0, y = 0) {
 		super();
-		
-		this.dataChangeHandler = this.dataChangeHandler.bind(this);
 
 		this.x = new NumberData(x);
-		this.x.addEventListener(Data.CHANGE, this.dataChangeHandler);
+		this.x.addEventListener(Data.CHANGE, this.changeHandler);
 
 		this.y = new NumberData(y);
-		this.y.addEventListener(Data.CHANGE, this.dataChangeHandler);
-	}
-
-	get value() {
-		return this;
-	}
-
-	set value(value) {
-		
-	}
-
-	dataChangeHandler() {
-		this.dispatchChangeEvent();
+		this.y.addEventListener(Data.CHANGE, this.changeHandler);
 	}
 
 	destroy() {
-		this.x.removeEventListener(Data.CHANGE, this.dataChangeHandler);
-		this.y.removeEventListener(Data.CHANGE, this.dataChangeHandler);
+		this.x.removeEventListener(Data.CHANGE, this.changeHandler);
+		this.y.removeEventListener(Data.CHANGE, this.changeHandler);
 		return super.destroy();
 	}
 

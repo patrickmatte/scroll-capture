@@ -18,9 +18,9 @@ export default class ObjectData extends Data {
 			this._deselectValue(this._value);
 			this._value = value;
 			this._selectValue(this._value);
-			this.dispatchChangeEvent();
+			this.dispatchChangeEvent("value", this.value);
 		} else if(this.forceChangeEvent) {
-			this.dispatchChangeEvent();
+			this.dispatchChangeEvent("value", this.value);
 		}
 	}
 

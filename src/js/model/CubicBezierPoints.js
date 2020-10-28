@@ -3,12 +3,12 @@ import Data from "../tsunami/data/Data";
 import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
 import { round2 } from "../tsunami/utils/number";
 import Easing from "../tsunami/animation/Easing";
+import DataModel from "../tsunami/data/DataModel";
 
-export default class CubicBezierPoints extends Data {
+export default class CubicBezierPoints extends DataModel {
 
 	constructor() {
 		super();
-		this.changeHandler = this.changeHandler.bind(this);
 
 		this._value = this;
 
@@ -16,10 +16,10 @@ export default class CubicBezierPoints extends Data {
 		this.p1 = new Vector2Data(0, 0);
 		this.p2 = new Vector2Data(1, 1);
 		this.p3 = new Vector2Data(1, 1);
-		this.p0.addEventListener(Data.CHANGE, this.changeHandler);
-		this.p1.addEventListener(Data.CHANGE, this.changeHandler);
-		this.p2.addEventListener(Data.CHANGE, this.changeHandler);
-		this.p3.addEventListener(Data.CHANGE, this.changeHandler);
+		this.p0.addEventListener("value", this.changeHandler);
+		this.p1.addEventListener("value", this.changeHandler);
+		this.p2.addEventListener("value", this.changeHandler);
+		this.p3.addEventListener("value", this.changeHandler);
 		for(let i = 0; i < 4; i++) {
 			let vec = this["p" + i];
 			vec.x.modifiers = [round2];
@@ -49,7 +49,8 @@ export default class CubicBezierPoints extends Data {
 		this.easing.p2.x = this.p2.x.value;
 		this.easing.p2.y = this.p2.y.value;
 		this.easing.calculateLength();
-		this.dispatchChangeEvent();
+		super.changeHandler();
+		// this.dispatchChangeEvent("value", this);
 	}
 
 }
