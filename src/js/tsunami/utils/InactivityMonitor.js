@@ -1,7 +1,6 @@
-import EventDispatcher from "../EventDispatcher";
-import BaseEvent, {events} from "../events";
+import {events} from "../events";
 
-export default class InactivityMonitor extends EventDispatcher {
+export default class InactivityMonitor extends EventTarget {
 
 	constructor(element, duration = 10000) {
 		super();
@@ -20,7 +19,7 @@ export default class InactivityMonitor extends EventDispatcher {
 
 	timerCompleteHandler() {
 		this.stopTimer();
-		this.dispatchEvent(new BaseEvent(InactivityMonitor.TIMER_COMPLETE));
+		this.dispatchEvent(new Event(InactivityMonitor.TIMER_COMPLETE));
 	}
 
 	stopTimer() {

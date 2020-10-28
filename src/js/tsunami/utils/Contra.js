@@ -1,7 +1,4 @@
-import EventDispatcher from "../EventDispatcher";
-import BaseEvent from "../events";
-
-export default class Contra extends EventDispatcher {
+export default class Contra extends EventTarget {
 
 	constructor() {
 		super();
@@ -25,7 +22,7 @@ export default class Contra extends EventDispatcher {
 		var keyword = this.letterSequence.join("");
 		var equal = (contraWord == keyword);
 		if (equal) {
-			this.dispatchEvent(new BaseEvent(Contra.CODE));
+			this.dispatchEvent(new Event(Contra.CODE));
 		}
 	}
 

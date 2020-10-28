@@ -76,11 +76,12 @@ export default class ArrayDataOperation extends Data {
 			let modifier = this.modifiers[i];
 			value = modifier(value);
 		}
+		let event = new BaseEvent(Data.CHANGE, this._value);
 		if (value != this._value) {
 			this._value = value;
-			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+			this.dispatchEvent(event);
 		} else if(this.forceChangeEvent) {
-			this.dispatchEvent({type:Data.CHANGE, value:this._value});
+			this.dispatchEvent(event);
 		}
 	}
 

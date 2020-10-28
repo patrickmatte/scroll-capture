@@ -1,5 +1,6 @@
 import Data from "./Data";
 import ArrayData from "./ArrayData";
+import BaseEvent from "../events";
 
 export default class NumberAverage extends Data {
 
@@ -40,7 +41,8 @@ export default class NumberAverage extends Data {
 			total += number.value;
 		}
 		this._value = total / Math.max(array.length, 1);
-		this.dispatchEvent({type:Data.CHANGE, value:this._value});
+		let event = new BaseEvent(Data.CHANGE, this._value);
+		this.dispatchEvent(event);
 	}
 
 	get value() {

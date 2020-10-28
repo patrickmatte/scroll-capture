@@ -1,9 +1,9 @@
-import EventDispatcher from "./EventDispatcher";
 import AssetList from "./AssetList";
 import {awaitAnimationFrame, awaitTimeout} from "./await";
 import ArrayData from "./data/ArrayData";
+import BaseEvent from "./events";
 
-export default class Router extends EventDispatcher {
+export default class Router extends EventTarget {
 
 	constructor(root) {
 		super();
@@ -107,7 +107,8 @@ export default class Router extends EventDispatcher {
 
 			this._location = path;
 
-			this.dispatchEvent({type:Router.CHANGE, location:path});
+			let event = new BaseEvent(Router.CHANGE, {location:path});
+			this.dispatchEvent(event);
 
 			this._nextLocation = "root";
 			if (path != "") {
@@ -218,7 +219,8 @@ export default class Router extends EventDispatcher {
 		}
 		if (interruptTheTransition) {
 			this._inTransition = false;
-			this.dispatchEvent({type:Router.INTERRUPT, location:this.location});
+			let event = new BaseEvent(Router.INTERRUPT, {location:this.location});
+			this.dispatchEvent(event);
 			// this.location = this._interruptingLocations.shift();
 			this.changeTheLocation(this._interruptingLocations.shift());
 
@@ -230,7 +232,8 @@ export default class Router extends EventDispatcher {
 
 	_showComplete(event) {
 		this._inTransition = false;
-		this.dispatchEvent({type:Router.COMPLETE, location:this.location});
+		let evt = new BaseEvent(Router.COMPLETE, {location:this.location});
+		this.dispatchEvent(evt);
 		let interruptedLocation = this._interruptingLocations[0];
 		if (interruptedLocation != null || interruptedLocation != undefined) {
 			// this.location = this._interruptingLocations.shift();

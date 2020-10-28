@@ -1,6 +1,5 @@
-import EventDispatcher from "./EventDispatcher";
 
-export default class Branch extends EventDispatcher {
+export default class Branch extends EventTarget {
 
 	constructor() {
 		super();

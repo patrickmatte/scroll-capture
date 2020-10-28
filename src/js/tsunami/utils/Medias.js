@@ -1,6 +1,4 @@
-import EventDispatcher from "../../tsunami/EventDispatcher";
-
-export default class Medias extends EventDispatcher {
+export default class Medias extends EventTarget {
 
 	constructor(medias) {
 		super();
@@ -21,7 +19,7 @@ export default class Medias extends EventDispatcher {
 				}
 			}
 		}
-		this.dispatchEvent({type:Medias.CHANGE});
+		this.dispatchEvent(new Event(Medias.CHANGE));
 	}
 	
 	matchMedia(media, data) {

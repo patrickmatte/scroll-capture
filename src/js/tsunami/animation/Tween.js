@@ -1,9 +1,8 @@
 import BaseEvent from "../events";
-import EventDispatcher from "../EventDispatcher";
 import Clock, { clock } from "./Clock";
 import { round3 } from "../utils/number";
 
-export default class Tween extends EventDispatcher {
+export default class Tween extends EventTarget {
   constructor(startTime, duration, tweenProps, updateHandler, completeHandler) {
     super();
     this.tick = this.tick.bind(this);
@@ -22,7 +21,7 @@ export default class Tween extends EventDispatcher {
 
   set startTime(value) {
     this._startTime = value;
-    this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+    this.dispatchEvent(new Event(Tween.CHANGE));
   }
 
   get endTime() {
@@ -35,7 +34,7 @@ export default class Tween extends EventDispatcher {
 
   set duration(value) {
     this._duration = round3(value);
-    this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+    this.dispatchEvent(new Event(Tween.CHANGE));
   }
 
   start() {
@@ -79,16 +78,17 @@ export default class Tween extends EventDispatcher {
         let tweenProp = this.tweenProps[i];
         tweenProp.calculate(tweenTime, this.duration, this.debug);
       }
-      let updateEvent = { type: Tween.UPDATE, target: this, currentTarget: this };
+      let updateEvent = new Event(Tween.UPDATE);
       if (this.updateHandler) {
         this.updateHandler(updateEvent);
       }
       this.dispatchEvent(updateEvent);
     }
     if (tweenTime >= this.duration) {
-      if (this.completeHandler) this.completeHandler();
+      let completeEvent = new Event(Tween.COMPLETE);
+      if (this.completeHandler) this.completeHandler(completeEvent);
       this.stop();
-      this.dispatchEvent({ type: Tween.COMPLETE, target: this });
+      this.dispatchEvent(completeEvent);
     }
   }
 

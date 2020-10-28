@@ -380,7 +380,7 @@ export default class UIScrollPane extends UIComponent {
 
 		if (Math.abs(distance) > 2 && !this.isDragging) {
 			this.isDragging = true;
-			this.dispatchEvent(new BaseEvent(UIScrollPane.DRAG_START));
+			this.dispatchEvent(new Event(UIScrollPane.DRAG_START));
 		}
 
 		this.momentum = this.touchPrevious.subtract(touchNew);
@@ -441,7 +441,7 @@ export default class UIScrollPane extends UIComponent {
 		let momentumScaleY = this.size.height * this.momentumScaleLimit;
 		this.momentum.y = this.getMinimumAbsoluteMomentum(this.momentum.y, momentumScaleY);
 
-		this.dispatchEvent(new BaseEvent(UIScrollPane.DRAG_END));
+		this.dispatchEvent(new Event(UIScrollPane.DRAG_END));
 	}
 
 }

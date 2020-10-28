@@ -5,10 +5,9 @@ import StringData from "../tsunami/data/StringData";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
 import { sendTrackEventMessage } from "./GABridge";
-import EventDispatcher from "../tsunami/EventDispatcher";
 import BaseEvent from "../tsunami/events";
 
-export default class Action extends EventDispatcher {
+export default class Action extends EventTarget {
 
 	constructor(type = "Action", name = "Action", description = "Add an Action") {
 		super();

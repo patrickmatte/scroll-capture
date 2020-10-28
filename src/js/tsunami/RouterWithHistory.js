@@ -1,3 +1,4 @@
+import BaseEvent from "./events";
 import Router from "./Router";
 
 export default class RouterWithHistory extends Router {
@@ -128,8 +129,9 @@ export default class RouterWithHistory extends Router {
 
 	changeState(state) {
 		this.state = state;
-		this.location = state.path || "";
-		this.dispatchEvent({type:RouterWithHistory.POP_STATE, state:this.state});
+        this.location = state.path || "";
+        let event = new BaseEvent(RouterWithHistory.POP_STATE, {state:this.state})
+		this.dispatchEvent(event);
 	}
 
 }

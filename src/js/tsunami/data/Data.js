@@ -1,7 +1,6 @@
-import EventDispatcher from "../EventDispatcher";
 import BaseEvent from "../events";
 
-export default class Data extends EventDispatcher {
+export default class Data extends EventTarget {
 
 	constructor() {
 		super();

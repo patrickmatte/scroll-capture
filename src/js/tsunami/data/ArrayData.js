@@ -163,7 +163,8 @@ export default class ArrayData extends Data {
 			item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 		}
 		this.length.value = this._value.length;
-		this.dispatchEvent({ type: "remove", value: [item], index: this.value.length, total: 1 });
+		let event = new BaseEvent("remove", {value: [item], index: this.value.length, total: 1 })
+		this.dispatchEvent(event);
 		// this.dispatchChangeEvent();
 		if (item == this.selectedItem.value) {
 			this.selectedItem.value = null;
@@ -188,7 +189,8 @@ export default class ArrayData extends Data {
 			}
 		}
 		if (added.length > 0) {
-			this.dispatchEvent({ type: "add", value: added, index: previousLength, total: arguments.length });
+			let event = new BaseEvent("add", {value: added, index: previousLength, total: arguments.length});
+			this.dispatchEvent(event);
 			// this.dispatchChangeEvent();
 		}
 		return length;
@@ -196,7 +198,8 @@ export default class ArrayData extends Data {
 
 	reverse() {
 		this._value.reverse();
-		this.dispatchEvent({ type: "reverse", value: this._value });
+		let event = new BaseEvent("reverse", {value: this._value})
+		this.dispatchEvent(event);
 		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
@@ -207,7 +210,8 @@ export default class ArrayData extends Data {
 			item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 		}
 		this.length.value = this._value.length;
-		this.dispatchEvent({ type: "remove", value: [item], index: 0, total: 1 });
+		let event = new BaseEvent("remove", {value: [item], index: 0, total: 1})
+		this.dispatchEvent(event);
 		// this.dispatchChangeEvent();
 		if (item == this.selectedItem.value) {
 			this.selectedItem.value = null;
@@ -221,14 +225,16 @@ export default class ArrayData extends Data {
 		let temp = this._value[index_A];
 		this._value[index_A] = this._value[index_B];
 		this._value[index_B] = temp;
-		this.dispatchEvent({ type: "sort", value: this._value });
+		let event = new BaseEvent("sort", {value: this._value});
+		this.dispatchEvent(event);
 		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
 
 	sort(compareFunction) {
 		this._value.sort(compareFunction);
-		this.dispatchEvent({ type: "sort", value: this._value });
+		let event = new BaseEvent("sort", {value: this._value});
+		this.dispatchEvent(event);
 		// this.dispatchChangeEvent();
 		this.updateSelectedIndex();
 	}
@@ -254,10 +260,12 @@ export default class ArrayData extends Data {
 		}
 		let index = arguments[0];
 		if (elements.length > 0) {
-			this.dispatchEvent({ type: "remove", value: elements, index: index, total: elements.length });
+			let event = new BaseEvent("remove", {value: elements, index: index, total: elements.length});
+			this.dispatchEvent(event);
 		}
 		if (added.length > 0) {
-			this.dispatchEvent({ type: "add", value: added, index: index, total: added.length });
+			let event = new BaseEvent("add", {value: added, index: index, total: added.length});
+			this.dispatchEvent(event);
 		}
 		// if (elements.length > 0 || added.length > 0) {
 		// 	this.dispatchChangeEvent();
@@ -291,7 +299,8 @@ export default class ArrayData extends Data {
 			}
 		}
 		if (added.length > 0) {
-			this.dispatchEvent({ type: "add", value: added, index: 0, total: arguments.length });
+			let event = new BaseEvent("add", {value: added, index: 0, total: arguments.length});
+			this.dispatchEvent(event);
 			// this.dispatchChangeEvent();
 		}
 		this.updateSelectedIndex();

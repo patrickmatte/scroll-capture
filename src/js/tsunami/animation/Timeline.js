@@ -1,8 +1,7 @@
-import EventDispatcher from "../../tsunami/EventDispatcher";
 import Tween from "./Tween";
 import Clock, { clock } from "./Clock";
 
-export default class Timeline extends EventDispatcher {
+export default class Timeline extends EventTarget {
 
   constructor(updateHandler = null, completeHandler = null, debug = false) {
     super();
@@ -69,7 +68,8 @@ export default class Timeline extends EventDispatcher {
       if (this.completeHandler) {
         this.completeHandler();
       }
-      this.dispatchEvent({ type: Timeline.COMPLETE, target: this });
+      let event = new Event(Timeline.COMPLETE);
+      this.dispatchEvent(event);
     }
   }
 
@@ -137,7 +137,7 @@ export default class Timeline extends EventDispatcher {
       }
     }
 
-    let changeEvent = { type: Timeline.UPDATE, target: this };
+    let changeEvent = new Event(Timeline.UPDATE);
     if (this.updateHandler) {
       this.updateHandler(changeEvent);
     }

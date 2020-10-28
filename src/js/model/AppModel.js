@@ -4,10 +4,9 @@ import Actions from "./Actions";
 import Settings from "./Settings";
 import { app } from "../main";
 import NumberData from "../tsunami/data/NumberData";
-import EventDispatcher from "../tsunami/EventDispatcher";
 import BaseEvent from "../tsunami/events";
 
-export default class AppModel extends EventDispatcher {
+export default class AppModel extends EventTarget {
 
     constructor() {
 		super();

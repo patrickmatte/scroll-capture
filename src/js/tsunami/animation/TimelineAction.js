@@ -1,6 +1,4 @@
-import EventDispatcher from "../EventDispatcher";
-
-export default class TimelineAction extends EventDispatcher {
+export default class TimelineAction extends EventTarget {
 
   constructor(startTime, forward, backward) {
     super();
@@ -16,7 +14,7 @@ export default class TimelineAction extends EventDispatcher {
 
   set startTime(value) {
     this._startTime = value;
-    this.dispatchEvent(new BaseEvent(Tween.CHANGE));
+    this.dispatchEvent(new Event(Tween.CHANGE));
   }
 
   get endTime() {

@@ -68,17 +68,11 @@ export function createCustomEvent (type, params) {
 	return event;
 }
 
-export default class BaseEvent {
+export default class BaseEvent extends Event {
 
-	constructor(type, data) {
-		this.type = type;
+	constructor(type, data, eventInit) {
+		super(type, eventInit);
 		this.data = data;
 	}
-
-	stopPropagation(){}
-
-	stopImmediatePropagation(){}
-
-	preventDefault(){}
 
 }

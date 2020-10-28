@@ -1,7 +1,6 @@
-import EventDispatcher from "../../tsunami/EventDispatcher";
 import BaseEvent from "../events";
 
-export default class Clock extends EventDispatcher {
+export default class Clock extends EventTarget {
 
 	constructor() {
 		super();
@@ -34,7 +33,8 @@ export default class Clock extends EventDispatcher {
 	animationFrame(time) {
 		this.time = time;
 		this.index++;
-		this.dispatchEvent(new BaseEvent(Clock.TICK, this.time));
+		let event = new BaseEvent(Clock.TICK, this.time);
+		this.dispatchEvent(event);
 		if (this.isRunning) {
 			window.requestAnimationFrame(this.animationFrame);
 		}
@@ -43,7 +43,8 @@ export default class Clock extends EventDispatcher {
 	dispatchFrameSeconds() {
 		this.allFrames += this.index;
 		this.seconds++;
-		this.dispatchEvent({type:Clock.FPS, frames:this.index, averageFrames:Math.round(this.allFrames / this.seconds * 10) / 10});
+		let event = new BaseEvent(Clock.FPS, {frames:this.index, averageFrames:Math.round(this.allFrames / this.seconds * 10) / 10});
+		this.dispatchEvent(event);
 		this.index = 0;
 		setTimeout(this.dispatchFrameSeconds.bind(this), 1000);
 	}
