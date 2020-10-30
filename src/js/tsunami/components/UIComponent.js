@@ -57,6 +57,7 @@ export default class UIComponent extends Branch {
 	}
 
 	removeChild(value) {
+		if(this.debug) console.log("UIList.removeChild", value);
 		if (value) {
 			if (this.containerElement == value.parentNode) {
 				value.parentNode.removeChild(value);

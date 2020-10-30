@@ -108,16 +108,19 @@ export default class ArrayData extends Data {
 	}
 
 	set value(value) {
+		if (!value) value = [];
+		
 		for (let i = 0; i < this._value.length; i++) {
 			let oldItem = this._value[i];
 			if (oldItem instanceof Data) {
 				oldItem.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
 			}
 		}
-		if (!value) {
-			value = [];
-		}
-		this._value = value;
+		var args = [0, this.value.length].concat(value);
+		this.splice.apply(this, args);
+		// this.splice(0, this.value.length);
+		// this._value = value;
+
 		for (let i = 0; i < this._value.length; i++) {
 			let item = this._value[i];
 			if (item instanceof Data) {
@@ -275,11 +278,13 @@ export default class ArrayData extends Data {
 		} else {
 			this.selectedItem.value = null;
 		}
+		if(this.debug) console.log(this.value);
 		return elements;
 	}
 
 	remove(element) {
 		let index = this.indexOf(element);
+		if(this.debug) console.log("ArrayData.remove", index);
 		if (index != -1) {
 			this.splice(index, 1);
 		}

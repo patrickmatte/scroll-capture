@@ -156,12 +156,14 @@ export default class UIList extends UIComponent {
 	}
 
 	_providerRemove(event) {
-		if (this.debug) console.log("UIList._providerRemove");
+		if (this.debug) console.log("UIList._providerRemove", event);
 		this._saveChildrenPositions();
 		let children = this.children;
+		if (this.debug) console.log("children=", children);
 		let removedElements = [];
 		let start = event.data.index;
 		let end = event.data.index + event.data.total;
+		if (this.debug) console.log("start=", start, "end=", end);
 		for (let i = start; i < end; i++) {
 			removedElements.push(children[i]);
 		}

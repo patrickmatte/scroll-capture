@@ -10,6 +10,8 @@ export default class Actions extends ArrayData {
 
 	constructor() {
 		super();
+		this.debug = true;
+
 		this.push.apply(this, arguments);
 
 		// this.addSelectedType = this.addSelectedType.bind(this);
@@ -41,6 +43,7 @@ export default class Actions extends ArrayData {
 	// }
 
 	addAction(action) {
+		console.log("addAction", action);
 		if (!action) return;
 		sendTrackEventMessage("Action", "add", action.type);
 		action.captureAtInit();
@@ -51,8 +54,10 @@ export default class Actions extends ArrayData {
 	}
 
 	removeAction(action) {
+		console.log("removeAction", action);
 		sendTrackEventMessage("Action", "remove", action.type);
 		let index = this.indexOf(action);
+		console.log("index", index);
 		this.remove(action);
 		let newIndex = Math.max(index - 1, 0);
 		this.selectedIndex.value = Math.min(newIndex, this.value.length - 1);
