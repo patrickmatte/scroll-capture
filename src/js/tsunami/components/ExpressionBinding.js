@@ -35,7 +35,7 @@ export default class ExpressionBinding {
                 target = new Function("scope", "return " + slugs.join(".")).bind(scope)(target);
             }
             if(target instanceof EventTarget && target[type] != undefined) {
-                console.log("expression", expression);
+                // console.log("expression", expression);
                 let eventHandler = new EventHandler(target, type, dataChangeHandler);
                 this.changeEventHandlers.push(eventHandler);
             }
