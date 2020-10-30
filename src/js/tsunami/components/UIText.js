@@ -20,7 +20,7 @@ export default class UIText extends UIComponent {
             let setModel = (value) => {
                 this.model = value;
             }
-            this.expressionBinding = new ExpressionBinding(setModel, "`" + expression + "`", value);
+            this.expressionBinding = new ExpressionBinding(setModel, "`" + expression + "`", this);
         }
     }
 

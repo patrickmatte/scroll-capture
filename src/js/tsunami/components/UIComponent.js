@@ -1,4 +1,3 @@
-import Data from "../data/Data";
 import { awaitTimeout } from "../await";
 import Rectangle from "../geom/Rectangle";
 import { isTouch, localToGlobal } from "../window";
@@ -207,11 +206,10 @@ export default class UIComponent extends Branch {
 			if (attribute.name.indexOf("data-set-") != -1) {
 				let propertyName = attribute.name.split("data-set-")[1];
 				let setValue = (value) => {
-					if (this.debug) console.log("debug data-set", propertyName, "to", value);
 					component[propertyName] = value;
 				}
 				let expression = attribute.value;
-				let attr = new ExpressionBinding(setValue, expression, scope, this.debug);
+				let attr = new ExpressionBinding(setValue, expression, this, this.debug);
 				component.attributes[attribute.name] = attr;
 				removedAttributes.push(attribute.name);
 			}
@@ -229,7 +227,7 @@ export default class UIComponent extends Branch {
 			let expression = attribute.value;
 			expression = expression.split("{").join("${");
 			if (expression.indexOf("${") != -1) {
-				let attributeBinding = new AttributeBinding(element, name, "`" + expression + "`", scope);
+				let attributeBinding = new AttributeBinding(element, name, "`" + expression + "`", this);
 				component.attributes[name] = attributeBinding;
 			}
 		}

@@ -2,7 +2,6 @@ import { sendTrackEventMessage } from "./GABridge";
 import BooleanData from "../tsunami/data/BooleanData";
 import Actions from "./Actions";
 import Settings from "./Settings";
-import { app } from "../main";
 import NumberData from "../tsunami/data/NumberData";
 import BaseEvent from "../tsunami/events";
 
@@ -43,6 +42,10 @@ export default class AppModel extends EventTarget {
         this.test1 = new NumberData(1);
         this.test2 = new NumberData(2);
         this.test3 = new NumberData(3);
+    }
+
+    test() {
+        console.log("test!!!");
     }
 
     get actions() {

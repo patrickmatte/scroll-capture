@@ -12,7 +12,6 @@ export default class Data extends EventTarget {
 		return this._value;
 	}
 
-	
 	set value(value) {
 		if (value != this._value || this.forceChangeEvent) {
 			this._value = value;

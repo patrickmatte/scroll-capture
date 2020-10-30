@@ -1,5 +1,6 @@
 import EventHandler from "./EventHandler";
 import Data from "../data/Data";
+import { hasValue } from "../utils/validation";
 
 export default class ExpressionBinding {
 
@@ -8,30 +9,38 @@ export default class ExpressionBinding {
 
         this.changeEventHandlers = [];
 
-        let getValue;
+        let getValue = new Function("scope", "return " + expression).bind(scope);
 
-        if (expression.indexOf("[[") != -1) {
-            let dataChangeHandler = (event) => {
-                this.setValue(getValue(scope));
-            }
-            let attributeSetProp = {};
-            let chunks = expression.split("[[");
-            for (let i = 0; i < chunks.length; i++) {
-                let chunk = chunks[i];
-                if (chunk.indexOf("]]") != -1) {
-                    let chunkArray = chunk.split("]]");
-                    let chunkExpression = chunkArray[0];
-                    let data = new Function("scope", "return " + chunkExpression).bind(scope)(scope);
-                    if (data instanceof Data) {
-                        let changeEventHandler = new EventHandler(data, Data.CHANGE, dataChangeHandler);
-                        this.changeEventHandlers.push(changeEventHandler);
-                    }
-                    chunks[i] = chunkArray.join("");
-                }
-            }
-            expression = chunks.join("");
+        let dataChangeHandler = (event) => {
+            this.setValue(getValue(scope));
         }
-        getValue = new Function("scope", "return " + expression).bind(scope);
+
+        let expressionChunks = expression;
+
+        let operators = "+/*-[](){}!?%$=:;`";
+        for(let i = 0; i < operators.length; i++) {
+            let char = operators.charAt(i);
+            expressionChunks = expressionChunks.split(char).join(" ");
+        }
+        let chunks = expressionChunks.split(" ");
+        let filteredChunks = chunks.filter((chunk) => {
+            return hasValue(chunk) && chunk.indexOf("'") == -1 && chunk.indexOf('"') == -1;
+        });
+
+        filteredChunks.map((chunk, i) => {
+            let slugs = chunk.split(".");
+            let target = scope;
+            let type = slugs.pop();
+            if(slugs.length > 0) {
+                target = new Function("scope", "return " + slugs.join(".")).bind(scope)(target);
+            }
+            if(target instanceof EventTarget && target[type] != undefined) {
+                console.log("expression", expression);
+                let eventHandler = new EventHandler(target, type, dataChangeHandler);
+                this.changeEventHandlers.push(eventHandler);
+            }
+        });
+
         let val = getValue(scope);
         this.setValue(val);
     }
