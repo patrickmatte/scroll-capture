@@ -278,13 +278,11 @@ export default class ArrayData extends Data {
 		} else {
 			this.selectedItem.value = null;
 		}
-		if(this.debug) console.log(this.value);
 		return elements;
 	}
 
 	remove(element) {
 		let index = this.indexOf(element);
-		if(this.debug) console.log("ArrayData.remove", index);
 		if (index != -1) {
 			this.splice(index, 1);
 		}

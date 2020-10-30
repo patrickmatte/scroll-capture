@@ -94,7 +94,7 @@ export default class AppModel extends EventTarget {
 
     clearActions() {
         sendTrackEventMessage("clearActions", "click");
-        this.actions.value = [];
+        this.actions.clear();
         this.save();
     }
 }

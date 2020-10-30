@@ -10,7 +10,6 @@ export default class Actions extends ArrayData {
 
 	constructor() {
 		super();
-		this.debug = true;
 
 		this.push.apply(this, arguments);
 
