@@ -57,6 +57,7 @@ export default class Expression extends EventTarget {
         });
         this.eventHandlers = [];
         this.callback = null;
+        this._value = null;
     }
 
 }

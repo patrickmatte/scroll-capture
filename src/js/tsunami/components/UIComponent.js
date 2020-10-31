@@ -8,6 +8,7 @@ import Expression from "../data/Expression";
 import { nodeListToArray } from "../utils/array";
 import ChangeEvent from "../ChangeEvent";
 import { transformLiterals } from "../utils/transformLiterals";
+import Bind from "../data/Bind";
 
 export default class UIComponent extends Branch {
 
@@ -176,6 +177,7 @@ export default class UIComponent extends Branch {
 		if (this.debug) console.log("debug UIComponent.scope", value);
 		this.onDirective(this);
 		this.setDirective(this);
+		this.setDirective(this, "bind2:");
 		this.bindDirective(this);
 		this.attributeDirective(this);
 	}
@@ -196,12 +198,12 @@ export default class UIComponent extends Branch {
 		});
 	}
 
-	setDirective(component) {
+	setDirective(component, attr = "set:") {
 		const removedAttributes = [];
 		for (let i = 0; i < component.element.attributes.length; i++) {
 			const attribute = component.element.attributes[i];
-			if (attribute.name.indexOf("set:") != -1) {
-				const propertyName = attribute.name.split("set:")[1];
+			if (attribute.name.indexOf(attr) != -1) {
+				const propertyName = attribute.name.split(attr)[1];
 				const callback = (value) => {
 					component[propertyName] = value;
 				}
@@ -220,10 +222,7 @@ export default class UIComponent extends Branch {
 			const attribute = component.element.attributes[i];
 			if (attribute.name.indexOf("bind:") != -1) {
 				const propertyName = attribute.name.split("bind:")[1];
-				const callback = (value) => {
-					component[propertyName] = value;
-				}
-				component.attributes[attribute.name] = new Expression(attribute.value, this, callback);
+				component.attributes[attribute.name] = new Bind(this, "this." + propertyName, this, attribute.value);
 				removedAttributes.push(attribute.name);
 			}
 		}
