@@ -241,7 +241,6 @@ export default class UIComponent extends Branch {
 				const callback = (value) => {
             		this.element.setAttribute(attribute.name, value);
 				}
-				// let attributeBinding = new AttributeBinding(element, attribute.name, "`" + attributeValue + "`", this);
 				component.attributes[attribute.name] = new Expression(transformLiterals("`" + attributeValue + "`"), this, callback);
 			}
 		}
