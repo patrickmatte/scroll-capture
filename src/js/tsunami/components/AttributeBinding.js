@@ -1,14 +1,12 @@
-import ExpressionBinding from "./ExpressionBinding";
 import { transformLiterals } from "../utils/transformLiterals";
+import Expression from "../data/Expression";
 
-export default class AttributeBinding extends ExpressionBinding {
+export default class AttributeBinding extends Expression {
 
     constructor(element, attributeName, expression, scope) {
-        expression = transformLiterals(expression);
-        let setValue = (value) => {
+        const callback = (value) => {
             element.setAttribute(attributeName, value);
         }
-        super(setValue, expression, scope);
+        super(transformLiterals(expression), scope, callback);
     }
-    
 }

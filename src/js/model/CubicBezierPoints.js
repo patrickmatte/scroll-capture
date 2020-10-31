@@ -50,7 +50,6 @@ export default class CubicBezierPoints extends DataModel {
 		this.easing.p2.y = this.p2.y.value;
 		this.easing.calculateLength();
 		super.changeHandler();
-		// this.dispatchChangeEvent("value", this);
 	}
 
 }

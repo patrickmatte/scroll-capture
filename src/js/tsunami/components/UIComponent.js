@@ -4,9 +4,10 @@ import { isTouch, localToGlobal } from "../window";
 import Branch from "../Branch";
 import Point from "../geom/Point";
 import EventHandler from "./EventHandler";
-import ExpressionBinding from "./ExpressionBinding";
-import AttributeBinding from "./AttributeBinding";
+import Expression from "../data/Expression";
 import { nodeListToArray } from "../utils/array";
+import ChangeEvent from "../ChangeEvent";
+import { transformLiterals } from "../utils/transformLiterals";
 
 export default class UIComponent extends Branch {
 
@@ -172,26 +173,21 @@ export default class UIComponent extends Branch {
 
 	set scope(value) {
 		this._scope = value;
-
 		if (this.debug) console.log("debug UIComponent.scope", value);
-
-		this._parseAttributesEventHandlers(this, value);
-
-		this._parseAttributesSetProperty(this, value);
-
-		this._bindComponentAttributes(this, value);
+		this.onDirective(this);
+		this.setDirective(this);
+		this.bindDirective(this);
+		this.attributeDirective(this);
 	}
 
-	_parseAttributesEventHandlers(component, scope) {
-		let removedAttributes = [];
+	onDirective(component) {
+		const removedAttributes = [];
 		for (let i = 0; i < component.element.attributes.length; i++) {
-			let attribute = component.element.attributes[i];
-			if (attribute.name.indexOf("data-on-") != -1) {
-				let type = attribute.name.split("data-on-")[1];
-				let expression = attribute.value;
-				let func = new Function("event", expression).bind(component);
-				let eventHandler = new EventHandler(component.element, type, func);
-				component.attributes[attribute.name] = eventHandler;
+			const attribute = component.element.attributes[i];
+			if (attribute.name.indexOf("on:") != -1) {
+				const type = attribute.name.split("on:")[1];
+				const callback = new Function("event", attribute.value).bind(component);
+				component.attributes[attribute.name] = new EventHandler(component.element, type, callback);
 				removedAttributes.push(attribute.name);
 			}
 		}
@@ -200,18 +196,34 @@ export default class UIComponent extends Branch {
 		});
 	}
 
-	_parseAttributesSetProperty(component, scope) {
-		let removedAttributes = [];
+	setDirective(component) {
+		const removedAttributes = [];
 		for (let i = 0; i < component.element.attributes.length; i++) {
-			let attribute = component.element.attributes[i];
-			if (attribute.name.indexOf("data-set-") != -1) {
-				let propertyName = attribute.name.split("data-set-")[1];
-				let setValue = (value) => {
+			const attribute = component.element.attributes[i];
+			if (attribute.name.indexOf("set:") != -1) {
+				const propertyName = attribute.name.split("set:")[1];
+				const callback = (value) => {
 					component[propertyName] = value;
 				}
-				let expression = attribute.value;
-				let attr = new ExpressionBinding(setValue, expression, this, this.debug);
-				component.attributes[attribute.name] = attr;
+				component.attributes[attribute.name] = new Expression(attribute.value, this, callback);
+				removedAttributes.push(attribute.name);
+			}
+		}
+		removedAttributes.map((attributeName) => {
+			component.element.removeAttribute(attributeName);
+		});
+	}
+	
+	bindDirective(component) {
+		const removedAttributes = [];
+		for (let i = 0; i < component.element.attributes.length; i++) {
+			const attribute = component.element.attributes[i];
+			if (attribute.name.indexOf("bind:") != -1) {
+				const propertyName = attribute.name.split("bind:")[1];
+				const callback = (value) => {
+					component[propertyName] = value;
+				}
+				component.attributes[attribute.name] = new Expression(attribute.value, this, callback);
 				removedAttributes.push(attribute.name);
 			}
 		}
@@ -220,16 +232,17 @@ export default class UIComponent extends Branch {
 		});
 	}
 
-	_bindComponentAttributes(component, scope) {
+	attributeDirective(component) {
 		let element = component.element;
 		for (let i = 0; i < element.attributes.length; i++) {
 			let attribute = element.attributes[i];
-			let name = attribute.name;
-			let expression = attribute.value;
-			expression = expression.split("{").join("${");
-			if (expression.indexOf("${") != -1) {
-				let attributeBinding = new AttributeBinding(element, name, "`" + expression + "`", this);
-				component.attributes[name] = attributeBinding;
+			let attributeValue = attribute.value.split("{").join("${");
+			if (attributeValue.indexOf("${") != -1) {
+				const callback = (value) => {
+            		this.element.setAttribute(attribute.name, value);
+				}
+				// let attributeBinding = new AttributeBinding(element, attribute.name, "`" + attributeValue + "`", this);
+				component.attributes[attribute.name] = new Expression(transformLiterals("`" + attributeValue + "`"), this, callback);
 			}
 		}
 	}
@@ -239,8 +252,10 @@ export default class UIComponent extends Branch {
 	}
 
 	set model(value) {
-		this._model = value;
-		// if (value instanceof Data) value = value.value;
+		if (value != this._model) {
+			this._model = value;
+		 	ChangeEvent.dispatch(this, "model", value);
+		}
 	}
 
 	load() {

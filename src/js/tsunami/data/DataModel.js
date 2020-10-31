@@ -1,3 +1,4 @@
+import ChangeEvent from "../ChangeEvent";
 import Data from "./Data";
 
 export default class DataModel extends Data {
@@ -12,7 +13,7 @@ export default class DataModel extends Data {
 	}
 
 	changeHandler() {
-		this.dispatchChangeEvent("value", this);
+		ChangeEvent.dispatch(this, "value", this);
 	}
 
 	destroy() {

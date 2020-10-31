@@ -16,12 +16,9 @@ export default class ObjectData extends Data {
 	set value(value) {
 		if (value != this._value) {
 			this._deselectValue(this._value);
-			this._value = value;
-			this._selectValue(this._value);
-			this.dispatchChangeEvent("value", this.value);
-		} else if(this.forceChangeEvent) {
-			this.dispatchChangeEvent("value", this.value);
+			this._selectValue(value);
 		}
+		super.value = value;
 	}
 
 	toString() {

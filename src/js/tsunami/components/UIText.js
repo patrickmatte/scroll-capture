@@ -1,5 +1,5 @@
 import UIComponent from "./UIComponent";
-import ExpressionBinding from "./ExpressionBinding";
+import Expression from "../data/Expression";
 import Data from "../data/Data";
 
 export default class UIText extends UIComponent {
@@ -20,7 +20,7 @@ export default class UIText extends UIComponent {
             let setModel = (value) => {
                 this.model = value;
             }
-            this.expressionBinding = new ExpressionBinding(setModel, "`" + expression + "`", this);
+            this.expression = new Expression("`" + expression + "`", this, setModel);
         }
     }
 
@@ -34,7 +34,7 @@ export default class UIText extends UIComponent {
     }
 
     destroy() {
-        if (this.expressionBinding) this.expressionBinding.destroy();
+        if (this.expression) this.expression.destroy();
         return super.destroy();
     }
 
