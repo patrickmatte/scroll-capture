@@ -3,8 +3,6 @@ import EventHandler from "../components/EventHandler";
 export default class Bind {
 
     constructor(scope1, path1, scope2, path2) {
-        console.log("scope1=", scope1, "path1=", path1);
-        console.log("scope2=", scope2, "path2=", path2);
         this.changeHandler1 = this.changeHandler1.bind(this);
         this.changeHandler2 = this.changeHandler2.bind(this);
         this.eventHandler1 = this.createEventHandler(scope1, path1, this.changeHandler1);
