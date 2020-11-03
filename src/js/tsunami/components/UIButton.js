@@ -1,6 +1,5 @@
 import {events} from "../events";
 import UIComponent from "./UIComponent";
-import {evalProperty} from "../tsunami";
 
 export default class UIButton extends UIComponent {
 
@@ -15,22 +14,6 @@ export default class UIButton extends UIComponent {
 
 		this.element.addEventListener(events.click, this.clickHandler);
 		this.element.addEventListener(events.mousedown, this.pressHandler);
-	}
-
-	get scope() {
-		return super.scope;
-	}
-
-	set scope(value) {
-		super.scope = value;
-
-		let click = this.element.getAttribute("data-click");
-		if (click) {
-			this.onRelease = (event) => {
-				let method = evalProperty(click, this.scope);
-				method(event);
-			}
-		}
 	}
 
 	pressHandler(event) {

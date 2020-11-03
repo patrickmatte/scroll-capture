@@ -1,5 +1,5 @@
 import UIComponent from "./UIComponent";
-import {destroyElement, destroyElements, evalProperty, importTemplate} from "../tsunami";
+import {destroyElement, importTemplate} from "../tsunami";
 import ArrayData from "../data/ArrayData";
 import Data from "../data/Data";
 import BaseEvent, {events} from "../events";

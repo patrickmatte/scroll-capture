@@ -1,6 +1,7 @@
 import EventHandler from "../components/EventHandler";
 import { hasValue } from "../utils/validation";
 import ChangeEvent from "../ChangeEvent";
+import { getProperty } from "../tsunami";
 
 export default class Expression extends EventTarget {
 
@@ -31,7 +32,8 @@ export default class Expression extends EventTarget {
             let slugs = chunk.split(".");
             let target = scope;
             let type = slugs.pop();
-            if(slugs.length > 0) target = new Function("return " + slugs.join(".")).bind(scope)();
+            // if(slugs.length > 0) target = new Function("return " + slugs.join(".")).bind(scope)();
+            if(slugs.length > 0) target = getProperty(slugs.join("."), scope);
             if(target instanceof EventTarget && target[type] != undefined) {
                 let handler = new EventHandler(target, type, this.changeHandler);
                 this.eventHandlers.push(handler);

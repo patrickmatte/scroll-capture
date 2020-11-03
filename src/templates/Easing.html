@@ -20,7 +20,7 @@
             <div class="sc-field">
                 <div class="sc-input" title="Easing">
                     <span class="sc-icon fa fa-bezier-curve"></span>
-                    <select is="ui-select" set:provider="this.scope.data.easingPresets" set:model="this.scope.data.easingPresets.selectedItem"></select>
+                    <select is="ui-select" set:provider="this.scope.data.easingPresets" bind:model="this.scope.data.easingPresets.selectedItem.value"></select>
                 </div>
             </div>
             <div class="sc-field">

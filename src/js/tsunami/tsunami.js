@@ -1,24 +1,8 @@
-export function evalProperty(path, scope = null, debug = false) {
-	if(!scope) return;
-	if(path == "." ) return scope;
-	let array = path.split(".");
-	let object = scope;
-	while(array.length > 0) {
-		let name = array.shift();
-		let arr = name.split("[");
-		for (let i = 0; i < arr.length; i++) {
-			let prop = arr[i].split("]")[0];
-			if (object) {
-				let newObject = object[prop];
-				if(!newObject && debug ) console.log(`Warning, in the expression '${path}', the property '${prop}' is null in ${object}`);
-				object = newObject;
-			}
-		}
-	}
-	return object;
-}
-
 let classes = {};
+
+export function getProperty(path, scope, debug = false) {
+	return new Function("return " + path).bind(scope)();
+}
 
 export function define(name, classReference) {
 	classes[name] = classReference;
@@ -27,25 +11,6 @@ export function define(name, classReference) {
 // export function registerClass(classReference, name) {
 // 	classes[name] = classReference;
 // }
-
-export function decorateElement (element, scope) {
-	let dataWrapper = element.getAttribute("data-wrapper");
-	if (dataWrapper) {
-		let wrappers = dataWrapper.split(" ");
-		for (let i = 0; i < wrappers.length; i++) {
-			let wrapper = wrappers[i];
-			if (wrapper) {
-				let method = evalProperty(wrapper, window);
-				if (method) {
-					method(element);
-					if ("createdCallback" in element) {
-						element.createdCallback();
-					}
-				}
-			}
-		}
-	}
-}
 
 export function createComponent (element, scope) {
 	let className = element.nodeName.toLowerCase();

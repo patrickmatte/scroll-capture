@@ -1,7 +1,6 @@
 import Data from "./Data";
 import ArrayData from "./ArrayData";
 import BaseEvent from "../events";
-import {evalProperty} from "../tsunami";
 import Validation from "./Validation";
 
 export default class ArrayDataOperation extends Data {
@@ -119,29 +118,6 @@ export default class ArrayDataOperation extends Data {
 		// 	this._value = newValue;
 		// 	this.dispatchEvent(new BaseEvent(Data.CHANGE, this.value));
 		// }
-	}
-
-	parseString(string, scope) {
-		let chunks = string.split("[[");
-		let array = [];
-		for (let i = 0; i < chunks.length; i++) {
-			let chunk = chunks[i];
-			if (chunk.indexOf("]]") == -1) {
-				array.push(chunk);
-			} else {
-				let chunkArray = chunk.split("]]");
-				for (let j = 0; j < chunkArray.length; j++) {
-					let chunk2 = chunkArray[j];
-					if (j == 0) {
-						let model = evalProperty(chunk2, scope);
-						array.push(model);
-					} else {
-						array.push(chunk2);
-					}
-				}
-			}
-		}
-		this.arrayData.value = array;
 	}
 
 	destroy() {

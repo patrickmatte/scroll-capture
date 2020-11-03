@@ -166,7 +166,7 @@
 																<div class="sc-field">
 																	<span class="sc-input sc-select" title="MouseEvent Type">
 																		<span class="sc-icon fas fa-mouse-pointer"></span>
-																		<select is="ui-select" set:provider="this.scope.data.eventTypes" set:model="this.scope.data.eventTypes.selectedItem"></select>
+																		<select is="ui-select" set:provider="this.scope.data.eventTypes" bind:model="this.scope.data.eventTypes.selectedItem.value"></select>
 																	</span>
 																	<span class="sc-input" title="Delay">
 																		<span class="sc-icon fas fa-hourglass-half"></span>
@@ -264,7 +264,7 @@
 													</div> -->
 													<div class="sc-input sc-select">
 														<span class="sc-icon fas" data-theme="{this.scope.settings.colorThemes.selectedItem.value}" is="ui-component"></span>
-														<select is="ui-select" set:provider="this.scope.settings.colorThemes" set:model="this.scope.settings.colorThemes.selectedItem"></select>
+														<select is="ui-select" set:provider="this.scope.settings.colorThemes" bind:model="this.scope.settings.colorThemes.selectedItem.value"></select>
 													</div>
 													<div class="sc-space"></div>
 												</div>
@@ -322,7 +322,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-video"></span>
-															<select is="ui-select" set:provider="this.scope.settings.videoCodecs" set:model="this.scope.settings.videoCodecs.selectedItem"></select>
+															<select is="ui-select" set:provider="this.scope.settings.videoCodecs" bind:model="this.scope.settings.videoCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">
@@ -337,7 +337,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-volume-up"></span>
-															<select is="ui-select" set:provider="this.scope.settings.audioCodecs" set:model="this.scope.settings.audioCodecs.selectedItem"></select>
+															<select is="ui-select" set:provider="this.scope.settings.audioCodecs" bind:model="this.scope.settings.audioCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">

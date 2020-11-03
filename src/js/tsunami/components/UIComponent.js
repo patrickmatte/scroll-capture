@@ -177,7 +177,6 @@ export default class UIComponent extends Branch {
 		if (this.debug) console.log("debug UIComponent.scope", value);
 		this.onDirective(this);
 		this.setDirective(this);
-		this.setDirective(this, "bind2:");
 		this.bindDirective(this);
 		this.attributeDirective(this);
 	}

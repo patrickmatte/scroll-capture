@@ -1,47 +1,42 @@
 import UIList from "./UIList";
-import Data from "../data/Data";
-import {evalProperty} from "../tsunami";
+import {getProperty} from "../tsunami";
 import { hasValue } from "../utils/validation";
+import ChangeEvent from "../ChangeEvent";
 
 export default class UISelect extends UIList {
 	
 	constructor(element) {
 		super(element);
-		this.valuePath = ".";
+		this.valuepath = "this";
 		this.template = '<option is="ui-text" value="{this.scope.data}">{this.scope.data}</option>';
 		this.inputHandler = this.inputHandler.bind(this);
 		this.element.addEventListener("input", this.inputHandler);
 	}
 
-	get valuePath() {
-		return this._valuePath;
+	get valuepath() {
+		return this._valuepath;
 	}
 
-	set valuePath(value) {
-		this._valuePath = value;
+	set valuepath(value) {
+		this._valuepath = value;
 		this.model = this.model;
 	}
 
 	get model() {
-		return super.model;
+		let value = this.provider.find((item) => {
+			let itemValue = getProperty(this.valuepath, item);
+			return (itemValue == this.element.value);
+		});
+		return value;
 	}
 
 	set model(value) {
+		if (hasValue(value)) this.element.value = getProperty(this.valuepath, value);
 		super.model = value;
-		if (value instanceof Data) value = value.value;
-		if (hasValue(value)) {
-			let propValue = evalProperty(this.valuePath, value);
-			this.element.value = propValue;
-		}
 	}
 
 	inputHandler(e) {
-		if (this._model instanceof Data) {
-			this._model.value = this.provider.find((model) => {
-				let value = evalProperty(this.valuePath, model);
-				return (value == this.element.value);
-			});
-		}
+		ChangeEvent.dispatch(this, "model", this.model);
 	}
 
 	destroy() {

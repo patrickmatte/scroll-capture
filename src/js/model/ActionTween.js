@@ -6,7 +6,7 @@ import Tween from "../tsunami/animation/Tween";
 import TweenProperty from "../tsunami/animation/TweenProperty";
 import Point from "../tsunami/geom/Point";
 import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
-import {evalProperty} from "../tsunami/tsunami";
+import {getProperty} from "../tsunami/tsunami";
 import CubicBezierPoints from "./CubicBezierPoints";
 import Easing from "../tsunami/animation/Easing";
 
@@ -21,7 +21,6 @@ export default class ActionTween extends Action {
 		this.duration = new NumberData(duration);
 		this.cubicBezierPoints = new CubicBezierPoints();
 		this.easingPresets = new ArrayData();
-		this.easingPresets.debugArray = true;
 		this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));
 		this.easingPresets.selectedItem.debug = true;
 		// this.easingPresets.selectedItem.forceChangeEvent = true;
@@ -48,12 +47,12 @@ export default class ActionTween extends Action {
 	easingPresetChange() {
 		let value = this.easingPresets.selectedItem.value;
 
-		let debugEasingMethod = evalProperty(value, Easing);
+		let debugEasingMethod = getProperty("this." + value, Easing);
 		if(debugEasingMethod) {
 			this.cubicBezierPoints.debugEasing = debugEasingMethod;
 		}
 
-		let cb = evalProperty(value, CubicBezierEasing);
+		let cb = getProperty("this." + value, CubicBezierEasing);
 		if(cb) {
 			this.cubicBezierPoints.p1.x.value = cb.p1.x;
 			this.cubicBezierPoints.p1.y.value = cb.p1.y;

@@ -1,5 +1,4 @@
 import Vector2Data from "../tsunami/data/Vector2Data";
-import Data from "../tsunami/data/Data";
 import CubicBezierEasing from "../tsunami/animation/CubicBezierEasing";
 import { round2 } from "../tsunami/utils/number";
 import Easing from "../tsunami/animation/Easing";
