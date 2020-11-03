@@ -1,3 +1,4 @@
+import ChangeEvent from "../ChangeEvent";
 import EventHandler from "../components/EventHandler";
 import { getProperty } from "../tsunami";
 
@@ -8,18 +9,18 @@ export default class Bind {
         this.changeHandler2 = this.changeHandler2.bind(this);
         this.eventHandler1 = this.createEventHandler(scope1, path1, this.changeHandler1);
         this.eventHandler2 = this.createEventHandler(scope2, path2, this.changeHandler2.bind(this));
-        this.changeHandler2();
+        this.changeHandler2(new ChangeEvent(this.eventHandler2.type, this.eventHandler2.eventTarget[this.eventHandler2.type]));
     }
 
     changeHandler1(event) {
         this.eventHandler2.enabled = false;
-        this.eventHandler2.eventTarget[this.eventHandler2.type] = this.eventHandler1.eventTarget[this.eventHandler1.type];
+        this.eventHandler2.eventTarget[this.eventHandler2.type] = event.data;
         this.eventHandler2.enabled = true;
     }
 
     changeHandler2(event) {
         this.eventHandler1.enabled = false;
-        this.eventHandler1.eventTarget[this.eventHandler1.type] = this.eventHandler2.eventTarget[this.eventHandler2.type];
+        this.eventHandler1.eventTarget[this.eventHandler1.type] = event.data;
         this.eventHandler1.enabled = true;
     }
 
@@ -30,10 +31,10 @@ export default class Bind {
         // if(slugs.length > 0) target = new Function().bind(scope)();
         if(slugs.length > 0) target = getProperty(slugs.join("."), scope);
         let handler;
-        if(target instanceof EventTarget && target[type] != undefined) {
+        if(target instanceof EventTarget) {
             handler = new EventHandler(target, type, callback);
         } else {
-            throw new Error("Object is not an instance of EventTarget, cannot add event listener type '" + type + "'");
+            console.log("Object is not an instance of EventTarget, cannot add event listener type '" + type + "'");
         }
         return handler;
     }

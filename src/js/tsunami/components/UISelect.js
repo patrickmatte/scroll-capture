@@ -7,7 +7,7 @@ export default class UISelect extends UIList {
 	
 	constructor(element) {
 		super(element);
-		this.valuepath = "this";
+		this._valuepath = "this";
 		this.template = '<option is="ui-text" value="{this.scope.data}">{this.scope.data}</option>';
 		this.inputHandler = this.inputHandler.bind(this);
 		this.element.addEventListener("input", this.inputHandler);
@@ -23,20 +23,25 @@ export default class UISelect extends UIList {
 	}
 
 	get model() {
-		let value = this.provider.find((item) => {
-			let itemValue = getProperty(this.valuepath, item);
-			return (itemValue == this.element.value);
-		});
-		return value;
+		return super.model;
 	}
 
 	set model(value) {
-		if (hasValue(value)) this.element.value = getProperty(this.valuepath, value);
+		if (hasValue(value)) {
+			let itemValue = value;
+			if(this.valuepath != "this") itemValue = getProperty(this.valuepath, item);
+			this.element.value = itemValue;
+		}
 		super.model = value;
 	}
 
 	inputHandler(e) {
-		ChangeEvent.dispatch(this, "model", this.model);
+		let value = this.provider.find((item) => {
+			let itemValue = item;
+			if(this.valuepath != "this") itemValue = getProperty(this.valuepath, item);
+			return (itemValue == this.element.value);
+		});
+		super.model = value;
 	}
 
 	destroy() {

@@ -2,7 +2,7 @@ import UIComponent from "./UIComponent";
 import {destroyElement, importTemplate} from "../tsunami";
 import ArrayData from "../data/ArrayData";
 import Data from "../data/Data";
-import BaseEvent, {events} from "../events";
+import {events} from "../events";
 import Scope from "../Scope";
 import Point from "../geom/Point";
 import Tween from "../animation/Tween";

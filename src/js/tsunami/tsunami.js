@@ -1,7 +1,13 @@
 let classes = {};
 
 export function getProperty(path, scope, debug = false) {
-	return new Function("return " + path).bind(scope)();
+	if(debug) console.log("getProperty path", path, "scope", scope);
+	let value = null;
+	try {
+		value = new Function("return " + path).bind(scope)();
+	} catch(e) {
+	}
+	return value;
 }
 
 export function define(name, classReference) {
