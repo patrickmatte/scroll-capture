@@ -1,4 +1,25 @@
 <div class="sc-default" is="scroll-capture" data-theme-light="{this.scope.settings.isColorThemeLight.value}" set:position="this.scope.settings.position" style="right:{this.scope.settings.position.x.value}px; top:{this.scope.settings.position.y.value}px;">
+	<!-- <ul is="ui-list" set:provider="this.scope.actions">
+		<template>
+			<label>
+				<input class="test-radio" type="radio" is="ui-input" value="{this.scope.data.name.value}" name="options1" bind:model="this.scope.rootScope.selectedAction" />
+				<span is="ui-text">{this.scope.data.name.value}</span>
+			</label>
+		</template>
+	</ul>
+	<ul is="ui-list" set:provider="this.scope.actions">
+		<template>
+			<label>
+				<input class="test-radio" type="radio" is="ui-component" value="{this.scope.data.name.value}" name="options2" set:checked="console.log((this.scope.rootScope.selectedAction == this.element.value));" on:change="this.scope.rootScope.selectedAction = this.element.value" />
+				<span is="ui-text">{this.scope.data.name.value}</span>
+			</label>
+		</template>
+	</ul>
+	<select is="ui-select" set:provider="this.scope.actions" bind:value="this.scope.selectedAction">
+		<template>
+			<option is="ui-text" value="{this.scope.data.name.value}">{this.scope.data.name.value}</option>
+		</template>
+	</select> -->
 	<div class="sc-window sc-window-main" is="ui-component">
 		<div class="sc-title">
 			<span class="sc-tabs">
@@ -166,7 +187,7 @@
 																<div class="sc-field">
 																	<span class="sc-input sc-select" title="MouseEvent Type">
 																		<span class="sc-icon fas fa-mouse-pointer"></span>
-																		<select is="ui-select" set:provider="this.scope.data.eventTypes" bind:model="this.scope.data.eventTypes.selectedItem.value"></select>
+																		<select is="ui-select" set:provider="this.scope.data.eventTypes" bind:value="this.scope.data.eventTypes.selectedItem.value"></select>
 																	</span>
 																	<span class="sc-input" title="Delay">
 																		<span class="sc-icon fas fa-hourglass-half"></span>
@@ -264,7 +285,7 @@
 													</div> -->
 													<div class="sc-input sc-select">
 														<span class="sc-icon fas" data-theme="{this.scope.settings.colorThemes.selectedItem.value}" is="ui-component"></span>
-														<select is="ui-select" set:provider="this.scope.settings.colorThemes" bind:model="this.scope.settings.colorThemes.selectedItem.value"></select>
+														<select is="ui-select" set:provider="this.scope.settings.colorThemes" bind:value="this.scope.settings.colorThemes.selectedItem.value"></select>
 													</div>
 													<div class="sc-space"></div>
 												</div>
@@ -290,14 +311,14 @@
 														<span class="sc-icon">W</span>
 														<span class="sc-input-group">
 															<span class="sc-input-unit" is="ui-text" data-unit="px">{this.scope.settings.windowSize.x.value}</span>
-															<input type="number" step="1" min="375" placeholder="375" title="PageX" is="ui-input" set:inputtype="'blur'" bind:model="this.scope.settings.windowSize.x.value" />
+															<input type="number" step="1" min="375" placeholder="375" title="PageX" is="ui-input" bind:model="this.scope.settings.windowSize.x.value" />
 														</span>
 													</span>
 													<span class="sc-input">
 														<span class="sc-icon">H</span>
 														<span class="sc-input-group">
 															<span class="sc-input-unit" is="ui-text" data-unit="px">{this.scope.settings.windowSize.y.value}</span>
-															<input type="number" step="1" min="375" placeholder="375" title="PageY" is="ui-input" set:inputtype='"blur"' bind:model="this.scope.settings.windowSize.y.value" />
+															<input type="number" step="1" min="375" placeholder="375" title="PageY" is="ui-input" bind:model="this.scope.settings.windowSize.y.value" />
 														</span>
 													</span>
 												</div>
@@ -322,7 +343,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-video"></span>
-															<select is="ui-select" set:provider="this.scope.settings.videoCodecs" bind:model="this.scope.settings.videoCodecs.selectedItem.value"></select>
+															<select is="ui-select" set:provider="this.scope.settings.videoCodecs" bind:value="this.scope.settings.videoCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">
@@ -337,7 +358,7 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fas fa-volume-up"></span>
-															<select is="ui-select" set:provider="this.scope.settings.audioCodecs" bind:model="this.scope.settings.audioCodecs.selectedItem.value"></select>
+															<select is="ui-select" set:provider="this.scope.settings.audioCodecs" bind:value="this.scope.settings.audioCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">

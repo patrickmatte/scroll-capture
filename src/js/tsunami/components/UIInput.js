@@ -31,22 +31,22 @@ export default class UIInput extends UIComponent {
         this._inputtype = value;
         this.element.addEventListener(this.inputtype, this.inputHandler);
     }
+
+    get value() {
+        return this.element.value;
+    }
+    
+    set value(val) {
+        this.element.value = val;
+        if(this.debug) console.log("UIInput.value", value);
+    }
     
     get model() {
-        let value;
-        switch (this.element.type) {
-            case "checkbox":
-                value = this.element.checked;
-                break;
-            case "radio":
-            default:
-                value = this.element.value;
-                break;
-        }
-        return value;
+        return super.model;
     }
 
     set model(value) {
+        if(this.debug) console.log("UIInput.model", value, "value", this.element.value);
         switch (this.element.type) {
             case "checkbox":
                 this.element.checked = value;
@@ -65,7 +65,18 @@ export default class UIInput extends UIComponent {
     }
 
     inputHandler(event) {
-		ChangeEvent.dispatch(this, "model", this.model);
+        let value;
+        switch (this.element.type) {
+            case "checkbox":
+                value = this.element.checked;
+                break;
+            case "radio":
+            default:
+                value = this.element.value;
+                break;
+        }
+        if(this.debug) console.log("UIInput.inputHandler", value);
+        super.model = value;
     }
 
     blurHandler() {

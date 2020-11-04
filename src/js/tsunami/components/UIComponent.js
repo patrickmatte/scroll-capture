@@ -9,6 +9,10 @@ import { nodeListToArray } from "../utils/array";
 import ChangeEvent from "../ChangeEvent";
 import { transformLiterals } from "../utils/transformLiterals";
 import Bind from "../data/Bind";
+import { onDirective } from "../directives/onDirective";
+import { setDirective } from "../directives/setDirective";
+import { attributeDirective } from "../directives/attributeDirective";
+import { bindDirective } from "../directives/bindDirective";
 
 export default class UIComponent extends Branch {
 
@@ -144,6 +148,10 @@ export default class UIComponent extends Branch {
 		}
 	}
 
+	setAttribute(name, value) {
+		this.element.setAttribute(name, value);
+	}
+
 	get isAdded() {
 		let parent;
 		if (this.element) {
@@ -175,73 +183,10 @@ export default class UIComponent extends Branch {
 	set scope(value) {
 		this._scope = value;
 		if (this.debug) console.log("debug UIComponent.scope", value);
-		this.onDirective(this);
-		this.setDirective(this);
-		this.bindDirective(this);
-		this.attributeDirective(this);
-	}
-
-	onDirective(component) {
-		const removedAttributes = [];
-		for (let i = 0; i < component.element.attributes.length; i++) {
-			const attribute = component.element.attributes[i];
-			if (attribute.name.indexOf("on:") != -1) {
-				const type = attribute.name.split("on:")[1];
-				const callback = new Function("event", attribute.value).bind(component);
-				component.attributes[attribute.name] = new EventHandler(component.element, type, callback);
-				removedAttributes.push(attribute.name);
-			}
-		}
-		removedAttributes.map((attributeName) => {
-			component.element.removeAttribute(attributeName);
-		});
-	}
-
-	setDirective(component, attr = "set:") {
-		const removedAttributes = [];
-		for (let i = 0; i < component.element.attributes.length; i++) {
-			const attribute = component.element.attributes[i];
-			if (attribute.name.indexOf(attr) != -1) {
-				const propertyName = attribute.name.split(attr)[1];
-				const callback = (value) => {
-					component[propertyName] = value;
-				}
-				component.attributes[attribute.name] = new Expression(attribute.value, this, callback);
-				removedAttributes.push(attribute.name);
-			}
-		}
-		removedAttributes.map((attributeName) => {
-			component.element.removeAttribute(attributeName);
-		});
-	}
-	
-	bindDirective(component) {
-		const removedAttributes = [];
-		for (let i = 0; i < component.element.attributes.length; i++) {
-			const attribute = component.element.attributes[i];
-			if (attribute.name.indexOf("bind:") != -1) {
-				const propertyName = attribute.name.split("bind:")[1];
-				component.attributes[attribute.name] = new Bind(this, "this." + propertyName, this, attribute.value);
-				removedAttributes.push(attribute.name);
-			}
-		}
-		removedAttributes.map((attributeName) => {
-			component.element.removeAttribute(attributeName);
-		});
-	}
-
-	attributeDirective(component) {
-		let element = component.element;
-		for (let i = 0; i < element.attributes.length; i++) {
-			let attribute = element.attributes[i];
-			let attributeValue = attribute.value.split("{").join("${");
-			if (attributeValue.indexOf("${") != -1) {
-				const callback = (value) => {
-            		this.element.setAttribute(attribute.name, value);
-				}
-				component.attributes[attribute.name] = new Expression(transformLiterals("`" + attributeValue + "`"), this, callback);
-			}
-		}
+		attributeDirective(this);
+		onDirective(this);
+		setDirective(this);
+		bindDirective(this);
 	}
 
 	get model() {

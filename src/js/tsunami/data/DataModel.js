@@ -3,9 +3,27 @@ import Data from "./Data";
 
 export default class DataModel extends Data {
 
-	constructor() {
+	constructor(properties = {}) {
 		super();
 		this.changeHandler = this.changeHandler.bind(this);
+
+		for(let i in properties) {
+			this["_" + i] = properties[i];
+			Object.defineProperty(this, i, {
+				get : function(){
+					return this["_" + i];
+				},
+                set : function(value) {
+					if(this["_" + i] != value) {
+						this["_" + i] = value;
+						ChangeEvent.dispatch(this, i,  value);
+						this.changeHandler();
+					}
+				},
+				enumerable : true,
+				configurable : true
+			});
+		}
 	}
 
 	get value() {

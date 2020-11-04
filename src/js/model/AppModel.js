@@ -4,11 +4,14 @@ import Actions from "./Actions";
 import Settings from "./Settings";
 import NumberData from "../tsunami/data/NumberData";
 import BaseEvent from "../tsunami/events";
+import DataModel from "../tsunami/data/DataModel";
 
-export default class AppModel extends EventTarget {
+export default class AppModel extends DataModel {
 
     constructor() {
-		super();
+        super({
+            selectedAction:"Pause"
+        });
         this.save = this.save.bind(this);
         // this.playSelected = this.playSelected.bind(this);
 		// this.captureSelected = this.captureSelected.bind(this);
@@ -22,6 +25,10 @@ export default class AppModel extends EventTarget {
 
         this.settings = new Settings();
         this.actions = new Actions();
+
+        // this.addEventListener("selectedAction", (event) => {
+        //     console.log("selectedAction change", this.selectedAction);
+        // });
 
         // this.actions.value = [
         // 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
@@ -42,10 +49,6 @@ export default class AppModel extends EventTarget {
         this.test1 = new NumberData(1);
         this.test2 = new NumberData(2);
         this.test3 = new NumberData(3);
-    }
-
-    test() {
-        console.log("test!!!");
     }
 
     get actions() {

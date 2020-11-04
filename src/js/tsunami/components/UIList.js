@@ -57,7 +57,7 @@ export default class UIList extends UIComponent {
 	}
 
 	set provider(value) {
-		if (this.debug) console.log("provider", value);
+		if (this.debug) console.log("UIList.provider", value);
 		if (this._provider) {
 			if (this._provider instanceof ArrayData) {
 				this._provider.removeEventListener("add", this._providerAdd);
