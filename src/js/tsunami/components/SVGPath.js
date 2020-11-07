@@ -6,7 +6,7 @@ export default class SVGPath extends UIComponent {
 	constructor(element) {
 		super(element);
 		this._offsetMultiplier = 0;
-		this.totalLength = this.element.getTotalLength();
+		this.totalLength = this.getTotalLength();
 		this.dashArray = 1;
 		this.dashOffset = 1;
 
@@ -17,6 +17,10 @@ export default class SVGPath extends UIComponent {
 		// if (dataDashOffset) {
 		// 	this.dashOffset = Number(dataDashOffset);
 		// }
+	}
+
+	getTotalLength() {
+		return this.element.getTotalLength();
 	}
 
 	get dashArray() {

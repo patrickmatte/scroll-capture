@@ -3,12 +3,8 @@ import Rectangle from "../geom/Rectangle";
 import { isTouch, localToGlobal } from "../window";
 import Branch from "../Branch";
 import Point from "../geom/Point";
-import EventHandler from "./EventHandler";
-import Expression from "../data/Expression";
 import { nodeListToArray } from "../utils/array";
 import ChangeEvent from "../ChangeEvent";
-import { transformLiterals } from "../utils/transformLiterals";
-import Bind from "../data/Bind";
 import { onDirective } from "../directives/onDirective";
 import { setDirective } from "../directives/setDirective";
 import { attributeDirective } from "../directives/attributeDirective";
@@ -162,10 +158,6 @@ export default class UIComponent extends Branch {
 		}
 		let isAdded = (parent == document.body);
 		return isAdded;
-	}
-
-	getSVGPathTotalLength() {
-		return this.element.getTotalLength();
 	}
 
 	get children() {
