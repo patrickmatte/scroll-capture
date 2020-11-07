@@ -1,5 +1,3 @@
-
-
 body[is-capturing="true"] * {
 	cursor: url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png'), auto !important;
 }
@@ -75,7 +73,7 @@ body[is-capturing="true"] * {
 		}
 	}
 
-	sc-actions-view {
+	[is='sc-actions-view'] {
 		width: 100%;
 		display: block;
 		max-height: 50vh;
@@ -87,7 +85,7 @@ body[is-capturing="true"] * {
 			display: none;
 		}
 
-		sc-action-view.sc-window {
+		[is='sc-action-view'].sc-window {
 			margin-top: 0.75em;
 			
 			&:first-child {
@@ -190,7 +188,7 @@ body[is-capturing="true"] * {
 	// 	outline: none !important;
 	// }
 
-	sc-video {
+	[is='sc-video'] {
 		iframe {
 			width: 100%;
 		}

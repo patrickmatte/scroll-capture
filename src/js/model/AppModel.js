@@ -2,7 +2,6 @@ import { sendTrackEventMessage } from "./GABridge";
 import BooleanData from "../tsunami/data/BooleanData";
 import Actions from "./Actions";
 import Settings from "./Settings";
-import NumberData from "../tsunami/data/NumberData";
 import BaseEvent from "../tsunami/events";
 import DataModel from "../tsunami/data/DataModel";
 
@@ -45,10 +44,6 @@ export default class AppModel extends DataModel {
         this.actions.addEventListener("remove", (event) => {
             this.save();
         });
-        
-        this.test1 = new NumberData(1);
-        this.test2 = new NumberData(2);
-        this.test3 = new NumberData(3);
     }
 
     get actions() {

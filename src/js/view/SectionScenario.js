@@ -19,7 +19,7 @@ export default class SectionScenario extends Section {
  
         app.model.save();
 
-        // let actionsViewElement = app.view.scrollCapture.windowContent.element.querySelector("sc-actions-view");
+        // let actionsViewElement = app.view.scrollCapture.windowContent.element.querySelector("[is='sc-actions-view']");
         // let actionsView = actionsViewElement.component;
         // let element = actionsView.getElementByModel(app.model.actions.selectedItem.value);
         // if (element) actionsView.scrollToElement(element, 0);

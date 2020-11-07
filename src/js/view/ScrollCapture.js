@@ -56,4 +56,3 @@ ScrollCapture.template = template;
 
 tsunami.define("sc-actions-view", ActionsView);
 tsunami.define("sc-window-content-main", WindowContentMain);
-

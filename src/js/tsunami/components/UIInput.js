@@ -1,4 +1,3 @@
-import ChangeEvent from "../ChangeEvent";
 import UIComponent from "./UIComponent";
 
 export default class UIInput extends UIComponent {
@@ -71,11 +70,12 @@ export default class UIInput extends UIComponent {
                 value = this.element.checked;
                 break;
             case "radio":
+                value = this.element.value;
+                console.log("this.element.checked", this.element.checked);
             default:
                 value = this.element.value;
                 break;
         }
-        if(this.debug) console.log("UIInput.inputHandler", value);
         super.model = value;
     }
 

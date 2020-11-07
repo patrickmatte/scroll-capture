@@ -1,9 +1,9 @@
 import * as tsunami from "../tsunami";
 import SplitLetters from "./SplitLetters";
-import UIList from "./UIList";
 import Data from "../data/Data";
+import UIListBase from "./UIListBase";
 
-export default class SplitWords extends UIList {
+export default class SplitWords extends UIListBase {
 
 	constructor(element) {
 		super(element);

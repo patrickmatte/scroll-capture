@@ -1,12 +1,11 @@
 import UIComponent from "../tsunami/components/UIComponent";
 import * as tsunami from "../tsunami/tsunami";
-import NumberData from "../tsunami/data/NumberData";
-import ArrayData from "../tsunami/data/ArrayData";
 import Point from "../tsunami/geom/Point";
 import UIList from "../tsunami/components/UIList";
 import Data from "../tsunami/data/Data";
 import { app } from "../main";
 import { round2, round3 } from "../tsunami/utils/number";
+import UIListBase from "../tsunami/components/UIListBase";
 
 export default class EasingGraph extends UIComponent {
 
@@ -42,7 +41,7 @@ export class EasingGraphControlPoints extends UIList {
 
 }
 
-export class EasingGraphControlPointLines extends UIList {
+export class EasingGraphControlPointLines extends UIListBase {
 
 	constructor(props) {
 		super(props);

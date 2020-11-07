@@ -1,7 +1,7 @@
-import UIList from "./UIList";
 import Data from "../data/Data";
+import UIListBase from "./UIListBase";
 
-export default class SplitLetters extends UIList {
+export default class SplitLetters extends UIListBase {
 
 	constructor(element) {
 		super(element);

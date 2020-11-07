@@ -1,5 +1,5 @@
 <div class="sc-default" is="scroll-capture" data-theme-light="{this.scope.settings.isColorThemeLight.value}" set:position="this.scope.settings.position" style="right:{this.scope.settings.position.x.value}px; top:{this.scope.settings.position.y.value}px;">
-	<!-- <ul is="ui-list" set:provider="this.scope.actions">
+	<ul is="ui-list" set:provider="this.scope.actions">
 		<template>
 			<label>
 				<input class="test-radio" type="radio" is="ui-input" value="{this.scope.data.name.value}" name="options1" bind:model="this.scope.rootScope.selectedAction" />
@@ -10,7 +10,7 @@
 	<ul is="ui-list" set:provider="this.scope.actions">
 		<template>
 			<label>
-				<input class="test-radio" type="radio" is="ui-component" value="{this.scope.data.name.value}" name="options2" set:checked="console.log((this.scope.rootScope.selectedAction == this.element.value));" on:change="this.scope.rootScope.selectedAction = this.element.value" />
+				<input class="test-radio" type="radio" is="ui-component" value="{this.scope.data.name.value}" name="options2" set:checked="(this.scope.rootScope.selectedAction == this.element.value);" on:change="this.scope.rootScope.selectedAction = this.element.value" />
 				<span is="ui-text">{this.scope.data.name.value}</span>
 			</label>
 		</template>
@@ -19,7 +19,7 @@
 		<template>
 			<option is="ui-text" value="{this.scope.data.name.value}">{this.scope.data.name.value}</option>
 		</template>
-	</select> -->
+	</select>
 	<div class="sc-window sc-window-main" is="ui-component">
 		<div class="sc-title">
 			<span class="sc-tabs">
@@ -75,10 +75,10 @@
 						</div>
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
 
-							<sc-scenario class="sc-section sc-fields" is="ui-component">
-								<sc-actions-view data-actions-length="{this.scope.actions.length.value}" set:provider="this.scope.actions">
+							<div class="sc-section sc-fields" is="sc-scenario">
+								<div is="sc-actions-view" data-actions-length="{this.scope.actions.length.value}" set:provider="this.scope.actions">
 									<template>
-										<sc-action-view class="sc-window ui-list-element" data-type="{this.scope.data.type}" set:model="this.scope.data" data-selected="{this.scope.data.isSelectedItem.value}">
+										<div class="sc-window ui-list-element" is="sc-action-view" data-type="{this.scope.data.type}" set:model="this.scope.data" data-selected="{this.scope.data.isSelectedItem.value}">
 											<div class="sc-title">
 												<span class="sc-tabs">
 													<div class="sc-drag-area ui-list-drag-area"></div>
@@ -233,9 +233,9 @@
 													</div>
 												</div>
 											</div>
-										</sc-action-view>
+										</div>
 									</template>
-								</sc-actions-view>
+								</div>
 								<div class="sc-action-buttons">
 									<div class="sc-buttons" is="ui-list" set:provider="this.scope.actions.types">
 										<template>
@@ -250,15 +250,15 @@
 										</button>
 									</div>
 								</div>
-							</sc-scenario>
+							</div>
 
-							<sc-video class="sc-section sc-fields">
+							<div class="sc-section sc-fields" is="sc-video">
 								<div>
 									<iframe></iframe>
 								</div>
-							</sc-video>
+							</div>
 
-							<sc-settings class="sc-section sc-fields" is="ui-component">
+							<div class="sc-section sc-fields" is="sc-settings">
 								<div>
 									<div class="sc-window">
 										<div class="sc-title">
@@ -373,7 +373,7 @@
 										</div>
 									</div>
 								</div>
-							</sc-settings>
+							</div>
 
 						</div>
 					</div>

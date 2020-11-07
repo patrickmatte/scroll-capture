@@ -205,7 +205,7 @@ export default class UIComponent extends Branch {
 		let children = this.children;
 		for (let i = 0; i < children.length; i++) {
 			let component = children[i].component;
-			if (component) {
+			if (component && component.load) {	
 				promises.push(component.load());
 			}
 		}

@@ -1,7 +1,7 @@
 import ChangeEvent from "../ChangeEvent";
-import UIList from "./UIList";
+import UIListBase from "./UIListBase";
 
-export default class UISelect extends UIList {
+export default class UISelect extends UIListBase {
 	
 	constructor(element) {
 		super(element);
@@ -26,11 +26,11 @@ export default class UISelect extends UIList {
 	}
 
 	set value(value) {
-		if(this.element.value != value) {
+		if(this._value != value) {
 			this._value = value;
-			this.element.value = value;
 			ChangeEvent.dispatch(this, "value", value);
 		}
+		this.element.value = value;
 	}
 
 	_providerAdd(event) {

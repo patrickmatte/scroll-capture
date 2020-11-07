@@ -9,9 +9,9 @@ export default class WindowContentMain extends UIComponent {
     constructor(element) {
         super(element);
         
-        this.scenario = this.element.querySelector("sc-scenario").component;
-        this.video = this.element.querySelector("sc-video").component;
-        this.settings = this.element.querySelector("sc-settings").component;
+        this.scenario = this.element.querySelector("[is='sc-scenario']").component;
+        this.video = this.element.querySelector("[is='sc-video']").component;
+        this.settings = this.element.querySelector("[is='sc-settings']").component;
     }
 
 }
