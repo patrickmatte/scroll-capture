@@ -84,9 +84,9 @@ export default class UIComponent extends Branch {
 				if (component.windowResize) {
 					component.windowResize(this.windowSize);
 				}
-				if (component.windowScroll) {
-					component.windowScroll(this.windowScrollPoint);
-				}
+				// if (component.windowScroll) {
+				// 	component.windowScroll(this.windowScrollPoint);
+				// }
 				// if (component.animationFrame) {
 				// 	component.animationFrame(this.animationFrameData);
 				// }
@@ -123,9 +123,9 @@ export default class UIComponent extends Branch {
 					if (component.windowResize) {
 						component.windowResize(this.windowSize);
 					}
-					if (component.windowScroll) {
-						component.windowScroll(this.windowScrollPoint);
-					}
+					// if (component.windowScroll) {
+					// 	component.windowScroll(this.windowScrollPoint);
+					// }
 					// if (component.animationFrame) {
 					// 	component.animationFrame(this.animationFrameData);
 					// }
@@ -307,18 +307,18 @@ export default class UIComponent extends Branch {
 		}
 	}
 
-	windowScroll(point) {
-		this.windowScrollPoint = point;
-		let children = this.children;
-		for (let i = 0; i < children.length; i++) {
-			let component = children[i].component;
-			if (component) {
-				if (component.windowScroll) {
-					component.windowScroll(point);
-				}
-			}
-		}
-	}
+	// windowScroll(point) {
+	// 	this.windowScrollPoint = point;
+	// 	let children = this.children;
+	// 	for (let i = 0; i < children.length; i++) {
+	// 		let component = children[i].component;
+	// 		if (component) {
+	// 			if (component.windowScroll) {
+	// 				component.windowScroll(point);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	animationFrame(data) {
 		this.animationFrameData = data;
