@@ -6,8 +6,9 @@ import {isTouch} from "../tsunami/window";
 
 import NumberData from "../tsunami/data/NumberData";
 import { events } from "../tsunami/events";
-import { Vector3, CatmullRomCurve3 } from "three";
 import { roundDecimalToPlace } from "../tsunami/utils/number";
+import { Vector3 } from "three/src/math/Vector3";
+import { CatmullRomCurve3} from "three/src/extras/curves/CatmullRomCurve3";
 
 export default class ActionSwipe extends ActionTween {
 
