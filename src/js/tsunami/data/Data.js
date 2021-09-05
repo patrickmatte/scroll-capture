@@ -1,52 +1,47 @@
-import ChangeEvent from "../ChangeEvent";
+import ChangeEvent from '../ChangeEvent';
 
 export default class Data extends EventTarget {
+  get value() {
+    return this._value;
+  }
 
-	constructor() {
-		super();
-		// this._value = this;
-	}
+  set value(value) {
+    if (value !== this._value || this.forceChangeEvent) {
+      this._value = value;
+      ChangeEvent.dispatch(this, 'value', this.value);
+    }
+  }
 
-	get value() {
-		return this._value;
-	}
+  reset(value) {
+    this.value = value;
+  }
 
-	set value(value) {
-		if (value != this._value || this.forceChangeEvent) {
-			this._value = value;
-			ChangeEvent.dispatch(this, "value", this.value);
-		}
-	}
+  toString() {
+    if (this.debug) {
+      console.log('Data.toString', this.value);
+    }
+    return this.value.toString();
+  }
 
-	reset(value) {
-		this.value = value;
-	}
+  serialize() {
+    return this.value;
+  }
 
-	toString() {
-		if(this.debug) console.log("Data.toString", this.value);
-		return this.value.toString();
-	}
+  deserialize(value) {
+    this.value = value;
+  }
 
-	serialize() {
-		return this.value;
-	}
+  copy(data) {
+    this.value = data.value;
+    ChangeEvent.dispatch(this, 'value', this.value);
+  }
 
-	deserialize(value) {
-		this.value = value;
-	}
-	
-	copy(data) {
-		this.value = data.value;
-		ChangeEvent.dispatch(this, "value", this.value);
-	}
+  destroy() {
+    this.value = null;
+    return super.destroy();
+  }
 
-	destroy() {
-		this.value = null;
-		return super.destroy();
-	}
-
-	static get CHANGE() {
-		return "value";
-	}
-
+  static get CHANGE() {
+    return 'value';
+  }
 }

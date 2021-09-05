@@ -1,6 +1,6 @@
-import * as THREE from "three";
-import Vector3D from "../geom/Vector3D";
-import { round3 } from "../utils/number";
+import * as THREE from 'three';
+import Vector3D from '../geom/Vector3D';
+import { round3 } from '../utils/number';
 
 export default class OrbitalCamera {
   constructor(camera, radius = 100, theta = 0, phi = 0, target = null) {
@@ -46,7 +46,7 @@ export default class OrbitalCamera {
   }
 
   update() {
-    var vec3 = Vector3D.spherePoint(this.radius, this.theta + this.thetaOffset, this.phi + this.phiOffset);
+    const vec3 = Vector3D.spherePoint(this.radius, this.theta + this.thetaOffset, this.phi + this.phiOffset);
     this.camera.position.x = round3(vec3.x + this.target.x);
     this.camera.position.y = round3(vec3.y + this.target.y);
     this.camera.position.z = round3(vec3.z + this.target.z);

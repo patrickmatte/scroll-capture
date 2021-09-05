@@ -8,6 +8,7 @@ import TweenProperty from "../animation/TweenProperty";
 import Easing from "../animation/Easing";
 import Point from "../geom/Point";
 import Rectangle from "../geom/Rectangle";
+import { round1 } from "../utils/number";
 
 export default class UIListBase extends UIComponent {
 
@@ -230,8 +231,8 @@ export default class UIListBase extends UIComponent {
 
 	scrollTo(scrollLeft, scrollTop, duration = 1) {
 		this.tween = new Tween(0, duration, [
-			new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, 10),
-			new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, 10)
+			new TweenProperty(this.element, "scrollLeft", this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, round1),
+			new TweenProperty(this.element, "scrollTop", this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, round1)
 		]);
 		return this.tween.start();
 	}

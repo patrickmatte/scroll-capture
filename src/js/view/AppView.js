@@ -1,7 +1,7 @@
 import { importTemplate, define } from "../tsunami/tsunami";
 import App from "../tsunami/App";
 import ScrollCapture from "./ScrollCapture";
-import { loadStyle } from "../tsunami/load";
+import { loadStyle } from "../tsunami/load/loadStyle";
 import Data from "../tsunami/data/Data";
 import RouterButton from "./RouterButton";
 import { app } from "../main";

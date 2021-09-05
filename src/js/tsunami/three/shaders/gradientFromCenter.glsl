@@ -4,8 +4,8 @@ float gradientFromCenter(float distance, float maxDistance, float revealFactor, 
     return min(multiplier, 1.0);
 }
 
-float ramp(float edge, float position, float size) {
-    float minimum = position - (1.0 - position) * size;
+float ramp(float edge, float time, float size) {
+    float minimum = time - (1.0 - time) * size;
     float val = max(0.0, edge - minimum) / size;
     return 1.0 - min(val, 1.0);
 }

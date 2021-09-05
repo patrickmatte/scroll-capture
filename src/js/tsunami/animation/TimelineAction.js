@@ -1,5 +1,6 @@
-export default class TimelineAction extends EventTarget {
+import Tween from './Tween';
 
+export default class TimelineAction extends EventTarget {
   constructor(startTime, forward, backward) {
     super();
     this._startTime = startTime;
@@ -30,9 +31,9 @@ export default class TimelineAction extends EventTarget {
   }
 
   set time(value) {
-    let previousTime = this.time;
-    // if (previousTime == value) return;
-    let diff = value - previousTime;
+    const previousTime = this.time;
+    // if (previousTime === value) return;
+    const diff = value - previousTime;
     if (diff > 0) {
       if (value >= this.startTime && previousTime < this.startTime && this.forward) {
         this.forward();
@@ -44,5 +45,4 @@ export default class TimelineAction extends EventTarget {
     }
     this._time = value;
   }
-
 }

@@ -1,17 +1,33 @@
-import BaseEvent from "../events";
-import Clock, { clock } from "./Clock";
-import { round3 } from "../utils/number";
+import Clock, { getClock } from './Clock';
+import { roundDecimalToPlace } from '../utils/number';
 
 export default class Tween extends EventTarget {
-  constructor(startTime, duration, tweenProps, updateHandler, completeHandler) {
+  constructor(
+    startTime = 0,
+    duration = 1,
+    properties = [],
+    updateHandler = null,
+    completeHandler = null,
+    name = '',
+    debug = false
+  ) {
     super();
+    if (startTime < 0) {
+      throw new Error('Tween startTime must be greater than or equal to 0');
+    }
+    if (duration <= 0) {
+      throw new Error('Tween duration must be greater than 0');
+    }
     this.tick = this.tick.bind(this);
-    this.tweenProps = tweenProps;
-    this.updateHandler = updateHandler;
-    this.completeHandler = completeHandler;
     this._startTime = startTime;
     this._duration = duration;
+    this.name = name;
+    this.debug = debug;
+    this.properties = properties;
+    this.updateHandler = updateHandler;
+    this.completeHandler = completeHandler;
     this._tweenTime = NaN;
+    this._time = NaN;
     this.forceUpdate = false;
   }
 
@@ -33,32 +49,47 @@ export default class Tween extends EventTarget {
   }
 
   set duration(value) {
-    this._duration = round3(value);
+    this._duration = roundDecimalToPlace(value, 3);
     this.dispatchEvent(new Event(Tween.CHANGE));
   }
 
-  start() {
-    let promise = new Promise((resolve, reject) => {
-      let tweenComplete = (event) => {
-        if (this.debug) console.log("tweenComplete");
-        this.removeEventListener(Tween.COMPLETE, tweenComplete);
+  start(time = 0, updateHandler = null) {
+    this.clock = getClock();
+    this.stop();
+    if (updateHandler) {
+      this.updateHandler = updateHandler;
+    }
+    const promise = new Promise((resolve, reject) => {
+      const completeCallback = (event) => {
+        this.removeEventListener(Tween.COMPLETE, completeCallback);
         resolve(this);
       };
-      this.addEventListener(Tween.COMPLETE, tweenComplete);
+      this.addEventListener(Tween.COMPLETE, completeCallback);
     });
     this._tweenTime = NaN;
-    this.clockStartTime = clock.time;
-    clock.addEventListener(Clock.TICK, this.tick);
-    this.time = 0;
+    this.time = time;
+    this.previousTime = this.clock.time;
+    this.clock.addEventListener(Clock.TICK, this.tick);
     return promise;
   }
 
   tick(event) {
-    this.time = (clock.time - this.clockStartTime) / 1000;
+    const currentTime = this.clock.time;
+    this.time += (currentTime - this.previousTime) / 1000;
+    this.previousTime = currentTime;
+  }
+
+  pause() {
+    this.clock.removeEventListener(Clock.TICK, this.tick);
+  }
+
+  resume() {
+    this.previousTime = this.clock.time;
+    this.clock.addEventListener(Clock.TICK, this.tick);
   }
 
   stop() {
-    clock.removeEventListener(Clock.TICK, this.tick);
+    if(this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
   }
 
   get time() {
@@ -66,41 +97,50 @@ export default class Tween extends EventTarget {
   }
 
   set time(value) {
-    value = Math.min(this.startTime + this.duration, value);
-    value = Math.max(0, value);
+    // value = Math.min(this.startTime + this.duration, value);
+    // value = Math.max(0, value);
     this._time = value;
     let tweenTime = value - this.startTime;
     tweenTime = Math.max(tweenTime, 0);
     tweenTime = Math.min(tweenTime, this.duration);
-    if (tweenTime != this._tweenTime || this.forceUpdate) {
+    if (tweenTime !== this._tweenTime || this.forceUpdate) {
       this._tweenTime = tweenTime;
-      for (let i = 0; i < this.tweenProps.length; i++) {
-        let tweenProp = this.tweenProps[i];
-        tweenProp.calculate(tweenTime, this.duration, this.debug);
-      }
-      let updateEvent = new Event(Tween.UPDATE);
+      this.properties.forEach((property) => {
+        property.calculate(tweenTime / this.duration, this.debug);
+      });
+      const updateEvent = new Event(Tween.UPDATE);
       if (this.updateHandler) {
         this.updateHandler(updateEvent);
       }
       this.dispatchEvent(updateEvent);
     }
     if (tweenTime >= this.duration) {
-      let completeEvent = new Event(Tween.COMPLETE);
-      if (this.completeHandler) this.completeHandler(completeEvent);
+      const completeEvent = new Event(Tween.COMPLETE);
+      if (this.completeHandler) {
+        this.completeHandler(completeEvent);
+      }
       this.stop();
       this.dispatchEvent(completeEvent);
     }
   }
 
+  set timeFraction(value) {
+    this.time = value * this.duration;
+  }
+
+  get timeFraction() {
+    return this.time / this.duration;
+  }
+
   static get COMPLETE() {
-    return "complete";
+    return 'complete';
   }
 
   static get UPDATE() {
-    return "update";
+    return 'update';
   }
 
   static get CHANGE() {
-    return "change";
+    return 'change';
   }
 }

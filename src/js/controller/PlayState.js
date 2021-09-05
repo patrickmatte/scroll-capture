@@ -17,7 +17,7 @@ export default class PlayState extends Branch {
 
         app.model.save();
         app.model.actions.selectedIndex.value = 0;
-        return awaitTimeout(250).then(() => this.triggerAction());
+        return awaitTimeout(0.25).then(() => this.triggerAction());
     }
 
     triggerAction() {

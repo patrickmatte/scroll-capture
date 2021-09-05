@@ -1,4 +1,8 @@
-import {loadHTML, loadImage, loadJSON, loadScript, loadStyle} from "./load";
+import { loadStyle} from "./load/loadStyle";
+import { loadHTML } from "./load/loadHTML";
+import { loadImage } from "./load/loadImage";
+import { loadJSON} from "./load/loadJSON";
+import { loadScript } from "./load/loadScript";
 import Branch from "./Branch";
 
 export default class BranchWithAssets extends Branch {

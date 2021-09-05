@@ -1,85 +1,182 @@
-import Tween from "./Tween";
-import Clock, { clock } from "./Clock";
+import Tween from './Tween';
+import Clock, { getClock } from './Clock';
 
 export default class Timeline extends EventTarget {
-
-  constructor(updateHandler = null, completeHandler = null, debug = false) {
+  constructor(tweens = null, startTime = 0, updateHandler = null, completeHandler = null, name = '', debug = false) {
     super();
+    if (startTime < 0) {
+      throw new Error('Timeline startTime must be greater than or equal to 0');
+    }
+    this.tick = this.tick.bind(this);
+    this._startTime = startTime;
+    this._duration = 0;
+    this.name = name;
     this.debug = debug;
-
     this.updateHandler = updateHandler;
     this.completeHandler = completeHandler;
-    this.tweenChangeHandler = this.tweenChangeHandler.bind(this);
-
+    this._tweenTime = NaN;
     this._time = NaN;
-    this._duration = 0;
+    this.forceUpdate = false;
 
+    this.tweenChangeHandler = this.tweenChangeHandler.bind(this);
+    this.resetTweensOnScrub = true;
+    this.setTimeOnAddTween = true;
     this.tweens = [];
     this.tweensByStartTime = [];
     this.tweensByEndTime = [];
-
-    this.resetTweensOnScrub = true;
-
-    this.tick = this.tick.bind(this);
-
-    this.setTimeOnAddTween = true;
+    tweens = tweens !== null ? tweens : [];
+    this.add(tweens);
   }
 
-  static get COMPLETE() {
-    return "complete";
+  get startTime() {
+    return this._startTime;
   }
 
-  static get UPDATE() {
-    return "update";
+  set startTime(value) {
+    this._startTime = value;
+    this.dispatchEvent(new Event(Tween.CHANGE));
   }
 
-  start() {
-    let timeline = this;
-    let promise;
+  get endTime() {
+    return this.startTime + this.duration;
+  }
 
-    if (Promise) {
-      promise = new Promise(function (resolve, reject) {
-        let timelineComplete = function (event) {
-          timeline.removeEventListener(Timeline.COMPLETE, timelineComplete);
-          resolve(timeline);
-        };
-        timeline.addEventListener(Timeline.COMPLETE, timelineComplete);
-      });
+  get duration() {
+    return this._duration;
+  }
+
+  start(time = 0, updateHandler = null) {
+    this.clock = getClock();
+    this.stop();
+    if (updateHandler) {
+      this.updateHandler = updateHandler;
     }
-    this.time = 0;
-    this.clockStartTime = NaN;
-    clock.addEventListener(Clock.TICK, this.tick);
+    const promise = new Promise((resolve, reject) => {
+      const completeCallback = (event) => {
+        this.removeEventListener(Tween.COMPLETE, completeCallback);
+        resolve(this);
+      };
+      this.addEventListener(Tween.COMPLETE, completeCallback);
+    });
+    this._tweenTime = NaN;
+    this.time = time;
+    this.previousTime = this.clock.time;
+    this.clock.addEventListener(Clock.TICK, this.tick);
     return promise;
   }
 
-  stop() {
-    clock.removeEventListener(Clock.TICK, this.tick);
+  tick(event) {
+    const currentTime = this.clock.time;
+    this.time += (currentTime - this.previousTime) / 1000;
+    this.previousTime = currentTime;
   }
 
-  tick(event) {
-    if (isNaN(this.clockStartTime)) {
-      this.clockStartTime = clock.time;
-    }
-    let currentTime = (clock.time - this.clockStartTime) / 1000;
-    this.time = currentTime;
+  pause() {
+    this.clock.removeEventListener(Clock.TICK, this.tick);
+  }
 
-    if (this.time >= this.duration) {
-      this.stop();
-      if (this.completeHandler) {
-        this.completeHandler();
+  resume() {
+    this.previousTime = this.clock.time;
+    this.clock.addEventListener(Clock.TICK, this.tick);
+  }
+
+  stop() {
+    if(this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
+  }
+
+  get time() {
+    return this._time;
+  }
+
+  set time(value) {
+    this._time = value;
+    let tweenTime = value - this.startTime;
+    tweenTime = Math.max(tweenTime, 0);
+    tweenTime = Math.min(tweenTime, this.duration);
+    if (tweenTime !== this._tweenTime || this.forceUpdate) {
+      this._tweenTime = tweenTime;
+
+      this.tweensByStartTime.forEach((tween) => {
+        if (tweenTime < tween.startTime && this.resetTweensOnScrub) {
+          tween.time = tweenTime;
+        }
+      });
+
+      this.tweensByEndTime.forEach((tween) => {
+        if (tweenTime > tween.endTime && this.resetTweensOnScrub) {
+          tween.time = tweenTime;
+        }
+      });
+
+      this.tweens.forEach((tween) => {
+        const startTime = tween.startTime;
+        const endTime = tween.endTime;
+        if (tweenTime >= startTime && tweenTime <= endTime) {
+          tween.time = tweenTime;
+        }
+      });
+
+      const updateEvent = new Event(Tween.UPDATE);
+      if (this.updateHandler) {
+        this.updateHandler(updateEvent);
       }
-      let event = new Event(Timeline.COMPLETE);
-      this.dispatchEvent(event);
+      this.dispatchEvent(updateEvent);
     }
+    if (tweenTime >= this.duration) {
+      const completeEvent = new Event(Tween.COMPLETE);
+      if (this.completeHandler) {
+        this.completeHandler(completeEvent);
+      }
+      this.stop();
+      this.dispatchEvent(completeEvent);
+    }
+  }
+
+  set timeFraction(value) {
+    this.time = value * this.duration;
+  }
+
+  get timeFraction() {
+    return this.time / this.duration;
+  }
+
+  add(tween) {
+    const tweens = tween instanceof Array ? tween : [tween];
+    tweens.forEach((tween, i) => {
+      tween.addEventListener(Tween.CHANGE, this.tweenChangeHandler);
+      this.tweens.push(tween);
+      const startTime = tween.startTime;
+      const endTime = tween.startTime + tween.duration;
+      if (this.time >= startTime && this.time <= endTime && this.setTimeOnAddTween) {
+        tween.time = this.time;
+      }
+      this.recalculateDuration();
+    });
+  }
+
+  removeTween(tween) {
+    const array = [];
+    this.tweens.forEach((oldTween) => {
+      if (oldTween === tween) {
+        tween.removeEventListener(Tween.CHANGE, this.tweenChangeHandler);
+      } else {
+        array.push(oldTween);
+      }
+    });
+    this.tweens = array;
+    this.recalculateDuration();
+  }
+
+  tweenChangeHandler(event) {
+    this.recalculateDuration();
   }
 
   recalculateDuration() {
     let duration = 0;
-    for (let i = 0; i < this.tweens.length; i++) {
-      let tween = this.tweens[i];
-      let tweenDuration = tween.startTime + tween.duration;
+    this.tweens.forEach((tween) => {
+      const tweenDuration = tween.startTime + tween.duration;
       duration = Math.max(duration, tweenDuration);
-    }
+    });
     this._duration = duration;
 
     this.tweensByStartTime = this.tweens.slice();
@@ -91,90 +188,4 @@ export default class Timeline extends EventTarget {
       return a.endTime - b.endTime;
     });
   }
-
-
-  get duration() {
-    return this._duration;
-  }
-
-  get time() {
-    return this._time;
-  }
-
-  set time(value) {
-    let oldTime = this._time;
-    if (oldTime == value) {
-      return;
-    }
-
-    this._time = value;
-
-    let currentTime = Math.max(value, 0);
-    currentTime = Math.min(value, this.duration);
-
-    for (let i = 0; i < this.tweensByStartTime.length; i++) {
-      let tween = this.tweensByStartTime[i];
-      if (currentTime < tween.startTime && this.resetTweensOnScrub) {
-        tween.time = currentTime;
-      }
-    }
-
-    for (let i = 0; i < this.tweensByEndTime.length; i++) {
-      let tween = this.tweensByEndTime[i];
-      if (currentTime > tween.endTime && this.resetTweensOnScrub) {
-        tween.time = currentTime;
-      }
-    }
-
-    for (let i = 0; i < this.tweens.length; i++) {
-      let tween = this.tweens[i];
-
-      let startTime = tween.startTime;
-      let endTime = tween.endTime;
-
-      if (currentTime >= startTime && currentTime <= endTime) {
-        tween.time = currentTime;
-      }
-    }
-
-    let changeEvent = new Event(Timeline.UPDATE);
-    if (this.updateHandler) {
-      this.updateHandler(changeEvent);
-    }
-    this.dispatchEvent(changeEvent);
-  }
-
-  get endTime() {
-    return this.startTime + this.duration;
-  }
-
-  add(tween) {
-    tween.addEventListener(Tween.CHANGE, this.tweenChangeHandler);
-    this.tweens.push(tween);
-    let startTime = tween.startTime;
-    let endTime = tween.startTime + tween.duration;
-    if (this.time >= startTime && this.time <= endTime && this.setTimeOnAddTween) {
-      tween.time = this.time;
-    }
-    this.recalculateDuration();
-  }
-
-  removeTween(tween) {
-    let array = [];
-    for (let i = 0; i < this.tweens.length; i++) {
-      let oldTween = this.tweens[i];
-      if (oldTween == tween) {
-        tween.removeEventListener(Tween.CHANGE, this.tweenChangeHandler);
-      } else {
-        array.push(oldTween);
-      }
-    }
-    this.tweens = array;
-    this.recalculateDuration();
-  }
-
-  tweenChangeHandler(event) {
-    this.recalculateDuration();
-  }
-
 }

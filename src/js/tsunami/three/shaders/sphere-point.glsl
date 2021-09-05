@@ -1,8 +1,9 @@
 vec2 polar(float r, float a) {
 	float x = r * cos(a);
-    float y = r * sin(a);
-    return vec2(x, y);
+  float y = r * sin(a);
+  return vec2(x, y);
 }
+
 vec3 polarX(float r, float a) {
     vec2 p = polar(r, a);
     return vec3(0.0, p.y, p.x);
@@ -69,5 +70,7 @@ vec3 rotate3(vec3 p, vec3 a) {
 }
 
 float getAngle(vec2 point, vec2 center) {
-    return atan(point.y - center.y, point.x - center.x);
+  float y = point.y - center.y;
+  float x = point.x - center.x;
+  return atan(y, x + 0.0000000001);
 }

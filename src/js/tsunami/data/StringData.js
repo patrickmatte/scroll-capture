@@ -1,21 +1,19 @@
-import DataPrimitive from "./DataPrimitive";
+import DataPrimitive from './DataPrimitive';
 
 export default class StringData extends DataPrimitive {
+  constructor(value = '', modifiers = []) {
+    super(value, modifiers);
+  }
 
-	constructor(value = "", modifiers = []) {
-		super(value, modifiers);
-	}
-	
-	get value() {
-		return super.value;
-	}
+  get value() {
+    return super.value;
+  }
 
-	set value(value = "") {
-		super.value = value.toString();
-	}
+  set value(value = '') {
+    super.value = value.toString();
+  }
 
-	reset(value = "") {
-		super.reset(value);
-	}
-	
+  reset(value = '') {
+    super.reset(value);
+  }
 }

@@ -60,7 +60,7 @@ export default class Action extends EventTarget {
 	}
 
 	triggerDelay() {
-		let promise1 = awaitTimeout(this.delay.value * 1000);
+		let promise1 = awaitTimeout(this.delay.value);
 		let promise2 = promise1.then(() => {
 			return this.trigger();
 		});

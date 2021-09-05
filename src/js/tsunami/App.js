@@ -9,7 +9,7 @@ import UINumber from "./components/UINumber";
 import UIScrollPane from "./components/UIScrollPane";
 import UIMedia from "./components/UIMedia";
 import UIToggle from "./components/UIToggle";
-import Clock, {clock} from "./animation/Clock";
+import Clock, {getClock} from "./animation/Clock";
 import UIHTML from "./components/UIHTML";
 
 export default class App extends UIComponent {
@@ -21,8 +21,7 @@ export default class App extends UIComponent {
 	}
 
 	init()  {
-		clock.addEventListener(Clock.TICK, this.clockTick.bind(this));
-		clock.start();
+		getClock().addEventListener(Clock.TICK, this.clockTick.bind(this));
 
 		window.addEventListener("resize", this.resizeHandler.bind(this));
 		this.resizeHandler();
@@ -30,7 +29,7 @@ export default class App extends UIComponent {
 
 	clockTick(event) {
 		let animationData = {
-			time: Math.round(clock.time) / 1000
+			time: Math.round(getClock().time) / 1000
 		};
 
 		this.animationFrame(animationData);
