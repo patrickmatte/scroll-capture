@@ -205,8 +205,6 @@ export default class UIComponent extends Branch {
 	}
 
 	show(props) {
-		console.log("UIComponent.show", props);
-
 		let promise1 = awaitTimeout(this.showDelay);
 		let promise2 = promise1.then(() => {
 			this.showPromises = [this.showDelayComplete()];
