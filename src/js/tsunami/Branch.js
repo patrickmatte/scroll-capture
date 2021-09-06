@@ -15,7 +15,7 @@ export default class Branch extends EventTarget {
       this.getBranch = getBranch;
     }
 
-    this.defaultChild = defaultChild;
+    this._defaultChild = defaultChild;
     this._parent = null;
     this._path = null;
     this._router = null;
