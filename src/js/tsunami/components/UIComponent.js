@@ -244,7 +244,7 @@ export default class UIComponent extends Branch {
 		return Promise.all(promises);
 	}
 
-	hide() {
+	hide(props) {
 		let promise1 = awaitTimeout(this.hideDelay);
 		let promise2 = promise1.then(() => {
 			this.hidePromises = [this.hideDelayComplete()];
