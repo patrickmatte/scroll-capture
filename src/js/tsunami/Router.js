@@ -1,6 +1,7 @@
-import AssetList from './AssetList';
 import ArrayData from './data/ArrayData';
 import BaseEvent from './events';
+import RouterTask from './RouterTask';
+import RouterTransition from './RouterTransition';
 
 export default class Router extends EventTarget {
   constructor(root) {
@@ -15,7 +16,7 @@ export default class Router extends EventTarget {
     this.branches = new ArrayData();
     this.redirects = {};
     this.parameters = {};
-
+    
     this.show = new RouterTransition(this, 'show', this._showComplete.bind(this));
     this.show.tasks = [new RouterTask('load', true), new RouterTask('show', false)];
     this.hide = new RouterTransition(this, 'hide', this._hideComplete.bind(this));
@@ -264,134 +265,3 @@ export default class Router extends EventTarget {
   }
 }
 
-class RouterTransition {
-  constructor(router, name, onComplete) {
-    this.router = router;
-    this.name = name;
-    this.onComplete = onComplete;
-    this.branches = [];
-    this.tasks = [];
-  }
-
-  start() {
-    if (this.branches.length > 0) {
-      let nextTask;
-      for (let i = this.tasks.length - 1; i > -1; i--) {
-        const task = this.tasks[i];
-        task.router = this.router;
-        task.branches = this.branches.slice();
-        if (nextTask) {
-          task.onComplete = nextTask.start.bind(nextTask);
-        } else {
-          task.onComplete = this.tasksComplete.bind(this);
-        }
-        nextTask = task;
-      }
-      const firstTask = this.tasks[0];
-      firstTask.start();
-    } else {
-      this.tasksComplete();
-    }
-  }
-
-  tasksComplete() {
-    this.onComplete();
-  }
-}
-
-class RouterTask {
-  constructor(name, preload) {
-    this.name = name;
-    this.preload = preload;
-    this.branches = [];
-    this.router = null;
-    this.checkProgressBind = this.checkProgress.bind(this);
-  }
-
-  start() {
-    this.preloader = null;
-    this.assets = [];
-    if (this.branches.length > 0) {
-      if (this.preload) {
-        for (let i = 0; i < this.branches.length; i++) {
-          this.assets.push(new AssetList());
-        }
-        this.assetList = new AssetList(this.assets.slice());
-        this.preloader = this.router.preloader;
-        if (this.preloader) {
-          this.isPreloading = true;
-          this.checkProgress();
-          const promise = this.preloader.show();
-          if (promise) {
-            promise.then((obj) => {
-              this.startNextBranch();
-            });
-          } else {
-            this.startNextBranch();
-          }
-        } else {
-          this.startNextBranch();
-        }
-      } else {
-        this.startNextBranch();
-      }
-    } else {
-      this.allComplete();
-    }
-  }
-
-  checkProgress() {
-    if (this.assetList) {
-      this.preloader.progress = this.assetList.progress;
-    }
-    if (this.isPreloading) {
-      this.animationFrame = requestAnimationFrame(this.checkProgressBind);
-    }
-  }
-
-  startNextBranch() {
-    this.branch = this.branches.shift();
-    // let method = this.branch.getMethod(this.name);
-    let method = this.branch[this.name];
-    if (method) {
-      method = method.bind(this.branch);
-      const assetList = this.assets.shift();
-      const promise = method(this.branch, assetList);
-      if (promise) {
-        promise.then(this.branchComplete.bind(this));
-      } else {
-        this.branchComplete();
-      }
-    } else {
-      this.branchComplete();
-    }
-  }
-
-  branchComplete() {
-    if (this.branches.length > 0) {
-      this.startNextBranch();
-    } else {
-      if (this.preloader) {
-        this.isPreloading = false;
-        const promise = this.preloader.hide();
-        if (promise) {
-          promise.then(this.allComplete.bind(this));
-        } else {
-          this.allComplete();
-        }
-      } else {
-        this.allComplete();
-      }
-    }
-  }
-
-  allComplete() {
-    this.assets = null;
-    this.assetList = null;
-    this.branches = null;
-
-    window.requestAnimationFrame(() => {
-      this.onComplete();
-    });
-  }
-}
