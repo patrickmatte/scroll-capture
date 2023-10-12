@@ -1,41 +1,32 @@
 {
+	"manifest_version": 3,
 	"name": "Scroll Capture",
 	"version": "0.0.5",
 	"description": "Record your websites and automate scrolling and mouse actions for your portfolio screen captures.",
 	"permissions": [
 		"activeTab",
 		"storage",
-		"tabCapture"
+		"tabCapture",
+		"scripting",
+		"offscreen"
 	],
 	"background": {
-		"scripts": [
-			"background.js"
-		],
-		"persistent": false
+		"service_worker": "background.js"
 	},
 	"content_scripts": [],
 	"web_accessible_resources":[
-		"content.css",
-		"fontawesome.css",
-		"video-recording.html",
-		"assets/fonts/fa-brands-400.woff",
-		"assets/fonts/fa-regular-400.woff",
-		"assets/fonts/fa-solid-900.woff",
-		"assets/fonts/Menlo-Bold.woff",
-		"assets/fonts/Menlo-Regular.woff",
-		"assets/fonts/SFMono-Bold.woff",
-		"assets/fonts/SFMono-Regular.woff",
-		"assets/images/customCursor.png",
-		"assets/images/get_started16_red.png",
-		"assets/images/get_started16.png",
-		"assets/images/get_started32_red.png",
-		"assets/images/get_started32.png",
-		"assets/images/get_started48_red.png",
-		"assets/images/get_started48.png",
-		"assets/images/get_started128_red.png",
-		"assets/images/get_started128.png"
+		{
+			"resources": [
+				"*.css",
+				"*.css",
+				"*.html",
+				"assets/fonts/*.woff",
+				"assets/images/*.png"
+			],
+			"matches": ["<all_urls>"]
+		}
 	],
-	"browser_action": {
+	"action": {
 		"default_icon": {
 			"16": "assets/images/get_started16.png",
 			"32": "assets/images/get_started32.png",
@@ -48,7 +39,5 @@
 		"32": "assets/images/get_started32.png",
 		"48": "assets/images/get_started48.png",
 		"128": "assets/images/get_started128.png"
-	},
-	"manifest_version": 2,
-	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+	}
 }

@@ -28,7 +28,7 @@ export default class AppController extends Branch {
         window.addEventListener("beforeunload", this.beforeUnloadHandler);
     }
 
-    trackRouterLocation() {
+    trackRouterLocation(e) {
         // console.log(e.type, this.router.location);
         sendTrackPageMessage("/" + this.router.location);
     }

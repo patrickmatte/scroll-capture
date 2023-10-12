@@ -21,9 +21,9 @@ export default class AppView extends App {
     }
 
     load() {
-        let contentCSS = chrome.extension.getURL("content.css");
+        let contentCSS = chrome.runtime.getURL("content.css");
         let contentCSSPromise = loadStyle(contentCSS);
-        let fontawesomeCSS = chrome.extension.getURL("fontawesome.css");
+        let fontawesomeCSS = chrome.runtime.getURL("fontawesome.css");
         let fontawesomeCSSPromise = loadStyle(fontawesomeCSS);
         return Promise.all([contentCSSPromise, fontawesomeCSSPromise]);
     }

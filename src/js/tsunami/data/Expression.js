@@ -1,18 +1,26 @@
 import EventHandler from "../components/EventHandler";
 import { hasValue } from "../utils/validation";
 import ChangeEvent from "../ChangeEvent";
-import { getProperty } from "../tsunami";
+import { getProperty, safeEval } from "../tsunami";
 
 export default class Expression extends EventTarget {
 
     constructor(expression, scope, callback = null) {
         super();
+        // console.log("Expression", expression);
+        this.expression = expression;
+        this.scope = scope;
 
         this.changeHandler = this.changeHandler.bind(this);
 
         this._value = null;
 
-        this.getValue = new Function("return " + expression).bind(scope);
+        this.getValue = function() {
+            const value = safeEval(scope, expression);
+            // console.log("getValue this=", this, 'scope=', scope, 'value=', value);
+            return value;
+      
+        }.bind(scope);
 
         this.callback = callback;
 

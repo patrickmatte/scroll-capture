@@ -3,15 +3,15 @@
         <span class="sc-input" title="Duration">
             <span class="sc-icon fas fa-clock"></span>
             <span class="sc-input-group">
-                <span class="sc-input-unit" is="ui-text" data-unit="s">{this.scope.data.duration.value}</span>
-                <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="this.scope.data.duration.value" />
+                <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.duration.value}</span>
+                <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.duration.value" />
             </span>
         </span>
         <span class="sc-input" title="Delay">
             <span class="sc-icon fa fa-hourglass-half"></span>
             <span class="sc-input-group">
-                <span class="sc-input-unit" is="ui-text" data-unit="s">{this.scope.data.delay.value}</span>
-                <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="this.scope.data.delay.value" />
+                <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
+                <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
             </span>
         </span>
     </div>
@@ -20,27 +20,27 @@
             <div class="sc-field">
                 <div class="sc-input" title="Easing">
                     <span class="sc-icon fa fa-bezier-curve"></span>
-                    <select is="ui-select" set:provider="this.scope.data.easingPresets" bind:value="this.scope.data.easingPresets.selectedItem.value"></select>
+                    <select is="ui-select" set:provider="scope.data.easingPresets" bind:value="scope.data.easingPresets.selectedItem.value"></select>
                 </div>
             </div>
             <div class="sc-field">
                 <span class="sc-input" title="Bezier point1.x">
                     <span class="sc-icon">X</span>
-                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="this.scope.data.cubicBezierPoints.p1.x.value" />
+                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="scope.data.cubicBezierPoints.p1.x.value" />
                 </span>
                 <span class="sc-input" title="Bezier point1.y">
                     <span class="sc-icon">Y</span>
-                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="this.scope.data.cubicBezierPoints.p1.y.value" />
+                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="scope.data.cubicBezierPoints.p1.y.value" />
                 </span>
             </div>
             <div class="sc-field" title="Point2.y">
                 <span class="sc-input" title="Bezier point2.x">
                     <span class="sc-icon">X</span>
-                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="this.scope.data.cubicBezierPoints.p2.x.value" />
+                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="scope.data.cubicBezierPoints.p2.x.value" />
                 </span>
                 <span class="sc-input" title="Bezier point2.y">
                     <span class="sc-icon">Y</span>
-                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="this.scope.data.cubicBezierPoints.p2.y.value" />
+                    <input type="number" step="0.01" placeholder="0" is="ui-input" bind:model="scope.data.cubicBezierPoints.p2.y.value" />
                 </span>
             </div>
         </div>
@@ -49,26 +49,26 @@
                 <div is="easing-graph">
                     <!-- <svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
                         <g>
-                            <polyline class="js" is="easing-graph-curve" set:model="this.scope.data.cubicBezierPoints.debugEasing" points=""></polyline>
+                            <polyline class="js" is="easing-graph-curve" set:model="scope.data.cubicBezierPoints.debugEasing" points=""></polyline>
                         </g>
                     </svg>
-                    <div class="points js" is="easing-graph-points" set:model="this.scope.data.cubicBezierPoints.debugEasing"></div> -->
+                    <div class="points js" is="easing-graph-points" set:model="scope.data.cubicBezierPoints.debugEasing"></div> -->
                     <svg class="curve" x="0px" y="0px" preserveAspectRatio="none" viewBox="0 0 200 200">
                         <g>
-                            <polyline is="easing-graph-curve" set:model="this.scope.data.cubicBezierPoints.value" points=""></polyline>
+                            <polyline is="easing-graph-curve" set:model="scope.data.cubicBezierPoints.value" points=""></polyline>
                         </g>
                     </svg>
-                    <div class="points" is="easing-graph-points" set:model="this.scope.data.cubicBezierPoints.value"></div>
-                    <div is="control-point-lines" is="ui-list" set:provider="this.scope.data.cubicBezierPoints.controlPointsLines">
+                    <div class="points" is="easing-graph-points" set:model="scope.data.cubicBezierPoints.value"></div>
+                    <div is="control-point-lines" is="ui-list" set:provider="scope.data.cubicBezierPoints.controlPointsLines">
                         <template>
-                            <div is="control-point-line" set:model="this.scope.data"></div>
+                            <div is="control-point-line" set:model="scope.data"></div>
                         </template>
                     </div>
-                    <div class="control-points" is="easing-graph-control-points" set:provider="this.scope.data.cubicBezierPoints.controlPoints">
+                    <div class="control-points" is="easing-graph-control-points" set:provider="scope.data.cubicBezierPoints.controlPoints">
                         <template>
-                            <div class="control-point" is="ui-component" set:model="this.scope.data" style="left:calc({this.scope.data.x.value} * 100%); top:calc(100% - {this.scope.data.y.value} * 100%)">
+                            <div class="control-point" is="ui-component" set:model="scope.data" style="left:calc({scope.data.x.value} * 100%); top:calc(100% - {scope.data.y.value} * 100%)">
                                 <span class="shape">
-                                    <span class="shape-label" is="ui-text">{this.scope.index + 1}</span>
+                                    <span class="shape-label" is="ui-text">{scope.index + 1}</span>
                                 </span>
                             </div>
                         </template>

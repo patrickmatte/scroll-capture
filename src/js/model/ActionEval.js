@@ -1,5 +1,6 @@
 import Action from "./Action";
 import StringData from "../tsunami/data/StringData";
+import { safeEval } from "../tsunami/tsunami";
 
 let example = `/* Example */
 let promise = new Promise(function(resolve, reject) {
@@ -35,7 +36,8 @@ export default class ActionEval extends Action {
 
 	trigger() {
 		let expression = this.code.value;
-		let promise = new Function(expression)();
+		const func = safeEval(window, expression);
+		let promise = func();
 		let isPromise = (promise instanceof Promise);
 		if(!isPromise) {
 			promise = Promise.resolve();

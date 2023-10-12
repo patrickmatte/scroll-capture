@@ -52,7 +52,7 @@ export default class Settings {
 
         this.isColorThemeLight = new BooleanData();
         this.isColorThemeLight.addEventListener(Data.CHANGE, (event) => {
-            let msg = { txt: "scrollCaptureColorTheme", isColorThemeLight: event.data };
+            let msg = { type: "scrollCaptureColorTheme", isColorThemeLight: event.data };
             app.model.sendMessage(msg);
         });
 
@@ -73,7 +73,7 @@ export default class Settings {
     }
 
     windowSizeChangeHandler() {
-        app.model.sendMessage({ txt: "scrollCaptureResizeWindow", width: this.windowSize.x.value, height: this.windowSize.y.value });
+        app.model.sendMessage({ type: "scrollCaptureResizeWindow", width: this.windowSize.x.value, height: this.windowSize.y.value });
    }
 
     switchColorTheme() {

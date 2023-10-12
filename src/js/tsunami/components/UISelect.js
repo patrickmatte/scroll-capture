@@ -6,7 +6,7 @@ export default class UISelect extends UIListBase {
 	constructor(element) {
 		super(element);
 		this._value = this.element.value;
-		this.template = '<option is="ui-text" value="{this.scope.data}">{this.scope.data}</option>';
+		this.template = '<option is="ui-text" value="{scope.data}">{scope.data}</option>';
 		this.inputHandler = this.inputHandler.bind(this);
 		this.element.addEventListener("input", this.inputHandler);
 	}
@@ -16,6 +16,7 @@ export default class UISelect extends UIListBase {
 	}
 
 	set provider(value) {
+		if (this.debug) console.log("UISelect.provider=", value);
 		let currentValue = this.value;
 		super.provider = value;
 		this.value = currentValue;
@@ -26,6 +27,7 @@ export default class UISelect extends UIListBase {
 	}
 
 	set value(value) {
+		if (this.debug) console.log("UISelect.value=", value);
 		if(this._value != value) {
 			this._value = value;
 			ChangeEvent.dispatch(this, "value", value);

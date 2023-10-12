@@ -3,52 +3,65 @@ const webpack = require("webpack");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = (env) => {
-	let isDev = (env == "development");
+module.exports = (env, argv) => {
+	const isDev = argv.mode == 'development';
+	console.log('isDev', isDev);
 
+	const plugins = [
+		new MiniCssExtractPlugin({
+			// Options similar to the same options in webpackOptions.output
+			// all options are optional
+			filename: `bundles/[name].css`,
+			chunkFilename: `bundles/[id].css`,
+			ignoreOrder: false, // Enable to remove warnings about conflicting order
+		  }),
+	];
+
+	if (isDev) {
+		plugins.push(new webpack.SourceMapDevToolPlugin());
+	}
+  
 	return {
-		watch: isDev,
 		context: path.resolve(__dirname, "src"),
-		devtool: `[name].${(isDev) ? "inline-source-map" : "none"}`,
+		devtool: false,
 		entry: {
 			"content": ["./js/main.js", "./css/content.scss"],
-			"background": [`./js/background-${env}.js`],
+			"background": [`./js/background-${argv.mode}.js`],
 			"video-recording": ["./js/video-recording.js"]
 		},
+		target: 'web',
+		watch: isDev,
 		output: {
 			path: path.resolve(__dirname, "build"),
 			filename: "[name].js",
+			publicPath: "/",
 		},
 		module: {
 			rules: [
-				// {
-				// 	test: /\.m?js$/,
-				// 	exclude: /(node_modules|bower_components)/,
-				// 	use: {
-				// 		loader: 'babel-loader',
-				// 		options: {
-				// 			presets: ["@babel/preset-env"]
-				// 		}
-				// 	}
-				// },
+				{
+					test: /\.(?:js|mjs|cjs)$/,
+					exclude: /node_modules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+						presets: [
+							['@babel/preset-env', { targets: "defaults" }]
+						]
+						}
+					}
+				},
 				{
 					test: /\.(sa|sc|c)ss$/,
 					use: [
 						{
 							loader: MiniCssExtractPlugin.loader,
 							options: {
-								hmr: isDev,
 								publicPath: "./",
 							},
 						},
 						'css-loader',
 						'sass-loader'
 					],
-				},
-				{
-					test: /\.(twig)$/,
-					exclude: /node_modules/,
-					use: "twig-loader"
 				},
 				{
 					test: /\.(xml|txt|md|hbs|mustache|html)$/,
@@ -64,33 +77,20 @@ module.exports = (env) => {
 				},
 			],
 		},
-		plugins: [
-			new MiniCssExtractPlugin({
-				// Options similar to the same options in webpackOptions.output
-				// all options are optional
-				filename: '[name].css',
-				chunkFilename: '[id].css',
-				ignoreOrder: false, // Enable to remove warnings about conflicting order
-			})
-		],
+		plugins,
 		optimization: {
 			minimize: !isDev,
 			minimizer: [
 				new TerserPlugin({
-					test: /\.js(\?.*)?$/i,
+					extractComments: false,
 				}),
 			],
 		},
 		stats: { colors: true },
-
 		node: {
 			global: true,
-			process: false,
-			Buffer: false,
 			__filename: true,
 			__dirname: true,
-			setImmediate: false,
-			fs: "empty",
 		}
 	};
 }

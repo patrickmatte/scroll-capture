@@ -19,11 +19,11 @@ export default class PlayRecordState extends PlayState {
             app.model.actions.addAction(this.timeout);
         }
         let promise = awaitTimeout(0.25).then(() => {
-            app.model.sendMessage({ txt: "scrollCaptureStartRecording"});
+            app.model.sendMessage({ type: "scrollCaptureStartRecording"});
             return super.show();
         });
         // this.keepAliveTimeout = setInterval(() => {
-        //     chrome.runtime.sendMessage({ txt: "scrollCaptureKeepAlive" });
+        //     chrome.runtime.sendMessage({ type: "scrollCaptureKeepAlive" });
         // }, 1000 * 10);
         return promise;
     }
@@ -36,8 +36,8 @@ export default class PlayRecordState extends PlayState {
 
     stopTheRecording() {
         // clearInterval(this.keepAliveTimeout);
-        app.model.sendMessage({ txt: "scrollCaptureStopRecording" });
-        app.model.sendMessage({ txt: "scrollCaptureUpdateVideo" });
+        app.model.sendMessage({ type: "scrollCaptureStopRecording" });
+        // app.model.sendMessage({ type: "scrollCaptureUpdateVideo" });
     }
 
     hide() {

@@ -1,4 +1,11 @@
+import evaluate from 'simple-evaluate';
+
 const classes = {};
+
+export function safeEval(context, expression, option = null) {
+  // console.log('safeEval expression=', expression, context);
+  return evaluate(context, expression);
+}
 
 export function getProperty(path, scope, debug = false) {
   if (debug) {
@@ -6,12 +13,31 @@ export function getProperty(path, scope, debug = false) {
   }
   let value = null;
   try {
-    value = new Function('return ' + path).bind(scope)();
+    value = safeEval(scope, path);
+    // console.log("getProperty path=", path, 'scope=', scope, 'value=', value);
   } catch (e) {
     // continue regardless of error
   }
   return value;
 }
+
+// export function getProperty(path, scope, debug = true) {
+//   if (debug) console.log('getProperty path', path, 'scope', scope);
+// 	var array = path.split(".");
+// 	var object = scope;
+// 	while(array.length > 0) {
+// 		var name = array.shift();
+// 		var arr = name.split("[");
+// 		for (var i = 0; i < arr.length; i++) {
+// 			var prop = arr[i].split("]")[0];
+// 			object = object[prop];
+// 			if (!object) {
+// 				console.log("Error! The reference '" + path + "' is not valid in " + scope);
+// 			}
+// 		}
+// 	}
+// 	return object;
+// };
 
 export function define(name, classReference) {
   classes[name] = classReference;

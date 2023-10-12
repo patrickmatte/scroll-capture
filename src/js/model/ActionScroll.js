@@ -20,6 +20,7 @@ export default class ActionScroll extends ActionTween {
 		this.isCaptureable.value = true;
 		this.isTestable.value = true;
 		this.icon.value = "fas fa-scroll";
+		this.targetStyle = "";
 
 		this.doScroll = this.doScroll.bind(this);
 		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
@@ -45,17 +46,29 @@ export default class ActionScroll extends ActionTween {
 	}
 
 	trigger() {
+		let scrollTarget;
 		switch (this.target.value) {
 			case "window":
+				scrollTarget = document.documentElement;
 				this.startX.value = window.scrollX;
 				this.startY.value = window.scrollY;
 				break;
 			default:
 				let element = document.querySelector(this.target.value);
+				scrollTarget = element;
 				this.startX.value = element.scrollLeft;
 				this.startY.value = element.scrollTop;
 				break;
 		}
+		let styleArrayFiltered = [];
+		this.targetStyle = scrollTarget.getAttribute('style') || "";
+		if(this.targetStyle) {
+			styleArrayFiltered = this.targetStyle.split(";").filter((prop)=> {
+			   return (prop.indexOf("scroll-behavior") == -1);
+		   });
+		}
+		styleArrayFiltered.push('scroll-behavior:auto !important');
+		scrollTarget.setAttribute('style', styleArrayFiltered.join(";"));
 		if(this.units.selectedItem.value == "px") {
 			this.endX.copy(this.unitX);
 			this.endY.copy(this.unitY);
@@ -97,6 +110,21 @@ export default class ActionScroll extends ActionTween {
 				break;
 		}
 	}
+
+	tweenCompleteHandler(e) {
+		super.tweenCompleteHandler(e);
+		let scrollTarget;
+		switch (this.target.value) {
+			case "window":
+				scrollTarget = document.documentElement;
+				break;
+			default:
+				scrollTarget = document.querySelector(this.target.value);
+				break;
+		}
+		scrollTarget.setAttribute('style', this.targetStyle);
+	}
+
 
 	serialize() {
 		let data = super.serialize();

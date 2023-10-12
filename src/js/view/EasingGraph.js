@@ -144,20 +144,22 @@ export class EasingGraphPoints extends UIComponent {
 	set model(value) {
 		super.model = value;
 		this.element.innerHTML = "";
-		let totalPoints = 15;
-		let points = [];
-		for(let i = 0; i < totalPoints; i++) {
-			let x = i / (totalPoints - 1);
-			let point = new Point(x, value.easing.ease(x, 0, 1, 1));
-			points.push(point);
-		}
-		for(let i = 0; i < points.length; i++) {
-			let position = points[i];
-			let point = tsunami.importTemplate("<point></point>");
-			point.style.left = position.x * 100 + "%";
-			point.style.top = 100 - (position.y * 100) + "%";
-			this.element.appendChild(point);
-		}
+		if (value) {
+			let totalPoints = 15;
+			let points = [];
+			for(let i = 0; i < totalPoints; i++) {
+				let x = i / (totalPoints - 1);
+				let point = new Point(x, value.easing.ease(x, 0, 1, 1));
+				points.push(point);
+			}
+			for(let i = 0; i < points.length; i++) {
+				let position = points[i];
+				let point = tsunami.importTemplate("<point></point>");
+				point.style.left = position.x * 100 + "%";
+				point.style.top = 100 - (position.y * 100) + "%";
+				this.element.appendChild(point);
+			}
+			}
 	}
 
 }

@@ -6,7 +6,7 @@ export function bindDirective(component) {
         const attribute = component.element.attributes[i];
         if (attribute.name.indexOf("bind:") != -1) {
             const propertyName = attribute.name.split("bind:")[1];
-            component.attributes[attribute.name] = new Bind(component, "this." + propertyName, component, attribute.value);
+            component.attributes[attribute.name] = new Bind(component, propertyName, component, attribute.value);
             removedAttributes.push(attribute.name);
         }
     }

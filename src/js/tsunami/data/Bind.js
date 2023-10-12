@@ -5,10 +5,13 @@ import { getProperty } from "../tsunami";
 export default class Bind {
 
     constructor(scope1, path1, scope2, path2) {
+        // console.log("!!!!!! Bind", path1, path2);
+        this.path1 = path1;
+        this.path2 = path2;
         this.changeHandler1 = this.changeHandler1.bind(this);
         this.changeHandler2 = this.changeHandler2.bind(this);
         this.eventHandler1 = this.createEventHandler(scope1, path1, this.changeHandler1);
-        this.eventHandler2 = this.createEventHandler(scope2, path2, this.changeHandler2.bind(this));
+        this.eventHandler2 = this.createEventHandler(scope2, path2, this.changeHandler2);
         this.changeHandler2(new ChangeEvent(this.eventHandler2.type, this.eventHandler2.eventTarget[this.eventHandler2.type]));
     }
 
@@ -19,17 +22,22 @@ export default class Bind {
     }
 
     changeHandler2(event) {
+        // console.log("changeHandler2", event);
+        // console.log("changeHandler2", this.path1, this.path2);
         this.eventHandler1.enabled = false;
         this.eventHandler1.eventTarget[this.eventHandler1.type] = event.data;
         this.eventHandler1.enabled = true;
     }
 
     createEventHandler(scope, path, callback) {
+        // console.log("!!!!!! createEventHandler", path);
         let slugs = path.split(".");
         let target = scope;
         let type = slugs.pop();
+
         // if(slugs.length > 0) target = new Function().bind(scope)();
         if(slugs.length > 0) target = getProperty(slugs.join("."), scope);
+        // console.log("!!!!!! target", target);
         let handler;
         if(target instanceof EventTarget) {
             handler = new EventHandler(target, type, callback);

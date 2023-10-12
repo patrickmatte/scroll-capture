@@ -71,7 +71,7 @@ export default class UIInput extends UIComponent {
                 break;
             case "radio":
                 value = this.element.value;
-                console.log("this.element.checked", this.element.checked);
+                // console.log("this.element.checked", this.element.checked);
             default:
                 value = this.element.value;
                 break;

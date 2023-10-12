@@ -1,7 +1,7 @@
 import ArrayData from "../tsunami/data/ArrayData";
 import ActionScroll from "./ActionScroll";
 import ActionMouseEvent from "./ActionMouseEvent";
-import ActionEval from "./ActionEval";
+// import ActionEval from "./ActionEval";
 import ActionSwipe from "./ActionSwipe";
 import ActionWait from "./ActionWait";
 import { sendTrackEventMessage } from "./GABridge";
@@ -20,7 +20,7 @@ export default class Actions extends ArrayData {
 			new ActionScroll(),
 			new ActionMouseEvent(),
 			new ActionSwipe(),
-			new ActionEval(),
+			// new ActionEval(),
 			new ActionWait()
 		];
 		// this.types.selectedItem.value = this.types.value[0];

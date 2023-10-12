@@ -6,10 +6,10 @@ export default class SectionVideo extends Section {
     constructor(element) {
         super(element);
         this.iframe = this.element.querySelector("iframe");
-        this.iframe.src = chrome.extension.getURL('video-recording.html');
+        this.iframe.src = chrome.runtime.getURL('video-recording.html');
 
         chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-            switch (msg.txt) {
+            switch (msg.type) {
                 case "scrollCaptureVideoHeight":
                     this.iframe.style.height = msg.height + "px";
                     break;
@@ -19,12 +19,12 @@ export default class SectionVideo extends Section {
 
     showDelayComplete() {
         let promise = super.showDelayComplete();
-        app.model.sendMessage({ txt: "scrollCaptureShowVideo" });
+        app.model.sendMessage({ type: "scrollCaptureShowVideo" });
         return promise;
     }
 
     hideComplete() {
-        app.model.sendMessage({ txt:"scrollCaptureUnloadVideo"});
+        app.model.sendMessage({ type:"scrollCaptureUnloadVideo"});
         return super.hideComplete();
     }
 
