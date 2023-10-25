@@ -1,6 +1,3 @@
-
-// let page = chrome.extension.getBackgroundPage();
-
 import { trackEvent, trackPage } from "./model/GA";
 
 let mediaStream;
@@ -31,7 +28,7 @@ export function initBackgroundPage() {
         }
       
         if (recording) {
-          stopRecording();
+        //   stopRecording({'stopped with button'});
         }
 
         chrome.scripting.executeScript({
@@ -39,7 +36,7 @@ export function initBackgroundPage() {
             files: ['content.js']
         });
 
-        globalThis.tabId = tab.id;
+        // globalThis.tabId = tab.id;
         chrome.storage.local.set({ tabId: tab.id });
 
         chrome.windows.getCurrent({ populate: false }, (win) => {
@@ -48,20 +45,18 @@ export function initBackgroundPage() {
                 height: win.height - tab.height
             };
         });
-
-        // let msg = { type: "scrollCaptureBrowserAction", tabId: tab.id};
-        // chrome.tabs.sendMessage(tab.id, msg);
     });
 }
 
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    // console.log('chrome.runtime.onMessage msg', msg);
     switch (msg.type) {
         case "scrollCaptureStartRecording":
-            startRecording(msg.tabId);
+            startRecording(msg);
             break;
         case "scrollCaptureStopRecording":
-            stopRecording();
+            stopRecording(msg);
             break;
         case "scrollCaptureResizeWindow":
             resizeWindow(msg.width, msg.height);
@@ -82,12 +77,6 @@ function resizeWindow(width, height) {
     });
 }
 
-// function handleDataAvailable(event) {
-//     if (event.data && event.data.size > 0) {
-//         recordedBlobs.push(event.data);
-//     }
-// }
-
 function changeIcon(color = "") {
     chrome.action.setIcon({
         path: {
@@ -100,25 +89,59 @@ function changeIcon(color = "") {
 }
 
 
-async function startRecording(tabId) {
+async function startRecording(data) {
+    console.log('background.startRecording data=', data);
     changeIcon("_red");
 
-    // Get a MediaStream for the active tab.
     const streamId = await chrome.tabCapture.getMediaStreamId({
-        targetTabId: tabId
+        targetTabId: data.tabId
     });
 
-    // Send the stream ID to the offscreen document to start recording.
-    chrome.runtime.sendMessage({
+    // chrome.windows.create({url: "player.html", type: "popup"});
+
+    const message = Object.assign({}, data);
+    Object.assign(message, {
         type: 'scrollCaptureStartOffscreenRecording',
         target: 'offscreen',
-        data: streamId
+        streamId: streamId
     });
 
-              
-    // chrome.tabs.get(globalThis.tabId, _startTabCapture);
-    // chrome.tabs.query({ active: true }, _startTabCapture);
+    console.log('background.startRecording message=', message);
+    chrome.runtime.sendMessage(message);
 }
+
+
+function stopRecording(message) {
+    console.log('background.stopRecording message=', message);
+
+    changeIcon();
+
+    chrome.runtime.sendMessage({
+        type: 'scrollCaptureStopOffscreenRecording',
+        target: 'offscreen'
+    });
+
+    // if (mediaRecorder) mediaRecorder.stop();
+    // let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
+    // let msg = { txt: "scrollCaptureVideoURL", videoURL: globalThis.videoURL };
+    // chrome.runtime.sendMessage(msg);
+
+    // if (mediaStream) {
+    //     let tracks = mediaStream.getTracks();
+    //     for (var i = 0; i < tracks.length; ++i) {
+    //         tracks[i].stop();
+    //     }
+    // }
+    // mediaRecorder = null;
+    // mediaStream = null;
+    // isRecording = false;
+}
+
+// function handleDataAvailable(event) {
+//     if (event.data && event.data.size > 0) {
+//         recordedBlobs.push(event.data);
+//     }
+// }
 
 // function _startTabCapture(tab) {
     // isRecording = true;
@@ -251,31 +274,3 @@ async function startRecording(tabId) {
 //     mediaRecorder.ondataavailable = handleDataAvailable;
 //     mediaRecorder.start(10); // collect 10ms of data
 // }
-
-function stopRecording() {
-    changeIcon();
-
-    chrome.runtime.sendMessage({
-        type: 'scrollCaptureStopOffscreenRecording',
-        target: 'offscreen'
-    });
-
-    // if (mediaRecorder) mediaRecorder.stop();
-    // let videoBlob = new Blob(recordedBlobs, { type: 'video/webm' });
-    // console.log("saveTheVideo");
-    // globalThis.videoURL = globalThis.URL.createObjectURL(videoBlob);
-    // chrome.storage.local.set({ videoURL: globalThis.videoURL });
-
-    // let msg = { txt: "scrollCaptureVideoURL", videoURL: globalThis.videoURL };
-    // chrome.runtime.sendMessage(msg);
-
-    // if (mediaStream) {
-    //     let tracks = mediaStream.getTracks();
-    //     for (var i = 0; i < tracks.length; ++i) {
-    //         tracks[i].stop();
-    //     }
-    // }
-    // mediaRecorder = null;
-    // mediaStream = null;
-    // isRecording = false;
-}

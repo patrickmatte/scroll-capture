@@ -349,7 +349,7 @@ export default class ArrayData extends Data {
 
   serialize() {
     const array = [];
-    this.forEach((obj) => {
+    this.value.forEach((obj) => {
       array.push(obj.serialize());
     });
     return array;

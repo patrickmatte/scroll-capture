@@ -332,6 +332,32 @@
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
 													<span class="sc-icon fas fa-film"></span>
+													<span class="sc-label">Device Pixel Ratio</span>
+												</span>
+											</span>
+											<span class="sc-tabs"></span>
+										</div>
+										<div class="sc-window-content" is="ui-component">
+											<div class="sc-fields" is="ui-component">
+												<div class="sc-field-group">
+													<div class="sc-field">
+														<input type="range" min="1" max="{scope.settings.devicePixelRatio}" step="0.01" title="devicePixelRatio" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
+														<div class="sc-space">
+															<span class="sc-input-unit" is="ui-text" data-unit="x">{scope.settings.pixelRatio.value}</span>
+															<span is="ui-text">{scope.settings.pixelRatio.value}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div class="sc-window">
+										<div class="sc-title">
+											<span class="sc-tabs">
+												<span class="sc-tab sc-title-tab">
+													<span class="sc-icon fas fa-film"></span>
 													<span class="sc-label">Codecs</span>
 												</span>
 											</span>
@@ -347,7 +373,7 @@
 														</div>
 													</div>
 													<div class="sc-field">
-														<input type="range" min="1" max="8" step="1" title="Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
+														<input type="range" min="1" max="48" step="1" title="Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
 														<div class="sc-space">
 															<span class="sc-input-unit" is="ui-text" data-unit="Mbps">{scope.settings.videoBitsPerSecond.value}</span>
 															<span is="ui-text">{scope.settings.videoBitsPerSecond.value}</span>
@@ -362,7 +388,7 @@
 														</div>
 													</div>
 													<div class="sc-field">
-														<input type="range" min="16" max="128" step="16" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
+														<input type="range" min="16" max="320" step="16" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
 														<div class="sc-space">
 															<span class="sc-input-unit" is="ui-text" data-unit="kbps">{scope.settings.audioBitsPerSecond.value}</span>
 															<span is="ui-text">{scope.settings.audioBitsPerSecond.value}</span>

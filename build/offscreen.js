@@ -1,25 +1,11 @@
-// Copyright 2023 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-chrome.runtime.onMessage.addListener(async (message) => {
+chrome.runtime.onMessage.addListener((message) => {
   if (message.target === 'offscreen') {
     switch (message.type) {
       case 'scrollCaptureStartOffscreenRecording':
-        startRecording(message.data);
+        startRecording(message);
         break;
       case 'scrollCaptureStopOffscreenRecording':
-        stopRecording();
+        stopRecording(message);
         break;
       default:
         throw new Error('Unrecognized message:', message.type);
@@ -30,71 +16,108 @@ chrome.runtime.onMessage.addListener(async (message) => {
 let recorder;
 let data = [];
 
-async function startRecording(streamId) {
+async function startRecording(message) {
+  console.log('offscreen.startRecording', message);
   if (recorder?.state === 'recording') {
     throw new Error('Called startRecording while recording is in progress.');
   }
 
+  const size = {x:message.tabWidth, y:message.tagHeight};
+  const pixelRatio = message.pixelRatio;
   const media = await navigator.mediaDevices.getUserMedia({
     audio: {
       mandatory: {
         chromeMediaSource: 'tab',
-        chromeMediaSourceId: streamId
+        chromeMediaSourceId: message.streamId
       }
     },
     video: {
       mandatory: {
         chromeMediaSource: 'tab',
-        chromeMediaSourceId: streamId
+        chromeMediaSourceId: message.streamId,
+        minWidth: size.x * pixelRatio,
+        maxWidth: size.x * pixelRatio,
+        minHeight: size.y * pixelRatio,
+        maxHeight: size.y * pixelRatio,
+        minFrameRate: 30,
+        maxFrameRate: 60
+
       }
     }
   });
 
-  // Continue to play the captured audio to the user.
   const output = new AudioContext();
   const source = output.createMediaStreamSource(media);
   source.connect(output.destination);
 
-  // Start recording.
-  recorder = new MediaRecorder(media, { mimeType: 'video/webm' });
+  let videoCodec = message.videoCodec || "vp8";
+  let audioCodec = message.audioCodec || "opus";
+  let videoBitsPerSecond = message.videoBitsPerSecond || 16;
+  let audioBitsPerSecond = message.audioBitsPerSecond || 128;
+
+
+  const options = {
+    mimeType: 'video/webm;codecs=' + videoCodec + "," + audioCodec,
+    audioBitsPerSecond: audioBitsPerSecond * 1000,
+    videoBitsPerSecond: videoBitsPerSecond * 1000000,
+  };
+  if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+    options.mimeType = 'video/webm;codecs=vp8';
+    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+      options.mimeType = 'video/webm;codecs=vp9';
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+          options.mimeType = 'video/webm;codecs=h264';
+          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+              options.mimeType = 'video/webm';
+              if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                  options.mimeType = '';
+              }
+          }
+      }
+    }
+  }
+
+  recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);
   recorder.onstop = () => {
+    console.log('offscreen recorder.onstop');
     const blob = new Blob(data, { type: 'video/webm' });
-    // window.open(URL.createObjectURL(blob), '_blank');
     const videoURL = URL.createObjectURL(blob);
-    // chrome.storage.local.set({ videoURL: videoURL });
     chrome.runtime.sendMessage({
         type: 'scrollCaptureVideoURL',
         videoURL: videoURL
     });
-
-    // Clear state ready for next recording
-    recorder = undefined;
     data = [];
   };
   recorder.start();
 
-  // Record the current state in the URL. This provides a very low-bandwidth
-  // way of communicating with the service worker (the service worker can check
-  // the URL of the document and see the current recording state). We can't
-  // store that directly in the service worker as it may be terminated while
-  // recording is in progress. We could write it to storage but that slightly
-  // increases the risk of things getting out of sync.
   window.location.hash = 'recording';
 }
 
-async function stopRecording() {
+function stopRecording(message) {
+  console.log('offscreen.stopRecording', message);
   recorder.stop();
-
-  // Stopping the tracks makes sure the recording icon in the tab is removed.
   recorder.stream.getTracks().forEach((t) => t.stop());
-
-  // Update current state in URL
+  recorder = undefined;
   window.location.hash = '';
+}
 
-  // Note: In a real extension, you would want to write the recording to a more
-  // permanent location (e.g IndexedDB) and then close the offscreen document,
-  // to avoid keeping a document around unnecessarily. Here we avoid that to
-  // make sure the browser keeps the Object URL we create (see above) and to
-  // keep the sample fairly simple to follow.
+function logMimeTypes() {
+  let mimeTypes = [
+    "video/webm;codecs=vp8,opus",
+    "video/webm",
+    "audio/webm",
+    "video/webm;codecs=vp8",
+    "video/webm;codecs=h264",
+    "video/webm;codecs=avc1",
+    "audio/webm;codecs=opus",
+    "video/mpeg",
+    "video/mp4",
+    "video/mp4;codecs=h264",
+    "video/m4v",
+  ];
+
+  mimeTypes.forEach((mimeType) => {
+    console.log('MediaRecorder', mimeType, MediaRecorder.isTypeSupported(mimeType));
+  });
 }

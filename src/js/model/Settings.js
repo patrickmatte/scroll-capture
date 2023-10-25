@@ -14,6 +14,7 @@ export default class Settings {
         this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
 
         this.position = new Vector2Data(50, 50);
+        this.devicePixelRatio = window.devicePixelRatio;
 
         this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
         this.windowResizeHandler = this.windowResizeHandler.bind(this);
@@ -26,10 +27,7 @@ export default class Settings {
         this.videoBitsPerSecondThrottle = new Throttle(() => {
             sendTrackEventMessage("settings", "videoBitsPerSecond", this.videoBitsPerSecond.value);
         }, 1000);
-        this.videoBitsPerSecondMin = 1;
-        this.videoBitsPerSecondMax = 8;
-        this.videoBitsPerSecond = new NumberData();
-        this.videoBitsPerSecond.value = 8;
+        this.videoBitsPerSecond = new NumberData(24);
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
         this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
@@ -63,16 +61,25 @@ export default class Settings {
             sendTrackEventMessage("settings", "colorTheme", this.colorThemes.selectedItem.value);
             this.switchColorTheme();
         });
+
+        this.pixelRatioThrottle = new Throttle(() => {
+            sendTrackEventMessage("settings", "pixelRatio", this.pixelRatio.value);
+        }, 1000);
+        this.pixelRatio = new NumberData(this.devicePixelRatio);
+        this.pixelRatio.addEventListener(Data.CHANGE, this.pixelRatioThrottle.throttle);
+
     }
 
     windowResizeHandler() {
         this.windowSize.removeEventListener(Data.CHANGE, this.windowSizeChangeHandler);
         this.windowSize.x.value = window.innerWidth;
         this.windowSize.y.value = window.innerHeight;
+        console.log('windowResizeHandler', this.windowSize);
         this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
     }
 
     windowSizeChangeHandler() {
+        console.log('windowSizeChangeHandler', this.windowSize);
         app.model.sendMessage({ type: "scrollCaptureResizeWindow", width: this.windowSize.x.value, height: this.windowSize.y.value });
    }
 
@@ -103,7 +110,8 @@ export default class Settings {
             videoCodec: this.videoCodecs.selectedItem.serialize(),
             audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
             audioCodec: this.audioCodecs.selectedItem.serialize(),
-            colorThemes: this.colorThemes.selectedItem.value
+            colorThemes: this.colorThemes.selectedItem.value,
+            pixelRatio: this.pixelRatio.serialize()
         };
     }
 
@@ -116,6 +124,19 @@ export default class Settings {
         this.audioCodecs.selectedItem.deserialize(data.audioCodec);
         if (data.hasOwnProperty("colorThemes")) {
             this.colorThemes.selectedItem.value = data.colorThemes;
+        }
+        this.pixelRatio.deserialize(data.pixelRatio);
+    }
+
+    getSettingsForRecording() {
+        return {
+            videoBitsPerSecond:this.videoBitsPerSecond.value,
+            audioBitsPerSecond:this.audioBitsPerSecond.value,
+            videoCodec:this.videoCodecs.selectedItem.value,
+            audioCodec:this.audioCodecs.selectedItem.value,
+            pixelRatio:this.pixelRatio.value,
+            tabWidth: this.windowSize.x.value,
+            tagHeight: this.windowSize.y.value
         }
     }
 
