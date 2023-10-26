@@ -5,7 +5,7 @@ export default class ActionWait extends Action {
 	constructor() {
 		super("ActionWait", "Pause", "Add a pause");
 		this.delay.value = 1;
-		this.icon.value = "fas fa-pause-circle";
+		this.icon.value = "fa-solid fa-pause-circle";
 	}
 
 	clone() {

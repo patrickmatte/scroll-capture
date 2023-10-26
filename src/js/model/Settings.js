@@ -14,7 +14,7 @@ export default class Settings {
         this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
 
         this.position = new Vector2Data(50, 50);
-        this.devicePixelRatio = window.devicePixelRatio;
+        this.devicePixelRatio = window.devicePixelRatio || 1;
 
         this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
         this.windowResizeHandler = this.windowResizeHandler.bind(this);
@@ -29,7 +29,7 @@ export default class Settings {
         }, 1000);
         this.videoBitsPerSecond = new NumberData(24);
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
-        this.videoCodecs = new ArrayData("vp8", "vp9", "h264");
+        this.videoCodecs = new ArrayData("avc1", "h264", "vp8", "vp9");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
         this.videoCodecs.selectedItem.addEventListener(Data.CHANGE, () => {
             sendTrackEventMessage("settings", "videoCodec", this.videoCodecs.selectedItem.value);
@@ -38,7 +38,7 @@ export default class Settings {
         this.audioBitsPerSecondThrottle = new Throttle(() => {
             sendTrackEventMessage("settings", "audioBitsPerSecond", this.audioBitsPerSecond.value);
         }, 1000);
-        this.audioBitsPerSecond = new NumberData(128);
+        this.audioBitsPerSecond = new NumberData(256);
         this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.audioBitsPerSecondThrottle.throttle);
         this.audioCodecs = new ArrayData("opus");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
@@ -74,7 +74,6 @@ export default class Settings {
         this.windowSize.removeEventListener(Data.CHANGE, this.windowSizeChangeHandler);
         this.windowSize.x.value = window.innerWidth;
         this.windowSize.y.value = window.innerHeight;
-        console.log('windowResizeHandler', this.windowSize);
         this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
     }
 

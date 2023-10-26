@@ -27,7 +27,7 @@ export default class ActionSwipe extends ActionTween {
 		this.isTestable.value = true;
 		this.smoothness = new NumberData(20);
 		this.changeCursorOnCapture.value = true;
-		this.icon.value = "fas fa-arrows-alt";
+		this.icon.value = "fa-solid fa-up-down-left-right";
 	
 		this.captureDownHandler = this.captureDownHandler.bind(this);
 		this.captureMoveHandler = this.captureMoveHandler.bind(this);

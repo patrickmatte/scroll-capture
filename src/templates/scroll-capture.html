@@ -33,7 +33,7 @@
 				<span class="sc-tab">
 					<span class="sc-drag-area"></span>
 					<button is="router-button" data-path="closed" title="Close">
-						<span class="sc-icon fas fa-times-circle"></span>
+						<span class="sc-icon fa-solid fa-times-circle"></span>
 					</button>
 				</span>
 			</span>
@@ -46,20 +46,20 @@
 							<span class="sc-tabs">
 								<span class="sc-tab" data-id="scenario">
 									<button is="router-button" data-path="scroll-capture/scenario" title="Timeline">
-										<!-- <span class="sc-icon fas fa-sliders-h"></span> -->
-										<span class="sc-icon fas fa-stream"></span>
+										<!-- <span class="sc-icon fa-solid fa-sliders-h"></span> -->
+										<span class="sc-icon fa-solid fa-bars-staggered"></span>
 										<span class="sc-label">Timeline</span>
 									</button>
 								</span>
-								<!-- <span class="sc-tab" data-id="play" is="ui-component">
-									<button is="router-button" data-path="play" title="Play">
-										<span class="sc-icon fas fa-play"></span>
+								<span class="sc-tab" data-id="play" is="ui-component">
+									<button is="router-button" data-path="play" title="Play Timeline">
+										<span class="sc-icon fa-solid fa-play-circle"></span>
 										<span class="sc-label">Play</span>
 									</button>
-								</span> -->
+								</span>
 								<span class="sc-tab" data-id="video" is="ui-component">
 									<button is="router-button" data-path="record" title="Capture">
-										<span class="sc-icon fas fa-video"></span>
+										<span class="sc-icon fa-solid fa-video"></span>
 										<span class="sc-label">Capture</span>
 									</button>
 								</span>
@@ -67,8 +67,8 @@
 							<span class="sc-tabs" is="ui-component">
 								<span class="sc-tab" data-id="settings">
 									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
-										<span class="sc-icon fas fa-cogs"></span>
-										<!-- <span class="sc-label">Settings</span> -->
+										<span class="sc-icon fa-solid fa-cogs"></span>
+										<span class="sc-label">Settings</span>
 									</button>
 								</span>
 							</span>
@@ -96,19 +96,19 @@
 													<span class="sc-tab" data-visible="{scope.data.isCaptureable.value}" is="ui-component">
 														<div class="ui-list-drag-area"></div>
 														<button class="sc-set-button" is="ui-button" data-is-capturing="{scope.data.isCapturing.value}" set:model="scope.data" on:click="model.reCapture()" title="Set">
-															<span class="sc-icon fas fa-bullseye"></span>
+															<span class="sc-icon fa-solid fa-bullseye"></span>
 														</button>
 													</span>
 													<span class="sc-tab" data-visible="{scope.data.isTestable.value}" is="ui-component">
 														<div class="ui-list-drag-area"></div>
 														<button class="sc-test-button" is="ui-button" set:model="scope.data" on:click="model.play()" data-is-playing="{scope.data.isPlaying.value}" title="Play">
-															<span class="sc-icon fas fa-play-circle"></span>
+															<span class="sc-icon fa-solid fa-play-circle"></span>
 														</button>
 													</span>
 													<span class="sc-tab">
 														<div class="ui-list-drag-area"></div>
 														<button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.rootScope.actions.removeAction(model);" title="Delete">
-															<span class="sc-icon fas fa-trash-alt"></span>
+															<span class="sc-icon fa-solid fa-trash-alt"></span>
 														</button>
 													</span>
 												</span>
@@ -136,7 +136,7 @@
 																</div>
 																<div class="sc-field">
 																	<span class="sc-input" title="Target Selector">
-																		<span class="sc-icon far fa-dot-circle"></span>
+																		<span class="sc-icon fa-regular fa-dot-circle"></span>
 																		<input type="text" placeholder="window" is="ui-input" bind:model="scope.data.target.value" />
 																	</span>
 																</div>
@@ -186,11 +186,11 @@
 																</div>
 																<div class="sc-field">
 																	<span class="sc-input sc-select" title="MouseEvent Type">
-																		<span class="sc-icon fas fa-mouse-pointer"></span>
+																		<span class="sc-icon fa-solid fa-mouse-pointer"></span>
 																		<select is="ui-select" set:provider="scope.data.eventTypes" bind:value="scope.data.eventTypes.selectedItem.value"></select>
 																	</span>
 																	<span class="sc-input" title="Delay">
-																		<span class="sc-icon fas fa-hourglass-half"></span>
+																		<span class="sc-icon fa-solid fa-hourglass-half"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
 																			<input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
@@ -203,7 +203,7 @@
 															<div class="sc-action sc-fields-list">
 																<div class="sc-field">
 																	<span class="sc-input" title="Duration">
-																		<span class="sc-icon fas fa-clock"></span>
+																		<span class="sc-icon fa-solid fa-clock"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
 																			<input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
@@ -220,7 +220,7 @@
 																</div>
 																<div class="sc-field">
 																	<span class="sc-input" title="Delay">
-																		<span class="sc-icon fas fa-hourglass-half"></span>
+																		<span class="sc-icon fa-solid fa-hourglass-half"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
 																			<input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
@@ -246,7 +246,7 @@
 									</div>
 									<div class="sc-buttons">
 										<button is="ui-button" on:click="scope.clearActions()" title="Delete all">
-											<span class="sc-icon fas fa-trash-alt"></span>
+											<span class="sc-icon fa-solid fa-trash-alt"></span>
 										</button>
 									</div>
 								</div>
@@ -264,7 +264,7 @@
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fas fa-adjust"></span>
+													<span class="sc-icon fa-solid fa-adjust"></span>
 													<span class="sc-label">Color theme</span>
 												</span>
 											</span>
@@ -278,13 +278,13 @@
 														<template>
 															<label class="sc-radio">
 																<input type="radio" name="color-theme" value="{scope.data}" is="ui-input" set:model="scope.parentScope.settings.colorThemes.selectedItem" />
-																<span class="sc-icon fas fa-check"></span>
+																<span class="sc-icon fa-solid fa-check"></span>
 																<span is="ui-text">{scope.data}</span>
 															</label>
 														</template>
 													</div> -->
 													<div class="sc-input sc-select">
-														<span class="sc-icon fas" data-theme="{scope.settings.colorThemes.selectedItem.value}" is="ui-component"></span>
+														<span class="sc-icon fa-solid" data-theme="{scope.settings.colorThemes.selectedItem.value}" is="ui-component"></span>
 														<select is="ui-select" set:provider="scope.settings.colorThemes" bind:value="scope.settings.colorThemes.selectedItem.value"></select>
 													</div>
 													<div class="sc-space"></div>
@@ -298,7 +298,7 @@
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon far fa-window-maximize"></span>
+													<span class="sc-icon fa-regular fa-window-maximize"></span>
 													<span class="sc-label">Window size</span>
 												</span>
 											</span>
@@ -326,12 +326,12 @@
 										</div>
 									</div>
 								</div>
-								<div>
+								<div data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
 									<div class="sc-window">
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fas fa-film"></span>
+													<span class="sc-icon fa-solid fa-table-cells"></span>
 													<span class="sc-label">Device Pixel Ratio</span>
 												</span>
 											</span>
@@ -357,7 +357,7 @@
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fas fa-film"></span>
+													<span class="sc-icon fa-solid fa-film"></span>
 													<span class="sc-label">Codecs</span>
 												</span>
 											</span>
@@ -368,12 +368,12 @@
 												<div class="sc-field-group">
 													<div class="sc-field">
 														<div class="sc-input sc-select">
-															<span class="sc-icon fas fa-video"></span>
+															<span class="sc-icon fa-solid fa-video"></span>
 															<select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">
-														<input type="range" min="1" max="48" step="1" title="Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
+														<input type="range" min="1" max="256" step="1" title="Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
 														<div class="sc-space">
 															<span class="sc-input-unit" is="ui-text" data-unit="Mbps">{scope.settings.videoBitsPerSecond.value}</span>
 															<span is="ui-text">{scope.settings.videoBitsPerSecond.value}</span>
@@ -383,7 +383,7 @@
 												<div class="sc-field-group">
 													<div class="sc-field">
 														<div class="sc-input sc-select">
-															<span class="sc-icon fas fa-volume-up"></span>
+															<span class="sc-icon fa-solid fa-volume-up"></span>
 															<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
 														</div>
 													</div>

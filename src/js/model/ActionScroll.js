@@ -19,7 +19,7 @@ export default class ActionScroll extends ActionTween {
 		this.units.selectedItem.value = units;
 		this.isCaptureable.value = true;
 		this.isTestable.value = true;
-		this.icon.value = "fas fa-scroll";
+		this.icon.value = "fa-solid fa-scroll";
 		this.targetStyle = "";
 
 		this.doScroll = this.doScroll.bind(this);

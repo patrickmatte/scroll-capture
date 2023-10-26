@@ -21,6 +21,8 @@
 				"*.css",
 				"*.html",
 				"assets/fonts/*.woff",
+				"assets/fonts/*.woff2",
+				"assets/fonts/*.ttf",
 				"assets/images/*.png"
 			],
 			"matches": ["<all_urls>"]

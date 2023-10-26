@@ -17,7 +17,7 @@ export default class ActionMouseEvent extends Action {
 		this.isCaptureable.value = true;
 		this.changeCursorOnCapture.value = true;
 		this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
-		this.icon.value = "fas fa-hand-pointer";
+		this.icon.value = "fa-solid fa-hand-pointer";
 	}
 
 	clone() {

@@ -105,6 +105,10 @@ function stopRecording(message) {
 function logMimeTypes() {
   let mimeTypes = [
     "video/webm;codecs=vp8,opus",
+    "video/webm;codecs=h264,aac",
+    "video/webm;codecs=avc1,aac",
+    "video/webm;codecs=h264,opus",
+    "video/webm;codecs=avc1,opus",
     "video/webm",
     "audio/webm",
     "video/webm;codecs=vp8",
@@ -114,6 +118,7 @@ function logMimeTypes() {
     "video/mpeg",
     "video/mp4",
     "video/mp4;codecs=h264",
+    "video/mp4;codecs=h264,aac",
     "video/m4v",
   ];
 
