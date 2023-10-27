@@ -24,12 +24,18 @@ export default class Settings {
 
         window.addEventListener("resize", this.windowResizeHandler);
 
+        this.format = new ArrayData("webm", "x-matroska");
+        this.format.selectedItem.value = this.format.value[0];
+        this.format.selectedItem.addEventListener(Data.CHANGE, () => {
+            sendTrackEventMessage("settings", "format", this.format.selectedItem.value);
+        });
+
         this.videoBitsPerSecondThrottle = new Throttle(() => {
             sendTrackEventMessage("settings", "videoBitsPerSecond", this.videoBitsPerSecond.value);
         }, 1000);
         this.videoBitsPerSecond = new NumberData(24);
         this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
-        this.videoCodecs = new ArrayData("avc1", "h264", "vp8", "vp9");
+        this.videoCodecs = new ArrayData("av1", "avc1", "h264", "vp8", "vp9");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
         this.videoCodecs.selectedItem.addEventListener(Data.CHANGE, () => {
             sendTrackEventMessage("settings", "videoCodec", this.videoCodecs.selectedItem.value);
@@ -40,7 +46,7 @@ export default class Settings {
         }, 1000);
         this.audioBitsPerSecond = new NumberData(256);
         this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.audioBitsPerSecondThrottle.throttle);
-        this.audioCodecs = new ArrayData("opus");
+        this.audioCodecs = new ArrayData("opus", "pcm");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
         this.audioCodecs.selectedItem.addEventListener(Data.CHANGE, () => {
             sendTrackEventMessage("settings", "audioCodec", this.audioCodecs.selectedItem.value);
@@ -105,6 +111,7 @@ export default class Settings {
     serialize() {
         return {
             position: this.position.serialize(),
+            format: this.format.selectedItem.serialize(),
             videoBitsPerSecond: this.videoBitsPerSecond.serialize(),
             videoCodec: this.videoCodecs.selectedItem.serialize(),
             audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
@@ -116,19 +123,19 @@ export default class Settings {
 
     deserialize(data) {
         if (!data) return;
-        this.position.deserialize(data.position);
-        this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
-        this.videoCodecs.selectedItem.deserialize(data.videoCodec);
-        this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
-        this.audioCodecs.selectedItem.deserialize(data.audioCodec);
-        if (data.hasOwnProperty("colorThemes")) {
-            this.colorThemes.selectedItem.value = data.colorThemes;
-        }
-        this.pixelRatio.deserialize(data.pixelRatio);
+        if(data.hasOwnProperty("position")) this.position.deserialize(data.position);
+        if(data.hasOwnProperty("format")) this.format.selectedItem.deserialize(data.format);
+        if(data.hasOwnProperty("videoBitsPerSecond")) this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
+        if(data.hasOwnProperty("videoCodec")) this.videoCodecs.selectedItem.deserialize(data.videoCodec);
+        if(data.hasOwnProperty("audioBitsPerSecond")) this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
+        if(data.hasOwnProperty("audioCodec")) this.audioCodecs.selectedItem.deserialize(data.audioCodec);
+        if(data.hasOwnProperty("colorThemes")) this.colorThemes.selectedItem.value = data.colorThemes;
+        if(data.hasOwnProperty("pixelRatio")) this.pixelRatio.deserialize(data.pixelRatio);
     }
 
     getSettingsForRecording() {
         return {
+            format:this.format.selectedItem.value,
             videoBitsPerSecond:this.videoBitsPerSecond.value,
             audioBitsPerSecond:this.audioBitsPerSecond.value,
             videoCodec:this.videoCodecs.selectedItem.value,

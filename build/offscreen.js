@@ -3,6 +3,7 @@ chrome.runtime.onMessage.addListener((message) => {
     switch (message.type) {
       case 'scrollCaptureStartOffscreenRecording':
         startRecording(message);
+        logMimeTypes();
         break;
       case 'scrollCaptureStopOffscreenRecording':
         stopRecording(message);
@@ -50,43 +51,44 @@ async function startRecording(message) {
   const source = output.createMediaStreamSource(media);
   source.connect(output.destination);
 
+  let format = message.format || "webm";
   let videoCodec = message.videoCodec || "vp8";
   let audioCodec = message.audioCodec || "opus";
   let videoBitsPerSecond = message.videoBitsPerSecond || 16;
   let audioBitsPerSecond = message.audioBitsPerSecond || 128;
 
-
   const options = {
-    mimeType: 'video/webm;codecs=' + videoCodec + "," + audioCodec,
+    mimeType: `video/${format};codecs=${videoCodec},${audioCodec}`,
     audioBitsPerSecond: audioBitsPerSecond * 1000,
     videoBitsPerSecond: videoBitsPerSecond * 1000000,
   };
-  if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-    options.mimeType = 'video/webm;codecs=vp8';
-    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-      options.mimeType = 'video/webm;codecs=vp9';
-      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-          options.mimeType = 'video/webm;codecs=h264';
-          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-              options.mimeType = 'video/webm';
-              if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                  options.mimeType = '';
-              }
-          }
-      }
-    }
-  }
+  // if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+  //   options.mimeType = 'video/webm;codecs=vp8';
+  //   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+  //     options.mimeType = 'video/webm;codecs=vp9';
+  //     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+  //         options.mimeType = 'video/webm;codecs=h264';
+  //         if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+  //             options.mimeType = 'video/webm';
+  //             if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+  //                 options.mimeType = '';
+  //             }
+  //         }
+  //     }
+  //   }
+  // }
 
   recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);
   recorder.onstop = () => {
     console.log('offscreen recorder.onstop');
-    const blob = new Blob(data, { type: 'video/webm' });
-    const videoURL = URL.createObjectURL(blob);
-    chrome.runtime.sendMessage({
-        type: 'scrollCaptureVideoURL',
-        videoURL: videoURL
+    const blob = new Blob(data, { type: `video/${format}` });
+    const videoURLMessage = Object.assign({}, message);
+    Object.assign(videoURLMessage, {
+      type: 'scrollCaptureVideoURL',
+      videoURL: URL.createObjectURL(blob)
     });
+    chrome.runtime.sendMessage(videoURLMessage);
     data = [];
   };
   recorder.start();
@@ -109,6 +111,8 @@ function logMimeTypes() {
     "video/webm;codecs=avc1,aac",
     "video/webm;codecs=h264,opus",
     "video/webm;codecs=avc1,opus",
+    "video/webm;codecs=av1,opus",
+    "video/webm;codecs=av1,pcm",
     "video/webm",
     "audio/webm",
     "video/webm;codecs=vp8",
@@ -119,7 +123,12 @@ function logMimeTypes() {
     "video/mp4",
     "video/mp4;codecs=h264",
     "video/mp4;codecs=h264,aac",
-    "video/m4v",
+    "video/mp4;codecs=h264,mp3",
+    "video/x-matroska;codecs=h264,opus",
+    "video/x-matroska;codecs=av1,opus",
+    "video/x-matroska;codecs=avc1,pcm",
+    "video/x-matroska;codecs=vp8,pcm",
+    "video/x-matroska;codecs=vp9,pcm",
   ];
 
   mimeTypes.forEach((mimeType) => {

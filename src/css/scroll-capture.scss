@@ -120,16 +120,21 @@ body[is-capturing="true"] * {
 		}
 	}
 
-	sc-credits {
-		font-size: 0.65em;
-		display: block;
+	.sc-footer {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 
-		a {
-			&:before {
-				content: "Made by Matte";
-				opacity: 0.5;
-			}
+		sc-credits {
+			font-size: 0.65em;
+			display: block;
 		}
+	
+		sc-sponsor {
+			font-size: 0.65em;
+			display: block;
+		}
+	
 	}
 
 	.sc-color-themes {

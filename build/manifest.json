@@ -18,7 +18,6 @@
 		{
 			"resources": [
 				"*.css",
-				"*.css",
 				"*.html",
 				"assets/fonts/*.woff",
 				"assets/fonts/*.woff2",

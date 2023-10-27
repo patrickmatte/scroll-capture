@@ -358,7 +358,7 @@
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
 													<span class="sc-icon fa-solid fa-film"></span>
-													<span class="sc-label">Codecs</span>
+													<span class="sc-label">Format & codecs</span>
 												</span>
 											</span>
 											<span class="sc-tabs"></span>
@@ -368,12 +368,20 @@
 												<div class="sc-field-group">
 													<div class="sc-field">
 														<div class="sc-input sc-select">
+															<span class="sc-icon fa-solid fa-file-code"></span>
+															<select is="ui-select" title="File format" set:provider="scope.settings.format" bind:value="scope.settings.format.selectedItem.value"></select>
+														</div>
+													</div>
+												</div>
+												<div class="sc-field-group">
+													<div class="sc-field">
+														<div class="sc-input sc-select">
 															<span class="sc-icon fa-solid fa-video"></span>
-															<select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
+															<select is="ui-select" title="Video codec" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">
-														<input type="range" min="1" max="256" step="1" title="Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
+														<input type="range" min="1" max="128" step="1" title="Video Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
 														<div class="sc-space">
 															<span class="sc-input-unit" is="ui-text" data-unit="Mbps">{scope.settings.videoBitsPerSecond.value}</span>
 															<span is="ui-text">{scope.settings.videoBitsPerSecond.value}</span>
@@ -384,11 +392,11 @@
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fa-solid fa-volume-up"></span>
-															<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
+															<select is="ui-select" title="Audio codec" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
 														</div>
 													</div>
 													<div class="sc-field">
-														<input type="range" min="16" max="320" step="16" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
+														<input type="range" min="16" max="320" step="16" title="Audio Bitrate" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
 														<div class="sc-space">
 															<span class="sc-input-unit" is="ui-text" data-unit="kbps">{scope.settings.audioBitsPerSecond.value}</span>
 															<span is="ui-text">{scope.settings.audioBitsPerSecond.value}</span>
@@ -404,8 +412,14 @@
 						</div>
 					</div>
 				</div>
-				<div>
-					<sc-credits><a href="http://www.patrickmatte.com" target="_blank"></a></sc-credits>
+				<div class="sc-footer">
+					<sc-credits>
+						<a href="http://www.patrickmatte.com" target="_blank">Made by Matte</a>
+					</sc-credits>
+					<sc-sponsor>
+						<i class="fa-solid fa-heart"></i>
+						<a class="support" href="https://github.com/sponsors/patrickmatte" target="_blank">Sponsor</a>
+					</sc-sponsor>	
 				</div>
 			</div>
 		</div>

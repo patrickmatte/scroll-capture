@@ -43,7 +43,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             dispatchVideoHeight();
             break;
         case "scrollCaptureVideoURL":
-            updateVideo(msg.videoURL);
+            console.log("scrollCaptureVideoURL", msg);
+            updateVideo(msg);
             break;
         }
 });
@@ -64,7 +65,19 @@ function dispatchVideoHeight() {
     });
 }
 
-function updateVideo(videoURL) {
+function updateVideo(message) {
+    console.log("updateVideo", message);
+    const videoURL = message.videoURL;
+    let extension = "webm";
+    switch(message.format) {
+        case "x-matroska":
+            extension = "mkv";
+        break;
+        case "webm":
+        default:
+            extension = "webm";
+        break;
+    }
     player.src = videoURL;
     let date = new Date();
     let ampmTime = timeAMPM(date);
@@ -75,7 +88,7 @@ function updateVideo(videoURL) {
         date: addLeadingZero(date.getDate())
     };
     ampmTime.ampm = ampmTime.ampm.toUpperCase();
-    let videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.webm`;
+    let videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.${extension}`;
 
     let buttons = document.querySelectorAll("a.sc-download-button");
     for (let i = 0; i < buttons.length; i++) {

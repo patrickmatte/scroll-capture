@@ -50,7 +50,7 @@ export function initBackgroundPage() {
 
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    // console.log('chrome.runtime.onMessage msg', msg);
+    console.log('backgorund chrome.runtime.onMessage msg', msg);
     switch (msg.type) {
         case "scrollCaptureStartRecording":
             startRecording(msg);
