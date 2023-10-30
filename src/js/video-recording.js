@@ -43,7 +43,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             dispatchVideoHeight();
             break;
         case "scrollCaptureVideoURL":
-            console.log("scrollCaptureVideoURL", msg);
             updateVideo(msg);
             break;
         }
@@ -66,7 +65,6 @@ function dispatchVideoHeight() {
 }
 
 function updateVideo(message) {
-    console.log("updateVideo", message);
     const videoURL = message.videoURL;
     let extension = "webm";
     switch(message.format) {

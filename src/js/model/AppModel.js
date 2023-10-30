@@ -33,7 +33,6 @@ export default class AppModel extends DataModel {
         // 	new ActionSwipe([new Vector2Data(150, 250), new Vector2Data(400, 450)]),
         // 	new ActionScroll("window", "px", 0, 500),
         // 	new ActionMouseEvent("click", 0, 0),
-        // 	new ActionEval(),
         // 	// new ActionScroll(".scrollpane", "%", 0, 100),
         // 	// new ActionMouseEvent("click", 0, 0),
         // ];

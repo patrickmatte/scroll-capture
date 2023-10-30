@@ -24,31 +24,34 @@ export default class Settings {
 
         window.addEventListener("resize", this.windowResizeHandler);
 
+        this.trackers = {};
+
         this.format = new ArrayData("webm", "x-matroska");
         this.format.selectedItem.value = this.format.value[0];
-        this.format.selectedItem.addEventListener(Data.CHANGE, () => {
+        this.trackers.format = new Throttle(() => {
             sendTrackEventMessage("settings", "format", this.format.selectedItem.value);
         });
 
-        this.videoBitsPerSecondThrottle = new Throttle(() => {
-            sendTrackEventMessage("settings", "videoBitsPerSecond", this.videoBitsPerSecond.value);
-        }, 1000);
         this.videoBitsPerSecond = new NumberData(24);
-        this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.videoBitsPerSecondThrottle.throttle);
+        this.trackers.videoBitsPerSecond = new Throttle(() => {
+            sendTrackEventMessage("settings", "videoBitsPerSecond", this.videoBitsPerSecond.value);
+        });
+
         this.videoCodecs = new ArrayData("av1", "avc1", "h264", "vp8", "vp9");
         this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
-        this.videoCodecs.selectedItem.addEventListener(Data.CHANGE, () => {
+        this.trackers.videoCodecs = new Throttle(() => {
             sendTrackEventMessage("settings", "videoCodec", this.videoCodecs.selectedItem.value);
-       });
+        });
 
-        this.audioBitsPerSecondThrottle = new Throttle(() => {
+
+        this.audioBitsPerSecond = new NumberData(256);
+        this.trackers.audioBitsPerSecond = new Throttle(() => {
             sendTrackEventMessage("settings", "audioBitsPerSecond", this.audioBitsPerSecond.value);
         }, 1000);
-        this.audioBitsPerSecond = new NumberData(256);
-        this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.audioBitsPerSecondThrottle.throttle);
+
         this.audioCodecs = new ArrayData("opus", "pcm");
         this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
-        this.audioCodecs.selectedItem.addEventListener(Data.CHANGE, () => {
+        this.trackers.audioCodecs = new Throttle(() => {
             sendTrackEventMessage("settings", "audioCodec", this.audioCodecs.selectedItem.value);
         });
 
@@ -64,16 +67,38 @@ export default class Settings {
         this.colorThemes.selectedItem.value = "Dark";
         this.switchColorTheme();
         this.colorThemes.selectedItem.addEventListener(Data.CHANGE, ()=> {
-            sendTrackEventMessage("settings", "colorTheme", this.colorThemes.selectedItem.value);
             this.switchColorTheme();
         });
+        this.trackers.colorThemes = new Throttle(() => {
+            sendTrackEventMessage("settings", "colorTheme", this.colorThemes.selectedItem.value);
+        });
 
-        this.pixelRatioThrottle = new Throttle(() => {
-            sendTrackEventMessage("settings", "pixelRatio", this.pixelRatio.value);
-        }, 1000);
         this.pixelRatio = new NumberData(this.devicePixelRatio);
-        this.pixelRatio.addEventListener(Data.CHANGE, this.pixelRatioThrottle.throttle);
+        this.trackers.pixelRatio = new Throttle(() => {
+            sendTrackEventMessage("settings", "pixelRatio", this.pixelRatio.value);
+        });
 
+        this.enableTracking();
+    }
+
+    enableTracking() {
+        this.format.selectedItem.addEventListener(Data.CHANGE, this.trackers.format.throttle);
+        this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.trackers.videoBitsPerSecond.throttle);
+        this.videoCodecs.selectedItem.addEventListener(Data.CHANGE, this.trackers.videoCodecs.throttle);
+        this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.trackers.audioBitsPerSecond.throttle);
+        this.audioCodecs.selectedItem.addEventListener(Data.CHANGE, this.trackers.audioCodecs.throttle);
+        this.colorThemes.selectedItem.addEventListener(Data.CHANGE, this.trackers.colorThemes.throttle);
+        this.pixelRatio.addEventListener(Data.CHANGE, this.trackers.pixelRatio.throttle);
+    }
+
+    disableTracking() {
+        this.format.selectedItem.removeEventListener(Data.CHANGE, this.trackers.format.throttle);
+        this.videoBitsPerSecond.removeEventListener(Data.CHANGE, this.trackers.videoBitsPerSecond.throttle);
+        this.videoCodecs.selectedItem.removeEventListener(Data.CHANGE, this.trackers.videoCodecs.throttle);
+        this.audioBitsPerSecond.removeEventListener(Data.CHANGE, this.trackers.audioBitsPerSecond.throttle);
+        this.audioCodecs.selectedItem.removeEventListener(Data.CHANGE, this.trackers.audioCodecs.throttle);
+        this.colorThemes.selectedItem.removeEventListener(Data.CHANGE, this.trackers.colorThemes.throttle);
+        this.pixelRatio.removeEventListener(Data.CHANGE, this.trackers.pixelRatio.throttle);
     }
 
     windowResizeHandler() {
@@ -84,7 +109,6 @@ export default class Settings {
     }
 
     windowSizeChangeHandler() {
-        console.log('windowSizeChangeHandler', this.windowSize);
         app.model.sendMessage({ type: "scrollCaptureResizeWindow", width: this.windowSize.x.value, height: this.windowSize.y.value });
    }
 
@@ -123,6 +147,7 @@ export default class Settings {
 
     deserialize(data) {
         if (!data) return;
+        this.disableTracking();
         if(data.hasOwnProperty("position")) this.position.deserialize(data.position);
         if(data.hasOwnProperty("format")) this.format.selectedItem.deserialize(data.format);
         if(data.hasOwnProperty("videoBitsPerSecond")) this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
@@ -131,10 +156,11 @@ export default class Settings {
         if(data.hasOwnProperty("audioCodec")) this.audioCodecs.selectedItem.deserialize(data.audioCodec);
         if(data.hasOwnProperty("colorThemes")) this.colorThemes.selectedItem.value = data.colorThemes;
         if(data.hasOwnProperty("pixelRatio")) this.pixelRatio.deserialize(data.pixelRatio);
+        this.enableTracking();
     }
 
     getSettingsForRecording() {
-        return {
+        const settings = {
             format:this.format.selectedItem.value,
             videoBitsPerSecond:this.videoBitsPerSecond.value,
             audioBitsPerSecond:this.audioBitsPerSecond.value,
@@ -144,6 +170,7 @@ export default class Settings {
             tabWidth: this.windowSize.x.value,
             tagHeight: this.windowSize.y.value
         }
+        return settings;
     }
 
 }

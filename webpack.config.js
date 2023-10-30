@@ -27,7 +27,8 @@ module.exports = (env, argv) => {
 		entry: {
 			"content": ["./js/main.js", "./css/content.scss"],
 			"background": [`./js/background-${argv.mode}.js`],
-			"video-recording": ["./js/video-recording.js"]
+			"video-recording": ["./js/video-recording.js"],
+			"offscreen": ["./js/offscreen.js"]
 		},
 		target: 'web',
 		watch: isDev,

@@ -12,7 +12,7 @@ export default class PlayRecordState extends PlayState {
     }
 
     show() {
-        sendTrackEventMessage("record-actions-length", app.model.actions.value.length.toString());
+        sendTrackEventMessage("record_actions_length", app.model.actions.value.length.toString());
         if (app.model.actions.value.length < 1) {
             this.timeout = new ActionWait();
             this.timeout.delay.value = 60 * 5;

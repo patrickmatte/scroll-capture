@@ -1,5 +1,5 @@
-// import { initAnalytics } from "./model/GA";
+import { initAnalytics } from "./analytics";
 import { initBackgroundPage } from "./background";
 
-// initAnalytics("UA-161404627-2");
+initAnalytics('G-7064XKF42S', 'oNskEvShRDGc0FL2AXyoVQ');
 initBackgroundPage();
