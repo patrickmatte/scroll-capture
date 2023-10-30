@@ -1,5 +1,4 @@
 import Expression from "../data/Expression";
-// import { transformLiterals } from "../utils/transformLiterals";
 
 export function attributeDirective(component) {
     let element = component.element;
@@ -10,7 +9,6 @@ export function attributeDirective(component) {
             const callback = (value) => {
                 component.setAttribute(attribute.name, value);
             }
-            // component.attributes[attribute.name] = new Expression( transformLiterals("`" + attributeValue + "`"), component, callback);
             component.attributes[attribute.name] = new Expression("`" + attributeValue + "`", component, callback);
         }
     }
