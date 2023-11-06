@@ -8,6 +8,8 @@
 	border-radius: $borderRadius;
 	margin: 0;
 	box-sizing: border-box;
+	visibility: visible !important;
+	pointer-events: visible;
 
 	* {
 		text-transform: none;
@@ -22,12 +24,15 @@
 		-webkit-font-smoothing: antialiased;
 		-webkit-text-size-adjust: none;
 		position: relative;
-		visibility: inherit;
+		visibility: visible !important;
 		outline: 0;
+		pointer-events: visible;
 
 		&:before,
 		&:after {
 			box-sizing: border-box;
+			visibility: visible !important;
+			pointer-events: visible;
 		}
 	}
 
@@ -74,7 +79,7 @@
 	}
 	
 	a, button {
-		color: inherit;
+		color: inherit !important;
 		margin: 0;
 		padding: 0;
 		font: inherit;
@@ -113,6 +118,7 @@
 		}
 
 		&:hover {
+			background: transparent;
 			.sc-icon {
 				opacity: 1;
 			}

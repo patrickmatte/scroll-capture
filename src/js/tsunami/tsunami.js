@@ -3,8 +3,16 @@ import evaluate from 'simple-evaluate';
 const classes = {};
 
 export function safeEval(context, expression, option = null) {
-  // console.log('safeEval expression=', expression, context);
-  return evaluate(context, expression);
+  if(context == null || expression == null) return null;
+  let value = null;
+  try {
+    value = evaluate(context, expression);
+  } catch(e) {
+    console.log('sc_error expression =', expression);
+    // console.log('safeEval context=', context);  
+    // console.log(e);
+  }
+  return value;
 }
 
 export function getProperty(path, scope, debug = false) {

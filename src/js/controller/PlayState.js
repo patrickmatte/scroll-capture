@@ -27,7 +27,8 @@ export default class PlayState extends Branch {
             let promise = action.triggerDelay();
             promise.then(() => this.actionComplete());
         } else {
-            this.allComplete();
+            // this.allComplete();
+            awaitTimeout(0.5).then(() => this.allComplete());
         }
     }
 
@@ -37,7 +38,8 @@ export default class PlayState extends Branch {
             app.model.actions.selectedIndex.value = (app.model.actions.selectedIndex.value + 1);
             this.triggerAction();
         } else {
-            this.allComplete();
+            // this.allComplete();
+            awaitTimeout(0.5).then(() => this.allComplete());
         }
     }
 
