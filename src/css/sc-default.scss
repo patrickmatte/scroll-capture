@@ -1,3 +1,17 @@
+body[data-sc-showcursor="false"] {
+	cursor: none;
+
+	* {
+		cursor: none;
+
+		&:hover {
+			cursor: none;
+		}
+	}
+}
+
+
+
 .sc-default {
 	display: block;
 	font-family: Menlo, 'Courier New', Courier, monospace !important;
@@ -202,14 +216,26 @@
 			width: 0;
 		}
 
-		.sc-icon {
-			display: none;
-			margin-right: 0.5em;
+		.sc-radio-content {
+			.sc-icon {	
+				&::before {
+					content: "\f070";
+				}
+			}
+
+			.sc-radio-label {
+				margin: 0;
+			}
 		}
 
-		input:checked ~ .sc-icon {
-			display: inline-block;
+		input:checked ~ .sc-radio-content {
+			.sc-icon {
+				&::before {
+					content: "\f06e";
+				}
+			}
 		}
+
 	}
 
 	*[data-visible="false"] {

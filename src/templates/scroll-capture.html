@@ -241,6 +241,7 @@
 								</div>
 							</div>
 
+
 							<div class="sc-section sc-fields" is="sc-settings">
 								<div>
 									<div class="sc-window">
@@ -256,7 +257,6 @@
 										<div class="sc-window-content" is="ui-component">
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field">
-													<!-- <span class="sc-label">Theme:</span> -->
 													<!-- <div class="sc-color-themes" is="ui-list" set:provider="scope.settings.colorThemes">
 														<template>
 															<label class="sc-radio">
@@ -309,7 +309,7 @@
 										</div>
 									</div>
 								</div>
-								<div data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
+								<!-- <div data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
 									<div class="sc-window">
 										<div class="sc-title">
 											<span class="sc-tabs">
@@ -323,6 +323,9 @@
 										<div class="sc-window-content" is="ui-component">
 											<div class="sc-fields" is="ui-component">
 												<div class="sc-field-group">
+													<div class="sc-space">
+														device pixel ratio
+													</div>
 													<div class="sc-field">
 														<input type="range" min="1" max="{scope.settings.devicePixelRatio}" step="0.01" title="devicePixelRatio" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
 														<div class="sc-space">
@@ -334,14 +337,64 @@
 											</div>
 										</div>
 									</div>
+								</div> -->
+								<div>
+									<div class="sc-window">
+										<div class="sc-title">
+											<span class="sc-tabs">
+												<span class="sc-tab sc-title-tab">
+													<span class="sc-icon fa-solid fa-record-vinyl"></span>
+													<span class="sc-label">Recording Options</span>
+												</span>
+											</span>
+											<span class="sc-tabs"></span>
+										</div>
+										<div class="sc-window-content" is="ui-component">
+											<div class="sc-fields" is="ui-component">
+
+												<div class="sc-field">
+													<span class="sc-space">
+														<span class="sc-icon fa-solid fa-arrow-pointer"></span>
+														<span class="sc-label">Cursor</span>
+													</span>
+													<label class="sc-input sc-radio">
+														<input type="checkbox" name="showCursor" bind:model="scope.settings.showCursor.value" is="ui-input" data-debug="true" />
+														<span class="sc-radio-content">
+															<span class="sc-icon fa-solid"></span>
+															<span class="sc-radio-label">
+																<span is="ui-component" data-visible="{scope.settings.showCursor.value}">Show</span>
+																<span is="ui-component" data-visible="{!scope.settings.showCursor.value}">Hide</span>
+															</span>
+														</span>
+													</label>
+												</div>
+
+												<div class="sc-field-group" data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
+													<div class="sc-space">													
+														<span class="sc-icon fa-solid fa-table-cells"></span>
+														<span class="sc-label">Pixel Ratio</span>
+													</div>
+													<div class="sc-field">
+														<input type="range" min="1" max="{scope.settings.devicePixelRatio}" step="0.01" title="devicePixelRatio" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
+														<div class="sc-space">
+															<span class="sc-input-unit" is="ui-text" data-unit="x">{scope.settings.pixelRatio.value}</span>
+															<span is="ui-text">{scope.settings.pixelRatio.value}</span>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
 								</div>
+
 								<div>
 									<div class="sc-window">
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
 													<span class="sc-icon fa-solid fa-film"></span>
-													<span class="sc-label">Format & codecs</span>
+													<span class="sc-label">Video Format</span>
 												</span>
 											</span>
 											<span class="sc-tabs"></span>

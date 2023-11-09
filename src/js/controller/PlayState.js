@@ -12,7 +12,9 @@ export default class PlayState extends Branch {
 
     show() {
         this.isPlaying = true;
-        
+
+        document.body.setAttribute("data-sc-showcursor", app.model.settings.showCursor.value);
+
         this.router.redirect("default", () => { return this.startLocation });
 
         app.model.save();
@@ -50,6 +52,7 @@ export default class PlayState extends Branch {
     }
 
     hide() {
+        document.body.removeAttribute("data-sc-showcursor");
         this.isPlaying = false;
         return super.hide();
     }

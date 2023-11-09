@@ -45,7 +45,6 @@ export default class UIInput extends UIComponent {
     }
 
     set model(value) {
-        if(this.debug) console.log("UIInput.model", value, "value", this.element.value);
         switch (this.element.type) {
             case "checkbox":
                 this.element.checked = value;
@@ -60,6 +59,7 @@ export default class UIInput extends UIComponent {
                 this.element.value = value;
                 break;
         }
+        if(this.debug) console.log("UIInput.model", value, "value", this.element.value);
         super.model = value;
     }
 

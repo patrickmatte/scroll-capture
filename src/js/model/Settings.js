@@ -7,11 +7,14 @@ import { app } from "../main";
 import { sendTrackEventMessage } from "./GABridge";
 import Throttle from "../tsunami/utils/Throttle";
 import NumberData from "../tsunami/data/NumberData";
+import ChangeEvent from "../tsunami/ChangeEvent";
 
 export default class Settings {
 
     constructor() {
         this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
+
+        this.showCursor = new BooleanData(true);
 
         this.position = new Vector2Data(50, 50);
         this.devicePixelRatio = window.devicePixelRatio || 1;
@@ -134,6 +137,7 @@ export default class Settings {
 
     serialize() {
         return {
+            showCursor: this.showCursor.serialize(),
             position: this.position.serialize(),
             format: this.format.selectedItem.serialize(),
             videoBitsPerSecond: this.videoBitsPerSecond.serialize(),
@@ -148,6 +152,7 @@ export default class Settings {
     deserialize(data) {
         if (!data) return;
         this.disableTracking();
+        if(data.hasOwnProperty("showCursor")) this.showCursor.deserialize(data.showCursor);
         if(data.hasOwnProperty("position")) this.position.deserialize(data.position);
         if(data.hasOwnProperty("format")) this.format.selectedItem.deserialize(data.format);
         if(data.hasOwnProperty("videoBitsPerSecond")) this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);

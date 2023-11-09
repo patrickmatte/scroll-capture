@@ -18,13 +18,10 @@ export default class PlayRecordState extends PlayState {
             this.timeout.delay.value = 60 * 5;
             app.model.actions.addAction(this.timeout);
         }
-        let promise = awaitTimeout(0.25).then(() => {
-            const message = app.model.settings.getSettingsForRecording();
-            message.type = "scrollCaptureStartRecording";
-            app.model.sendMessage(message);
-            return super.show();
-        });
-        return promise;
+        const message = app.model.settings.getSettingsForRecording();
+        message.type = "scrollCaptureStartRecording";
+        app.model.sendMessage(message);
+        return super.show();
     }
 
     allComplete() {
