@@ -120,14 +120,14 @@
 															<div class="sc-action sc-fields-list" is="action-tween">
 																<div class="sc-field">
 																	<span class="sc-input" title="ScrollLeft">
-																		<span class="sc-icon">X</span>
+																		<span class="sc-icon fa-solid fa-x"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.unitX.value}</span>
 																			<input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
 																		</span>
 																	</span>
 																	<span class="sc-input" title="ScrollTop">
-																		<span class="sc-icon">Y</span>
+																		<span class="sc-icon fa-solid fa-y"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.unitY.value}</span>
 																			<input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitY.value" on:focus="scope.data.doScroll()" />
@@ -148,14 +148,14 @@
 																	<template>
 																		<div class="sc-field">
 																			<span class="sc-input" title="PageX">
-																				<span class="sc-icon">X</span>
+																				<span class="sc-icon fa-solid fa-x"></span>
 																				<span class="sc-input-group">
 																					<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.x.value}</span>
 																					<input type="number" min="0" placeholder="0" step="1" is="ui-input" bind:model="scope.data.x.value" />
 																				</span>
 																			</span>
 																			<span class="sc-input" title="PageY">
-																				<span class="sc-icon">Y</span>
+																				<span class="sc-icon fa-solid fa-y"></span>
 																				<span class="sc-input-group">
 																					<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.y.value}</span>
 																					<input type="number" min="0" placeholder="0" step="1" is="ui-input" bind:model="scope.data.y.value" />
@@ -170,14 +170,14 @@
 															<div class="sc-action sc-fields-list">
 																<div class="sc-field">
 																	<span class="sc-input">
-																		<span class="sc-icon">X</span>
+																		<span class="sc-icon fa-solid fa-x"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.x.value}</span>
 																			<input type="number" step="1" min="0" placeholder="0" title="PageX" is="ui-input" bind:model="scope.data.x.value" />
 																		</span>
 																	</span>
 																	<span class="sc-input">
-																		<span class="sc-icon">Y</span>
+																		<span class="sc-icon fa-solid fa-y"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.y.value}</span>
 																			<input type="number" step="1" min="0" placeholder="0" title="PageY" is="ui-input" bind:model="scope.data.y.value" />
@@ -210,6 +210,13 @@
 																		</span>
 																	</span>
 																	<span class="sc-space"></span>
+																</div>
+															</div>
+														</template>
+														<template data-type="ActionEval">
+															<div class="sc-action sc-fields-list">
+																<div class="sc-field">
+																	<div class="sc-text">This action is incompatible with Chrome Extension Manifest V3, please remove it.</div>
 																</div>
 															</div>
 														</template>
@@ -248,14 +255,30 @@
 										<div class="sc-title">
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fa-solid fa-adjust"></span>
-													<span class="sc-label">Color theme</span>
+													<span class="sc-icon fa-solid fa-window-maximize"></span>
+													<span class="sc-label">General</span>
 												</span>
 											</span>
 											<span class="sc-tabs"></span>
 										</div>
 										<div class="sc-window-content" is="ui-component">
 											<div class="sc-fields" is="ui-component">
+												<div class="sc-field-group" data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
+													<div class="sc-space">
+														<span class="sc-icon fa-solid fa-table-cells"></span>
+														<span class="sc-label">Pixel Ratio</span>
+													</div>
+													<div class="sc-field" >
+														<span class="sc-input" title="devicePixelRatio">
+															<span class="sc-input-group">
+																<span class="sc-input-unit" is="ui-text" data-unit="x">{scope.settings.pixelRatio.value}</span>
+																<input type="number" step="0.1" min="1" max="{scope.settings.devicePixelRatio}" placeholder="{scope.settings.devicePixelRatio}" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
+															</span>
+														</span>
+														<input class="sc-input" type="range" min="1" max="{scope.settings.devicePixelRatio}" step="0.1" title="devicePixelRatio" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
+													</div>
+												</div>
+
 												<div class="sc-field">
 													<!-- <div class="sc-color-themes" is="ui-list" set:provider="scope.settings.colorThemes">
 														<template>
@@ -266,99 +289,46 @@
 															</label>
 														</template>
 													</div> -->
+													<div class="sc-space">
+														<span class="sc-icon fa-solid fa-adjust"></span>
+														<span class="sc-label">Color theme</span>
+													</div>
 													<div class="sc-input sc-select">
 														<span class="sc-icon fa-solid" data-theme="{scope.settings.colorThemes.selectedItem.value}" is="ui-component"></span>
 														<select is="ui-select" set:provider="scope.settings.colorThemes" bind:value="scope.settings.colorThemes.selectedItem.value"></select>
 													</div>
-													<div class="sc-space"></div>
 												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div>
-									<div class="sc-window">
-										<div class="sc-title">
-											<span class="sc-tabs">
-												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fa-solid fa-window-maximize"></span>
-													<span class="sc-label">Window size</span>
-												</span>
-											</span>
-											<span class="sc-tabs"></span>
-										</div>
-										<div class="sc-window-content" is="ui-component">
-											<div class="sc-fields" is="ui-component">
-												<div class="sc-field">
-													<span class="sc-input">
-														<span class="sc-icon">W</span>
-														<span class="sc-input-group">
-															<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.settings.windowSize.x.value}</span>
-															<input type="number" step="1" min="375" placeholder="375" title="PageX" is="ui-input" bind:model="scope.settings.windowSize.x.value" />
-														</span>
-													</span>
-													<span class="sc-input">
-														<span class="sc-icon">H</span>
-														<span class="sc-input-group">
-															<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.settings.windowSize.y.value}</span>
-															<input type="number" step="1" min="375" placeholder="375" title="PageY" is="ui-input" bind:model="scope.settings.windowSize.y.value" />
-														</span>
-													</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- <div data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
-									<div class="sc-window">
-										<div class="sc-title">
-											<span class="sc-tabs">
-												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fa-solid fa-table-cells"></span>
-													<span class="sc-label">Device Pixel Ratio</span>
-												</span>
-											</span>
-											<span class="sc-tabs"></span>
-										</div>
-										<div class="sc-window-content" is="ui-component">
-											<div class="sc-fields" is="ui-component">
+
 												<div class="sc-field-group">
 													<div class="sc-space">
-														device pixel ratio
+														<span class="sc-icon fa-solid fa-window-maximize"></span>
+														<span class="sc-label">Window size</span>
 													</div>
 													<div class="sc-field">
-														<input type="range" min="1" max="{scope.settings.devicePixelRatio}" step="0.01" title="devicePixelRatio" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
-														<div class="sc-space">
-															<span class="sc-input-unit" is="ui-text" data-unit="x">{scope.settings.pixelRatio.value}</span>
-															<span is="ui-text">{scope.settings.pixelRatio.value}</span>
-														</div>
+														<span class="sc-input">
+															<span class="sc-icon fa-solid fa-left-right"></span>
+															<span class="sc-input-group">
+																<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.settings.windowSize.x.value}</span>
+																<input type="number" step="1" min="375" placeholder="375" title="PageX" is="ui-input" bind:model="scope.settings.windowSize.x.value" />
+															</span>
+														</span>
+														<span class="sc-input">
+															<span class="sc-icon fa-solid fa-up-down"></span>
+															<span class="sc-input-group">
+																<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.settings.windowSize.y.value}</span>
+																<input type="number" step="1" min="375" placeholder="375" title="PageY" is="ui-input" bind:model="scope.settings.windowSize.y.value" />
+															</span>
+														</span>
 													</div>
 												</div>
-											</div>
-										</div>
-									</div>
-								</div> -->
-								<div>
-									<div class="sc-window">
-										<div class="sc-title">
-											<span class="sc-tabs">
-												<span class="sc-tab sc-title-tab">
-													<span class="sc-icon fa-solid fa-record-vinyl"></span>
-													<span class="sc-label">Recording Options</span>
-												</span>
-											</span>
-											<span class="sc-tabs"></span>
-										</div>
-										<div class="sc-window-content" is="ui-component">
-											<div class="sc-fields" is="ui-component">
 
-												<div class="sc-field">
-													<span class="sc-space">
+												<div class="sc-field" title="Cursor">
+													<div class="sc-space">
 														<span class="sc-icon fa-solid fa-arrow-pointer"></span>
 														<span class="sc-label">Cursor</span>
-													</span>
-													<label class="sc-input sc-radio">
-														<input type="checkbox" name="showCursor" bind:model="scope.settings.showCursor.value" is="ui-input" data-debug="true" />
+													</div>
+													<label class="sc-input sc-radio sc-radio-visibility">
+														<input type="checkbox" name="showCursor" bind:model="scope.settings.showCursor.value" is="ui-input"/>
 														<span class="sc-radio-content">
 															<span class="sc-icon fa-solid"></span>
 															<span class="sc-radio-label">
@@ -369,18 +339,21 @@
 													</label>
 												</div>
 
-												<div class="sc-field-group" data-visible="{scope.settings.devicePixelRatio > 1}" is="ui-component">
-													<div class="sc-space">													
-														<span class="sc-icon fa-solid fa-table-cells"></span>
-														<span class="sc-label">Pixel Ratio</span>
+												<div class="sc-field" title="Scrollbars">
+													<div class="sc-space">
+														<span class="sc-icon fa-solid fa-scroll"></span>
+														<span class="sc-label">Scrollbars</span>
 													</div>
-													<div class="sc-field">
-														<input type="range" min="1" max="{scope.settings.devicePixelRatio}" step="0.01" title="devicePixelRatio" is="ui-input" bind:model="scope.settings.pixelRatio.value" />
-														<div class="sc-space">
-															<span class="sc-input-unit" is="ui-text" data-unit="x">{scope.settings.pixelRatio.value}</span>
-															<span is="ui-text">{scope.settings.pixelRatio.value}</span>
-														</div>
-													</div>
+													<label class="sc-input sc-radio sc-radio-visibility">
+														<input type="checkbox" name="showScrollbars" bind:model="scope.settings.showScrollbars.value" is="ui-input"/>
+														<span class="sc-radio-content">
+															<span class="sc-icon fa-solid"></span>
+															<span class="sc-radio-label">
+																<span is="ui-component" data-visible="{scope.settings.showScrollbars.value}">Show</span>
+																<span is="ui-component" data-visible="{!scope.settings.showScrollbars.value}">Hide</span>
+															</span>
+														</span>
+													</label>
 												</div>
 
 											</div>
@@ -394,49 +367,56 @@
 											<span class="sc-tabs">
 												<span class="sc-tab sc-title-tab">
 													<span class="sc-icon fa-solid fa-film"></span>
-													<span class="sc-label">Video Format</span>
+													<span class="sc-label">Video</span>
 												</span>
 											</span>
 											<span class="sc-tabs"></span>
 										</div>
 										<div class="sc-window-content" is="ui-component">
 											<div class="sc-fields" is="ui-component">
-												<div class="sc-field-group">
-													<div class="sc-field">
-														<div class="sc-input sc-select">
-															<span class="sc-icon fa-solid fa-file-code"></span>
-															<select is="ui-select" title="File format" set:provider="scope.settings.format" bind:value="scope.settings.format.selectedItem.value"></select>
-														</div>
+	
+												<div class="sc-field" title="File Format">
+													<div class="sc-space">
+														<span class="sc-icon fa-solid fa-file"></span>
+														<span class="sc-label">File Format</span>
+													</div>
+													<div class="sc-input sc-select">
+														<select is="ui-select" set:provider="scope.settings.format" bind:value="scope.settings.format.selectedItem.value"></select>
 													</div>
 												</div>
+
 												<div class="sc-field-group">
-													<div class="sc-field">
+													<div class="sc-field" title="Video Codec">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fa-solid fa-video"></span>
-															<select is="ui-select" title="Video codec" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
+															<select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
 														</div>
 													</div>
-													<div class="sc-field">
-														<input type="range" min="1" max="128" step="1" title="Video Bitrate" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
-														<div class="sc-space">
-															<span class="sc-input-unit" is="ui-text" data-unit="Mbps">{scope.settings.videoBitsPerSecond.value}</span>
-															<span is="ui-text">{scope.settings.videoBitsPerSecond.value}</span>
-														</div>
+													<div class="sc-field" title="Video Bitrate">
+														<span class="sc-input">
+															<span class="sc-input-group">
+																<span class="sc-input-unit" is="ui-text" data-unit="Mbps">{scope.settings.videoBitsPerSecond.value}</span>
+																<input type="number" min="1" max="128" step="1" placeholder="24" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
+															</span>
+														</span>
+														<input type="range" min="1" max="128" step="1" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
 													</div>
 												</div>
-												<div class="sc-field-group">
+												<div class="sc-field-group" title="Audio Codec">
 													<div class="sc-field">
 														<div class="sc-input sc-select">
 															<span class="sc-icon fa-solid fa-volume-up"></span>
-															<select is="ui-select" title="Audio codec" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
+															<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
 														</div>
 													</div>
-													<div class="sc-field">
-														<input type="range" min="16" max="320" step="16" title="Audio Bitrate" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
-														<div class="sc-space">
-															<span class="sc-input-unit" is="ui-text" data-unit="kbps">{scope.settings.audioBitsPerSecond.value}</span>
-															<span is="ui-text">{scope.settings.audioBitsPerSecond.value}</span>
-														</div>
+													<div class="sc-field"" title="Audio Bitrate">
+														<span class="sc-input">
+															<span class="sc-input-group">
+																<span class="sc-input-unit" is="ui-text" data-unit="kbps">{scope.settings.audioBitsPerSecond.value}</span>
+																<input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
+															</span>
+														</span>
+														<input type="range" min="16" max="320" step="16" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
 													</div>
 												</div>
 											</div>

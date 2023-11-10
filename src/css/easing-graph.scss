@@ -1,16 +1,18 @@
 .sc-default {
     .easing-graph-container {
-		display: inline-block;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 		flex-grow: 1;
-		flex-shrink: 0;
-		padding: 0.5em 3.4em;
+		flex-shrink: 1;
+		height: 100%;
 		border-radius: $borderRadius;
 		background-color: $inputColorDark;
 	}
 
 	[is="easing-graph"] {
-		width: 100%;
-		padding-bottom: 100%;
+		width: 60px;
+		height: 60px;
 		display: inline-block;
 		border-left: 1px dotted rgba(255, 255, 255, 0.5);
 		border-bottom: 1px dotted rgba(255, 255, 255, 0.5);

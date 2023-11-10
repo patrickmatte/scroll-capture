@@ -13,7 +13,8 @@ export default class PlayState extends Branch {
     show() {
         this.isPlaying = true;
 
-        document.body.setAttribute("data-sc-showcursor", app.model.settings.showCursor.value);
+        document.documentElement.setAttribute("data-sc-cursor", app.model.settings.showCursor.value);
+        document.documentElement.setAttribute("data-sc-scrollbars", app.model.settings.showScrollbars.value);
 
         this.router.redirect("default", () => { return this.startLocation });
 
@@ -52,7 +53,8 @@ export default class PlayState extends Branch {
     }
 
     hide() {
-        document.body.removeAttribute("data-sc-showcursor");
+        document.documentElement.removeAttribute("data-sc-cursor");
+        document.documentElement.removeAttribute("data-sc-scrollbars");
         this.isPlaying = false;
         return super.hide();
     }

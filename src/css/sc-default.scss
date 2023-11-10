@@ -1,17 +1,3 @@
-body[data-sc-showcursor="false"] {
-	cursor: none;
-
-	* {
-		cursor: none;
-
-		&:hover {
-			cursor: none;
-		}
-	}
-}
-
-
-
 .sc-default {
 	display: block;
 	font-family: Menlo, 'Courier New', Courier, monospace !important;
@@ -216,22 +202,24 @@ body[data-sc-showcursor="false"] {
 			width: 0;
 		}
 
-		.sc-radio-content {
-			.sc-icon {	
-				&::before {
-					content: "\f070";
-				}
-			}
-
-			.sc-radio-label {
-				margin: 0;
-			}
+		.sc-radio-label {
+			margin: 0;
 		}
 
-		input:checked ~ .sc-radio-content {
-			.sc-icon {
-				&::before {
-					content: "\f06e";
+		&.sc-radio-visibility {
+			.sc-radio-content {
+				.sc-icon {	
+					&::before {
+						content: "\f070";
+					}
+				}
+			}
+	
+			input:checked ~ .sc-radio-content {
+				.sc-icon {
+					&::before {
+						content: "\f06e";
+					}
 				}
 			}
 		}
@@ -336,6 +324,7 @@ body[data-sc-showcursor="false"] {
 			display: inline-flex;
 			align-items: center;
 			justify-content: flex-start;
+			width: 100%;
 
 			& > * {
 				margin-left: 0.25em;
@@ -439,5 +428,10 @@ body[data-sc-showcursor="false"] {
 			left: 0;
 			top: 0;
 		}
+	}
+
+	.sc-text {
+		line-height: 1.2;
+		padding: 0.5em;
 	}
 }

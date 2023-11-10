@@ -2,6 +2,33 @@ body[is-capturing="true"] * {
 	cursor: url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png'), auto !important;
 }
 
+html[data-sc-cursor="false"] {
+	cursor: none;
+
+	* {
+		cursor: none;
+
+		&:hover {
+			cursor: none;
+		}
+	}
+}
+
+html[data-sc-scrollbars="false"] {
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	::-webkit-scrollbar {
+		display: none;
+	}
+	
+	/* Hide scrollbar for IE, Edge and Firefox */
+	body {
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+	}
+}
+
+
+  
 .sc-default {
 
 	.sc-logo {
@@ -34,6 +61,10 @@ body[is-capturing="true"] * {
 
 			&:last-child {
 				margin-right: 0;
+			}
+
+			&[data-type="ActionEval"] {
+				display: none;
 			}
 		}
 	}
@@ -157,7 +188,7 @@ body[is-capturing="true"] * {
 		position: fixed !important;
 		right: 4px;
 		top: 4px;
-		width: 375px;
+		width: 420px;
 		display: none;
 		flex-direction: column;
 		line-height: 1;
