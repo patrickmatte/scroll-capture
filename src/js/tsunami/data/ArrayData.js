@@ -1,12 +1,12 @@
-import Data from './Data';
-import NumberData from './NumberData';
-import ObjectData from './ObjectData';
-import BaseEvent from '../events';
-import ChangeEvent from '../ChangeEvent';
+import Data from "./Data";
+import NumberData from "./NumberData";
+import ObjectData from "./ObjectData";
+import BaseEvent from "../events";
+import ChangeEvent from "../ChangeEvent";
 
 export default class ArrayData extends Data {
   static get ITEM_CHANGE() {
-    return 'item-change';
+    return "item-change";
   }
 
   constructor() {
@@ -23,7 +23,7 @@ export default class ArrayData extends Data {
     });
     this.length.value = arguments.length;
     this._value = [];
-    this.selectedItem = new ObjectData();
+    this.selectedItem = new ObjectData(null);
     this.selectedItem.addEventListener(Data.CHANGE, this.selectedItemChange);
     this.selectedIndex = new NumberData();
     this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
@@ -39,7 +39,10 @@ export default class ArrayData extends Data {
   }
 
   updateSelectedIndex() {
-    this.selectedIndex.removeEventListener(Data.CHANGE, this.selectedIndexChange);
+    this.selectedIndex.removeEventListener(
+      Data.CHANGE,
+      this.selectedIndexChange
+    );
     const index = this.value.indexOf(this.selectedItem.value);
     this.selectedIndex.value = index;
     this.selectedIndex.addEventListener(Data.CHANGE, this.selectedIndexChange);
@@ -131,7 +134,7 @@ export default class ArrayData extends Data {
     }
     this.length.value = this._value.length;
 
-    ChangeEvent.dispatch(this, 'value', this.value);
+    ChangeEvent.dispatch(this, "value", this.value);
     this.dataItemChangeHandler(null);
 
     if (this.includes(this.selectedItem.value)) {
@@ -170,7 +173,7 @@ export default class ArrayData extends Data {
       item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
     }
     this.length.value = this._value.length;
-    const event = new BaseEvent('remove', {
+    const event = new BaseEvent("remove", {
       value: [item],
       index: this.value.length,
       total: 1,
@@ -199,7 +202,7 @@ export default class ArrayData extends Data {
       }
     }
     if (added.length > 0) {
-      const event = new BaseEvent('add', {
+      const event = new BaseEvent("add", {
         value: added,
         index: previousLength,
         total: arguments.length,
@@ -211,7 +214,7 @@ export default class ArrayData extends Data {
 
   reverse() {
     this._value.reverse();
-    const event = new BaseEvent('reverse', { value: this._value });
+    const event = new BaseEvent("reverse", { value: this._value });
     this.dispatchEvent(event);
     this.updateSelectedIndex();
   }
@@ -222,7 +225,7 @@ export default class ArrayData extends Data {
       item.removeEventListener(Data.CHANGE, this.dataItemChangeHandler);
     }
     this.length.value = this._value.length;
-    const event = new BaseEvent('remove', {
+    const event = new BaseEvent("remove", {
       value: [item],
       index: 0,
       total: 1,
@@ -240,14 +243,14 @@ export default class ArrayData extends Data {
     const temp = this._value[index_A];
     this._value[index_A] = this._value[index_B];
     this._value[index_B] = temp;
-    const event = new BaseEvent('sort', { value: this._value });
+    const event = new BaseEvent("sort", { value: this._value });
     this.dispatchEvent(event);
     this.updateSelectedIndex();
   }
 
   sort(compareFunction) {
     this._value.sort(compareFunction);
-    const event = new BaseEvent('sort', { value: this._value });
+    const event = new BaseEvent("sort", { value: this._value });
     this.dispatchEvent(event);
     this.updateSelectedIndex();
   }
@@ -273,7 +276,7 @@ export default class ArrayData extends Data {
     }
     const index = arguments[0];
     if (elements.length > 0) {
-      const event = new BaseEvent('remove', {
+      const event = new BaseEvent("remove", {
         value: elements,
         index: index,
         total: elements.length,
@@ -281,7 +284,7 @@ export default class ArrayData extends Data {
       this.dispatchEvent(event);
     }
     if (added.length > 0) {
-      const event = new BaseEvent('add', {
+      const event = new BaseEvent("add", {
         value: added,
         index: index,
         total: added.length,
@@ -319,7 +322,7 @@ export default class ArrayData extends Data {
       }
     }
     if (added.length > 0) {
-      const event = new BaseEvent('add', {
+      const event = new BaseEvent("add", {
         value: added,
         index: 0,
         total: arguments.length,

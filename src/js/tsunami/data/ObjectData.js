@@ -1,5 +1,5 @@
-import Data from './Data';
-import BooleanData from './BooleanData';
+import Data from "./Data";
+import BooleanData from "./BooleanData";
 
 export default class ObjectData extends Data {
   constructor(value) {

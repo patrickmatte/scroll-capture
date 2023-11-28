@@ -27,6 +27,7 @@
 		visibility: visible !important;
 		outline: 0;
 		pointer-events: visible;
+		color: inherit;
 
 		&:before,
 		&:after {
@@ -313,6 +314,17 @@
 					content: "\f042";
 				}
 			}
+			&[data-theme="VideoFile"] {
+				&:before {
+					content: "\f1c8";
+				}
+			}
+			&[data-theme="AudioFile"] {
+				&:before {
+					content: "\f1c7";
+				}
+			}
+
 		}
 
 		.sc-icon,
