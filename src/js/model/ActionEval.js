@@ -1,6 +1,6 @@
-import Action from "./Action";
+import Action from './Action';
 // import StringData from "../tsunami/data/StringData";
-import { safeEval } from "../tsunami/tsunami";
+import { safeEval } from '../tsunami/tsunami';
 
 // let example = `/* Example */
 // let promise = new Promise(function(resolve, reject) {
@@ -15,46 +15,44 @@ import { safeEval } from "../tsunami/tsunami";
 // `;
 
 export default class ActionEval extends Action {
+  constructor(code = '') {
+    super('ActionEval', 'Javascript', 'Add javascript code');
+    // if(!code) code = example;
+    // this.code = new StringData(code);
+    this.icon.value = 'fab fa-js-square';
+    this.isTestable.value = false;
+  }
 
-	constructor(code = '') {
-		super("ActionEval", "Javascript", "Add javascript code");
-		// if(!code) code = example;
-		// this.code = new StringData(code);
-		this.icon.value = "fab fa-js-square";
-		this.isTestable.value = false;
-	}
+  clone() {
+    let action = new ActionEval();
+    // action.copy(this);
+    return action;
+  }
 
-	clone() {
-		let action = new ActionEval();
-		// action.copy(this);
-		return action;
-	}
+  // copy(action) {
+  // 	this.code.value = action.code.value;
+  // }
 
-	// copy(action) {
-	// 	this.code.value = action.code.value;
-	// }
+  // trigger() {
+  // 	let expression = this.code.value;
+  // 	const func = safeEval(window, expression);
+  // 	let promise = func();
+  // 	let isPromise = (promise instanceof Promise);
+  // 	if(!isPromise) {
+  // 		promise = Promise.resolve();
+  // 	}
+  // 	return promise;
+  // }
 
-	// trigger() {
-	// 	let expression = this.code.value;
-	// 	const func = safeEval(window, expression);
-	// 	let promise = func();
-	// 	let isPromise = (promise instanceof Promise);
-	// 	if(!isPromise) {
-	// 		promise = Promise.resolve();
-	// 	}
-	// 	return promise;
-	// }
+  // serialize() {
+  // 	let data = super.serialize();
+  // 	data.code = encodeURIComponent(this.code.value);
+  // 	return data;
+  // }
 
-	// serialize() {
-	// 	let data = super.serialize();
-	// 	data.code = encodeURIComponent(this.code.value);
-	// 	return data;
-	// }
-
-	// deserialize(data) {
-	// 	if (!data) return;
-	// 	super.deserialize(data);
-	// 	this.code.value = decodeURIComponent(data.code);
-	// }
-
+  // deserialize(data) {
+  // 	if (!data) return;
+  // 	super.deserialize(data);
+  // 	this.code.value = decodeURIComponent(data.code);
+  // }
 }

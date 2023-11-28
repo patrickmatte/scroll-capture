@@ -1,24 +1,22 @@
-import { analytics } from "./analytics";
+import { analytics } from './analytics';
 
 export function initBackgroundPage() {
   chrome.action.onClicked.addListener(async (tab) => {
     const existingContexts = await chrome.runtime.getContexts({});
     let recording = false;
 
-    const offscreenDocument = existingContexts.find(
-      (c) => c.contextType === "OFFSCREEN_DOCUMENT"
-    );
+    const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
 
     // If an offscreen document is not already open, create one.
     if (!offscreenDocument) {
       // Create an offscreen document.
       await chrome.offscreen.createDocument({
-        url: "offscreen.html",
-        reasons: ["USER_MEDIA"],
-        justification: "Recording from chrome.tabCapture API",
+        url: 'offscreen.html',
+        reasons: ['USER_MEDIA'],
+        justification: 'Recording from chrome.tabCapture API',
       });
     } else {
-      recording = offscreenDocument.documentUrl.endsWith("#recording");
+      recording = offscreenDocument.documentUrl.endsWith('#recording');
     }
 
     if (recording) {
@@ -27,7 +25,7 @@ export function initBackgroundPage() {
 
     chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      files: ["content.js"],
+      files: ['content.js'],
     });
 
     // globalThis.tabId = tab.id;
@@ -44,23 +42,23 @@ export function initBackgroundPage() {
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   switch (msg.type) {
-    case "scrollCaptureStartRecording":
+    case 'scrollCaptureStartRecording':
       startRecording(msg);
       break;
-    case "scrollCaptureStopRecording":
+    case 'scrollCaptureStopRecording':
       stopRecording(msg);
       break;
-    case "scrollCaptureResizeWindow":
+    case 'scrollCaptureResizeWindow':
       resizeWindow(msg.width, msg.height);
       break;
-    case "scrollCaptureTrackEvent":
+    case 'scrollCaptureTrackEvent':
       analytics.fireEvent(msg.category, {
         action: msg.action,
         label: msg.label,
       });
       break;
-    case "scrollCaptureTrackPage":
-      analytics.firePageViewEvent(msg.path.split("/").pop(), msg.path);
+    case 'scrollCaptureTrackPage':
+      analytics.firePageViewEvent(msg.path.split('/').pop(), msg.path);
       break;
   }
 });
@@ -75,21 +73,19 @@ function resizeWindow(width, height) {
   });
 }
 
-function changeIcon(color = "") {
+function changeIcon(color = '') {
   chrome.action.setIcon({
     path: {
-      16: chrome.runtime.getURL("assets/images/get_started16" + color + ".png"),
-      32: chrome.runtime.getURL("assets/images/get_started32" + color + ".png"),
-      48: chrome.runtime.getURL("assets/images/get_started48" + color + ".png"),
-      128: chrome.runtime.getURL(
-        "assets/images/get_started128" + color + ".png"
-      ),
+      16: chrome.runtime.getURL('assets/images/get_started16' + color + '.png'),
+      32: chrome.runtime.getURL('assets/images/get_started32' + color + '.png'),
+      48: chrome.runtime.getURL('assets/images/get_started48' + color + '.png'),
+      128: chrome.runtime.getURL('assets/images/get_started128' + color + '.png'),
     },
   });
 }
 
 async function startRecording(data) {
-  changeIcon("_red");
+  changeIcon('_red');
 
   const streamId = await chrome.tabCapture.getMediaStreamId({
     targetTabId: data.tabId,
@@ -97,8 +93,8 @@ async function startRecording(data) {
 
   const message = Object.assign({}, data);
   Object.assign(message, {
-    type: "scrollCaptureStartOffscreenRecording",
-    target: "offscreen",
+    type: 'scrollCaptureStartOffscreenRecording',
+    target: 'offscreen',
     streamId,
   });
 
@@ -109,7 +105,7 @@ function stopRecording(message) {
   changeIcon();
 
   chrome.runtime.sendMessage({
-    type: "scrollCaptureStopOffscreenRecording",
-    target: "offscreen",
+    type: 'scrollCaptureStopOffscreenRecording',
+    target: 'offscreen',
   });
 }

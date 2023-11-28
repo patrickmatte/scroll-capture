@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Scroll Capture",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "Record your websites and automate scrolling and mouse actions for your portfolio screen captures.",
 	"permissions": [
 		"activeTab",

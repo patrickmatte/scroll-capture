@@ -1,116 +1,111 @@
-import BooleanData from "../tsunami/data/BooleanData";
-import NumberData from "../tsunami/data/NumberData";
-import {awaitTimeout} from "../tsunami/await";
-import StringData from "../tsunami/data/StringData";
-import Data from "../tsunami/data/Data";
-import { app } from "../main";
-import { sendTrackEventMessage } from "./GABridge";
-import BaseEvent from "../tsunami/events";
+import BooleanData from '../tsunami/data/BooleanData';
+import NumberData from '../tsunami/data/NumberData';
+import { awaitTimeout } from '../tsunami/await';
+import StringData from '../tsunami/data/StringData';
+import Data from '../tsunami/data/Data';
+import { app } from '../main';
+import { sendTrackEventMessage } from './GABridge';
+import BaseEvent from '../tsunami/events';
 
 export default class Action extends EventTarget {
+  constructor(type = 'Action', name = 'Action', description = 'Add an Action') {
+    super();
+    this.capture = this.capture.bind(this);
+    this.play = this.play.bind(this);
+    this.reCapture = this.reCapture.bind(this);
 
-	constructor(type = "Action", name = "Action", description = "Add an Action") {
-		super();
-		this.capture = this.capture.bind(this);
-		this.play = this.play.bind(this);
-		this.reCapture = this.reCapture.bind(this);
+    this.type = type;
+    this.name = new StringData();
+    this.name.addEventListener(Data.CHANGE, () => {
+      this.name.length.value = Math.max(this.name.value.length, 4);
+    });
+    this.name.value = name;
+    this.icon = new StringData();
+    this.description = new StringData(description);
+    this.captureDescription = new StringData();
+    this.isTestable = new BooleanData();
+    this.isCaptureable = new BooleanData();
+    this.isCapturing = new BooleanData();
+    this.changeCursorOnCapture = new BooleanData();
+    this.isCapturing.addEventListener(Data.CHANGE, (event) => {
+      if (this.changeCursorOnCapture.value) app.model.showCaptureIcon.value = event.data;
+    });
+    this.isPlaying = new BooleanData();
+    this.delay = new NumberData(0);
+    this.isSelectedItem = new BooleanData();
 
-		this.type = type;
-		this.name = new StringData();
-		this.name.addEventListener(Data.CHANGE, () => {
-			this.name.length.value = Math.max(this.name.value.length, 4);
-		});
-		this.name.value = name;
-		this.icon = new StringData();
-		this.description = new StringData(description);
-		this.captureDescription = new StringData();
-		this.isTestable = new BooleanData();
-		this.isCaptureable = new BooleanData();
-		this.isCapturing = new BooleanData();
-		this.changeCursorOnCapture = new BooleanData();
-		this.isCapturing.addEventListener(Data.CHANGE, (event) => {
-			if (this.changeCursorOnCapture.value) app.model.showCaptureIcon.value = event.data;
-		});
-		this.isPlaying = new BooleanData();
-		this.delay = new NumberData(0);
-		this.isSelectedItem = new BooleanData();
+    this._array = [this];
+  }
 
+  get array() {
+    return this._array;
+  }
 
-		this._array = [this];
-	}
+  set array(value) {
+    this._array = value;
+    this.dispatchEvent(new BaseEvent('change_array', value));
+  }
 
-	get array() {
-		return this._array;
-	}
+  clone() {}
 
-	set array(value) {
-		this._array = value;
-		this.dispatchEvent(new BaseEvent("change_array", value));
-	}
+  copy(action) {
+    if (!action) return;
+    this.delay.value = action.delay.value;
+    this.isCaptureable.value = action.isCaptureable.value;
+    this.isTestable.value = action.isTestable.value;
+  }
 
-	clone() {
+  triggerDelay() {
+    let promise1 = awaitTimeout(this.delay.value);
+    let promise2 = promise1.then(() => {
+      return this.trigger();
+    });
+    return promise2;
+  }
 
-	}
+  trigger() {
+    return Promise.resolve();
+  }
 
-	copy(action) {
-		if(!action) return;
-		this.delay.value = action.delay.value;
-		this.isCaptureable.value = action.isCaptureable.value;
-		this.isTestable.value = action.isTestable.value;
-	}
+  serialize() {
+    return {
+      type: this.type,
+      delay: this.delay.serialize(),
+      name: this.name.serialize(),
+    };
+  }
 
-	triggerDelay() {
-		let promise1 = awaitTimeout(this.delay.value);
-		let promise2 = promise1.then(() => {
-			return this.trigger();
-		});
-		return promise2;
-	}
+  deserialize(data) {
+    if (!data) return;
+    this.type = data.type;
+    this.delay.deserialize(data.delay);
+    this.name.deserialize(data.name);
+  }
 
-	trigger() {
-		return Promise.resolve();
-	}
+  capture() {
+    this.isCapturing.value = true;
+  }
 
-	serialize() {
-		return {
-			type:this.type,
-			delay:this.delay.serialize(),
-			name:this.name.serialize()
-		}
-	}
+  reCapture() {
+    sendTrackEventMessage('Action', 'reCapture', this.type);
+    this.capture();
+  }
 
-	deserialize(data) {
-		if(!data) return;
-		this.type = data.type;
-		this.delay.deserialize(data.delay);
-		this.name.deserialize(data.name);
-	}
+  captureComplete() {
+    this.isCapturing.value = false;
+    app.model.save();
+  }
 
-	capture() {
-		this.isCapturing.value = true;
-	}
+  captureAtInit() {}
 
-	reCapture() {
-		sendTrackEventMessage("Action", "reCapture", this.type);
-		this.capture();
-	}
-
-	captureComplete() {
-		this.isCapturing.value = false;
-		app.model.save();
-	}
-
-	captureAtInit() {
-	}
-
-	play() {
-		sendTrackEventMessage("Action", "play", this.type);
-		this.isPlaying.value = true;
-		let promise1 = this.trigger();
-		let promise2 = promise1.then(() => {
-			this.isPlaying.value = false;
-			app.model.save();
-		});
-		return promise2;
-	}
+  play() {
+    sendTrackEventMessage('Action', 'play', this.type);
+    this.isPlaying.value = true;
+    let promise1 = this.trigger();
+    let promise2 = promise1.then(() => {
+      this.isPlaying.value = false;
+      app.model.save();
+    });
+    return promise2;
+  }
 }

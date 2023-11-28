@@ -1,15 +1,13 @@
-import Branch from "../tsunami/Branch";
-import { app } from "../main";
+import Branch from '../tsunami/Branch';
+import { app } from '../main';
 
 export default class CloseState extends Branch {
+  constructor() {
+    super();
+  }
 
-    constructor() {
-        super();
-    }
-
-    show() {
-        app.model.save();
-        return super.show();
-    }
-
+  show() {
+    app.model.save();
+    return super.show();
+  }
 }

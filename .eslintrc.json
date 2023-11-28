@@ -1,0 +1,32 @@
+{
+  "extends": ["eslint:recommended", "prettier", "react-app"],
+  "plugins": ["prettier", "react-hooks"],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "no-console": "off",
+    "strict": ["error", "global"],
+    "curly": "warn",
+    "no-nested-ternary": "error",
+    "no-var": "error",
+    "prefer-const": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"]
+    }
+  ]
+}

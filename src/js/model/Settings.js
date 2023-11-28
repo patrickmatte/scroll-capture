@@ -1,12 +1,12 @@
-import Vector2Data from "../tsunami/data/Vector2Data";
-import ArrayData from "../tsunami/data/ArrayData";
-import BooleanData from "../tsunami/data/BooleanData";
-import Data from "../tsunami/data/Data";
-import { app } from "../main";
-import { sendTrackEventMessage } from "./GABridge";
-import Throttle from "../tsunami/utils/Throttle";
-import NumberData from "../tsunami/data/NumberData";
-import { getSupportedFormatsAndCodecs } from "./FormatsAndCodecs";
+import Vector2Data from '../tsunami/data/Vector2Data';
+import ArrayData from '../tsunami/data/ArrayData';
+import BooleanData from '../tsunami/data/BooleanData';
+import Data from '../tsunami/data/Data';
+import { app } from '../main';
+import { sendTrackEventMessage } from './GABridge';
+import Throttle from '../tsunami/utils/Throttle';
+import NumberData from '../tsunami/data/NumberData';
+import { getSupportedFormatsAndCodecs } from './FormatsAndCodecs';
 
 export default class Settings {
   constructor() {
@@ -26,15 +26,15 @@ export default class Settings {
     this.windowSize = new Vector2Data(window.innerWidth, window.innerHeight);
     this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
 
-    window.addEventListener("resize", this.windowResizeHandler);
+    window.addEventListener('resize', this.windowResizeHandler);
 
     this.trackers = {};
 
     this.format = new ArrayData();
-    this.format.addEventListener("value", (event) => {
+    this.format.addEventListener('value', (event) => {
       this.format.selectedItem.value = this.format.value[0];
     });
-    this.format.selectedItem.addEventListener("value", (event) => {
+    this.format.selectedItem.addEventListener('value', (event) => {
       const format = supportedFormats.video.find((supportedFormat) => {
         return supportedFormat.name == this.format.selectedItem.value;
       });
@@ -46,33 +46,25 @@ export default class Settings {
     this.exportVideo = new BooleanData(true);
 
     this.videoCodecs = new ArrayData();
-    this.videoCodecs.addEventListener("value", (event) => {
+    this.videoCodecs.addEventListener('value', (event) => {
       this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
     });
 
     this.videoBitsPerSecond = new NumberData(16);
     this.trackers.videoBitsPerSecond = new Throttle(() => {
-      sendTrackEventMessage(
-        "settings",
-        "videoBitsPerSecond",
-        this.videoBitsPerSecond.value
-      );
+      sendTrackEventMessage('settings', 'videoBitsPerSecond', this.videoBitsPerSecond.value);
     });
 
     this.exportAudio = new BooleanData(true);
 
     this.audioCodecs = new ArrayData();
-    this.audioCodecs.addEventListener("value", (event) => {
+    this.audioCodecs.addEventListener('value', (event) => {
       this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
     });
 
     this.audioBitsPerSecond = new NumberData(256);
     this.trackers.audioBitsPerSecond = new Throttle(() => {
-      sendTrackEventMessage(
-        "settings",
-        "audioBitsPerSecond",
-        this.audioBitsPerSecond.value
-      );
+      sendTrackEventMessage('settings', 'audioBitsPerSecond', this.audioBitsPerSecond.value);
     }, 1000);
 
     // set formats
@@ -82,82 +74,51 @@ export default class Settings {
     });
     this.format.value = names;
 
-    this.darkModeMatchMedia = window.matchMedia("(prefers-color-scheme: dark)");
+    this.darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
     this.isColorThemeLight = new BooleanData();
     this.isColorThemeLight.addEventListener(Data.CHANGE, (event) => {
       let msg = {
-        type: "scrollCaptureColorTheme",
+        type: 'scrollCaptureColorTheme',
         isColorThemeLight: event.data,
       };
       app.model.sendMessage(msg);
     });
 
-    this.colorThemes = new ArrayData("Dark", "Light", "Auto");
-    this.colorThemes.selectedItem.value = "Dark";
+    this.colorThemes = new ArrayData('Dark', 'Light', 'Auto');
+    this.colorThemes.selectedItem.value = 'Dark';
     this.switchColorTheme();
     this.colorThemes.selectedItem.addEventListener(Data.CHANGE, () => {
       this.switchColorTheme();
     });
     this.trackers.colorThemes = new Throttle(() => {
-      sendTrackEventMessage(
-        "settings",
-        "colorTheme",
-        this.colorThemes.selectedItem.value
-      );
+      sendTrackEventMessage('settings', 'colorTheme', this.colorThemes.selectedItem.value);
     });
 
     this.pixelRatio = new NumberData(this.devicePixelRatio);
     this.trackers.pixelRatio = new Throttle(() => {
-      sendTrackEventMessage("settings", "pixelRatio", this.pixelRatio.value);
+      sendTrackEventMessage('settings', 'pixelRatio', this.pixelRatio.value);
     });
 
     this.enableTracking();
   }
 
   enableTracking() {
-    this.videoBitsPerSecond.addEventListener(
-      Data.CHANGE,
-      this.trackers.videoBitsPerSecond.throttle
-    );
-    this.audioBitsPerSecond.addEventListener(
-      Data.CHANGE,
-      this.trackers.audioBitsPerSecond.throttle
-    );
-    this.colorThemes.selectedItem.addEventListener(
-      Data.CHANGE,
-      this.trackers.colorThemes.throttle
-    );
-    this.pixelRatio.addEventListener(
-      Data.CHANGE,
-      this.trackers.pixelRatio.throttle
-    );
+    this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.trackers.videoBitsPerSecond.throttle);
+    this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.trackers.audioBitsPerSecond.throttle);
+    this.colorThemes.selectedItem.addEventListener(Data.CHANGE, this.trackers.colorThemes.throttle);
+    this.pixelRatio.addEventListener(Data.CHANGE, this.trackers.pixelRatio.throttle);
   }
 
   disableTracking() {
-    this.videoBitsPerSecond.removeEventListener(
-      Data.CHANGE,
-      this.trackers.videoBitsPerSecond.throttle
-    );
-    this.audioBitsPerSecond.removeEventListener(
-      Data.CHANGE,
-      this.trackers.audioBitsPerSecond.throttle
-    );
-    this.colorThemes.selectedItem.removeEventListener(
-      Data.CHANGE,
-      this.trackers.colorThemes.throttle
-    );
-    this.pixelRatio.removeEventListener(
-      Data.CHANGE,
-      this.trackers.pixelRatio.throttle
-    );
+    this.videoBitsPerSecond.removeEventListener(Data.CHANGE, this.trackers.videoBitsPerSecond.throttle);
+    this.audioBitsPerSecond.removeEventListener(Data.CHANGE, this.trackers.audioBitsPerSecond.throttle);
+    this.colorThemes.selectedItem.removeEventListener(Data.CHANGE, this.trackers.colorThemes.throttle);
+    this.pixelRatio.removeEventListener(Data.CHANGE, this.trackers.pixelRatio.throttle);
   }
 
   windowResizeHandler() {
-    this.windowSize.removeEventListener(
-      Data.CHANGE,
-      this.windowSizeChangeHandler
-    );
+    this.windowSize.removeEventListener(Data.CHANGE, this.windowSizeChangeHandler);
     this.windowSize.x.value = window.innerWidth;
     this.windowSize.y.value = window.innerHeight;
     this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
@@ -165,7 +126,7 @@ export default class Settings {
 
   windowSizeChangeHandler() {
     app.model.sendMessage({
-      type: "scrollCaptureResizeWindow",
+      type: 'scrollCaptureResizeWindow',
       width: this.windowSize.x.value,
       height: this.windowSize.y.value,
     });
@@ -174,19 +135,13 @@ export default class Settings {
   switchColorTheme() {
     let colorTheme = this.colorThemes.selectedItem.value;
     switch (colorTheme) {
-      case "Dark":
-      case "Light":
-        this.darkModeMatchMedia.removeEventListener(
-          "change",
-          this.darkModeChangeHandler
-        );
-        this.isColorThemeLight.value = colorTheme == "Light";
+      case 'Dark':
+      case 'Light':
+        this.darkModeMatchMedia.removeEventListener('change', this.darkModeChangeHandler);
+        this.isColorThemeLight.value = colorTheme == 'Light';
         break;
       default:
-        this.darkModeMatchMedia.addEventListener(
-          "change",
-          this.darkModeChangeHandler
-        );
+        this.darkModeMatchMedia.addEventListener('change', this.darkModeChangeHandler);
         this.darkModeChangeHandler();
         break;
     }
@@ -217,30 +172,18 @@ export default class Settings {
   deserialize(data) {
     if (!data) return;
     this.disableTracking();
-    if (data.hasOwnProperty("showCursor"))
-      this.showCursor.deserialize(data.showCursor);
-    if (data.hasOwnProperty("showScrollbars"))
-      this.showScrollbars.deserialize(data.showScrollbars);
-    if (data.hasOwnProperty("position"))
-      this.position.deserialize(data.position);
-    if (data.hasOwnProperty("format"))
-      this.format.selectedItem.deserialize(data.format);
-    if (data.hasOwnProperty("videoBitsPerSecond"))
-      this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
-    if (data.hasOwnProperty("videoCodec"))
-      this.videoCodecs.selectedItem.deserialize(data.videoCodec);
-    if (data.hasOwnProperty("audioBitsPerSecond"))
-      this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
-    if (data.hasOwnProperty("audioCodec"))
-      this.audioCodecs.selectedItem.deserialize(data.audioCodec);
-    if (data.hasOwnProperty("colorThemes"))
-      this.colorThemes.selectedItem.value = data.colorThemes;
-    if (data.hasOwnProperty("pixelRatio"))
-      this.pixelRatio.deserialize(data.pixelRatio);
-    if (data.hasOwnProperty("exportAudio"))
-      this.exportAudio.deserialize(data.exportAudio);
-    if (data.hasOwnProperty("exportVideo"))
-      this.exportVideo.deserialize(data.exportVideo);
+    if (data.hasOwnProperty('showCursor')) this.showCursor.deserialize(data.showCursor);
+    if (data.hasOwnProperty('showScrollbars')) this.showScrollbars.deserialize(data.showScrollbars);
+    if (data.hasOwnProperty('position')) this.position.deserialize(data.position);
+    if (data.hasOwnProperty('format')) this.format.selectedItem.deserialize(data.format);
+    if (data.hasOwnProperty('videoBitsPerSecond')) this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
+    if (data.hasOwnProperty('videoCodec')) this.videoCodecs.selectedItem.deserialize(data.videoCodec);
+    if (data.hasOwnProperty('audioBitsPerSecond')) this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
+    if (data.hasOwnProperty('audioCodec')) this.audioCodecs.selectedItem.deserialize(data.audioCodec);
+    if (data.hasOwnProperty('colorThemes')) this.colorThemes.selectedItem.value = data.colorThemes;
+    if (data.hasOwnProperty('pixelRatio')) this.pixelRatio.deserialize(data.pixelRatio);
+    if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
+    if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
     this.enableTracking();
   }
 

@@ -10,8 +10,8 @@ const DEFAULT_ENGAGEMENT_TIME_MSEC = 100;
 const SESSION_EXPIRATION_IN_MIN = 30;
 
 export function initAnalytics(id, secret) {
-    MEASUREMENT_ID = id;
-    API_SECRET = secret;
+  MEASUREMENT_ID = id;
+  API_SECRET = secret;
 }
 
 class Analytics {
@@ -56,7 +56,7 @@ class Analytics {
       // Create and store a new session
       sessionData = {
         session_id: currentTimeInMs.toString(),
-        timestamp: currentTimeInMs.toString()
+        timestamp: currentTimeInMs.toString(),
       };
       await chrome.storage.session.set({ sessionData });
     }
@@ -76,9 +76,7 @@ class Analytics {
 
     try {
       const response = await fetch(
-        `${
-          this.debug ? GA_DEBUG_ENDPOINT : GA_ENDPOINT
-        }?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
+        `${this.debug ? GA_DEBUG_ENDPOINT : GA_ENDPOINT}?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -86,10 +84,10 @@ class Analytics {
             events: [
               {
                 name,
-                params
-              }
-            ]
-          })
+                params,
+              },
+            ],
+          }),
         }
       );
       if (!this.debug) {
@@ -106,7 +104,7 @@ class Analytics {
     return this.fireEvent('page_view', {
       page_title: pageTitle,
       page_location: pageLocation,
-      ...additionalParams
+      ...additionalParams,
     });
   }
 
@@ -116,7 +114,7 @@ class Analytics {
     // see https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=gtag#reserved_names
     return this.fireEvent('extension_error', {
       ...error,
-      ...additionalParams
+      ...additionalParams,
     });
   }
 }

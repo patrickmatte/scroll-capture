@@ -1,20 +1,20 @@
 export function getSupportedFormatsAndCodecs() {
   const formats = [
-    { name: "mp4", ext: "mp4" },
-    { name: "webm", ext: "webm" },
-    { name: "x-matroska", ext: "mkv" },
-    { name: "ogg", ext: "ogg" },
-    { name: "mp3", ext: "mp3" },
-    { name: "MP2T", ext: "mp2t" },
-    { name: "3gpp", ext: "3gpp" },
-    { name: "quicktime", ext: "mov" },
-    { name: "x-msvideo", ext: "msvideo" },
-    { name: "x-ms-wmv", ext: "wmv" },
-    { name: "mpeg", ext: "mpeg" },
-    { name: "wav", ext: "wav" },
+    { name: 'mp4', ext: 'mp4' },
+    { name: 'webm', ext: 'webm' },
+    { name: 'x-matroska', ext: 'mkv' },
+    { name: 'ogg', ext: 'ogg' },
+    { name: 'mp3', ext: 'mp3' },
+    { name: 'MP2T', ext: 'mp2t' },
+    { name: '3gpp', ext: '3gpp' },
+    { name: 'quicktime', ext: 'mov' },
+    { name: 'x-msvideo', ext: 'msvideo' },
+    { name: 'x-ms-wmv', ext: 'wmv' },
+    { name: 'mpeg', ext: 'mpeg' },
+    { name: 'wav', ext: 'wav' },
   ];
-  const videoCodecs = ["vp9", "h264", "vp8", "av1", "avc1", "h265", "h263"];
-  const audioCodecs = ["opus", "pcm", "aac", "mpeg", "mp4a", "mp3"];
+  const videoCodecs = ['vp9', 'h264', 'vp8', 'av1', 'avc1', 'h265', 'h263'];
+  const audioCodecs = ['opus', 'pcm', 'aac', 'mpeg', 'mp4a', 'mp3'];
 
   function getSupportedFormatsAndCodecsForType(type) {
     const supported = [];
@@ -31,16 +31,14 @@ export function getSupportedFormatsAndCodecs() {
         supported.push(supportedFormat);
         videoCodecs.forEach((videoCodec) => {
           let videoType = `${formatType};codecs=${videoCodec}`;
-          const videoCodecIsSupported =
-            MediaRecorder.isTypeSupported(videoType);
+          const videoCodecIsSupported = MediaRecorder.isTypeSupported(videoType);
           if (videoCodecIsSupported) {
             supportedFormat.video.push(videoCodec);
           }
         });
         audioCodecs.forEach((audioCodec) => {
           let audioType = `${formatType};codecs=${audioCodec}`;
-          const audioCodecIsSupported =
-            MediaRecorder.isTypeSupported(audioType);
+          const audioCodecIsSupported = MediaRecorder.isTypeSupported(audioType);
           if (audioCodecIsSupported) {
             supportedFormat.audio.push(audioCodec);
           }
@@ -51,8 +49,8 @@ export function getSupportedFormatsAndCodecs() {
   }
 
   const supportedFormats = {
-    video: getSupportedFormatsAndCodecsForType("video"),
-    audio: getSupportedFormatsAndCodecsForType("audio"),
+    video: getSupportedFormatsAndCodecsForType('video'),
+    audio: getSupportedFormatsAndCodecsForType('audio'),
   };
   return supportedFormats;
 }

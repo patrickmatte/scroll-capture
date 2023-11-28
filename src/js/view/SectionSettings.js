@@ -1,20 +1,20 @@
-import Section from "./Section";
-import { app } from "../main";
+import Section from './Section';
+import { app } from '../main';
 
 export default class SectionSettings extends Section {
-    
-    constructor(element) {
-        super(element);
-   }
+  constructor(element) {
+    super(element);
+  }
 
-    showDelayComplete() {
-        let promise = super.showDelayComplete();
+  showDelayComplete() {
+    let promise = super.showDelayComplete();
 
-        this.router.redirect("default", () => { return this.path });
+    this.router.redirect('default', () => {
+      return this.path;
+    });
 
-        app.model.save();
+    app.model.save();
 
-        return promise;
-    }
-
+    return promise;
+  }
 }

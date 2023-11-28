@@ -1,204 +1,201 @@
-import NumberData from "../tsunami/data/NumberData";
-import ArrayData from "../tsunami/data/ArrayData";
-import ActionTween from "./ActionTween";
-import StringData from "../tsunami/data/StringData";
-import Point from "../tsunami/geom/Point";
-import Data from "../tsunami/data/Data";
+import NumberData from '../tsunami/data/NumberData';
+import ArrayData from '../tsunami/data/ArrayData';
+import ActionTween from './ActionTween';
+import StringData from '../tsunami/data/StringData';
+import Point from '../tsunami/geom/Point';
+import Data from '../tsunami/data/Data';
 
 export default class ActionScroll extends ActionTween {
+  constructor(target = 'window', units = 'px', x = 0, y = 0, duration = 1, delay = 0) {
+    super(0, 0, 0, 0, duration, delay);
+    this.type = 'ActionScroll';
+    this.name.value = 'Scroll';
+    this.description.value = 'Add a scroll animation';
+    this.target = new StringData(target);
+    this.unitX = new NumberData(x);
+    this.unitY = new NumberData(y);
+    this.units = new ArrayData('%', 'px');
+    this.units.selectedItem.value = units;
+    this.isCaptureable.value = true;
+    this.isTestable.value = true;
+    this.icon.value = 'fa-solid fa-scroll';
+    this.targetStyle = '';
 
-	constructor(target = "window", units = "px", x = 0, y = 0, duration = 1, delay = 0) {
-		super(0, 0, 0, 0, duration, delay);
-		this.type = "ActionScroll";
-		this.name.value = "Scroll";
-		this.description.value = "Add a scroll animation";
-		this.target = new StringData(target);
-		this.unitX = new NumberData(x);
-		this.unitY = new NumberData(y);
-		this.units = new ArrayData("%", "px");
-		this.units.selectedItem.value = units;
-		this.isCaptureable.value = true;
-		this.isTestable.value = true;
-		this.icon.value = "fa-solid fa-scroll";
-		this.targetStyle = "";
+    this.doScroll = this.doScroll.bind(this);
+    this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+    this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+  }
 
-		this.doScroll = this.doScroll.bind(this);
-		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
-	}
+  clone() {
+    let action = new ActionScroll();
+    action.copy(this);
+    return action;
+  }
 
-	clone() {
-		let action = new ActionScroll();
-		action.copy(this);
-		return action;
-	}
+  copy(action) {
+    this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
+    this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
+    super.copy(action);
+    this.target.value = action.target.value;
+    this.unitX.value = action.unitX.value;
+    this.unitY.value = action.unitY.value;
+    this.units.selectedItem.value = action.units.selectedItem.value;
+    this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+    this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+  }
 
-	copy(action) {
-		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
-		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
-		super.copy(action);
-		this.target.value = action.target.value;
-		this.unitX.value = action.unitX.value;
-		this.unitY.value = action.unitY.value;
-		this.units.selectedItem.value = action.units.selectedItem.value;
-		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
-	}
+  trigger() {
+    let scrollTarget;
+    switch (this.target.value) {
+      case 'window':
+        scrollTarget = document.documentElement;
+        this.startX.value = window.scrollX;
+        this.startY.value = window.scrollY;
+        break;
+      default:
+        let element = document.querySelector(this.target.value);
+        scrollTarget = element;
+        this.startX.value = element.scrollLeft;
+        this.startY.value = element.scrollTop;
+        break;
+    }
+    let styleArrayFiltered = [];
+    this.targetStyle = scrollTarget.getAttribute('style') || '';
+    if (this.targetStyle) {
+      styleArrayFiltered = this.targetStyle.split(';').filter((prop) => {
+        return prop.indexOf('scroll-behavior') == -1;
+      });
+    }
+    styleArrayFiltered.push('scroll-behavior:auto !important');
+    scrollTarget.setAttribute('style', styleArrayFiltered.join(';'));
+    if (this.units.selectedItem.value == 'px') {
+      this.endX.copy(this.unitX);
+      this.endY.copy(this.unitY);
+    }
+    if (this.units.selectedItem.value == '%') {
+      let maxScroll = { x: 0, y: 0 };
+      switch (this.target.value) {
+        case 'window':
+          maxScroll.x = document.body.offsetWidth - window.innerWidth;
+          maxScroll.y = document.body.offsetHeight - window.innerHeight;
+          break;
+        default:
+          let element = document.querySelector(this.target.value);
+          maxScroll.x = element.scrollWidth - element.clientWidth;
+          maxScroll.y = element.scrollHeight - element.clientHeight;
+          break;
+      }
+      this.endX.value = Math.round((this.unitX.value / 100) * maxScroll.x);
+      this.endY.value = Math.round((this.unitY.value / 100) * maxScroll.y);
+    }
+    return super.trigger();
+  }
 
-	trigger() {
-		let scrollTarget;
-		switch (this.target.value) {
-			case "window":
-				scrollTarget = document.documentElement;
-				this.startX.value = window.scrollX;
-				this.startY.value = window.scrollY;
-				break;
-			default:
-				let element = document.querySelector(this.target.value);
-				scrollTarget = element;
-				this.startX.value = element.scrollLeft;
-				this.startY.value = element.scrollTop;
-				break;
-		}
-		let styleArrayFiltered = [];
-		this.targetStyle = scrollTarget.getAttribute('style') || "";
-		if(this.targetStyle) {
-			styleArrayFiltered = this.targetStyle.split(";").filter((prop)=> {
-			   return (prop.indexOf("scroll-behavior") == -1);
-		   });
-		}
-		styleArrayFiltered.push('scroll-behavior:auto !important');
-		scrollTarget.setAttribute('style', styleArrayFiltered.join(";"));
-		if(this.units.selectedItem.value == "px") {
-			this.endX.copy(this.unitX);
-			this.endY.copy(this.unitY);
-		}
-		if(this.units.selectedItem.value == "%") {
-			let maxScroll = {x:0, y:0};
-			switch (this.target.value) {
-				case "window":
-					maxScroll.x = document.body.offsetWidth - window.innerWidth;
-					maxScroll.y = document.body.offsetHeight - window.innerHeight;
-					break;
-				default:
-					let element = document.querySelector(this.target.value);
-					maxScroll.x = element.scrollWidth - element.clientWidth;
-					maxScroll.y = element.scrollHeight - element.clientHeight;
-					break;
-			}
-			this.endX.value = Math.round(this.unitX.value / 100 * maxScroll.x);
-			this.endY.value = Math.round(this.unitY.value / 100 * maxScroll.y);
-		}
-		return super.trigger();
-	}
+  doScroll() {
+    this.pos.x = this.unitX.value;
+    this.pos.y = this.unitY.value;
+    this.tweenUpdateHandler();
+  }
 
-	doScroll() {
-		this.pos.x = this.unitX.value;
-		this.pos.y = this.unitY.value;
-		this.tweenUpdateHandler();
-	}
+  tweenUpdateHandler() {
+    switch (this.target.value) {
+      case 'window':
+        window.scroll(this.pos.x, this.pos.y);
+        break;
+      default:
+        let element = document.querySelector(this.target.value);
+        element.scrollLeft = this.pos.x;
+        element.scrollTop = this.pos.y;
+        break;
+    }
+  }
 
-	tweenUpdateHandler() {
-		switch (this.target.value) {
-			case "window":
-				window.scroll(this.pos.x, this.pos.y);
-				break;
-			default:
-				let element = document.querySelector(this.target.value);
-				element.scrollLeft = this.pos.x;
-				element.scrollTop = this.pos.y;
-				break;
-		}
-	}
+  tweenCompleteHandler(e) {
+    super.tweenCompleteHandler(e);
+    let scrollTarget;
+    switch (this.target.value) {
+      case 'window':
+        scrollTarget = document.documentElement;
+        break;
+      default:
+        scrollTarget = document.querySelector(this.target.value);
+        break;
+    }
+    scrollTarget.setAttribute('style', this.targetStyle);
+  }
 
-	tweenCompleteHandler(e) {
-		super.tweenCompleteHandler(e);
-		let scrollTarget;
-		switch (this.target.value) {
-			case "window":
-				scrollTarget = document.documentElement;
-				break;
-			default:
-				scrollTarget = document.querySelector(this.target.value);
-				break;
-		}
-		scrollTarget.setAttribute('style', this.targetStyle);
-	}
+  serialize() {
+    let data = super.serialize();
+    data.target = this.target.serialize();
+    data.unitX = this.unitX.serialize();
+    data.unitY = this.unitY.serialize();
+    data.units = this.units.selectedItem.value;
+    return data;
+  }
 
+  deserialize(data) {
+    if (!data) return;
+    this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
+    this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
+    super.deserialize(data);
+    this.target.deserialize(data.target);
+    this.unitX.deserialize(data.unitX);
+    this.unitY.deserialize(data.unitY);
+    this.units.selectedItem.value = data.units;
+    this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+    this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+  }
 
-	serialize() {
-		let data = super.serialize();
-		data.target = this.target.serialize();
-		data.unitX = this.unitX.serialize();
-		data.unitY = this.unitY.serialize();
-		data.units = this.units.selectedItem.value;
-		return data;
-	}
+  capture() {
+    super.capture();
 
-	deserialize(data) {
-		if (!data) return;
-		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
-		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
-		super.deserialize(data);
-		this.target.deserialize(data.target);
-		this.unitX.deserialize(data.unitX);
-		this.unitY.deserialize(data.unitY);
-		this.units.selectedItem.value = data.units;
-		this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-		this.unitY.addEventListener(Data.CHANGE, this.doScroll);
-	}
+    this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
+    this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 
-	capture() {
-		super.capture();
+    let scroll = new Point();
+    let maxScroll = new Point();
+    switch (this.target.value) {
+      case 'window':
+        scroll.x = window.scrollX;
+        scroll.y = window.scrollY;
+        maxScroll.x = document.body.offsetWidth - window.innerWidth;
+        maxScroll.y = document.body.offsetHeight - window.innerHeight;
+        break;
+      default:
+        let element = document.querySelector(this.target.value);
+        scroll.x = element.scrollLeft;
+        scroll.y = element.scrollTop;
+        maxScroll.x = element.scrollWidth - element.clientWidth;
+        maxScroll.y = element.scrollHeight - element.clientHeight;
+        break;
+    }
+    let unit = new Point();
+    switch (this.units.selectedItem.value) {
+      case 'px':
+        unit.x = scroll.x;
+        unit.y = scroll.y;
+        break;
+      case '%':
+        unit.x = Math.round((scroll.x / maxScroll.x) * 100);
+        unit.y = Math.round((scroll.y / maxScroll.y) * 100);
+        break;
+    }
 
-		this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
-		this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
-		
-		let scroll = new Point();
-		let maxScroll = new Point();
-		switch (this.target.value) {
-			case "window":
-				scroll.x = window.scrollX;
-				scroll.y = window.scrollY;
-				maxScroll.x = document.body.offsetWidth - window.innerWidth;
-				maxScroll.y = document.body.offsetHeight - window.innerHeight;
-				break;
-			default:
-				let element = document.querySelector(this.target.value);
-				scroll.x = element.scrollLeft;
-				scroll.y = element.scrollTop;
-				maxScroll.x = element.scrollWidth - element.clientWidth;
-				maxScroll.y = element.scrollHeight - element.clientHeight;
-				break;
-		}
-		let unit = new Point();
-		switch(this.units.selectedItem.value) {
-			case "px":
-				unit.x = scroll.x;
-				unit.y = scroll.y;
-				break;
-			case "%":
-				unit.x = Math.round(scroll.x / maxScroll.x * 100);
-				unit.y = Math.round(scroll.y / maxScroll.y * 100);
-				break;
-		}
+    if (isNaN(unit.x)) unit.x = 0;
+    if (isNaN(unit.y)) unit.y = 0;
 
-		if(isNaN(unit.x)) unit.x = 0;
-		if(isNaN(unit.y)) unit.y = 0;
+    this.unitX.value = unit.x;
+    this.unitY.value = unit.y;
 
-		this.unitX.value = unit.x;
-		this.unitY.value = unit.y;
+    setTimeout(() => {
+      this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+      this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+      this.captureComplete();
+    }, 200);
+  }
 
-		setTimeout(()=> {
-			this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-			this.unitY.addEventListener(Data.CHANGE, this.doScroll);
-			this.captureComplete();
-		}, 200);
-	}
-
-	captureAtInit() {
-		super.captureAtInit();
-		this.capture();
-	}
-
+  captureAtInit() {
+    super.captureAtInit();
+    this.capture();
+  }
 }

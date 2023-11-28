@@ -1,9 +1,9 @@
-import { timeAMPM } from "./tsunami/utils/date";
-import { addLeadingZero } from "./tsunami/utils/number";
-import { sendTrackEventMessage } from "./model/GABridge";
+import { timeAMPM } from './tsunami/utils/date';
+import { addLeadingZero } from './tsunami/utils/number';
+import { sendTrackEventMessage } from './model/GABridge';
 
-chrome.storage.local.get(["json"], (result) => {
-  let colorTheme = "Dark";
+chrome.storage.local.get(['json'], (result) => {
+  let colorTheme = 'Dark';
   if (result) {
     if (result.json) {
       let data = JSON.parse(result.json);
@@ -14,59 +14,53 @@ chrome.storage.local.get(["json"], (result) => {
   }
   let isColorThemeLight;
   switch (colorTheme) {
-    case "Dark":
-    case "Light":
-      isColorThemeLight = colorTheme == "Light";
+    case 'Dark':
+    case 'Light':
+      isColorThemeLight = colorTheme == 'Light';
       break;
     default:
-      let darkModeMatchMedia = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      );
+      let darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
       let isDarkMode = darkModeMatchMedia.matches;
       isColorThemeLight = !isDarkMode;
       break;
   }
-  document.body
-    .querySelector(".sc-default")
-    .setAttribute("data-theme-light", isColorThemeLight);
+  document.body.querySelector('.sc-default').setAttribute('data-theme-light', isColorThemeLight);
 });
 
-window.addEventListener("resize", () => {
+window.addEventListener('resize', () => {
   dispatchVideoHeight();
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   switch (msg.type) {
-    case "scrollCaptureColorTheme":
-      document.body
-        .querySelector(".sc-default")
-        .setAttribute("data-theme-light", msg.isColorThemeLight);
+    case 'scrollCaptureColorTheme':
+      document.body.querySelector('.sc-default').setAttribute('data-theme-light', msg.isColorThemeLight);
       break;
-    case "scrollCaptureUnloadVideo":
+    case 'scrollCaptureUnloadVideo':
       unloadVideo();
       break;
-    case "scrollCaptureShowVideo":
+    case 'scrollCaptureShowVideo':
       dispatchVideoHeight();
       break;
-    case "scrollCaptureVideoURL":
+    case 'scrollCaptureVideoURL':
       updateVideo(msg);
       break;
   }
 });
 
-let player = document.querySelector(".sc-video-player");
-player.setAttribute("muted", "true");
-player.setAttribute("autoplay", "true");
-player.setAttribute("playsinline", "true");
-player.setAttribute("controls", "1");
-player.addEventListener("canplay", () => {
+let player = document.querySelector('.sc-video-player');
+player.setAttribute('muted', 'true');
+player.setAttribute('autoplay', 'true');
+player.setAttribute('playsinline', 'true');
+player.setAttribute('controls', '1');
+player.addEventListener('canplay', () => {
   dispatchVideoHeight();
 });
 
 function dispatchVideoHeight() {
-  chrome.storage.local.get(["tabId"]).then((tabId) => {
+  chrome.storage.local.get(['tabId']).then((tabId) => {
     let msg = {
-      type: "scrollCaptureVideoHeight",
+      type: 'scrollCaptureVideoHeight',
       height: document.body.scrollHeight,
     };
     chrome.tabs.sendMessage(tabId.tabId, msg);
@@ -98,18 +92,16 @@ function updateVideo(message) {
   ampmTime.ampm = ampmTime.ampm.toUpperCase();
   let videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.${extension}`;
 
-  let buttons = document.querySelectorAll("a.sc-download-button");
+  let buttons = document.querySelectorAll('a.sc-download-button');
   for (let i = 0; i < buttons.length; i++) {
     let button = buttons[i];
     button.href = videoURL;
     button.download = videoFileName;
-    button.addEventListener("click", () => {
-      sendTrackEventMessage("download", "click");
+    button.addEventListener('click', () => {
+      sendTrackEventMessage('download', 'click');
     });
   }
-  let fileNameButton = document.querySelector(
-    ".sc-video-filename a.sc-download-button"
-  );
+  let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');
   fileNameButton.textContent = videoFileName;
 }
 

@@ -1,31 +1,29 @@
-import Section from "./Section";
-import { app } from "../main";
+import Section from './Section';
+import { app } from '../main';
 
 export default class SectionVideo extends Section {
+  constructor(element) {
+    super(element);
+    this.iframe = this.element.querySelector('iframe');
+    this.iframe.src = chrome.runtime.getURL('video-recording.html');
 
-    constructor(element) {
-        super(element);
-        this.iframe = this.element.querySelector("iframe");
-        this.iframe.src = chrome.runtime.getURL('video-recording.html');
+    chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+      switch (msg.type) {
+        case 'scrollCaptureVideoHeight':
+          this.iframe.style.height = msg.height + 'px';
+          break;
+      }
+    });
+  }
 
-        chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-            switch (msg.type) {
-                case "scrollCaptureVideoHeight":
-                    this.iframe.style.height = msg.height + "px";
-                    break;
-            }
-        });
-    }
+  showDelayComplete() {
+    let promise = super.showDelayComplete();
+    app.model.sendMessage({ type: 'scrollCaptureShowVideo' });
+    return promise;
+  }
 
-    showDelayComplete() {
-        let promise = super.showDelayComplete();
-        app.model.sendMessage({ type: "scrollCaptureShowVideo" });
-        return promise;
-    }
-
-    hideComplete() {
-        app.model.sendMessage({ type:"scrollCaptureUnloadVideo"});
-        return super.hideComplete();
-    }
-
+  hideComplete() {
+    app.model.sendMessage({ type: 'scrollCaptureUnloadVideo' });
+    return super.hideComplete();
+  }
 }
