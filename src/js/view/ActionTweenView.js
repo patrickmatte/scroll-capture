@@ -1,6 +1,6 @@
-import UIComponent from '../tsunami/components/UIComponent';
+import UIComponent from '../../lib/tsunami/components/UIComponent';
 import easingTemplate from '../../templates/easing.html';
-import * as tsunami from '../tsunami/tsunami';
+import * as tsunami from '../../lib/tsunami/tsunami';
 import EasingGraph from './EasingGraph';
 
 export default class ActionTweenView extends UIComponent {

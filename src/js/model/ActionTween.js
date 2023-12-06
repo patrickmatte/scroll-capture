@@ -1,14 +1,14 @@
 import Action from './Action';
-import NumberData from '../tsunami/data/NumberData';
-import ArrayData from '../tsunami/data/ArrayData';
-import Data from '../tsunami/data/Data';
-import Tween from '../tsunami/animation/Tween';
-import TweenProperty from '../tsunami/animation/TweenProperty';
-import Point from '../tsunami/geom/Point';
-import CubicBezierEasing from '../tsunami/animation/CubicBezierEasing';
-import { getProperty } from '../tsunami/tsunami';
+import NumberData from '../../lib/tsunami/data/NumberData';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
+import Data from '../../lib/tsunami/data/Data';
+import Tween from '../../lib/tsunami/animation/Tween';
+import TweenProperty from '../../lib/tsunami/animation/TweenProperty';
+import Point from '../../lib/tsunami/geom/Point';
+import CubicBezierEasing from '../../lib/tsunami/animation/CubicBezierEasing';
+import { getProperty } from '../../lib/tsunami/tsunami';
 import CubicBezierPoints from './CubicBezierPoints';
-import Easing from '../tsunami/animation/Easing';
+import Easing from '../../lib/tsunami/animation/Easing';
 
 export default class ActionTween extends Action {
   constructor(startX, startY, x = 0, y = 0, duration = 1, delay = 0) {

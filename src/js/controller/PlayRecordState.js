@@ -6,7 +6,10 @@ import { sendTrackEventMessage } from '../model/GABridge';
 export default class PlayRecordState extends PlayState {
   constructor() {
     super();
-    this.startLocation = 'scroll-capture/video';
+  }
+
+  get endLocation() {
+    return 'scroll-capture/video';
   }
 
   show() {
@@ -16,26 +19,20 @@ export default class PlayRecordState extends PlayState {
       this.timeout.delay.value = 60 * 5;
       app.model.actions.addAction(this.timeout);
     }
-    const message = app.model.settings.getSettingsForRecording();
-    message.type = 'scrollCaptureStartRecording';
-    app.model.sendMessage(message);
     return super.show();
   }
 
-  allComplete() {
-    if (!this.isPlaying) return;
-    this.stopTheRecording();
-    super.allComplete();
-  }
-
-  stopTheRecording() {
-    app.model.sendMessage({ type: 'scrollCaptureStopRecording' });
-    // app.model.sendMessage({ type: "scrollCaptureUpdateVideo" });
+  startActions(index) {
+    if (index == 0) {
+      const message = app.model.settings.getSettingsForRecording();
+      message.type = 'scrollCaptureStartRecording';
+      app.model.sendMessage(message);
+    }
   }
 
   hide() {
-    window.removeEventListener('onbeforeunload', this.onBeforeUnloadHandler);
-    if (this.isPlaying) this.stopTheRecording();
+    app.model.sendMessage({ type: 'scrollCaptureStopRecording' });
+    // app.model.sendMessage({ type: "scrollCaptureUpdateVideo" });
     if (this.timeout) {
       app.model.actions.removeAction(this.timeout);
       this.timeout = null;

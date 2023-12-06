@@ -1,11 +1,11 @@
-import UIComponent from '../tsunami/components/UIComponent';
-import * as tsunami from '../tsunami/tsunami';
-import Point from '../tsunami/geom/Point';
-import UIList from '../tsunami/components/UIList';
-import Data from '../tsunami/data/Data';
+import UIComponent from '../../lib/tsunami/components/UIComponent';
+import * as tsunami from '../../lib/tsunami/tsunami';
+import Point from '../../lib/tsunami/geom/Point';
+import UIList from '../../lib/tsunami/components/UIList';
+import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
-import { round2, round3 } from '../tsunami/utils/number';
-import UIListBase from '../tsunami/components/UIListBase';
+import { round2, round3 } from '../../lib/tsunami/utils/number';
+import UIListBase from '../../lib/tsunami/components/UIListBase';
 
 export default class EasingGraph extends UIComponent {
   constructor(element) {

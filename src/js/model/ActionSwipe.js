@@ -1,12 +1,12 @@
-import Point from '../tsunami/geom/Point';
+import Point from '../../lib/tsunami/geom/Point';
 import ActionTween from './ActionTween';
-import ArrayData from '../tsunami/data/ArrayData';
-import Vector2Data from '../tsunami/data/Vector2Data';
-import { isTouch } from '../tsunami/window';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
+import Vector2Data from '../../lib/tsunami/data/Vector2Data';
+import { isTouch } from '../../lib/tsunami/window';
 
-import NumberData from '../tsunami/data/NumberData';
-import { events } from '../tsunami/events';
-import { roundDecimalToPlace } from '../tsunami/utils/number';
+import NumberData from '../../lib/tsunami/data/NumberData';
+import { events } from '../../lib/tsunami/events';
+import { roundDecimalToPlace } from '../../lib/tsunami/utils/number';
 import { Vector3 } from 'three/src/math/Vector3';
 import { CatmullRomCurve3 } from 'three/src/extras/curves/CatmullRomCurve3';
 

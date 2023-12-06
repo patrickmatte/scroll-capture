@@ -1,62 +1,57 @@
-import Branch from '../tsunami/Branch';
+import Branch from '../../lib/tsunami/Branch';
+import { awaitTimeout } from '../../lib/tsunami/await';
 import { app } from '../main';
-import { awaitTimeout } from '../tsunami/await';
 
 export default class PlayState extends Branch {
   constructor() {
     super();
-    this.isPlaying = false;
-    this.startLocation = 'scroll-capture/scenario';
+  }
+
+  get endLocation() {
+    return 'scroll-capture/scenario';
   }
 
   show() {
-    this.isPlaying = true;
+    app.model.save();
 
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
-    this.router.redirect('default', () => {
-      return this.startLocation;
+    app.model.setDefaultLocation(this.path).then(() => {
+      app.model.getActionIndex().then((result) => {
+        let index = result.actionIndex;
+        if (isNaN(index)) index = 0;
+        this.startActions(index);
+      });
     });
-
-    app.model.save();
-    app.model.actions.selectedIndex.value = 0;
-    return awaitTimeout(0.25).then(() => this.triggerAction());
   }
 
-  triggerAction() {
-    if (!this.isPlaying) return;
-    let action = app.model.actions.selectedItem.value;
-    if (action) {
+  startActions(index) {
+    awaitTimeout(0.25).then(() => this.triggerAction(index));
+  }
+
+  triggerAction(index) {
+    if (index < app.model.actions.value.length) {
+      app.model.actions.selectedIndex.value = index;
+      let action = app.model.actions.selectedItem.value;
       let promise = action.triggerDelay();
-      promise.then(() => this.actionComplete());
+      promise.then(() => {
+        app.model.setActionIndex(index + 1).then(() => {
+          this.triggerAction(index + 1);
+        });
+      });
     } else {
-      // this.allComplete();
-      awaitTimeout(0.5).then(() => this.allComplete());
-    }
-  }
-
-  actionComplete() {
-    if (!this.isPlaying) return;
-    if (app.model.actions.selectedIndex.value < app.model.actions.value.length - 1) {
-      app.model.actions.selectedIndex.value = app.model.actions.selectedIndex.value + 1;
-      this.triggerAction();
-    } else {
-      // this.allComplete();
       awaitTimeout(0.5).then(() => this.allComplete());
     }
   }
 
   allComplete() {
-    if (!this.isPlaying) return;
-    this.isPlaying = false;
-    this.router.location = this.startLocation;
+    this.router.location = this.endLocation;
   }
 
   hide() {
     document.documentElement.removeAttribute('data-sc-cursor');
     document.documentElement.removeAttribute('data-sc-scrollbars');
-    this.isPlaying = false;
     return super.hide();
   }
 }

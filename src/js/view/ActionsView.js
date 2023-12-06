@@ -1,5 +1,5 @@
-import UIList from '../tsunami/components/UIList';
-import * as tsunami from '../tsunami/tsunami';
+import UIList from '../../lib/tsunami/components/UIList';
+import * as tsunami from '../../lib/tsunami/tsunami';
 import ActionView from './ActionView';
 import { app } from '../main';
 

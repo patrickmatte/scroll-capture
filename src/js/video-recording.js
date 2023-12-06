@@ -1,5 +1,5 @@
-import { timeAMPM } from './tsunami/utils/date';
-import { addLeadingZero } from './tsunami/utils/number';
+import { timeAMPM } from '../lib/tsunami/utils/date';
+import { addLeadingZero } from '../lib/tsunami/utils/number';
 import { sendTrackEventMessage } from './model/GABridge';
 
 chrome.storage.local.get(['json'], (result) => {

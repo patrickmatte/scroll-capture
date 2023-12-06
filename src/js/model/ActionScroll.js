@@ -1,9 +1,9 @@
-import NumberData from '../tsunami/data/NumberData';
-import ArrayData from '../tsunami/data/ArrayData';
+import NumberData from '../../lib/tsunami/data/NumberData';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
 import ActionTween from './ActionTween';
-import StringData from '../tsunami/data/StringData';
-import Point from '../tsunami/geom/Point';
-import Data from '../tsunami/data/Data';
+import StringData from '../../lib/tsunami/data/StringData';
+import Point from '../../lib/tsunami/geom/Point';
+import Data from '../../lib/tsunami/data/Data';
 
 export default class ActionScroll extends ActionTween {
   constructor(target = 'window', units = 'px', x = 0, y = 0, duration = 1, delay = 0) {

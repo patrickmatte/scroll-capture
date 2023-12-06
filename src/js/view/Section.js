@@ -1,4 +1,4 @@
-import UIComponent from '../tsunami/components/UIComponent';
+import UIComponent from '../../lib/tsunami/components/UIComponent';
 import { app } from '../main';
 
 export default class Section extends UIComponent {

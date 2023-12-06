@@ -1,4 +1,4 @@
-import ArrayData from '../tsunami/data/ArrayData';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
 import ActionEval from './ActionEval';
 import ActionScroll from './ActionScroll';
 import ActionMouseEvent from './ActionMouseEvent';

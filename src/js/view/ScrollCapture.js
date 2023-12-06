@@ -1,6 +1,6 @@
-import UIComponent from '../tsunami/components/UIComponent';
-import * as tsunami from '../tsunami/tsunami';
-import { events } from '../tsunami/events';
+import UIComponent from '../../lib/tsunami/components/UIComponent';
+import * as tsunami from '../../lib/tsunami/tsunami';
+import { events } from '../../lib/tsunami/events';
 import { app } from '../main';
 import ActionsView from './ActionsView';
 import template from '../../templates/scroll-capture.html';
@@ -24,6 +24,16 @@ export default class ScrollCapture extends UIComponent {
     this.branches['scenario'] = this.windowContent.scenario;
     this.branches['video'] = this.windowContent.video;
     this.branches['settings'] = this.windowContent.settings;
+  }
+
+  hide() {
+    console.log('ScrollCapture hide');
+    const promise = app.model.setActionIndex(0);
+    const promise2 = promise.then(() => {
+      console.log('ScrollCapture hide complete');
+      return super.hide();
+    });
+    return promise2;
   }
 
   dragStart(event) {

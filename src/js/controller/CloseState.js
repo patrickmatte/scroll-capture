@@ -1,4 +1,4 @@
-import Branch from '../tsunami/Branch';
+import Branch from '../../lib/tsunami/Branch';
 import { app } from '../main';
 
 export default class CloseState extends Branch {
@@ -7,6 +7,7 @@ export default class CloseState extends Branch {
   }
 
   show() {
+    console.log('CloseState.show');
     app.model.save();
     return super.show();
   }

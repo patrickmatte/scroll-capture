@@ -1,8 +1,8 @@
-import Vector2Data from '../tsunami/data/Vector2Data';
-import CubicBezierEasing from '../tsunami/animation/CubicBezierEasing';
-import { round2 } from '../tsunami/utils/number';
-import Easing from '../tsunami/animation/Easing';
-import DataModel from '../tsunami/data/DataModel';
+import Vector2Data from '../../lib/tsunami/data/Vector2Data';
+import CubicBezierEasing from '../../lib/tsunami/animation/CubicBezierEasing';
+import { round2 } from '../../lib/tsunami/utils/number';
+import Easing from '../../lib/tsunami/animation/Easing';
+import DataModel from '../../lib/tsunami/data/DataModel';
 
 export default class CubicBezierPoints extends DataModel {
   constructor() {

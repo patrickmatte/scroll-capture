@@ -1,9 +1,9 @@
 import Action from './Action';
-import NumberData from '../tsunami/data/NumberData';
-import { isTouch } from '../tsunami/window';
-import Point from '../tsunami/geom/Point';
-import ArrayData from '../tsunami/data/ArrayData';
-import StringData from '../tsunami/data/StringData';
+import NumberData from '../../lib/tsunami/data/NumberData';
+import { isTouch } from '../../lib/tsunami/window';
+import Point from '../../lib/tsunami/geom/Point';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
+import StringData from '../../lib/tsunami/data/StringData';
 
 export default class ActionMouseEvent extends Action {
   constructor(eventType = 'click', x = 0, y = 0) {

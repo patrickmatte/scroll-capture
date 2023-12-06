@@ -1,11 +1,11 @@
-import Vector2Data from '../tsunami/data/Vector2Data';
-import ArrayData from '../tsunami/data/ArrayData';
-import BooleanData from '../tsunami/data/BooleanData';
-import Data from '../tsunami/data/Data';
+import Vector2Data from '../../lib/tsunami/data/Vector2Data';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
+import BooleanData from '../../lib/tsunami/data/BooleanData';
+import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
 import { sendTrackEventMessage } from './GABridge';
-import Throttle from '../tsunami/utils/Throttle';
-import NumberData from '../tsunami/data/NumberData';
+import Throttle from '../../lib/tsunami/utils/Throttle';
+import NumberData from '../../lib/tsunami/data/NumberData';
 import { getSupportedFormatsAndCodecs } from './FormatsAndCodecs';
 
 export default class Settings {

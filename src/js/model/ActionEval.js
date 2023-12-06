@@ -1,6 +1,6 @@
 import Action from './Action';
 // import StringData from "../tsunami/data/StringData";
-import { safeEval } from '../tsunami/tsunami';
+import { safeEval } from '../../lib/tsunami/tsunami';
 
 // let example = `/* Example */
 // let promise = new Promise(function(resolve, reject) {

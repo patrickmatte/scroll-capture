@@ -66,7 +66,7 @@ async function startRecording(message) {
     videoBitsPerSecond: videoBitsPerSecond * 1000000,
   };
 
-  sendTrackEventMessage('recording', 'start', options.mimeType);
+  sendTrackEventMessage('recording', 'mimeType', options.mimeType);
 
   recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);

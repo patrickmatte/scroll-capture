@@ -21,6 +21,8 @@ export function initBackgroundPage() {
 
     if (recording) {
       //   stopRecording({'stopped with button'});
+    } else {
+      changeIcon();
     }
 
     chrome.scripting.executeScript({

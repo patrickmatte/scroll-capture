@@ -1,11 +1,11 @@
-import BooleanData from '../tsunami/data/BooleanData';
-import NumberData from '../tsunami/data/NumberData';
-import { awaitTimeout } from '../tsunami/await';
-import StringData from '../tsunami/data/StringData';
-import Data from '../tsunami/data/Data';
+import BooleanData from '../../lib/tsunami/data/BooleanData';
+import NumberData from '../../lib/tsunami/data/NumberData';
+import { awaitTimeout } from '../../lib/tsunami/await';
+import StringData from '../../lib/tsunami/data/StringData';
+import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
 import { sendTrackEventMessage } from './GABridge';
-import BaseEvent from '../tsunami/events';
+import BaseEvent from '../../lib/tsunami/events';
 
 export default class Action extends EventTarget {
   constructor(type = 'Action', name = 'Action', description = 'Add an Action') {

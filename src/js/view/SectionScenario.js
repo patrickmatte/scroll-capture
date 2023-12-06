@@ -9,9 +9,10 @@ export default class SectionScenario extends Section {
   showDelayComplete() {
     let promise = super.showDelayComplete();
 
-    this.router.redirect('default', () => {
-      return this.path;
-    });
+    app.model.setDefaultLocation(this.path);
+    // this.router.redirect('default', () => {
+    //   return this.path;
+    // });
 
     if (!app.model.actions.selectedItem.value) {
       let lastIndex = app.model.actions.length.value - 1;

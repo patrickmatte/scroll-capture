@@ -1,5 +1,5 @@
-import UIComponent from '../tsunami/components/UIComponent';
-import * as tsunami from '../tsunami/tsunami';
+import UIComponent from '../../lib/tsunami/components/UIComponent';
+import * as tsunami from '../../lib/tsunami/tsunami';
 import ActionTweenView from './ActionTweenView';
 
 export default class ActionView extends UIComponent {

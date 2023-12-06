@@ -1,9 +1,9 @@
 import { sendTrackEventMessage } from './GABridge';
-import BooleanData from '../tsunami/data/BooleanData';
+import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Actions from './Actions';
 import Settings from './Settings';
-import BaseEvent from '../tsunami/events';
-import DataModel from '../tsunami/data/DataModel';
+import BaseEvent from '../../lib/tsunami/events';
+import DataModel from '../../lib/tsunami/data/DataModel';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -69,6 +69,41 @@ export default class AppModel extends DataModel {
         this.isSaving.value = false;
       }, 100);
     });
+  }
+
+  load() {
+    let jsonPromise = chrome.storage.local.get(['json']).then((result) => {
+      if (result.json) {
+        let data = JSON.parse(result.json);
+        this.actions.deserialize(data.actions);
+        this.settings.deserialize(data.settings);
+      }
+    });
+    return jsonPromise;
+  }
+
+  loadDefaultLocation() {
+    const promise = chrome.storage.local.get(['defaultLocation']).then((result) => {
+      this._defaultLocation = result.defaultLocation || 'scroll-capture/scenario';
+    });
+    return promise;
+  }
+
+  setDefaultLocation(value) {
+    this._defaultLocation = value;
+    return chrome.storage.local.set({ defaultLocation: value });
+  }
+
+  get defaultLocation() {
+    return this._defaultLocation;
+  }
+
+  setActionIndex(value) {
+    return chrome.storage.local.set({ actionIndex: value });
+  }
+
+  getActionIndex() {
+    return chrome.storage.local.get(['actionIndex']);
   }
 
   // playSelected() {
