@@ -5,6 +5,7 @@ import Router from '../../lib/tsunami/Router';
 import PlayState from './PlayState';
 import PlayRecordState from './PlayRecordState';
 import CloseState from './CloseState';
+import StopRecordingState from './StopRecordingState';
 
 export default class AppController extends Branch {
   constructor() {
@@ -13,18 +14,21 @@ export default class AppController extends Branch {
     this.trackRouterLocation = this.trackRouterLocation.bind(this);
 
     this.router = new Router(this);
-    // this.router.addEventListener(Router.CHANGE, this.trackRouterLocation);
+    this.router.addEventListener(Router.CHANGE, this.trackRouterLocation);
 
     this.branches = {
       'scroll-capture': app.view.scrollCapture,
       play: new PlayState(),
       record: new PlayRecordState(),
       closed: new CloseState(),
+      stop: new StopRecordingState(),
     };
+
+    this.defaultChild = 'scroll-capture';
   }
 
   trackRouterLocation(e) {
-    // console.log('############## trackRouterLocation', this.router.location);
+    console.log('############## trackRouterLocation', this.router.location);
     sendTrackPageMessage('/' + this.router.location);
   }
 

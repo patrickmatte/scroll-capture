@@ -2,6 +2,9 @@ import { analytics } from './analytics';
 
 export function initBackgroundPage() {
   chrome.action.onClicked.addListener(async (tab) => {
+    chrome.storage.local.set({ tabId: tab.id });
+    console.log('chrome.action.onClicked', tab.id);
+
     const existingContexts = await chrome.runtime.getContexts({});
     let recording = false;
 
@@ -9,6 +12,7 @@ export function initBackgroundPage() {
 
     // If an offscreen document is not already open, create one.
     if (!offscreenDocument) {
+      console.log('!!!!! Create an offscreen document');
       // Create an offscreen document.
       await chrome.offscreen.createDocument({
         url: 'offscreen.html',
@@ -17,27 +21,36 @@ export function initBackgroundPage() {
       });
     } else {
       recording = offscreenDocument.documentUrl.endsWith('#recording');
+      console.log('recording=', recording);
     }
-
-    if (recording) {
-      //   stopRecording({'stopped with button'});
-    } else {
-      changeIcon();
-    }
-
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ['content.js'],
-    });
-
-    // globalThis.tabId = tab.id;
-    chrome.storage.local.set({ tabId: tab.id });
 
     chrome.windows.getCurrent({ populate: false }, (win) => {
       globalThis.chromeSize = {
         width: win.width - tab.width,
         height: win.height - tab.height,
       };
+    });
+
+    console.log('executeScript start');
+    const scriptPromise = chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ['content.js'],
+    });
+    scriptPromise.then(() => {
+      console.log('executeScript done');
+      if (recording) {
+        console.log('Stop recording with extension button');
+        chrome.tabs.sendMessage(tab.id, {
+          type: 'scrollCaptureLocation',
+          location: 'stop',
+        });
+      } else {
+        changeIcon('');
+        chrome.tabs.sendMessage(tab.id, {
+          type: 'scrollCaptureLocation',
+          location: '',
+        });
+      }
     });
   });
 }
@@ -48,7 +61,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       startRecording(msg);
       break;
     case 'scrollCaptureStopRecording':
-      stopRecording(msg);
+      console.log('Stop recording from UI when actions complete');
+      stopRecording();
       break;
     case 'scrollCaptureResizeWindow':
       resizeWindow(msg.width, msg.height);
@@ -87,6 +101,7 @@ function changeIcon(color = '') {
 }
 
 async function startRecording(data) {
+  console.log('background.startRecording');
   changeIcon('_red');
 
   const streamId = await chrome.tabCapture.getMediaStreamId({
@@ -103,7 +118,8 @@ async function startRecording(data) {
   chrome.runtime.sendMessage(message);
 }
 
-function stopRecording(message) {
+function stopRecording() {
+  console.log('background.stopRecording');
   changeIcon();
 
   chrome.runtime.sendMessage({

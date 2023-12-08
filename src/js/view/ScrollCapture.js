@@ -24,13 +24,13 @@ export default class ScrollCapture extends UIComponent {
     this.branches['scenario'] = this.windowContent.scenario;
     this.branches['video'] = this.windowContent.video;
     this.branches['settings'] = this.windowContent.settings;
+
+    this.defaultChild = 'scenario';
   }
 
   hide() {
-    console.log('ScrollCapture hide');
     const promise = app.model.setActionIndex(0);
     const promise2 = promise.then(() => {
-      console.log('ScrollCapture hide complete');
       return super.hide();
     });
     return promise2;

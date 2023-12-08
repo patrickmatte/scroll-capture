@@ -19,6 +19,8 @@ let recorder;
 let data = [];
 
 async function startRecording(message) {
+  console.log('offscreen.startRecording');
+
   if (recorder?.state === 'recording') {
     throw new Error('Called startRecording while recording is in progress.');
   }
@@ -71,6 +73,7 @@ async function startRecording(message) {
   recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);
   recorder.onstop = () => {
+    console.log('recorder.onstop');
     // const blob = new Blob(data, { type: `video/${format}` });
     const blobFormat = mimeType.split(';')[0];
     const blob = new Blob(data, { type: blobFormat });
@@ -88,6 +91,7 @@ async function startRecording(message) {
 }
 
 function stopRecording(message) {
+  console.log('offscreen.stopRecording');
   recorder.stop();
   recorder.stream.getTracks().forEach((t) => t.stop());
   recorder = undefined;

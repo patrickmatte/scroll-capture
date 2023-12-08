@@ -5,6 +5,7 @@ import { loadStyle } from '../../lib/tsunami/load/loadStyle';
 import Data from '../../lib/tsunami/data/Data';
 import RouterButton from './RouterButton';
 import { app } from '../main';
+import UIButton from '../../lib/tsunami/components/UIButton';
 
 export default class AppView extends App {
   constructor(scope) {
