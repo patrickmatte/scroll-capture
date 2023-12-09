@@ -5,6 +5,7 @@ import ActionMouseEvent from './ActionMouseEvent';
 import ActionSwipe from './ActionSwipe';
 import ActionWait from './ActionWait';
 import { sendTrackEventMessage } from './GABridge';
+import ActionURL from './ActionURL';
 
 export default class Actions extends ArrayData {
   constructor() {
@@ -20,6 +21,7 @@ export default class Actions extends ArrayData {
       new ActionMouseEvent(),
       new ActionSwipe(),
       new ActionWait(),
+      new ActionURL(),
       new ActionEval(),
     ];
     // this.types.selectedItem.value = this.types.value[0];

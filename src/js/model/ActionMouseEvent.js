@@ -92,15 +92,15 @@ export default class ActionMouseEvent extends Action {
   }
 
   captureMouseEventHandler(event) {
-    // if (event.preventDefaut) {
-    // 	event.preventDefaut();
-    // }
-    // if (event.stopImmediatePropagation) {
-    // 	event.stopImmediatePropagation();
-    // }
-    // if (event.stopPropagation) {
-    // 	event.stopPropagation();
-    // }
+    if (event.preventDefaut) {
+      event.preventDefaut();
+    }
+    if (event.stopImmediatePropagation) {
+      event.stopImmediatePropagation();
+    }
+    if (event.stopPropagation) {
+      event.stopPropagation();
+    }
     let touch = event;
     if (isTouch) {
       touch = event.touches[0];

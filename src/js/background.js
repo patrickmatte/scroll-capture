@@ -76,13 +76,10 @@ export function initBackgroundPage() {
 }
 
 function updatedTabHandler(tabId, changeInfo, tab) {
-  console.log('!!!updatedTabHandler', tabId, tab.id);
-  console.log('!!!changeInfo', changeInfo);
   executeScript(tab.id).then(() => {
     chrome.runtime.getContexts({}).then((existingContexts) => {
       const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
       const recording = offscreenDocument.documentUrl.endsWith('#recording');
-      console.log('!!!recording', recording);
       chrome.tabs.sendMessage(tab.id, {
         type: 'scrollCaptureLocation',
         location: recording ? 'record' : 'play',
