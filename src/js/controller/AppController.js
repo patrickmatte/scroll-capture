@@ -28,7 +28,7 @@ export default class AppController extends Branch {
   }
 
   trackRouterLocation(e) {
-    console.log('############## trackRouterLocation', this.router.location);
+    // console.log('############## trackRouterLocation', this.router.location);
     sendTrackPageMessage('/' + this.router.location);
   }
 

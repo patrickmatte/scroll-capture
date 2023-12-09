@@ -2,11 +2,7 @@ import { timeAMPM } from '../lib/tsunami/utils/date';
 import { addLeadingZero } from '../lib/tsunami/utils/number';
 import { sendTrackEventMessage } from './model/GABridge';
 
-console.log('video-recording javascript started');
-
 chrome.storage.local.get(['json'], (result) => {
-  console.log('video-recording json loaded');
-
   let colorTheme = 'Dark';
   if (result) {
     if (result.json) {
@@ -36,7 +32,6 @@ window.addEventListener('resize', () => {
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  console.log('video-recording onMessage', msg.type);
   switch (msg.type) {
     case 'scrollCaptureColorTheme':
       document.body.querySelector('.sc-default').setAttribute('data-theme-light', msg.isColorThemeLight);
@@ -48,7 +43,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       dispatchVideoHeight();
       break;
     case 'scrollCaptureVideoURL':
-      console.log('video-recording message scrollCaptureVideoURL');
       updateVideo(msg);
       break;
   }
@@ -74,7 +68,6 @@ function dispatchVideoHeight() {
 }
 
 function updateVideo(message) {
-  console.log('video-recording.updateVideo');
   const videoURL = message.videoURL;
   let extension = message.extension;
   // let extension = "webm";

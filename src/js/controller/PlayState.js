@@ -19,14 +19,16 @@ export default class PlayState extends Branch {
 
     app.model.setDefaultLocation(this.path).then(() => {
       app.model.getActionIndex().then((result) => {
-        let index = result.actionIndex;
-        if (isNaN(index)) index = 0;
+        const index = isNaN(result.actionIndex) ? 0 : result.actionIndex;
         this.startActions(index);
       });
     });
   }
 
   startActions(index) {
+    if (app.model.actions.value.length > 0) {
+      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true });
+    }
     awaitTimeout(0.25).then(() => this.triggerAction(index));
   }
 
@@ -41,11 +43,14 @@ export default class PlayState extends Branch {
         });
       });
     } else {
-      awaitTimeout(0.5).then(() => this.allComplete());
+      awaitTimeout(0.25).then(() => this.allComplete());
     }
   }
 
   allComplete() {
+    if (app.model.actions.value.length > 0) {
+      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false });
+    }
     this.router.location = this.endLocation;
   }
 

@@ -1,4 +1,9 @@
 .sc-default {
+	::placeholder {
+		color: inherit;
+		opacity: 0.5; 
+	}
+
     .sc-field {
 		display: flex;
 		flex-grow: 1;
