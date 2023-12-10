@@ -52,15 +52,15 @@
 									</button>
 								</span>
 								<span class="sc-tab" data-id="play" is="ui-component">
-									<button is="router-button" data-path="play" title="Play Timeline">
-										<span class="sc-icon fa-solid fa-play-circle"></span>
+									<button is="router-button" data-path="play" title="Play">
+										<span class="sc-icon fa-solid fa-play"></span>
 										<span class="sc-label">Play</span>
 									</button>
 								</span>
 								<span class="sc-tab" data-id="video" is="ui-component">
-									<button is="router-button" data-path="record" title="Capture">
-										<span class="sc-icon fa-solid fa-video"></span>
-										<span class="sc-label">Capture</span>
+									<button is="router-button" data-path="record" title="Record">
+										<span class="sc-icon fa-solid fa-circle"></span>
+										<span class="sc-label">Record</span>
 									</button>
 								</span>
 							</span>
@@ -102,7 +102,7 @@
 													<span class="sc-tab" data-visible="{scope.data.isTestable.value}" is="ui-component">
 														<div class="ui-list-drag-area"></div>
 														<button class="sc-test-button" is="ui-button" set:model="scope.data" on:click="model.play()" data-is-playing="{scope.data.isPlaying.value}" title="Play">
-															<span class="sc-icon fa-solid fa-play-circle"></span>
+															<span class="sc-icon fa-solid fa-circle-play"></span>
 														</button>
 													</span>
 													<span class="sc-tab">
@@ -120,14 +120,14 @@
 															<div class="sc-action sc-fields-list" is="action-tween">
 																<div class="sc-field">
 																	<span class="sc-input" title="ScrollLeft">
-																		<span class="sc-icon fa-solid fa-x"></span>
+																		<span class="sc-icon fa-solid fa-left-right"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.unitX.value}</span>
 																			<input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
 																		</span>
 																	</span>
 																	<span class="sc-input" title="ScrollTop">
-																		<span class="sc-icon fa-solid fa-y"></span>
+																		<span class="sc-icon fa-solid fa-up-down"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.unitY.value}</span>
 																			<input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitY.value" on:focus="scope.data.doScroll()" />
@@ -136,7 +136,7 @@
 																</div>
 																<div class="sc-field">
 																	<span class="sc-input" title="Target Selector">
-																		<span class="sc-icon fa-solid fa-dot-circle"></span>
+																		<span class="sc-icon fa-solid fa-location-crosshairs"></span>
 																		<input type="text" placeholder="window" is="ui-input" bind:model="scope.data.target.value" />
 																	</span>
 																</div>
@@ -148,14 +148,14 @@
 																	<template>
 																		<div class="sc-field">
 																			<span class="sc-input" title="PageX">
-																				<span class="sc-icon fa-solid fa-x"></span>
+																				<span class="sc-icon fa-solid fa-left-right"></span>
 																				<span class="sc-input-group">
 																					<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.x.value}</span>
 																					<input type="number" min="0" placeholder="0" step="1" is="ui-input" bind:model="scope.data.x.value" />
 																				</span>
 																			</span>
 																			<span class="sc-input" title="PageY">
-																				<span class="sc-icon fa-solid fa-y"></span>
+																				<span class="sc-icon fa-solid fa-up-down"></span>
 																				<span class="sc-input-group">
 																					<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.y.value}</span>
 																					<input type="number" min="0" placeholder="0" step="1" is="ui-input" bind:model="scope.data.y.value" />
@@ -170,14 +170,14 @@
 															<div class="sc-action sc-fields-list">
 																<div class="sc-field">
 																	<span class="sc-input">
-																		<span class="sc-icon fa-solid fa-x"></span>
+																		<span class="sc-icon fa-solid fa-left-right"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.x.value}</span>
 																			<input type="number" step="1" min="0" placeholder="0" title="PageX" is="ui-input" bind:model="scope.data.x.value" />
 																		</span>
 																	</span>
 																	<span class="sc-input">
-																		<span class="sc-icon fa-solid fa-y"></span>
+																		<span class="sc-icon fa-solid fa-up-down"></span>
 																		<span class="sc-input-group">
 																			<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.y.value}</span>
 																			<input type="number" step="1" min="0" placeholder="0" title="PageY" is="ui-input" bind:model="scope.data.y.value" />
@@ -217,7 +217,7 @@
 															<div class="sc-action sc-fields-list">
 																<div class="sc-field">
 																	<span class="sc-input" title="URL">
-																		<span class="sc-icon fa-solid fa-dot-circle"></span>
+																		<span class="sc-icon fa-solid fa-location-crosshairs"></span>
 																		<input type="text" placeholder="window" is="ui-input" bind:model="scope.data.url.value" />
 																	</span>
 																</div>

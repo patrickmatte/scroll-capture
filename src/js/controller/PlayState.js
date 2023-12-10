@@ -29,7 +29,8 @@ export default class PlayState extends Branch {
     if (app.model.actions.value.length > 0) {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true });
     }
-    awaitTimeout(0.25).then(() => this.triggerAction(index));
+    this.triggerAction(index);
+    this.isPlaying = true;
   }
 
   triggerAction(index) {
@@ -39,7 +40,7 @@ export default class PlayState extends Branch {
       let promise = action.triggerDelay();
       promise.then(() => {
         app.model.setActionIndex(index + 1).then(() => {
-          this.triggerAction(index + 1);
+          if (this.isPlaying) this.triggerAction(index + 1);
         });
       });
     } else {
@@ -48,13 +49,14 @@ export default class PlayState extends Branch {
   }
 
   allComplete() {
-    if (app.model.actions.value.length > 0) {
-      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false });
-    }
     this.router.location = this.endLocation;
   }
 
   hide() {
+    this.isPlaying = false;
+    if (app.model.actions.value.length > 0) {
+      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false });
+    }
     document.documentElement.removeAttribute('data-sc-cursor');
     document.documentElement.removeAttribute('data-sc-scrollbars');
     return super.hide();
