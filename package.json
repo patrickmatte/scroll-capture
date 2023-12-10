@@ -1,6 +1,6 @@
 {
 	"name": "scroll-capture",
-	"version": "0.0.9",
+	"version": "0.1.0",
 	"author": "Patrick Matte <patrick.matte@gmail.com>",
 	"description": "A chrome extension to automate scrolling and mouse actions for your portfolio screen captures.",
 	"scripts": {

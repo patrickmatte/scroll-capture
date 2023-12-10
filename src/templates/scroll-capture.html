@@ -26,7 +26,11 @@
 				<span class="sc-drag-area"></span>
 				<span class="sc-tab sc-title-tab">
 					<span class="sc-drag-area"></span>
-					<span class="sc-label">Scroll Capture</span>
+					<span class="sc-tab-wrapper">
+						<span class="sc-icon fa-solid fa-video"></span>
+						<span class="sc-label">Scroll Capture</span>
+					</span>
+
 				</span>
 			</span>
 			<span class="sc-tabs">
@@ -444,7 +448,6 @@
 															</span>
 														</label>
 															<div class="sc-input sc-select">
-															<span class="sc-icon fa-solid "></span>
 															<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
 														</div>
 													</div>
