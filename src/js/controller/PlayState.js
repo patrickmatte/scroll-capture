@@ -5,6 +5,7 @@ import { app } from '../main';
 export default class PlayState extends Branch {
   constructor() {
     super();
+    this.beforeUnloadHandler = this.beforeUnloadHandler.bind(this);
   }
 
   get endLocation() {
@@ -13,6 +14,8 @@ export default class PlayState extends Branch {
 
   show() {
     app.model.save();
+
+    window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
@@ -23,6 +26,10 @@ export default class PlayState extends Branch {
         this.startActions(index);
       });
     });
+  }
+
+  beforeUnloadHandler() {
+    this.router.location = '';
   }
 
   startActions(index) {
@@ -53,6 +60,7 @@ export default class PlayState extends Branch {
   }
 
   hide() {
+    window.removeEventListener('beforeunload', this.beforeUnloadHandler);
     this.isPlaying = false;
     if (app.model.actions.value.length > 0) {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false });

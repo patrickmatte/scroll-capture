@@ -225,6 +225,43 @@
 			}
 		}
 
+
+		&.sc-radio-video {
+			.sc-radio-content {
+				.sc-icon {	
+					&::before {
+						content: "\f4e2";
+					}
+				}
+			}
+	
+			input:checked ~ .sc-radio-content {
+				.sc-icon {
+					&::before {
+						content: "\f03d";
+					}
+				}
+			}
+		}
+
+		&.sc-radio-audio {
+			.sc-radio-content {
+				.sc-icon {	
+					&::before {
+						content: "\f131";
+					}
+				}
+			}
+	
+			input:checked ~ .sc-radio-content {
+				.sc-icon {
+					&::before {
+						content: "\f130";
+					}
+				}
+			}
+		}
+
 	}
 
 	*[data-visible="false"] {
@@ -244,7 +281,7 @@
 	.sc-icon {
 		display: inline-block;
 		vertical-align: middle;
-		min-width: 1em;
+		min-width: 1.2em;
 
 		.sc-icon-shape {
 			fill: $textColorDark;

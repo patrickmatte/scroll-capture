@@ -51,30 +51,31 @@
 								<span class="sc-tab" data-id="scenario">
 									<button is="router-button" data-path="scroll-capture/scenario" title="Timeline">
 										<!-- <span class="sc-icon fa-solid fa-sliders-h"></span> -->
-										<span class="sc-icon fa-solid fa-bars-staggered"></span>
+										<span class="sc-icon fa-solid fa-clapperboard"></span>
 										<span class="sc-label">Timeline</span>
 									</button>
 								</span>
+								<span class="sc-tab" data-id="settings">
+									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
+										<span class="sc-icon fa-solid fa-sliders"></span>
+										<span class="sc-label">Settings</span>
+									</button>
+								</span>
 								<span class="sc-tab" data-id="play" is="ui-component">
-									<button is="router-button" data-path="play" title="Play">
+									<button is="router-button" data-path="play" title="Play Timeline">
 										<span class="sc-icon fa-solid fa-play"></span>
 										<span class="sc-label">Play</span>
 									</button>
 								</span>
 								<span class="sc-tab" data-id="video" is="ui-component">
-									<button is="router-button" data-path="record" title="Record">
+									<button is="router-button" data-path="record" title="Record Timeline">
 										<span class="sc-icon fa-solid fa-circle"></span>
 										<span class="sc-label">Record</span>
 									</button>
 								</span>
 							</span>
 							<span class="sc-tabs" is="ui-component">
-								<span class="sc-tab" data-id="settings">
-									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
-										<span class="sc-icon fa-solid fa-cogs"></span>
-										<span class="sc-label">Settings</span>
-									</button>
-								</span>
+
 							</span>
 						</div>
 						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
@@ -86,7 +87,7 @@
 											<div class="sc-title">
 												<span class="sc-tabs">
 													<div class="sc-drag-area ui-list-drag-area"></div>
-													<span class="sc-tab sc-title-tab">
+													<span class="sc-tab sc-title-tab" title="{scope.data.name.value}" is="ui-component">
 														<div class="ui-list-drag-area"></div>
 														<span class="sc-tab-wrapper">
 															<span class="sc-icon {scope.data.icon.value}" is="ui-component"></span>
@@ -97,16 +98,16 @@
 													</span>
 												</span>
 												<span class="sc-tabs">
-													<span class="sc-tab" data-visible="{scope.data.isCaptureable.value}" is="ui-component">
-														<div class="ui-list-drag-area"></div>
-														<button class="sc-set-button" is="ui-button" data-is-capturing="{scope.data.isCapturing.value}" set:model="scope.data" on:click="model.reCapture()" title="Set">
-															<span class="sc-icon fa-solid fa-bullseye"></span>
-														</button>
-													</span>
 													<span class="sc-tab" data-visible="{scope.data.isTestable.value}" is="ui-component">
 														<div class="ui-list-drag-area"></div>
 														<button class="sc-test-button" is="ui-button" set:model="scope.data" on:click="model.play()" data-is-playing="{scope.data.isPlaying.value}" title="Play">
 															<span class="sc-icon fa-solid fa-play"></span>
+														</button>
+													</span>
+													<span class="sc-tab" data-visible="{scope.data.isCaptureable.value}" is="ui-component">
+														<div class="ui-list-drag-area"></div>
+														<button class="sc-set-button" is="ui-button" data-is-capturing="{scope.data.isCapturing.value}" set:model="scope.data" on:click="model.reCapture()" title="Set Value">
+															<span class="sc-icon fa-solid fa-bullseye"></span>
 														</button>
 													</span>
 													<span class="sc-tab">
@@ -411,10 +412,10 @@
 
 												<div class="sc-field-group">
 													<div class="sc-field">
-														<label class="sc-input sc-radio" title="Export Video">
+														<label class="sc-input sc-radio sc-radio-video" title="Export Video">
 															<input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input"/>
 															<span class="sc-radio-content">
-																<span class="sc-icon fa-solid fa-video"></span>
+																<span class="sc-icon fa-solid" is="ui-component"></span>
 																<span class="sc-radio-label">
 																	<span is="ui-component" data-visible="{scope.settings.exportVideo.value}">On</span>
 																	<span is="ui-component" data-visible="{!scope.settings.exportVideo.value}">Off</span>
@@ -437,10 +438,10 @@
 												</div>
 												<div class="sc-field-group" title="Audio Codec">
 													<div class="sc-field">
-														<label class="sc-input sc-radio" title="Export Audio">
+														<label class="sc-input sc-radio sc-radio-audio" title="Export Audio">
 															<input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input"/>
 															<span class="sc-radio-content">
-																<span class="sc-icon fa-solid fa-volume-up"></span>
+																<span class="sc-icon fa-solid"></span>
 																<span class="sc-radio-label">
 																	<span is="ui-component" data-visible="{scope.settings.exportAudio.value}">On</span>
 																	<span is="ui-component" data-visible="{!scope.settings.exportAudio.value}">Off</span>
