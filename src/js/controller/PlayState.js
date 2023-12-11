@@ -29,15 +29,15 @@ export default class PlayState extends Branch {
   }
 
   beforeUnloadHandler() {
-    this.router.location = '';
+    this.isPlaying = false;
   }
 
   startActions(index) {
     if (app.model.actions.value.length > 0) {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true });
     }
-    this.triggerAction(index);
     this.isPlaying = true;
+    this.triggerAction(index);
   }
 
   triggerAction(index) {
