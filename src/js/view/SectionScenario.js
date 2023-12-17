@@ -7,6 +7,8 @@ export default class SectionScenario extends Section {
   }
 
   showDelayComplete() {
+    app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true, location: 'scenario' });
+
     let promise = super.showDelayComplete();
 
     app.model.setDefaultLocation(this.path);
@@ -29,6 +31,8 @@ export default class SectionScenario extends Section {
   }
 
   hideDelayComplete() {
+    app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'scenario' });
+
     app.model.actions.selectedItem.value = null;
     return super.hideDelayComplete();
   }
