@@ -38,8 +38,8 @@ export default class ScrollCapture extends UIComponent {
 
   dragStart(event) {
     if (event.which == 3) return;
-    event.preventDefault();
     if (event.target.classList.contains('sc-drag-area')) {
+      event.preventDefault();
       this.startPosition = this.position.serialize();
       this.startPoint = this.getTouchPoint(event);
       document.body.addEventListener(events.mousemove, this.dragMove);
