@@ -1,11 +1,7 @@
 import { analytics } from './analytics';
-console.log('test');
 
 export function initBackgroundPage() {
-  console.log('initBackgroundPage');
-
   chrome.action.onClicked.addListener(async (tab) => {
-    console.log('onClicked');
     chrome.storage.local.set({ tabId: tab.id });
 
     const existingContexts = await chrome.runtime.getContexts({});
@@ -90,7 +86,6 @@ export function initBackgroundPage() {
 }
 
 function updatedTabHandlerPlay(tabId, changeInfo, tab) {
-  console.log('updatedTabHandlerPlay');
   executeScript(tab).then(() => {
     chrome.runtime.getContexts({}).then((existingContexts) => {
       const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
@@ -104,7 +99,6 @@ function updatedTabHandlerPlay(tabId, changeInfo, tab) {
 }
 
 function updatedTabHandlerScenario(tabId, changeInfo, tab) {
-  console.log('updatedTabHandlerScenario');
   chrome.storage.local.get('tabId').then((obj) => {
     if (obj.tabId == tabId) {
       executeScript(tab).then(() => {
