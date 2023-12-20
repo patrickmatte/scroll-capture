@@ -3,11 +3,11 @@ import Action from './Action';
 
 export default class ActionURL extends Action {
   constructor() {
-    super('ActionURL', 'Refresh current tab', 'Refresh current tab');
-    this.icon.value = 'fa-solid fa-rotate-right';
-    // this.url = new StringData('');
+    super('ActionURL', 'URL', 'Load a URL');
+    this.icon.value = 'fa-solid fa-link';
+    this.url = new StringData('');
     this.isTestable.value = true;
-    this.isCaptureable.value = false;
+    this.isCaptureable.value = true;
   }
 
   clone() {
@@ -18,37 +18,36 @@ export default class ActionURL extends Action {
 
   copy(action) {
     super.copy(action);
-    // this.url.value = action.url.value;
+    this.url.value = action.url.value;
   }
 
   trigger() {
-    // window.location.href = this.url.value;
-    window.location.href = window.location.href;
+    window.location.href = this.url.value;
     return super.trigger();
   }
 
-  // serialize() {
-  //   let data = super.serialize();
-  //   data.url = this.url.serialize();
-  //   return data;
-  // }
+  serialize() {
+    let data = super.serialize();
+    data.url = this.url.serialize();
+    return data;
+  }
 
-  // deserialize(data) {
-  //   if (!data) return;
-  //   super.deserialize(data);
-  //   this.url.deserialize(data.url);
-  // }
+  deserialize(data) {
+    if (!data) return;
+    super.deserialize(data);
+    this.url.deserialize(data.url);
+  }
 
-  // capture() {
-  //   super.capture();
-  //   this.url.value = window.location.href;
-  //   setTimeout(() => {
-  //     this.captureComplete();
-  //   }, 200);
-  // }
+  capture() {
+    super.capture();
+    this.url.value = window.location.href;
+    setTimeout(() => {
+      this.captureComplete();
+    }, 200);
+  }
 
-  // captureAtInit() {
-  //   super.captureAtInit();
-  //   this.capture();
-  // }
+  captureAtInit() {
+    super.captureAtInit();
+    this.capture();
+  }
 }

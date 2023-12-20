@@ -8,11 +8,8 @@
 		"storage",
 		"tabCapture",
 		"scripting",
-		"offscreen"
-	],
-	"host_permissions":[
-		"https://*/*",
-		"http://*/*"
+		"offscreen",
+		"tabs"
 	],
 	"background": {
 		"service_worker": "background.js"
@@ -21,6 +18,7 @@
 	"web_accessible_resources":[
 		{
 			"resources": [
+				"*.js",
 				"*.css",
 				"*.html",
 				"assets/fonts/*.woff",
