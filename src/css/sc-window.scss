@@ -1,11 +1,21 @@
 .sc-default {
+
+	.sc-drag-area {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
     .sc-window {
 		border-radius: $borderRadius;
 		background-color: $windowColorDark;
 		transition: background-color 0.3s ease 0s;
 		width: 100%;
 		font-size: 0.9em !important;
-		margin: 0.75em 0;
+		// margin: 0.75em 0;
 		display: block;
 
 		&:first-child {
@@ -21,7 +31,7 @@
 			display: flex;
 			justify-content: space-between;
 
-			.sc-drag-area {
+			.ui-list-drag-area {
 				position: absolute;
 				left: 0;
 				top: 0;

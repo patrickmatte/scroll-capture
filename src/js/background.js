@@ -99,11 +99,15 @@ function updatedTabHandlerPlay(tabId, changeInfo, tab) {
 }
 
 function updatedTabHandlerScenario(tabId, changeInfo, tab) {
-  executeScript(tab).then(() => {
-    chrome.tabs.sendMessage(tab.id, {
-      type: 'scrollCaptureLocation',
-      location: 'scroll-capture',
-    });
+  chrome.storage.local.get('tabId').then((obj) => {
+    if (obj.tabId == tabId) {
+      executeScript(tab).then(() => {
+        chrome.tabs.sendMessage(tab.id, {
+          type: 'scrollCaptureLocation',
+          location: 'scroll-capture',
+        });
+      });
+    }
   });
 }
 

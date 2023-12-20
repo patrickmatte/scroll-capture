@@ -20,6 +20,7 @@
 			<option is="ui-text" value="{scope.data.name.value}">{scope.data.name.value}</option>
 		</template>
 	</select> -->
+	<span class="sc-drag-area"></span>
 	<div class="sc-window sc-window-main" is="ui-component">
 		<div class="sc-title">
 			<span class="sc-tabs">
@@ -86,7 +87,7 @@
 										<div class="sc-window ui-list-element" is="sc-action-view" data-type="{scope.data.type}" set:model="scope.data" data-selected="{scope.data.isSelectedItem.value}">
 											<div class="sc-title">
 												<span class="sc-tabs">
-													<div class="sc-drag-area ui-list-drag-area"></div>
+													<div class="ui-list-drag-area"></div>
 													<span class="sc-tab sc-title-tab" title="{scope.data.name.value}" is="ui-component">
 														<div class="ui-list-drag-area"></div>
 														<span class="sc-tab-wrapper">

@@ -16,8 +16,8 @@ export default class ScrollCapture extends UIComponent {
     this.dragMove = this.dragMove.bind(this);
     this.dragEnd = this.dragEnd.bind(this);
 
-    let title = this.element.querySelector('.sc-window.sc-window-main > .sc-title');
-    title.addEventListener(events.mousedown, this.dragStart);
+    // let title = this.element.querySelector('.sc-window.sc-window-main > .sc-title');
+    this.element.addEventListener(events.mousedown, this.dragStart);
 
     this.windowContent = this.element.querySelector(".sc-window-content[is='sc-window-content-main']").component;
 
@@ -37,6 +37,7 @@ export default class ScrollCapture extends UIComponent {
   }
 
   dragStart(event) {
+    if (event.which == 3) return;
     event.preventDefault();
     if (event.target.classList.contains('sc-drag-area')) {
       this.startPosition = this.position.serialize();

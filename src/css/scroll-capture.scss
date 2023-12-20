@@ -127,9 +127,10 @@ html[data-sc-scrollbars="false"] {
 				position: absolute;
 				margin-top: 0;
 
-				.sc-drag-area {
+				.ui-list-drag-area {
 					display: none;
 				}
+				
 			}
 
 			&.is-dragged {
