@@ -4,10 +4,16 @@ import { app } from '../main';
 export default class SectionScenario extends Section {
   constructor(element) {
     super(element);
+    this.beforeUnloadHandler = this.beforeUnloadHandler.bind(this);
+  }
+
+  beforeUnloadHandler() {
+    app.model.save();
   }
 
   showDelayComplete() {
     app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true, location: 'scenario' });
+    window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
     let promise = super.showDelayComplete();
 
@@ -32,6 +38,7 @@ export default class SectionScenario extends Section {
 
   hideDelayComplete() {
     app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'scenario' });
+    window.removeEventListener('beforeunload', this.beforeUnloadHandler);
 
     app.model.actions.selectedItem.value = null;
     return super.hideDelayComplete();
