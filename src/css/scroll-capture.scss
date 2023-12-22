@@ -166,6 +166,19 @@ html[data-sc-scrollbars="false"] {
 			font-size: 0.65em;
 			display: block;
 		}
+
+		a {
+			opacity: 0.5;
+			transition: opacity 0.5s ease 0s;
+
+			.icon {
+				margin-right: 0.5em;
+			}
+
+			&:hover {
+				opacity: 1;
+			}
+		}
 	
 	}
 

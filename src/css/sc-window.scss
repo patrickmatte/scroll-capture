@@ -47,6 +47,8 @@
 					flex-grow: 1;
 					
 					.sc-tab {
+						background-color: $windowColorDark;
+
 						&.sc-title-tab {
 							background-color: $windowColorFrontDark;
 							transition: background-color 0.3s ease 0s;

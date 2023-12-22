@@ -14,6 +14,7 @@
 
                     &:nth-child(1) {
                         .sc-tab {
+                            background-color: $windowColorLight;
                             &.sc-title-tab {
                                 background-color: $windowColorFrontLight;
                             }
