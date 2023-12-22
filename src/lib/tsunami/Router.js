@@ -1,3 +1,4 @@
+import ChangeEvent from './ChangeEvent';
 import ArrayData from './data/ArrayData';
 import BaseEvent from './events';
 import RouterTask from './RouterTask';
@@ -16,7 +17,7 @@ export default class Router extends EventTarget {
     this.branches = new ArrayData();
     this.redirects = {};
     this.parameters = {};
-    
+
     this.show = new RouterTransition(this, 'show', this._showComplete.bind(this));
     this.show.tasks = [new RouterTask('load', true), new RouterTask('show', false)];
     this.hide = new RouterTransition(this, 'hide', this._hideComplete.bind(this));
@@ -68,6 +69,8 @@ export default class Router extends EventTarget {
     } else {
       this.changeTheLocation(value);
     }
+
+    ChangeEvent.dispatch(this, 'location', this.location);
   }
 
   start() {
@@ -231,9 +234,17 @@ export default class Router extends EventTarget {
     }
   }
 
+  get fullLocation() {
+    const slugs = this.branches.map((branch) => {
+      return branch.slug;
+    });
+    slugs.shift();
+    return slugs.join('/');
+  }
+
   _showComplete(event) {
     this._inTransition = false;
-    const evt = new BaseEvent(Router.COMPLETE, { location: this.location });
+    const evt = new BaseEvent(Router.COMPLETE, { location: this.location, fullLocation: this.fullLocation });
     this.dispatchEvent(evt);
     if (this._interruptingLocations.length > 0) {
       this.changeTheLocation(this._interruptingLocations.shift());
@@ -264,4 +275,3 @@ export default class Router extends EventTarget {
     return '[Router location=' + this.location + ']';
   }
 }
-

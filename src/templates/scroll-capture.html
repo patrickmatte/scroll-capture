@@ -25,13 +25,19 @@
 		<div class="sc-title">
 			<span class="sc-tabs">
 				<span class="sc-drag-area"></span>
-				<span class="sc-tab sc-title-tab">
+				<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video`" bind:location="scope.location">
 					<span class="sc-drag-area"></span>
-					<span class="sc-tab-wrapper">
-						<span class="sc-icon fa-solid fa-video"></span>
-						<span class="sc-label">Scroll Capture</span>
-					</span>
-
+					<button is="router-button" data-path="scroll-capture/video" title="Video Capture">
+						<span class="sc-icon fa-solid fa-film"></span>
+						<span class="sc-label">Video Capture</span>
+					</button>
+				</span>
+				<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/image`" bind:location="scope.location">
+					<span class="sc-drag-area"></span>
+					<button is="router-button" data-path="scroll-capture/image" title="Image Capture">
+						<span class="sc-icon fa-solid fa-image"></span>
+						<span class="sc-label">Image Capture</span>
+					</button>
 				</span>
 			</span>
 			<span class="sc-tabs">
@@ -44,31 +50,31 @@
 			</span>
 		</div>
 		<div class="sc-window-content" is="ui-component">
-			<div class="sc-fields" is="ui-component">
+			<div class="sc-section sc-fields" is="sc-capture-video">
 				<div is="ui-component">
 					<div class="sc-window sc-window-sections" is="ui-component">
 						<div class="sc-title">
 							<span class="sc-tabs">
-								<span class="sc-tab" data-id="scenario">
-									<button is="router-button" data-path="scroll-capture/scenario" title="Timeline">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/scenario`" bind:location="scope.location">
+									<button is="router-button" data-path="scroll-capture/video/scenario" title="Timeline">
 										<!-- <span class="sc-icon fa-solid fa-sliders-h"></span> -->
 										<span class="sc-icon fa-solid fa-clapperboard"></span>
 										<span class="sc-label">Timeline</span>
 									</button>
 								</span>
-								<span class="sc-tab" data-id="settings">
-									<button is="router-button" data-path="scroll-capture/settings" title="Settings">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/settings`" bind:location="scope.location">
+									<button is="router-button" data-path="scroll-capture/video/settings" title="Settings">
 										<span class="sc-icon fa-solid fa-sliders"></span>
 										<span class="sc-label">Settings</span>
 									</button>
 								</span>
-								<span class="sc-tab" data-id="play" is="ui-component">
+								<span class="sc-tab" is="sc-section-tab" set:path="`play`" bind:location="scope.location">
 									<button is="router-button" data-path="play" title="Play Timeline">
 										<span class="sc-icon fa-solid fa-play"></span>
 										<span class="sc-label">Play</span>
 									</button>
 								</span>
-								<span class="sc-tab" data-id="video" is="ui-component">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/video`" bind:location="scope.location">
 									<button is="router-button" data-path="record" title="Record Timeline">
 										<span class="sc-icon fa-solid fa-circle"></span>
 										<span class="sc-label">Record</span>
@@ -79,7 +85,7 @@
 
 							</span>
 						</div>
-						<div class="sc-window-content" is="sc-window-content-main" is="ui-component">
+						<div class="sc-window-content" is="ui-component">
 
 							<div class="sc-section sc-fields" is="sc-scenario">
 								<div is="sc-actions-view" data-actions-length="{scope.actions.length.value}" set:provider="scope.actions">
@@ -472,16 +478,26 @@
 						</div>
 					</div>
 				</div>
-				<div class="sc-footer">
-					<sc-credits>
-						<a href="http://www.patrickmatte.com" target="_blank">Made by Matte</a>
-					</sc-credits>
-					<sc-sponsor>
-						<i class="fa-solid fa-heart"></i>
-						<a class="support" href="https://github.com/sponsors/patrickmatte" target="_blank">Sponsor</a>
-					</sc-sponsor>	
-				</div>
 			</div>
+			<div class="sc-section sc-fields" is="sc-capture-image">
+				<div is="ui-component">
+					<div class="sc-window sc-window-sections" is="ui-component">
+					</div>
+				</div>
+			</div>	
+			<div class="sc-section sc-fields" is="ui-component" data-state="show">
+				<div is="ui-component">
+					<div class="sc-footer">
+						<sc-credits>
+							<a href="http://www.patrickmatte.com" target="_blank">Made by Matte</a>
+						</sc-credits>
+						<sc-sponsor>
+							<i class="fa-solid fa-heart"></i>
+							<a class="support" href="https://github.com/sponsors/patrickmatte" target="_blank">Sponsor</a>
+						</sc-sponsor>	
+					</div>
+				</div>
+			</div>	
 		</div>
 	</div>
 </div>

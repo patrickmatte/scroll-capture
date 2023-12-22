@@ -211,6 +211,10 @@ html[data-sc-scrollbars="false"] {
 		&[data-state="show"] {
 			display: block;
 		}
+
+		&:last-child {
+			padding-top: 0;
+		}
 	}
 
 	// &[is="sc-sections"] {

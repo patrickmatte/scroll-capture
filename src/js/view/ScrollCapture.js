@@ -2,9 +2,10 @@ import UIComponent from '../../lib/tsunami/components/UIComponent';
 import * as tsunami from '../../lib/tsunami/tsunami';
 import { events } from '../../lib/tsunami/events';
 import { app } from '../main';
-import ActionsView from './ActionsView';
 import template from '../../templates/scroll-capture.html';
-import WindowContentMain from './WindowContentMain';
+import CaptureVideo from './Capturevideo';
+import CaptureImage from './CaptureImage';
+import SectionTab from './SectionTab';
 
 export default class ScrollCapture extends UIComponent {
   constructor(element) {
@@ -19,21 +20,13 @@ export default class ScrollCapture extends UIComponent {
     // let title = this.element.querySelector('.sc-window.sc-window-main > .sc-title');
     this.element.addEventListener(events.mousedown, this.dragStart);
 
-    this.windowContent = this.element.querySelector(".sc-window-content[is='sc-window-content-main']").component;
+    this.video = this.element.querySelector("[is='sc-capture-video']").component;
+    this.image = this.element.querySelector("[is='sc-capture-image']").component;
 
-    this.branches['scenario'] = this.windowContent.scenario;
-    this.branches['video'] = this.windowContent.video;
-    this.branches['settings'] = this.windowContent.settings;
+    this.branches['video'] = this.video;
+    this.branches['image'] = this.image;
 
-    this.defaultChild = 'scenario';
-  }
-
-  hide() {
-    const promise = app.model.setActionIndex(0);
-    const promise2 = promise.then(() => {
-      return super.hide();
-    });
-    return promise2;
+    this.defaultChild = 'video';
   }
 
   dragStart(event) {
@@ -63,5 +56,6 @@ export default class ScrollCapture extends UIComponent {
 
 ScrollCapture.template = template;
 
-tsunami.define('sc-actions-view', ActionsView);
-tsunami.define('sc-window-content-main', WindowContentMain);
+tsunami.define('sc-capture-video', CaptureVideo);
+tsunami.define('sc-capture-image', CaptureImage);
+tsunami.define('sc-section-tab', SectionTab);

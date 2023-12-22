@@ -9,7 +9,7 @@ export default class PlayState extends Branch {
   }
 
   get endLocation() {
-    return 'scroll-capture/scenario';
+    return 'scroll-capture/video/scenario';
   }
 
   show() {

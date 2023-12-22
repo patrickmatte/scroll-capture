@@ -9,6 +9,7 @@ export default class AppModel extends DataModel {
   constructor() {
     super({
       selectedAction: 'Pause',
+      location: '',
     });
     this.save = this.save.bind(this);
     // this.playSelected = this.playSelected.bind(this);
@@ -84,7 +85,7 @@ export default class AppModel extends DataModel {
 
   loadDefaultLocation() {
     const promise = chrome.storage.local.get(['defaultLocation']).then((result) => {
-      this._defaultLocation = result.defaultLocation || 'scroll-capture/scenario';
+      this._defaultLocation = result.defaultLocation || 'scroll-capture/video/scenario';
     });
     return promise;
   }

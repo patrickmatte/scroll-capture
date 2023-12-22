@@ -14,7 +14,7 @@ export default class AppController extends Branch {
     this.trackRouterLocation = this.trackRouterLocation.bind(this);
 
     this.router = new Router(this);
-    this.router.addEventListener(Router.CHANGE, this.trackRouterLocation);
+    this.router.addEventListener(Router.COMPLETE, this.trackRouterLocation);
 
     this.branches = {
       'scroll-capture': app.view.scrollCapture,
@@ -28,6 +28,7 @@ export default class AppController extends Branch {
   }
 
   trackRouterLocation(e) {
+    app.model.location = e.data.fullLocation;
     // console.log('############## trackRouterLocation', this.router.location);
     sendTrackPageMessage('/' + this.router.location);
   }
