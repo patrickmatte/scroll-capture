@@ -188,6 +188,7 @@ export default class Settings {
       pixelRatio: this.pixelRatio.serialize(),
       exportAudio: this.exportAudio.serialize(),
       exportVideo: this.exportVideo.serialize(),
+      windowSize: this.windowSize.serialize(),
     };
   }
 
@@ -206,6 +207,7 @@ export default class Settings {
     if (data.hasOwnProperty('pixelRatio')) this.pixelRatio.deserialize(data.pixelRatio);
     if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
+    if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
     this.enableTracking();
   }
 
