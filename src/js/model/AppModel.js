@@ -4,6 +4,7 @@ import Actions from './Actions';
 import Settings from './Settings';
 import BaseEvent from '../../lib/tsunami/events';
 import DataModel from '../../lib/tsunami/data/DataModel';
+import ActionImageCapture from './ActionImageCapture';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -24,6 +25,7 @@ export default class AppModel extends DataModel {
 
     this.settings = new Settings();
     this.actions = new Actions();
+    this.imageCaptureAction = new ActionImageCapture();
 
     // this.addEventListener("selectedAction", (event) => {
     //     console.log("selectedAction change", this.selectedAction);

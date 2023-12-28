@@ -21,13 +21,6 @@ export function initBackgroundPage() {
       recording = offscreenDocument.documentUrl.endsWith('#recording');
     }
 
-    chrome.windows.getCurrent({ populate: false }, (win) => {
-      globalThis.chromeSize = {
-        width: win.width - tab.width,
-        height: win.height - tab.height,
-      };
-    });
-
     executeScript(tab).then(() => {
       if (recording) {
         chrome.tabs.sendMessage(tab.id, {
@@ -120,9 +113,10 @@ function executeScript(tab) {
 
 function resizeWindow(width, height) {
   let options = {
-    width: width + globalThis.chromeSize.width,
-    height: height + globalThis.chromeSize.height,
+    width,
+    height,
   };
+  console.log('options', options);
   chrome.windows.getCurrent({ populate: false }, (win) => {
     chrome.windows.update(win.id, options);
   });

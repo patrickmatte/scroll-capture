@@ -7,6 +7,7 @@ import { sendTrackEventMessage } from './GABridge';
 import Throttle from '../../lib/tsunami/utils/Throttle';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { getSupportedFormatsAndCodecs } from './FormatsAndCodecs';
+import Point from '../../lib/tsunami/geom/Point';
 
 export default class Settings {
   constructor() {
@@ -23,8 +24,14 @@ export default class Settings {
     this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
     this.windowResizeHandler = this.windowResizeHandler.bind(this);
 
-    this.windowSize = new Vector2Data(window.innerWidth, window.innerHeight);
+    this.windowSize = new Vector2Data();
     this.windowSize.addEventListener(Data.CHANGE, this.windowSizeChangeHandler);
+
+    this.windowSizeMax = new Vector2Data();
+    this.innerSize = new Point();
+    this.outerSize = new Point();
+    this.availSize = new Point();
+    this.diffSize = new Point();
 
     window.addEventListener('resize', this.windowResizeHandler);
 
@@ -100,6 +107,8 @@ export default class Settings {
       sendTrackEventMessage('settings', 'pixelRatio', this.pixelRatio.value);
     });
 
+    this.windowResizeHandler();
+
     this.enableTracking();
   }
 
@@ -118,6 +127,12 @@ export default class Settings {
   }
 
   windowResizeHandler() {
+    this.innerSize.set(window.innerWidth, window.innerHeight);
+    this.outerSize.set(window.outerWidth, window.outerHeight);
+    this.availSize.set(screen.availWidth, screen.availHeight);
+    this.diffSize = this.outerSize.subtract(this.innerSize);
+    this.windowSizeMax.deserialize(this.availSize.subtract(this.diffSize));
+
     this.windowSize.removeEventListener(Data.CHANGE, this.windowSizeChangeHandler);
     this.windowSize.x.value = window.innerWidth;
     this.windowSize.y.value = window.innerHeight;
@@ -125,11 +140,18 @@ export default class Settings {
   }
 
   windowSizeChangeHandler() {
-    app.model.sendMessage({
+    console.log('windowSizeChangeHandler');
+    // const innerSize = new Point(window.innerWidth, window.innerHeight);
+    // const outerSize = new Point(window.outerWidth, window.outerHeight);
+    // const availSize = new Point(screen.availWidth, screen.availHeight);
+    // const diffSize = this.outerSize.subtract(this.innerSize);
+    const msg = {
       type: 'scrollCaptureResizeWindow',
-      width: this.windowSize.x.value,
-      height: this.windowSize.y.value,
-    });
+      width: this.windowSize.x.value + this.diffSize.x,
+      height: this.windowSize.y.value + this.diffSize.y,
+    };
+    console.log('msg', msg);
+    app.model.sendMessage(msg);
   }
 
   switchColorTheme() {

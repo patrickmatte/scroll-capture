@@ -25,14 +25,14 @@
 		<div class="sc-title">
 			<span class="sc-tabs">
 				<span class="sc-drag-area"></span>
-				<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video`" bind:location="scope.location">
+				<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video`" set:location="scope.location">
 					<span class="sc-drag-area"></span>
 					<button is="router-button" data-path="scroll-capture/video" title="Video Capture">
 						<span class="sc-icon fa-solid fa-film"></span>
 						<span class="sc-label">Video Capture</span>
 					</button>
 				</span>
-				<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/image`" bind:location="scope.location">
+				<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/image`" set:location="scope.location">
 					<span class="sc-drag-area"></span>
 					<button is="router-button" data-path="scroll-capture/image" title="Image Capture">
 						<span class="sc-icon fa-solid fa-image"></span>
@@ -55,35 +55,33 @@
 					<div class="sc-window sc-window-sections" is="ui-component">
 						<div class="sc-title">
 							<span class="sc-tabs">
-								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/scenario`" bind:location="scope.location">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/scenario`" set:location="scope.location">
 									<button is="router-button" data-path="scroll-capture/video/scenario" title="Timeline">
 										<!-- <span class="sc-icon fa-solid fa-sliders-h"></span> -->
 										<span class="sc-icon fa-solid fa-clapperboard"></span>
 										<span class="sc-label">Timeline</span>
 									</button>
 								</span>
-								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/settings`" bind:location="scope.location">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/settings`" set:location="scope.location">
 									<button is="router-button" data-path="scroll-capture/video/settings" title="Settings">
 										<span class="sc-icon fa-solid fa-sliders"></span>
 										<span class="sc-label">Settings</span>
 									</button>
 								</span>
-								<span class="sc-tab" is="sc-section-tab" set:path="`play`" bind:location="scope.location">
+								<span class="sc-tab" is="sc-section-tab" set:path="`play`" set:location="scope.location">
 									<button is="router-button" data-path="play" title="Play Timeline">
 										<span class="sc-icon fa-solid fa-play"></span>
 										<span class="sc-label">Play</span>
 									</button>
 								</span>
-								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/video`" bind:location="scope.location">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/video/video`" set:location="scope.location">
 									<button is="router-button" data-path="record" title="Record Timeline">
 										<span class="sc-icon fa-solid fa-circle"></span>
 										<span class="sc-label">Record</span>
 									</button>
 								</span>
 							</span>
-							<span class="sc-tabs" is="ui-component">
-
-							</span>
+							<span class="sc-tabs" is="ui-component"></span>
 						</div>
 						<div class="sc-window-content" is="ui-component">
 
@@ -341,14 +339,14 @@
 															<span class="sc-icon fa-solid fa-left-right"></span>
 															<span class="sc-input-group">
 																<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.settings.windowSize.x.value}</span>
-																<input type="number" step="1" min="375" placeholder="375" title="Width" is="ui-input" bind:model="scope.settings.windowSize.x.value" />
+																<input type="number" step="1" min="420" max="{scope.settings.windowSizeMax.x.value}" placeholder="420" title="Width" is="ui-input" bind:model="scope.settings.windowSize.x.value" />
 															</span>
 														</span>
 														<span class="sc-input">
 															<span class="sc-icon fa-solid fa-up-down"></span>
 															<span class="sc-input-group">
 																<span class="sc-input-unit" is="ui-text" data-unit="px">{scope.settings.windowSize.y.value}</span>
-																<input type="number" step="1" min="375" placeholder="375" title="Height" is="ui-input" bind:model="scope.settings.windowSize.y.value" />
+																<input type="number" step="1" min="420" max="{scope.settings.windowSizeMax.y.value}" placeholder="420" title="Height" is="ui-input" bind:model="scope.settings.windowSize.y.value" />
 															</span>
 														</span>
 													</div>
@@ -482,6 +480,28 @@
 			<div class="sc-section sc-fields" is="sc-capture-image">
 				<div is="ui-component">
 					<div class="sc-window sc-window-sections" is="ui-component">
+						<div class="sc-title">
+							<span class="sc-tabs">
+								<span class="sc-tab" is="sc-section-tab" set:path="`scroll-capture/image/settings`" set:location="scope.location">
+									<button is="router-button" data-path="scroll-capture/image/settings" title="Settings">
+										<span class="sc-icon fa-solid fa-sliders"></span>
+										<span class="sc-label">Settings</span>
+									</button>
+								</span>
+								<span class="sc-tab" is="sc-section-tab" set:path="`capture-image`" set:location="scope.location">
+									<button is="router-button" data-path="capture-image" title="Capture Image">
+										<span class="sc-icon fa-solid fa-play"></span>
+										<span class="sc-label">Play</span>
+									</button>
+								</span>
+							</span>
+							<span class="sc-tabs" is="ui-component"></span>
+						</div>
+						<div class="sc-window-content" is="ui-component">
+							<div class="sc-section sc-fields" is="sc-scenario">
+
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>	
