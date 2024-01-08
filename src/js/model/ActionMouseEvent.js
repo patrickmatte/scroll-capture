@@ -49,7 +49,8 @@ export default class ActionMouseEvent extends Action {
   trigger() {
     let point = new Point(this.x.value - window.scrollX, this.y.value - window.scrollY);
     let el = document.elementFromPoint(point.x, point.y);
-    let event = new MouseEvent(this.eventTypes.selectedItem.value, {
+    const type = this.eventTypes.selectedItem.value;
+    let event = new MouseEvent(type, {
       bubbles: true,
       cancelable: true,
       view: window,
@@ -60,6 +61,19 @@ export default class ActionMouseEvent extends Action {
       x: point.x,
       y: point.y,
     });
+    const elements = document.elementsFromPoint(point.x, point.y);
+    switch (type) {
+      case 'mouseover':
+        elements.forEach((el) => {
+          el.classList.add('sc-hover');
+        });
+        break;
+      case 'mouseout':
+        elements.forEach((el) => {
+          el.classList.remove('sc-hover');
+        });
+        break;
+    }
     if (el) {
       el.dispatchEvent(event);
     } else {

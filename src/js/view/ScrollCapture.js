@@ -6,10 +6,13 @@ import template from '../../templates/scroll-capture.html';
 import CaptureVideo from './Capturevideo';
 import CaptureImage from './CaptureImage';
 import SectionTab from './SectionTab';
+import { hackHoverStates } from './hackHoverStates';
 
 export default class ScrollCapture extends UIComponent {
   constructor(element) {
     super(element);
+
+    hackHoverStates();
 
     this.position = null;
 
