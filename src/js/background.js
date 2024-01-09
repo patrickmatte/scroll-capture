@@ -74,6 +74,14 @@ export function initBackgroundPage() {
           chrome.tabs.onUpdated.removeListener(handler);
         }
         break;
+      case 'scrollCaptureInsertCSS':
+        chrome.storage.local.get('tabId').then((obj) => {
+          chrome.scripting.insertCSS({
+            target: { tabId: obj.tabId },
+            css: msg.css,
+          });
+        });
+        break;
     }
   });
 }
