@@ -45,16 +45,16 @@
                                 <div class="sc-field-group" data-visibility="{scope.imgCapSettings.format.selectedItem.value=='jpeg'}" is="ui-component">
                                     <div class="sc-space">
                                         <span class="sc-icon fa-solid fa-file"></span>
-                                        <span class="sc-label">JPEG Compression</span>
+                                        <span class="sc-label">JPEG Quality</span>
                                     </div>
                                     <div class="sc-field" title="Quality">
                                         <span class="sc-input">
                                             <span class="sc-input-group">
                                                 <span class="sc-input-unit" is="ui-text" data-unit="%">{scope.imgCapSettings.compression.value}</span>
-                                                <input type="number" min="0" max="100" step="1" placeholder="100" is="ui-input" bind:model="scope.imgCapSettings.compression.value" />
+                                                <input type="number" min="0" max="100" step="5" placeholder="100" is="ui-input" bind:model="scope.imgCapSettings.compression.value" />
                                             </span>
                                         </span>
-                                        <input type="range" min="0" max="100" step="1" is="ui-input" bind:model="scope.imgCapSettings.compression.value" />
+                                        <input type="range" min="0" max="100" step="5" is="ui-input" bind:model="scope.imgCapSettings.compression.value" />
                                     </div>
                                 </div>
 
