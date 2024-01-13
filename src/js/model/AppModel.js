@@ -65,6 +65,7 @@ export default class AppModel extends DataModel {
     let obj = {
       actions: this.actions.serialize(),
       settings: this.settings.serialize(),
+      imgCapSettings: this.imgCapSettings.serialize(),
     };
     let json = JSON.stringify(obj);
     chrome.storage.local.set({ json: json }, () => {
@@ -80,6 +81,7 @@ export default class AppModel extends DataModel {
         let data = JSON.parse(result.json);
         this.actions.deserialize(data.actions);
         this.settings.deserialize(data.settings);
+        this.imgCapSettings.deserialize(data.imgCapSettings);
       }
     });
     return jsonPromise;

@@ -19,7 +19,7 @@ export class ImageRecorder extends Branch {
     const maxChromePixels = 268435456;
     const pixels =
       pageSize.x * app.model.settings.pixelRatio.value * (pageSize.y * app.model.settings.pixelRatio.value);
-    console.log('maxChromePixels=', maxChromePixels, 'pixels=', pixels);
+    // console.log('maxChromePixels=', maxChromePixels, 'pixels=', pixels);
     if (pixels > maxChromePixels) {
       console.log('Page is too large!');
       pageSize.y = maxChromePixels / (pageSize.x * app.model.settings.pixelRatio.value);
@@ -34,14 +34,13 @@ export class ImageRecorder extends Branch {
       document.body.scrollHeight - window.innerHeight
     );
 
-    console.log('innerSize', innerSize);
-    console.log('pageSize', pageSize);
-    // console.log('scroll', scroll);
-    console.log('maxScroll', maxScroll);
+    // console.log('innerSize', innerSize);
+    // console.log('pageSize', pageSize);
+    // console.log('maxScroll', maxScroll);
 
     const captures = [];
     const captureTotals = new Point(Math.ceil(pageSize.x / innerSize.x), Math.ceil(pageSize.y / innerSize.y));
-    console.log('captureTotals', captureTotals);
+    // console.log('captureTotals', captureTotals);
     for (let y = 0; y < captureTotals.y; y++) {
       for (let x = 0; x < captureTotals.x; x++) {
         const point = new Point(x * innerWidth, y * innerHeight);
@@ -60,12 +59,12 @@ export class ImageRecorder extends Branch {
         });
       }
     }
-    console.log('captures', captures);
+    // console.log('captures', captures);
     let captureIndex = 0;
     const img = new Image();
 
     const captureStep = () => {
-      console.log(captureIndex);
+      // console.log(captureIndex);
       const scrollPromise = scroll();
       const capturePromise = scrollPromise.then(() => {
         return capture();
@@ -114,7 +113,6 @@ export class ImageRecorder extends Branch {
     document.documentElement.removeAttribute('data-sc-cursor');
     document.documentElement.removeAttribute('data-sc-scrollbars');
 
-    console.log('ImageRecorder.hide');
     this.isCapturing = false;
   }
 }

@@ -1,27 +1,27 @@
 import ArrayData from '../../lib/tsunami/data/ArrayData';
-import BooleanData from '../../lib/tsunami/data/BooleanData';
 import DataModel from '../../lib/tsunami/data/DataModel';
-import NumberData from '../../lib/tsunami/data/NumberData';
 
 export default class SettingsImageCapture extends DataModel {
   constructor() {
-    super({ delay: 0.5 });
+    super({ delay: 0.5, compression: 100, format: 'png' });
     this.imageCanvas = document.createElement('canvas');
 
-    this.format = new ArrayData('png', 'jpeg');
-    this.format.selectedItem.value = this.format.value[0];
-    this.compression = new NumberData(100);
+    this.formats = new ArrayData('png', 'jpeg');
   }
 
-  serialize() {
-    let data = super.serialize();
-    data.delay = this.delay;
-    return data;
-  }
+  // serialize() {
+  //   let data = super.serialize();
+  //   data.delay = this.delay;
+  //   data.compression = this.compression;
+  //   data.format = this.format;
+  //   return data;
+  // }
 
-  deserialize(data) {
-    if (!data) return;
-    super.deserialize(data);
-    this.delay = data.delay;
-  }
+  // deserialize(data) {
+  //   if (!data) return;
+  //   super.deserialize(data);
+  //   if (data.hasOwnProperty('delay')) this.delay = data.delay;
+  //   if (data.hasOwnProperty('compression')) this.compression = data.compression;
+  //   if (data.hasOwnProperty('format')) this.format = data.format;
+  // }
 }

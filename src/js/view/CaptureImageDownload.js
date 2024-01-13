@@ -10,12 +10,11 @@ export class CaptureImageDownload extends Section {
   show() {
     const img = this.querySelector('.img-container img');
     let dataURL;
-    console.log(app.model.imgCapSettings.format.selectedItem.value);
-    switch (app.model.imgCapSettings.format.selectedItem.value) {
+    switch (app.model.imgCapSettings.format) {
       case 'jpeg':
         dataURL = app.model.imgCapSettings.imageCanvas.toDataURL(
           'image/jpeg',
-          app.model.imgCapSettings.compression.value / 100
+          app.model.imgCapSettings.compression / 100
         );
         break;
       default:
@@ -24,7 +23,7 @@ export class CaptureImageDownload extends Section {
     }
     img.src = dataURL;
 
-    let videoFileName = createFilename(app.model.imgCapSettings.format.selectedItem.value);
+    let videoFileName = createFilename(app.model.imgCapSettings.format);
     let buttons = document.querySelectorAll('a.sc-download-button');
     for (let i = 0; i < buttons.length; i++) {
       let button = buttons[i];

@@ -38,23 +38,23 @@
                                         <span class="sc-label">Image Format</span>
                                     </div>
                                     <div class="sc-input sc-select">
-                                        <select is="ui-select" set:provider="scope.imgCapSettings.format" bind:value="scope.imgCapSettings.format.selectedItem.value"></select>
+                                        <select is="ui-select" set:provider="scope.imgCapSettings.formats" bind:value="scope.imgCapSettings.format"></select>
                                     </div>
                                 </div>
 
-                                <div class="sc-field-group" data-visibility="{scope.imgCapSettings.format.selectedItem.value=='jpeg'}" is="ui-component">
+                                <div class="sc-field-group" data-visible="{scope.imgCapSettings.format == 'jpeg'}" is="ui-component">
                                     <div class="sc-space">
-                                        <span class="sc-icon fa-solid fa-file"></span>
+                                        <span class="sc-icon fa-solid fa-file-zipper"></span>
                                         <span class="sc-label">JPEG Quality</span>
                                     </div>
                                     <div class="sc-field" title="Quality">
                                         <span class="sc-input">
                                             <span class="sc-input-group">
-                                                <span class="sc-input-unit" is="ui-text" data-unit="%">{scope.imgCapSettings.compression.value}</span>
-                                                <input type="number" min="0" max="100" step="5" placeholder="100" is="ui-input" bind:model="scope.imgCapSettings.compression.value" />
+                                                <span class="sc-input-unit" is="ui-text" data-unit="%">{scope.imgCapSettings.compression}</span>
+                                                <input type="number" min="0" max="100" step="5" placeholder="100" is="ui-input" bind:model="scope.imgCapSettings.compression" />
                                             </span>
                                         </span>
-                                        <input type="range" min="0" max="100" step="5" is="ui-input" bind:model="scope.imgCapSettings.compression.value" />
+                                        <input type="range" min="0" max="100" step="5" is="ui-input" bind:model="scope.imgCapSettings.compression" />
                                     </div>
                                 </div>
 
@@ -67,7 +67,7 @@
                                         <span class="sc-icon fa-solid fa-hourglass-half"></span>
                                         <span class="sc-input-group">
                                             <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.imgCapSettings.delay}</span>
-                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.imgCapSettings.delay" />
+                                            <input type="number" step="0.25" min="0.5" placeholder="0" is="ui-input" bind:model="scope.imgCapSettings.delay" />
                                         </span>
                                     </span>
                                 </div>

@@ -17,6 +17,11 @@ export default class CaptureImageSettings extends Section {
 
     return promise;
   }
+
+  hide() {
+    app.model.save();
+    return super.hide();
+  }
 }
 
 define('general-settings', GeneralSettings);

@@ -59,6 +59,7 @@ export default class ActionScroll extends ActionTween {
         this.startY.value = element.scrollTop;
         break;
     }
+
     let styleArrayFiltered = [];
     this.targetStyle = scrollTarget.getAttribute('style') || '';
     if (this.targetStyle) {
@@ -68,6 +69,7 @@ export default class ActionScroll extends ActionTween {
     }
     styleArrayFiltered.push('scroll-behavior:auto !important');
     scrollTarget.setAttribute('style', styleArrayFiltered.join(';'));
+
     if (this.units.selectedItem.value == 'px') {
       this.endX.copy(this.unitX);
       this.endY.copy(this.unitY);

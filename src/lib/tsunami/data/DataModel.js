@@ -1,48 +1,71 @@
-import ChangeEvent from "../ChangeEvent";
-import Data from "./Data";
+import ChangeEvent from '../ChangeEvent';
+import Data from './Data';
 
 export default class DataModel extends Data {
+  constructor(properties = {}) {
+    super();
+    this.changeHandler = this.changeHandler.bind(this);
+    this._properties = [];
 
-	constructor(properties = {}) {
-		super();
-		this.changeHandler = this.changeHandler.bind(this);
+    this.addProperties(properties);
+  }
 
-		for(let i in properties) {
-			this["_" + i] = properties[i];
-			Object.defineProperty(this, i, {
-				get : function(){
-					return this["_" + i];
-				},
-                set : function(value) {
-					if(this["_" + i] != value) {
-						this["_" + i] = value;
-						ChangeEvent.dispatch(this, i,  value);
-						this.changeHandler();
-					}
-				},
-				enumerable : true,
-				configurable : true
-			});
-		}
-	}
+  addProperties(properties) {
+    for (let name in properties) {
+      this.addProperty(name, properties[name]);
+    }
+  }
 
-	get value() {
-		return this;
-	}
+  addProperty(name, val) {
+    if (this._properties.indexOf('name') == -1) this._properties.push(name);
+    this['_' + name] = val;
+    Object.defineProperty(this, name, {
+      get: function () {
+        return this['_' + name];
+      },
+      set: function (value) {
+        if (this['_' + name] != value) {
+          this['_' + name] = value;
+          ChangeEvent.dispatch(this, name, value);
+          this.changeHandler();
+        }
+      },
+      enumerable: true,
+      configurable: true,
+    });
+  }
 
-	changeHandler() {
-		ChangeEvent.dispatch(this, "value", this);
-	}
+  get value() {
+    return this;
+  }
 
-	destroy() {
-		for(let i in this) {
-			let data = this[i];
-			if(data instanceof Data) {
-				data.destroy();
-			}
-			this[i] = null;
-		}
-		return super.destroy();
-	}
+  changeHandler() {
+    ChangeEvent.dispatch(this, 'value', this);
+  }
 
+  serialize() {
+    let data = {};
+    this._properties.forEach((name) => {
+      data[name] = this[name];
+    });
+    return data;
+  }
+
+  deserialize(data) {
+    if (!data) return;
+    for (let i in data) {
+      if (data.hasOwnProperty(i)) this[i] = data[i];
+    }
+  }
+
+  destroy() {
+    for (let i in this) {
+      let data = this[i];
+      if (data instanceof Data) {
+        data.destroy();
+      }
+      this[i] = null;
+    }
+    return super.destroy();
+  }
 }
