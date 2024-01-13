@@ -20,12 +20,12 @@ export default class PlayState extends Branch {
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
-    app.model.setDefaultLocation(this.path).then(() => {
-      app.model.getActionIndex().then((result) => {
-        const index = isNaN(result.actionIndex) ? 0 : result.actionIndex;
-        this.startActions(index);
-      });
+    // app.model.setDefaultLocation(this.path).then(() => {
+    app.model.getActionIndex().then((result) => {
+      const index = isNaN(result.actionIndex) ? 0 : result.actionIndex;
+      this.startActions(index);
     });
+    // });
   }
 
   beforeUnloadHandler() {

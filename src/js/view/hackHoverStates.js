@@ -4,7 +4,7 @@ export function hackHoverStates() {
     try {
       rules = document.styleSheets[i].cssRules;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
     if (rules) {
       for (var r in rules) {

@@ -25,6 +25,3 @@ if (!window.scrollCaptureApp) {
   window.scrollCaptureApp = new Main();
 }
 app = window.scrollCaptureApp;
-// app.model.loadDefaultLocation().then(() => {
-//   app.controller.router.location = app.model.defaultLocation;
-// });

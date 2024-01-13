@@ -101,7 +101,7 @@
 		cursor: pointer;
 		
 		> * {
-			pointer-events: none;
+			// pointer-events: none;
 			vertical-align: middle;
 		}
 
@@ -483,5 +483,9 @@
 	.sc-text {
 		line-height: 1.2;
 		padding: 0.5em;
+	}
+
+	*[data-visibility="false"] {
+		display:none !important;
 	}
 }

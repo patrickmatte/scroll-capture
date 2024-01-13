@@ -1,10 +1,10 @@
 import { sendTrackEventMessage } from './GABridge';
 import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Actions from './Actions';
-import Settings from './Settings';
+import SettingsVideoCapture from './SettingsVideoCapture';
 import BaseEvent from '../../lib/tsunami/events';
 import DataModel from '../../lib/tsunami/data/DataModel';
-import ActionImageCapture from './ActionImageCapture';
+import SettingsImageCapture from './SettingsImageCapture';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -23,9 +23,9 @@ export default class AppModel extends DataModel {
     // this.isPlayingSelected = new BooleanData();
     // this.isCapturingSelected = new BooleanData();
 
-    this.settings = new Settings();
+    this.settings = new SettingsVideoCapture();
     this.actions = new Actions();
-    this.imageCaptureAction = new ActionImageCapture();
+    this.imgCapSettings = new SettingsImageCapture();
 
     // this.addEventListener("selectedAction", (event) => {
     //     console.log("selectedAction change", this.selectedAction);
@@ -85,20 +85,8 @@ export default class AppModel extends DataModel {
     return jsonPromise;
   }
 
-  loadDefaultLocation() {
-    const promise = chrome.storage.local.get(['defaultLocation']).then((result) => {
-      this._defaultLocation = result.defaultLocation || 'scroll-capture/video/scenario';
-    });
-    return promise;
-  }
-
   setDefaultLocation(value) {
-    this._defaultLocation = value;
     return chrome.storage.local.set({ defaultLocation: value });
-  }
-
-  get defaultLocation() {
-    return this._defaultLocation;
   }
 
   setActionIndex(value) {

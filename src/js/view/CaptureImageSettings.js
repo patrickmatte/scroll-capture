@@ -1,7 +1,9 @@
 import Section from './Section';
 import { app } from '../main';
+import { define } from '../../lib/tsunami/tsunami';
+import { GeneralSettings } from './GeneralSettings';
 
-export default class SectionSettings extends Section {
+export default class CaptureImageSettings extends Section {
   constructor(element) {
     super(element);
   }
@@ -10,12 +12,11 @@ export default class SectionSettings extends Section {
     let promise = super.showDelayComplete();
 
     app.model.setDefaultLocation(this.path);
-    // this.router.redirect('default', () => {
-    //   return this.path;
-    // });
 
     app.model.save();
 
     return promise;
   }
 }
+
+define('general-settings', GeneralSettings);

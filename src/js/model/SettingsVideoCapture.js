@@ -9,14 +9,14 @@ import NumberData from '../../lib/tsunami/data/NumberData';
 import { getSupportedFormatsAndCodecs } from './FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
 
-export default class Settings {
+export default class SettingsVideoCapture {
   constructor() {
     const supportedFormats = getSupportedFormatsAndCodecs();
 
     this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
 
     this.showCursor = new BooleanData(true);
-    this.showScrollbars = new BooleanData(true);
+    this.showScrollbars = new BooleanData(false);
 
     this.position = new Vector2Data(50, 50);
     this.devicePixelRatio = window.devicePixelRatio || 1;
@@ -140,17 +140,11 @@ export default class Settings {
   }
 
   windowSizeChangeHandler() {
-    console.log('windowSizeChangeHandler');
-    // const innerSize = new Point(window.innerWidth, window.innerHeight);
-    // const outerSize = new Point(window.outerWidth, window.outerHeight);
-    // const availSize = new Point(screen.availWidth, screen.availHeight);
-    // const diffSize = this.outerSize.subtract(this.innerSize);
     const msg = {
       type: 'scrollCaptureResizeWindow',
       width: this.windowSize.x.value + this.diffSize.x,
       height: this.windowSize.y.value + this.diffSize.y,
     };
-    console.log('msg', msg);
     app.model.sendMessage(msg);
   }
 
@@ -207,7 +201,7 @@ export default class Settings {
     if (data.hasOwnProperty('pixelRatio')) this.pixelRatio.deserialize(data.pixelRatio);
     if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
-    if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
+    // if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
     this.enableTracking();
   }
 

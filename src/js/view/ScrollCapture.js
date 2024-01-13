@@ -3,7 +3,7 @@ import * as tsunami from '../../lib/tsunami/tsunami';
 import { events } from '../../lib/tsunami/events';
 import { app } from '../main';
 import template from '../../templates/scroll-capture.html';
-import CaptureVideo from './Capturevideo';
+import CaptureVideo from './CaptureVideo';
 import CaptureImage from './CaptureImage';
 import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
@@ -23,8 +23,8 @@ export default class ScrollCapture extends UIComponent {
     // let title = this.element.querySelector('.sc-window.sc-window-main > .sc-title');
     this.element.addEventListener(events.mousedown, this.dragStart);
 
-    this.video = this.element.querySelector("[is='sc-capture-video']").component;
-    this.image = this.element.querySelector("[is='sc-capture-image']").component;
+    this.video = this.element.querySelector('sc-capture-video').component;
+    this.image = this.element.querySelector('sc-capture-image').component;
 
     this.branches['video'] = this.video;
     this.branches['image'] = this.image;

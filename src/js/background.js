@@ -29,10 +29,7 @@ export function initBackgroundPage() {
         });
       } else {
         changeIcon('');
-        chrome.tabs.sendMessage(tab.id, {
-          type: 'scrollCaptureLocation',
-          location: '',
-        });
+        sendDefaultLocation(tab.id);
       }
     });
   });
@@ -82,7 +79,13 @@ export function initBackgroundPage() {
           });
         });
         break;
+      case 'scrollCaptureVisibleTab':
+        chrome.tabs.captureVisibleTab(null, {}, (dataUrl) => {
+          sendResponse({ dataUrl });
+        });
+        break;
     }
+    return true;
   });
 }
 
@@ -103,12 +106,19 @@ function updatedTabHandlerScenario(tabId, changeInfo, tab) {
   chrome.storage.local.get('tabId').then((obj) => {
     if (obj.tabId == tabId) {
       executeScript(tab).then(() => {
-        chrome.tabs.sendMessage(tab.id, {
-          type: 'scrollCaptureLocation',
-          location: 'scroll-capture',
-        });
+        sendDefaultLocation(tab.id);
       });
     }
+  });
+}
+
+function sendDefaultLocation(tabId) {
+  chrome.storage.local.get(['defaultLocation']).then((result) => {
+    const location = result.defaultLocation || 'scroll-capture';
+    chrome.tabs.sendMessage(tabId, {
+      type: 'scrollCaptureLocation',
+      location,
+    });
   });
 }
 
@@ -124,7 +134,6 @@ function resizeWindow(width, height) {
     width,
     height,
   };
-  console.log('options', options);
   chrome.windows.getCurrent({ populate: false }, (win) => {
     chrome.windows.update(win.id, options);
   });

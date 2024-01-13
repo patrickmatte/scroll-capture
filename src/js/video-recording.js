@@ -1,6 +1,5 @@
-import { timeAMPM } from '../lib/tsunami/utils/date';
-import { addLeadingZero } from '../lib/tsunami/utils/number';
 import { sendTrackEventMessage } from './model/GABridge';
+import { createFilename } from './model/utils';
 
 chrome.storage.local.get(['json'], (result) => {
   let colorTheme = 'Dark';
@@ -69,29 +68,8 @@ function dispatchVideoHeight() {
 
 function updateVideo(message) {
   const videoURL = message.videoURL;
-  let extension = message.extension;
-  // let extension = "webm";
-  // switch(message.format) {
-  //     case "x-matroska":
-  //         extension = "mkv";
-  //     break;
-  //     case "webm":
-  //     default:
-  //         extension = "webm";
-  //     break;
-  // }
   player.src = videoURL;
-  let date = new Date();
-  let ampmTime = timeAMPM(date);
-  // Screen Shot 2020-03-20 at 4.35.14 PM
-  let dateData = {
-    year: date.getFullYear(),
-    month: addLeadingZero(date.getMonth() + 1),
-    date: addLeadingZero(date.getDate()),
-  };
-  ampmTime.ampm = ampmTime.ampm.toUpperCase();
-  let videoFileName = `Scroll Capture ${dateData.year}-${dateData.month}-${dateData.date} at ${ampmTime.hours}.${ampmTime.minutes}.${ampmTime.seconds} ${ampmTime.ampm}.${extension}`;
-
+  let videoFileName = createFilename(message.extension);
   let buttons = document.querySelectorAll('a.sc-download-button');
   for (let i = 0; i < buttons.length; i++) {
     let button = buttons[i];

@@ -102,9 +102,8 @@ export default class Rectangle {
   }
 
   set position(value) {
-    this._position = value;
-    this.center.x = this.position.x + this.halfSize.x;
-    this.center.y = this.position.y + this.halfSize.y;
+    this.x = value.x;
+    this.y = value.y;
   }
 
   get size() {
@@ -112,7 +111,8 @@ export default class Rectangle {
   }
 
   set size(value) {
-    this._size = value;
+    this.width = value.x;
+    this.height = value.y;
   }
 
   get area() {

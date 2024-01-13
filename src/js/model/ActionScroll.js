@@ -158,8 +158,8 @@ export default class ActionScroll extends ActionTween {
       case 'window':
         scroll.x = window.scrollX;
         scroll.y = window.scrollY;
-        maxScroll.x = document.body.offsetWidth - window.innerWidth;
-        maxScroll.y = document.body.offsetHeight - window.innerHeight;
+        maxScroll.x = document.body.scrollWidth - window.innerWidth;
+        maxScroll.y = document.body.scrollHeight - window.innerHeight;
         break;
       default:
         let element = document.querySelector(this.target.value);

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Image Capture Test</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            color:black;
+            overflow: visible;
+        }
+
+        .gradient {
+            position: relative;
+            width: 2300px;
+            height: 3500px;
+            background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
+            linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
+        }
+
+        .marker {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient">
+        <div class="marker" style="left:0; top:0;">top left</div>
+        <div class="marker" style="right:0; top:0;">top right</div>
+        <div class="marker" style="left:0; top:50%;">middle left</div>
+        <div class="marker" style="right:0; top:50%;">middle right</div>
+        <div class="marker" style="left:0; bottom:0;">bottom left</div>
+        <div class="marker" style="right:0; bottom:0;">bottom right</div>    
+    </div>
+</body>
+</html>
