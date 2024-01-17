@@ -431,8 +431,8 @@
 		}
 
 		input {
-			background: transparent;
-			background-color: transparent;
+			background: transparent !important;
+			background-color: transparent !important;
 			padding: 0;
 		}
 
@@ -446,6 +446,7 @@
 			display: inline-block;
 			font-family: inherit;
 			flex-grow: 1;
+			width: 100%;
 
 			option {
 				line-height: 1;

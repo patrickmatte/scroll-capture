@@ -20,7 +20,7 @@ export default class CaptureVideo extends Section {
     this.branches['scenario'] = this.scenario;
     this.branches['video'] = this.video;
 
-    this.defaultChild = 'settings';
+    this.defaultChild = 'scenario';
   }
 
   hide() {

@@ -3,13 +3,13 @@ import evaluate from 'simple-evaluate';
 const classes = {};
 
 export function safeEval(context, expression, option = null) {
-  if(context == null || expression == null) return null;
+  if (context == null || expression == null) return null;
   let value = null;
   try {
     value = evaluate(context, expression);
-  } catch(e) {
+  } catch (e) {
     console.log('sc_error expression =', expression);
-    // console.log('safeEval context=', context);  
+    // console.log('safeEval context=', context);
     // console.log(e);
   }
   return value;
@@ -177,6 +177,7 @@ export function getAllObjects(parent, array) {
       const child = parent.children.item(i);
       switch (child.nodeName) {
         case '#text':
+        case 'text':
         case '#comment':
         case 'BR':
         case 'TEMPLATE':

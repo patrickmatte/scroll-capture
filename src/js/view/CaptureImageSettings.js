@@ -11,6 +11,8 @@ export default class CaptureImageSettings extends Section {
   showDelayComplete() {
     let promise = super.showDelayComplete();
 
+    app.model.imgCapSettings.refreshTargets();
+
     app.model.setDefaultLocation(this.path);
 
     app.model.save();

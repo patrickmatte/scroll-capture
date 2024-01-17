@@ -1,5 +1,6 @@
 import Rectangle from './geom/Rectangle';
 import Point from './geom/Point';
+import { getAllObjects } from './tsunami';
 
 export let isMobile;
 if (typeof navigator !== 'undefined') {
@@ -166,4 +167,48 @@ export function getElementSelector(element) {
   names = names.reverse();
   const selector = names.join(' > ');
   return selector;
+}
+
+export function canScroll(el, scrollAxis) {
+  if (0 === el[scrollAxis]) {
+    el[scrollAxis] = 1;
+    if (1 === el[scrollAxis]) {
+      el[scrollAxis] = 0;
+      return true;
+    }
+  } else {
+    return true;
+  }
+  return false;
+}
+
+export function isScrollableX(el) {
+  return el.scrollWidth > el.clientWidth && canScroll(el, 'scrollLeft') && 'hidden' !== getComputedStyle(el).overflowX;
+}
+
+export function isScrollableY(el) {
+  return el.scrollHeight > el.clientHeight && canScroll(el, 'scrollTop') && 'hidden' !== getComputedStyle(el).overflowY;
+}
+
+export function isScrollable(el) {
+  return isScrollableX(el) || isScrollableY(el);
+}
+
+export function getScrollingTargets() {
+  const targetsArray = [];
+  if (isScrollable(document.documentElement)) {
+    targetsArray.push('documentElement');
+  }
+  const objects = getAllObjects(document.documentElement);
+  objects.forEach((element, index) => {
+    if (isScrollable(element)) {
+      let target = element.nodeName;
+      const classNameArray = element.className.split(' ');
+      if (classNameArray.length > 0) {
+        target += '.' + classNameArray.join('.');
+      }
+      targetsArray.push(target);
+    }
+  });
+  return targetsArray;
 }

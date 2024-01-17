@@ -13,49 +13,63 @@ export class ImageRecorder extends Branch {
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
+    const target = app.model.imgCapSettings.target.value;
+    const isDocumentElement = target == 'window' || target == 'documentElement';
+    const element = isDocumentElement ? document.documentElement : document.querySelector(target);
+
     this.isCapturing = true;
-    const innerSize = new Point(window.innerWidth, window.innerHeight);
-    const pageSize = new Point(document.body.scrollWidth, document.body.scrollHeight);
+    const clientPosition = new Point(0, 0);
+    if (element != document.documentElement) {
+      const clientRect = element.getBoundingClientRect();
+      clientPosition.set(clientRect.x, clientRect.y);
+    }
+    const clientSize = new Point(element.clientWidth, element.clientHeight);
+    const scrollSize = new Point(element.scrollWidth, element.scrollHeight);
     const maxChromePixels = 268435456;
     const pixels =
-      pageSize.x * app.model.settings.pixelRatio.value * (pageSize.y * app.model.settings.pixelRatio.value);
+      scrollSize.x * app.model.settings.pixelRatio.value * (scrollSize.y * app.model.settings.pixelRatio.value);
     // console.log('maxChromePixels=', maxChromePixels, 'pixels=', pixels);
     if (pixels > maxChromePixels) {
       console.log('Page is too large!');
-      pageSize.y = maxChromePixels / (pageSize.x * app.model.settings.pixelRatio.value);
+      scrollSize.y = maxChromePixels / (scrollSize.x * app.model.settings.pixelRatio.value);
     }
 
     const canvas = app.model.imgCapSettings.imageCanvas;
-    canvas.width = pageSize.x * app.model.settings.pixelRatio.value;
-    canvas.height = pageSize.y * app.model.settings.pixelRatio.value;
+    const canvasSize = scrollSize.multiplyScalar(app.model.settings.pixelRatio.value);
+    canvas.width = canvasSize.x;
+    canvas.height = canvasSize.y;
+    const ctx = canvas.getContext('2d');
 
-    const maxScroll = new Point(
-      document.body.scrollWidth - window.innerWidth,
-      document.body.scrollHeight - window.innerHeight
-    );
+    const maxScroll = scrollSize.subtract(clientSize);
 
-    // console.log('innerSize', innerSize);
-    // console.log('pageSize', pageSize);
+    // console.log('target', target);
+    // console.log('clientPosition', clientPosition);
+    // console.log('clientSize', clientSize);
+    // console.log('scrollSize', scrollSize);
     // console.log('maxScroll', maxScroll);
 
     const captures = [];
-    const captureTotals = new Point(Math.ceil(pageSize.x / innerSize.x), Math.ceil(pageSize.y / innerSize.y));
+    const captureTotals = new Point(Math.ceil(scrollSize.x / clientSize.x), Math.ceil(scrollSize.y / clientSize.y));
     // console.log('captureTotals', captureTotals);
     for (let y = 0; y < captureTotals.y; y++) {
       for (let x = 0; x < captureTotals.x; x++) {
-        const point = new Point(x * innerWidth, y * innerHeight);
+        const point = clientSize.multiply(new Point(x, y));
         const scroll = new Point(Math.min(point.x, maxScroll.x), Math.min(point.y, maxScroll.y));
         const position = point.subtract(scroll);
-        const size = innerSize.subtract(position);
-        const drawRect = new Rectangle();
-        drawRect.position = position;
-        drawRect.size = size;
+        const size = clientSize.subtract(position);
+        const cropPosition = clientPosition.add(position);
+        const cropSize = size.clone();
+        const drawPosition = point.clone();
+        const drawSize = size.clone();
         captures.push({
+          cropPosition,
+          cropSize,
+          drawPosition,
+          drawSize,
           point,
-          scroll,
           position,
+          scroll,
           size,
-          drawRect,
         });
       }
     }
@@ -71,10 +85,25 @@ export class ImageRecorder extends Branch {
       });
       capturePromise.then((img) => {
         const captureData = captures[captureIndex];
+        const pixelRatio = app.model.settings.pixelRatio.value;
+        const cropPosition = captureData.cropPosition.multiplyScalar(pixelRatio);
+        const cropSize = captureData.cropSize.multiplyScalar(pixelRatio);
+        const drawPosition = captureData.drawPosition.multiplyScalar(pixelRatio);
+        const drawSize = captureData.drawSize.multiplyScalar(pixelRatio);
+
         // const position = captureData.position.multiplyScalar(app.model.settings.pixelRatio.value);
         // const size = captureData.size.multiplyScalar(app.model.settings.pixelRatio.value);
-        const scroll = captureData.scroll.multiplyScalar(app.model.settings.pixelRatio.value);
-        canvas.getContext('2d').drawImage(img, scroll.x, scroll.y);
+        ctx.drawImage(
+          img,
+          cropPosition.x,
+          cropPosition.y,
+          cropSize.x,
+          cropSize.y,
+          drawPosition.x,
+          drawPosition.y,
+          drawSize.x,
+          drawSize.y
+        );
 
         captureIndex++;
         if (captureIndex < captures.length) {
@@ -88,7 +117,9 @@ export class ImageRecorder extends Branch {
 
     const scroll = () => {
       const captureData = captures[captureIndex];
-      window.scroll(captureData.scroll.x, captureData.scroll.y);
+      element.scrollLeft = captureData.scroll.x;
+      element.scrollTop = captureData.scroll.y;
+      // window.scroll(captureData.scroll.x, captureData.scroll.y);
       return awaitTimeout(app.model.imgCapSettings.delay);
     };
 

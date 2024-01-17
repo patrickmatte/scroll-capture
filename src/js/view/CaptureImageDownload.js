@@ -1,6 +1,7 @@
 import { app } from '../main';
 import Section from './Section';
 import { createFilename } from '../model/utils';
+import { sendTrackEventMessage } from '../model/GABridge';
 
 export class CaptureImageDownload extends Section {
   constructor(element) {

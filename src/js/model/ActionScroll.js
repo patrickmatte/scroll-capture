@@ -4,14 +4,20 @@ import ActionTween from './ActionTween';
 import StringData from '../../lib/tsunami/data/StringData';
 import Point from '../../lib/tsunami/geom/Point';
 import Data from '../../lib/tsunami/data/Data';
+import { getScrollingTargets, isScrollable } from '../../lib/tsunami/window';
 
 export default class ActionScroll extends ActionTween {
-  constructor(target = 'window', units = 'px', x = 0, y = 0, duration = 1, delay = 0) {
+  constructor(units = 'px', x = 0, y = 0, duration = 1, delay = 0) {
     super(0, 0, 0, 0, duration, delay);
     this.type = 'ActionScroll';
     this.name.value = 'Scroll';
     this.description.value = 'Add a scroll animation';
-    this.target = new StringData(target);
+    this.targets = new ArrayData();
+    this.targets.value = getScrollingTargets();
+    this.target = new StringData(this.targets.value[0]);
+    this.target.addEventListener(Data.CHANGE, () => {
+      this.captureAtInit();
+    });
     this.unitX = new NumberData(x);
     this.unitY = new NumberData(y);
     this.units = new ArrayData('%', 'px');
@@ -24,6 +30,12 @@ export default class ActionScroll extends ActionTween {
     this.doScroll = this.doScroll.bind(this);
     this.unitX.addEventListener(Data.CHANGE, this.doScroll);
     this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+  }
+
+  get element() {
+    const target = this.target.value;
+    const isDocumentElement = target == 'window' || target == 'documentElement';
+    return isDocumentElement ? document.documentElement : document.querySelector(target);
   }
 
   clone() {
@@ -45,20 +57,9 @@ export default class ActionScroll extends ActionTween {
   }
 
   trigger() {
-    let scrollTarget;
-    switch (this.target.value) {
-      case 'window':
-        scrollTarget = document.documentElement;
-        this.startX.value = window.scrollX;
-        this.startY.value = window.scrollY;
-        break;
-      default:
-        let element = document.querySelector(this.target.value);
-        scrollTarget = element;
-        this.startX.value = element.scrollLeft;
-        this.startY.value = element.scrollTop;
-        break;
-    }
+    let scrollTarget = this.element;
+    this.startX.value = scrollTarget.scrollLeft;
+    this.startY.value = scrollTarget.scrollTop;
 
     let styleArrayFiltered = [];
     this.targetStyle = scrollTarget.getAttribute('style') || '';
@@ -75,18 +76,8 @@ export default class ActionScroll extends ActionTween {
       this.endY.copy(this.unitY);
     }
     if (this.units.selectedItem.value == '%') {
-      let maxScroll = { x: 0, y: 0 };
-      switch (this.target.value) {
-        case 'window':
-          maxScroll.x = document.body.offsetWidth - window.innerWidth;
-          maxScroll.y = document.body.offsetHeight - window.innerHeight;
-          break;
-        default:
-          let element = document.querySelector(this.target.value);
-          maxScroll.x = element.scrollWidth - element.clientWidth;
-          maxScroll.y = element.scrollHeight - element.clientHeight;
-          break;
-      }
+      const element = this.element;
+      let maxScroll = { x: element.scrollWidth - element.clientWidth, y: element.scrollHeight - element.clientHeight };
       this.endX.value = Math.round((this.unitX.value / 100) * maxScroll.x);
       this.endY.value = Math.round((this.unitY.value / 100) * maxScroll.y);
     }
@@ -100,30 +91,14 @@ export default class ActionScroll extends ActionTween {
   }
 
   tweenUpdateHandler() {
-    switch (this.target.value) {
-      case 'window':
-        window.scroll(this.pos.x, this.pos.y);
-        break;
-      default:
-        let element = document.querySelector(this.target.value);
-        element.scrollLeft = this.pos.x;
-        element.scrollTop = this.pos.y;
-        break;
-    }
+    const scrollTarget = this.element;
+    scrollTarget.scrollLeft = this.pos.x;
+    scrollTarget.scrollTop = this.pos.y;
   }
 
   tweenCompleteHandler(e) {
     super.tweenCompleteHandler(e);
-    let scrollTarget;
-    switch (this.target.value) {
-      case 'window':
-        scrollTarget = document.documentElement;
-        break;
-      default:
-        scrollTarget = document.querySelector(this.target.value);
-        break;
-    }
-    scrollTarget.setAttribute('style', this.targetStyle);
+    this.element.setAttribute('style', this.targetStyle);
   }
 
   serialize() {
@@ -154,23 +129,10 @@ export default class ActionScroll extends ActionTween {
     this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
     this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 
-    let scroll = new Point();
-    let maxScroll = new Point();
-    switch (this.target.value) {
-      case 'window':
-        scroll.x = window.scrollX;
-        scroll.y = window.scrollY;
-        maxScroll.x = document.body.scrollWidth - window.innerWidth;
-        maxScroll.y = document.body.scrollHeight - window.innerHeight;
-        break;
-      default:
-        let element = document.querySelector(this.target.value);
-        scroll.x = element.scrollLeft;
-        scroll.y = element.scrollTop;
-        maxScroll.x = element.scrollWidth - element.clientWidth;
-        maxScroll.y = element.scrollHeight - element.clientHeight;
-        break;
-    }
+    const element = this.element;
+    let scroll = new Point(element.scrollLeft, element.scrollTop);
+    let maxScroll = new Point(element.scrollWidth - element.clientWidth, element.scrollHeight - element.clientHeight);
+
     let unit = new Point();
     switch (this.units.selectedItem.value) {
       case 'px':

@@ -119,10 +119,6 @@ export default class Rectangle {
     return this.size.x * this.size.y;
   }
 
-  toString() {
-    return '[Rectangle x=' + this.x + ' y=' + this.y + ' width=' + this.width + ' height=' + this.height + ']';
-  }
-
   get widthToHeight() {
     return this.width / this.height;
   }
@@ -162,7 +158,7 @@ export default class Rectangle {
   }
 
   scale(x, y) {
-    return new Rectangle(this.x, this.y, this.width * x, this.height * y);
+    return new Rectangle(this.x * x, this.y * y, this.width * x, this.height * y);
   }
 
   scaleToArea(area) {
@@ -220,5 +216,9 @@ export default class Rectangle {
     randomSize.x *= this.size.x;
     randomSize.y *= this.size.y;
     return this.position.add(randomSize);
+  }
+
+  toString() {
+    return '[Rectangle x=' + this.x + ' y=' + this.y + ' width=' + this.width + ' height=' + this.height + ']';
   }
 }

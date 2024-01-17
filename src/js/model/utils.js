@@ -2,7 +2,6 @@ import { timeAMPM } from '../../lib/tsunami/utils/date';
 import { addLeadingZero } from '../../lib/tsunami/utils/number';
 
 export function createFilename(extension) {
-  console.log('createFilename', extension);
   let date = new Date();
   let ampmTime = timeAMPM(date);
   let dateData = {
