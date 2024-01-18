@@ -1,10 +1,10 @@
 import { sendTrackEventMessage } from './GABridge';
 import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Actions from './Actions';
-import SettingsVideoCapture from './SettingsVideoCapture';
+import CaptureVideoModel from './CaptureVideoModel';
 import BaseEvent from '../../lib/tsunami/events';
 import DataModel from '../../lib/tsunami/data/DataModel';
-import SettingsImageCapture from './SettingsImageCapture';
+import CaptureImageModel from './CaptureImageModel';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -23,9 +23,9 @@ export default class AppModel extends DataModel {
     // this.isPlayingSelected = new BooleanData();
     // this.isCapturingSelected = new BooleanData();
 
-    this.settings = new SettingsVideoCapture();
+    this.settings = new CaptureVideoModel();
     this.actions = new Actions();
-    this.imgCapSettings = new SettingsImageCapture();
+    this.imgCapSettings = new CaptureImageModel();
 
     // this.addEventListener("selectedAction", (event) => {
     //     console.log("selectedAction change", this.selectedAction);
@@ -39,12 +39,8 @@ export default class AppModel extends DataModel {
     // 	// new ActionMouseEvent("click", 0, 0),
     // ];
 
-    this.actions.addEventListener('add', (event) => {
-      this.save();
-    });
-    this.actions.addEventListener('remove', (event) => {
-      this.save();
-    });
+    this.actions.addEventListener('add', this.save);
+    this.actions.addEventListener('remove', this.save);
   }
 
   get actions() {
@@ -79,9 +75,15 @@ export default class AppModel extends DataModel {
     let jsonPromise = chrome.storage.local.get(['json']).then((result) => {
       if (result.json) {
         let data = JSON.parse(result.json);
+        this.actions.removeEventListener('add', this.save);
+        this.actions.removeEventListener('remove', this.save);
+
         this.actions.deserialize(data.actions);
         this.settings.deserialize(data.settings);
         this.imgCapSettings.deserialize(data.imgCapSettings);
+
+        this.actions.addEventListener('add', this.save);
+        this.actions.addEventListener('remove', this.save);
       }
     });
     return jsonPromise;

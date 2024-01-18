@@ -13,8 +13,6 @@ export default class CaptureVideoSettings extends Section {
 
     app.model.setDefaultLocation(this.path);
 
-    app.model.save();
-
     return promise;
   }
 

@@ -15,7 +15,7 @@ export default class CaptureImageSettings extends Section {
 
     app.model.setDefaultLocation(this.path);
 
-    app.model.save();
+    // app.model.save();
 
     return promise;
   }

@@ -149,7 +149,7 @@ export function fileExists(url) {
   return req.status !== 404;
 }
 
-export function getElementSelector(element) {
+export function getElementSelector(element, root = null) {
   let names = [];
   while (element) {
     let elSelector = element.nodeName;
@@ -158,10 +158,10 @@ export function getElementSelector(element) {
       elSelector = elSelector + '.' + className.split(' ').join('.');
     }
     names.push(elSelector);
-    if (element !== document.body) {
-      element = element.parentNode;
-    } else {
+    if (!root || element == root) {
       element = null;
+    } else {
+      element = element.parentNode;
     }
   }
   names = names.reverse();
@@ -194,21 +194,39 @@ export function isScrollable(el) {
   return isScrollableX(el) || isScrollableY(el);
 }
 
-export function getScrollingTargets() {
-  const targetsArray = [];
-  if (isScrollable(document.documentElement)) {
-    targetsArray.push('documentElement');
-  }
+export function getScrollingTargets(omitSelectors) {
+  const array = [];
+  if (isScrollable(document.documentElement)) array.push('documentElement');
   const objects = getAllObjects(document.documentElement);
   objects.forEach((element, index) => {
     if (isScrollable(element)) {
-      let target = element.nodeName;
-      const classNameArray = element.className.split(' ');
-      if (classNameArray.length > 0) {
-        target += '.' + classNameArray.join('.');
-      }
-      targetsArray.push(target);
+      const selector = getElementSelector(element);
+      let addSelector = true;
+      omitSelectors.forEach((omit) => {
+        if (selector.indexOf(omit) != -1) addSelector = false;
+      });
+      if (addSelector) array.push(selector);
     }
   });
-  return targetsArray;
+  return array;
+}
+
+export function isFixed(el) {
+  return getComputedStyle(el).position == 'fixed';
+}
+
+export function getFixedElements(omitSelectors) {
+  const array = [];
+  const objects = getAllObjects(document.documentElement);
+  objects.forEach((element, index) => {
+    if (isFixed(element)) {
+      const selector = getElementSelector(element);
+      let addSelector = true;
+      omitSelectors.forEach((omit) => {
+        if (selector.indexOf(omit) != -1) addSelector = false;
+      });
+      if (addSelector) array.push(selector);
+    }
+  });
+  return array;
 }

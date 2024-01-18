@@ -21,25 +21,25 @@
             <sc-image-settings class="sc-section sc-fields" is="ui-component">
                 <div>
                     <div class="sc-window">
-                        <!-- <div class="sc-title">
+                        <div class="sc-title">
                             <span class="sc-tabs">
                                 <span class="sc-tab sc-title-tab">
-                                    <span class="sc-icon fa-solid fa-film"></span>
-                                    <span class="sc-label">Video File</span>
+                                    <span class="sc-icon fa-solid fa-gear"></span>
+                                    <span class="sc-label">Configuration</span>
                                 </span>
                             </span>
                             <span class="sc-tabs"></span>
-                        </div> -->
+                        </div>
                         <div class="sc-window-content" is="ui-component">
                             <div class="sc-fields" is="ui-component">
-                                <div class="sc-field" title="Target Selector">
+                                <div class="sc-field" title="Scroll Target">
                                     <div class="sc-space">
                                         <span class="sc-icon fa-solid fa-location-crosshairs"></span>
-                                        <span class="sc-label">Target Selector</span>
+                                        <span class="sc-label">Scroll Target</span>
                                     </div>
                                     <div class="sc-input sc-select">
                                         <!-- <span class="sc-icon fa-solid fa-location-crosshairs"></span> -->
-                                        <select is="ui-select" set:provider="scope.imgCapSettings.targets" bind:value="scope.imgCapSettings.target.value"></select>
+                                        <select is="ui-select" set:provider="scope.imgCapSettings.targets" bind:value="scope.imgCapSettings.target"></select>
                                     </div>
                                 </div>
                                 
@@ -82,10 +82,49 @@
                                         </span>
                                     </span>
                                 </div>
-                
+
                             </div>
                         </div>
                     </div>
+
+                    <div class="sc-window">
+                        <div class="sc-title">
+                            <span class="sc-tabs">
+                                <span class="sc-tab sc-title-tab">
+                                    <span class="sc-icon fa-solid fa-eye-slash"></span>
+                                    <span class="sc-label">Hidden Elements</span>
+                                </span>
+                            </span>
+                            <span class="sc-tabs">
+                                <span class="sc-tab">
+                                    <div class="ui-list-drag-area"></div>
+                                    <button class="sc-trash-button" is="ui-button" on:click="scope.imgCapSettings.addHiddenElement()" title="Delete">
+                                        <span class="sc-icon fa-solid fa-square-plus"></span>
+                                    </button>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="sc-window-content" is="ui-component">
+                            <div class="sc-fields" is="ui-component">
+                                <div class="sc-fixed-elements-list sc-field-column" is="ui-list" set:provider="scope.imgCapSettings.fixedElements">
+                                    <template>
+                                        <div class="sc-field">
+                                            <span class="sc-input" title="Element Selector">
+                                                <span class="sc-icon fa-solid fa-location-crosshairs"></span>
+                                                <input type="text" is="ui-input" placeholder="Enter element selector" bind:model="scope.data.selector" />
+                                            </span>
+                                            <span class="sc-icon">
+                                                <button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.rootScope.imgCapSettings.removeHiddenElement(model);" title="Delete">
+                                                    <span class="sc-icon fa-solid fa-trash-alt"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div is="general-settings"></div>
                 </div>
             </sc-image-settings>

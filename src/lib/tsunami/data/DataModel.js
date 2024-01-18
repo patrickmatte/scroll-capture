@@ -1,4 +1,4 @@
-import ChangeEvent from '../ChangeEvent';
+import { ChangeEvent } from '../ChangeEvent';
 import Data from './Data';
 
 export default class DataModel extends Data {
@@ -51,11 +51,10 @@ export default class DataModel extends Data {
     return data;
   }
 
-  deserialize(data) {
-    if (!data) return;
-    for (let i in data) {
-      if (data.hasOwnProperty(i)) this[i] = data[i];
-    }
+  deserialize(data = {}) {
+    this._properties.forEach((name) => {
+      if (data.hasOwnProperty(name)) this[name] = data[name];
+    });
   }
 
   destroy() {

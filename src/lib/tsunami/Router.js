@@ -1,4 +1,4 @@
-import ChangeEvent from './ChangeEvent';
+import { ChangeEvent } from './ChangeEvent';
 import ArrayData from './data/ArrayData';
 import BaseEvent from './events';
 import RouterTask from './RouterTask';

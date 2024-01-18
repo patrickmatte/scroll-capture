@@ -1,4 +1,4 @@
-import ChangeEvent from '../ChangeEvent';
+import { ChangeEvent } from '../ChangeEvent';
 
 export default class Data extends EventTarget {
   get value() {

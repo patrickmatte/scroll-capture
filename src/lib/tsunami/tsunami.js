@@ -168,13 +168,11 @@ export function destroyElements(elements) {
   }
 }
 
-export function getAllObjects(parent, array) {
-  if (!array) {
-    array = [];
-  }
+export function getAllObjects(parent, array = [], omit = []) {
   if (parent.children) {
     for (let i = 0; i < parent.children.length; i++) {
       const child = parent.children.item(i);
+      if (omit.indexOf(child) != -1) continue;
       switch (child.nodeName) {
         case '#text':
         case 'text':
@@ -185,7 +183,7 @@ export function getAllObjects(parent, array) {
           break;
         default:
           array.push(child);
-          getAllObjects(child, array);
+          getAllObjects(child, array, omit);
           break;
       }
     }

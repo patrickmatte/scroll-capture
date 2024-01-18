@@ -13,10 +13,9 @@ export class ImageRecorder extends Branch {
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
-    const target = app.model.imgCapSettings.target.value;
+    const target = app.model.imgCapSettings.target;
     const isDocumentElement = target == 'window' || target == 'documentElement';
     const element = isDocumentElement ? document.documentElement : document.querySelector(target);
-
     this.isCapturing = true;
     const clientPosition = new Point(0, 0);
     if (element != document.documentElement) {
@@ -78,7 +77,9 @@ export class ImageRecorder extends Branch {
     const img = new Image();
 
     const captureStep = () => {
-      // console.log(captureIndex);
+      if (captureIndex == 1) {
+        this.hideElements();
+      }
       const scrollPromise = scroll();
       const capturePromise = scrollPromise.then(() => {
         return capture();
@@ -109,6 +110,7 @@ export class ImageRecorder extends Branch {
         if (captureIndex < captures.length) {
           captureStep();
         } else {
+          this.showElements();
           this.isCapturing = false;
           this.router.location = 'scroll-capture/image/download';
         }
@@ -138,6 +140,28 @@ export class ImageRecorder extends Branch {
     };
 
     captureStep();
+  }
+
+  hideElements() {
+    console.log('hideElements');
+    app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
+      if (obj.selector) {
+        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
+          el.style.visibility = 'hidden';
+        });
+      }
+    });
+  }
+
+  showElements() {
+    console.log('showElements');
+    app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
+      if (obj.selector) {
+        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
+          el.style.visibility = 'visible';
+        });
+      }
+    });
   }
 
   hide() {

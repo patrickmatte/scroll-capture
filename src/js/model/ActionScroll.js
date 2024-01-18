@@ -5,6 +5,7 @@ import StringData from '../../lib/tsunami/data/StringData';
 import Point from '../../lib/tsunami/geom/Point';
 import Data from '../../lib/tsunami/data/Data';
 import { getScrollingTargets, isScrollable } from '../../lib/tsunami/window';
+import { app } from '../main';
 
 export default class ActionScroll extends ActionTween {
   constructor(units = 'px', x = 0, y = 0, duration = 1, delay = 0) {
@@ -13,7 +14,7 @@ export default class ActionScroll extends ActionTween {
     this.name.value = 'Scroll';
     this.description.value = 'Add a scroll animation';
     this.targets = new ArrayData();
-    this.targets.value = getScrollingTargets();
+    this.targets.value = getScrollingTargets(['sc-']);
     this.target = new StringData(this.targets.value[0]);
     this.target.addEventListener(Data.CHANGE, () => {
       this.captureAtInit();

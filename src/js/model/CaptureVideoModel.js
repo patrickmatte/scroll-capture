@@ -9,7 +9,7 @@ import NumberData from '../../lib/tsunami/data/NumberData';
 import { getSupportedFormatsAndCodecs } from './FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
 
-export default class SettingsVideoCapture {
+export default class CaptureVideoModel {
   constructor() {
     const supportedFormats = getSupportedFormatsAndCodecs();
 
