@@ -41,5 +41,9 @@
 		"32": "assets/images/get_started32.png",
 		"48": "assets/images/get_started48.png",
 		"128": "assets/images/get_started128.png"
-	}
+	},
+	"content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+        "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; child-src 'self';"
+    }
 }

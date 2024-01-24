@@ -12,6 +12,7 @@ import Point from '../../lib/tsunami/geom/Point';
 export default class CaptureVideoModel {
   constructor() {
     const supportedFormats = getSupportedFormatsAndCodecs();
+    console.log('supportedFormats', supportedFormats);
 
     this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
 

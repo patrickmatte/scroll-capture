@@ -64,11 +64,17 @@ export default class AppModel extends DataModel {
       imgCapSettings: this.imgCapSettings.serialize(),
     };
     let json = JSON.stringify(obj);
-    chrome.storage.local.set({ json: json }, () => {
+
+    const saveHandler = () => {
       setTimeout(() => {
         this.isSaving.value = false;
       }, 100);
-    });
+    }
+    try {
+      chrome.storage.local.set({ json: json }, saveHandler);
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   load() {

@@ -67,9 +67,10 @@ function dispatchVideoHeight() {
 }
 
 function updateVideo(message) {
+  let videoFileName = createFilename(message.extension);
   const videoURL = message.videoURL;
   player.src = videoURL;
-  let videoFileName = createFilename(message.extension);
+  player.download = videoFileName;
   let buttons = document.querySelectorAll('a.sc-download-button');
   for (let i = 0; i < buttons.length; i++) {
     let button = buttons[i];
