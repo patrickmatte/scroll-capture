@@ -14,7 +14,7 @@ export default class ActionScroll extends ActionTween {
     this.name.value = 'Scroll';
     this.description.value = 'Add a scroll animation';
     this.targets = new ArrayData();
-    this.targets.value = getScrollingTargets(['sc-']);
+    this.targets.value = getScrollingTargets(['sc-'], ['documentElement']);
     this.target = new StringData(this.targets.value[0]);
     this.target.addEventListener(Data.CHANGE, () => {
       this.captureAtInit();
@@ -35,7 +35,7 @@ export default class ActionScroll extends ActionTween {
 
   get element() {
     const target = this.target.value;
-    const isDocumentElement = target == 'window' || target == 'documentElement';
+    const isDocumentElement = target == 'window' || target == 'documentElement' || !target;
     return isDocumentElement ? document.documentElement : document.querySelector(target);
   }
 

@@ -67,7 +67,7 @@ function dispatchVideoHeight() {
 }
 
 function updateVideo(message) {
-  let videoFileName = createFilename(message.extension);
+  let videoFileName = message.fileName;
   const videoURL = message.videoURL;
   player.src = videoURL;
   player.download = videoFileName;

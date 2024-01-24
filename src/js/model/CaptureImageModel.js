@@ -27,7 +27,7 @@ export default class CaptureImageModel extends DataModel {
   }
 
   refreshTargets() {
-    this.targets.value = getScrollingTargets(['sc-']);
+    this.targets.value = getScrollingTargets(['sc-'], ['documentElement']);
     if (!this.target) this.target = this.targets.value[0];
 
     // const fixedElements = getFixedElements(['sc-']);

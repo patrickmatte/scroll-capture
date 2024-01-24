@@ -303,7 +303,7 @@
 											<div class="sc-window-content" is="ui-component">
 												<div class="sc-fields" is="ui-component">
 									
-													<div class="sc-field" title="Video Format">
+													<!-- <div class="sc-field" title="Video Format">
 														<div class="sc-space">
 															<span class="sc-icon fa-solid fa-file"></span>
 															<span class="sc-label">Video Format</span>
@@ -311,23 +311,33 @@
 														<div class="sc-input sc-select">
 															<select is="ui-select" set:provider="scope.settings.format" bind:value="scope.settings.format.selectedItem.value"></select>
 														</div>
-													</div>
+													</div> -->
 									
 													<div class="sc-field-group">
-														<div class="sc-field">
-															<label class="sc-input sc-radio sc-radio-video" title="Export Video">
+														<div class="sc-field" title="Video Track">
+															<div class="sc-space">
+																<span class="sc-icon">
+																	<span class="fa-solid fa-video" is="ui-component" data-visible="{scope.settings.exportVideo.value}"></span>
+																	<span class="fa-solid fa-video-slash" is="ui-component" data-visible="{!scope.settings.exportVideo.value}"></span>
+																</span>
+																<span class="sc-label">Video</span>
+															</div>										
+															<label class="sc-input sc-radio">
 																<input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input"/>
 																<span class="sc-radio-content">
-																	<span class="sc-icon fa-solid" is="ui-component"></span>
+																	<span class="sc-icon">
+																		<span class="fa-solid fa-toggle-on" is="ui-component" data-visible="{scope.settings.exportVideo.value}"></span>
+																		<span class="fa-solid fa-toggle-off" is="ui-component" data-visible="{!scope.settings.exportVideo.value}"></span>
+																	</span>
 																	<span class="sc-radio-label">
 																		<span is="ui-component" data-visible="{scope.settings.exportVideo.value}">On</span>
 																		<span is="ui-component" data-visible="{!scope.settings.exportVideo.value}">Off</span>
 																	</span>
 																</span>
 															</label>	
-															<div class="sc-input sc-select" title="Video Codec">
+															<!-- <div class="sc-input sc-select" title="Video Codec">
 																<select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
-															</div>
+															</div> -->
 														</div>
 														<div class="sc-field" title="Video Bitrate">
 															<span class="sc-input">
@@ -339,21 +349,32 @@
 															<input type="range" min="1" max="64" step="1" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
 														</div>
 													</div>
-													<div class="sc-field-group" title="Audio Codec">
-														<div class="sc-field">
-															<label class="sc-input sc-radio sc-radio-audio" title="Export Audio">
+													
+													<div class="sc-field-group">
+														<div class="sc-field" title="Audio Track">
+															<div class="sc-space">
+																<span class="sc-icon">
+																	<span class="fa-solid fa-volume-high" is="ui-component" data-visible="{scope.settings.exportAudio.value}"></span>
+																	<span class="fa-solid fa-volume-xmark" is="ui-component" data-visible="{!scope.settings.exportAudio.value}"></span>
+																</span>
+																<span class="sc-label">Audio</span>
+															</div>
+															<label class="sc-input sc-radio">
 																<input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input"/>
 																<span class="sc-radio-content">
-																	<span class="sc-icon fa-solid"></span>
+																	<span class="sc-icon">
+																		<span class="fa-solid fa-toggle-on" is="ui-component" data-visible="{scope.settings.exportAudio.value}"></span>
+																		<span class="fa-solid fa-toggle-off" is="ui-component" data-visible="{!scope.settings.exportAudio.value}"></span>
+																	</span>
 																	<span class="sc-radio-label">
 																		<span is="ui-component" data-visible="{scope.settings.exportAudio.value}">On</span>
 																		<span is="ui-component" data-visible="{!scope.settings.exportAudio.value}">Off</span>
 																	</span>
 																</span>
 															</label>
-																<div class="sc-input sc-select">
+															<!-- <div class="sc-input sc-select">
 																<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
-															</div>
+															</div> -->
 														</div>
 														<div class="sc-field"" title="Audio Bitrate">
 															<span class="sc-input">

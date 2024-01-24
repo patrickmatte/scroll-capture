@@ -194,9 +194,7 @@ export function isScrollable(el) {
   return isScrollableX(el) || isScrollableY(el);
 }
 
-export function getScrollingTargets(omitSelectors) {
-  const array = [];
-  if (isScrollable(document.documentElement)) array.push('documentElement');
+export function getScrollingTargets(omitSelectors, array = []) {
   const objects = getAllObjects(document.documentElement);
   objects.forEach((element, index) => {
     if (isScrollable(element)) {

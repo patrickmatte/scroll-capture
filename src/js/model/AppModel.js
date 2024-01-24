@@ -53,7 +53,11 @@ export default class AppModel extends DataModel {
   }
 
   sendMessage(message) {
-    chrome.runtime.sendMessage(message);
+    try{
+      chrome.runtime.sendMessage(message);
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   save() {
@@ -100,7 +104,13 @@ export default class AppModel extends DataModel {
   }
 
   setActionIndex(value) {
-    return chrome.storage.local.set({ actionIndex: value });
+    let promise = Promise.resolve();
+    try {
+      promise = chrome.storage.local.set({ actionIndex: value });
+    } catch(error) {
+      console.log(error);
+    }
+    return promise;
   }
 
   getActionIndex() {

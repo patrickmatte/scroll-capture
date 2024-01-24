@@ -1,8 +1,7 @@
 import { sendTrackEventMessage } from './model/GABridge';
+import { createFilename, createFilenameOnly } from './model/utils';
 
 const { createFFmpeg, fetchFile } = FFmpeg;
-console.log('FFmpeg', FFmpeg);
-console.log('window.FFmpeg', window.FFmpeg);
 
 const ffmpeg = createFFmpeg({
     corePath: chrome.runtime.getURL("ffmpeg-core.js"),
@@ -36,9 +35,9 @@ async function startRecording(message) {
   console.log(startRecording, message);
   const size = { x: message.tabWidth, y: message.tabHeight };
   const pixelRatio = message.pixelRatio;
-  const mediaOptions = {};
+  const constraints = {};
   if (message.exportVideo) {
-    mediaOptions.video = {
+    constraints.video = {
       mandatory: {
         chromeMediaSource: 'tab',
         chromeMediaSourceId: message.streamId,
@@ -52,15 +51,15 @@ async function startRecording(message) {
     };
   }
   if (message.exportAudio) {
-    mediaOptions.audio = {
+    constraints.audio = {
       mandatory: {
         chromeMediaSource: 'tab',
         chromeMediaSourceId: message.streamId,
       },
     };
   }
-  console.log('navigator.mediaDevices.getUserMedia', JSON.stringify(mediaOptions));
-  const media = await navigator.mediaDevices.getUserMedia(mediaOptions);
+  console.log('getUserMedia constraints', JSON.stringify(constraints));
+  const media = await navigator.mediaDevices.getUserMedia(constraints);
 
   if (message.exportAudio) {
     const output = new AudioContext();
@@ -68,7 +67,18 @@ async function startRecording(message) {
     source.connect(output.destination);
   }
 
-  let mimeType = message.mimetype;
+  let mimeType;
+  if (message.exportVideo) {
+    mimeType = 'video/webm;codecs=h264';
+    if (message.exportAudio) {
+      mimeType += ',opus';
+    }
+  } else {
+    mimeType = 'audio/webm;codecs=opus';
+  }
+
+  console.log();
+
   let videoBitsPerSecond = message.videoBitsPerSecond || 16;
   let audioBitsPerSecond = message.audioBitsPerSecond || 128;
 
@@ -80,21 +90,12 @@ async function startRecording(message) {
 
   console.log('MediaRecorder options', JSON.stringify(options));
 
-  sendTrackEventMessage('recording', 'mimeType', options.mimeType);
-  console.log('options');
   recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);
   recorder.onstop = () => {
     // const blob = new Blob(data, { type: `video/${format}` });
     const blobFormat = mimeType.split(';')[0];
     blob = new Blob(data, { type: blobFormat });
-
-    // const videoURLMessage = Object.assign({}, message);
-    // Object.assign(videoURLMessage, {
-    //   type: 'scrollCaptureVideoURL',
-    //   videoURL: URL.createObjectURL(blob),
-    // });
-    // chrome.runtime.sendMessage(videoURLMessage);
 
     convertStreams(blob, message);
 
@@ -112,73 +113,46 @@ function stopRecording(message) {
   window.location.hash = '';
 }
 
-var worker;
-var aab;
-
-function print(text) {
-    console.log(JSON.stringify({
-      "type" : "stdout",
-      "data" : text
-  }));
-};
-
-function ffmpegConvert(message) {
-    if (message.type === "command") {
-        var Module = {
-            print: print,
-            printErr: print,
-            files: message.files || [],
-            arguments: message.arguments || [],
-            TOTAL_MEMORY: message.TOTAL_MEMORY || false
-        };
-
-        var time = Date.now();
-        var result = ffmpeg_run(Module);
-        var totalTime = Date.now() - time;
-
-        return {
-            "type" : "done",
-            "data" : result,
-            "time" : totalTime
-        };
-    }
-};
-
 function convertStreams(videoBlob, message) {
   var fileReader = new FileReader();
   fileReader.onload = async function () {
-    aab = this.result;
-    // const ffmpegResult = ffmpegConvert({
-    //   type: 'command',
-    //   arguments: '-i video.webm -nostdin -c:v copy output.mp4'.split(' '),
-    //   files: [
-    //     {
-    //       data: new Uint8Array(aab),
-    //       name: 'video.webm',
-    //     },
-    //   ],
-    //   TOTAL_MEMORY: 256 * 1024 * 1024
-    // });
-
-    // var result = ffmpegResult.data[0];
 
     // var blob = new File([result.data], 'test.mp4', {
     //   type: 'video/mp4',
     // });
 
-    // console.log('blob=', JSON.stringify(blob));
+    const fileName = createFilenameOnly();
+    console.log('fileName', fileName);
 
-    const inputFileName = 'sample_video.webm';
-    const outputFileName = 'sample_video.mp4';
+    let inputFileName = `sample_video.webm`;
+    let outputFileName =  `sample_video.mp4`;
+    let videoFileName = `${fileName}.mp4`;
+    let commandStr;
+
+    if(message.exportVideo) {
+      if(message.exportAudio) {
+        commandStr = `ffmpeg -i ${inputFileName} -c:v copy -c:a aac ${outputFileName}`;
+      } else {
+        commandStr = `ffmpeg -i ${inputFileName} -c:v copy ${outputFileName}`;
+      }
+    } else {
+      videoFileName = `${fileName}.m4a`;
+      outputFileName = `sample_video.m4a`;
+      commandStr = `ffmpeg -i ${inputFileName} -c:a aac ${outputFileName}`;
+    }
+
+    console.log('inputFileName', inputFileName);
+    console.log('outputFileName', outputFileName);
   
-    const commandStr = `ffmpeg -i ${inputFileName} -c:v copy -c:a aac ${outputFileName}`;
-    const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(aab));
-    console.log("DONE!!!!")
+    const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
+    
+    console.log('FFmpeg blob', blob);
 
     const videoURLMessage = Object.assign({}, message);
     Object.assign(videoURLMessage, {
       type: 'scrollCaptureVideoURL',
       videoURL: URL.createObjectURL(blob),
+      fileName: videoFileName
     });
     chrome.runtime.sendMessage(videoURLMessage);
 

@@ -1,4 +1,4 @@
-export function getSupportedFormatsAndCodecs() {
+function getSupportedFormatsAndCodecs() {
   const formats = [
     { name: 'mp4', ext: 'mp4' },
     { name: 'webm', ext: 'webm' },
@@ -54,6 +54,8 @@ export function getSupportedFormatsAndCodecs() {
   };
   return supportedFormats;
 }
+
+export const supportedFormatsAndCodecs = getSupportedFormatsAndCodecs();
 
 // function logMimeTypes() {
 //   let mimeTypes = [

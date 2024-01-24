@@ -1,7 +1,6 @@
 import Branch from '../../lib/tsunami/Branch';
 import { awaitTimeout } from '../../lib/tsunami/await';
 import Point from '../../lib/tsunami/geom/Point';
-import Rectangle from '../../lib/tsunami/geom/Rectangle';
 import { app } from '../main';
 
 export class ImageRecorder extends Branch {
@@ -14,7 +13,7 @@ export class ImageRecorder extends Branch {
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
     const target = app.model.imgCapSettings.target;
-    const isDocumentElement = target == 'window' || target == 'documentElement';
+    const isDocumentElement = target == 'window' || target == 'documentElement' || !target;
     const element = isDocumentElement ? document.documentElement : document.querySelector(target);
     this.isCapturing = true;
     const clientPosition = new Point(0, 0);
