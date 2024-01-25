@@ -31,7 +31,7 @@ export class CaptureImageDownload extends Section {
       button.href = dataURL;
       button.download = videoFileName;
       button.addEventListener('click', () => {
-        sendTrackEventMessage('download', 'click');
+        sendTrackEventMessage('download', 'image');
       });
     }
     let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');

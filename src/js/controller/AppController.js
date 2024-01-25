@@ -32,7 +32,7 @@ export default class AppController extends Branch {
   trackRouterLocation(e) {
     app.model.location = e.data.fullLocation;
     // console.log('############## trackRouterLocation', this.router.location);
-    sendTrackPageMessage('/' + this.router.location);
+    // sendTrackPageMessage('/' + this.router.location);
   }
 
   load() {

@@ -1,10 +1,10 @@
 import PlayState from './PlayState';
 import { app } from '../main';
-import { sendTrackEventMessage } from '../model/GABridge';
 
 export default class PlayRecordState extends PlayState {
   constructor() {
     super();
+    this.trackName = 'record_actions';
   }
 
   get endLocation() {
@@ -12,7 +12,6 @@ export default class PlayRecordState extends PlayState {
   }
 
   show() {
-    sendTrackEventMessage('record_actions_length', app.model.actions.value.length.toString());
     super.show();
   }
 

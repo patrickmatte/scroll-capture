@@ -1,12 +1,11 @@
-import { sendTrackEventMessage } from './model/GABridge';
 import { createFilename, createFilenameOnly } from './model/utils';
 
 const { createFFmpeg, fetchFile } = FFmpeg;
 
 const ffmpeg = createFFmpeg({
-    corePath: chrome.runtime.getURL("ffmpeg-core.js"),
-    log: true,
-    mainName: 'main'
+  corePath: chrome.runtime.getURL('ffmpeg-core.js'),
+  log: true,
+  mainName: 'main',
 });
 
 chrome.runtime.onMessage.addListener((message) => {
@@ -116,61 +115,58 @@ function stopRecording(message) {
 function convertStreams(videoBlob, message) {
   var fileReader = new FileReader();
   fileReader.onload = async function () {
-
     // var blob = new File([result.data], 'test.mp4', {
     //   type: 'video/mp4',
     // });
 
-    const fileName = createFilenameOnly();
-    console.log('fileName', fileName);
-
-    let inputFileName = `sample_video.webm`;
-    let outputFileName =  `sample_video.mp4`;
-    let videoFileName = `${fileName}.mp4`;
+    let inputFileName = "sample_video.webm";
+    let outputFileName = "sample_video.mp4";
+    let downloadExtension = "mp4";
     let commandStr;
 
-    if(message.exportVideo) {
-      if(message.exportAudio) {
+    if (message.exportVideo) {
+      if (message.exportAudio) {
         commandStr = `ffmpeg -i ${inputFileName} -c:v copy -c:a aac ${outputFileName}`;
       } else {
         commandStr = `ffmpeg -i ${inputFileName} -c:v copy ${outputFileName}`;
       }
     } else {
-      videoFileName = `${fileName}.m4a`;
+      downloadExtension = "m4a";
       outputFileName = `sample_video.m4a`;
       commandStr = `ffmpeg -i ${inputFileName} -c:a aac ${outputFileName}`;
     }
 
-    console.log('inputFileName', inputFileName);
-    console.log('outputFileName', outputFileName);
-  
-    const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
-    
-    console.log('FFmpeg blob', blob);
+    const fileName = createFilenameOnly();
+    const downloadFileName = `${fileName}.${downloadExtension}`;
+
+    const result = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
+    var blob = new File([result], downloadFileName, {
+      type: `video/${downloadExtension}`,
+    });
 
     const videoURLMessage = Object.assign({}, message);
     Object.assign(videoURLMessage, {
       type: 'scrollCaptureVideoURL',
       videoURL: URL.createObjectURL(blob),
-      fileName: videoFileName
+      fileName: downloadFileName,
     });
+    console.log('videoURLMessage.videoURL', videoURLMessage.videoURL)
     chrome.runtime.sendMessage(videoURLMessage);
-
   };
   fileReader.readAsArrayBuffer(videoBlob);
 }
 
 async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
   if (ffmpeg.isLoaded()) {
-      await ffmpeg.exit();
+    await ffmpeg.exit();
   }
 
   await ffmpeg.load();
 
   const commandList = commandStr.split(' ');
   if (commandList.shift() !== 'ffmpeg') {
-      alert('Please start with ffmpeg');
-      return;
+    alert('Please start with ffmpeg');
+    return;
   }
 
   ffmpeg.FS('writeFile', inputFileName, await fetchFile(file));

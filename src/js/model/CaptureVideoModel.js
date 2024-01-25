@@ -3,8 +3,6 @@ import ArrayData from '../../lib/tsunami/data/ArrayData';
 import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
-import { sendTrackEventMessage } from './GABridge';
-import Throttle from '../../lib/tsunami/utils/Throttle';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { supportedFormatsAndCodecs } from './FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
@@ -35,8 +33,6 @@ export default class CaptureVideoModel {
 
     window.addEventListener('resize', this.windowResizeHandler);
 
-    this.trackers = {};
-
     // this.format = new ArrayData();
     // this.format.addEventListener('value', (event) => {
     //   this.format.selectedItem.value = this.format.value[0];
@@ -62,9 +58,6 @@ export default class CaptureVideoModel {
     // });
 
     this.videoBitsPerSecond = new NumberData(16);
-    this.trackers.videoBitsPerSecond = new Throttle(() => {
-      sendTrackEventMessage('settings', 'videoBitsPerSecond', this.videoBitsPerSecond.value);
-    });
 
     this.exportAudio = new BooleanData(true);
     this.exportAudio.addEventListener("value", (event) => {
@@ -77,9 +70,6 @@ export default class CaptureVideoModel {
     // });
 
     this.audioBitsPerSecond = new NumberData(256);
-    this.trackers.audioBitsPerSecond = new Throttle(() => {
-      sendTrackEventMessage('settings', 'audioBitsPerSecond', this.audioBitsPerSecond.value);
-    }, 1000);
 
     // // set formats
     // const formats = supportedFormats.video;
@@ -105,33 +95,16 @@ export default class CaptureVideoModel {
     this.colorThemes.selectedItem.addEventListener(Data.CHANGE, () => {
       this.switchColorTheme();
     });
-    this.trackers.colorThemes = new Throttle(() => {
-      sendTrackEventMessage('settings', 'colorTheme', this.colorThemes.selectedItem.value);
-    });
 
     this.pixelRatio = new NumberData(this.devicePixelRatio);
-    this.trackers.pixelRatio = new Throttle(() => {
-      sendTrackEventMessage('settings', 'pixelRatio', this.pixelRatio.value);
-    });
 
     this.windowResizeHandler();
 
-    this.enableTracking();
   }
 
-  enableTracking() {
-    this.videoBitsPerSecond.addEventListener(Data.CHANGE, this.trackers.videoBitsPerSecond.throttle);
-    this.audioBitsPerSecond.addEventListener(Data.CHANGE, this.trackers.audioBitsPerSecond.throttle);
-    this.colorThemes.selectedItem.addEventListener(Data.CHANGE, this.trackers.colorThemes.throttle);
-    this.pixelRatio.addEventListener(Data.CHANGE, this.trackers.pixelRatio.throttle);
-  }
 
-  disableTracking() {
-    this.videoBitsPerSecond.removeEventListener(Data.CHANGE, this.trackers.videoBitsPerSecond.throttle);
-    this.audioBitsPerSecond.removeEventListener(Data.CHANGE, this.trackers.audioBitsPerSecond.throttle);
-    this.colorThemes.selectedItem.removeEventListener(Data.CHANGE, this.trackers.colorThemes.throttle);
-    this.pixelRatio.removeEventListener(Data.CHANGE, this.trackers.pixelRatio.throttle);
-  }
+
+
 
   windowResizeHandler() {
     this.innerSize.set(window.innerWidth, window.innerHeight);
@@ -195,7 +168,6 @@ export default class CaptureVideoModel {
 
   deserialize(data) {
     if (!data) return;
-    this.disableTracking();
     if (data.hasOwnProperty('showCursor')) this.showCursor.deserialize(data.showCursor);
     if (data.hasOwnProperty('showScrollbars')) this.showScrollbars.deserialize(data.showScrollbars);
     if (data.hasOwnProperty('position')) this.position.deserialize(data.position);
@@ -209,7 +181,6 @@ export default class CaptureVideoModel {
     if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
     // if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
-    this.enableTracking();
   }
 
   getSettingsForRecording() {

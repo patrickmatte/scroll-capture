@@ -1,4 +1,3 @@
-import { sendTrackEventMessage } from './GABridge';
 import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Actions from './Actions';
 import CaptureVideoModel from './CaptureVideoModel';
@@ -135,7 +134,6 @@ export default class AppModel extends DataModel {
   // }
 
   clearActions() {
-    sendTrackEventMessage('clearActions', 'click');
     this.actions.clear();
     this.save();
   }

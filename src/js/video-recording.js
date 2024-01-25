@@ -77,7 +77,7 @@ function updateVideo(message) {
     button.href = videoURL;
     button.download = videoFileName;
     button.addEventListener('click', () => {
-      sendTrackEventMessage('download', 'click');
+      sendTrackEventMessage('download', 'video');
     });
   }
   let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');

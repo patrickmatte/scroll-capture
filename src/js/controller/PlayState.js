@@ -1,10 +1,12 @@
 import Branch from '../../lib/tsunami/Branch';
 import { awaitTimeout } from '../../lib/tsunami/await';
 import { app } from '../main';
+import { sendTrackEventMessage } from '../model/GABridge';
 
 export default class PlayState extends Branch {
   constructor() {
     super();
+    this.trackName = 'play_actions';
     this.beforeUnloadHandler = this.beforeUnloadHandler.bind(this);
   }
 
@@ -13,6 +15,7 @@ export default class PlayState extends Branch {
   }
 
   show() {
+
     app.model.save();
 
     window.addEventListener('beforeunload', this.beforeUnloadHandler);
@@ -33,6 +36,9 @@ export default class PlayState extends Branch {
   }
 
   startActions(index) {
+    if(index == 0) {
+      sendTrackEventMessage(this.trackName, app.model.actions.value.length.toString());
+    }
     if (app.model.actions.value.length > 0) {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true });
     }

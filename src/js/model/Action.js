@@ -4,7 +4,6 @@ import { awaitTimeout } from '../../lib/tsunami/await';
 import StringData from '../../lib/tsunami/data/StringData';
 import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
-import { sendTrackEventMessage } from './GABridge';
 import BaseEvent from '../../lib/tsunami/events';
 
 export default class Action extends EventTarget {
@@ -87,7 +86,6 @@ export default class Action extends EventTarget {
   }
 
   reCapture() {
-    sendTrackEventMessage('Action', 'reCapture', this.type);
     this.capture();
   }
 
@@ -99,7 +97,6 @@ export default class Action extends EventTarget {
   captureAtInit() {}
 
   play() {
-    sendTrackEventMessage('Action', 'play', this.type);
     this.isPlaying.value = true;
     let promise1 = this.trigger();
     let promise2 = promise1.then(() => {

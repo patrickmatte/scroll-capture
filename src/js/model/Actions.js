@@ -4,7 +4,6 @@ import ActionScroll from './ActionScroll';
 import ActionMouseEvent from './ActionMouseEvent';
 import ActionSwipe from './ActionSwipe';
 import ActionWait from './ActionWait';
-import { sendTrackEventMessage } from './GABridge';
 import ActionURL from './ActionURL';
 import ActionCSS from './ActionCSS';
 
@@ -39,14 +38,12 @@ export default class Actions extends ArrayData {
   // 		return;
   // 	}
   // 	let action = this.types.selectedItem.value.clone();
-  // 	sendTrackEventMessage("Action", "add", action.type);
   // 	this.addAction(action);
   // 	// this.types.selectedItem.value = this.types.value[0];
   // }
 
   addAction(action) {
     if (!action) return;
-    sendTrackEventMessage('Action', 'add', action.type);
     action.captureAtInit();
     let index = this.selectedIndex.value + 1;
     if (isNaN(index)) index = this.value.length;
@@ -55,7 +52,6 @@ export default class Actions extends ArrayData {
   }
 
   removeAction(action) {
-    sendTrackEventMessage('Action', 'remove', action.type);
     let index = this.indexOf(action);
     this.remove(action);
     let newIndex = Math.max(index - 1, 0);

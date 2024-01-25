@@ -20,9 +20,7 @@
 				"*.js",
 				"*.css",
 				"*.html",
-				"assets/fonts/*.woff",
-				"assets/fonts/*.woff2",
-				"assets/fonts/*.ttf",
+				"assets/fonts/*",
 				"assets/images/*.png"
 			],
 			"matches": ["<all_urls>"]
