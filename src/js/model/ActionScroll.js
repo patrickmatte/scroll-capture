@@ -31,6 +31,21 @@ export default class ActionScroll extends ActionTween {
     this.doScroll = this.doScroll.bind(this);
     this.unitX.addEventListener(Data.CHANGE, this.doScroll);
     this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+
+    this.tweenType.addEventListener('id', (event) => {
+      const obj = this.tweenTypes.find((item) => {
+        return item.id == event.data;
+      });
+      ActionScroll.defaultTweenType = obj;
+    });
+  }
+
+  get defaultTweenType() {
+    let type = ActionScroll.defaultTweenType;
+    if (!type) {
+      type = super.defaultTweenType;
+    }
+    return type;
   }
 
   get element() {
@@ -41,7 +56,7 @@ export default class ActionScroll extends ActionTween {
 
   clone() {
     let action = new ActionScroll();
-    action.copy(this);
+    // action.copy(this);
     return action;
   }
 

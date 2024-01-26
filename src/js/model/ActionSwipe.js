@@ -35,7 +35,7 @@ export default class ActionSwipe extends ActionTween {
 
   clone() {
     let action = new ActionSwipe();
-    action.copy(this);
+    // action.copy(this);
     return action;
   }
 

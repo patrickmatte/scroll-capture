@@ -22,7 +22,6 @@ export default class ActionCSS extends Action {
 
   clone() {
     let action = new ActionCSS();
-    action.copy(this);
     return action;
   }
 

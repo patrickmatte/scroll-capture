@@ -35,7 +35,7 @@ export default class ActionMouseEvent extends Action {
 
   clone() {
     let action = new ActionMouseEvent();
-    action.copy(this);
+    // action.copy(this);
     return action;
   }
 
