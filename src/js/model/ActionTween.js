@@ -24,10 +24,6 @@ export default class ActionTween extends Action {
     this.easingPresets = new ArrayData();
     this.easingPresets.selectedItem.addEventListener(Data.CHANGE, this.easingPresetChange.bind(this));
     // this.easingPresets.selectedItem.debug = true;
-    this.tweenTypes = new ArrayData(
-      { id: 'duration', option: 'Use Duration', name: 'Duration', property: 1, icon: 'fa-clock', unit: 's', step: 0.25 },
-      { id: 'speed', option: 'Use Speed', name: 'Speed', property: 600, icon: 'fa-gauge-high', unit: 'px/s', step: 25 }
-    );
     this.tweenType = new DataModel({ id: '', option: '', name: '', defaultValue: 0, icon: '', unit: '', step: 0, property: 0 });
     this.tweenType.addEventListener('id', (event) => {
       const obj = this.tweenTypes.find((item) => {
@@ -53,6 +49,10 @@ export default class ActionTween extends Action {
     this.tweenCompleteHandler = this.tweenCompleteHandler.bind(this);
 
     this.pos = new Point();
+  }
+
+  get tweenTypes() {
+    return ActionTween.tweenTypes;
   }
 
   get defaultTweenType() {
@@ -146,3 +146,5 @@ export default class ActionTween extends Action {
     this.easingPresets.selectedItem.value = data.easing || 'quad.easeInOut';
   }
 }
+
+ActionTween.tweenTypes = new ArrayData({ id: 'duration', option: 'Use Duration', name: 'Duration', property: 1, icon: 'fa-clock', unit: 's', step: 0.25 });

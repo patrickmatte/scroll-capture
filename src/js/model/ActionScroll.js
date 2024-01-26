@@ -38,6 +38,19 @@ export default class ActionScroll extends ActionTween {
       });
       ActionScroll.defaultTweenType = obj;
     });
+
+    this.tweenType.addEventListener('property', (event) => {
+      if (this.tweenType.id == 'speed') {
+        const obj = this.tweenTypes.find((item) => {
+          return item.id == this.tweenType.id;
+        });
+        obj.property = event.data;
+      }
+    });
+  }
+
+  get tweenTypes() {
+    return ActionScroll.tweenTypes;
   }
 
   get defaultTweenType() {
@@ -179,3 +192,8 @@ export default class ActionScroll extends ActionTween {
     this.capture();
   }
 }
+
+ActionScroll.tweenTypes = new ArrayData(
+  { id: 'duration', option: 'Use Duration', name: 'Duration', property: 1, icon: 'fa-clock', unit: 's', step: 0.25 },
+  { id: 'speed', option: 'Use Speed', name: 'Speed', property: 600, icon: 'fa-gauge-high', unit: 'px/s', step: 25 }
+);
