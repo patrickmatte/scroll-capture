@@ -5,6 +5,7 @@ import { app } from '../main';
 import template from '../../templates/scroll-capture.html';
 import CaptureVideo from './CaptureVideo';
 import CaptureImage from './CaptureImage';
+import Info from './Info';
 import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
 
@@ -25,9 +26,11 @@ export default class ScrollCapture extends UIComponent {
 
     this.video = this.element.querySelector('sc-capture-video').component;
     this.image = this.element.querySelector('sc-capture-image').component;
+    this.info = this.element.querySelector('sc-info').component;
 
     this.branches['video'] = this.video;
     this.branches['image'] = this.image;
+    this.branches['info'] = this.info;
 
     this.defaultChild = 'video';
   }
@@ -61,4 +64,5 @@ ScrollCapture.template = template;
 
 tsunami.define('sc-capture-video', CaptureVideo);
 tsunami.define('sc-capture-image', CaptureImage);
+tsunami.define('sc-info', Info);
 tsunami.define('sc-section-tab', SectionTab);

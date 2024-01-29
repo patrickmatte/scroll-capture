@@ -46,10 +46,9 @@ export default class CaptureVideoModel {
     //   this.audioCodecs.value = format.audio;
     // });
 
-
     this.exportVideo = new BooleanData(true);
-    this.exportVideo.addEventListener("value", (event) => {
-      if(!this.exportVideo.value && !this.exportAudio.value) this.exportAudio.value = true;
+    this.exportVideo.addEventListener('value', (event) => {
+      if (!this.exportVideo.value && !this.exportAudio.value) this.exportAudio.value = true;
     });
 
     // this.videoCodecs = new ArrayData();
@@ -60,8 +59,8 @@ export default class CaptureVideoModel {
     this.videoBitsPerSecond = new NumberData(16);
 
     this.exportAudio = new BooleanData(true);
-    this.exportAudio.addEventListener("value", (event) => {
-      if(!this.exportVideo.value && !this.exportAudio.value) this.exportVideo.value = true;
+    this.exportAudio.addEventListener('value', (event) => {
+      if (!this.exportVideo.value && !this.exportAudio.value) this.exportVideo.value = true;
     });
 
     // this.audioCodecs = new ArrayData();
@@ -99,12 +98,7 @@ export default class CaptureVideoModel {
     this.pixelRatio = new NumberData(this.devicePixelRatio);
 
     this.windowResizeHandler();
-
   }
-
-
-
-
 
   windowResizeHandler() {
     this.innerSize.set(window.innerWidth, window.innerHeight);
@@ -199,5 +193,4 @@ export default class CaptureVideoModel {
     };
     return settings;
   }
-
 }

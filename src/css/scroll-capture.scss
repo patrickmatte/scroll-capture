@@ -35,7 +35,7 @@ html[data-sc-scrollbars="false"] {
 		height: 1em;
 	}
 
-	.sc-action-buttons {
+	sc-action-buttons {
 		display: flex;
 		width: 100%;
 		justify-content: space-between;
@@ -104,13 +104,14 @@ html[data-sc-scrollbars="false"] {
 		}
 	}
 
-	[is='sc-actions-view'] {
+	sc-actions-view {
 		width: 100%;
 		display: block;
 		max-height: 50vh;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		overscroll-behavior: contain;
+		margin-bottom: 0.75em;
 
 		&[data-actions-length="0"] {
 			display: none;
@@ -270,5 +271,15 @@ html[data-sc-scrollbars="false"] {
                 font-size: 0.8em;
             }
         }
+	}
+
+	sc-info {
+
+		sc-rating {
+			background: transparent;
+			sc-star {
+				width: 1.25em;
+			}	
+		}
 	}
 }

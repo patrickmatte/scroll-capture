@@ -15,7 +15,6 @@ export default class PlayState extends Branch {
   }
 
   show() {
-
     app.model.save();
 
     window.addEventListener('beforeunload', this.beforeUnloadHandler);
@@ -36,8 +35,8 @@ export default class PlayState extends Branch {
   }
 
   startActions(index) {
-    if(index == 0) {
-      sendTrackEventMessage(this.trackName, app.model.actions.value.length.toString());
+    if (index == 0) {
+      sendTrackEventMessage(this.trackName, { actionslength: app.model.actions.value.length });
     }
     if (app.model.actions.value.length > 0) {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true });

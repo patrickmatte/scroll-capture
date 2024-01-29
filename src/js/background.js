@@ -46,10 +46,7 @@ export function initBackgroundPage() {
         resizeWindow(msg.width, msg.height);
         break;
       case 'scrollCaptureTrackEvent':
-        analytics.fireEvent(msg.category, {
-          action: msg.action,
-          label: msg.label,
-        });
+        analytics.fireEvent(msg.category, msg.params);
         break;
       case 'scrollCaptureTrackPage':
         analytics.firePageViewEvent(msg.path.split('/').pop(), msg.path);

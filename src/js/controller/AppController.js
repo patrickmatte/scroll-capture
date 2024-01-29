@@ -42,7 +42,7 @@ export default class AppController extends Branch {
   }
 
   show() {
-    sendTrackEventMessage('ScrollCaptureStart', window.location.origin + window.location.pathname);
+    sendTrackEventMessage('ScrollCaptureStart', { url: window.location.origin + window.location.pathname });
   }
 
   hide() {}

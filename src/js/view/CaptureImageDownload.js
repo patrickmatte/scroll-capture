@@ -13,10 +13,7 @@ export class CaptureImageDownload extends Section {
     let dataURL;
     switch (app.model.imgCapSettings.format) {
       case 'jpeg':
-        dataURL = app.model.imgCapSettings.imageCanvas.toDataURL(
-          'image/jpeg',
-          app.model.imgCapSettings.compression / 100
-        );
+        dataURL = app.model.imgCapSettings.imageCanvas.toDataURL('image/jpeg', app.model.imgCapSettings.compression / 100);
         break;
       default:
         dataURL = app.model.imgCapSettings.imageCanvas.toDataURL();
@@ -31,7 +28,7 @@ export class CaptureImageDownload extends Section {
       button.href = dataURL;
       button.download = videoFileName;
       button.addEventListener('click', () => {
-        sendTrackEventMessage('download', 'image');
+        sendTrackEventMessage('download', { media: 'image' });
       });
     }
     let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');

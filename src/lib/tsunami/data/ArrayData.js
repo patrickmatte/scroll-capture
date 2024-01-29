@@ -103,6 +103,14 @@ export default class ArrayData extends Data {
     return this._value[index];
   }
 
+  getItem(index) {
+    return this._value[index];
+  }
+
+  setItem(index, value) {
+    this._value[index] = value;
+  }
+
   get value() {
     return this._value;
   }

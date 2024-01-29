@@ -1,5 +1,4 @@
 import { sendTrackEventMessage } from './model/GABridge';
-import { createFilename } from './model/utils';
 
 chrome.storage.local.get(['json'], (result) => {
   let colorTheme = 'Dark';
@@ -77,7 +76,7 @@ function updateVideo(message) {
     button.href = videoURL;
     button.download = videoFileName;
     button.addEventListener('click', () => {
-      sendTrackEventMessage('download', 'video');
+      sendTrackEventMessage('download', { media: 'video' });
     });
   }
   let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');
