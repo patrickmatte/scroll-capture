@@ -81,6 +81,12 @@ export function initBackgroundPage() {
           sendResponse({ dataUrl });
         });
         break;
+      case 'scrollCaptureImageCaptureStart':
+        startImageCapture(msg);
+        break;
+      case 'scrollCaptureImageCaptureStop':
+        stopImageCapture(msg);
+        break;
     }
     return true;
   });
@@ -171,4 +177,12 @@ function stopRecording() {
     type: 'scrollCaptureStopOffscreenRecording',
     target: 'offscreen',
   });
+}
+
+function startImageCapture() {
+  changeIcon('_red');
+}
+
+function stopImageCapture() {
+  changeIcon();
 }

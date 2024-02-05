@@ -6,7 +6,7 @@ import PlayState from './PlayState';
 import PlayRecordState from './PlayRecordState';
 import CloseState from './CloseState';
 import StopRecordingState from './StopRecordingState';
-import { ImageRecorder } from './ImageRecorder';
+import { ImageCapture } from './ImageCapture';
 
 export default class AppController extends Branch {
   constructor() {
@@ -23,7 +23,7 @@ export default class AppController extends Branch {
       record: new PlayRecordState(),
       closed: new CloseState(),
       stop: new StopRecordingState(),
-      'record-image': new ImageRecorder(),
+      'image-capture': new ImageCapture(),
     };
 
     this.defaultChild = 'scroll-capture';

@@ -3,12 +3,14 @@ import { awaitTimeout } from '../../lib/tsunami/await';
 import Point from '../../lib/tsunami/geom/Point';
 import { app } from '../main';
 
-export class ImageRecorder extends Branch {
+export class ImageCapture extends Branch {
   constructor() {
     super();
   }
 
   show() {
+    app.model.sendMessage({ type: 'scrollCaptureImageCaptureStart' });
+
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
@@ -24,8 +26,7 @@ export class ImageRecorder extends Branch {
     const clientSize = new Point(element.clientWidth, element.clientHeight);
     const scrollSize = new Point(element.scrollWidth, element.scrollHeight);
     const maxChromePixels = 268435456;
-    const pixels =
-      scrollSize.x * app.model.settings.pixelRatio.value * (scrollSize.y * app.model.settings.pixelRatio.value);
+    const pixels = scrollSize.x * app.model.settings.pixelRatio.value * (scrollSize.y * app.model.settings.pixelRatio.value);
     // console.log('maxChromePixels=', maxChromePixels, 'pixels=', pixels);
     if (pixels > maxChromePixels) {
       console.log('Page is too large!');
@@ -93,25 +94,17 @@ export class ImageRecorder extends Branch {
 
         // const position = captureData.position.multiplyScalar(app.model.settings.pixelRatio.value);
         // const size = captureData.size.multiplyScalar(app.model.settings.pixelRatio.value);
-        ctx.drawImage(
-          img,
-          cropPosition.x,
-          cropPosition.y,
-          cropSize.x,
-          cropSize.y,
-          drawPosition.x,
-          drawPosition.y,
-          drawSize.x,
-          drawSize.y
-        );
+        ctx.drawImage(img, cropPosition.x, cropPosition.y, cropSize.x, cropSize.y, drawPosition.x, drawPosition.y, drawSize.x, drawSize.y);
 
         captureIndex++;
-        if (captureIndex < captures.length) {
-          captureStep();
-        } else {
-          this.showElements();
-          this.isCapturing = false;
-          this.router.location = 'scroll-capture/image/download';
+        if (this.isCapturing) {
+          if (captureIndex < captures.length) {
+            captureStep();
+          } else {
+            this.showElements();
+            this.isCapturing = false;
+            this.router.location = 'scroll-capture/image/download';
+          }
         }
       });
     };
@@ -138,11 +131,10 @@ export class ImageRecorder extends Branch {
       return promise;
     };
 
-    captureStep();
+    if (this.isCapturing) captureStep();
   }
 
   hideElements() {
-    console.log('hideElements');
     app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
       if (obj.selector) {
         document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
@@ -153,7 +145,6 @@ export class ImageRecorder extends Branch {
   }
 
   showElements() {
-    console.log('showElements');
     app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
       if (obj.selector) {
         document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
@@ -164,6 +155,7 @@ export class ImageRecorder extends Branch {
   }
 
   hide() {
+    app.model.sendMessage({ type: 'scrollCaptureImageCaptureStop' });
     document.documentElement.removeAttribute('data-sc-cursor');
     document.documentElement.removeAttribute('data-sc-scrollbars');
 
