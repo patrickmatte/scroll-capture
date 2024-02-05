@@ -6,6 +6,7 @@ import ActionSwipe from './ActionSwipe';
 import ActionWait from './ActionWait';
 import ActionURL from './ActionURL';
 import ActionCSS from './ActionCSS';
+import { app } from '../main';
 
 export default class Actions extends ArrayData {
   constructor() {
@@ -16,21 +17,19 @@ export default class Actions extends ArrayData {
     // this.addSelectedType = this.addSelectedType.bind(this);
 
     this.types = new ArrayData();
-    this.types.value = [
-      new ActionScroll(),
-      new ActionMouseEvent(),
-      new ActionSwipe(),
-      new ActionURL(),
-      new ActionCSS(),
-      new ActionEval(),
-      new ActionWait(),
-    ];
+    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait()];
     // this.types.selectedItem.value = this.types.value[0];
   }
 
   cloneAction(action) {
     let clone = action.clone();
     this.addAction(clone);
+  }
+
+  duplicateAction(action) {
+    let clone = action.clone();
+    clone.copy(action);
+    this.addAction(clone, true);
   }
 
   // addSelectedType() {
@@ -42,9 +41,9 @@ export default class Actions extends ArrayData {
   // 	// this.types.selectedItem.value = this.types.value[0];
   // }
 
-  addAction(action) {
+  addAction(action, ignoreCapture = false) {
     if (!action) return;
-    action.captureAtInit();
+    if (!ignoreCapture) action.captureAtInit();
     let index = this.selectedIndex.value + 1;
     if (isNaN(index)) index = this.value.length;
     this.splice(index, 0, action);

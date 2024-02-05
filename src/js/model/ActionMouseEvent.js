@@ -4,6 +4,7 @@ import { isTouch } from '../../lib/tsunami/window';
 import Point from '../../lib/tsunami/geom/Point';
 import ArrayData from '../../lib/tsunami/data/ArrayData';
 import StringData from '../../lib/tsunami/data/StringData';
+import { events } from '../../lib/tsunami/events';
 
 export default class ActionMouseEvent extends Action {
   constructor(eventType = 'click', x = 0, y = 0) {
@@ -28,8 +29,10 @@ export default class ActionMouseEvent extends Action {
     this.eventTypes.selectedItem.value = this.eventTypes.value[0];
     this.isTestable.value = true;
     this.isCaptureable.value = true;
+    this.isDuplicateable.value = true;
     this.changeCursorOnCapture.value = true;
     this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
+    this.mouseEventHandler = this.mouseEventHandler.bind(this);
     this.icon.value = 'fa-solid fa-hand-pointer';
   }
 
@@ -101,11 +104,15 @@ export default class ActionMouseEvent extends Action {
   capture() {
     super.capture();
     setTimeout(() => {
+      const activeElement = document.activeElement;
+      if (activeElement) activeElement.blur();
+      document.body.addEventListener(events.mousemove, this.mouseEventHandler);
       document.body.addEventListener('click', this.captureMouseEventHandler);
+      document.body.addEventListener('keydown', this.captureMouseEventHandler);
     }, 33);
   }
 
-  captureMouseEventHandler(event) {
+  mouseEventHandler(event) {
     if (event.preventDefaut) {
       event.preventDefaut();
     }
@@ -122,7 +129,21 @@ export default class ActionMouseEvent extends Action {
     let point = new Point(touch.pageX, touch.pageY);
     this.x.value = point.x;
     this.y.value = point.y;
+  }
+
+  captureMouseEventHandler(event) {
+    if (event.preventDefaut) {
+      event.preventDefaut();
+    }
+    if (event.stopImmediatePropagation) {
+      event.stopImmediatePropagation();
+    }
+    if (event.stopPropagation) {
+      event.stopPropagation();
+    }
+    document.body.removeEventListener(events.mousemove, this.mouseEventHandler);
     document.body.removeEventListener('click', this.captureMouseEventHandler);
+    document.body.removeEventListener('keydown', this.captureMouseEventHandler);
     this.captureComplete();
   }
 

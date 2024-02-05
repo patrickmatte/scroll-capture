@@ -20,7 +20,6 @@ export default class ActionEval extends Action {
     // if(!code) code = example;
     // this.code = new StringData(code);
     this.icon.value = 'fab fa-js-square';
-    this.isTestable.value = false;
   }
 
   clone() {

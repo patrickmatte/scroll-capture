@@ -23,6 +23,7 @@ export default class Action extends EventTarget {
     this.description = new StringData(description);
     this.captureDescription = new StringData();
     this.isTestable = new BooleanData();
+    this.isDuplicateable = new BooleanData();
     this.isCaptureable = new BooleanData();
     this.isCapturing = new BooleanData();
     this.changeCursorOnCapture = new BooleanData();
@@ -50,8 +51,6 @@ export default class Action extends EventTarget {
   copy(action) {
     if (!action) return;
     this.delay.value = action.delay.value;
-    this.isCaptureable.value = action.isCaptureable.value;
-    this.isTestable.value = action.isTestable.value;
   }
 
   triggerDelay() {

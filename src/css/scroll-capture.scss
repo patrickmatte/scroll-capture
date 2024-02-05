@@ -1,5 +1,11 @@
 body[is-capturing="true"] * {
-	cursor: url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png'), auto !important;
+	cursor: -webkit-image-set(
+		url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
+		url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x), auto !important;
+		cursor: image-set(
+		url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
+		url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x), auto !important;
+	// cursor: url(), auto !important;
 }
 
 html[data-sc-cursor="false"] {
