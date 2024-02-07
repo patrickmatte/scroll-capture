@@ -50,7 +50,7 @@ export default class Action extends EventTarget {
 
   copy(action) {
     if (!action) return;
-    this.delay.value = action.delay.value;
+    this.delay.copy(action.delay);
   }
 
   triggerDelay() {

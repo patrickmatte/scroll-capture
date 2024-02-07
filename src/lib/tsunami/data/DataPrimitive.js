@@ -8,6 +8,10 @@ export default class DataPrimitive extends Data {
     this.value = value;
   }
 
+  copy(data) {
+    this.value = data.value;
+  }
+
   get value() {
     return super.value;
   }
