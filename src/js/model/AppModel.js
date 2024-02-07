@@ -4,6 +4,8 @@ import CaptureVideoModel from './CaptureVideoModel';
 import BaseEvent from '../../lib/tsunami/events';
 import DataModel from '../../lib/tsunami/data/DataModel';
 import CaptureImageModel from './CaptureImageModel';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
+import { getFonts } from './fonts';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -21,6 +23,13 @@ export default class AppModel extends DataModel {
     this.isSaving = new BooleanData();
     // this.isPlayingSelected = new BooleanData();
     // this.isCapturingSelected = new BooleanData();
+
+    this.fontStylesByFamily = [];
+
+    this.fontFamilies = new ArrayData();
+    this.fontFamilies.addEventListener('value', () => {
+      console.log('fontFamilies changed', this.fontFamilies.value);
+    });
 
     this.settings = new CaptureVideoModel();
     this.actions = new Actions();
@@ -52,9 +61,9 @@ export default class AppModel extends DataModel {
   }
 
   sendMessage(message) {
-    try{
+    try {
       chrome.runtime.sendMessage(message);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -72,16 +81,17 @@ export default class AppModel extends DataModel {
       setTimeout(() => {
         this.isSaving.value = false;
       }, 100);
-    }
+    };
     try {
       chrome.storage.local.set({ json: json }, saveHandler);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
 
   load() {
-    let jsonPromise = chrome.storage.local.get(['json']).then((result) => {
+    getFonts();
+    const jsonPromise = chrome.storage.local.get(['json']).then((result) => {
       if (result.json) {
         let data = JSON.parse(result.json);
         this.actions.removeEventListener('add', this.save);
@@ -95,6 +105,7 @@ export default class AppModel extends DataModel {
         this.actions.addEventListener('remove', this.save);
       }
     });
+
     return jsonPromise;
   }
 
@@ -106,7 +117,7 @@ export default class AppModel extends DataModel {
     let promise = Promise.resolve();
     try {
       promise = chrome.storage.local.set({ actionIndex: value });
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
     return promise;
@@ -137,4 +148,13 @@ export default class AppModel extends DataModel {
     this.actions.clear();
     this.save();
   }
+
+  // setFonts() {
+  //   if (this.fontFamilies.value.length == 0) {
+  //     getFonts().then((result) => {
+  //       this.fontStylesByFamily = result.styles;
+  //       this.fontFamilies.value = result.families;
+  //     });
+  //   }
+  // }
 }

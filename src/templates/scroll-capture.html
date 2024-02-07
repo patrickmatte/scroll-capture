@@ -309,6 +309,36 @@
                                     </div>
                                   </div>
                                 </template>
+                                <template data-type="ActionText">
+                                  <div class="sc-action sc-fields-list">
+                                    <div class="sc-field">
+                                      <span class="sc-input">
+                                        <span class="sc-icon fa-solid fa-left-right"></span>
+                                        <span class="sc-input-group">
+                                          <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.position.x.value}</span>
+                                          <input type="number" step="1" min="0" placeholder="0" title="PageX" is="ui-input" bind:model="scope.data.position.x.value" />
+                                        </span>
+                                      </span>
+                                      <span class="sc-input">
+                                        <span class="sc-icon fa-solid fa-up-down"></span>
+                                        <span class="sc-input-group">
+                                          <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.position.y.value}</span>
+                                          <input type="number" step="1" min="0" placeholder="0" title="PageY" is="ui-input" bind:model="scope.data.position.y.value" />
+                                        </span>
+                                      </span>
+                                    </div>
+                                    <div class="sc-field">
+                                      <span class="sc-input sc-select" title="Font Family">
+                                        <span class="sc-icon fa-solid fa-font"></span>
+                                        <select is="ui-select" set:provider="scope.rootScope.fontFamilies" bind:value="scope.data.fontFamily.value"></select>
+                                      </span>
+                                      <span class="sc-input sc-select" title="Font Weight">
+                                        <span class="sc-icon fa-solid fa-bold"></span>
+                                        <select is="ui-select" set:provider="scope.data.fontStyles" bind:value="scope.data.fontStyle.value"></select>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </template>
                               </div>
                             </div>
                           </div>

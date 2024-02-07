@@ -7,6 +7,7 @@ import ActionWait from './ActionWait';
 import ActionURL from './ActionURL';
 import ActionCSS from './ActionCSS';
 import { app } from '../main';
+import ActionText from './ActionText';
 
 export default class Actions extends ArrayData {
   constructor() {
@@ -17,7 +18,7 @@ export default class Actions extends ArrayData {
     // this.addSelectedType = this.addSelectedType.bind(this);
 
     this.types = new ArrayData();
-    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait()];
+    this.types.value = [];
     // this.types.selectedItem.value = this.types.value[0];
   }
 
@@ -66,6 +67,7 @@ export default class Actions extends ArrayData {
   }
 
   deserialize(json) {
+    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait(), new ActionText()];
     if (!json) return;
     let actions = [];
     for (let i = 0; i < json.length; i++) {
