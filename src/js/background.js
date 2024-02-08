@@ -2,6 +2,13 @@ import { analytics } from './analytics';
 
 export function initBackgroundPage() {
   chrome.action.onClicked.addListener(async (tab) => {
+    try {
+      chrome.tabs.executeScript(tab.id, { code: 'console.log("Scroll Capture")' });
+    } catch (error) {
+      console.log('The chrome.tabs.executeScript function is not permitted on this page');
+      return;
+    }
+
     chrome.storage.local.set({ tabId: tab.id });
 
     const existingContexts = await chrome.runtime.getContexts({});

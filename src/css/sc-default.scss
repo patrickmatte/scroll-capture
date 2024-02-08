@@ -11,6 +11,15 @@
 	visibility: visible !important;
 	pointer-events: visible;
 
+	::-webkit-scrollbar {
+		width: 5px;
+	}
+	
+	::-webkit-scrollbar-thumb {
+		border-radius: 2.5px;
+		background-color: black;
+	}
+
 	* {
 		text-transform: none;
 		box-shadow: none;

@@ -31,7 +31,7 @@ async function startRecording(message) {
   if (recorder?.state === 'recording') {
     throw new Error('Called startRecording while recording is in progress.');
   }
-  console.log(startRecording, message);
+  console.log('startRecording', JSON.stringify(message));
   const size = { x: message.tabWidth, y: message.tabHeight };
   const pixelRatio = message.pixelRatio;
   const constraints = {};
@@ -40,9 +40,9 @@ async function startRecording(message) {
       mandatory: {
         chromeMediaSource: 'tab',
         chromeMediaSourceId: message.streamId,
-        minWidth: size.x * pixelRatio,
+        minWidth: size.x,
         maxWidth: size.x * pixelRatio,
-        minHeight: size.y * pixelRatio,
+        minHeight: size.y,
         maxHeight: size.y * pixelRatio,
         minFrameRate: 30,
         maxFrameRate: 60,
@@ -57,8 +57,9 @@ async function startRecording(message) {
       },
     };
   }
-  console.log('getUserMedia constraints', JSON.stringify(constraints));
+  console.log('navigator.mediaDevices.getUserMedia', JSON.stringify(constraints));
   const media = await navigator.mediaDevices.getUserMedia(constraints);
+  console.log('media=', media);
 
   if (message.exportAudio) {
     const output = new AudioContext();
@@ -76,8 +77,6 @@ async function startRecording(message) {
     mimeType = 'audio/webm;codecs=opus';
   }
 
-  console.log();
-
   let videoBitsPerSecond = message.videoBitsPerSecond || 16;
   let audioBitsPerSecond = message.audioBitsPerSecond || 128;
 
@@ -87,14 +86,16 @@ async function startRecording(message) {
     videoBitsPerSecond: videoBitsPerSecond * 1000000,
   };
 
-  console.log('MediaRecorder options', JSON.stringify(options));
+  console.log('MediaRecorder', JSON.stringify(options));
 
   recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);
   recorder.onstop = () => {
-    // const blob = new Blob(data, { type: `video/${format}` });
+    console.log('data=', data);
     const blobFormat = mimeType.split(';')[0];
+    console.log('blobFormat=', blobFormat);
     blob = new Blob(data, { type: blobFormat });
+    console.log('blob=', blob);
 
     convertStreams(blob, message);
 
@@ -119,9 +120,9 @@ function convertStreams(videoBlob, message) {
     //   type: 'video/mp4',
     // });
 
-    let inputFileName = "sample_video.webm";
-    let outputFileName = "sample_video.mp4";
-    let downloadExtension = "mp4";
+    let inputFileName = 'sample_video.webm';
+    let outputFileName = 'sample_video.mp4';
+    let downloadExtension = 'mp4';
     let commandStr;
 
     if (message.exportVideo) {
@@ -131,7 +132,7 @@ function convertStreams(videoBlob, message) {
         commandStr = `ffmpeg -i ${inputFileName} -c:v copy ${outputFileName}`;
       }
     } else {
-      downloadExtension = "m4a";
+      downloadExtension = 'm4a';
       outputFileName = `sample_video.m4a`;
       commandStr = `ffmpeg -i ${inputFileName} -c:a aac ${outputFileName}`;
     }
@@ -150,13 +151,15 @@ function convertStreams(videoBlob, message) {
       videoURL: URL.createObjectURL(blob),
       fileName: downloadFileName,
     });
-    console.log('videoURLMessage.videoURL', videoURLMessage.videoURL)
+    console.log('videoURLMessage.videoURL', videoURLMessage.videoURL);
     chrome.runtime.sendMessage(videoURLMessage);
   };
   fileReader.readAsArrayBuffer(videoBlob);
 }
 
 async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
+  console.log('runFFmpeg commandStr', commandStr);
+
   if (ffmpeg.isLoaded()) {
     await ffmpeg.exit();
   }
@@ -170,10 +173,12 @@ async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
   }
 
   ffmpeg.FS('writeFile', inputFileName, await fetchFile(file));
-  console.log(commandList);
   await ffmpeg.run(...commandList);
   const data = ffmpeg.FS('readFile', outputFileName);
+  console.log('ffmpeg data', data);
+
   const blob = new Blob([data.buffer]);
+  console.log('ffmpeg blob', blob);
   return blob;
   // downloadFile(blob, outputFileName);
 }
