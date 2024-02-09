@@ -6,6 +6,7 @@ import { app } from '../main';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { supportedFormatsAndCodecs } from './FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
+import { round1, decimalToPlace } from '../../lib/tsunami/utils/number';
 
 export default class CaptureVideoModel {
   constructor() {
@@ -17,7 +18,7 @@ export default class CaptureVideoModel {
     this.showScrollbars = new BooleanData(false);
 
     this.position = new Vector2Data(50, 50);
-    this.devicePixelRatio = window.devicePixelRatio || 1;
+    this.devicePixelRatio = new NumberData(window.devicePixelRatio);
 
     this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
     this.windowResizeHandler = this.windowResizeHandler.bind(this);
@@ -58,7 +59,7 @@ export default class CaptureVideoModel {
 
     this.videoBitsPerSecond = new NumberData(16);
 
-    this.exportAudio = new BooleanData(true);
+    this.exportAudio = new BooleanData(false);
     this.exportAudio.addEventListener('value', (event) => {
       if (!this.exportVideo.value && !this.exportAudio.value) this.exportVideo.value = true;
     });
@@ -101,6 +102,9 @@ export default class CaptureVideoModel {
   }
 
   windowResizeHandler() {
+    // const ratio = this.pixelRatio.value / this.devicePixelRatio.value;
+    this.devicePixelRatio.value = decimalToPlace(window.devicePixelRatio, 2, Math.floor);
+    this.pixelRatio.value = Math.min(this.pixelRatio.value, this.devicePixelRatio.value);
     this.innerSize.set(window.innerWidth, window.innerHeight);
     this.outerSize.set(window.outerWidth, window.outerHeight);
     this.availSize.set(screen.availWidth, screen.availHeight);
@@ -190,6 +194,7 @@ export default class CaptureVideoModel {
       extension: this.extension,
       exportAudio: this.exportAudio.value,
       exportVideo: this.exportVideo.value,
+      zoomLevel: window.outerWidth / window.innerWidth,
     };
     return settings;
   }

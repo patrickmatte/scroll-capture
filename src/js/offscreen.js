@@ -40,9 +40,9 @@ async function startRecording(message) {
       mandatory: {
         chromeMediaSource: 'tab',
         chromeMediaSourceId: message.streamId,
-        minWidth: size.x,
+        minWidth: Math.min(size.x, size.x * message.zoomLevel),
         maxWidth: size.x * pixelRatio,
-        minHeight: size.y,
+        minHeight: Math.min(size.y, size.y * message.zoomLevel),
         maxHeight: size.y * pixelRatio,
         minFrameRate: 30,
         maxFrameRate: 60,

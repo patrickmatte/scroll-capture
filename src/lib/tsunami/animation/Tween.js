@@ -1,16 +1,8 @@
 import Clock, { getClock } from './Clock';
-import { roundDecimalToPlace } from '../utils/number';
+import { decimalToPlace } from '../utils/number';
 
 export default class Tween extends EventTarget {
-  constructor(
-    startTime = 0,
-    duration = 1,
-    properties = [],
-    updateHandler = null,
-    completeHandler = null,
-    name = '',
-    debug = false
-  ) {
+  constructor(startTime = 0, duration = 1, properties = [], updateHandler = null, completeHandler = null, name = '', debug = false) {
     super();
     if (startTime < 0) {
       throw new Error('Tween startTime must be greater than or equal to 0');
@@ -49,7 +41,7 @@ export default class Tween extends EventTarget {
   }
 
   set duration(value) {
-    this._duration = roundDecimalToPlace(value, 3);
+    this._duration = decimalToPlace(value, 3);
     this.dispatchEvent(new Event(Tween.CHANGE));
   }
 
@@ -89,7 +81,7 @@ export default class Tween extends EventTarget {
   }
 
   stop() {
-    if(this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
+    if (this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
   }
 
   get time() {

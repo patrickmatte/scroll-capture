@@ -1,116 +1,108 @@
 import { analytics } from './analytics';
 
 export function initBackgroundPage() {
-  chrome.action.onClicked.addListener(async (tab) => {
-    try {
-      chrome.scripting
-        .executeScript({
-          target: { tabId: tab.id },
-          func: () => {
-            console.log('Scripting test');
-          },
-        })
-        .then(() => console.log('injected a function'));
-    } catch (error) {
-      console.log(error);
-    }
-    if (tab.url.indexOf('chromewebstore.google.com') != -1) {
-      chrome.action.setPopup({ popup: 'noscript.html' });
-      return;
-    }
-
-    chrome.storage.local.set({ tabId: tab.id });
-
-    const existingContexts = await chrome.runtime.getContexts({});
-    let recording = false;
-
-    const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
-
-    // If an offscreen document is not already open, create one.
-    if (!offscreenDocument) {
-      // Create an offscreen document.
-      await chrome.offscreen.createDocument({
-        url: 'offscreen.html',
-        reasons: ['USER_MEDIA'],
-        justification: 'Recording from chrome.tabCapture API',
-      });
-    } else {
-      recording = offscreenDocument.documentUrl.endsWith('#recording');
-    }
-
-    executeScript(tab).then(() => {
-      if (recording) {
-        chrome.tabs.sendMessage(tab.id, {
-          type: 'scrollCaptureLocation',
-          location: 'stop',
-        });
-      } else {
-        changeIcon('');
-        sendDefaultLocation(tab.id);
-      }
-    });
-  });
-
-  chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    switch (msg.type) {
-      case 'scrollCaptureStartRecording':
-        startRecording(msg);
-        break;
-      case 'scrollCaptureStopRecording':
-        stopRecording();
-        break;
-      case 'scrollCaptureResizeWindow':
-        resizeWindow(msg.width, msg.height);
-        break;
-      case 'scrollCaptureTrackEvent':
-        analytics.fireEvent(msg.category, msg.params);
-        break;
-      case 'scrollCaptureTrackPage':
-        analytics.firePageViewEvent(msg.path.split('/').pop(), msg.path);
-        break;
-      case 'scrollCaptureUpdatedTabListener':
-        let handler;
-        switch (msg.location) {
-          case 'scenario':
-            handler = updatedTabHandlerScenario;
-            break;
-          case 'play':
-          default:
-            handler = updatedTabHandlerPlay;
-            break;
-        }
-        if (msg.enabled) {
-          chrome.tabs.onUpdated.addListener(handler);
-        } else {
-          chrome.tabs.onUpdated.removeListener(handler);
-        }
-        break;
-      case 'scrollCaptureInsertCSS':
-        chrome.storage.local.get('tabId').then((obj) => {
-          chrome.scripting.insertCSS({
-            target: { tabId: obj.tabId },
-            css: msg.css,
-          });
-        });
-        break;
-      case 'scrollCaptureVisibleTab':
-        chrome.tabs.captureVisibleTab(null, {}, (dataUrl) => {
-          sendResponse({ dataUrl });
-        });
-        break;
-      case 'scrollCaptureImageCaptureStart':
-        startImageCapture(msg);
-        break;
-      case 'scrollCaptureImageCaptureStop':
-        stopImageCapture(msg);
-        break;
-    }
-    return true;
+  chrome.runtime.onMessage.addListener(onMessageHandler);
+  chrome.action.onClicked.addListener((tab) => {
+    showMainPanel(tab.id, tab.url);
   });
 }
 
+async function showMainPanel(tabId) {
+  chrome.storage.local.set({ tabId });
+
+  const existingContexts = await chrome.runtime.getContexts({});
+  let recording = false;
+
+  const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
+
+  // If an offscreen document is not already open, create one.
+  if (!offscreenDocument) {
+    // Create an offscreen document.
+    await chrome.offscreen.createDocument({
+      url: 'offscreen.html',
+      reasons: ['USER_MEDIA'],
+      justification: 'Recording from chrome.tabCapture API',
+    });
+  } else {
+    recording = offscreenDocument.documentUrl.endsWith('#recording');
+  }
+
+  executeScript(tabId).then(() => {
+    if (recording) {
+      chrome.tabs.sendMessage(tabId, {
+        type: 'scrollCaptureLocation',
+        location: 'stop',
+      });
+    } else {
+      changeIcon('');
+      sendDefaultLocation(tabId);
+    }
+  });
+}
+
+function onMessageHandler(msg, sender, sendResponse) {
+  switch (msg.type) {
+    case 'scrollCaptureShowMainPanel':
+      showMainPanel(msg.tabId);
+      sendResponse({ mainPanel: true });
+      break;
+    case 'scrollCaptureStartRecording':
+      startRecording(msg);
+      break;
+    case 'scrollCaptureStopRecording':
+      stopRecording();
+      break;
+    case 'scrollCaptureResizeWindow':
+      resizeWindow(msg.width, msg.height);
+      break;
+    case 'scrollCaptureTrackEvent':
+      analytics.fireEvent(msg.category, msg.params);
+      break;
+    case 'scrollCaptureTrackPage':
+      analytics.firePageViewEvent(msg.path.split('/').pop(), msg.path);
+      break;
+    case 'scrollCaptureUpdatedTabListener':
+      let handler;
+      switch (msg.location) {
+        case 'scenario':
+          handler = updatedTabHandlerScenario;
+          break;
+        case 'play':
+        default:
+          handler = updatedTabHandlerPlay;
+          break;
+      }
+      if (msg.enabled) {
+        chrome.tabs.onUpdated.addListener(handler);
+      } else {
+        chrome.tabs.onUpdated.removeListener(handler);
+      }
+      break;
+    case 'scrollCaptureInsertCSS':
+      chrome.storage.local.get('tabId').then((obj) => {
+        chrome.scripting.insertCSS({
+          target: { tabId: obj.tabId },
+          css: msg.css,
+        });
+      });
+      break;
+    case 'scrollCaptureVisibleTab':
+      chrome.tabs.captureVisibleTab(null, {}, (dataUrl) => {
+        sendResponse({ dataUrl });
+      });
+      break;
+    case 'scrollCaptureImageCaptureStart':
+      startImageCapture(msg);
+      break;
+    case 'scrollCaptureImageCaptureStop':
+      stopImageCapture(msg);
+      break;
+  }
+  return true;
+}
+
 function updatedTabHandlerPlay(tabId, changeInfo, tab) {
-  executeScript(tab).then(() => {
+  executeScript(tab.id).then(() => {
     chrome.runtime.getContexts({}).then((existingContexts) => {
       const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
       const recording = offscreenDocument.documentUrl.endsWith('#recording');
@@ -125,7 +117,7 @@ function updatedTabHandlerPlay(tabId, changeInfo, tab) {
 function updatedTabHandlerScenario(tabId, changeInfo, tab) {
   chrome.storage.local.get('tabId').then((obj) => {
     if (obj.tabId == tabId) {
-      executeScript(tab).then(() => {
+      executeScript(tab.id).then(() => {
         sendDefaultLocation(tab.id);
       });
     }
@@ -142,9 +134,9 @@ function sendDefaultLocation(tabId) {
   });
 }
 
-function executeScript(tab) {
+function executeScript(tabId) {
   return chrome.scripting.executeScript({
-    target: { tabId: tab.id },
+    target: { tabId },
     files: ['content.js'],
   });
 }

@@ -124,22 +124,22 @@ export function isPrime(value) {
  console.log(roundToPlace(3.14159, 3)); // Traces 3.142
  </code>
  */
-export function roundDecimalToPlace(value, place = 1) {
+export function decimalToPlace(value, place = 1, method = null) {
   const p = Math.pow(10, place);
-
-  return Math.round(value * p) / p;
+  if (!method) method = Math.round;
+  return method(value * p) / p;
 }
 
 export function round1(value) {
-  return roundDecimalToPlace(value, 1);
+  return decimalToPlace(value, 1);
 }
 
 export function round2(value) {
-  return roundDecimalToPlace(value, 2);
+  return decimalToPlace(value, 2);
 }
 
 export function round3(value) {
-  return roundDecimalToPlace(value, 3);
+  return decimalToPlace(value, 3);
 }
 
 /**
@@ -184,10 +184,7 @@ export function loopIndex(index, length) {
  </code>
  */
 export function isBetween(value, firstValue, secondValue) {
-  return !(
-    value < Math.min(firstValue, secondValue) ||
-    value > Math.max(firstValue, secondValue)
-  );
+  return !(value < Math.min(firstValue, secondValue) || value > Math.max(firstValue, secondValue));
 }
 
 /**
@@ -205,10 +202,7 @@ export function isBetween(value, firstValue, secondValue) {
  </code>
  */
 export function constrain(value, firstValue, secondValue) {
-  return Math.min(
-    Math.max(value, Math.min(firstValue, secondValue)),
-    Math.max(firstValue, secondValue)
-  );
+  return Math.min(Math.max(value, Math.min(firstValue, secondValue)), Math.max(firstValue, secondValue));
 }
 
 /**
@@ -317,13 +311,13 @@ export function getWeightedAverage(value, dest, n) {
  */
 export function format(value, kDelim, minLength, fillChar) {
   if (!kDelim) {
-    kDelim = ",";
+    kDelim = ',';
   }
   if (isNaN(minLength)) {
     minLength = 0;
   }
   if (!fillChar) {
-    fillChar = "0";
+    fillChar = '0';
   }
   const remainder = value % 1;
   let num = Math.floor(value).toString();
@@ -332,7 +326,7 @@ export function format(value, kDelim, minLength, fillChar) {
   if (minLength !== 0 && minLength > len) {
     minLength -= len;
 
-    const addChar = fillChar || "0";
+    const addChar = fillChar || '0';
 
     while (minLength--) {
       num = addChar + num;
@@ -342,7 +336,7 @@ export function format(value, kDelim, minLength, fillChar) {
   if (kDelim !== null && num.length > 3) {
     const totalDelim = Math.floor(num.length / 3);
     const totalRemain = num.length % 3;
-    const numSplit = num.split("");
+    const numSplit = num.split('');
     let i = -1;
 
     while (++i < totalDelim) {
@@ -353,7 +347,7 @@ export function format(value, kDelim, minLength, fillChar) {
       numSplit.shift();
     }
 
-    num = numSplit.join("");
+    num = numSplit.join('');
   }
 
   if (remainder !== 0) {
@@ -380,7 +374,7 @@ export function formatCurrency(value, forceDecimals, kDelim) {
     forceDecimals = true;
   }
   if (!kDelim) {
-    kDelim = ",";
+    kDelim = ',';
   }
   const remainder = value % 1;
   let currency = format(Math.floor(value), kDelim);
@@ -404,22 +398,22 @@ export function formatCurrency(value, forceDecimals, kDelim) {
  */
 export function getOrdinalSuffix(value) {
   if (value >= 10 && value <= 20) {
-    return "th";
+    return 'th';
   }
 
   if (value === 0) {
-    return "";
+    return '';
   }
 
   switch (value % 10) {
     case 3:
-      return "rd";
+      return 'rd';
     case 2:
-      return "nd";
+      return 'nd';
     case 1:
-      return "st";
+      return 'st';
     default:
-      return "th";
+      return 'th';
   }
 }
 
@@ -435,7 +429,7 @@ export function getOrdinalSuffix(value) {
  </code>
  */
 export function addLeadingZero(value) {
-  return value < 10 ? "0" + value : value.toString();
+  return value < 10 ? '0' + value : value.toString();
 }
 
 /**
@@ -453,44 +447,33 @@ export function addLeadingZero(value) {
  */
 export function spell(value) {
   if (value > 999999999) {
-    throw new Error("Value too large for this method.");
+    throw new Error('Value too large for this method.');
   }
 
   const onesSpellings = [
-    "",
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
-    "Ten",
-    "Eleven",
-    "Twelve",
-    "Thirteen",
-    "Fourteen",
-    "Fifteen",
-    "Sixteen",
-    "Seventeen",
-    "Eighteen",
-    "Nineteen",
+    '',
+    'One',
+    'Two',
+    'Three',
+    'Four',
+    'Five',
+    'Six',
+    'Seven',
+    'Eight',
+    'Nine',
+    'Ten',
+    'Eleven',
+    'Twelve',
+    'Thirteen',
+    'Fourteen',
+    'Fifteen',
+    'Sixteen',
+    'Seventeen',
+    'Eighteen',
+    'Nineteen',
   ];
-  const tensSpellings = [
-    "",
-    "",
-    "Twenty",
-    "Thirty",
-    "Forty",
-    "Fifty",
-    "Sixty",
-    "Seventy",
-    "Eighty",
-    "Ninety",
-  ];
-  let spelling = "";
+  const tensSpellings = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  let spelling = '';
 
   const millions = value / 1000000;
   value %= 1000000;
@@ -507,22 +490,22 @@ export function spell(value) {
   const ones = value % 10;
 
   if (millions !== 0) {
-    spelling += spelling.length === 0 ? "" : ", ";
-    spelling += spell(millions) + " Million";
+    spelling += spelling.length === 0 ? '' : ', ';
+    spelling += spell(millions) + ' Million';
   }
 
   if (thousands !== 0) {
-    spelling += spelling.length === 0 ? "" : ", ";
-    spelling += spell(thousands) + " Thousand";
+    spelling += spelling.length === 0 ? '' : ', ';
+    spelling += spell(thousands) + ' Thousand';
   }
 
   if (hundreds !== 0) {
-    spelling += spelling.length === 0 ? "" : ", ";
-    spelling += spell(hundreds) + " Hundred";
+    spelling += spelling.length === 0 ? '' : ', ';
+    spelling += spell(hundreds) + ' Hundred';
   }
 
   if (tens !== 0 || ones !== 0) {
-    spelling += spelling.length === 0 ? "" : " ";
+    spelling += spelling.length === 0 ? '' : ' ';
 
     if (tens < 2) {
       spelling += onesSpellings[tens * 10 + ones];
@@ -530,13 +513,13 @@ export function spell(value) {
       spelling += tensSpellings[tens];
 
       if (ones !== 0) {
-        spelling += "-" + onesSpellings[ones];
+        spelling += '-' + onesSpellings[ones];
       }
     }
   }
 
   if (spelling.length === 0) {
-    return "Zero";
+    return 'Zero';
   }
 
   return spelling;
@@ -544,7 +527,7 @@ export function spell(value) {
 
 export function componentToHex(c) {
   const hex = c.toString(16);
-  return hex.length === 1 ? "0" + hex : hex;
+  return hex.length === 1 ? '0' + hex : hex;
 }
 
 export function rgbToHex(rgb) {
@@ -559,7 +542,7 @@ export function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16),
         toString: function () {
-          return "r:" + this.r + ",g:" + this.g + ",b:" + this.b;
+          return 'r:' + this.r + ',g:' + this.g + ',b:' + this.b;
         },
       }
     : null;
@@ -630,13 +613,7 @@ export function mapClamp(value, min1, max1, min2, max2) {
   return clamp(lerp(norm(value, min1, max1), min2, max2), min2, max2);
 }
 
-export function sineWave(
-  angle = 0,
-  frequency = Math.PI,
-  time = 0,
-  speed = 1,
-  amplitude = 1
-) {
+export function sineWave(angle = 0, frequency = Math.PI, time = 0, speed = 1, amplitude = 1) {
   return Math.sin(angle * frequency + time * speed) * amplitude;
 }
 
@@ -673,13 +650,7 @@ export function easeOut(value, target, friction = 0.1) {
  value += speed;
  </code>
  */
-export function spring(
-  value,
-  target = 0,
-  friction = 0.1,
-  speed = 0,
-  elasticity = 0
-) {
+export function spring(value, target = 0, friction = 0.1, speed = 0, elasticity = 0) {
   return speed * elasticity + (target - value) * friction;
 }
 
@@ -695,5 +666,5 @@ export function removeMultipleRotations(angle) {
 }
 
 export function hexColorStringToNumber(value) {
-  return Number(value.replace("#", "0x"));
+  return Number(value.replace('#', '0x'));
 }
