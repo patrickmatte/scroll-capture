@@ -3,9 +3,19 @@ import { analytics } from './analytics';
 export function initBackgroundPage() {
   chrome.action.onClicked.addListener(async (tab) => {
     try {
-      chrome.tabs.executeScript(tab.id, { code: 'console.log("Scroll Capture")' });
+      chrome.scripting
+        .executeScript({
+          target: { tabId: tab.id },
+          func: () => {
+            console.log('Scripting test');
+          },
+        })
+        .then(() => console.log('injected a function'));
     } catch (error) {
-      console.log('The chrome.tabs.executeScript function is not permitted on this page');
+      console.log(error);
+    }
+    if (tab.url.indexOf('chromewebstore.google.com') != -1) {
+      chrome.action.setPopup({ popup: 'noscript.html' });
       return;
     }
 

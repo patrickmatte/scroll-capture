@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Capture</title>
+    <link rel="stylesheet" href="content.css" />
+    <link rel="stylesheet" href="fontawesome.css" />
+  </head>
+  <body style="background-color: #404040; margin: 0; padding: 2px">
+    <div class="sc-default" data-theme-light="false" style="width: 365px; font-size: 16.46px">
+      <div class="sc-window" is="ui-component">
+        <div class="sc-title">
+          <div class="sc-tabs">
+            <span class="sc-tab sc-title-tab">
+              <span class="sc-icon fa-solid fa-circle-exclamation"></span>
+              <span class="sc-label">Scroll Capture</span>
+            </span>
+          </div>
+          <div class="sc-tabs">
+            <span class="sc-tab">
+              <span class="sc-drag-area"></span>
+              <button title="Close" class="close">
+                <span class="sc-icon fa-solid fa-times-circle"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="sc-window-content" is="ui-component">
+          <sc-capture-image class="sc-section sc-fields" data-state="show"
+            ><div is="ui-component">
+              <div class="sc-window sc-window-sections" is="ui-component">
+                <div class="sc-window-content" is="ui-component">
+                  <div class="sc-fields">
+                    <div>The Chrome Web Store cannot be scripted. Please try a different URL.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-capture-image>
+        </div>
+      </div>
+    </div>
+    <script src="noscript.js"></script>
+  </body>
+</html>
