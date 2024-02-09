@@ -14,6 +14,7 @@ export default class Main {
     chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       switch (msg.type) {
         case 'scrollCaptureLocation':
+          this.model.tabId.value = msg.tabId;
           this.controller.router.location = msg.location;
           break;
       }

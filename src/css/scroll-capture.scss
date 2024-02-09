@@ -258,6 +258,16 @@ html[data-sc-scrollbars="false"] {
 		iframe {
 			width: 100%;
 		}
+
+		.sc-video-player-container {
+            width: 100%;
+        }
+        
+        video.sc-video-player {
+            display: block;
+            border-radius: 0.25em;
+            width: 100%;
+        }
 	}
 
 	sc-image-download {
@@ -272,12 +282,6 @@ html[data-sc-scrollbars="false"] {
 				height: auto;
 			}
 		}
-
-		.sc-video-filename {
-            > * {
-                font-size: 0.8em;
-            }
-        }
 	}
 
 	sc-info {

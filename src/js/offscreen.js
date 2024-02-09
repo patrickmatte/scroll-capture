@@ -140,18 +140,20 @@ function convertStreams(videoBlob, message) {
     const fileName = createFilenameOnly();
     const downloadFileName = `${fileName}.${downloadExtension}`;
 
-    const result = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
-    var blob = new File([result], downloadFileName, {
-      type: `video/${downloadExtension}`,
-    });
-
-    const videoURLMessage = Object.assign({}, message);
-    Object.assign(videoURLMessage, {
-      type: 'scrollCaptureVideoURL',
+    const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
+    console.log('runFFmpeg blob', blob);
+    // var file = new File([blob], downloadFileName, {
+    //   type: `video/${downloadExtension}`,
+    // });
+    // console.log('runFFmpeg file', file);
+    const videoURLMessage = {
+      type: 'scrollCaptureVideoURLBackground',
       videoURL: URL.createObjectURL(blob),
       fileName: downloadFileName,
-    });
-    console.log('videoURLMessage.videoURL', videoURLMessage.videoURL);
+      tabId: message.tabId,
+      mimeType: `video/${downloadExtension}`,
+    };
+    console.log('videoURLMessage', videoURLMessage);
     chrome.runtime.sendMessage(videoURLMessage);
   };
   fileReader.readAsArrayBuffer(videoBlob);

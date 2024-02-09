@@ -4,6 +4,8 @@ import CaptureVideoModel from './CaptureVideoModel';
 import BaseEvent from '../../lib/tsunami/events';
 import DataModel from '../../lib/tsunami/data/DataModel';
 import CaptureImageModel from './CaptureImageModel';
+import StringData from '../../lib/tsunami/data/StringData';
+import NumberData from '../../lib/tsunami/data/NumberData';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -25,6 +27,7 @@ export default class AppModel extends DataModel {
     this.settings = new CaptureVideoModel();
     this.actions = new Actions();
     this.imgCapSettings = new CaptureImageModel();
+    this.tabId = new NumberData();
 
     // this.addEventListener("selectedAction", (event) => {
     //     console.log("selectedAction change", this.selectedAction);
@@ -52,9 +55,9 @@ export default class AppModel extends DataModel {
   }
 
   sendMessage(message) {
-    try{
+    try {
       chrome.runtime.sendMessage(message);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -72,10 +75,10 @@ export default class AppModel extends DataModel {
       setTimeout(() => {
         this.isSaving.value = false;
       }, 100);
-    }
+    };
     try {
       chrome.storage.local.set({ json: json }, saveHandler);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -106,7 +109,7 @@ export default class AppModel extends DataModel {
     let promise = Promise.resolve();
     try {
       promise = chrome.storage.local.set({ actionIndex: value });
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
     return promise;

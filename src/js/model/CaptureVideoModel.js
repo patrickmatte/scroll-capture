@@ -18,7 +18,7 @@ export default class CaptureVideoModel {
     this.showScrollbars = new BooleanData(false);
 
     this.position = new Vector2Data(50, 50);
-    this.devicePixelRatio = new NumberData(window.devicePixelRatio);
+    this.devicePixelRatio = new NumberData(decimalToPlace(window.devicePixelRatio, 2, Math.floor));
 
     this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
     this.windowResizeHandler = this.windowResizeHandler.bind(this);
@@ -175,7 +175,7 @@ export default class CaptureVideoModel {
     if (data.hasOwnProperty('audioBitsPerSecond')) this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
     // if (data.hasOwnProperty('audioCodec')) this.audioCodecs.selectedItem.deserialize(data.audioCodec);
     if (data.hasOwnProperty('colorThemes')) this.colorThemes.selectedItem.value = data.colorThemes;
-    if (data.hasOwnProperty('pixelRatio')) this.pixelRatio.deserialize(data.pixelRatio);
+    if (data.hasOwnProperty('pixelRatio')) this.pixelRatio.deserialize(Math.min(data.pixelRatio, this.devicePixelRatio.value));
     if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
     // if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
@@ -195,6 +195,7 @@ export default class CaptureVideoModel {
       exportAudio: this.exportAudio.value,
       exportVideo: this.exportVideo.value,
       zoomLevel: window.outerWidth / window.innerWidth,
+      tabId: app.model.tabId.value,
     };
     return settings;
   }

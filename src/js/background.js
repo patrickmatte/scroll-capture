@@ -32,6 +32,7 @@ async function showMainPanel(tabId) {
       chrome.tabs.sendMessage(tabId, {
         type: 'scrollCaptureLocation',
         location: 'stop',
+        tabId,
       });
     } else {
       changeIcon('');
@@ -97,6 +98,10 @@ function onMessageHandler(msg, sender, sendResponse) {
     case 'scrollCaptureImageCaptureStop':
       stopImageCapture(msg);
       break;
+    case 'scrollCaptureVideoURLBackground':
+      msg.type = 'scrollCaptureVideoURL';
+      chrome.tabs.sendMessage(msg.tabId, msg);
+      break;
   }
   return true;
 }
@@ -109,6 +114,7 @@ function updatedTabHandlerPlay(tabId, changeInfo, tab) {
       chrome.tabs.sendMessage(tab.id, {
         type: 'scrollCaptureLocation',
         location: recording ? 'record' : 'play',
+        tabId,
       });
     });
   });
@@ -130,6 +136,7 @@ function sendDefaultLocation(tabId) {
     chrome.tabs.sendMessage(tabId, {
       type: 'scrollCaptureLocation',
       location,
+      tabId,
     });
   });
 }
@@ -174,8 +181,8 @@ async function startRecording(data) {
     type: 'scrollCaptureStartOffscreenRecording',
     target: 'offscreen',
     streamId,
+    tabId: data.tabId,
   });
-
   chrome.runtime.sendMessage(message);
 }
 

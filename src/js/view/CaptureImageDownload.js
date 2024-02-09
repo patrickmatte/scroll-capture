@@ -22,7 +22,7 @@ export class CaptureImageDownload extends Section {
     img.src = dataURL;
 
     let videoFileName = createFilename(app.model.imgCapSettings.format);
-    let buttons = document.querySelectorAll('a.sc-download-button');
+    let buttons = this.querySelectorAll('a.sc-download-button');
     for (let i = 0; i < buttons.length; i++) {
       let button = buttons[i];
       button.href = dataURL;
@@ -31,9 +31,8 @@ export class CaptureImageDownload extends Section {
         sendTrackEventMessage('download', { media: 'image' });
       });
     }
-    let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');
+    let fileNameButton = this.querySelector('.sc-video-filename a.sc-download-button');
     fileNameButton.textContent = videoFileName;
-
     return super.show();
   }
 }
