@@ -1,7 +1,8 @@
 import Clock, { getClock } from './Clock';
 import { decimalToPlace } from '../utils/number';
+import { EventDispatcher } from '../EventDispatcher';
 
-export default class Tween extends EventTarget {
+export default class Tween extends EventDispatcher {
   constructor(startTime = 0, duration = 1, properties = [], updateHandler = null, completeHandler = null, name = '', debug = false) {
     super();
     if (startTime < 0) {

@@ -1,6 +1,7 @@
 import ArrayData from '../../lib/tsunami/data/ArrayData';
 import Data from '../../lib/tsunami/data/Data';
 import DataModel from '../../lib/tsunami/data/DataModel';
+import StringData from '../../lib/tsunami/data/StringData';
 import { getFixedElements, getScrollingTargets } from '../../lib/tsunami/window';
 import { app } from '../main';
 
@@ -12,13 +13,13 @@ export default class CaptureImageModel extends DataModel {
     this.formats = new ArrayData('png', 'jpeg');
 
     this.targets = new ArrayData();
-    this.fixedElements = new ArrayData(new DataModel({ selector: '' }));
+    this.fixedElements = new ArrayData(new StringData());
 
     this.refreshTargets();
   }
 
   addHiddenElement() {
-    this.fixedElements.unshift(new DataModel({ selector: '' }));
+    this.fixedElements.unshift(new StringData());
   }
 
   removeHiddenElement(model) {
@@ -39,8 +40,8 @@ export default class CaptureImageModel extends DataModel {
 
   serialize() {
     let data = super.serialize();
-    const array = this.fixedElements.value.map((element) => {
-      return element.selector;
+    const array = this.fixedElements.value.map((data) => {
+      return data.value;
     });
     data.fixedElements = array;
     return data;
@@ -48,13 +49,10 @@ export default class CaptureImageModel extends DataModel {
 
   deserialize(data = {}) {
     if (data.hasOwnProperty('fixedElements')) {
-      const array = data.fixedElements.map((selector) => {
-        return new DataModel({ selector });
+      const array = data.fixedElements.map((value) => {
+        return new StringData(value);
       });
       this.fixedElements.value = array;
     }
-    // if (data.hasOwnProperty('delay')) this.delay = data.delay;
-    // if (data.hasOwnProperty('compression')) this.compression = data.compression;
-    // if (data.hasOwnProperty('format')) this.format = data.format;
   }
 }

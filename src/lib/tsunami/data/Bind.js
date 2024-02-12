@@ -1,6 +1,7 @@
 import { ChangeEvent } from '../ChangeEvent';
 import EventHandler from '../components/EventHandler';
 import { getProperty } from '../tsunami';
+import { EventDispatcher } from '../EventDispatcher';
 
 export default class Bind {
   constructor(scope1, path1, scope2, path2) {
@@ -11,9 +12,7 @@ export default class Bind {
     this.changeHandler2 = this.changeHandler2.bind(this);
     this.eventHandler1 = this.createEventHandler(scope1, path1, this.changeHandler1);
     this.eventHandler2 = this.createEventHandler(scope2, path2, this.changeHandler2);
-    this.changeHandler2(
-      new ChangeEvent(this.eventHandler2.type, this.eventHandler2.eventTarget[this.eventHandler2.type])
-    );
+    this.changeHandler2(new ChangeEvent(this.eventHandler2.type, this.eventHandler2.eventTarget[this.eventHandler2.type]));
   }
 
   changeHandler1(event) {
@@ -40,10 +39,11 @@ export default class Bind {
     if (slugs.length > 0) target = getProperty(slugs.join('.'), scope);
     // console.log("!!!!!! target", target);
     let handler;
-    if (target instanceof EventTarget) {
+    const isDispatcher = target instanceof EventDispatcher || target instanceof EventTarget;
+    if (isDispatcher) {
       handler = new EventHandler(target, type, callback);
     } else {
-      console.log("Object is not an instance of EventTarget, cannot add event listener type '" + type + "'");
+      console.log("Object is not an instance of EventDispatcher or EventTarget, cannot add event listener type '" + type + "'");
     }
     return handler;
   }

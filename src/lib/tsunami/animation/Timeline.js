@@ -1,7 +1,8 @@
 import Tween from './Tween';
 import Clock, { getClock } from './Clock';
+import { EventDispatcher } from '../EventDispatcher';
 
-export default class Timeline extends EventTarget {
+export default class Timeline extends EventDispatcher {
   constructor(tweens = null, startTime = 0, updateHandler = null, completeHandler = null, name = '', debug = false) {
     super();
     if (startTime < 0) {
@@ -81,7 +82,7 @@ export default class Timeline extends EventTarget {
   }
 
   stop() {
-    if(this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
+    if (this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
   }
 
   get time() {

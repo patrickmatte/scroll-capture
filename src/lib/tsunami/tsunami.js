@@ -103,7 +103,7 @@ for (let i = 0; i < 5; i++) {
 // 	let factory = factories.shift();
 // 	factories.push(factory);
 // 	factory.innerHTML = template;
-// 	let child = factory.children.item(0);
+// 	let child = factory.children[0];
 // 	// if (window.CustomElements) {
 // 	// 	CustomElements.upgradeSubtree(child);
 // 	// }

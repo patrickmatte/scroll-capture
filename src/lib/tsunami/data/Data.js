@@ -1,6 +1,7 @@
 import { ChangeEvent } from '../ChangeEvent';
+import { EventDispatcher } from '../EventDispatcher';
 
-export default class Data extends EventTarget {
+export default class Data extends EventDispatcher {
   get value() {
     return this._value;
   }

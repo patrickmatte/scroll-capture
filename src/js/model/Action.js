@@ -5,8 +5,9 @@ import StringData from '../../lib/tsunami/data/StringData';
 import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
 import BaseEvent from '../../lib/tsunami/events';
+import { EventDispatcher } from '../../lib/tsunami/EventDispatcher';
 
-export default class Action extends EventTarget {
+export default class Action extends EventDispatcher {
   constructor(type = 'Action', name = 'Action', description = 'Add an Action') {
     super();
     this.capture = this.capture.bind(this);

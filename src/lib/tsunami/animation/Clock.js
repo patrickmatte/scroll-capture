@@ -1,6 +1,7 @@
 import BaseEvent from '../events';
+import { EventDispatcher } from '../EventDispatcher';
 
-export default class Clock extends EventTarget {
+export default class Clock extends EventDispatcher {
   constructor() {
     super();
     this.time = NaN;

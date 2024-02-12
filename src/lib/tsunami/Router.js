@@ -3,8 +3,9 @@ import ArrayData from './data/ArrayData';
 import BaseEvent from './events';
 import RouterTask from './RouterTask';
 import RouterTransition from './RouterTransition';
+import { EventDispatcher } from './EventDispatcher';
 
-export default class Router extends EventTarget {
+export default class Router extends EventDispatcher {
   constructor(root) {
     super();
 
@@ -159,7 +160,7 @@ export default class Router extends EventTarget {
     this.hide.branches = this.branches.splice(breakIndex + 1).reverse();
     let parent = this;
     if (this.branches.length > 0) {
-      parent = this.branches.item(this.branches.length - 1);
+      parent = this.branches[this.branches.length - 1];
     }
     const newBranches = [];
     for (let i = breakIndex + 1; i < nextLocationArray.length; i++) {

@@ -1,6 +1,7 @@
 import Tween from './Tween';
+import { EventDispatcher } from '../EventDispatcher';
 
-export default class TimelineAction extends EventTarget {
+export default class TimelineAction extends EventDispatcher {
   constructor(startTime, forward, backward) {
     super();
     this._startTime = startTime;

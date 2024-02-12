@@ -136,8 +136,8 @@ export class ImageCapture extends Branch {
 
   hideElements() {
     app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
-      if (obj.selector) {
-        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
+      if (obj.value) {
+        document.documentElement.querySelectorAll(obj.value).forEach((el) => {
           el.style.visibility = 'hidden';
         });
       }
@@ -146,8 +146,8 @@ export class ImageCapture extends Branch {
 
   showElements() {
     app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
-      if (obj.selector) {
-        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
+      if (obj.value) {
+        document.documentElement.querySelectorAll(obj.value).forEach((el) => {
           el.style.visibility = 'visible';
         });
       }

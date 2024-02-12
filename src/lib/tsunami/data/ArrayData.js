@@ -12,6 +12,30 @@ export default class ArrayData extends Data {
   constructor() {
     super();
 
+    const proxy = new Proxy(this, {
+      set(object, key, value, proxy) {
+        if (!isNaN(Number(key))) {
+          object.value[key] = value;
+          object.dispatchEvent({
+            target: this,
+            currentTarget: this,
+            type: key,
+            value,
+          });
+          return value;
+        } else {
+          return Reflect.set(...arguments);
+        }
+      },
+      get: function (object, key, receiver) {
+        if (!isNaN(Number(key))) {
+          return object.value[key];
+        } else {
+          return Reflect.get(...arguments);
+        }
+      },
+    });
+
     this.dataItemChangeHandler = this.dataItemChangeHandler.bind(this);
     this.selectedItemChange = this.selectedItemChange.bind(this);
     this.selectedIndexChange = this.selectedIndexChange.bind(this);
@@ -31,6 +55,8 @@ export default class ArrayData extends Data {
     this.prevIndex = new NumberData();
     this.dataClass = Object;
     this.push.apply(this, arguments);
+
+    return proxy;
   }
 
   selectedItemChange(event) {
@@ -99,17 +125,13 @@ export default class ArrayData extends Data {
     this.dispatchEvent(event);
   }
 
-  item(index) {
-    return this._value[index];
-  }
+  // getItem(index) {
+  //   return this._value[index];
+  // }
 
-  getItem(index) {
-    return this._value[index];
-  }
-
-  setItem(index, value) {
-    this._value[index] = value;
-  }
+  // setItem(index, value) {
+  //   this._value[index] = value;
+  // }
 
   get value() {
     return this._value;

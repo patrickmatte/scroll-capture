@@ -2,8 +2,9 @@ import EventHandler from '../components/EventHandler';
 import { hasValue } from '../utils/validation';
 import { ChangeEvent } from '../ChangeEvent';
 import { getProperty, safeEval } from '../tsunami';
+import { EventDispatcher } from '../EventDispatcher';
 
-export default class Expression extends EventTarget {
+export default class Expression extends EventDispatcher {
   constructor(expression, scope, callback = null) {
     super();
     // console.log("Expression", expression);
@@ -40,7 +41,8 @@ export default class Expression extends EventTarget {
       let type = slugs.pop();
       // if(slugs.length > 0) target = new Function("return " + slugs.join(".")).bind(scope)();
       if (slugs.length > 0) target = getProperty(slugs.join('.'), scope);
-      if (target instanceof EventTarget && target[type] != undefined) {
+      const isDispatcher = target instanceof EventDispatcher || target instanceof EventTarget;
+      if (isDispatcher && target[type] != undefined) {
         let handler = new EventHandler(target, type, this.changeHandler);
         this.eventHandlers.push(handler);
       }
