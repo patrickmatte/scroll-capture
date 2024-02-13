@@ -5,7 +5,7 @@ import { getProperty, safeEval } from '../tsunami';
 import { EventDispatcher } from '../EventDispatcher';
 
 export default class Expression extends EventDispatcher {
-  constructor(expression, scope, callback = null) {
+  constructor(expression, scope, callback = null, debug) {
     super();
     // console.log("Expression", expression);
     this.expression = expression;

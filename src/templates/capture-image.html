@@ -114,7 +114,7 @@
                                                 <input type="text" is="ui-input" placeholder="Enter element selector" bind:model="scope.data.value" />
                                             </span>
                                             <span class="sc-icon">
-                                                <button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.rootScope.imgCapSettings.removeHiddenElement(model);" title="Delete">
+                                                <button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.rootScope.imgCapSettings.removeHiddenElement(scope.data)" title="Delete">
                                                     <span class="sc-icon fa-solid fa-trash-alt"></span>
                                                 </button>
                                             </span>

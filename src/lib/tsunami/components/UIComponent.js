@@ -177,7 +177,7 @@ export default class UIComponent extends Branch {
     attributeDirective(this);
     onDirective(this);
     setDirective(this);
-    bindDirective(this);
+    bindDirective(this, this.debug);
   }
 
   get model() {

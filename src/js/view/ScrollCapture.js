@@ -8,10 +8,15 @@ import CaptureImage from './CaptureImage';
 import Info from './Info';
 import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
+import CaptureTest from './CaptureTest';
+// import evaluate from 'simple-evaluate';
 
 export default class ScrollCapture extends UIComponent {
   constructor(element) {
     super(element);
+
+    // const result = evaluate({ scope: { index: 1, provider: ['yo0', 'yo1', 'yo2', 'yo3'] } }, 'scope.provider[scope.index]');
+    // console.log('result', result);
 
     hackHoverStates();
 
@@ -24,10 +29,12 @@ export default class ScrollCapture extends UIComponent {
     // let title = this.element.querySelector('.sc-window.sc-window-main > .sc-title');
     this.element.addEventListener(events.mousedown, this.dragStart);
 
+    this.test = this.element.querySelector('sc-test').component;
     this.video = this.element.querySelector('sc-capture-video').component;
     this.image = this.element.querySelector('sc-capture-image').component;
     this.info = this.element.querySelector('sc-info').component;
 
+    this.branches['test'] = this.test;
     this.branches['video'] = this.video;
     this.branches['image'] = this.image;
     this.branches['info'] = this.info;
@@ -62,6 +69,7 @@ export default class ScrollCapture extends UIComponent {
 
 ScrollCapture.template = template;
 
+tsunami.define('sc-test', CaptureTest);
 tsunami.define('sc-capture-video', CaptureVideo);
 tsunami.define('sc-capture-image', CaptureImage);
 tsunami.define('sc-info', Info);

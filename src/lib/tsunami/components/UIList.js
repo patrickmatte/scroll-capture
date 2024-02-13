@@ -28,7 +28,7 @@ export default class UIList extends UIListBase {
       let contains = child.contains(event.target);
       let isChild = child == event.target;
       let isMatch = contains || isChild;
-      if (this.debug) console.log(index, 'contains', contains, 'isChild', isChild, 'isMatch', isMatch);
+      // if (this.debug) console.log(index, 'contains', contains, 'isChild', isChild, 'isMatch', isMatch);
       if (isMatch) selectedIndex = index;
       return isMatch;
     });

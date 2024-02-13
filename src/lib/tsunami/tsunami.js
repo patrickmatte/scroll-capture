@@ -26,6 +26,7 @@ export function getProperty(path, scope, debug = false) {
   } catch (e) {
     // continue regardless of error
   }
+  if (debug) console.log('getProperty value', value);
   return value;
 }
 
