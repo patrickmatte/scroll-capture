@@ -1,14 +1,18 @@
-import evaluate from 'simple-evaluate';
+// import evaluate from 'simple-evaluate';
+import { parseExpressionAt } from 'acorn';
+import { evaluate } from 'estree-eval';
 
 const classes = {};
 
 export function safeEval(context, expression, option = null) {
   if (context == null || expression == null) return null;
   let value = null;
+  const ast = parseExpressionAt(expression, 0, { ecmaVersion: 2020 });
   try {
-    value = evaluate(context, expression);
-  } catch (e) {
-    console.log('sc_error expression =', expression);
+    value = evaluate(ast, context);
+  } catch (error) {
+    // console.log('error', error);
+    // console.log('sc_error expression =', expression);
     // console.log('safeEval context=', context);
     // console.log(e);
   }
@@ -17,18 +21,43 @@ export function safeEval(context, expression, option = null) {
 
 export function getProperty(path, scope, debug = false) {
   if (debug) {
-    console.log('getProperty path', path, 'scope', scope);
+    console.log('getProperty', 'scope', scope, 'path', path);
   }
   let value = null;
   try {
     value = safeEval(scope, path);
-    // console.log("getProperty path=", path, 'scope=', scope, 'value=', value);
-  } catch (e) {
-    // continue regardless of error
-  }
+  } catch (e) {}
   if (debug) console.log('getProperty value', value);
   return value;
 }
+
+// export function safeEval(context, expression, option = null) {
+//   if (context == null || expression == null) return null;
+//   let value = null;
+//   try {
+//     value = evaluate(context, expression);
+//   } catch (e) {
+//     console.log('sc_error expression =', expression);
+//     // console.log('safeEval context=', context);
+//     // console.log(e);
+//   }
+//   return value;
+// }
+
+// export function getProperty(path, scope, debug = false) {
+//   if (debug) {
+//     console.log('getProperty path', path, 'scope', scope);
+//   }
+//   let value = null;
+//   try {
+//     value = safeEval(scope, path);
+//     // console.log("getProperty path=", path, 'scope=', scope, 'value=', value);
+//   } catch (e) {
+//     // continue regardless of error
+//   }
+//   if (debug) console.log('getProperty value', value);
+//   return value;
+// }
 
 // export function getProperty(path, scope, debug = true) {
 //   if (debug) console.log('getProperty path', path, 'scope', scope);

@@ -10,10 +10,22 @@ import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
 import CaptureTest from './CaptureTest';
 // import evaluate from 'simple-evaluate';
+import { parseExpressionAt } from 'acorn';
+import { evaluate } from 'estree-eval';
 
 export default class ScrollCapture extends UIComponent {
   constructor(element) {
     super(element);
+
+    // const scope = {
+    //   test1: 5,
+    //   test2: 10,
+    //   test3: 4,
+    // };
+    // const expression = '`${test1 * 2} - 1 + 4` + test2 + test3';
+    // const ast = parseExpressionAt(expression, 0);
+    // const value = evaluate(ast, scope);
+    // console.log('value', value); // answer is 10 - 1 + 4104
 
     // const result = evaluate({ scope: { index: 1, provider: ['yo0', 'yo1', 'yo2', 'yo3'] } }, 'scope.provider[scope.index]');
     // console.log('result', result);

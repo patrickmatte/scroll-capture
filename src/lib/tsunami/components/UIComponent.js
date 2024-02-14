@@ -21,7 +21,7 @@ export default class UIComponent extends Branch {
     this.element = element;
 
     this.componentID = new Date().getTime();
-    if (this.debug) this.element.setAttribute('data-componentId', this.componentID);
+    if (this.debug) this.element.setAttribute('data-component-id', this.componentID);
 
     // this.childrenSelector = ":scope > *";
 
@@ -407,6 +407,14 @@ export default class UIComponent extends Branch {
 
   dispatchResizeEvent() {
     this.element.dispatchEvent(new Event('ui-resize', { bubbles: true, cancelable: true }));
+  }
+
+  log() {
+    // let string = '';
+    // for (let i = 0; i < arguments.length; i++) {
+    //   string += arguments[i].toString() + ' ';
+    // }
+    console.log.apply(console, [this.element.getAttribute('data-component-id'), ...arguments]);
   }
 
   destroy() {

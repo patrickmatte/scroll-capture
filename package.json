@@ -36,6 +36,13 @@
 	},
 	"dependencies": {
 		"@ffmpeg/ffmpeg": "^0.12.10",
-		"@ffmpeg/util": "^0.12.1"
+		"@ffmpeg/util": "^0.12.1",
+		"acorn": "^8.11.3",
+		"ast-eval": "^0.8.0",
+		"estree-eval": "^1.0.3",
+		"eval-estree-expression": "^1.1.0",
+		"expression-eval": "^5.0.1",
+		"install": "^0.13.0",
+		"npm": "^10.4.0"
 	}
 }

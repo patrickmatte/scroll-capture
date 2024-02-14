@@ -5,6 +5,7 @@ export class TestModel {
   constructor() {
     this.list = new ArrayData();
     this.list.value = ['string1', 'string2'];
+    this.index = 0;
   }
 
   log() {

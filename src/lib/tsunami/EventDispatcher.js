@@ -25,10 +25,10 @@ export class EventDispatcher {
   }
 
   dispatchEvent(event) {
+    if (this.debug) console.log('EventDispatcher.dispatchEvent', event);
     try {
       event.target = this;
     } catch (e) {}
-
     if (!event.currentTarget) {
       try {
         event.currentTarget = this;

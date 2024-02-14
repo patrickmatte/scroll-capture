@@ -76,7 +76,7 @@
             <div class="sc-window sc-window-sections" is="ui-component">
               <div class="sc-window-content" is="ui-component">
                 <div>
-                  <div is="ui-list" set:debug="true" set:provider="scope.test.list">
+                  <div is="ui-list" set:provider="scope.test.list">
                     <template>
                       <div>
                         <input is="ui-input" bind:model="scope.provider.0" data-debug="true" />
@@ -84,11 +84,11 @@
                     </template>
                   </div>
                   <div>
-                    <button is="ui-button" on:click="scope.test.log()" data-debug="true">log</button>
+                    <button is="ui-button" on:click="scope.test.log()">log</button>
                   </div>
-                  <div is="ui-text">{scope.test.list.0}</div>
+                  <div is="ui-text">{scope.test.list[scope.test.index]}</div>
                   <div>
-                    <input is="ui-input" bind:model="scope.test.list.1" data-debug="true" />
+                    <input is="ui-input" bind:model="scope.test.list.0" />
                   </div>
                 </div>
               </div>

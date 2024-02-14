@@ -17,13 +17,14 @@ export default class Bind {
   }
 
   changeHandler1(event) {
+    if (this.debug) console.log('changeHandler1', event);
     this.eventHandler2.enabled = false;
     this.eventHandler2.eventTarget[this.eventHandler2.type] = event.data;
     this.eventHandler2.enabled = true;
   }
 
   changeHandler2(event) {
-    // console.log("changeHandler2", event);
+    if (this.debug) console.log('changeHandler2', event);
     // console.log("changeHandler2", this.path1, this.path2);
     this.eventHandler1.enabled = false;
     this.eventHandler1.eventTarget[this.eventHandler1.type] = event.data;

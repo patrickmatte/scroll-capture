@@ -16,13 +16,8 @@ export default class ArrayData extends Data {
       set(object, key, value, proxy) {
         if (!isNaN(Number(key))) {
           object.value[key] = value;
-          object.dispatchEvent({
-            target: this,
-            currentTarget: this,
-            type: key,
-            value,
-          });
-          return value;
+          ChangeEvent.dispatch(object, key, value);
+          return true;
         } else {
           return Reflect.set(...arguments);
         }
