@@ -86,7 +86,7 @@
                   <div>
                     <button is="ui-button" on:click="scope.test.log()">log</button>
                   </div>
-                  <div is="ui-text">{scope.test.list[scope.test.index]}</div>
+                  <div is="ui-text" data-debug="true">{scope.test.list[scope.test.index1 + scope.test.index2 + scope.test.indices[0]]}</div>
                   <div>
                     <input is="ui-input" bind:model="scope.test.list.0" />
                   </div>
