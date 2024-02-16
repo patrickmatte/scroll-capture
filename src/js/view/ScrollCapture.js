@@ -10,8 +10,8 @@ import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
 import CaptureTest from './CaptureTest';
 // import evaluate from 'simple-evaluate';
-import { parseExpressionAt } from 'acorn';
-import { evaluate } from 'estree-eval';
+// import { parseExpressionAt } from 'acorn';
+// import { evaluate } from '../../lib/tsunami/utils/estree-eval';
 
 export default class ScrollCapture extends UIComponent {
   constructor(element) {
@@ -29,6 +29,15 @@ export default class ScrollCapture extends UIComponent {
 
     // const result = evaluate({ scope: { index: 1, provider: ['yo0', 'yo1', 'yo2', 'yo3'] } }, 'scope.provider[scope.index]');
     // console.log('result', result);
+
+    // const expression = '`${scope.test.list[scope.test.index1 + 1 + scope.test.index2 + scope.test.indices[0] + scope.test.func(0)]}`';
+    // const expression = '`${scope.test.index1}`';
+    // console.log('expression', expression);
+    // const ast = parseExpressionAt(expression, 0, { ecmaVersion: 2020 });
+    // console.log('ast', ast);
+    // const context = { scope: app.model };
+    // const value = evaluate(ast, context);
+    // console.log('value', value);
 
     hackHoverStates();
 

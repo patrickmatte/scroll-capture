@@ -3,7 +3,71 @@ import { hasValue } from '../utils/validation';
 import { ChangeEvent } from '../ChangeEvent';
 import { getProperty, safeEval } from '../tsunami';
 import { EventDispatcher } from '../EventDispatcher';
-import { parseExpressionAt } from 'acorn';
+import * as acorn from 'acorn';
+import { evaluate } from '../utils/estree-eval';
+
+class ExpressionNode {
+  constructor(node) {
+    this.type = node.type;
+  }
+  evaluate() {}
+}
+
+function createNode(value) {
+  return new ESTree[value.type](value);
+}
+
+const ESTree = {
+  BinaryExpression: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.operator = node.operator;
+      this.left = createNode(node.left);
+      this.right = createNode(node.right);
+    }
+  },
+  TemplateLiteral: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.expressions = node.expressions.map((expression) => createNode(expression));
+      this.quasis = node.quasis.map((quasi) => createNode(quasi));
+    }
+  },
+  MemberExpression: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.computed = node.computed;
+      this.object = createNode(node.object);
+      this.property = createNode(node.property);
+    }
+  },
+  Identifier: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.name = node.name;
+    }
+  },
+  CallExpression: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.callee = createNode(node.callee);
+      this.arguments = node.arguments.map((argument) => createNode(argument));
+    }
+  },
+  Literal: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.value = node.value;
+    }
+  },
+  TemplateElement: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.tail = node.tail;
+      this.value = Object.assign({}, node.value);
+    }
+  },
+};
 
 export default class ExpressionTest extends EventDispatcher {
   constructor(expression, scope, callback = null, debug) {
@@ -12,8 +76,10 @@ export default class ExpressionTest extends EventDispatcher {
     this.expression = expression;
     this.scope = scope;
 
-    const ast = parseExpressionAt(expression, 0, { ecmaVersion: 2020 });
-    console.log('ast', ast);
+    const ast = acorn.parseExpressionAt(expression, 0, { ecmaVersion: 2020 });
+    const node = createNode(ast);
+    console.log('node', node);
+    // console.log('node value=', evaluate(node, scope));
 
     this.changeHandler = this.changeHandler.bind(this);
 

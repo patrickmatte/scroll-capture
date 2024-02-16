@@ -1,6 +1,6 @@
 // import evaluate from 'simple-evaluate';
 import { parseExpressionAt } from 'acorn';
-import { evaluate } from 'estree-eval';
+import { evaluate } from './utils/estree-eval';
 
 const classes = {};
 
