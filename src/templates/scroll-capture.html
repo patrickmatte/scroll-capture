@@ -9,7 +9,7 @@
 		<template>
 			<label>
 				<input class="test-radio" type="radio" is="ui-input" value="{scope.data.name.value}" name="options1" bind:model="scope.rootScope.selectedAction" />
-				<span is="ui-text">{scope.data.name.value}</span>
+				<span is="ui-text">${scope.data.name.value}</span>
 			</label>
 		</template>
 	</ul>
@@ -17,13 +17,13 @@
 		<template>
 			<label>
 				<input class="test-radio" type="radio" is="ui-component" value="{scope.data.name.value}" name="options2" set:checked="(scope.rootScope.selectedAction == element.value);" on:change="scope.rootScope.selectedAction = element.value" />
-				<span is="ui-text">{scope.data.name.value}</span>
+				<span is="ui-text">${scope.data.name.value}</span>
 			</label>
 		</template>
 	</ul>
 	<select is="ui-select" set:provider="scope.actions" bind:value="scope.selectedAction">
 		<template>
-			<option is="ui-text" value="{scope.data.name.value}">{scope.data.name.value}</option>
+			<option is="ui-text" value="{scope.data.name.value}">${scope.data.name.value}</option>
 		</template>
 	</select> -->
   <span class="sc-drag-area"></span>
@@ -78,19 +78,17 @@
                 <div>
                   <div is="ui-list" set:provider="scope.test.list">
                     <template>
-                      <div>
-                        <input is="ui-input" bind:model="scope.provider.0" />
-                      </div>
+                      <input is="ui-input" bind:model="scope.provider.0" />
                     </template>
                   </div>
                   <div>
                     <button is="ui-button" on:click="scope.test.log()">log</button>
                   </div>
-                  <!-- <div is="ui-text" data-debug="true">{scope.test.list[scope.test.index1 + 1 + scope.test.index2 + scope.test.indices[0] + scope.test.func(0)]}</div> -->
-                  <div is="ui-text" data-debug="true">{scope.test.list[scope.test.index0]}</div>
-                  <!-- <div>
-                    <input is="ui-input" bind:model="scope.test.list.0" />
-                  </div> -->
+                  <div is="ui-text">${scope.test.list[scope.test.i1 + 1 + scope.test.index + scope.test.indices[scope.test.func(scope.test.i0)]]}</div>
+                  <div is="ui-text">${scope.test.list[scope.test.index]}</div>
+                  <div>
+                    <input is="ui-input" type="number" step="1" bind:model="scope.test.index" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -183,14 +181,14 @@
                                     <span class="sc-input" title="ScrollLeft">
                                       <span class="sc-icon fa-solid fa-left-right"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.unitX.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.unitX.value}</span>
                                         <input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
                                       </span>
                                     </span>
                                     <span class="sc-input" title="ScrollTop">
                                       <span class="sc-icon fa-solid fa-up-down"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.unitY.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.unitY.value}</span>
                                         <input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitY.value" on:focus="scope.data.doScroll()" />
                                       </span>
                                     </span>
@@ -204,7 +202,7 @@
                                       <span class="sc-icon fa-solid fa-shuffle"></span>
                                       <select is="ui-select" set:provider="scope.data.tweenTypes" bind:value="scope.data.tweenType.id">
                                         <template>
-                                          <option is="ui-text" value="{scope.data.id}">{scope.data.option}</option>
+                                          <option is="ui-text" value="{scope.data.id}">${scope.data.option}</option>
                                         </template>
                                       </select>
                                     </div>
@@ -219,14 +217,14 @@
                                         <span class="sc-input" title="PageX">
                                           <span class="sc-icon fa-solid fa-left-right"></span>
                                           <span class="sc-input-group">
-                                            <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.x.value}</span>
+                                            <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.x.value}</span>
                                             <input type="number" min="0" placeholder="0" step="1" is="ui-input" bind:model="scope.data.x.value" />
                                           </span>
                                         </span>
                                         <span class="sc-input" title="PageY">
                                           <span class="sc-icon fa-solid fa-up-down"></span>
                                           <span class="sc-input-group">
-                                            <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.y.value}</span>
+                                            <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.y.value}</span>
                                             <input type="number" min="0" placeholder="0" step="1" is="ui-input" bind:model="scope.data.y.value" />
                                           </span>
                                         </span>
@@ -241,14 +239,14 @@
                                     <span class="sc-input">
                                       <span class="sc-icon fa-solid fa-left-right"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.x.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.x.value}</span>
                                         <input type="number" step="1" min="0" placeholder="0" title="PageX" is="ui-input" bind:model="scope.data.x.value" />
                                       </span>
                                     </span>
                                     <span class="sc-input">
                                       <span class="sc-icon fa-solid fa-up-down"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="px">{scope.data.y.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.y.value}</span>
                                         <input type="number" step="1" min="0" placeholder="0" title="PageY" is="ui-input" bind:model="scope.data.y.value" />
                                       </span>
                                     </span>
@@ -261,7 +259,7 @@
                                     <span class="sc-input" title="Delay">
                                       <span class="sc-icon fa-solid fa-hourglass-half"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="s">${scope.data.delay.value}</span>
                                         <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
                                       </span>
                                     </span>
@@ -274,7 +272,7 @@
                                     <span class="sc-input" title="Duration">
                                       <span class="sc-icon fa-solid fa-clock"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="s">${scope.data.delay.value}</span>
                                         <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
                                       </span>
                                     </span>
@@ -294,7 +292,7 @@
                                     <span class="sc-input" title="Delay">
                                       <span class="sc-icon fa-solid fa-hourglass-half"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="s">${scope.data.delay.value}</span>
                                         <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
                                       </span>
                                     </span>
@@ -318,7 +316,7 @@
                                     <span class="sc-input" title="Delay">
                                       <span class="sc-icon fa-solid fa-hourglass-half"></span>
                                       <span class="sc-input-group">
-                                        <span class="sc-input-unit" is="ui-text" data-unit="s">{scope.data.delay.value}</span>
+                                        <span class="sc-input-unit" is="ui-text" data-unit="s">${scope.data.delay.value}</span>
                                         <input type="number" step="0.25" min="0" placeholder="0" is="ui-input" bind:model="scope.data.delay.value" />
                                       </span>
                                     </span>
@@ -414,7 +412,7 @@
                             <div class="sc-field" title="Video Bitrate">
                               <span class="sc-input">
                                 <span class="sc-input-group">
-                                  <span class="sc-input-unit" is="ui-text" data-unit="Mbps">{scope.settings.videoBitsPerSecond.value}</span>
+                                  <span class="sc-input-unit" is="ui-text" data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
                                   <input type="number" min="1" max="64" step="1" placeholder="24" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
                                 </span>
                               </span>
@@ -451,7 +449,7 @@
                             <div class="sc-field" title="Audio Bitrate">
                               <span class="sc-input">
                                 <span class="sc-input-group">
-                                  <span class="sc-input-unit" is="ui-text" data-unit="kbps">{scope.settings.audioBitsPerSecond.value}</span>
+                                  <span class="sc-input-unit" is="ui-text" data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
                                   <input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
                                 </span>
                               </span>

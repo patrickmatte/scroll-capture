@@ -1,11 +1,13 @@
-export default class Scope {
+import DataModel from './data/DataModel';
+
+export default class Scope extends DataModel {
   constructor(data, parentScope = null, provider, index, length) {
-    this.data = data;
-    this.parentScope = parentScope;
-    this.provider = provider;
-    this.index = index;
-    if (!isNaN(this.index)) this.index1 = index + 1;
-    this.length = length;
+    super({ data, parentScope, provider, index, length });
+    // this.data = data;
+    // this.parentScope = parentScope;
+    // this.provider = provider;
+    // this.index = index;
+    // this.length = length;
   }
 
   get rootScope() {

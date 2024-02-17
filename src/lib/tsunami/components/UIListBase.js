@@ -18,7 +18,7 @@ export default class UIListBase extends UIComponent {
     this._providerRemove = this._providerRemove.bind(this);
     this._providerSort = this._providerSort.bind(this);
 
-    this.template = '<li is="ui-text">{scope.data}</li>';
+    this.template = '<li is="ui-text">${scope.data}</li>';
     this.templates = {};
     this._provider = new ArrayData();
 
