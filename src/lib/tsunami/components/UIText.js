@@ -6,8 +6,6 @@ import ExpressionTest from '../data/ExpressionTest';
 export default class UIText extends UIComponent {
   constructor(element) {
     super(element);
-    if (this.debug) console.log('UIText');
-    this.expressionChangeHandler = this.expressionChangeHandler.bind(this);
   }
 
   get scope() {
@@ -18,14 +16,11 @@ export default class UIText extends UIComponent {
     super.scope = value;
     let expression = this.element.textContent;
     if (expression.indexOf('${') != -1) {
-      this.expression = new ExpressionTest('`' + expression + '`', this);
-      this.expression.addEventListener('value', this.expressionChangeHandler);
-      this.model = this.expression.value;
+      const callback = (value) => {
+        this.model = value;
+      };
+      this.expression = new ExpressionTest('`' + expression + '`', this, callback, this.debug);
     }
-  }
-
-  expressionChangeHandler(event = null) {
-    this.model = this.expression.value;
   }
 
   get model() {
@@ -39,7 +34,6 @@ export default class UIText extends UIComponent {
 
   destroy() {
     if (this.expression) {
-      this.expression.removeEventListener('value', this.expressionChangeHandler);
       this.expression.destroy();
     }
     return super.destroy();

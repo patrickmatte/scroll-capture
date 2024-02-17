@@ -1,4 +1,5 @@
 import Expression from '../data/Expression';
+import ExpressionTest from '../data/ExpressionTest';
 
 export function attributeDirective(component) {
   let element = component.element;
@@ -11,7 +12,7 @@ export function attributeDirective(component) {
       const callback = (value) => {
         component.setAttribute(attribute.name, value);
       };
-      component.attributes[attribute.name] = new Expression('`' + attributeValue + '`', component, callback);
+      component.attributes[attribute.name] = new ExpressionTest('`' + attributeValue + '`', component, callback);
     }
   }
 }

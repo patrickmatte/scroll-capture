@@ -19,7 +19,14 @@ class ExpressionNode {
 }
 
 function createNode(value) {
-  return new ESTree[value.type](value);
+  let node;
+  try {
+    node = new ESTree[value.type](value);
+  } catch (e) {
+    console.log('missing node', value.type, value);
+    console.log(e);
+  }
+  return node;
 }
 
 function evaluateSpreadArray(elements, scope, observables) {
@@ -222,13 +229,58 @@ const ESTree = {
       return s + this.quasis[i].value.cooked;
     }
   },
+  UnaryExpression: class extends ExpressionNode {
+    constructor(node) {
+      super(node);
+      this.operator = node.operator;
+      this.prefix = node.prefix;
+      this.argument = createNode(node.argument);
+    }
+    evaluate(scope, observables) {
+      if (!this.prefix) {
+        throw new Error(`${this.type} with prefix: "false" and operator "${this.operator}" not supported.`);
+      }
+      if (this.operator === 'delete') {
+        if (this.argument.type === 'Identifier') {
+          return delete scope[this.argument.name];
+        }
+        if (this.argument.type === 'MemberExpression') {
+          if (this.argument.object.type === 'Super') {
+            throw new Error(`delete not supported with super expressions.`);
+          }
+          const object = this.argument.object.evaluate(scope, observables);
+          const name = this.argument.property.evaluate(scope, observables);
+          return delete object[name];
+        }
+        throw new Error(`Unsupported delete expression argument: ${this.argument.type}.`);
+      }
+      const value = this.argument.evaluate(scope, observables);
+      switch (this.operator) {
+        case '-':
+          return -value;
+        case '+':
+          return +value;
+        case '!':
+          return !value;
+        case '~':
+          return ~value;
+        case 'typeof':
+          return typeof value;
+        case 'void':
+          return void value;
+        default:
+          throw new Error(`Unsupported ${this.type} operator "${this.operator}".`);
+      }
+    }
+  },
 };
 
 export default class ExpressionTest extends Data {
-  constructor(expression, scope, debug = false) {
+  constructor(expression, scope, callback = null, debug = false) {
     super();
     this.expression = expression;
     this.scope = scope;
+    this.callback = callback;
     this.debug = debug;
 
     this.changeEventHandlers = [];
@@ -255,13 +307,16 @@ export default class ExpressionTest extends Data {
       });
     }
     this.value = newValue;
+    if (this.callback) this.callback(newValue);
   }
 
   destroy() {
     this.changeEventHandlers.map((handler) => {
       handler.destroy();
     });
+    this.node = null;
+    this.callback = null;
     this.changeEventHandlers = [];
-    this._value = null;
+    return super.destroy();
   }
 }

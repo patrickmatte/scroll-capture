@@ -10,7 +10,7 @@ export function bindDirective(component, debug = false) {
       removedAttributes.push(attribute.name);
     }
   }
-  removedAttributes.map((attributeName) => {
+  removedAttributes.forEach((attributeName) => {
     component.element.removeAttribute(attributeName);
   });
 }
