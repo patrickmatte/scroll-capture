@@ -20,7 +20,7 @@ export default class UIComponent extends Branch {
 
     this.element = element;
 
-    this.componentID = new Date().getTime();
+    this.componentID = new Date().getTime().toString(16);
     if (this.debug) this.element.setAttribute('data-component-id', this.componentID);
 
     // this.childrenSelector = ":scope > *";
@@ -58,7 +58,7 @@ export default class UIComponent extends Branch {
   }
 
   removeChild(value) {
-    if (this.debug) console.log('UIList.removeChild', value);
+    if (this.debug) this.log('UIList.removeChild', value);
     if (value) {
       if (this.containerElement == value.parentNode) {
         value.parentNode.removeChild(value);
@@ -139,7 +139,7 @@ export default class UIComponent extends Branch {
     if (!isNaN(index)) {
       this.appendChildAt(value, index + 1);
     } else {
-      console.log("Can't find depth index for", ref);
+      this.log("Can't find depth index for", ref);
     }
   }
 
@@ -173,7 +173,7 @@ export default class UIComponent extends Branch {
 
   set scope(value) {
     this._scope = value;
-    if (this.debug) console.log('debug UIComponent.scope', value);
+    if (this.debug) this.log('UIComponent.scope', value);
     attributeDirective(this, this.debug);
     onDirective(this, this.debug);
     setDirective(this, this.debug);
@@ -382,7 +382,7 @@ export default class UIComponent extends Branch {
   querySelector(selector) {
     let element = this.element.querySelector(selector);
     if (!element) {
-      console.log('No element with selector ' + selector + ' in ' + this);
+      this.log('No element with selector ' + selector + ' in ' + this);
     }
     return element.component || element;
   }
@@ -410,15 +410,13 @@ export default class UIComponent extends Branch {
   }
 
   log() {
-    // let string = '';
-    // for (let i = 0; i < arguments.length; i++) {
-    //   string += arguments[i].toString() + ' ';
-    // }
-    console.log.apply(console, [this.element.getAttribute('data-component-id'), ...arguments]);
+    const array = [...arguments];
+    if (this.debug && this.element) array.unshift(this.element.getAttribute('data-component-id'));
+    this.log.apply(console, array);
   }
 
   destroy() {
-    if (this.debug) console.log('UIComponent.destroy', this.element);
+    if (this.debug) this.log('UIComponent.destroy', this.element);
     for (let i in this.attributes) {
       let attribute = this.attributes[i];
       attribute.destroy();

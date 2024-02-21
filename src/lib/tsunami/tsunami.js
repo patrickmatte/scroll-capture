@@ -1,6 +1,3 @@
-// import evaluate from 'simple-evaluate';
-import { parseExpressionAt } from 'acorn';
-import { evaluate } from './estree/estree-eval';
 import { parseExpression } from './estree/estree';
 
 const classes = {};
@@ -8,14 +5,16 @@ const classes = {};
 export function safeEval(context, expression, debug = false) {
   if (context == null || expression == null) return null;
   let value = null;
-  const node = parseExpression(expression, null, debug);
+  let node;
+  try {
+    node = parseExpression(expression, null, debug);
+  } catch (error) {
+    console.log('Cannot parse ', expression);
+  }
   try {
     value = node.evaluate(context);
   } catch (error) {
-    // console.log('error', error);
-    // console.log('sc_error expression =', expression);
-    // console.log('safeEval context=', context);
-    // console.log(e);
+    console.log('Cannot evaluate ', expression);
   }
   return value;
 }

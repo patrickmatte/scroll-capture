@@ -22,17 +22,17 @@ export default class UIList extends UIListBase {
 
   _mouseDownHandler(event) {
     if (event.which == 3) return;
-    // if(this.debug) console.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
+    // if(this.debug) this.log("_mouseDownHandler", "target", event.target, "currentTarget", event.currentTarget);
     let selectedIndex = NaN;
     let selectedChild = this.children.find((child, index) => {
       let contains = child.contains(event.target);
       let isChild = child == event.target;
       let isMatch = contains || isChild;
-      // if (this.debug) console.log(index, 'contains', contains, 'isChild', isChild, 'isMatch', isMatch);
+      // if (this.debug) this.log(index, 'contains', contains, 'isChild', isChild, 'isMatch', isMatch);
       if (isMatch) selectedIndex = index;
       return isMatch;
     });
-    // if(this.debug) console.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
+    // if(this.debug) this.log("selectedChild", selectedChild, "selectedIndex", selectedIndex);
     if (selectedChild) {
       if (this.selectItemOnMouseDown) {
         if (this.provider.selectedIndex) {
@@ -40,7 +40,7 @@ export default class UIList extends UIListBase {
         }
       }
       let isDragElement = event.target.classList.contains(this.dragElementClass);
-      // if(this.debug) console.log("isDragElement", isDragElement);
+      // if(this.debug) this.log("isDragElement", isDragElement);
       if (isDragElement) {
         event.preventDefault();
         this.dragStartPoint = this.getTouchPoint(event);

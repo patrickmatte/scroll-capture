@@ -6,9 +6,9 @@ import EventHandler from '../components/EventHandler';
 export function parseExpression(expression, changeCallback = null, debug = false, ecmaVersion = 2020) {
   if (debug) console.log('parseExpression', expression);
   const ast = acorn.parseExpressionAt(expression, 0, { ecmaVersion });
-  if (debug) console.log('ast', ast);
+  if (debug) console.log('acorn ast', ast);
   const node = createNode(ast, changeCallback, debug);
-  if (debug) console.log('node', node);
+  if (debug) console.log('eval node', node);
   return node;
 }
 
@@ -47,7 +47,7 @@ export class ExpressionNode {
     if (!this.changeCallback) return;
     const isDispatcher = dispatcher instanceof EventDispatcher || dispatcher instanceof EventTarget;
     if (isDispatcher) {
-      if (this.debug) console.log('observe', name, dispatcher);
+      // if (this.debug) console.log('observe', name, dispatcher);
       if (!this.changeEventHandler) {
         this.changeEventHandler = new EventHandler(dispatcher, name, this.changeCallback, this.debug);
       } else {
@@ -77,23 +77,18 @@ export class AssignmentExpression extends ExpressionNode {
     return new AssignmentExpression(operator, left, right, changeCallback, debug);
   }
   evaluate(scopeRight, scopeLeft = null) {
-    if (this.debug) console.log('AssignmentExpression.evaluate');
     scopeLeft ||= scopeRight;
     let object;
     let name;
     switch (this.left.type) {
       case 'Identifier':
-        if (this.debug) console.log('left.type is Identifier');
         object = scopeLeft;
         name = this.left.name;
         break;
       case 'MemberExpression':
-        if (this.debug) console.log('left.type is MemberExpression');
         if (this.left.object.type === 'Super') {
           throw new Error(`Cannot assign ${this.left.object.type}`);
         }
-        if (this.debug) console.log('this.left.object', this.left.object);
-        if (this.debug) console.log('this.left.property', this.left.property);
         object = this.left.object.evaluate(scopeLeft);
         switch (this.left.property.type) {
           case 'Identifier':
@@ -107,8 +102,6 @@ export class AssignmentExpression extends ExpressionNode {
       default:
         throw new Error(`${this.left.type} assignment is not supported.`);
     }
-    if (this.debug) console.log('evaluate object =', object);
-    if (this.debug) console.log('evaluate name =', name);
     this.left.observe(object, name);
     const value = this.right.evaluate(scopeRight);
     return assign[this.operator](object, name, value, this.debug);

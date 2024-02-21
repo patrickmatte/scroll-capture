@@ -43,7 +43,7 @@ export default class UIListBase extends UIComponent {
   }
 
   set provider(value) {
-    if (this.debug) console.log('UIList.provider', value);
+    if (this.debug) this.log('UIList.provider', value);
     if (this._provider) {
       if (this._provider instanceof ArrayData) {
         this._provider.removeEventListener('add', this._providerAdd);
@@ -66,7 +66,7 @@ export default class UIListBase extends UIComponent {
   }
 
   _removeElements(array) {
-    if (this.debug) console.log('UIList._removeElements', array.length);
+    if (this.debug) this.log('UIList._removeElements', array.length);
     for (let i = 0; i < array.length; i++) {
       let element = array[i];
       this.removeChild(element);
@@ -76,7 +76,7 @@ export default class UIListBase extends UIComponent {
   }
 
   _addElements(array, index = 0) {
-    if (this.debug) console.log('UIList._addElements', array.length);
+    if (this.debug) this.log('UIList._addElements', array.length);
     for (let i in array) {
       let data = array[i];
       let element = this._createElement(data, index, array.length);
@@ -125,7 +125,7 @@ export default class UIListBase extends UIComponent {
   }
 
   _providerAdd(event) {
-    if (this.debug) console.log('UIList._providerAdd');
+    if (this.debug) this.log('UIList._providerAdd');
     this._saveChildrenPositions();
     let addedElements = [];
     let start = event.data.index;
@@ -142,14 +142,14 @@ export default class UIListBase extends UIComponent {
   }
 
   _providerRemove(event) {
-    if (this.debug) console.log('UIList._providerRemove', event);
+    if (this.debug) this.log('UIList._providerRemove', event);
     this._saveChildrenPositions();
     let children = this.children;
-    if (this.debug) console.log('children=', children);
+    if (this.debug) this.log('children=', children);
     let removedElements = [];
     let start = event.data.index;
     let end = event.data.index + event.data.total;
-    if (this.debug) console.log('start=', start, 'end=', end);
+    if (this.debug) this.log('start=', start, 'end=', end);
     for (let i = start; i < end; i++) {
       removedElements.push(children[i]);
     }

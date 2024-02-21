@@ -185,7 +185,15 @@
                                       <span class="sc-icon fa-solid fa-left-right"></span>
                                       <span class="sc-input-group">
                                         <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.unitX.value}</span>
-                                        <input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
+                                        <input
+                                          type="number"
+                                          placeholder="0"
+                                          min="0"
+                                          is="ui-input"
+                                          bind:model="scope.data.unitX.value"
+                                          on:focus="scope.data.doScroll()"
+                                          data-debug="true"
+                                        />
                                       </span>
                                     </span>
                                     <span class="sc-input" title="ScrollTop">

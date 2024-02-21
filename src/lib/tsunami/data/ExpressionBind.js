@@ -2,7 +2,7 @@ import { AssignmentExpression, parseExpression } from '../estree/estree';
 
 export default class ExpressionBind {
   constructor(expressionLeft, scopeLeft, expressionRight, scopeRight, debug = false) {
-    if (debug) console.log('!!!!!! ExpressionBind', expressionLeft, '=', expressionRight);
+    if (debug) console.log('ExpressionBind', expressionLeft, '=', expressionRight);
     this.debug = debug;
     this.changeHandlerLeft = this.changeHandlerLeft.bind(this);
     this.changeHandlerRight = this.changeHandlerRight.bind(this);
@@ -23,9 +23,8 @@ export default class ExpressionBind {
   }
 
   changeHandlerLeft(event) {
-    if (this.debug) console.log('ExpressionBind.changeHandlerLeft event=', event);
-    if (this.debug) console.log('ExpressionBind.changeHandlerLeft this.enabled.left=', this.enabled.left);
     if (!this.enabled.left) return;
+    if (this.debug) console.log('changeHandlerLeft', event);
     this.enabled.right = false;
     this.node.left = this.right;
     this.node.right = this.left;
@@ -34,18 +33,13 @@ export default class ExpressionBind {
   }
 
   changeHandlerRight(event) {
-    if (this.debug) console.log('ExpressionBind.changeHandlerRight event=', event);
-    if (this.debug) console.log('ExpressionBind.changeHandlerRight this.enabled.right=', this.enabled.right);
     if (!this.enabled.right) return;
-    if (this.debug) console.log('ExpressionBind.changeHandlerRight enabled.left false');
+    if (this.debug) console.log('changeHandlerRight', event);
     this.enabled.left = false;
     this.node.left = this.left;
     this.node.right = this.right;
-    if (this.debug) console.log('ExpressionBind.changeHandlerRight eval before');
     this.node.evaluate(this.scopeRight, this.scopeLeft);
-    if (this.debug) console.log('ExpressionBind.changeHandlerRight eval after');
     this.enabled.left = true;
-    if (this.debug) console.log('ExpressionBind.changeHandlerRight enabled.left true');
   }
 
   destroy() {

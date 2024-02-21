@@ -15,7 +15,7 @@ export default class UISelect extends UIListBase {
   }
 
   set provider(value) {
-    if (this.debug) console.log('UISelect.provider=', value);
+    if (this.debug) this.log('UISelect.provider=', value);
     let currentValue = this.value;
     super.provider = value;
     this.value = currentValue;
@@ -26,7 +26,7 @@ export default class UISelect extends UIListBase {
   }
 
   set value(value) {
-    if (this.debug) console.log('UISelect.value=', value);
+    if (this.debug) this.log('UISelect.value=', value);
     if (this._value != value) {
       this._value = value;
       ChangeEvent.dispatchEvent(this, 'value', value);
