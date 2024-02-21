@@ -5,7 +5,7 @@ import { getProperty, safeEval } from '../tsunami';
 import { EventDispatcher } from '../EventDispatcher';
 
 export default class Expression extends EventDispatcher {
-  constructor(expression, scope, callback = null, debug) {
+  constructor(expression, scope, callback = null, debug = false) {
     super();
     // console.log("Expression", expression);
     this.expression = expression;
@@ -43,7 +43,7 @@ export default class Expression extends EventDispatcher {
       if (slugs.length > 0) target = getProperty(slugs.join('.'), scope);
       const isDispatcher = target instanceof EventDispatcher || target instanceof EventTarget;
       if (isDispatcher && target[type] != undefined) {
-        let handler = new EventHandler(target, type, this.changeHandler);
+        let handler = new EventHandler(target, type, this.changeHandler, debug);
         this.eventHandlers.push(handler);
       }
     });
@@ -57,7 +57,7 @@ export default class Expression extends EventDispatcher {
 
   changeHandler(event = null) {
     this._value = this.getValue();
-    ChangeEvent.dispatch(this, 'value', this.value);
+    ChangeEvent.dispatchEvent(this, 'value', this.value);
     if (this.callback) this.callback(this.value);
   }
 

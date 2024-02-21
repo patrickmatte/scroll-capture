@@ -27,7 +27,7 @@ export default class DataModel extends Data {
         set: function (value) {
           if (this['_' + name] != value) {
             this['_' + name] = value;
-            ChangeEvent.dispatch(this, name, value);
+            ChangeEvent.dispatchEvent(this, name, value);
             this.changeHandler();
           }
         },
@@ -43,7 +43,7 @@ export default class DataModel extends Data {
   }
 
   changeHandler() {
-    ChangeEvent.dispatch(this, 'value', this);
+    ChangeEvent.dispatchEvent(this, 'value', this);
   }
 
   serialize() {

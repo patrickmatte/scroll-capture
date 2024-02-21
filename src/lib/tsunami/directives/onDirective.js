@@ -1,7 +1,7 @@
 import EventHandler from '../components/EventHandler';
 import { safeEval } from '../tsunami';
 
-export function onDirective(component) {
+export function onDirective(component, debug = false) {
   const removedAttributes = [];
   for (let i = 0; i < component.element.attributes.length; i++) {
     const attribute = component.element.attributes[i];
@@ -29,7 +29,7 @@ export function onDirective(component) {
           return method();
         }
       };
-      component.attributes[attribute.name] = new EventHandler(component.element, type, callback);
+      component.attributes[attribute.name] = new EventHandler(component.element, type, callback, debug);
       removedAttributes.push(attribute.name);
     }
   }

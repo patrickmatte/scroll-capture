@@ -1,0 +1,31 @@
+import { AssignmentExpression, parseExpression } from '../estree/estree';
+
+export default class ExpressionSet {
+  constructor(expressionLeft, scopeLeft, expressionRight, scopeRight, debug = false) {
+    if (debug) console.log('!!!!!! ExpressionSet', expressionLeft, '=', expressionRight);
+
+    this.debug = debug;
+    this.changeHandler = this.changeHandler.bind(this);
+
+    this.left = parseExpression(expressionLeft, this.changeHandler, debug);
+    this.right = parseExpression(expressionRight, this.changeHandler, debug);
+    this.node = new AssignmentExpression('=', this.left, this.right, null, debug);
+
+    this.scopeLeft = scopeLeft;
+    this.scopeRight = scopeRight;
+
+    this.changeHandler(null);
+  }
+
+  changeHandler(event) {
+    if (this.debug) console.log('ExpressionSet.changeHandler event=', event);
+    this.node.evaluate(this.scopeRight, this.scopeLeft);
+  }
+
+  destroy() {
+    this.scopeLeft = null;
+    this.scopeRight = null;
+    this.node.destroy();
+    this.node = null;
+  }
+}

@@ -1,10 +1,10 @@
 export default class EventHandler {
-  constructor(eventTarget, type, eventHandler, enabled = true, debug = false) {
+  constructor(dispatcher, type, callback, debug = false) {
     this.debug = debug;
-    this.eventTarget = eventTarget;
+    this.dispatcher = dispatcher;
     this.type = type;
-    this.eventHandler = eventHandler;
-    this.enabled = enabled;
+    this.callback = callback;
+    this.enabled = true;
   }
 
   get enabled() {
@@ -15,9 +15,9 @@ export default class EventHandler {
     if (value != this._enabled) {
       this._enabled = value;
       if (value) {
-        this.eventTarget.addEventListener(this.type, this.eventHandler);
+        this.dispatcher.addEventListener(this.type, this.callback);
       } else {
-        this.eventTarget.removeEventListener(this.type, this.eventHandler);
+        this.dispatcher.removeEventListener(this.type, this.callback);
       }
     }
   }
@@ -28,16 +28,16 @@ export default class EventHandler {
 
   set type(value) {
     if (value != this._type) {
-      if (this.enabled) this.eventTarget.removeEventListener(this.type, this.eventHandler);
+      this.dispatcher.removeEventListener(this.type, this.callback);
       this._type = value;
-      if (this.enabled) this.eventTarget.addEventListener(this.type, this.eventHandler);
+      if (this.enabled) this.dispatcher.addEventListener(this.type, this.callback);
     }
   }
 
   destroy() {
     this.enabled = false;
-    this.eventTarget = null;
+    this.dispatcher = null;
     this.type = null;
-    this.eventHandler = null;
+    this.callback = null;
   }
 }

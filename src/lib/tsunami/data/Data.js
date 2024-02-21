@@ -9,7 +9,7 @@ export default class Data extends EventDispatcher {
   set value(value) {
     if (value !== this._value || this.forceChangeEvent) {
       this._value = value;
-      ChangeEvent.dispatch(this, 'value', this.value);
+      ChangeEvent.dispatchEvent(this, 'value', this.value);
     }
   }
 
@@ -34,7 +34,7 @@ export default class Data extends EventDispatcher {
 
   copy(data) {
     this.value = data.value;
-    ChangeEvent.dispatch(this, 'value', this.value);
+    ChangeEvent.dispatchEvent(this, 'value', this.value);
   }
 
   destroy() {

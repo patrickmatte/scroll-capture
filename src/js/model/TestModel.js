@@ -6,7 +6,7 @@ import StringData from '../../lib/tsunami/data/StringData';
 export class TestModel extends DataModel {
   constructor() {
     super({
-      list: new ArrayData('string0', 'string1', 'string2', 'string3', 'string4', 'string5', 'string6'),
+      list: new ArrayData('#ff0000', '#ffff00', '#ff00ff', '#00ff00', '#0000ff', '#00ffff'),
       i0: 0,
       i1: 1,
       i2: 2,

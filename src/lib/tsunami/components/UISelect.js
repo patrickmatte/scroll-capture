@@ -29,7 +29,7 @@ export default class UISelect extends UIListBase {
     if (this.debug) console.log('UISelect.value=', value);
     if (this._value != value) {
       this._value = value;
-      ChangeEvent.dispatch(this, 'value', value);
+      ChangeEvent.dispatchEvent(this, 'value', value);
     }
     this.element.value = value;
   }
@@ -50,7 +50,7 @@ export default class UISelect extends UIListBase {
 
   inputHandler(event) {
     this._value = this.element.value;
-    ChangeEvent.dispatch(this, 'value', this._value);
+    ChangeEvent.dispatchEvent(this, 'value', this._value);
   }
 
   destroy() {

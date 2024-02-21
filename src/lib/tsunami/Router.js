@@ -71,7 +71,7 @@ export default class Router extends EventDispatcher {
       this.changeTheLocation(value);
     }
 
-    ChangeEvent.dispatch(this, 'location', this.location);
+    ChangeEvent.dispatchEvent(this, 'location', this.location);
   }
 
   start() {

@@ -78,16 +78,19 @@
                 <div>
                   <div is="ui-list" set:provider="scope.test.list">
                     <template>
-                      <input is="ui-input" bind:model="scope.provider.0" />
+                      <input is="ui-input" bind:model="scope.provider[scope.index]" />
                     </template>
                   </div>
                   <div>
                     <button is="ui-button" on:click="scope.test.log()">log</button>
                   </div>
-                  <div is="ui-text">${scope.test.list[scope.test.i1 + 1 + scope.test.index + scope.test.indices[scope.test.func(scope.test.i0)]]}</div>
+                  <div is="ui-text">${scope.test.list[scope.test.i1 + 1 + scope.test.index + scope.test.indices[scope.test.i0]]}</div>
+                  <div>
+                    <input data-debug="true" is="ui-input" type="number" step="1" bind:model="scope.test.index" />
+                  </div>
                   <div is="ui-text">${scope.test.list[scope.test.index]}</div>
                   <div>
-                    <input is="ui-input" type="number" step="1" bind:model="scope.test.index" />
+                    <input is="ui-input" bind:model="scope.test.list[scope.test.index]" />
                   </div>
                 </div>
               </div>

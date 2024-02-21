@@ -187,7 +187,7 @@ export default class UIComponent extends Branch {
   set model(value) {
     if (value != this._model) {
       this._model = value;
-      ChangeEvent.dispatch(this, 'model', value);
+      ChangeEvent.dispatchEvent(this, 'model', value);
     }
   }
 

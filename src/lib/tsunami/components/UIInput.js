@@ -78,7 +78,6 @@ export default class UIInput extends UIComponent {
         value = this.element.value;
         break;
     }
-    if (this.debug) this.log('UIInput inputHandler', value);
     super.model = value;
   }
 

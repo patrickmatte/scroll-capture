@@ -1,4 +1,6 @@
-export default class Branch extends EventTarget {
+import { EventDispatcher } from './EventDispatcher';
+
+export default class Branch extends EventDispatcher {
   constructor({ load, show, hide, branches, defaultChild, getBranch } = {}) {
     super();
     this.branches = branches || {};

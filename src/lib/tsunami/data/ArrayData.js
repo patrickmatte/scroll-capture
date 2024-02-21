@@ -16,7 +16,7 @@ export default class ArrayData extends Data {
       set(object, key, value, proxy) {
         if (!isNaN(Number(key))) {
           object.value[key] = value;
-          ChangeEvent.dispatch(object, key, value);
+          ChangeEvent.dispatchEvent(object, key, value);
           return true;
         } else {
           return Reflect.set(...arguments);
@@ -156,7 +156,7 @@ export default class ArrayData extends Data {
     }
     this.length.value = this._value.length;
 
-    ChangeEvent.dispatch(this, 'value', this.value);
+    ChangeEvent.dispatchEvent(this, 'value', this.value);
     this.dataItemChangeHandler(null);
 
     if (this.includes(this.selectedItem.value)) {

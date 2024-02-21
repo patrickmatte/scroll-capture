@@ -13,13 +13,13 @@ export default class Bind {
     this.changeHandler2 = this.changeHandler2.bind(this);
     this.eventHandler1 = this.createEventHandler(scope1, path1, this.changeHandler1, debug);
     this.eventHandler2 = this.createEventHandler(scope2, path2, this.changeHandler2, debug);
-    this.changeHandler2(new ChangeEvent(this.eventHandler2.type, this.eventHandler2.eventTarget[this.eventHandler2.type]));
+    this.changeHandler2(new ChangeEvent(this.eventHandler2.type, this.eventHandler2.dispatcher[this.eventHandler2.type]));
   }
 
   changeHandler1(event) {
     if (this.debug) console.log('changeHandler1', event);
     this.eventHandler2.enabled = false;
-    this.eventHandler2.eventTarget[this.eventHandler2.type] = event.data;
+    this.eventHandler2.dispatcher[this.eventHandler2.type] = event.data;
     this.eventHandler2.enabled = true;
   }
 
@@ -27,7 +27,7 @@ export default class Bind {
     if (this.debug) console.log('changeHandler2', event);
     // console.log("changeHandler2", this.path1, this.path2);
     this.eventHandler1.enabled = false;
-    this.eventHandler1.eventTarget[this.eventHandler1.type] = event.data;
+    this.eventHandler1.dispatcher[this.eventHandler1.type] = event.data;
     this.eventHandler1.enabled = true;
   }
 
@@ -51,7 +51,7 @@ export default class Bind {
     const isDispatcher = target instanceof EventDispatcher || target instanceof EventTarget;
     if (debug) console.log('isDispatcher', isDispatcher);
     if (isDispatcher) {
-      handler = new EventHandler(target, type, callback, true, this.debug);
+      handler = new EventHandler(target, type, callback, debug);
     } else {
       console.log("Object is not an instance of EventDispatcher or EventTarget, cannot add event listener type '" + type + "'");
     }
