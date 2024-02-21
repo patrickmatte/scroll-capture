@@ -1,7 +1,6 @@
 import UIComponent from './UIComponent';
-import Expression from '../data/Expression';
 import Data from '../data/Data';
-import ExpressionTest from '../data/ExpressionTest';
+import ExpressionSet from '../data/ExpressionSet';
 
 export default class UIText extends UIComponent {
   constructor(element) {
@@ -14,12 +13,9 @@ export default class UIText extends UIComponent {
 
   set scope(value) {
     super.scope = value;
-    let expression = this.element.textContent;
-    if (expression.indexOf('${') != -1) {
-      const callback = (value) => {
-        this.model = value;
-      };
-      this.expression = new ExpressionTest('`' + expression + '`', this, callback, this.debug);
+    let textContent = this.element.textContent;
+    if (textContent.indexOf('${') != -1) {
+      this.expression = new ExpressionSet('model', this, '`' + textContent + '`', this, this.debug);
     }
   }
 

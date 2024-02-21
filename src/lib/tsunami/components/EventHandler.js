@@ -22,15 +22,42 @@ export default class EventHandler {
     }
   }
 
+  get callback() {
+    return this._callback;
+  }
+
+  set callback(value) {
+    if (value != this._callback) {
+      const isEnabled = this.enabled;
+      if (isEnabled) this.enabled = false;
+      this._callback = value;
+      this.enabled = isEnabled;
+    }
+  }
+
   get type() {
     return this._type;
   }
 
   set type(value) {
     if (value != this._type) {
-      this.dispatcher.removeEventListener(this.type, this.callback);
+      const isEnabled = this.enabled;
+      if (isEnabled) this.enabled = false;
       this._type = value;
-      if (this.enabled) this.dispatcher.addEventListener(this.type, this.callback);
+      this.enabled = isEnabled;
+    }
+  }
+
+  get dispatcher() {
+    return this._dispatcher;
+  }
+
+  set dispatcher(value) {
+    if (value != this._dispatcher) {
+      const isEnabled = this.enabled;
+      if (isEnabled) this.enabled = false;
+      this._dispatcher = value;
+      this.enabled = isEnabled;
     }
   }
 
