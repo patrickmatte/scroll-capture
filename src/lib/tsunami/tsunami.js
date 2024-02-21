@@ -1,15 +1,16 @@
 // import evaluate from 'simple-evaluate';
 import { parseExpressionAt } from 'acorn';
 import { evaluate } from './estree/estree-eval';
+import { parseExpression } from './estree/estree';
 
 const classes = {};
 
-export function safeEval(context, expression, option = null) {
+export function safeEval(context, expression, debug = false) {
   if (context == null || expression == null) return null;
   let value = null;
-  const ast = parseExpressionAt(expression, 0, { ecmaVersion: 2020 });
+  const node = parseExpression(expression, null, debug);
   try {
-    value = evaluate(ast, context);
+    value = node.evaluate(context);
   } catch (error) {
     // console.log('error', error);
     // console.log('sc_error expression =', expression);

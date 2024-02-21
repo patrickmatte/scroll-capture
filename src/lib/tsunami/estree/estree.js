@@ -56,7 +56,11 @@ export class ExpressionNode {
     }
   }
   evaluate(scope) {}
-  destroy() {}
+
+  destroy() {
+    if (this.changeEventHandler) this.changeEventHandler.destroy();
+    this.changeCallback = null;
+  }
 }
 
 export class AssignmentExpression extends ExpressionNode {
@@ -108,6 +112,13 @@ export class AssignmentExpression extends ExpressionNode {
     this.left.observe(object, name);
     const value = this.right.evaluate(scopeRight);
     return assign[this.operator](object, name, value, this.debug);
+  }
+
+  destroy() {
+    this.operator = null;
+    this.left.destroy();
+    this.right.destroy();
+    return super.destroy();
   }
 }
 
@@ -176,6 +187,12 @@ export class BinaryExpression extends ExpressionNode {
         throw new Error(`Unexpected operator: ${this.operator}`);
     }
   }
+  destroy() {
+    this.operator = null;
+    this.left.destroy();
+    this.right.destroy();
+    return super.destroy();
+  }
 }
 
 export class CallExpression extends ExpressionNode {
@@ -204,6 +221,11 @@ export class CallExpression extends ExpressionNode {
         return this.callee.evaluate(scope)(...evaluateSpreadArray(this.argsArray, scope, this.debug));
     }
   }
+  destroy() {
+    this.argsArray.map((node) => node.destroy());
+    this.callee.destroy();
+    return super.destroy();
+  }
 }
 
 export class Identifier extends ExpressionNode {
@@ -218,6 +240,10 @@ export class Identifier extends ExpressionNode {
     this.observe(scope, this.name);
     return scope[this.name];
   }
+  destroy() {
+    this.name = null;
+    return super.destroy();
+  }
 }
 
 export class Literal extends ExpressionNode {
@@ -230,6 +256,10 @@ export class Literal extends ExpressionNode {
   }
   evaluate(scope) {
     return this.value;
+  }
+  destroy() {
+    this.value = null;
+    return super.destroy();
   }
 }
 
@@ -261,6 +291,12 @@ export class MemberExpression extends ExpressionNode {
         }
     }
   }
+  destroy() {
+    this.computed = null;
+    this.object.destroy();
+    this.property.destroy();
+    return super.destroy();
+  }
 }
 
 export class TemplateElement extends ExpressionNode {
@@ -273,6 +309,11 @@ export class TemplateElement extends ExpressionNode {
     const tail = node.tail;
     const value = Object.assign({}, node.value);
     return new TemplateElement(tail, value, changeCallback, debug);
+  }
+  destroy() {
+    this.tail = null;
+    this.value = null;
+    return super.destroy();
   }
 }
 
@@ -302,6 +343,11 @@ export class TemplateLiteral extends ExpressionNode {
       }
     }
     return s + this.quasis[i].value.cooked;
+  }
+  destroy() {
+    this.expressions.map((node) => node.destroy());
+    this.quasis.map((node) => node.destroy());
+    return super.destroy();
   }
 }
 
@@ -353,6 +399,12 @@ export class UnaryExpression extends ExpressionNode {
       default:
         throw new Error(`Unsupported ${this.type} operator "${this.operator}".`);
     }
+  }
+  destroy() {
+    this.operator = null;
+    this.prefix = null;
+    this.argument.destroy();
+    return super.destroy();
   }
 }
 
