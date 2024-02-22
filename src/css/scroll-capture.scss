@@ -344,5 +344,38 @@ html[data-sc-scrollbars="false"] {
 				width: 1.25em;
 			}	
 		}
+
+		.sc-tutorial {
+			position: relative;
+			padding-top: 56.25%;
+			width: 100%;
+			background-image: url("chrome-extension://__MSG_@@extension_id__/assets/images/tutorial.jpg");
+			background-size: cover;
+
+			.sc-tutorial-icon {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0; 
+				top: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				.sc-white-block {
+					position: absolute;
+					width: 4em;
+					height: 3em;
+					background-color: white;
+					left:calc(50% - 2em);
+					top:calc(50% - 1.5em);
+				}
+
+				span {
+					font-size: 5em;
+					color: #eb3323;
+				}
+			}
+		}
 	}
 }
