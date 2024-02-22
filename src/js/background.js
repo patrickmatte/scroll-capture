@@ -102,6 +102,10 @@ function onMessageHandler(msg, sender, sendResponse) {
       msg.type = 'scrollCaptureVideoURL';
       chrome.tabs.sendMessage(msg.tabId, msg);
       break;
+    case 'scrollCaptureFFmpegLogToSW':
+      msg.type = 'scrollCaptureFFmpegLogToCC';
+      chrome.tabs.sendMessage(msg.tabId, msg);
+      break;
   }
   return true;
 }

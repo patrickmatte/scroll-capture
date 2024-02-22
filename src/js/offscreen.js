@@ -1,11 +1,39 @@
 import { createFilename, createFilenameOnly } from './model/utils';
 
-const { createFFmpeg, fetchFile } = FFmpeg;
+// const { createFFmpeg, fetchFile } = FFmpeg;
+// console.log('FFmpeg', FFmpeg);
 
-const ffmpeg = createFFmpeg({
+let recorder;
+let data = [];
+let blob;
+let currentTabId;
+
+const ffmpeg = FFmpeg.createFFmpeg({
   corePath: chrome.runtime.getURL('ffmpeg-core.js'),
   log: true,
   mainName: 'main',
+});
+// console.log('ffmpeg', ffmpeg);
+
+ffmpeg.setProgress((params) => {
+  console.log('progress:', params);
+});
+
+ffmpeg.setLogger((params) => {
+  switch (params.type) {
+    case 'fferr':
+    // case 'info':
+    case 'ffout':
+      const msg = {
+        type: 'scrollCaptureFFmpegLogToSW',
+        logType: params.type,
+        message: params.message,
+        tabId: currentTabId,
+      };
+      // console.log('offscreen msg', msg);
+      chrome.runtime.sendMessage(msg);
+      break;
+  }
 });
 
 chrome.runtime.onMessage.addListener((message) => {
@@ -23,10 +51,6 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
-let recorder;
-let data = [];
-let blob;
-
 async function startRecording(message) {
   if (recorder?.state === 'recording') {
     throw new Error('Called startRecording while recording is in progress.');
@@ -35,15 +59,24 @@ async function startRecording(message) {
   const size = { x: message.tabWidth, y: message.tabHeight };
   const pixelRatio = message.pixelRatio;
   const constraints = {};
+  const constraintSizes = [
+    { width: size.x, height: size.y },
+    { width: size.x * message.zoomLevel, height: size.y * message.zoomLevel },
+    { width: size.x * pixelRatio, height: size.y * pixelRatio },
+  ];
+  constraintSizes.sort((a, b) => {
+    return a.width * a.height - b.width * b.height;
+  });
+  console.log('constraintSizes', constraintSizes);
   if (message.exportVideo) {
     constraints.video = {
       mandatory: {
         chromeMediaSource: 'tab',
         chromeMediaSourceId: message.streamId,
-        minWidth: Math.min(size.x, size.x * message.zoomLevel),
-        maxWidth: size.x * pixelRatio,
-        minHeight: Math.min(size.y, size.y * message.zoomLevel),
-        maxHeight: size.y * pixelRatio,
+        minWidth: constraintSizes[0].width,
+        minHeight: constraintSizes[0].height,
+        maxWidth: constraintSizes[2].width,
+        maxHeight: constraintSizes[2].height,
         minFrameRate: 30,
         maxFrameRate: 60,
       },
@@ -58,7 +91,12 @@ async function startRecording(message) {
     };
   }
   console.log('navigator.mediaDevices.getUserMedia', JSON.stringify(constraints));
-  const media = await navigator.mediaDevices.getUserMedia(constraints);
+  let media;
+  try {
+    media = await navigator.mediaDevices.getUserMedia(constraints);
+  } catch (error) {
+    console.log('navigator.mediaDevices.getUserMedia error', error);
+  }
   console.log('media=', media);
 
   if (message.exportAudio) {
@@ -114,6 +152,7 @@ function stopRecording(message) {
 }
 
 function convertStreams(videoBlob, message) {
+  currentTabId = message.tabId;
   var fileReader = new FileReader();
   fileReader.onload = async function () {
     // var blob = new File([result.data], 'test.mp4', {
@@ -141,7 +180,7 @@ function convertStreams(videoBlob, message) {
     const downloadFileName = `${fileName}.${downloadExtension}`;
 
     const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
-    console.log('runFFmpeg blob', blob);
+    // console.log('runFFmpeg blob', blob);
     // var file = new File([blob], downloadFileName, {
     //   type: `video/${downloadExtension}`,
     // });
@@ -153,14 +192,14 @@ function convertStreams(videoBlob, message) {
       tabId: message.tabId,
       mimeType: `video/${downloadExtension}`,
     };
-    console.log('videoURLMessage', videoURLMessage);
+    // console.log('videoURLMessage', videoURLMessage);
     chrome.runtime.sendMessage(videoURLMessage);
   };
   fileReader.readAsArrayBuffer(videoBlob);
 }
 
 async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
-  console.log('runFFmpeg commandStr', commandStr);
+  // console.log('runFFmpeg commandStr', commandStr);
 
   if (ffmpeg.isLoaded()) {
     await ffmpeg.exit();
@@ -174,13 +213,13 @@ async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
     return;
   }
 
-  ffmpeg.FS('writeFile', inputFileName, await fetchFile(file));
+  ffmpeg.FS('writeFile', inputFileName, await FFmpeg.fetchFile(file));
   await ffmpeg.run(...commandList);
   const data = ffmpeg.FS('readFile', outputFileName);
-  console.log('ffmpeg data', data);
+  // console.log('ffmpeg data', data);
 
   const blob = new Blob([data.buffer]);
-  console.log('ffmpeg blob', blob);
+  // console.log('ffmpeg blob', blob);
   return blob;
   // downloadFile(blob, outputFileName);
 }

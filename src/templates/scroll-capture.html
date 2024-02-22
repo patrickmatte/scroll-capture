@@ -46,13 +46,13 @@
               <span class="sc-label">Image Capture</span>
             </button>
           </span>
-          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/test'" set:location="scope.location">
+          <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/test'" set:location="scope.location">
             <span class="sc-drag-area"></span>
             <button is="router-button" data-path="scroll-capture/test" title="test Capture">
               <span class="sc-icon fa-solid fa-flask-vial"></span>
               <span class="sc-label">Test Capture</span>
             </button>
-          </span>
+          </span> -->
         </span>
         <span class="sc-tabs">
           <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/info'" set:location="scope.location">
@@ -185,15 +185,7 @@
                                       <span class="sc-icon fa-solid fa-left-right"></span>
                                       <span class="sc-input-group">
                                         <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.data.unitX.value}</span>
-                                        <input
-                                          type="number"
-                                          placeholder="0"
-                                          min="0"
-                                          is="ui-input"
-                                          bind:model="scope.data.unitX.value"
-                                          on:focus="scope.data.doScroll()"
-                                          data-debug="true"
-                                        />
+                                        <input type="number" placeholder="0" min="0" is="ui-input" bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
                                       </span>
                                     </span>
                                     <span class="sc-input" title="ScrollTop">
@@ -205,10 +197,6 @@
                                     </span>
                                   </div>
                                   <div class="sc-field">
-                                    <div class="sc-input sc-select" title="Target Selector">
-                                      <span class="sc-icon fa-solid fa-location-crosshairs"></span>
-                                      <select is="ui-select" set:provider="scope.data.targets" bind:value="scope.data.target.value"></select>
-                                    </div>
                                     <div class="sc-input sc-select" title="Animation Timing">
                                       <span class="sc-icon fa-solid fa-shuffle"></span>
                                       <select is="ui-select" set:provider="scope.data.tweenTypes" bind:value="scope.data.tweenType.id">
@@ -216,6 +204,10 @@
                                           <option is="ui-text" value="{scope.data.id}">${scope.data.option}</option>
                                         </template>
                                       </select>
+                                    </div>
+                                    <div class="sc-input sc-select" title="Target Selector">
+                                      <span class="sc-icon fa-solid fa-location-crosshairs"></span>
+                                      <select is="ui-select" set:provider="scope.data.targets" bind:value="scope.data.target.value"></select>
                                     </div>
                                   </div>
                                 </div>
@@ -492,6 +484,18 @@
                       <div class="sc-window-content" is="ui-component">
                         <div class="sc-fields">
                           <div class="sc-video-player-container">
+                            <div class="sc-logger-container">
+                              <sc-logger>
+                                <ol class="sc-logger-list" is="ui-list" set:provider="scope.ffmpegLogs">
+                                  <template>
+                                    <li>
+                                      <span is="ui-text" class="num">${scope.index + 1}</span>
+                                      <span is="ui-text" set:model="scope.data"></span>
+                                    </li>
+                                  </template>
+                                </ol>
+                              </sc-logger>
+                            </div>
                             <video class="sc-video-player" controls muted></video>
                           </div>
                           <div class="sc-video-filename">

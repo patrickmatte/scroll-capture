@@ -17,17 +17,24 @@ export default class SectionVideo extends Section {
         case 'scrollCaptureVideoURL':
           this.updateVideo(msg);
           break;
+        case 'scrollCaptureFFmpegLogToCC':
+          // console.log('sc msg', msg);
+          app.model.ffmpegLogs.push(msg.message);
+          sendResponse({ gotIt: true });
+          break;
       }
     });
+
+    this.videoContainer = this.querySelector('.sc-video-player-container');
 
     let player = this.querySelector('.sc-video-player');
     player.setAttribute('muted', 'true');
     player.setAttribute('autoplay', 'true');
     player.setAttribute('playsinline', 'true');
     player.setAttribute('controls', '1');
-    // player.addEventListener('canplay', () => {
-    //   dispatchVideoHeight();
-    // });
+    player.addEventListener('canplay', () => {
+      this.element.setAttribute('data-show-video', true);
+    });
   }
 
   updateVideo(message) {
@@ -62,8 +69,11 @@ export default class SectionVideo extends Section {
   }
 
   showDelayComplete() {
+    app.model.ffmpegLogs.value = [];
     let promise = super.showDelayComplete();
     app.model.sendMessage({ type: 'scrollCaptureShowVideo' });
+
+    this.querySelector('.sc-logger-container').style.paddingTop = `${(window.innerHeight / window.innerWidth) * 100}%`;
     return promise;
   }
 
@@ -71,9 +81,9 @@ export default class SectionVideo extends Section {
     // app.model.sendMessage({ type: 'scrollCaptureUnloadVideo' });
     let player = this.querySelector('.sc-video-player');
     player.pause();
-    // player.removeAttribute('src');
-    // player.load();
-
+    player.removeAttribute('src');
+    player.load();
+    this.element.setAttribute('data-show-video', false);
     return super.hideComplete();
   }
 }

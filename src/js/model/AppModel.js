@@ -7,6 +7,7 @@ import CaptureImageModel from './CaptureImageModel';
 import StringData from '../../lib/tsunami/data/StringData';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { TestModel } from './TestModel';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -30,6 +31,7 @@ export default class AppModel extends DataModel {
     this.imgCapSettings = new CaptureImageModel();
     this.tabId = new NumberData();
     this.test = new TestModel();
+    this.ffmpegLogs = new ArrayData();
 
     // this.addEventListener("selectedAction", (event) => {
     //     console.log("selectedAction change", this.selectedAction);

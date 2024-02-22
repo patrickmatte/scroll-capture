@@ -5,6 +5,11 @@
         &[is="scroll-capture"] {
             background-color: $backgroundColorLight;
         }
+        
+        ::-webkit-scrollbar-thumb {
+            background-color: $windowBorderLight;
+        }
+    
 
         .sc-window {
             background-color: $windowColorLight;
