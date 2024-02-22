@@ -33,6 +33,7 @@ export default class ActionCSS extends Action {
     app.model.sendMessage({
       type: 'scrollCaptureInsertCSS',
       css: this.code.value,
+      tabId: app.model.tabId.value,
     });
     return Promise.resolve();
   }

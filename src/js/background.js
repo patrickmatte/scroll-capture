@@ -8,8 +8,6 @@ export function initBackgroundPage() {
 }
 
 async function showMainPanel(tabId) {
-  chrome.storage.local.set({ tabId });
-
   const existingContexts = await chrome.runtime.getContexts({});
   let recording = false;
 
@@ -66,6 +64,7 @@ function onMessageHandler(msg, sender, sendResponse) {
       let handler;
       switch (msg.location) {
         case 'scenario':
+          chrome.storage.local.set({ tabId: msg.tabId });
           handler = updatedTabHandlerScenario;
           break;
         case 'play':
@@ -80,12 +79,12 @@ function onMessageHandler(msg, sender, sendResponse) {
       }
       break;
     case 'scrollCaptureInsertCSS':
-      chrome.storage.local.get('tabId').then((obj) => {
-        chrome.scripting.insertCSS({
-          target: { tabId: obj.tabId },
-          css: msg.css,
-        });
+      // chrome.storage.local.get('tabId').then((obj) => {
+      chrome.scripting.insertCSS({
+        target: { tabId: msg.tabId },
+        css: msg.css,
       });
+      // });
       break;
     case 'scrollCaptureVisibleTab':
       chrome.tabs.captureVisibleTab(null, {}, (dataUrl) => {
