@@ -256,6 +256,38 @@ export class Literal extends ExpressionNode {
   }
 }
 
+export class LogicalExpression extends ExpressionNode {
+  constructor(operator, left, right, changeCallback = null, debug = false) {
+    super('LogicalExpression', changeCallback, debug);
+    this.operator = operator;
+    this.left = left;
+    this.right = right;
+  }
+  static fromNode(node, changeCallback = null, debug = false) {
+    const operator = node.operator;
+    const left = createNode(node.left, changeCallback, debug);
+    const right = createNode(node.right, changeCallback, debug);
+    return new LogicalExpression(operator, left, right, changeCallback, debug);
+  }
+  evaluate(scope) {
+    const left = this.left.evaluate(scope);
+    switch (this.operator) {
+      case '||':
+        return left || this.right.evaluate(scope);
+      case '&&':
+        return left && this.right.evaluate(scope);
+      default:
+        throw new Error(`Unexpected logical operator ${this.operator}`);
+    }
+  }
+  destroy() {
+    this.operator = null;
+    this.left.destroy();
+    this.right.destroy();
+    return super.destroy();
+  }
+}
+
 export class MemberExpression extends ExpressionNode {
   constructor(computed, object, property, changeCallback = null, debug = false) {
     super('MemberExpression', changeCallback, debug);
@@ -407,6 +439,7 @@ export const estree = {
   CallExpression,
   Identifier,
   Literal,
+  LogicalExpression,
   MemberExpression,
   TemplateElement,
   TemplateLiteral,
