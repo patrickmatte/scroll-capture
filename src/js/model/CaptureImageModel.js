@@ -7,10 +7,10 @@ import { app } from '../main';
 
 export default class CaptureImageModel extends DataModel {
   constructor() {
-    super({ delay: 0.5, compression: 100, format: 'png', target: '' });
+    super({ delay: 0.5, compression: 100, format: 'jpeg', target: '' });
     this.imageCanvas = document.createElement('canvas');
 
-    this.formats = new ArrayData('png', 'jpeg');
+    this.formats = new ArrayData('jpeg', 'png');
 
     this.targets = new ArrayData();
     this.fixedElements = new ArrayData(new StringData());

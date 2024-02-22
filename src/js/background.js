@@ -39,6 +39,8 @@ async function showMainPanel(tabId) {
   });
 }
 
+let canvas;
+
 function onMessageHandler(msg, sender, sendResponse) {
   switch (msg.type) {
     case 'scrollCaptureShowMainPanel':
@@ -85,6 +87,9 @@ function onMessageHandler(msg, sender, sendResponse) {
         css: msg.css,
       });
       // });
+      break;
+    case 'scrollCaptureImageCaptureCanvas':
+      canvas = new OffscreenCanvas(msg.width, msg.height);
       break;
     case 'scrollCaptureVisibleTab':
       chrome.tabs.captureVisibleTab(null, {}, (dataUrl) => {

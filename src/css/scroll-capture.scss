@@ -324,10 +324,11 @@ html[data-sc-scrollbars="false"] {
 
 	sc-image-download {
 		.img-panel {
+			width: 100%;
 			overflow: auto;
 			max-height: 400px;
 		}
-
+		
 		.img-container {
 			width: 100%;
 
