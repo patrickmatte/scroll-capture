@@ -329,11 +329,14 @@ html[data-sc-scrollbars="false"] {
 		}
 
 		.img-container {
+			width: 100%;
+
 			canvas, img {
 				width: 100%;
 				height: auto;
 			}
 		}
+
 	}
 
 	sc-info {

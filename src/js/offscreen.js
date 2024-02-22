@@ -1,8 +1,5 @@
 import { createFilename, createFilenameOnly } from './model/utils';
 
-// const { createFFmpeg, fetchFile } = FFmpeg;
-// console.log('FFmpeg', FFmpeg);
-
 let recorder;
 let data = [];
 let blob;
