@@ -126,11 +126,11 @@ async function startRecording(message) {
   recorder = new MediaRecorder(media, options);
   recorder.ondataavailable = (event) => data.push(event.data);
   recorder.onstop = () => {
-    console.log('data=', data);
+    // console.log('data=', data);
     const blobFormat = mimeType.split(';')[0];
-    console.log('blobFormat=', blobFormat);
+    // console.log('blobFormat=', blobFormat);
     blob = new Blob(data, { type: blobFormat });
-    console.log('blob=', blob);
+    // console.log('blob=', blob);
 
     convertStreams(blob, message);
 
