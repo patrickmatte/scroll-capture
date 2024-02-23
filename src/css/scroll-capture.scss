@@ -118,7 +118,7 @@ html[data-sc-scrollbars="false"] {
 		overflow-x: hidden;
 		overscroll-behavior: contain;
 		margin-bottom: 0.75em;
-		padding-right: calc(0.75em - 5px) !important;
+		// padding-right: calc(0.75em - 5px) !important;
 		
 		&[data-actions-length="0"] {
 			display: none;

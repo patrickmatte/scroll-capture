@@ -15,7 +15,15 @@
           </button>
         </span>
       </span>
-      <span class="sc-tabs" is="ui-component"></span>
+      <span class="sc-tabs" is="ui-component">
+        <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/info'" set:location="scope.location">
+          <span class="sc-drag-area"></span>
+          <button is="router-button" data-path="scroll-capture/image/info" title="Info">
+            <span class="sc-icon fa-solid fa-circle-question"></span>
+            <!-- <span class="sc-label">Info</span> -->
+          </button>
+        </span>
+      </span>
     </div>
     <div class="sc-window-content" is="ui-component">
       <sc-image-settings class="sc-section sc-fields" is="ui-component">
@@ -170,6 +178,7 @@
           </div>
         </div>
       </sc-image-download>
+      <sc-info class="sc-section sc-fields"></sc-info>
     </div>
   </div>
 </div>

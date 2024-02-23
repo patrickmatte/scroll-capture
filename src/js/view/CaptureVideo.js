@@ -15,10 +15,12 @@ export default class CaptureVideo extends Section {
     this.settings = this.element.querySelector('sc-video-settings').component;
     this.scenario = this.element.querySelector('sc-scenario').component;
     this.video = this.element.querySelector('sc-video').component;
+    this.info = this.element.querySelector('sc-info').component;
 
     this.branches['settings'] = this.settings;
     this.branches['scenario'] = this.scenario;
     this.branches['video'] = this.video;
+    this.branches['info'] = this.info;
 
     this.defaultChild = 'scenario';
   }
