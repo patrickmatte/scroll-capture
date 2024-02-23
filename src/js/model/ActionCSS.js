@@ -7,7 +7,6 @@ body {
     margin:100px !important;
     color: #ffff00 !important;
     background-color: #ff0000 !important;
-    font-size: 12px !important;
 }`;
 
 export default class ActionCSS extends Action {
@@ -22,6 +21,7 @@ export default class ActionCSS extends Action {
 
   clone() {
     let action = new ActionCSS();
+    //
     return action;
   }
 
