@@ -84,8 +84,8 @@
         }
 
         input, textarea {
-            background: $inputColorLight;
-            background-color: $inputColorLight;
+            background: transparent !important;
+            background-color: transparent !important;
         }
 
         .sc-input {

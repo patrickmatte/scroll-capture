@@ -338,6 +338,30 @@ html[data-sc-scrollbars="false"] {
 			}
 		}
 
+		.sc-wait {
+			display: block;
+		}
+
+		.sc-video-filename {
+			display: none;
+		}
+
+		.img-panel-container {
+			display: none;
+		}
+
+
+		&[data-imageloaded="true"] {
+			.img-panel-container {
+				display: block;
+			}
+			.sc-video-filename {
+				display: block;
+			}
+			.sc-wait {
+				display: none;
+			}
+		}
 	}
 
 	sc-info {

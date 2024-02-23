@@ -1,4 +1,5 @@
 import ArrayData from '../../lib/tsunami/data/ArrayData';
+import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Data from '../../lib/tsunami/data/Data';
 import DataModel from '../../lib/tsunami/data/DataModel';
 import StringData from '../../lib/tsunami/data/StringData';
@@ -10,7 +11,11 @@ export default class CaptureImageModel extends DataModel {
     super({ delay: 0.5, compression: 100, format: 'jpeg', target: '' });
     this.imageCanvas = document.createElement('canvas');
 
-    this.formats = new ArrayData('jpeg', 'png');
+    this.addEventListener('format', (event) => {
+      console.log('event', event);
+    });
+
+    this.formats = new ArrayData({ type: 'jpeg', ext: 'jpg' }, { type: 'png', ext: 'png' });
 
     this.targets = new ArrayData();
     this.fixedElements = new ArrayData(new StringData());

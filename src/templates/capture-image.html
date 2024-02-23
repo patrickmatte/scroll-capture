@@ -22,14 +22,14 @@
         <div>
           <div class="sc-window">
             <!-- <div class="sc-title">
-                            <span class="sc-tabs">
-                                <span class="sc-tab sc-title-tab">
-                                    <span class="sc-icon fa-solid fa-gear"></span>
-                                    <span class="sc-label">Configuration</span>
-                                </span>
-                            </span>
-                            <span class="sc-tabs"></span>
-                        </div> -->
+                <span class="sc-tabs">
+                    <span class="sc-tab sc-title-tab">
+                        <span class="sc-icon fa-solid fa-gear"></span>
+                        <span class="sc-label">Configuration</span>
+                    </span>
+                </span>
+                <span class="sc-tabs"></span>
+            </div> -->
             <div class="sc-window-content" is="ui-component">
               <div class="sc-fields" is="ui-component">
                 <div class="sc-field" title="Scroll Target">
@@ -49,7 +49,11 @@
                     <span class="sc-label">Image Format</span>
                   </div>
                   <div class="sc-input sc-select">
-                    <select is="ui-select" set:provider="scope.imgCapSettings.formats" bind:value="scope.imgCapSettings.format"></select>
+                    <select is="ui-select" set:provider="scope.imgCapSettings.formats" bind:value="scope.imgCapSettings.format">
+                      <template>
+                        <option is="ui-text" value="{scope.data.type}">${scope.data.ext}</option>
+                      </template>
+                    </select>
                   </div>
                 </div>
 
@@ -133,13 +137,13 @@
           <div is="general-settings"></div>
         </div>
       </sc-image-settings>
-      <sc-image-download class="sc-section sc-fields">
+      <sc-image-download class="sc-section sc-fields" data-imageloaded="{imageLoaded}">
         <div class="sc-window" is="ui-component">
-          <div class="sc-title">
+          <!-- <div class="sc-title">
             <div class="sc-tabs">
               <span class="sc-tab sc-title-tab">
                 <a class="sc-download-button" title="Download Image">
-                  <span class="sc-icon fas fa-download"></span>
+                  <span class="sc-icon fa-solid fa-circle-arrow-down"></span>
                   <span class="sc-label">Download</span>
                 </a>
               </span>
@@ -147,16 +151,20 @@
             <div class="sc-tabs">
               <span class="sc-tab"></span>
             </div>
-          </div>
+          </div> -->
           <div class="sc-window-content" is="ui-component">
             <div class="sc-fields">
-              <div>
-                <div class="img-panel">
-                  <a class="sc-download-button img-container" title="Download Image"> </a>
-                </div>
-              </div>
+              <div class="sc-wait">The image should be ready in a few seconds...</div>
               <div class="sc-video-filename">
-                <a class="sc-download-button" title="Download Image"></a>
+                <a class="sc-download-button" title="Download Image">
+                  <span class="sc-icon fa-solid fa-circle-arrow-down"></span>
+                  <span class="sc-label"></span>
+                </a>
+              </div>
+              <div class="img-panel-container">
+                <div class="img-panel">
+                  <a class="sc-download-button img-container" title="Download Image"></a>
+                </div>
               </div>
             </div>
           </div>

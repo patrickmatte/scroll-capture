@@ -1,12 +1,12 @@
 import { timeAMPM } from '../../lib/tsunami/utils/date';
 import { addLeadingZero } from '../../lib/tsunami/utils/number';
 
-export function createFilename(extension, text = 'Scroll Capture') {
+export function createFilename(extension, text = 'ScrollCapture') {
   const name = createFilenameOnly(text);
   return `${name}.${extension}`;
 }
 
-export function createFilenameOnly(text = 'Scroll Capture') {
+export function createFilenameOnly(text = 'ScrollCapture') {
   let date = new Date();
   let ampmTime = timeAMPM(date);
   let dateData = {

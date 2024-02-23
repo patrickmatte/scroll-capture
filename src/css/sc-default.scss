@@ -157,8 +157,8 @@
 	}
 
 	input, textarea {
-		background: $inputColorDark;
-		background-color: $inputColorDark;
+		background: transparent !important;
+		background-color: transparent !important;
 	}
 	
 	// input::-webkit-outer-spin-button,
@@ -420,6 +420,7 @@
 		}
 
 		&.sc-select {
+
 			&:after {
 				content: "\f107";
 				position: absolute;

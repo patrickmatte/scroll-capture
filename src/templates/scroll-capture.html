@@ -468,7 +468,7 @@
                 <sc-video class="sc-section sc-fields">
                   <div>
                     <div class="sc-window" is="ui-component">
-                      <div class="sc-title">
+                      <!-- <div class="sc-title">
                         <div class="sc-tabs">
                           <span class="sc-tab sc-title-tab">
                             <a class="sc-download-button" title="Download">
@@ -480,9 +480,15 @@
                         <div class="sc-tabs">
                           <span class="sc-tab"> </span>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="sc-window-content" is="ui-component">
                         <div class="sc-fields">
+                          <div class="sc-video-filename">
+                            <a class="sc-download-button">
+                              <span class="sc-icon fa-solid fa-circle-arrow-down"></span>
+                              <span class="sc-label"></span>
+                            </a>
+                          </div>
                           <div class="sc-video-player-container">
                             <div class="sc-logger-container">
                               <sc-logger>
@@ -497,9 +503,6 @@
                               </sc-logger>
                             </div>
                             <video class="sc-video-player" controls muted></video>
-                          </div>
-                          <div class="sc-video-filename">
-                            <a class="sc-download-button"></a>
                           </div>
                         </div>
                       </div>

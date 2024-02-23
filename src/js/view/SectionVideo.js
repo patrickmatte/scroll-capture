@@ -62,7 +62,7 @@ export default class SectionVideo extends Section {
             sendTrackEventMessage('download', { media: 'video' });
           });
         }
-        let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button');
+        let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button  span.sc-label');
         fileNameButton.textContent = videoFileName;
       });
     });
