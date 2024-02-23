@@ -15,7 +15,7 @@ export default class PlayState extends Branch {
   }
 
   show() {
-    app.model.save();
+    // app.model.save('PlayState.show');
 
     window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
@@ -39,7 +39,7 @@ export default class PlayState extends Branch {
       sendTrackEventMessage(this.trackName, { actionslength: app.model.actions.value.length });
     }
     if (app.model.actions.value.length > 0) {
-      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true });
+      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true, location: 'play', tabId: app.model.tabId.value });
     }
     this.isPlaying = true;
     this.triggerAction(index);
@@ -68,10 +68,13 @@ export default class PlayState extends Branch {
     window.removeEventListener('beforeunload', this.beforeUnloadHandler);
     this.isPlaying = false;
     if (app.model.actions.value.length > 0) {
-      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false });
+      app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'play', tabId: app.model.tabId.value });
     }
     document.documentElement.removeAttribute('data-sc-cursor');
     document.documentElement.removeAttribute('data-sc-scrollbars');
+
+    app.model.save('PlayState.hide');
+
     return super.hide();
   }
 }

@@ -91,7 +91,7 @@ export default class Action extends EventDispatcher {
 
   captureComplete() {
     this.isCapturing.value = false;
-    app.model.save();
+    app.model.save(this);
   }
 
   captureAtInit() {}
@@ -101,7 +101,7 @@ export default class Action extends EventDispatcher {
     let promise1 = this.trigger();
     let promise2 = promise1.then(() => {
       this.isPlaying.value = false;
-      app.model.save();
+      app.model.save('Action.play');
     });
     return promise2;
   }

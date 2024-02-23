@@ -17,7 +17,7 @@ export default class CaptureVideoSettings extends Section {
   }
 
   hide() {
-    app.model.save();
+    app.model.save('CaptureVideoSettings.hide');
     return super.hide();
   }
 }

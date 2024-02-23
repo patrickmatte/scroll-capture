@@ -19,7 +19,7 @@ export default class ActionsView extends UIList {
   _dragEnd(event) {
     let wasDragged = this.isDragged;
     let result = super._dragEnd(event);
-    if (wasDragged) app.model.save();
+    if (wasDragged) app.model.save('ActionsView._dragEnd');
     return result;
   }
 }

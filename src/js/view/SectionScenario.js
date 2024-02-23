@@ -8,11 +8,11 @@ export default class SectionScenario extends Section {
   }
 
   beforeUnloadHandler() {
-    app.model.save();
+    app.model.save('SectionScenario.beforeUnloadHandler');
   }
 
   showDelayComplete() {
-    app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true, location: 'scenario' });
+    app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true, location: 'scenario', tabId: app.model.tabId.value });
     window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
     let promise = super.showDelayComplete();
@@ -27,7 +27,7 @@ export default class SectionScenario extends Section {
       app.model.actions.selectedIndex.value = lastIndex;
     }
 
-    app.model.save();
+    // app.model.save('SectionScenario.showDelayComplete');
 
     // let actionsViewElement = app.view.scrollCapture.windowContent.element.querySelector("[is='sc-actions-view']");
     // let actionsView = actionsViewElement.component;
@@ -37,10 +37,13 @@ export default class SectionScenario extends Section {
   }
 
   hideDelayComplete() {
-    app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'scenario' });
+    app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'scenario', tabId: app.model.tabId.value });
     window.removeEventListener('beforeunload', this.beforeUnloadHandler);
 
     app.model.actions.selectedItem.value = null;
+
+    app.model.save('SectionScenario.hideDelayComplete');
+
     return super.hideDelayComplete();
   }
 }

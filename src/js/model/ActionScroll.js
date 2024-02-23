@@ -6,6 +6,7 @@ import Point from '../../lib/tsunami/geom/Point';
 import Data from '../../lib/tsunami/data/Data';
 import { getScrollingTargets, isScrollable } from '../../lib/tsunami/window';
 import { app } from '../main';
+import EventHandler from '../../lib/tsunami/components/EventHandler';
 
 export default class ActionScroll extends ActionTween {
   constructor(units = 'px', x = 0, y = 0, duration = 1, delay = 0) {
@@ -16,7 +17,7 @@ export default class ActionScroll extends ActionTween {
     this.targets = new ArrayData();
     this.targets.value = getScrollingTargets(['sc-'], ['documentElement']);
     this.target = new StringData(this.targets.value[0]);
-    this.target.addEventListener(Data.CHANGE, () => {
+    this.targetEventHandler = new EventHandler(this.target, Data.CHANGE, () => {
       this.captureAtInit();
     });
     this.unitX = new NumberData(x);
@@ -141,6 +142,7 @@ export default class ActionScroll extends ActionTween {
 
   deserialize(data) {
     if (!data) return;
+    this.targetEventHandler.enabled = false;
     this.unitX.removeEventListener(Data.CHANGE, this.doScroll);
     this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
     super.deserialize(data);
@@ -150,6 +152,7 @@ export default class ActionScroll extends ActionTween {
     this.units.selectedItem.value = data.units;
     this.unitX.addEventListener(Data.CHANGE, this.doScroll);
     this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+    this.targetEventHandler.enabled = true;
   }
 
   capture() {

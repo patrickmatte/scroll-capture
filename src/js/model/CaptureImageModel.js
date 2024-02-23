@@ -11,10 +11,6 @@ export default class CaptureImageModel extends DataModel {
     super({ delay: 0.5, compression: 100, format: 'jpeg', target: '' });
     this.imageCanvas = document.createElement('canvas');
 
-    this.addEventListener('format', (event) => {
-      console.log('event', event);
-    });
-
     this.formats = new ArrayData({ type: 'jpeg', ext: 'jpg' }, { type: 'png', ext: 'png' });
 
     this.targets = new ArrayData();
@@ -53,6 +49,8 @@ export default class CaptureImageModel extends DataModel {
   }
 
   deserialize(data = {}) {
+    super.deserialize(data);
+
     if (data.hasOwnProperty('fixedElements')) {
       const array = data.fixedElements.map((value) => {
         return new StringData(value);

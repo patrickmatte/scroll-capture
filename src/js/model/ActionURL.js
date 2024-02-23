@@ -4,7 +4,7 @@ import Action from './Action';
 export default class ActionURL extends Action {
   constructor() {
     super('ActionURL', 'URL', 'Load a URL');
-    this.icon.value = 'fa-solid fa-link';
+    this.icon.value = 'fa-solid fa-rotate';
     // this.icon.value = 'fa-solid fa-rotate-right';
     this.url = new StringData('');
     this.isTestable.value = true;

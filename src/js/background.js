@@ -115,27 +115,31 @@ function onMessageHandler(msg, sender, sendResponse) {
 }
 
 function updatedTabHandlerPlay(tabId, changeInfo, tab) {
-  executeScript(tab.id).then(() => {
-    chrome.runtime.getContexts({}).then((existingContexts) => {
-      const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
-      const recording = offscreenDocument.documentUrl.endsWith('#recording');
-      chrome.tabs.sendMessage(tab.id, {
-        type: 'scrollCaptureLocation',
-        location: recording ? 'record' : 'play',
-        tabId,
+  if (changeInfo.status == 'complete') {
+    executeScript(tab.id).then(() => {
+      chrome.runtime.getContexts({}).then((existingContexts) => {
+        const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
+        const recording = offscreenDocument.documentUrl.endsWith('#recording');
+        chrome.tabs.sendMessage(tab.id, {
+          type: 'scrollCaptureLocation',
+          location: recording ? 'record' : 'play',
+          tabId,
+        });
       });
     });
-  });
+  }
 }
 
 function updatedTabHandlerScenario(tabId, changeInfo, tab) {
-  chrome.storage.local.get('tabId').then((obj) => {
-    if (obj.tabId == tabId) {
-      executeScript(tab.id).then(() => {
-        sendDefaultLocation(tab.id);
-      });
-    }
-  });
+  if (changeInfo.status == 'complete') {
+    chrome.storage.local.get('tabId').then((obj) => {
+      if (obj.tabId == tabId) {
+        executeScript(tab.id).then(() => {
+          sendDefaultLocation(tab.id);
+        });
+      }
+    });
+  }
 }
 
 function sendDefaultLocation(tabId) {

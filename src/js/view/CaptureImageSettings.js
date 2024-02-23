@@ -15,13 +15,13 @@ export default class CaptureImageSettings extends Section {
 
     app.model.setDefaultLocation(this.path);
 
-    // app.model.save();
+    // app.model.save("CaptureImageSettings.showDelayComplete");
 
     return promise;
   }
 
   hide() {
-    app.model.save();
+    app.model.save('CaptureImageSettings.hide');
     return super.hide();
   }
 }

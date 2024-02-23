@@ -8,6 +8,7 @@ import StringData from '../../lib/tsunami/data/StringData';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { TestModel } from './TestModel';
 import ArrayData from '../../lib/tsunami/data/ArrayData';
+import EventHandler from '../../lib/tsunami/components/EventHandler';
 
 export default class AppModel extends DataModel {
   constructor() {
@@ -45,8 +46,13 @@ export default class AppModel extends DataModel {
     // 	// new ActionMouseEvent("click", 0, 0),
     // ];
 
-    this.actions.addEventListener('add', this.save);
-    this.actions.addEventListener('remove', this.save);
+    this.actionsAddHandler = new EventHandler(this.actions, 'add', () => {
+      this.save('actions add');
+    });
+
+    this.actionsRemoveHandler = new EventHandler(this.actions, 'remove', () => {
+      this.save('actions remove');
+    });
   }
 
   get actions() {
@@ -66,7 +72,8 @@ export default class AppModel extends DataModel {
     }
   }
 
-  save() {
+  save(caller) {
+    // console.log('!!!save', caller);
     this.isSaving.value = true;
     let obj = {
       actions: this.actions.serialize(),
@@ -91,15 +98,15 @@ export default class AppModel extends DataModel {
     let jsonPromise = chrome.storage.local.get(['json']).then((result) => {
       if (result.json) {
         let data = JSON.parse(result.json);
-        this.actions.removeEventListener('add', this.save);
-        this.actions.removeEventListener('remove', this.save);
+        this.actionsAddHandler.enabled = false;
+        this.actionsRemoveHandler.enabled = false;
 
         this.actions.deserialize(data.actions);
         this.settings.deserialize(data.settings);
         this.imgCapSettings.deserialize(data.imgCapSettings);
 
-        this.actions.addEventListener('add', this.save);
-        this.actions.addEventListener('remove', this.save);
+        this.actionsAddHandler.enabled = true;
+        this.actionsRemoveHandler.enabled = true;
       }
     });
     return jsonPromise;
@@ -128,7 +135,7 @@ export default class AppModel extends DataModel {
   // 	let promise = this.actions.selectedItem.value.play();
   // 	promise.then(()=> {
   // 		this.isPlayingSelected.value = false;
-  // 		this.save();
+  // 		this.save("playSelected");
   // 	});
   // }
 
@@ -142,6 +149,6 @@ export default class AppModel extends DataModel {
 
   clearActions() {
     this.actions.clear();
-    this.save();
+    this.save('clearActions');
   }
 }
