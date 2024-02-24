@@ -84,10 +84,15 @@ html[data-sc-scrollbars="false"] {
 			margin-bottom: 0.75em;
 			width: 100%;
 
+
 			&:last-child {
 				margin-bottom: 0;
 			}
 		}
+		*:has(+*:last-child[data-visible="false"]) {
+			margin-bottom: 0;
+		}
+
 	}
 
 	.sc-fields-list {

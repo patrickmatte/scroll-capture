@@ -114,55 +114,53 @@
             </div> -->
             <div class="sc-window-content" is="ui-component">
               <div class="sc-fields" is="ui-component">
-                <div>
-                  <div class="sc-field-group" title="Hidden Elements">
-                    <span class="sc-space">
-                      <span class="sc-icon fa-solid fa-eye-slash"></span>
-                      <span class="sc-label">Hidden Elements</span>
+                <div class="sc-field-group" title="Hidden Elements">
+                  <span class="sc-space">
+                    <span class="sc-icon fa-solid fa-eye-slash"></span>
+                    <span class="sc-label">Hidden Elements</span>
+                  </span>
+                  <span class="sc-input-group">
+                    <span class="sc-input sc-select">
+                      <select is="ui-select" set:provider="scope.imgCapSettings.hiddenTypes" bind:value="scope.imgCapSettings.hiddenType.value">
+                        <template>
+                          <option is="ui-text" value="{scope.data.type}">${scope.data.name}</option>
+                        </template>
+                      </select>
                     </span>
-                    <span class="sc-input-group">
-                      <span class="sc-input sc-select">
-                        <select is="ui-select" set:provider="scope.imgCapSettings.hiddenTypes" bind:value="scope.imgCapSettings.hiddenType.value">
-                          <template>
-                            <option is="ui-text" value="{scope.data.type}">${scope.data.name}</option>
-                          </template>
-                        </select>
-                      </span>
-                      <button class="sc-trash-button" is="ui-button" on:click="scope.imgCapSettings.addHiddenElement()" title="Add">
-                        <span class="sc-icon fa-solid fa-square-plus"></span>
-                      </button>
-                    </span>
-                  </div>
+                    <button class="sc-trash-button" is="ui-button" on:click="scope.imgCapSettings.addHiddenElement()" title="Add">
+                      <span class="sc-icon fa-solid fa-square-plus"></span>
+                    </button>
+                  </span>
+                </div>
 
-                  <div
-                    class="sc-fixed-elements-list sc-field-column"
-                    is="ui-list"
-                    data-visible="{scope.imgCapSettings.hiddenElements.length.value > 0}"
-                    set:provider="scope.imgCapSettings.hiddenElements"
-                  >
-                    <template>
-                      <div class="sc-field">
-                        <span class="sc-input {scope.data.type == 'fixed' ? 'sc-select' : ''}" title="Element Selector" is="ui-component">
-                          <span class="sc-icon fa-solid fa-location-crosshairs"></span>
-                          <span is="ui-list" set:provider="[scope.data]">
-                            <template data-type="query">
-                              <input type="text" is="ui-input" placeholder="Enter selector" bind:model="scope.data.selector" />
-                            </template>
-                            <template data-type="fixed">
-                              <select is="ui-select" set:provider="scope.root.imgCapSettings.fixedSelectors" bind:value="scope.data.selector">
-                                <template>
-                                  <option is="ui-text" value="{scope.data}">${scope.data}</option>
-                                </template>
-                              </select>
-                            </template>
-                          </span>
+                <div
+                  class="sc-fixed-elements-list sc-field-column"
+                  is="ui-list"
+                  data-visible="{scope.imgCapSettings.hiddenElements.length.value > 0}"
+                  set:provider="scope.imgCapSettings.hiddenElements"
+                >
+                  <template>
+                    <div class="sc-field">
+                      <span class="sc-input {scope.data.type == 'fixed' ? 'sc-select' : ''}" title="Element Selector" is="ui-component">
+                        <span class="sc-icon fa-solid fa-location-crosshairs"></span>
+                        <span is="ui-list" set:provider="[scope.data]">
+                          <template data-type="query">
+                            <input type="text" is="ui-input" placeholder="Enter selector" bind:model="scope.data.selector" />
+                          </template>
+                          <template data-type="fixed">
+                            <select is="ui-select" set:provider="scope.root.imgCapSettings.fixedSelectors" bind:value="scope.data.selector">
+                              <template>
+                                <option is="ui-text" value="{scope.data.value}">${scope.data.name}</option>
+                              </template>
+                            </select>
+                          </template>
                         </span>
-                        <button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.root.imgCapSettings.removeHiddenElement(scope.data)" title="Delete">
-                          <span class="sc-icon fa-solid fa-trash-alt"></span>
-                        </button>
-                      </div>
-                    </template>
-                  </div>
+                      </span>
+                      <button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.root.imgCapSettings.removeHiddenElement(scope.data)" title="Delete">
+                        <span class="sc-icon fa-solid fa-trash-alt"></span>
+                      </button>
+                    </div>
+                  </template>
                 </div>
               </div>
             </div>

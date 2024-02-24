@@ -14,15 +14,15 @@ export default class CaptureImageModel extends DataModel {
     this.formats = new ArrayData({ type: 'jpeg', ext: 'jpg' }, { type: 'png', ext: 'png' });
 
     this.targets = new ArrayData();
+    this.hiddenElements = new ArrayData();
 
-    this.hiddenTypes = new ArrayData({ type: 'query', name: 'Selector' }, { type: 'fixed', name: 'Fixed Element' });
+    this.hiddenTypes = new ArrayData({ type: 'fixed', name: 'Fixed Element' }, { type: 'query', name: 'Selector' });
     this.hiddenType = new StringData(this.hiddenTypes[0].type);
 
     this.fixedSelectors = new ArrayData();
     this.refreshFixedSelectors();
 
-    this.hiddenElements = new ArrayData();
-    this.addHiddenElement();
+    // this.addHiddenElement();
 
     this.refreshTargets();
   }
@@ -32,7 +32,7 @@ export default class CaptureImageModel extends DataModel {
     let selector = '';
     if (type == 'fixed') {
       this.refreshFixedSelectors();
-      selector = this.fixedSelectors[0];
+      selector = this.fixedSelectors[0].value;
     }
     const item = new DataModel({ selector, type });
     this.hiddenElements.unshift(item);
@@ -40,7 +40,7 @@ export default class CaptureImageModel extends DataModel {
 
   removeHiddenElement(model) {
     this.hiddenElements.remove(model);
-    if (this.hiddenElements.length < 1) this.addHiddenElement();
+    // if (this.hiddenElements.length < 1) this.addHiddenElement();
   }
 
   refreshTargets() {
@@ -56,10 +56,16 @@ export default class CaptureImageModel extends DataModel {
 
   refreshFixedSelectors() {
     const fixedElements = getFixedElements(['sc-']);
-    // const fixedElementList = fixedElements.map((selector) => {
-    //   return { selector, name: selector };
-    // });
-    this.fixedSelectors.value = ['Select a fixed element', ...fixedElements];
+    const fixedSelectors = fixedElements.map((selector) => {
+      return { value: selector, name: selector };
+    });
+    const missingSelectors = [];
+    this.hiddenElements.forEach((hiddenElement) => {
+      const fixedElement = fixedElements.find((fixed) => fixed.selector == hiddenElement.selector);
+      if (!fixedElement) missingSelectors.push({ value: hiddenElement.selector, name: hiddenElement.selector });
+    });
+
+    this.fixedSelectors.value = [{ value: '', name: 'Select a fixed element' }, ...missingSelectors, ...fixedSelectors];
   }
 
   serialize() {
@@ -82,6 +88,7 @@ export default class CaptureImageModel extends DataModel {
         return model;
       });
       this.hiddenElements.value = hiddenElements;
+      this.refreshFixedSelectors();
     }
   }
 }

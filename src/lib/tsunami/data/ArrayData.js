@@ -185,6 +185,10 @@ export default class ArrayData extends Data {
     return selected;
   }
 
+  forEach(callback) {
+    return this._value.forEach(callback);
+  }
+
   filter(callback) {
     return this._value.filter(callback);
   }

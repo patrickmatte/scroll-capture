@@ -1,19 +1,19 @@
 import Section from './Section';
 import { app } from '../main';
+import EventHandler from '../../lib/tsunami/components/EventHandler';
 
 export default class SectionScenario extends Section {
   constructor(element) {
     super(element);
-    this.beforeUnloadHandler = this.beforeUnloadHandler.bind(this);
-  }
-
-  beforeUnloadHandler() {
-    app.model.save('SectionScenario.beforeUnloadHandler');
+    this.beforeUnloadHandler = new EventHandler(window, 'beforeunload', () => {
+      app.model.save('SectionScenario.beforeUnloadHandler');
+    });
+    this.beforeUnloadHandler.enabled = false;
   }
 
   showDelayComplete() {
     app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: true, location: 'scenario', tabId: app.model.tabId.value });
-    window.addEventListener('beforeunload', this.beforeUnloadHandler);
+    this.beforeUnloadHandler.enabled = true;
 
     let promise = super.showDelayComplete();
 
@@ -38,7 +38,7 @@ export default class SectionScenario extends Section {
 
   hideDelayComplete() {
     app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'scenario', tabId: app.model.tabId.value });
-    window.removeEventListener('beforeunload', this.beforeUnloadHandler);
+    this.beforeUnloadHandler.enabled = false;
 
     app.model.actions.selectedItem.value = null;
 
