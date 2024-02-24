@@ -19,7 +19,7 @@ export default class ExpressionBind {
       right: true,
     };
 
-    this.changeHandlerRight(null);
+    this.changeHandlerRight({ default: true });
   }
 
   changeHandlerLeft(event) {
@@ -34,11 +34,12 @@ export default class ExpressionBind {
 
   changeHandlerRight(event) {
     if (!this.enabled.right) return;
-    if (this.debug) console.log('changeHandlerRight', event);
+    if (this.debug) console.log('changeHandlerRight event', event);
     this.enabled.left = false;
     this.node.left = this.left;
     this.node.right = this.right;
-    this.node.evaluate(this.scopeRight, this.scopeLeft);
+    const val = this.node.evaluate(this.scopeRight, this.scopeLeft);
+    if (this.debug) console.log('changeHandlerRight val', val);
     this.enabled.left = true;
   }
 

@@ -120,10 +120,6 @@ html[data-sc-scrollbars="false"] {
 		margin-bottom: 0.75em;
 		// padding-right: calc(0.75em - 5px) !important;
 		
-		&[data-actions-length="0"] {
-			display: none;
-		}
-
 		[is='sc-action-view'].sc-window {
 			margin-top: 0.75em;
 			

@@ -2,7 +2,7 @@ import UIComponent from './UIComponent';
 import { destroyElement, importTemplate } from '../tsunami';
 import ArrayData from '../data/ArrayData';
 import Data from '../data/Data';
-import Scope from '../Scope';
+import Scope from '../data/Scope';
 import Tween from '../animation/Tween';
 import TweenProperty from '../animation/TweenProperty';
 import Easing from '../animation/Easing';
@@ -21,6 +21,8 @@ export default class UIListBase extends UIComponent {
     this.template = '<li is="ui-text">${scope.data}</li>';
     this.templates = {};
     this._provider = new ArrayData();
+
+    this.templatekey = 'type';
 
     let templates = [];
     if (this.element) {
@@ -102,7 +104,7 @@ export default class UIListBase extends UIComponent {
   }
 
   _getModelType(model) {
-    let type = model.type;
+    let type = model[this.templatekey];
     if (type instanceof Data) {
       type = type.value;
     }

@@ -135,9 +135,9 @@ export class ImageCapture extends Branch {
   }
 
   hideElements() {
-    app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
-      if (obj.value) {
-        document.documentElement.querySelectorAll(obj.value).forEach((el) => {
+    app.model.imgCapSettings.hiddenElements.value.forEach((obj) => {
+      if (obj.selector) {
+        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
           el.style.visibility = 'hidden';
         });
       }
@@ -145,9 +145,9 @@ export class ImageCapture extends Branch {
   }
 
   showElements() {
-    app.model.imgCapSettings.fixedElements.value.forEach((obj) => {
-      if (obj.value) {
-        document.documentElement.querySelectorAll(obj.value).forEach((el) => {
+    app.model.imgCapSettings.hiddenElements.value.forEach((obj) => {
+      if (obj.selector) {
+        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
           el.style.visibility = 'visible';
         });
       }

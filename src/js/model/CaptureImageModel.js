@@ -14,18 +14,33 @@ export default class CaptureImageModel extends DataModel {
     this.formats = new ArrayData({ type: 'jpeg', ext: 'jpg' }, { type: 'png', ext: 'png' });
 
     this.targets = new ArrayData();
-    this.fixedElements = new ArrayData(new StringData());
+
+    this.hiddenTypes = new ArrayData({ type: 'query', name: 'Selector' }, { type: 'fixed', name: 'Fixed Element' });
+    this.hiddenType = new StringData(this.hiddenTypes[0].type);
+
+    this.fixedSelectors = new ArrayData();
+    this.refreshFixedSelectors();
+
+    this.hiddenElements = new ArrayData();
+    this.addHiddenElement();
 
     this.refreshTargets();
   }
 
   addHiddenElement() {
-    this.fixedElements.unshift(new StringData());
+    const type = this.hiddenType.value;
+    let selector = '';
+    if (type == 'fixed') {
+      this.refreshFixedSelectors();
+      selector = this.fixedSelectors[0];
+    }
+    const item = new DataModel({ selector, type });
+    this.hiddenElements.unshift(item);
   }
 
   removeHiddenElement(model) {
-    this.fixedElements.remove(model);
-    if (this.fixedElements.length < 1) this.addHiddenElement();
+    this.hiddenElements.remove(model);
+    if (this.hiddenElements.length < 1) this.addHiddenElement();
   }
 
   refreshTargets() {
@@ -39,23 +54,34 @@ export default class CaptureImageModel extends DataModel {
     // this.fixedElementList.value = fixedElementList;
   }
 
+  refreshFixedSelectors() {
+    const fixedElements = getFixedElements(['sc-']);
+    // const fixedElementList = fixedElements.map((selector) => {
+    //   return { selector, name: selector };
+    // });
+    this.fixedSelectors.value = ['Select a fixed element', ...fixedElements];
+  }
+
   serialize() {
     let data = super.serialize();
-    const array = this.fixedElements.value.map((data) => {
-      return data.value;
+    const array = this.hiddenElements.value.map((data) => {
+      return data.serialize();
     });
-    data.fixedElements = array;
+    data.hiddenElements = array;
+    console.log('serialize', data);
     return data;
   }
 
   deserialize(data = {}) {
+    console.log('deserialize', data);
     super.deserialize(data);
-
-    if (data.hasOwnProperty('fixedElements')) {
-      const array = data.fixedElements.map((value) => {
-        return new StringData(value);
+    if (data.hasOwnProperty('hiddenElements')) {
+      const hiddenElements = data.hiddenElements.map((value) => {
+        const model = new DataModel({ type: '', selector: '' });
+        model.deserialize(value);
+        return model;
       });
-      this.fixedElements.value = array;
+      this.hiddenElements.value = hiddenElements;
     }
   }
 }

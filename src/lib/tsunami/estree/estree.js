@@ -8,7 +8,7 @@ export function parseExpression(expression, changeCallback = null, debug = false
   const ast = acorn.parseExpressionAt(expression, 0, { ecmaVersion });
   if (debug) console.log('acorn ast', ast);
   const node = createNode(ast, changeCallback, debug);
-  if (debug) console.log('eval node', node);
+  if (debug) console.log('node', node);
   return node;
 }
 
@@ -60,6 +60,24 @@ export class ExpressionNode {
   destroy() {
     if (this.changeEventHandler) this.changeEventHandler.destroy();
     this.changeCallback = null;
+  }
+}
+
+export class ArrayExpression extends ExpressionNode {
+  constructor(elements, changeCallback = null, debug = false) {
+    super('ArrayExpression', changeCallback, debug);
+    this.elements = elements;
+  }
+  static fromNode(node, changeCallback = null, debug = false) {
+    const elements = node.elements.map((element) => createNode(element, changeCallback, debug));
+    return new ArrayExpression(elements, changeCallback, debug);
+  }
+  evaluate(scope) {
+    return evaluateSpreadArray(this.elements, scope, this.debug);
+  }
+  destroy() {
+    this.elements.map((node) => node.destroy());
+    return super.destroy();
   }
 }
 
@@ -221,6 +239,33 @@ export class CallExpression extends ExpressionNode {
   }
 }
 
+export class ConditionalExpression extends ExpressionNode {
+  constructor(alternate, consequent, test, changeCallback = null, debug = false) {
+    super('ConditionalExpression', changeCallback, debug);
+    this.alternate = alternate;
+    this.consequent = consequent;
+    this.test = test;
+  }
+  static fromNode(node, changeCallback = null, debug = false) {
+    const alternate = createNode(node.alternate, changeCallback, debug);
+    const consequent = createNode(node.consequent, changeCallback, debug);
+    const test = createNode(node.test, changeCallback, debug);
+    return new ConditionalExpression(alternate, consequent, test, changeCallback, debug);
+  }
+  evaluate(scope) {
+    if (this.test.evaluate(scope)) {
+      return this.consequent.evaluate(scope);
+    }
+    return this.alternate.evaluate(scope);
+  }
+  destroy() {
+    this.alternate.destroy();
+    this.consequent.destroy();
+    this.test.destroy();
+    return super.destroy();
+  }
+}
+
 export class Identifier extends ExpressionNode {
   constructor(name, changeCallback = null, debug = false) {
     super('Identifier', changeCallback, debug);
@@ -231,7 +276,8 @@ export class Identifier extends ExpressionNode {
   }
   evaluate(scope) {
     this.observe(scope, this.name);
-    return scope[this.name];
+    const value = scope[this.name];
+    return value;
   }
   destroy() {
     this.name = null;
@@ -310,9 +356,11 @@ export class MemberExpression extends ExpressionNode {
         if (this.computed) {
           const name = this.property.evaluate(scope);
           this.observe(object, name);
-          return object[name];
+          const computedValue = object[name];
+          return computedValue;
         } else {
-          return this.property.evaluate(object);
+          const value = this.property.evaluate(object);
+          return value;
         }
     }
   }
@@ -361,11 +409,15 @@ export class TemplateLiteral extends ExpressionNode {
       const value = this.expressions[i].evaluate(scope);
       if (value === null) {
         s += 'null';
+        if (this.debug) console.log('!!! add null');
       } else if (value === undefined) {
         s += 'undefined';
+        if (this.debug) console.log('!!!  add undefined');
       } else {
         s += value.toString();
+        if (this.debug) console.log('!!!  add toString');
       }
+      if (this.debug) console.log('!!! s =', s);
     }
     return s + this.quasis[i].value.cooked;
   }
@@ -434,9 +486,11 @@ export class UnaryExpression extends ExpressionNode {
 }
 
 export const estree = {
+  ArrayExpression,
   AssignmentExpression,
   BinaryExpression,
   CallExpression,
+  ConditionalExpression,
   Identifier,
   Literal,
   LogicalExpression,

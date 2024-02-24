@@ -24,6 +24,7 @@
 			}
 		}
 
+
 		.sc-label {
 			width: calc(25% - 0.25em);
 			flex-shrink: 0;
@@ -35,10 +36,26 @@
 			height: 2em;
 		}
 
-		.sc-input, .sc-space {
+		.sc-input, .sc-space, .sc-select {
 			width: 50%;
 			flex-shrink: 1;
 			flex-grow: 1;
+
+			> [is="ui-list"] {
+				flex-shrink: 1;
+				flex-grow: 1;
+				display: inline-flex;
+
+				input {
+					flex-shrink: 1;
+					flex-grow: 1;
+				}
+			}
+	
+			// * {
+			// 	flex-shrink: 1;
+			// 	flex-grow: 1;
+			// }
 
 			input[size] {
 				flex-grow: 0;

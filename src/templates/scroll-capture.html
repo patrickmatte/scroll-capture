@@ -128,7 +128,7 @@
               <div class="sc-window-content" is="ui-component">
                 <sc-scenario class="sc-section sc-fields">
                   <div>
-                    <sc-actions-view data-actions-length="{scope.actions.length.value}" set:provider="scope.actions">
+                    <sc-actions-view data-visible="{scope.actions.length.value > 0}" set:provider="scope.actions">
                       <template>
                         <div
                           class="sc-window ui-list-element"

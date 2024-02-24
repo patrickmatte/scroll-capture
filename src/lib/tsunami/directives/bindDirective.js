@@ -1,4 +1,3 @@
-import Bind from '../data/Bind';
 import ExpressionBind from '../data/ExpressionBind';
 
 export function bindDirective(component, debug = false) {

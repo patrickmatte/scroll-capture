@@ -277,11 +277,6 @@
 		display: none !important;
 	}
 
-	*[data-actions-length="0"] {
-		opacity: 0.5;
-		pointer-events: none;
-	}
-
 	*[data-enabled="false"] {
 		opacity: 0.5;
 		pointer-events: none;
@@ -333,7 +328,7 @@
 		background-color: $inputColorDark;
 	}
 
-	.sc-input, .sc-space {
+	.sc-input, .sc-space, .sc-select {
 		height: 2em;
 		border-radius: $borderRadius;
 		display: inline-flex;
@@ -379,26 +374,6 @@
 			opacity: 0.5;
 		}
 
-		.sc-input-group {
-			display: inline-flex;
-			align-items: center;
-			justify-content: flex-start;
-			width: 100%;
-
-			& > * {
-				margin-left: 0.25em;
-				margin-right: 0.25em;
-
-				&:first-child {
-					margin-left: 0;
-				}
-
-				&:last-child {
-					margin-right: 0;
-				}
-			}
-		}
-
 		.sc-input-unit {
 			position: absolute;
 			padding: 0.5em;
@@ -419,26 +394,6 @@
 			}
 		}
 
-		&.sc-select {
-
-			&:after {
-				content: "\f107";
-				position: absolute;
-				font-size: 1.2em;
-				top: calc(50% - 0.5em);
-				font-family: 'Font Awesome 6 Free';
-				font-weight: 900;
-				right: 0.5em;
-				pointer-events: none;
-				opacity: 0.5;
-			}
-
-			&:hover {
-				&:after {
-					opacity: 1;
-				}
-			}
-		}
 
 		input {
 			background: transparent !important;
@@ -446,21 +401,79 @@
 			padding: 0;
 		}
 
-		select {
-			-webkit-appearance: none;
-			appearance: none;
-			background: none;
-			border: none;
-			padding: 0;
-			color: inherit;
-			display: inline-block;
-			font-family: inherit;
-			flex-grow: 1;
-			width: 100%;
+	}
 
-			option {
-				line-height: 1;
+	.sc-input-group {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+
+		.sc-input, .sc-select {
+			flex-grow: 1;
+			flex-shrink: 1;
+		}
+
+		.sc-icon, button {
+			flex-grow: 0;
+			flex-shrink: 0;
+		}
+
+		> * {
+			margin-left: 0.25em;
+			margin-right: 0.25em;
+			flex-grow: 1;
+			flex-shrink: 1;
+
+			&:first-child {
+				margin-left: 0;
 			}
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+
+	.sc-select {
+
+		// select {
+		// 	padding-right: 2em;
+		// }
+
+		&:after {
+			content: "\f107";
+			position: absolute;
+			font-size: 1.2em;
+			top: calc(50% - 0.5em);
+			font-family: 'Font Awesome 6 Free';
+			font-weight: 900;
+			right: 0.5em;
+			pointer-events: none;
+			opacity: 0.5;
+		}
+
+		&:hover {
+			&:after {
+				opacity: 1;
+			}
+		}
+	}
+	
+	select {
+		-webkit-appearance: none;
+		appearance: none;
+		background: none;
+		border: none;
+		padding: 0;
+		color: inherit;
+		display: inline-block;
+		font-family: inherit;
+		flex-grow: 1;
+		width: 100%;
+
+		option {
+			line-height: 1;
 		}
 	}
 

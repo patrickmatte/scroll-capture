@@ -62,6 +62,10 @@ export default class DataModel extends Data {
     });
   }
 
+  toString() {
+    return this.serialize();
+  }
+
   destroy() {
     for (let i in this) {
       let data = this[i];
