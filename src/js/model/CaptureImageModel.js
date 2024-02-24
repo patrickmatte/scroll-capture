@@ -74,12 +74,10 @@ export default class CaptureImageModel extends DataModel {
       return data.serialize();
     });
     data.hiddenElements = array;
-    console.log('serialize', data);
     return data;
   }
 
   deserialize(data = {}) {
-    console.log('deserialize', data);
     super.deserialize(data);
     if (data.hasOwnProperty('hiddenElements')) {
       const hiddenElements = data.hiddenElements.map((value) => {

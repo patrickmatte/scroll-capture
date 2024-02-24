@@ -18,11 +18,9 @@ export default class CaptureImageSettings extends Section {
 
     this.beforeUnloadHandler.enabled = true;
 
-    app.model.imgCapSettings.refreshTargets();
-
     app.model.setDefaultLocation(this.path);
 
-    // app.model.save("CaptureImageSettings.showDelayComplete");
+    app.model.imgCapSettings.refreshTargets();
 
     return promise;
   }

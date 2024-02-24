@@ -8,7 +8,7 @@
   <!-- <ul is="ui-list" set:provider="scope.actions">
 		<template>
 			<label>
-				<input class="test-radio" type="radio" is="ui-input" value="{scope.data.name.value}" name="options1" bind:model="scope.rootScope.selectedAction" />
+				<input class="test-radio" type="radio" is="ui-input" value="{scope.data.name.value}" name="options1" bind:model="scope.root.selectedAction" />
 				<span is="ui-text">${scope.data.name.value}</span>
 			</label>
 		</template>
@@ -16,7 +16,7 @@
 	<ul is="ui-list" set:provider="scope.actions">
 		<template>
 			<label>
-				<input class="test-radio" type="radio" is="ui-component" value="{scope.data.name.value}" name="options2" set:checked="(scope.rootScope.selectedAction == element.value);" on:change="scope.rootScope.selectedAction = element.value" />
+				<input class="test-radio" type="radio" is="ui-component" value="{scope.data.name.value}" name="options2" set:checked="(scope.root.selectedAction == element.value);" on:change="scope.root.selectedAction = element.value" />
 				<span is="ui-text">${scope.data.name.value}</span>
 			</label>
 		</template>
@@ -153,7 +153,7 @@
                             <span class="sc-tabs">
                               <span class="sc-tab" data-visible="{scope.data.isDuplicateable.value}" is="ui-component">
                                 <div class="ui-list-drag-area"></div>
-                                <button class="sc-set-button" is="ui-button" on:click="scope.rootScope.actions.duplicateAction(scope.data)" title="Duplicate">
+                                <button class="sc-set-button" is="ui-button" on:click="scope.root.actions.duplicateAction(scope.data)" title="Duplicate">
                                   <span class="sc-icon fa-regular fa-clone"></span>
                                 </button>
                               </span>
@@ -171,7 +171,7 @@
                               </span>
                               <span class="sc-tab">
                                 <div class="ui-list-drag-area"></div>
-                                <button class="sc-trash-button" is="ui-button" on:click="scope.rootScope.actions.removeAction(scope.data)" title="Delete">
+                                <button class="sc-trash-button" is="ui-button" on:click="scope.root.actions.removeAction(scope.data)" title="Delete">
                                   <span class="sc-icon fa-solid fa-trash-alt"></span>
                                 </button>
                               </span>
@@ -343,7 +343,7 @@
                             data-type="{scope.data.type}"
                             is="ui-button"
                             title="{scope.data.description.value}"
-                            on:click="scope.rootScope.actions.cloneAction(scope.data)"
+                            on:click="scope.root.actions.cloneAction(scope.data)"
                           >
                             <span class="sc-icon {scope.data.icon.value}" is="ui-component"></span>
                           </button>

@@ -145,7 +145,7 @@
                         <span class="sc-icon fa-solid fa-location-crosshairs"></span>
                         <span is="ui-list" set:provider="[scope.data]">
                           <template data-type="query">
-                            <input type="text" is="ui-input" placeholder="Enter selector" bind:model="scope.data.selector" />
+                            <input type="text" is="ui-input" placeholder="Enter element selector" bind:model="scope.data.selector" />
                           </template>
                           <template data-type="fixed">
                             <select is="ui-select" set:provider="scope.root.imgCapSettings.fixedSelectors" bind:value="scope.data.selector">
