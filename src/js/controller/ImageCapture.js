@@ -136,12 +136,9 @@ export class ImageCapture extends Branch {
 
   hideElements() {
     app.model.imgCapSettings.hiddenElements.forEach((obj) => {
-      console.log('hideElements obj', obj);
       if (obj.selector) {
-        console.log('obj.selector', obj.selector);
         const list = document.documentElement.querySelectorAll(obj.selector);
         list.forEach((el) => {
-          console.log('el', el);
           el.style.visibility = 'hidden';
         });
       }
@@ -151,7 +148,8 @@ export class ImageCapture extends Branch {
   showElements() {
     app.model.imgCapSettings.hiddenElements.forEach((obj) => {
       if (obj.selector) {
-        document.documentElement.querySelectorAll(obj.selector).forEach((el) => {
+        const list = document.documentElement.querySelectorAll(obj.selector);
+        list.forEach((el) => {
           el.style.visibility = 'visible';
         });
       }
