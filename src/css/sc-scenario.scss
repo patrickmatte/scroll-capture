@@ -1,0 +1,88 @@
+.sc-default {
+  sc-scenario {
+    .sc-scrollpane {
+    }
+
+    sc-actions-view {
+      width: 100%;
+      display: block;
+      max-height: 50vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      margin-bottom: 0.75em;
+      // padding-right: calc(0.75em - 5px) !important;
+
+      [is='sc-action-view'].sc-window {
+        margin-top: 0.75em;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &.drag-element {
+          position: absolute;
+          margin-top: 0;
+
+          .ui-list-drag-area {
+            display: none;
+          }
+        }
+
+        &.is-dragged {
+          z-index: 1000;
+        }
+
+        &.deleted {
+          transition:
+            opacity 0.33s ease 0s,
+            transform 0.33s ease-in 0s;
+          opacity: 0;
+          transform: scaleX(0.5) scaleY(0.5);
+        }
+
+        .sc-points-list {
+          max-height: 4.5em;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          overscroll-behavior: contain;
+        }
+      }
+    }
+
+    sc-action-buttons {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .sc-buttons {
+        padding: 0;
+        display: inline-flex;
+
+        > * {
+          font-size: 1.18em;
+        }
+      }
+
+      a,
+      button {
+        display: inline-flex;
+        padding: 0;
+        align-items: center;
+        margin: 0 0.5em;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &[data-type='ActionEval'] {
+          display: none;
+        }
+      }
+    }
+  }
+}
