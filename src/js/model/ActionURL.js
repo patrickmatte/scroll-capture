@@ -4,8 +4,8 @@ import Action from './Action';
 export default class ActionURL extends Action {
   constructor() {
     super('ActionURL', 'Load URL', 'Load a URL');
-    this.icon.value = 'fa-solid fa-rotate';
-    // this.icon.value = 'fa-solid fa-rotate-right';
+    // this.icon.value = 'fa-solid fa-rotate';
+    this.icon.value = 'fa-solid fa-rotate-right';
     this.url = new StringData('');
     this.isTestable.value = true;
     this.isCaptureable.value = true;
