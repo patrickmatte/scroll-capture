@@ -247,9 +247,16 @@
     display: none !important;
   }
 
-  *[data-enabled='false'] {
-    opacity: 0.5;
+  *[data-enabled='false'],
+  *[data-disabled='true'] {
+    opacity: 0.33;
     pointer-events: none;
+    user-select: false;
+
+    * {
+      pointer-events: none;
+      user-select: false;
+    }
   }
 
   .sc-icon {

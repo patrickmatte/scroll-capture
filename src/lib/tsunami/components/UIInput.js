@@ -90,6 +90,14 @@ export default class UIInput extends UIComponent {
     }
   }
 
+  get disabled() {
+    return this.element.disabled;
+  }
+
+  set disabled(value) {
+    this.element.disabled = value;
+  }
+
   destroy() {
     this.element.removeEventListener('blur', this.blurHandler);
     this.element.removeEventListener(this.inputtype, this.inputHandler);
