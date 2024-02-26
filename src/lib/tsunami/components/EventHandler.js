@@ -14,6 +14,7 @@ export default class EventHandler {
   set enabled(value) {
     if (value != this._enabled) {
       this._enabled = value;
+      if (!this.dispatcher) return;
       if (value) {
         this.dispatcher.addEventListener(this.type, this.callback);
       } else {

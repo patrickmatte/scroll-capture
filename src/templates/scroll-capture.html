@@ -96,18 +96,19 @@
               <div class="sc-title">
                 <span class="sc-tabs">
                   <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/scenario'" set:location="scope.location">
-                    <button is="router-button" data-path="scroll-capture/video/scenario" title="Timeline">
-                      <!-- <span class="sc-icon fa-solid fa-sliders-h"></span> -->
-                      <span class="sc-icon fa-solid fa-clapperboard"></span>
-                      <span class="sc-label">Timeline</span>
+                    <button is="router-button" data-path="scroll-capture/video/scenario" title="Settings">
+                      <span class="sc-icon fa-solid fa-sliders"></span>
+                      <!-- <span class="sc-icon fa-solid fa-clapperboard"></span> -->
+                      <!-- <span class="sc-label">Timeline</span> -->
+                      <span class="sc-label">Settings</span>
                     </button>
                   </span>
-                  <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/settings'" set:location="scope.location">
+                  <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/settings'" set:location="scope.location">
                     <button is="router-button" data-path="scroll-capture/video/settings" title="Settings">
                       <span class="sc-icon fa-solid fa-sliders"></span>
                       <span class="sc-label">Settings</span>
                     </button>
-                  </span>
+                  </span> -->
                   <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/video'" set:location="scope.location">
                     <button is="router-button" data-path="record" title="Capture">
                       <span class="sc-icon fa-solid fa-video"></span>
@@ -119,23 +120,123 @@
                   <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/info'" set:location="scope.location">
                     <span class="sc-drag-area"></span>
                     <button is="router-button" data-path="scroll-capture/video/info" title="Info">
+                      <span class="sc-label">Info</span>
                       <span class="sc-icon fa-solid fa-circle-question"></span>
-                      <!-- <span class="sc-label">Info</span> -->
                     </button>
                   </span>
                 </span>
               </div>
               <div class="sc-window-content" is="ui-component">
                 <sc-scenario class="sc-section sc-fields">
-                  <div class="sc-scrollpane">
+                  <sc-video-scrollpane class="sc-scrollpane" set:actions="scope.actions">
+                    <div class="sc-window">
+                      <!-- <div class="sc-title">
+                        <span class="sc-tabs">
+                          <span class="sc-tab sc-title-tab">
+                            <span class="sc-icon fa-solid fa-gear"></span>
+                            <span class="sc-label">Configuration</span>
+                          </span>
+                        </span>
+                        <span class="sc-tabs"></span>
+                      </div> -->
+                      <div class="sc-window-content" is="ui-component">
+                        <div class="sc-fields" is="ui-component">
+                          <!-- <div class="sc-field" title="Video Format">
+														<div class="sc-space">
+															<span class="sc-icon fa-solid fa-file"></span>
+															<span class="sc-label">Video Format</span>
+														</div>
+														<div class="sc-input sc-select">
+															<select is="ui-select" set:provider="scope.settings.format" bind:value="scope.settings.format.selectedItem.value"></select>
+														</div>
+													</div> -->
+
+                          <div class="sc-field-group">
+                            <div class="sc-field" title="Video Track">
+                              <div class="sc-space">
+                                <span class="sc-icon">
+                                  <span class="fa-solid fa-video" is="ui-component" data-visible="{scope.settings.exportVideo.value}"></span>
+                                  <span class="fa-solid fa-video-slash" is="ui-component" data-visible="{!scope.settings.exportVideo.value}"></span>
+                                </span>
+                                <span class="sc-label">Video</span>
+                              </div>
+                              <label class="sc-input sc-radio">
+                                <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
+                                <span class="sc-radio-content">
+                                  <span class="sc-icon">
+                                    <span class="fa-solid fa-toggle-on" is="ui-component" data-visible="{scope.settings.exportVideo.value}"></span>
+                                    <span class="fa-solid fa-toggle-off" is="ui-component" data-visible="{!scope.settings.exportVideo.value}"></span>
+                                  </span>
+                                  <span class="sc-radio-label">
+                                    <span is="ui-component" data-visible="{scope.settings.exportVideo.value}">On</span>
+                                    <span is="ui-component" data-visible="{!scope.settings.exportVideo.value}">Off</span>
+                                  </span>
+                                </span>
+                              </label>
+                              <!-- <div class="sc-input sc-select" title="Video Codec">
+																<select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
+															</div> -->
+                            </div>
+                            <div class="sc-field" title="Video Bitrate">
+                              <span class="sc-input">
+                                <span class="sc-input-group">
+                                  <span class="sc-input-unit" is="ui-text" data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
+                                  <input type="number" min="1" max="64" step="1" placeholder="24" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
+                                </span>
+                              </span>
+                              <input type="range" min="1" max="64" step="1" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
+                            </div>
+                          </div>
+
+                          <div class="sc-field-group">
+                            <div class="sc-field" title="Audio Track">
+                              <div class="sc-space">
+                                <span class="sc-icon">
+                                  <span class="fa-solid fa-volume-high" is="ui-component" data-visible="{scope.settings.exportAudio.value}"></span>
+                                  <span class="fa-solid fa-volume-xmark" is="ui-component" data-visible="{!scope.settings.exportAudio.value}"></span>
+                                </span>
+                                <span class="sc-label">Audio</span>
+                              </div>
+                              <label class="sc-input sc-radio">
+                                <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
+                                <span class="sc-radio-content">
+                                  <span class="sc-icon">
+                                    <span class="fa-solid fa-toggle-on" is="ui-component" data-visible="{scope.settings.exportAudio.value}"></span>
+                                    <span class="fa-solid fa-toggle-off" is="ui-component" data-visible="{!scope.settings.exportAudio.value}"></span>
+                                  </span>
+                                  <span class="sc-radio-label">
+                                    <span is="ui-component" data-visible="{scope.settings.exportAudio.value}">On</span>
+                                    <span is="ui-component" data-visible="{!scope.settings.exportAudio.value}">Off</span>
+                                  </span>
+                                </span>
+                              </label>
+                              <!-- <div class="sc-input sc-select">
+																<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
+															</div> -->
+                            </div>
+                            <div class="sc-field" title="Audio Bitrate">
+                              <span class="sc-input">
+                                <span class="sc-input-group">
+                                  <span class="sc-input-unit" is="ui-text" data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
+                                  <input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
+                                </span>
+                              </span>
+                              <input type="range" min="16" max="320" step="16" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div is="general-settings"></div>
                     <sc-actions-view data-visible="{scope.actions.length.value > 0}" set:provider="scope.actions">
                       <template>
-                        <div
+                        <sc-action
                           class="sc-window ui-list-element"
                           is="sc-action-view"
                           data-type="{scope.data.type}"
                           set:model="scope.data"
                           data-selected="{scope.data.isSelectedItem.value}"
+                          data-id="{scope.data.id}"
                         >
                           <div class="sc-title">
                             <span class="sc-tabs">
@@ -332,139 +433,44 @@
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </sc-action>
                       </template>
                     </sc-actions-view>
-                    <sc-action-buttons>
-                      <div class="sc-buttons" is="ui-list" set:provider="scope.actions.types">
-                        <template>
-                          <button
-                            class="sc-action-button"
-                            data-type="{scope.data.type}"
-                            is="ui-button"
-                            title="{scope.data.description.value}"
-                            on:click="scope.root.actions.cloneAction(scope.data)"
-                          >
-                            <span class="sc-icon {scope.data.icon.value}" is="ui-component"></span>
-                          </button>
-                        </template>
+                    <!-- <div class="sc-window">
+                      <div class="sc-window-content">
+                        <div class="sc-fields"></div>
                       </div>
-                      <div class="sc-buttons">
-                        <!-- <span class="sc-tab" is="sc-section-tab" set:path="'play'" set:location="scope.location"> -->
-                        <button is="router-button" data-path="play" title="Play All">
-                          <span class="sc-icon fa-solid fa-circle-play"></span>
-                          <!-- <span class="sc-label">Play</span> -->
+                    </div> -->
+                  </sc-video-scrollpane>
+                  <sc-action-buttons>
+                    <div class="sc-buttons" is="ui-list" set:provider="scope.actions.types">
+                      <template>
+                        <button
+                          class="sc-action-button"
+                          data-type="{scope.data.type}"
+                          is="ui-button"
+                          title="{scope.data.description.value}"
+                          on:click="scope.root.actions.cloneAction(scope.data)"
+                        >
+                          <span class="sc-icon {scope.data.icon.value}" is="ui-component"></span>
                         </button>
-                        <!-- </span> -->
-                        <button is="ui-button" on:click="scope.clearActions()" title="Delete All">
-                          <span class="sc-icon fa-solid fa-trash-alt"></span>
-                        </button>
-                      </div>
-                    </sc-action-buttons>
-                  </div>
+                      </template>
+                    </div>
+                    <div class="sc-buttons">
+                      <!-- <span class="sc-tab" is="sc-section-tab" set:path="'play'" set:location="scope.location"> -->
+                      <button is="router-button" data-path="play" title="Play All">
+                        <span class="sc-icon fa-solid fa-circle-play"></span>
+                        <!-- <span class="sc-label">Play</span> -->
+                      </button>
+                      <!-- </span> -->
+                      <button is="ui-button" on:click="scope.clearActions()" title="Delete All">
+                        <span class="sc-icon fa-solid fa-trash-alt"></span>
+                      </button>
+                    </div>
+                  </sc-action-buttons>
                 </sc-scenario>
                 <sc-video-settings class="sc-section sc-fields">
-                  <div>
-                    <div class="sc-window">
-                      <!-- <div class="sc-title">
-                        <span class="sc-tabs">
-                          <span class="sc-tab sc-title-tab">
-                            <span class="sc-icon fa-solid fa-gear"></span>
-                            <span class="sc-label">Configuration</span>
-                          </span>
-                        </span>
-                        <span class="sc-tabs"></span>
-                      </div> -->
-                      <div class="sc-window-content" is="ui-component">
-                        <div class="sc-fields" is="ui-component">
-                          <!-- <div class="sc-field" title="Video Format">
-														<div class="sc-space">
-															<span class="sc-icon fa-solid fa-file"></span>
-															<span class="sc-label">Video Format</span>
-														</div>
-														<div class="sc-input sc-select">
-															<select is="ui-select" set:provider="scope.settings.format" bind:value="scope.settings.format.selectedItem.value"></select>
-														</div>
-													</div> -->
-
-                          <div class="sc-field-group">
-                            <div class="sc-field" title="Video Track">
-                              <div class="sc-space">
-                                <span class="sc-icon">
-                                  <span class="fa-solid fa-video" is="ui-component" data-visible="{scope.settings.exportVideo.value}"></span>
-                                  <span class="fa-solid fa-video-slash" is="ui-component" data-visible="{!scope.settings.exportVideo.value}"></span>
-                                </span>
-                                <span class="sc-label">Video</span>
-                              </div>
-                              <label class="sc-input sc-radio">
-                                <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
-                                <span class="sc-radio-content">
-                                  <span class="sc-icon">
-                                    <span class="fa-solid fa-toggle-on" is="ui-component" data-visible="{scope.settings.exportVideo.value}"></span>
-                                    <span class="fa-solid fa-toggle-off" is="ui-component" data-visible="{!scope.settings.exportVideo.value}"></span>
-                                  </span>
-                                  <span class="sc-radio-label">
-                                    <span is="ui-component" data-visible="{scope.settings.exportVideo.value}">On</span>
-                                    <span is="ui-component" data-visible="{!scope.settings.exportVideo.value}">Off</span>
-                                  </span>
-                                </span>
-                              </label>
-                              <!-- <div class="sc-input sc-select" title="Video Codec">
-																<select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodecs.selectedItem.value"></select>
-															</div> -->
-                            </div>
-                            <div class="sc-field" title="Video Bitrate">
-                              <span class="sc-input">
-                                <span class="sc-input-group">
-                                  <span class="sc-input-unit" is="ui-text" data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
-                                  <input type="number" min="1" max="64" step="1" placeholder="24" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
-                                </span>
-                              </span>
-                              <input type="range" min="1" max="64" step="1" is="ui-input" bind:model="scope.settings.videoBitsPerSecond.value" />
-                            </div>
-                          </div>
-
-                          <div class="sc-field-group">
-                            <div class="sc-field" title="Audio Track">
-                              <div class="sc-space">
-                                <span class="sc-icon">
-                                  <span class="fa-solid fa-volume-high" is="ui-component" data-visible="{scope.settings.exportAudio.value}"></span>
-                                  <span class="fa-solid fa-volume-xmark" is="ui-component" data-visible="{!scope.settings.exportAudio.value}"></span>
-                                </span>
-                                <span class="sc-label">Audio</span>
-                              </div>
-                              <label class="sc-input sc-radio">
-                                <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
-                                <span class="sc-radio-content">
-                                  <span class="sc-icon">
-                                    <span class="fa-solid fa-toggle-on" is="ui-component" data-visible="{scope.settings.exportAudio.value}"></span>
-                                    <span class="fa-solid fa-toggle-off" is="ui-component" data-visible="{!scope.settings.exportAudio.value}"></span>
-                                  </span>
-                                  <span class="sc-radio-label">
-                                    <span is="ui-component" data-visible="{scope.settings.exportAudio.value}">On</span>
-                                    <span is="ui-component" data-visible="{!scope.settings.exportAudio.value}">Off</span>
-                                  </span>
-                                </span>
-                              </label>
-                              <!-- <div class="sc-input sc-select">
-																<select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodecs.selectedItem.value"></select>
-															</div> -->
-                            </div>
-                            <div class="sc-field" title="Audio Bitrate">
-                              <span class="sc-input">
-                                <span class="sc-input-group">
-                                  <span class="sc-input-unit" is="ui-text" data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
-                                  <input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
-                                </span>
-                              </span>
-                              <input type="range" min="16" max="320" step="16" is="ui-input" bind:model="scope.settings.audioBitsPerSecond.value" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div is="general-settings"></div>
-                  </div>
+                  <div></div>
                 </sc-video-settings>
                 <sc-video class="sc-section sc-fields">
                   <div>

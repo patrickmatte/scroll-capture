@@ -3,12 +3,7 @@ import { destroyElement, importTemplate } from '../tsunami';
 import ArrayData from '../data/ArrayData';
 import Data from '../data/Data';
 import Scope from '../data/Scope';
-import Tween from '../animation/Tween';
-import TweenProperty from '../animation/TweenProperty';
-import Easing from '../animation/Easing';
 import Point from '../geom/Point';
-import Rectangle from '../geom/Rectangle';
-import { round1 } from '../utils/number';
 
 export default class UIListBase extends UIComponent {
   constructor(element) {
@@ -213,29 +208,6 @@ export default class UIListBase extends UIComponent {
       child.classList.add('smooth-transform');
       child.style.transform = 'translate3d(0px, 0px, 0px)';
     });
-  }
-
-  scrollToElement(element, duration) {
-    let pos = new Point();
-
-    let maxScroll = new Point();
-    maxScroll.x = this.element.scrollWidth - this.element.clientWidth;
-    maxScroll.y = this.element.scrollHeight - this.element.clientHeight;
-
-    let elementRect = new Rectangle(element.offsetLeft, element.offsetTop, element.offsetWidth, element.offsetHeight);
-
-    pos.x = Math.min(elementRect.x, maxScroll.x);
-    pos.y = Math.min(elementRect.y, maxScroll.y);
-
-    return this.scrollTo(pos.x, pos.y, duration);
-  }
-
-  scrollTo(scrollLeft, scrollTop, duration = 1) {
-    this.tween = new Tween(0, duration, [
-      new TweenProperty(this.element, 'scrollLeft', this.element.scrollLeft, scrollLeft, Easing.cubic.easeInOut, round1),
-      new TweenProperty(this.element, 'scrollTop', this.element.scrollTop, scrollTop, Easing.cubic.easeInOut, round1),
-    ]);
-    return this.tween.start();
   }
 
   destroy() {

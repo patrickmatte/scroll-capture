@@ -1,6 +1,5 @@
-<div>
-  <div class="sc-window">
-    <!-- <div class="sc-title">
+<div class="sc-window">
+  <!-- <div class="sc-title">
             <span class="sc-tabs">
                 <span class="sc-tab sc-title-tab">
                     <span class="sc-icon fa-solid fa-window-maximize"></span>
@@ -9,115 +8,114 @@
             </span>
             <span class="sc-tabs"></span>
         </div> -->
-    <div class="sc-window-content" is="ui-component">
-      <div class="sc-fields" is="ui-component">
-        <div class="sc-field-group" is="ui-component">
-          <div class="sc-space">
-            <span class="sc-icon fa-solid fa-table-cells"></span>
-            <span class="sc-label">Pixel Ratio</span>
-          </div>
-          <div class="sc-field">
-            <span class="sc-input" title="devicePixelRatio">
-              <span class="sc-input-group">
-                <span class="sc-input-unit" is="ui-text" data-unit="x">${scope.settings.pixelRatio.value}</span>
-                <input
-                  type="number"
-                  step="0.1"
-                  min="0.5"
-                  max="{scope.settings.devicePixelRatio.value}"
-                  placeholder="{scope.settings.devicePixelRatio}"
-                  is="ui-input"
-                  bind:model="scope.settings.pixelRatio.value"
-                />
-              </span>
-            </span>
-            <input
-              class="sc-input"
-              type="range"
-              step="0.1"
-              min="0.5"
-              max="{scope.settings.devicePixelRatio.value}"
-              title="devicePixelRatio"
-              is="ui-input"
-              bind:model="scope.settings.pixelRatio.value"
-            />
-          </div>
+  <div class="sc-window-content" is="ui-component">
+    <div class="sc-fields" is="ui-component">
+      <div class="sc-field-group" is="ui-component">
+        <div class="sc-space">
+          <span class="sc-icon fa-solid fa-table-cells"></span>
+          <span class="sc-label">Pixel Ratio</span>
         </div>
+        <div class="sc-field">
+          <span class="sc-input" title="devicePixelRatio">
+            <span class="sc-input-group">
+              <span class="sc-input-unit" is="ui-text" data-unit="x">${scope.settings.pixelRatio.value}</span>
+              <input
+                type="number"
+                step="0.1"
+                min="0.5"
+                max="{scope.settings.devicePixelRatio.value}"
+                placeholder="{scope.settings.devicePixelRatio}"
+                is="ui-input"
+                bind:model="scope.settings.pixelRatio.value"
+              />
+            </span>
+          </span>
+          <input
+            class="sc-input"
+            type="range"
+            step="0.1"
+            min="0.5"
+            max="{scope.settings.devicePixelRatio.value}"
+            title="devicePixelRatio"
+            is="ui-input"
+            bind:model="scope.settings.pixelRatio.value"
+          />
+        </div>
+      </div>
 
-        <div class="sc-field-group">
-          <div class="sc-space">
-            <span class="sc-icon fa-solid fa-window-maximize"></span>
-            <span class="sc-label">Window size</span>
-          </div>
-          <div class="sc-field">
-            <span class="sc-input">
-              <span class="sc-icon fa-solid fa-left-right"></span>
-              <span class="sc-input-group">
-                <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.settings.windowSize.x.value}</span>
-                <input
-                  type="number"
-                  step="1"
-                  min="420"
-                  max="{scope.settings.windowSizeMax.x.value}"
-                  placeholder="420"
-                  title="Width"
-                  is="ui-input"
-                  bind:model="scope.settings.windowSize.x.value"
-                />
-              </span>
-            </span>
-            <span class="sc-input">
-              <span class="sc-icon fa-solid fa-up-down"></span>
-              <span class="sc-input-group">
-                <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.settings.windowSize.y.value}</span>
-                <input
-                  type="number"
-                  step="1"
-                  min="420"
-                  max="{scope.settings.windowSizeMax.y.value}"
-                  placeholder="420"
-                  title="Height"
-                  is="ui-input"
-                  bind:model="scope.settings.windowSize.y.value"
-                />
-              </span>
-            </span>
-          </div>
+      <div class="sc-field-group">
+        <div class="sc-space">
+          <span class="sc-icon fa-solid fa-window-maximize"></span>
+          <span class="sc-label">Window size</span>
         </div>
+        <div class="sc-field">
+          <span class="sc-input">
+            <span class="sc-icon fa-solid fa-left-right"></span>
+            <span class="sc-input-group">
+              <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.settings.windowSize.x.value}</span>
+              <input
+                type="number"
+                step="1"
+                min="420"
+                max="{scope.settings.windowSizeMax.x.value}"
+                placeholder="420"
+                title="Width"
+                is="ui-input"
+                bind:model="scope.settings.windowSize.x.value"
+              />
+            </span>
+          </span>
+          <span class="sc-input">
+            <span class="sc-icon fa-solid fa-up-down"></span>
+            <span class="sc-input-group">
+              <span class="sc-input-unit" is="ui-text" data-unit="px">${scope.settings.windowSize.y.value}</span>
+              <input
+                type="number"
+                step="1"
+                min="420"
+                max="{scope.settings.windowSizeMax.y.value}"
+                placeholder="420"
+                title="Height"
+                is="ui-input"
+                bind:model="scope.settings.windowSize.y.value"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
 
-        <div class="sc-field" title="Scrollbars visibility">
-          <div class="sc-space">
-            <span class="sc-icon fa-solid fa-scroll"></span>
-            <span class="sc-label">Scrollbars</span>
-          </div>
-          <label class="sc-input sc-radio sc-radio-visibility">
-            <input type="checkbox" name="showScrollbars" bind:model="scope.settings.showScrollbars.value" is="ui-input" />
-            <span class="sc-radio-content">
-              <span class="sc-icon fa-solid"></span>
-              <span class="sc-radio-label">
-                <span is="ui-component" data-visible="{scope.settings.showScrollbars.value}">Show</span>
-                <span is="ui-component" data-visible="{!scope.settings.showScrollbars.value}">Hide</span>
-              </span>
-            </span>
-          </label>
+      <div class="sc-field" title="Scrollbars visibility">
+        <div class="sc-space">
+          <span class="sc-icon fa-solid fa-scroll"></span>
+          <span class="sc-label">Scrollbars</span>
         </div>
+        <label class="sc-input sc-radio sc-radio-visibility">
+          <input type="checkbox" name="showScrollbars" bind:model="scope.settings.showScrollbars.value" is="ui-input" />
+          <span class="sc-radio-content">
+            <span class="sc-icon fa-solid"></span>
+            <span class="sc-radio-label">
+              <span is="ui-component" data-visible="{scope.settings.showScrollbars.value}">Show</span>
+              <span is="ui-component" data-visible="{!scope.settings.showScrollbars.value}">Hide</span>
+            </span>
+          </span>
+        </label>
+      </div>
 
-        <div class="sc-field" title="Cursor visibility">
-          <div class="sc-space">
-            <span class="sc-icon fa-solid fa-arrow-pointer"></span>
-            <span class="sc-label">Cursor</span>
-          </div>
-          <label class="sc-input sc-radio sc-radio-visibility">
-            <input type="checkbox" name="showCursor" bind:model="scope.settings.showCursor.value" is="ui-input" />
-            <span class="sc-radio-content">
-              <span class="sc-icon fa-solid"></span>
-              <span class="sc-radio-label">
-                <span is="ui-component" data-visible="{scope.settings.showCursor.value}">Show</span>
-                <span is="ui-component" data-visible="{!scope.settings.showCursor.value}">Hide</span>
-              </span>
-            </span>
-          </label>
+      <div class="sc-field" title="Cursor visibility">
+        <div class="sc-space">
+          <span class="sc-icon fa-solid fa-arrow-pointer"></span>
+          <span class="sc-label">Cursor</span>
         </div>
+        <label class="sc-input sc-radio sc-radio-visibility">
+          <input type="checkbox" name="showCursor" bind:model="scope.settings.showCursor.value" is="ui-input" />
+          <span class="sc-radio-content">
+            <span class="sc-icon fa-solid"></span>
+            <span class="sc-radio-label">
+              <span is="ui-component" data-visible="{scope.settings.showCursor.value}">Show</span>
+              <span is="ui-component" data-visible="{!scope.settings.showCursor.value}">Hide</span>
+            </span>
+          </span>
+        </label>
       </div>
     </div>
   </div>

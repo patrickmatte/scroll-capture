@@ -14,6 +14,8 @@ export default class Action extends EventDispatcher {
     this.play = this.play.bind(this);
     this.reCapture = this.reCapture.bind(this);
 
+    Action.actionIndex++;
+    this.id = Action.actionIndex;
     this.type = type;
     this.name = new StringData();
     this.name.addEventListener(Data.CHANGE, () => {
@@ -106,3 +108,5 @@ export default class Action extends EventDispatcher {
     return promise2;
   }
 }
+
+Action.actionIndex = 0;

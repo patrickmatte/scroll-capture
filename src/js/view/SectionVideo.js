@@ -1,6 +1,8 @@
 import Section from './Section';
 import { app } from '../main';
 import { sendTrackEventMessage } from '../model/GABridge';
+import { define } from '../../lib/tsunami/tsunami';
+import { VideoScrollpane } from './VideoScrollpane';
 
 export default class SectionVideo extends Section {
   constructor(element) {
@@ -87,3 +89,5 @@ export default class SectionVideo extends Section {
     return super.hideComplete();
   }
 }
+
+define('sc-video-scrollpane', VideoScrollpane);

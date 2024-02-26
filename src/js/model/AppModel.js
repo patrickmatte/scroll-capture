@@ -55,14 +55,14 @@ export default class AppModel extends DataModel {
     });
   }
 
-  get actions() {
-    return this._actions;
-  }
+  // get actions() {
+  //   return this._actions;
+  // }
 
-  set actions(value) {
-    this._actions = value;
-    this.dispatchEvent(new BaseEvent('change_actions', value));
-  }
+  // set actions(value) {
+  //   this._actions = value;
+  //   this.dispatchEvent(new BaseEvent('change_actions', value));
+  // }
 
   sendMessage(message) {
     try {

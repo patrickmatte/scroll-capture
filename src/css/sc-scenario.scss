@@ -1,24 +1,35 @@
 .sc-default {
   sc-scenario {
     .sc-scrollpane {
-    }
-
-    sc-actions-view {
-      width: 100%;
-      display: block;
       max-height: 50vh;
       overflow-y: auto;
       overflow-x: hidden;
       overscroll-behavior: contain;
+      display: flex;
+      flex-direction: column;
+
+      > * {
+        margin-bottom: 0.75em;
+      }
+
+      > *:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    sc-actions-view {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
       margin-bottom: 0.75em;
       // padding-right: calc(0.75em - 5px) !important;
 
       [is='sc-action-view'].sc-window {
-        margin-top: 0.75em;
+        // margin-top: 0.75em;
 
-        &:first-child {
-          margin-top: 0;
-        }
+        // &:first-child {
+        //   margin-top: 0;
+        // }
 
         &.drag-element {
           position: absolute;

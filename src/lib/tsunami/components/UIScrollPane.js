@@ -168,15 +168,15 @@ export default class UIScrollPane extends UIComponent {
       props.push(new TweenProperty(this.scrollTarget, 'y', currentY, targetY, Easing.cubic.easeOut, 100));
     }
     if (props.length > 0) {
-      this.tween = new Tween(0, 0.75, props);
-      this.tweenPromise = this.tween.start();
+      this.scrollTween = new Tween(0, 0.75, props);
+      this.tweenPromise = this.scrollTween.start();
     }
     return this.tweenPromise;
   }
 
   stopTween() {
-    if (this.tween) {
-      this.tween.stop();
+    if (this.scrollTween) {
+      this.scrollTween.stop();
     }
   }
 
