@@ -117,6 +117,23 @@
           </span>
         </label>
       </div>
+
+      <div class="sc-field" title="Pointer Events">
+        <div class="sc-space">
+          <span class="sc-icon fa-solid fa-hand-pointer"></span>
+          <span class="sc-label">Pointer Events</span>
+        </div>
+        <label class="sc-input sc-radio sc-radio-check">
+          <input type="checkbox" name="pointerEvents" bind:model="scope.settings.pointerEvents.value" is="ui-input" />
+          <span class="sc-radio-content">
+            <span class="sc-icon fa-solid"></span>
+            <span class="sc-radio-label">
+              <span is="ui-component" data-visible="{scope.settings.pointerEvents.value}">Auto</span>
+              <span is="ui-component" data-visible="{!scope.settings.pointerEvents.value}">None</span>
+            </span>
+          </span>
+        </label>
+      </div>
     </div>
   </div>
 </div>

@@ -241,6 +241,24 @@
         }
       }
     }
+
+    &.sc-radio-check {
+      .sc-radio-content {
+        .sc-icon {
+          &::before {
+            content: '\f111';
+          }
+        }
+      }
+
+      input:checked ~ .sc-radio-content {
+        .sc-icon {
+          &::before {
+            content: '\f058';
+          }
+        }
+      }
+    }
   }
 
   *[data-visible='false'] {

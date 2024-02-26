@@ -24,6 +24,18 @@ html[data-sc-cursor='false'] {
   }
 }
 
+html[data-sc-pointer-events='false'] {
+  pointer-events: none;
+
+  * {
+    pointer-events: none;
+
+    &:hover {
+      pointer-events: none;
+    }
+  }
+}
+
 html[data-sc-scrollbars='false'] {
   /* Hide scrollbar for Chrome, Safari and Opera */
   ::-webkit-scrollbar {

@@ -20,6 +20,7 @@ export default class PlayState extends Branch {
     window.addEventListener('beforeunload', this.beforeUnloadHandler);
 
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
+    document.documentElement.setAttribute('data-sc-pointer-events', app.model.settings.pointerEvents.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
     // app.model.setDefaultLocation(this.path).then(() => {
@@ -71,6 +72,7 @@ export default class PlayState extends Branch {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'play', tabId: app.model.tabId.value });
     }
     document.documentElement.removeAttribute('data-sc-cursor');
+    document.documentElement.removeAttribute('data-sc-pointer-events');
     document.documentElement.removeAttribute('data-sc-scrollbars');
 
     app.model.save('PlayState.hide');
