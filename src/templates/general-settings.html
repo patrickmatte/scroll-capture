@@ -89,13 +89,13 @@
           <span class="sc-icon fa-solid fa-scroll"></span>
           <span class="sc-label">Scrollbars</span>
         </div>
-        <label class="sc-input sc-radio sc-radio-visibility">
+        <label class="sc-input sc-radio sc-radio-check">
           <input type="checkbox" name="showScrollbars" bind:model="scope.settings.showScrollbars.value" is="ui-input" />
           <span class="sc-radio-content">
             <span class="sc-icon fa-solid"></span>
             <span class="sc-radio-label">
-              <span is="ui-component" data-visible="{scope.settings.showScrollbars.value}">Show</span>
-              <span is="ui-component" data-visible="{!scope.settings.showScrollbars.value}">Hide</span>
+              <span is="ui-component" data-visible="{scope.settings.showScrollbars.value}">auto</span>
+              <span is="ui-component" data-visible="{!scope.settings.showScrollbars.value}">none</span>
             </span>
           </span>
         </label>
@@ -106,13 +106,13 @@
           <span class="sc-icon fa-solid fa-arrow-pointer"></span>
           <span class="sc-label">Cursor</span>
         </div>
-        <label class="sc-input sc-radio sc-radio-visibility">
+        <label class="sc-input sc-radio sc-radio-check">
           <input type="checkbox" name="showCursor" bind:model="scope.settings.showCursor.value" is="ui-input" />
           <span class="sc-radio-content">
             <span class="sc-icon fa-solid"></span>
             <span class="sc-radio-label">
-              <span is="ui-component" data-visible="{scope.settings.showCursor.value}">Show</span>
-              <span is="ui-component" data-visible="{!scope.settings.showCursor.value}">Hide</span>
+              <span is="ui-component" data-visible="{scope.settings.showCursor.value}">auto</span>
+              <span is="ui-component" data-visible="{!scope.settings.showCursor.value}">none</span>
             </span>
           </span>
         </label>
@@ -128,8 +128,8 @@
           <span class="sc-radio-content">
             <span class="sc-icon fa-solid"></span>
             <span class="sc-radio-label">
-              <span is="ui-component" data-visible="{scope.settings.pointerEvents.value}">Auto</span>
-              <span is="ui-component" data-visible="{!scope.settings.pointerEvents.value}">None</span>
+              <span is="ui-component" data-visible="{scope.settings.pointerEvents.value}">auto</span>
+              <span is="ui-component" data-visible="{!scope.settings.pointerEvents.value}">none</span>
             </span>
           </span>
         </label>
