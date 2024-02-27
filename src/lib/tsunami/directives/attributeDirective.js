@@ -8,10 +8,14 @@ export function attributeDirective(component, debug = false) {
     if (attribute.name.indexOf('bind:') != -1) continue;
     let attributeValue = attribute.value.split('{').join('${');
     if (attributeValue.indexOf('${') != -1) {
-      const callback = (value) => {
-        component.setAttribute(attribute.name, value);
-      };
-      component.attributes[attribute.name] = new ExpressionData('`' + attributeValue + '`', component, callback, debug);
+      component.attributes[attribute.name] = attributeBind(component, attribute.name, attributeValue, component);
     }
   }
+}
+
+export function attributeBind(component, attributeName, expression, scope, debug) {
+  const callback = (value) => {
+    component.setAttribute(attributeName, value);
+  };
+  return new ExpressionData('`' + expression + '`', scope, callback, debug);
 }

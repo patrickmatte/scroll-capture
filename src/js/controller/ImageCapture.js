@@ -19,6 +19,9 @@ export class ImageCapture extends Branch {
     const isDocumentElement = target == 'window' || target == 'documentElement' || !target;
     const element = isDocumentElement ? document.documentElement : document.querySelector(target);
     this.isCapturing = true;
+    const devicePixelRatio = window.devicePixelRatio;
+    const pixelRatio = app.model.settings.pixelRatio.value;
+
     const clientPosition = new Point(0, 0);
     if (element != document.documentElement) {
       const clientRect = element.getBoundingClientRect();
@@ -27,15 +30,15 @@ export class ImageCapture extends Branch {
     const clientSize = new Point(element.clientWidth, element.clientHeight);
     const scrollSize = new Point(element.scrollWidth, element.scrollHeight);
     const maxChromePixels = 268435456;
-    const pixels = scrollSize.x * app.model.settings.pixelRatio.value * (scrollSize.y * app.model.settings.pixelRatio.value);
+    const pixels = scrollSize.x * scrollSize.y;
     // console.log('maxChromePixels=', maxChromePixels, 'pixels=', pixels);
     if (pixels > maxChromePixels) {
       console.log('Page is too large!');
-      scrollSize.y = maxChromePixels / (scrollSize.x * app.model.settings.pixelRatio.value);
+      scrollSize.y = maxChromePixels / scrollSize.x;
     }
 
     const canvas = app.model.imgCapSettings.imageCanvas;
-    const canvasSize = scrollSize.multiplyScalar(app.model.settings.pixelRatio.value);
+    const canvasSize = scrollSize.multiplyScalar(pixelRatio);
     canvas.width = canvasSize.x;
     canvas.height = canvasSize.y;
     const ctx = canvas.getContext('2d');
@@ -87,9 +90,9 @@ export class ImageCapture extends Branch {
       });
       capturePromise.then((img) => {
         const captureData = captures[captureIndex];
-        const pixelRatio = app.model.settings.pixelRatio.value;
-        const cropPosition = captureData.cropPosition.multiplyScalar(pixelRatio);
-        const cropSize = captureData.cropSize.multiplyScalar(pixelRatio);
+        console.log('captureData', captureData);
+        const cropPosition = captureData.cropPosition.multiplyScalar(devicePixelRatio);
+        const cropSize = captureData.cropSize.multiplyScalar(devicePixelRatio);
         const drawPosition = captureData.drawPosition.multiplyScalar(pixelRatio);
         const drawSize = captureData.drawSize.multiplyScalar(pixelRatio);
 

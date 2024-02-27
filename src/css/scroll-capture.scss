@@ -1,4 +1,4 @@
-body[is-capturing='true'] * {
+body[data-pointer-capture='true'] * {
   cursor: -webkit-image-set(
       url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
       url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x

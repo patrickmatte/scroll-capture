@@ -27,6 +27,7 @@ export default class ExpressionData extends Data {
     this.value = null;
     this.node.destroy();
     this.node = null;
+    this.callback = null;
     return super.destroy();
   }
 }

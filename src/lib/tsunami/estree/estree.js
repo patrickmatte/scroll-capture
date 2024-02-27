@@ -409,15 +409,11 @@ export class TemplateLiteral extends ExpressionNode {
       const value = this.expressions[i].evaluate(scope);
       if (value === null) {
         s += 'null';
-        if (this.debug) console.log('!!! add null');
       } else if (value === undefined) {
         s += 'undefined';
-        if (this.debug) console.log('!!!  add undefined');
       } else {
         s += value.toString();
-        if (this.debug) console.log('!!!  add toString');
       }
-      if (this.debug) console.log('!!! s =', s);
     }
     return s + this.quasis[i].value.cooked;
   }

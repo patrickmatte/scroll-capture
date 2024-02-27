@@ -6,18 +6,18 @@ import Data from '../../lib/tsunami/data/Data';
 import RouterButton from './RouterButton';
 import { app } from '../main';
 import UIButton from '../../lib/tsunami/components/UIButton';
+import ExpressionData from '../../lib/tsunami/data/ExpressionData';
+import { attributeBind } from '../../lib/tsunami/directives/attributeDirective';
 
 export default class AppView extends App {
-  constructor(scope) {
+  constructor() {
     super(document.body);
 
-    this.scope = app.model;
+    // this.scope = app.model;
     this.scrollCapture = importTemplate(ScrollCapture.template, app.model).component;
     this.appendChild(this.scrollCapture.element);
 
-    app.model.showCaptureIcon.addEventListener(Data.CHANGE, (event) => {
-      this.element.setAttribute('is-capturing', event.data);
-    });
+    this.pointerCaptureBind = attributeBind(this, 'data-pointer-capture', '${showCaptureIcon.value}', app.model);
   }
 
   load() {
