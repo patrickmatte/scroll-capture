@@ -51,6 +51,10 @@ export default class Action extends EventDispatcher {
 
   clone() {}
 
+  interrupt() {
+    console.log('Action.interrupt', this);
+  }
+
   copy(action) {
     if (!action) return;
     this.delay.copy(action.delay);

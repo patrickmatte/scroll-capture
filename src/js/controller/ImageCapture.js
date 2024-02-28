@@ -90,7 +90,6 @@ export class ImageCapture extends Branch {
       });
       capturePromise.then((img) => {
         const captureData = captures[captureIndex];
-        console.log('captureData', captureData);
         const cropPosition = captureData.cropPosition.multiplyScalar(devicePixelRatio);
         const cropSize = captureData.cropSize.multiplyScalar(devicePixelRatio);
         const drawPosition = captureData.drawPosition.multiplyScalar(pixelRatio);

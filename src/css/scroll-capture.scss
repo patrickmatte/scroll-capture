@@ -42,10 +42,8 @@ html[data-sc-scrollbars='false'] {
     display: none;
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
-  body {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar-thumb {
+    display: none;
   }
 }
 

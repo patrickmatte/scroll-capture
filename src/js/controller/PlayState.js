@@ -50,6 +50,7 @@ export default class PlayState extends Branch {
     if (index < app.model.actions.value.length) {
       app.model.actions.selectedIndex.value = index;
       let action = app.model.actions.selectedItem.value;
+      this.currentAction = action;
       let promise = action.triggerDelay();
       promise.then(() => {
         app.model.setActionIndex(index + 1).then(() => {
@@ -68,6 +69,10 @@ export default class PlayState extends Branch {
   hide() {
     window.removeEventListener('beforeunload', this.beforeUnloadHandler);
     this.isPlaying = false;
+    if (this.currentAction) {
+      this.currentAction.interrupt();
+      this.currentAction = null;
+    }
     if (app.model.actions.value.length > 0) {
       app.model.sendMessage({ type: 'scrollCaptureUpdatedTabListener', enabled: false, location: 'play', tabId: app.model.tabId.value });
     }

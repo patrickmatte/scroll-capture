@@ -115,6 +115,13 @@ export default class ActionTween extends Action {
     return this.tween.start();
   }
 
+  interrupt() {
+    if (this.tween) {
+      this.tween.stop();
+      this.tweenCompleteHandler();
+    }
+  }
+
   tweenUpdateHandler(e) {}
 
   tweenCompleteHandler(e) {}

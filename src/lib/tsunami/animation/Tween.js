@@ -73,7 +73,7 @@ export default class Tween extends EventDispatcher {
   }
 
   pause() {
-    this.clock.removeEventListener(Clock.TICK, this.tick);
+    if (this.clock) this.clock.removeEventListener(Clock.TICK, this.tick);
   }
 
   resume() {
