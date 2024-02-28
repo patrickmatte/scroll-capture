@@ -12,7 +12,7 @@ export class ImageCapture extends Branch {
     app.model.sendMessage({ type: 'scrollCaptureImageCaptureStart' });
 
     document.documentElement.setAttribute('data-sc-cursor', app.model.settings.showCursor.value);
-    document.documentElement.setAttribute('data-sc-pointer-events', app.model.settings.pointerEvents.value);
+    // document.documentElement.setAttribute('data-sc-pointer-events', app.model.settings.pointerEvents.value);
     document.documentElement.setAttribute('data-sc-scrollbars', app.model.settings.showScrollbars.value);
 
     const target = app.model.imgCapSettings.target;
@@ -162,7 +162,7 @@ export class ImageCapture extends Branch {
   hide() {
     app.model.sendMessage({ type: 'scrollCaptureImageCaptureStop' });
     document.documentElement.removeAttribute('data-sc-cursor');
-    document.documentElement.removeAttribute('data-sc-pointer-events');
+    // document.documentElement.removeAttribute('data-sc-pointer-events');
     document.documentElement.removeAttribute('data-sc-scrollbars');
 
     this.isCapturing = false;

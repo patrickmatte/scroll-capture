@@ -16,7 +16,7 @@ export default class CaptureVideoModel {
 
     this.showScrollbars = new BooleanData(false);
     this.showCursor = new BooleanData(true);
-    this.pointerEvents = new BooleanData(true);
+    // this.pointerEvents = new BooleanData(true);
 
     this.position = new Vector2Data(50, 50);
     this.devicePixelRatio = new NumberData(decimalToPlace(window.devicePixelRatio, 2, Math.floor));
@@ -150,7 +150,7 @@ export default class CaptureVideoModel {
   serialize() {
     return {
       showCursor: this.showCursor.serialize(),
-      pointerEvents: this.pointerEvents.serialize(),
+      // pointerEvents: this.pointerEvents.serialize(),
       showScrollbars: this.showScrollbars.serialize(),
       position: this.position.serialize(),
       // format: this.format.selectedItem.serialize(),
@@ -169,7 +169,7 @@ export default class CaptureVideoModel {
   deserialize(data) {
     if (!data) return;
     if (data.hasOwnProperty('showCursor')) this.showCursor.deserialize(data.showCursor);
-    if (data.hasOwnProperty('pointerEvents')) this.pointerEvents.deserialize(data.pointerEvents);
+    // if (data.hasOwnProperty('pointerEvents')) this.pointerEvents.deserialize(data.pointerEvents);
     if (data.hasOwnProperty('showScrollbars')) this.showScrollbars.deserialize(data.showScrollbars);
     if (data.hasOwnProperty('position')) this.position.deserialize(data.position);
     // if (data.hasOwnProperty('format')) this.format.selectedItem.deserialize(data.format);
