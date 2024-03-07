@@ -19,7 +19,7 @@ export default class ActionEval extends Action {
     super('ActionEval', 'Javascript', 'Add javascript code');
     // if(!code) code = example;
     // this.code = new StringData(code);
-    this.icon.value = 'fab fa-js-square';
+    this.icon.value = 'fa-brands fa-js-square';
   }
 
   clone() {

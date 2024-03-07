@@ -1,16 +1,16 @@
-$fieldMargin: 0.5em;
-$borderRadius: 0.33em;
+$fieldMargin: 0.5em !important;
+$borderRadius: 0.33em !important;
 
-$backgroundColorDark: rgba(0, 0, 0, 0.75);
-$windowColorDark: rgba(255, 255, 255, 0.025);
-$windowColorFrontDark: rgba(255, 255, 255, 0.075);
+$backgroundColorDark: rgba(0, 0, 0, 0.75) !important;
+$windowColorDark: rgba(255, 255, 255, 0.025) !important;
+$windowColorFrontDark: rgba(255, 255, 255, 0.075) !important;
 $inputColorDark: rgba(0, 0, 0, 0.075) !important;
-$windowBorderDark: rgba(255, 255, 255, 0.5);
-$textColorDark: #ffffff;
+$windowBorderDark: rgba(255, 255, 255, 0.5) !important;
+$textColorDark: #ffffff !important;
 
-$backgroundColorLight: rgba(179, 179, 179, 0.75);
-$windowColorLight: rgba(255, 255, 255, 0.25);
-$windowColorFrontLight: rgba(255, 255, 255, 0.4);
+$backgroundColorLight: rgba(179, 179, 179, 0.75) !important;
+$windowColorLight: rgba(255, 255, 255, 0.25) !important;
+$windowColorFrontLight: rgba(255, 255, 255, 0.4) !important;
 $inputColorLight: rgba(0, 0, 0, 0.05) !important;
-$windowBorderLight: rgba(0, 0, 0, 0.25);
-$textColorLight: #000000;
+$windowBorderLight: rgba(0, 0, 0, 0.25) !important;
+$textColorLight: #000000 !important;

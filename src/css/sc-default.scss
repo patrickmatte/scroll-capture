@@ -11,6 +11,28 @@
   visibility: visible !important;
   pointer-events: visible;
 
+  * {
+    font-family: unset !important;
+    padding: unset;
+    letter-spacing: unset !important;
+    background-color: unset;
+    background: unset;
+  }
+
+  input {
+    padding: unset !important;
+  }
+
+  span {
+    background: unset !important;
+  }
+
+  button {
+    padding: unset !important;
+    background-color: unset !important;
+    background: unset !important;
+  }
+
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -209,6 +231,8 @@
     align-items: center;
     font-weight: 700;
     cursor: pointer;
+    color: inherit;
+    font-size: inherit;
 
     > * {
       display: inline-block;
