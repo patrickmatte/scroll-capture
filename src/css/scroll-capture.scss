@@ -1,15 +1,35 @@
-body[data-pointer-capture='true'] * {
-  cursor: -webkit-image-set(
-      url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
-      url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x
-    ),
+body[data-pointer-capture='pointer'] * {
+  cursor:
+    -webkit-image-set(
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x
+      )
+      10 3,
     auto !important;
-  cursor: image-set(
-      url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
-      url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x
-    ),
+  cursor:
+    image-set(
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor.png') 1x,
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursor2x.png') 2x
+      )
+      10 3,
     auto !important;
-  // cursor: url(), auto !important;
+}
+
+body[data-pointer-capture='arrow'] * {
+  cursor:
+    -webkit-image-set(
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursorArrow.png') 1x,
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursorArrow2x.png') 2x
+      )
+      2 2,
+    auto !important;
+  cursor:
+    image-set(
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursorArrow.png') 1x,
+        url('chrome-extension://__MSG_@@extension_id__/assets/images/customCursorArrow2x.png') 2x
+      )
+      2 2,
+    auto !important;
 }
 
 html[data-sc-cursor='false'] {

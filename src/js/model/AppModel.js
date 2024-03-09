@@ -22,7 +22,7 @@ export default class AppModel extends DataModel {
     // this.deleteSelected = this.deleteSelected.bind(this);
     // this.clearActions = this.clearActions.bind(this);
 
-    this.showCaptureIcon = new BooleanData();
+    this.showCaptureIcon = new StringData();
     this.isSaving = new BooleanData();
     // this.isPlayingSelected = new BooleanData();
     // this.isCapturingSelected = new BooleanData();

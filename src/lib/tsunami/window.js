@@ -149,14 +149,22 @@ export function fileExists(url) {
   return req.status !== 404;
 }
 
-export function getElementSelector(element, root = null) {
+export function getElementSelector(element, root = null, attributes = []) {
   let names = [];
   while (element) {
-    let elSelector = element.nodeName;
+    let elSelector = element.nodeName.toLowerCase();
     const className = element.className;
     if (className) {
       elSelector = elSelector + '.' + className.split(' ').join('.');
     }
+    const name = element.getAttribute('name');
+    if (name) elSelector += `[name='${name}']`;
+    attributes.forEach((attrName) => {
+      const param = element.getAttribute(attrName);
+      if (param) elSelector += `[${attrName}='${param}']`;
+    });
+    const id = element.id;
+    if (id) elSelector += `#${id}`;
     names.push(elSelector);
     if (!root || element == root) {
       element = null;

@@ -27,10 +27,12 @@ export default class ActionMouseEvent extends Action {
       'touchend'
     );
     this.eventTypes.selectedItem.value = this.eventTypes.value[0];
+
     this.isTestable.value = true;
     this.isCaptureable.value = true;
     this.isDuplicateable.value = true;
     this.changeCursorOnCapture.value = true;
+
     this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
     this.mouseEventHandler = this.mouseEventHandler.bind(this);
     this.icon.value = 'fa-solid fa-hand-pointer';

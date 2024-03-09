@@ -2,11 +2,8 @@ import { importTemplate, define } from '../../lib/tsunami/tsunami';
 import App from '../../lib/tsunami/App';
 import ScrollCapture from './ScrollCapture';
 import { loadStyle } from '../../lib/tsunami/load/loadStyle';
-import Data from '../../lib/tsunami/data/Data';
 import RouterButton from './RouterButton';
 import { app } from '../main';
-import UIButton from '../../lib/tsunami/components/UIButton';
-import ExpressionData from '../../lib/tsunami/data/ExpressionData';
 import { attributeBind } from '../../lib/tsunami/directives/attributeDirective';
 
 export default class AppView extends App {

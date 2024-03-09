@@ -6,7 +6,7 @@ import ActionSwipe from './ActionSwipe';
 import ActionWait from './ActionWait';
 import ActionURL from './ActionURL';
 import ActionCSS from './ActionCSS';
-import { app } from '../main';
+import { ActionTextInput } from './ActionTextInput';
 
 export default class Actions extends ArrayData {
   constructor() {
@@ -17,7 +17,7 @@ export default class Actions extends ArrayData {
     // this.addSelectedType = this.addSelectedType.bind(this);
 
     this.types = new ArrayData();
-    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait()];
+    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait(), new ActionTextInput()];
     // this.types.selectedItem.value = this.types.value[0];
   }
 
@@ -69,14 +69,16 @@ export default class Actions extends ArrayData {
     if (!json) return;
     let actions = [];
     for (let i = 0; i < json.length; i++) {
-      let data = json[i];
-      let action = this.types
-        .find((type) => {
-          return type.type == data.type;
-        })
-        .clone();
-      action.deserialize(data);
-      actions.push(action);
+      const data = json[i];
+      console.log('data.type', data.type);
+      const actionType = this.types.find((type) => {
+        return type.type == data.type;
+      });
+      if (actionType) {
+        const action = actionType.clone();
+        action.deserialize(data);
+        actions.push(action);
+      }
     }
     this.value = actions;
   }

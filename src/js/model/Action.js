@@ -30,8 +30,11 @@ export default class Action extends EventDispatcher {
     this.isCaptureable = new BooleanData();
     this.isCapturing = new BooleanData();
     this.changeCursorOnCapture = new BooleanData();
+    this.captureIconName = 'pointer';
     this.isCapturing.addEventListener(Data.CHANGE, (event) => {
-      if (this.changeCursorOnCapture.value) app.model.showCaptureIcon.value = event.data;
+      if (this.changeCursorOnCapture.value) {
+        app.model.showCaptureIcon.value = this.isCapturing.value ? this.captureIconName : '';
+      }
     });
     this.isPlaying = new BooleanData();
     this.delay = new NumberData(0);

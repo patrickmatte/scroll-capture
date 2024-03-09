@@ -19,11 +19,11 @@
 
 .sc-default .fa-solid,
 .sc-default .fa-regular {
-  font-family: 'Font Awesome 6 Free' !important;
+  font-family: 'Font Awesome 6 SC Free' !important;
 }
 
 .sc-default .fa-brands {
-  font-family: 'Font Awesome 6 Brands' !important;
+  font-family: 'Font Awesome 6 SC Brands' !important;
 }
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
@@ -7830,7 +7830,7 @@ readers do not read off random characters that represent icons */
 }
 
 @font-face {
-  font-family: 'Font Awesome 6 Brands';
+  font-family: 'Font Awesome 6 SC Brands';
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -9916,7 +9916,7 @@ readers do not read off random characters that represent icons */
 }
 
 @font-face {
-  font-family: 'Font Awesome 6 Free';
+  font-family: 'Font Awesome 6 SC Free';
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -9930,7 +9930,7 @@ readers do not read off random characters that represent icons */
 }
 
 @font-face {
-  font-family: 'Font Awesome 6 Free';
+  font-family: 'Font Awesome 6 SC Free';
   font-style: normal;
   font-weight: 900;
   font-display: block;
