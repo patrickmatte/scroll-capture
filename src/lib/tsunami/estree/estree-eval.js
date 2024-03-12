@@ -62,7 +62,7 @@ const evaluateFns = {
       throw new Error('generator functions are not supported.');
     }
     if (!node.expression) {
-      throw new Error('function body must be a single expression.');
+      // throw new Error('function body must be a single expression.');
     }
     return (...args) => {
       const fnScope = Object.create(scope);
@@ -83,7 +83,7 @@ const evaluateFns = {
         }
       }
       if (node.body.type === 'BlockStatement') {
-        throw new Error('BlockStatements are not supported.');
+        // throw new Error('BlockStatements are not supported.');
       }
       return evaluate(node.body, fnScope);
     };
@@ -161,6 +161,18 @@ const evaluateFns = {
         throw new Error(`Unexpected operator: ${node.operator}`);
     }
   },
+  BlockStatement(node, scope) {
+    let results = evaluateSpreadArray(node.body, scope);
+    if (results)
+      results = results.filter((val) => {
+        return val !== undefined;
+      });
+    let result = results[0];
+    // results.forEach((val) => {
+    //   if (val !== undefined) result = val;
+    // });
+    return result;
+  },
   CallExpression(node, scope) {
     switch (node.callee.type) {
       case 'Super':
@@ -181,6 +193,12 @@ const evaluateFns = {
       return evaluate(node.consequent, scope);
     }
     return evaluate(node.alternate, scope);
+  },
+  ExpressionStatement(node, scope) {
+    return evaluate(node.expression, scope);
+  },
+  FunctionExpression(node, scope) {
+    return evaluateFns.ArrowFunctionExpression(node, scope);
   },
   Identifier(node, scope) {
     return scope[node.name];
@@ -211,6 +229,16 @@ const evaluateFns = {
           return evaluate(node.property, object);
         }
     }
+  },
+  NewExpression(node, scope) {
+    const callee = evaluate(node.callee, scope);
+    const args = evaluateSpreadArray(node.arguments, scope);
+    const result = new callee(...args);
+    return result;
+    // return new (Function.prototype.bind.apply(callee, args))();
+  },
+  ReturnStatement(node, scope) {
+    return evaluate(node.argument, scope);
   },
   TemplateLiteral(node, scope) {
     let s = '';
@@ -262,6 +290,16 @@ const evaluateFns = {
         return void value;
       default:
         throw new Error(`Unsupported ${node.type} operator "${node.operator}".`);
+    }
+  },
+  VariableDeclaration(node, scope) {
+    evaluateSpreadArray(node.declarations, scope);
+  },
+  VariableDeclarator(node, scope) {
+    switch (node.id.type) {
+      case 'Identifier':
+        scope[node.id.name] = evaluate(node.init, scope);
+        break;
     }
   },
 };

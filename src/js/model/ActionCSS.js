@@ -14,8 +14,8 @@ export default class ActionCSS extends Action {
     super('ActionCSS', 'CSS', 'Add CSS rules');
     if (!code) code = example;
     this.code = new StringData(code);
-    // this.icon.value = 'fa-brands fa-css3-alt';
-    this.icon.value = 'fa-solid fa-code';
+    this.icon.value = 'fa-brands fa-css3-alt';
+    // this.icon.value = 'fa-solid fa-code';
     this.isTestable.value = true;
   }
 

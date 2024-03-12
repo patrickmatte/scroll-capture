@@ -7,6 +7,7 @@ import ActionWait from './ActionWait';
 import ActionURL from './ActionURL';
 import ActionCSS from './ActionCSS';
 import { ActionTextInput } from './ActionTextInput';
+import ActionJavascript from './ActionJavascript';
 
 export default class Actions extends ArrayData {
   constructor() {
@@ -17,7 +18,17 @@ export default class Actions extends ArrayData {
     // this.addSelectedType = this.addSelectedType.bind(this);
 
     this.types = new ArrayData();
-    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait(), new ActionTextInput()];
+    this.types.value = [
+      new ActionScroll(),
+      new ActionMouseEvent(),
+      new ActionSwipe(),
+      new ActionURL(),
+      new ActionCSS(),
+      new ActionJavascript(),
+      new ActionEval(),
+      new ActionWait(),
+      new ActionTextInput(),
+    ];
     // this.types.selectedItem.value = this.types.value[0];
   }
 
@@ -70,7 +81,6 @@ export default class Actions extends ArrayData {
     let actions = [];
     for (let i = 0; i < json.length; i++) {
       const data = json[i];
-      console.log('data.type', data.type);
       const actionType = this.types.find((type) => {
         return type.type == data.type;
       });
