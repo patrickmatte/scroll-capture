@@ -7,7 +7,6 @@ import ActionWait from './ActionWait';
 import ActionURL from './ActionURL';
 import ActionCSS from './ActionCSS';
 import { ActionTextInput } from './ActionTextInput';
-import ActionJavascript from './ActionJavascript';
 
 export default class Actions extends ArrayData {
   constructor() {
@@ -18,17 +17,7 @@ export default class Actions extends ArrayData {
     // this.addSelectedType = this.addSelectedType.bind(this);
 
     this.types = new ArrayData();
-    this.types.value = [
-      new ActionScroll(),
-      new ActionMouseEvent(),
-      new ActionSwipe(),
-      new ActionURL(),
-      new ActionCSS(),
-      new ActionJavascript(),
-      new ActionEval(),
-      new ActionWait(),
-      new ActionTextInput(),
-    ];
+    this.types.value = [new ActionScroll(), new ActionMouseEvent(), new ActionSwipe(), new ActionURL(), new ActionCSS(), new ActionEval(), new ActionWait(), new ActionTextInput()];
     // this.types.selectedItem.value = this.types.value[0];
   }
 

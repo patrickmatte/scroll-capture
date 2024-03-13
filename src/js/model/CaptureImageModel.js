@@ -61,8 +61,10 @@ export default class CaptureImageModel extends DataModel {
     });
     const missingSelectors = [];
     this.hiddenElements.forEach((hiddenElement) => {
-      const fixedElement = fixedElements.find((fixed) => fixed.selector == hiddenElement.selector);
-      if (!fixedElement) missingSelectors.push({ value: hiddenElement.selector, name: hiddenElement.selector });
+      if (hiddenElement.type == 'fixed') {
+        const fixedElement = fixedElements.find((fixed) => fixed.selector == hiddenElement.selector);
+        if (!fixedElement) missingSelectors.push({ value: hiddenElement.selector, name: hiddenElement.selector });
+      }
     });
 
     this.fixedSelectors.value = [{ value: '', name: 'Select a fixed element' }, ...missingSelectors, ...fixedSelectors];

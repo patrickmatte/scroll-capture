@@ -3,8 +3,8 @@ export function hackHoverStates() {
     let rules;
     try {
       rules = document.styleSheets[i].cssRules;
-    } catch (e) {
-      // console.log(e);
+    } catch (error) {
+      console.log('document.styleSheets[i].cssRules', error);
     }
     if (rules) {
       for (var r in rules) {

@@ -63,6 +63,7 @@ export default class PlayState extends Branch {
   }
 
   allComplete() {
+    this.currentAction = null;
     this.router.location = this.endLocation;
   }
 

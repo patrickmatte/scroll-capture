@@ -70,7 +70,13 @@ const evaluateFns = {
         const param = node.params[i];
         switch (param.type) {
           case 'Identifier':
-            fnScope[param.name] = args[i];
+            try {
+              fnScope[param.name] = args[i];
+            } catch (error) {
+              console.log('Identifier error', error);
+              console.log('args', args);
+              console.log('param', param);
+            }
             break;
           case 'RestElement':
             if (param.argument.type !== 'Identifier') {
@@ -82,9 +88,9 @@ const evaluateFns = {
             throw new Error(`"${param.type}" parameter expressions are not supported.`);
         }
       }
-      if (node.body.type === 'BlockStatement') {
-        // throw new Error('BlockStatements are not supported.');
-      }
+      // if (node.body.type === 'BlockStatement') {
+      // throw new Error('BlockStatements are not supported.');
+      // }
       return evaluate(node.body, fnScope);
     };
   },
@@ -168,9 +174,6 @@ const evaluateFns = {
         return val !== undefined;
       });
     let result = results[0];
-    // results.forEach((val) => {
-    //   if (val !== undefined) result = val;
-    // });
     return result;
   },
   CallExpression(node, scope) {
@@ -185,7 +188,16 @@ const evaluateFns = {
         const callee = evaluate(node.callee.property, object);
         return callee.apply(object, evaluateSpreadArray(node.arguments, scope));
       default:
-        return evaluate(node.callee, scope)(...evaluateSpreadArray(node.arguments, scope));
+        const func = evaluate(node.callee, scope);
+        let result;
+        try {
+          result = func(...evaluateSpreadArray(node.arguments, scope));
+        } catch (error) {
+          console.log('CallExpression error', error);
+          console.log('scope', scope);
+          console.log('node', node);
+        }
+        return result;
     }
   },
   ConditionalExpression(node, scope) {
@@ -201,7 +213,15 @@ const evaluateFns = {
     return evaluateFns.ArrowFunctionExpression(node, scope);
   },
   Identifier(node, scope) {
-    return scope[node.name];
+    let result;
+    try {
+      result = scope[node.name];
+    } catch (error) {
+      console.log('Identifier error', error);
+      console.log('scope', scope);
+      console.log('node', node);
+    }
+    return result;
   },
   Literal(node) {
     return node.value;
@@ -255,6 +275,9 @@ const evaluateFns = {
       }
     }
     return s + node.quasis[i].value.cooked;
+  },
+  ThisExpression(node, scope) {
+    return scope;
   },
   UnaryExpression(node, scope) {
     if (!node.prefix) {
