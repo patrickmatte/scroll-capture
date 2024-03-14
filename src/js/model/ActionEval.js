@@ -2,7 +2,7 @@ import Action from './Action';
 import StringData from '../../lib/tsunami/data/StringData';
 import { app } from '../main';
 
-let example = `/* Example with promise */
+let example = `/* Example using jQuery animation with a promise */
 return new Promise((resolve, reject) => {
   $({ scrollY: 0 }).animate(
     { scrollY: 500 },
