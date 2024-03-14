@@ -65,6 +65,7 @@ export default class AppModel extends DataModel {
   // }
 
   sendMessage(message) {
+    message.tabId = this.tabId.value;
     try {
       chrome.runtime.sendMessage(message);
     } catch (error) {

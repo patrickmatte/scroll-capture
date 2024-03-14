@@ -25,7 +25,7 @@ async function showMainPanel(tabId) {
     recording = offscreenDocument.documentUrl.endsWith('#recording');
   }
 
-  executeScript(tabId).then(() => {
+  executeContentScript(tabId).then(() => {
     if (recording) {
       chrome.tabs.sendMessage(tabId, {
         type: 'scrollCaptureLocation',
@@ -42,9 +42,10 @@ async function showMainPanel(tabId) {
 let canvas;
 
 function onMessageHandler(msg, sender, sendResponse) {
+  const tabId = msg.tabId;
   switch (msg.type) {
     case 'scrollCaptureShowMainPanel':
-      showMainPanel(msg.tabId);
+      showMainPanel(tabId);
       sendResponse({ mainPanel: true });
       break;
     case 'scrollCaptureStartRecording':
@@ -66,7 +67,7 @@ function onMessageHandler(msg, sender, sendResponse) {
       let handler;
       switch (msg.location) {
         case 'scenario':
-          chrome.storage.local.set({ tabId: msg.tabId });
+          chrome.storage.local.set({ tabId });
           handler = updatedTabHandlerScenario;
           break;
         case 'play':
@@ -83,7 +84,7 @@ function onMessageHandler(msg, sender, sendResponse) {
     case 'scrollCaptureInsertCSS':
       // chrome.storage.local.get('tabId').then((obj) => {
       chrome.scripting.insertCSS({
-        target: { tabId: msg.tabId },
+        target: { tabId },
         css: msg.css,
       });
       // });
@@ -104,11 +105,57 @@ function onMessageHandler(msg, sender, sendResponse) {
       break;
     case 'scrollCaptureVideoURLBackground':
       msg.type = 'scrollCaptureVideoURL';
-      chrome.tabs.sendMessage(msg.tabId, msg);
+      chrome.tabs.sendMessage(tabId, msg);
       break;
     case 'scrollCaptureFFmpegLogToSW':
       msg.type = 'scrollCaptureFFmpegLogToCC';
-      chrome.tabs.sendMessage(msg.tabId, msg);
+      chrome.tabs.sendMessage(tabId, msg);
+      break;
+    case 'scrollCaptureExecuteScript':
+      console.log('scrollCaptureExecuteScript', msg);
+      chrome.scripting
+        .executeScript({
+          target: { tabId },
+          func: (body) => {
+            return new Function(body)();
+          },
+          args: [msg.code],
+          world: 'MAIN',
+        })
+        .then((val) => {
+          console.log('executeScript then', val);
+          sendResponse(val[0].result);
+        });
+      break;
+    case 'scrollCaptureSetScroll':
+      const code = `
+        document.documentElement.scrollLeft = x;
+        document.documentElement.scrollTop = y;
+      `;
+      chrome.scripting.executeScript({
+        target: { tabId },
+        func: (body, x, y) => {
+          return new Function('x', 'y', body)(x, y);
+        },
+        args: [msg.code, msg.x, msg.y],
+        world: 'MAIN',
+      });
+      break;
+    case 'scrollCaptureGetScroll':
+      const code2 = 'return {x:window.scrollX, y:window.scrollY};';
+      chrome.scripting
+        .executeScript({
+          target: { tabId },
+          func: (body) => {
+            return new Function(body)();
+          },
+          args: [msg.code],
+          world: 'MAIN',
+        })
+        .then((val) => {
+          console.log('scrollCaptureGetScroll then', val);
+          sendResponse(val[0].result);
+        });
       break;
   }
   return true;
@@ -116,7 +163,7 @@ function onMessageHandler(msg, sender, sendResponse) {
 
 function updatedTabHandlerPlay(tabId, changeInfo, tab) {
   if (changeInfo.status == 'complete') {
-    executeScript(tab.id).then(() => {
+    executeContentScript(tab.id).then(() => {
       chrome.runtime.getContexts({}).then((existingContexts) => {
         const offscreenDocument = existingContexts.find((c) => c.contextType === 'OFFSCREEN_DOCUMENT');
         const recording = offscreenDocument.documentUrl.endsWith('#recording');
@@ -134,7 +181,7 @@ function updatedTabHandlerScenario(tabId, changeInfo, tab) {
   if (changeInfo.status == 'complete') {
     chrome.storage.local.get('tabId').then((obj) => {
       if (obj.tabId == tabId) {
-        executeScript(tab.id).then(() => {
+        executeContentScript(tab.id).then(() => {
           sendDefaultLocation(tab.id);
         });
       }
@@ -153,7 +200,7 @@ function sendDefaultLocation(tabId) {
   });
 }
 
-function executeScript(tabId) {
+function executeContentScript(tabId) {
   return chrome.scripting.executeScript({
     target: { tabId },
     files: ['content.js'],

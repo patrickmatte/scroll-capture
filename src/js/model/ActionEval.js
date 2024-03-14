@@ -1,20 +1,23 @@
 import Action from './Action';
 import StringData from '../../lib/tsunami/data/StringData';
-import { safeEval } from '../../lib/tsunami/tsunami';
-import { evaluate } from '../../lib/tsunami/estree/estree-eval';
-import * as acorn from 'acorn';
+import { app } from '../main';
 
-let example = `/* Example */
-const time = 2000;
-const promise = new Promise((resolve, reject) => {
-  console.log("wait for " + time + " ms");
-  setTimeout(() => {
-    resolve(time + " ms has passed");
-  }, time);
+let example = `/* Example with promise */
+return new Promise((resolve, reject) => {
+  $({ scrollY: 0 }).animate(
+    { scrollY: 500 },
+    {
+      duration: 2000,
+      step: function () {
+        document.documentElement.scrollTop = this.scrollY;
+      },
+      complete: () => {
+        resolve();
+      },
+    }
+  );
 });
-return promise.then((msg)=> {
-  console.log(msg);
-});`;
+`;
 
 export default class ActionEval extends Action {
   constructor(code = '') {
@@ -38,20 +41,17 @@ export default class ActionEval extends Action {
   }
 
   trigger() {
-    const expression = '() => {' + this.code.value + '}';
-    const ast = acorn.parseExpressionAt(expression, 0, { ecmaVersion: 2020 });
-    const scope = Object.create(window, {
-      window: {
-        writable: true,
-        configurable: true,
-        value: window,
-      },
+    const message = {
+      type: 'scrollCaptureExecuteScript',
+      code: this.code.value,
+      tabId: app.model.tabId.value,
+    };
+    const promise = new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(message, (response) => {
+        resolve(response);
+      });
     });
-    let promise = Promise.resolve();
-    const func = evaluate(ast, scope);
-    if (func) promise = func();
-    let isPromise = promise instanceof Promise;
-    if (!isPromise) promise = Promise.resolve();
+
     return promise;
   }
 
