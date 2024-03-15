@@ -112,7 +112,6 @@ function onMessageHandler(msg, sender, sendResponse) {
       chrome.tabs.sendMessage(tabId, msg);
       break;
     case 'scrollCaptureExecuteScript':
-      console.log('scrollCaptureExecuteScript', msg);
       chrome.scripting
         .executeScript({
           target: { tabId },
@@ -123,15 +122,10 @@ function onMessageHandler(msg, sender, sendResponse) {
           world: 'MAIN',
         })
         .then((val) => {
-          console.log('executeScript then', val);
           sendResponse(val[0].result);
         });
       break;
     case 'scrollCaptureSetScroll':
-      const code = `
-        document.documentElement.scrollLeft = x;
-        document.documentElement.scrollTop = y;
-      `;
       chrome.scripting.executeScript({
         target: { tabId },
         func: (body, x, y) => {
@@ -142,7 +136,6 @@ function onMessageHandler(msg, sender, sendResponse) {
       });
       break;
     case 'scrollCaptureGetScroll':
-      const code2 = 'return {x:window.scrollX, y:window.scrollY};';
       chrome.scripting
         .executeScript({
           target: { tabId },
@@ -153,7 +146,6 @@ function onMessageHandler(msg, sender, sendResponse) {
           world: 'MAIN',
         })
         .then((val) => {
-          console.log('scrollCaptureGetScroll then', val);
           sendResponse(val[0].result);
         });
       break;

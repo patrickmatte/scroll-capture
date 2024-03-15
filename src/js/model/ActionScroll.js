@@ -7,6 +7,7 @@ import Data from '../../lib/tsunami/data/Data';
 import { getScrollingTargets, isScrollable } from '../../lib/tsunami/window';
 import { app } from '../main';
 import EventHandler from '../../lib/tsunami/components/EventHandler';
+import BooleanData from '../../lib/tsunami/data/BooleanData';
 
 export default class ActionScroll extends ActionTween {
   constructor(units = 'px', x = 0, y = 0, duration = 1, delay = 0) {
@@ -16,10 +17,24 @@ export default class ActionScroll extends ActionTween {
     this.description.value = 'Add a scroll animation';
     this.targets = new ArrayData();
     this.targets.value = getScrollingTargets(['sc-'], ['documentElement']);
+    this.customJSMethod = 'Custom JS method';
+    this.targets.push(this.customJSMethod);
     this.target = new StringData(this.targets.value[0]);
-    this.targetEventHandler = new EventHandler(this.target, Data.CHANGE, () => {
+    this.isCustomJSMethod = new BooleanData(false);
+    this.target.addEventListener(Data.CHANGE, () => {
+      this.isCustomJSMethod.value = this.target.value == this.customJSMethod;
+    });
+    this.targetEventHandler = new EventHandler(this.target, Data.CHANGE, (event) => {
       this.captureAtInit();
     });
+    const getScrollCode = `return {
+  x:document.documentElement.scrollLeft,
+  y:document.documentElement.scrollTop
+};`;
+    this.getScroll = new StringData(getScrollCode);
+    const setScrollCode = `document.documentElement.scrollLeft = x;
+document.documentElement.scrollTop = y;`;
+    this.setScroll = new StringData(setScrollCode);
     this.unitX = new NumberData(x);
     this.unitY = new NumberData(y);
     this.units = new ArrayData('%', 'px');
@@ -87,31 +102,38 @@ export default class ActionScroll extends ActionTween {
   }
 
   trigger() {
-    let scrollTarget = this.element;
-    this.startX.value = scrollTarget.scrollLeft;
-    this.startY.value = scrollTarget.scrollTop;
+    let element = this.element;
+    const scrollPromise = this.sendGetScroll(element);
+    const triggerPromise = scrollPromise.then((currentScroll) => {
+      this.startX.value = currentScroll.x;
+      this.startY.value = currentScroll.y;
+      // this.startX.value = element.scrollLeft;
+      // this.startY.value = element.scrollTop;
 
-    let styleArrayFiltered = [];
-    this.targetStyle = scrollTarget.getAttribute('style') || '';
-    if (this.targetStyle) {
-      styleArrayFiltered = this.targetStyle.split(';').filter((prop) => {
-        return prop.indexOf('scroll-behavior') == -1;
-      });
-    }
-    styleArrayFiltered.push('scroll-behavior:auto !important');
-    scrollTarget.setAttribute('style', styleArrayFiltered.join(';'));
+      if (this.target.value != this.customJSMethod) {
+        let styleArrayFiltered = [];
+        this.targetStyle = element.getAttribute('style') || '';
+        if (this.targetStyle) {
+          styleArrayFiltered = this.targetStyle.split(';').filter((prop) => {
+            return prop.indexOf('scroll-behavior') == -1;
+          });
+        }
+        styleArrayFiltered.push('scroll-behavior:auto !important');
+        element.setAttribute('style', styleArrayFiltered.join(';'));
+      }
 
-    if (this.units.selectedItem.value == 'px') {
-      this.endX.copy(this.unitX);
-      this.endY.copy(this.unitY);
-    }
-    if (this.units.selectedItem.value == '%') {
-      const element = this.element;
-      let maxScroll = { x: element.scrollWidth - element.clientWidth, y: element.scrollHeight - element.clientHeight };
-      this.endX.value = Math.round((this.unitX.value / 100) * maxScroll.x);
-      this.endY.value = Math.round((this.unitY.value / 100) * maxScroll.y);
-    }
-    return super.trigger();
+      if (this.units.selectedItem.value == 'px') {
+        this.endX.copy(this.unitX);
+        this.endY.copy(this.unitY);
+      }
+      if (this.units.selectedItem.value == '%') {
+        let maxScroll = { x: element.scrollWidth - element.clientWidth, y: element.scrollHeight - element.clientHeight };
+        this.endX.value = Math.round((this.unitX.value / 100) * maxScroll.x);
+        this.endY.value = Math.round((this.unitY.value / 100) * maxScroll.y);
+      }
+      return super.trigger();
+    });
+    return triggerPromise;
   }
 
   doScroll() {
@@ -121,14 +143,31 @@ export default class ActionScroll extends ActionTween {
   }
 
   tweenUpdateHandler() {
-    const scrollTarget = this.element;
-    scrollTarget.scrollLeft = this.pos.x;
-    scrollTarget.scrollTop = this.pos.y;
+    switch (this.target.value) {
+      case this.customJSMethod:
+        const promise = new Promise((resolve, reject) => {
+          const message = {
+            type: 'scrollCaptureSetScroll',
+            code: this.setScroll.value,
+            x: this.pos.x,
+            y: this.pos.y,
+            tabId: app.model.tabId.value,
+          };
+          chrome.runtime.sendMessage(message);
+        });
+        break;
+      default:
+        this.element.scrollLeft = this.pos.x;
+        this.element.scrollTop = this.pos.y;
+        break;
+    }
   }
 
   tweenCompleteHandler(e) {
     super.tweenCompleteHandler(e);
-    this.element.setAttribute('style', this.targetStyle);
+    if (this.target.value != this.customJSMethod) {
+      this.element.setAttribute('style', this.targetStyle);
+    }
   }
 
   serialize() {
@@ -155,6 +194,28 @@ export default class ActionScroll extends ActionTween {
     this.targetEventHandler.enabled = true;
   }
 
+  sendGetScroll(element) {
+    let promise;
+    switch (this.target.value) {
+      case this.customJSMethod:
+        promise = new Promise((resolve, reject) => {
+          const message = {
+            type: 'scrollCaptureGetScroll',
+            code: this.getScroll.value,
+            tabId: app.model.tabId.value,
+          };
+          chrome.runtime.sendMessage(message, (response) => {
+            resolve(response);
+          });
+        });
+        break;
+      default:
+        promise = Promise.resolve({ x: element.scrollLeft, y: element.scrollTop });
+        break;
+    }
+    return promise;
+  }
+
   capture() {
     super.capture();
 
@@ -162,32 +223,35 @@ export default class ActionScroll extends ActionTween {
     this.unitY.removeEventListener(Data.CHANGE, this.doScroll);
 
     const element = this.element;
-    let scroll = new Point(element.scrollLeft, element.scrollTop);
-    let maxScroll = new Point(element.scrollWidth - element.clientWidth, element.scrollHeight - element.clientHeight);
+    this.sendGetScroll(element).then((currentScroll) => {
+      // let scroll = new Point(element.scrollLeft, element.scrollTop);
+      let scroll = new Point(currentScroll.x, currentScroll.y);
 
-    let unit = new Point();
-    switch (this.units.selectedItem.value) {
-      case 'px':
-        unit.x = scroll.x;
-        unit.y = scroll.y;
-        break;
-      case '%':
-        unit.x = Math.round((scroll.x / maxScroll.x) * 100);
-        unit.y = Math.round((scroll.y / maxScroll.y) * 100);
-        break;
-    }
+      let unit = new Point();
+      switch (this.units.selectedItem.value) {
+        case 'px':
+          unit.x = scroll.x;
+          unit.y = scroll.y;
+          break;
+        case '%':
+          let maxScroll = new Point(element.scrollWidth - element.clientWidth, element.scrollHeight - element.clientHeight);
+          unit.x = Math.round((scroll.x / maxScroll.x) * 100);
+          unit.y = Math.round((scroll.y / maxScroll.y) * 100);
+          break;
+      }
 
-    if (isNaN(unit.x)) unit.x = 0;
-    if (isNaN(unit.y)) unit.y = 0;
+      if (isNaN(unit.x)) unit.x = 0;
+      if (isNaN(unit.y)) unit.y = 0;
 
-    this.unitX.value = unit.x;
-    this.unitY.value = unit.y;
+      this.unitX.value = unit.x;
+      this.unitY.value = unit.y;
 
-    setTimeout(() => {
-      this.unitX.addEventListener(Data.CHANGE, this.doScroll);
-      this.unitY.addEventListener(Data.CHANGE, this.doScroll);
-      this.captureComplete();
-    }, 200);
+      setTimeout(() => {
+        this.unitX.addEventListener(Data.CHANGE, this.doScroll);
+        this.unitY.addEventListener(Data.CHANGE, this.doScroll);
+        this.captureComplete();
+      }, 200);
+    });
   }
 
   captureAtInit() {

@@ -363,6 +363,18 @@
                                         <select is="ui-select" set:provider="scope.data.targets" bind:value="scope.data.target.value"></select>
                                       </div>
                                     </div>
+                                    <div class="sc-field" title="Get Scroll" is="ui-component" data-visible="{scope.data.isCustomJSMethod.value}">
+                                      <span class="sc-input sc-textarea">
+                                        <span class="sc-icon fa-solid fa-reply"></span>
+                                        <textarea rows="3" is="ui-input" bind:model="scope.data.getScroll.value"></textarea>
+                                      </span>
+                                    </div>
+                                    <div class="sc-field" title="Set Scroll" is="ui-component" data-visible="{scope.data.isCustomJSMethod.value}">
+                                      <span class="sc-input sc-textarea">
+                                        <span class="sc-icon fa-solid fa-share"></span>
+                                        <textarea rows="3" is="ui-input" bind:model="scope.data.setScroll.value"></textarea>
+                                      </span>
+                                    </div>
                                   </div>
                                 </template>
                                 <template data-type="ActionSwipe">

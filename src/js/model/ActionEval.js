@@ -3,7 +3,8 @@ import StringData from '../../lib/tsunami/data/StringData';
 import { app } from '../main';
 
 let example = `/* Example using jQuery animation with a promise */
-return new Promise((resolve, reject) => {
+/* Test it on jQuery.com */
+const promise = new Promise((resolve, reject) => {
   $({ scrollY: 0 }).animate(
     { scrollY: 500 },
     {
@@ -17,6 +18,10 @@ return new Promise((resolve, reject) => {
     }
   );
 });
+promise.catch((error) => {
+  console.error(error);
+});
+return promise;
 `;
 
 export default class ActionEval extends Action {
@@ -41,17 +46,16 @@ export default class ActionEval extends Action {
   }
 
   trigger() {
-    const message = {
-      type: 'scrollCaptureExecuteScript',
-      code: this.code.value,
-      tabId: app.model.tabId.value,
-    };
     const promise = new Promise((resolve, reject) => {
+      const message = {
+        type: 'scrollCaptureExecuteScript',
+        code: this.code.value,
+        tabId: app.model.tabId.value,
+      };
       chrome.runtime.sendMessage(message, (response) => {
         resolve(response);
       });
     });
-
     return promise;
   }
 

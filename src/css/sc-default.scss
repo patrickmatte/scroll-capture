@@ -433,6 +433,16 @@
     }
   }
 
+  .sc-input.sc-textarea {
+    height: auto;
+
+    textarea {
+      background: transparent !important;
+      resize: none;
+      overflow: auto;
+    }
+  }
+
   .sc-input-group {
     display: inline-flex;
     align-items: center;
