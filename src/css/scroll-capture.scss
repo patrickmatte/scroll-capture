@@ -85,7 +85,7 @@ html[data-sc-scrollbars='false'] {
         margin-bottom: 0;
       }
     }
-    *:has(+ *:last-child[data-visible='false']) {
+    *:has(+ *:last-child[data-display='false']) {
       margin-bottom: 0;
     }
   }

@@ -65,7 +65,7 @@
                   </div>
                 </div>
 
-                <div class="sc-field-group" data-visible="{scope.imgCapSettings.format != 'png'}" is="ui-component">
+                <div class="sc-field-group" data-display="{scope.imgCapSettings.format != 'png'}" is="ui-component">
                   <div class="sc-space">
                     <span class="sc-icon fa-solid fa-file-zipper"></span>
                     <span class="sc-label">JPEG Quality</span>
@@ -136,7 +136,7 @@
                 <div
                   class="sc-fixed-elements-list sc-field-column"
                   is="ui-list"
-                  data-visible="{scope.imgCapSettings.hiddenElements.length.value > 0}"
+                  data-display="{scope.imgCapSettings.hiddenElements.length.value > 0}"
                   set:provider="scope.imgCapSettings.hiddenElements"
                 >
                   <template>

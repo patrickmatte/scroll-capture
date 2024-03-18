@@ -66,7 +66,7 @@
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: none;
     position: relative;
-    visibility: visible !important;
+    visibility: inherit !important;
     outline: 0;
     pointer-events: visible;
     color: inherit;
@@ -74,7 +74,7 @@
     &:before,
     &:after {
       box-sizing: border-box;
-      visibility: visible !important;
+      visibility: inherit !important;
       pointer-events: visible;
     }
   }
@@ -296,8 +296,12 @@
     }
   }
 
-  *[data-visible='false'] {
+  *[data-display='false'] {
     display: none !important;
+  }
+
+  *[data-visibility='false'] {
+    visibility: hidden !important;
   }
 
   *[data-enabled='false'],

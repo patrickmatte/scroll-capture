@@ -4,19 +4,28 @@ import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Data from '../../lib/tsunami/data/Data';
 import { app } from '../main';
 import NumberData from '../../lib/tsunami/data/NumberData';
-import { supportedFormatsAndCodecs } from './FormatsAndCodecs';
+import { getSupportedFormatsAndCodecs } from '../../lib/tsunami/utils/FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
-import { round1, decimalToPlace } from '../../lib/tsunami/utils/number';
+import { decimalToPlace } from '../../lib/tsunami/utils/number';
+import StringData from '../../lib/tsunami/data/StringData';
+import ObjectData from '../../lib/tsunami/data/ObjectData';
 
 export default class CaptureVideoModel {
   constructor() {
-    const supportedFormats = supportedFormatsAndCodecs;
+    const supportedFormats = getSupportedFormatsAndCodecs();
+    const mp4Format = supportedFormats.video.find((format) => {
+      return format.ext == 'mp4';
+    });
+    if (!mp4Format) {
+      supportedFormats.video.unshift({ name: 'mp4', ext: 'mp4', video: ['h264', 'avc1', 'av1'], audio: ['aac'], needsTranscode: true });
+      supportedFormats.audio.unshift({ name: 'm4a', ext: 'm4a', video: [], audio: ['aac'], needsTranscode: true });
+    }
+    // console.log('supportedFormats', JSON.stringify(supportedFormats));
 
     this.darkModeChangeHandler = this.darkModeChangeHandler.bind(this);
 
     this.showScrollbars = new BooleanData(false);
     this.showCursor = new BooleanData(true);
-    // this.pointerEvents = new BooleanData(true);
 
     this.position = new Vector2Data(50, 50);
     this.devicePixelRatio = new NumberData(decimalToPlace(window.devicePixelRatio, 2, Math.floor));
@@ -35,49 +44,69 @@ export default class CaptureVideoModel {
 
     window.addEventListener('resize', this.windowResizeHandler);
 
-    // this.format = new ArrayData();
-    // this.format.addEventListener('value', (event) => {
-    //   this.format.selectedItem.value = this.format.value[0];
-    // });
-    // this.format.selectedItem.addEventListener('value', (event) => {
-    //   const format = supportedFormats.video.find((supportedFormat) => {
-    //     return supportedFormat.name == this.format.selectedItem.value;
-    //   });
-    //   this.extension = format.ext;
-    //   this.videoCodecs.value = format.video;
-    //   this.audioCodecs.value = format.audio;
-    // });
+    this.transcodedCodecs = ['aac', 'mp3'];
+
+    this.format = new StringData();
+    this.formats = new ArrayData();
+    this.formats.addEventListener('value', (event) => {
+      if (this.formats.value.indexOf(this.format.value) == -1) {
+        this.format.value = this.formats[0];
+      }
+    });
+    this.format.addEventListener('value', (event) => {
+      let formats = this.exportVideo.value ? supportedFormats.video : supportedFormats.audio;
+      const format = formats.find((supportedFormat) => {
+        return supportedFormat.name == this.format.value;
+      });
+      this.extension = format.ext;
+      this.videoCodecs.value = format.video;
+      this.audioCodecs.value = format.audio;
+    });
+
+    this.mediaTrackIcon = new StringData();
+
+    const setFormats = () => {
+      this.mediaTrackIcon.value = this.exportVideo.value ? 'fa-file-video' : 'fa-file-audio';
+      let formats = this.exportVideo.value ? supportedFormats.video : supportedFormats.audio;
+      const names = formats.map((format) => {
+        return format.name;
+      });
+      this.formats.value = names;
+    };
+
+    const mediaChangeHandler = (event) => {
+      setFormats();
+    };
 
     this.exportVideo = new BooleanData(true);
     this.exportVideo.addEventListener('value', (event) => {
       if (!this.exportVideo.value && !this.exportAudio.value) this.exportAudio.value = true;
+      mediaChangeHandler(event);
     });
 
-    // this.videoCodecs = new ArrayData();
-    // this.videoCodecs.addEventListener('value', (event) => {
-    //   this.videoCodecs.selectedItem.value = this.videoCodecs.value[0];
-    // });
+    this.videoCodec = new StringData();
+    this.videoCodecs = new ArrayData();
+    this.videoCodecs.addEventListener('value', (event) => {
+      this.videoCodec.value = this.videoCodecs.value[0];
+    });
 
     this.videoBitsPerSecond = new NumberData(16);
 
     this.exportAudio = new BooleanData(false);
     this.exportAudio.addEventListener('value', (event) => {
       if (!this.exportVideo.value && !this.exportAudio.value) this.exportVideo.value = true;
+      mediaChangeHandler(event);
     });
 
-    // this.audioCodecs = new ArrayData();
-    // this.audioCodecs.addEventListener('value', (event) => {
-    //   this.audioCodecs.selectedItem.value = this.audioCodecs.value[0];
-    // });
+    this.audioCodec = new StringData();
+    this.audioCodecs = new ArrayData();
+    this.audioCodecs.addEventListener('value', (event) => {
+      this.audioCodec.value = this.audioCodecs.value[0];
+    });
 
     this.audioBitsPerSecond = new NumberData(256);
 
-    // // set formats
-    // const formats = supportedFormats.video;
-    // const names = formats.map((format) => {
-    //   return format.name;
-    // });
-    // this.format.value = names;
+    setFormats();
 
     this.darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -150,14 +179,13 @@ export default class CaptureVideoModel {
   serialize() {
     return {
       showCursor: this.showCursor.serialize(),
-      // pointerEvents: this.pointerEvents.serialize(),
       showScrollbars: this.showScrollbars.serialize(),
       position: this.position.serialize(),
-      // format: this.format.selectedItem.serialize(),
+      format: this.format.serialize(),
       videoBitsPerSecond: this.videoBitsPerSecond.serialize(),
-      // videoCodec: this.videoCodecs.selectedItem.serialize(),
+      videoCodec: this.videoCodec.serialize(),
       audioBitsPerSecond: this.audioBitsPerSecond.serialize(),
-      // audioCodec: this.audioCodecs.selectedItem.serialize(),
+      audioCodec: this.audioCodec.serialize(),
       colorThemes: this.colorThemes.selectedItem.value,
       pixelRatio: this.pixelRatio.serialize(),
       exportAudio: this.exportAudio.serialize(),
@@ -169,28 +197,27 @@ export default class CaptureVideoModel {
   deserialize(data) {
     if (!data) return;
     if (data.hasOwnProperty('showCursor')) this.showCursor.deserialize(data.showCursor);
-    // if (data.hasOwnProperty('pointerEvents')) this.pointerEvents.deserialize(data.pointerEvents);
     if (data.hasOwnProperty('showScrollbars')) this.showScrollbars.deserialize(data.showScrollbars);
     if (data.hasOwnProperty('position')) this.position.deserialize(data.position);
-    // if (data.hasOwnProperty('format')) this.format.selectedItem.deserialize(data.format);
     if (data.hasOwnProperty('videoBitsPerSecond')) this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
-    // if (data.hasOwnProperty('videoCodec')) this.videoCodecs.selectedItem.deserialize(data.videoCodec);
+    if (data.hasOwnProperty('videoCodec')) this.videoCodec.deserialize(data.videoCodec);
     if (data.hasOwnProperty('audioBitsPerSecond')) this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);
-    // if (data.hasOwnProperty('audioCodec')) this.audioCodecs.selectedItem.deserialize(data.audioCodec);
+    if (data.hasOwnProperty('audioCodec')) this.audioCodec.deserialize(data.audioCodec);
     if (data.hasOwnProperty('colorThemes')) this.colorThemes.selectedItem.value = data.colorThemes;
     if (data.hasOwnProperty('pixelRatio')) this.pixelRatio.deserialize(Math.min(data.pixelRatio, this.devicePixelRatio.value));
     if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
+    if (data.hasOwnProperty('format')) this.format.deserialize(data.format);
     // if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
   }
 
   getSettingsForRecording() {
     const settings = {
-      // format: this.format.selectedItem.value,
+      format: this.format.value,
       videoBitsPerSecond: this.videoBitsPerSecond.value,
       audioBitsPerSecond: this.audioBitsPerSecond.value,
-      // videoCodec: this.videoCodecs.selectedItem.value,
-      // audioCodec: this.audioCodecs.selectedItem.value,
+      videoCodec: this.videoCodec.value,
+      audioCodec: this.audioCodec.value,
       pixelRatio: this.pixelRatio.value,
       tabWidth: this.windowSize.x.value,
       tabHeight: this.windowSize.y.value,

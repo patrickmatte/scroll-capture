@@ -1,15 +1,29 @@
-function getSupportedFormatsAndCodecs() {
+/* returns
+{
+  video: [
+    { name: 'mp4', ext: 'mp4', video: ['h264', 'avc1', 'av1'], audio: ['aac'], needsTranscode:true },
+    { name: 'webm', ext: 'webm', video: ['h264', 'avc1', 'av1', 'vp8', 'vp9'], audio: ['opus', 'pcm'] },
+    { name: 'x-matroska', ext: 'mkv', video: ['h264', 'avc1', 'av1', 'vp8', 'vp9'], audio: ['opus', 'pcm'] },
+  ],
+  audio: [
+    { name: 'm4a', ext: 'm4a', video: [], audio: ['aac'], needsTranscode:true },
+    { name: 'webm', ext: 'webm', video: [], audio: ['opus', 'pcm']}
+  ],
+}
+*/
+
+export function getSupportedFormatsAndCodecs() {
   const formats = [
     { name: 'mp4', ext: 'mp4' },
     { name: 'webm', ext: 'webm' },
-    { name: 'x-matroska', ext: 'mkv' },
+    { name: 'mkv', ext: 'mkv' },
     { name: 'ogg', ext: 'ogg' },
     { name: 'mp3', ext: 'mp3' },
-    { name: 'MP2T', ext: 'mp2t' },
+    { name: 'mp2t', ext: 'mp2t' },
     { name: '3gpp', ext: '3gpp' },
-    { name: 'quicktime', ext: 'mov' },
-    { name: 'x-msvideo', ext: 'msvideo' },
-    { name: 'x-ms-wmv', ext: 'wmv' },
+    { name: 'mov', ext: 'mov' },
+    { name: 'msvideo', ext: 'msvideo' },
+    { name: 'wmv', ext: 'wmv' },
     { name: 'mpeg', ext: 'mpeg' },
     { name: 'wav', ext: 'wav' },
   ];
@@ -55,7 +69,7 @@ function getSupportedFormatsAndCodecs() {
   return supportedFormats;
 }
 
-export const supportedFormatsAndCodecs = getSupportedFormatsAndCodecs();
+// export const supportedFormatsAndCodecs = getSupportedFormatsAndCodecs();
 
 // function logMimeTypes() {
 //   let mimeTypes = [

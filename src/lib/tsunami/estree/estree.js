@@ -276,7 +276,13 @@ export class Identifier extends ExpressionNode {
   }
   evaluate(scope) {
     this.observe(scope, this.name);
-    const value = scope[this.name];
+    let value;
+    try {
+      value = scope[this.name];
+    } catch (error) {
+      console.log('Identifier', this, 'scope', scope);
+      throw error;
+    }
     return value;
   }
   destroy() {
@@ -359,7 +365,13 @@ export class MemberExpression extends ExpressionNode {
           const computedValue = object[name];
           return computedValue;
         } else {
-          const value = this.property.evaluate(object);
+          let value;
+          try {
+            value = this.property.evaluate(object);
+          } catch (error) {
+            console.log('MemberExpression Error', this, 'scope', scope);
+            throw error;
+          }
           return value;
         }
     }
