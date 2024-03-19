@@ -56,6 +56,7 @@ export default class CaptureVideoModel {
     });
 
     this.mediaTrackIcon = new StringData();
+    this.mediaTrackName = new StringData('video');
 
     const setCodecs = () => {
       let formats = this.exportVideo.value ? supportedFormats.video : supportedFormats.audio;
@@ -69,6 +70,7 @@ export default class CaptureVideoModel {
     };
 
     const setFormats = () => {
+      this.mediaTrackName.value = this.exportVideo.value ? 'Video' : 'Audio';
       this.mediaTrackIcon.value = this.exportVideo.value ? 'fa-file-video' : 'fa-file-audio';
       let formats = this.exportVideo.value ? supportedFormats.video : supportedFormats.audio;
       const names = formats.map((format) => {

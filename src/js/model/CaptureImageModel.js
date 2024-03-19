@@ -16,7 +16,7 @@ export default class CaptureImageModel extends DataModel {
     this.targets = new ArrayData();
     this.hiddenElements = new ArrayData();
 
-    this.hiddenTypes = new ArrayData({ type: 'fixed', name: 'Fixed Element' }, { type: 'query', name: 'Selector' });
+    this.hiddenTypes = new ArrayData({ type: 'fixed', name: 'fixed element' }, { type: 'query', name: 'selector' });
     this.hiddenType = new StringData(this.hiddenTypes[0].type);
 
     this.fixedSelectors = new ArrayData();

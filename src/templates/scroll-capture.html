@@ -141,32 +141,40 @@
                       </div> -->
                       <div class="sc-window-content" is="ui-component">
                         <div class="sc-fields" is="ui-component">
-                          <div class="sc-field-group">
-                            <!-- <div class="sc-field" title="File Format">
+                          <div class="sc-field-group" title="Media Tracks">
+                            <div class="sc-field">
                               <div class="sc-space">
-                                <span class="sc-icon fa-solid fa-file"></span>
-                                <span class="sc-label">File Format</span>
+                                <span class="sc-icon fa-solid fa-layer-group"></span>
+                                <span class="sc-label">Media Tracks</span>
                               </div>
-                            </div> -->
-                            <div class="sc-field" title="Media Tracks">
-                              <label class="sc-input sc-radio sc-radio-check">
+                            </div>
+                            <div class="sc-field">
+                              <label class="sc-input sc-radio sc-radio-check" title="Video Track">
                                 <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
                                 <span class="sc-radio-content">
                                   <span class="sc-icon fa-solid"></span>
-                                  <span class="sc-radio-label">Video</span>
+                                  <span class="sc-radio-label">video</span>
                                 </span>
                               </label>
-                              <label class="sc-input sc-radio sc-radio-check">
+                              <label class="sc-input sc-radio sc-radio-check" title="Audio Track">
                                 <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
                                 <span class="sc-radio-content">
                                   <span class="sc-icon fa-solid"></span>
-                                  <span class="sc-radio-label">Audio</span>
+                                  <span class="sc-radio-label">audio</span>
                                 </span>
                               </label>
                             </div>
-                            <div class="sc-field" title="File Format">
-                              <div class="sc-input sc-select">
+                          </div>
+                          <div class="sc-field-group" title="File Format">
+                            <div class="sc-field">
+                              <div class="sc-space">
                                 <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}" is="ui-component"></span>
+                                <span class="sc-label" is="ui-text">File Format</span>
+                              </div>
+                            </div>
+                            <div class="sc-field">
+                              <div class="sc-input sc-select">
+                                <!-- <span class="sc-icon fa-solid" is="ui-component"></span> -->
                                 <select is="ui-select" set:provider="scope.settings.formats" bind:value="scope.settings.format.value">
                                   <template>
                                     <option is="ui-text" value="{scope.data}">${scope.data}</option>
@@ -177,19 +185,22 @@
                           </div>
                           <div class="sc-field-group" is="ui-component" data-display="{scope.settings.exportVideo.value}">
                             <div class="sc-field" title="Video Track">
-                              <div class="sc-input sc-select" title="Video Codec" is="ui-component" data-visibility="{scope.settings.exportVideo.value}">
+                              <span class="sc-space">
                                 <span class="sc-icon fa-solid fa-video"></span>
-                                <select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodec.value"></select>
-                              </div>
+                                <span class="sc-label" is="ui-text">Video Codec</span>
+                              </span>
                             </div>
-                            <div is="ui-component" class="sc-field" title="Video Bitrate" data-visibility="{scope.settings.exportVideo.value}">
+                            <div class="sc-field" is="ui-component" title="Video Bitrate" data-visibility="{scope.settings.exportVideo.value}">
+                              <span class="sc-input sc-select" title="Video Codec" is="ui-component" data-visibility="{scope.settings.exportVideo.value}">
+                                <select is="ui-select" set:provider="scope.settings.videoCodecs" bind:value="scope.settings.videoCodec.value"></select>
+                              </span>
                               <span class="sc-input">
                                 <span class="sc-input-group">
                                   <span class="sc-input-unit" is="ui-text" data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
                                   <input
                                     type="number"
                                     min="1"
-                                    max="64"
+                                    max="32"
                                     step="1"
                                     placeholder="24"
                                     is="ui-input"
@@ -198,26 +209,29 @@
                                   />
                                 </span>
                               </span>
-                              <input
+                              <!-- <input
                                 type="range"
                                 min="1"
-                                max="64"
+                                max="32"
                                 step="1"
                                 is="ui-input"
                                 bind:model="scope.settings.videoBitsPerSecond.value"
                                 set:disabled="!scope.settings.exportVideo.value"
-                              />
+                              /> -->
                             </div>
                           </div>
 
                           <div class="sc-field-group" is="ui-component" data-display="{scope.settings.exportAudio.value}">
                             <div class="sc-field" title="Audio Track">
-                              <div class="sc-input sc-select" is="ui-component" data-visibility="{scope.settings.exportAudio.value}">
+                              <span class="sc-space">
                                 <span class="sc-icon fa-solid fa-volume-high"></span>
-                                <select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodec.value"></select>
-                              </div>
+                                <span class="sc-label" is="ui-text">Audio Codec</span>
+                              </span>
                             </div>
                             <div class="sc-field" title="Audio Bitrate" data-visibility="{scope.settings.exportAudio.value}" is="ui-component">
+                              <div class="sc-input sc-select" is="ui-component" data-visibility="{scope.settings.exportAudio.value}">
+                                <select is="ui-select" set:provider="scope.settings.audioCodecs" bind:value="scope.settings.audioCodec.value"></select>
+                              </div>
                               <span class="sc-input">
                                 <span class="sc-input-group">
                                   <span class="sc-input-unit" is="ui-text" data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
@@ -233,7 +247,7 @@
                                   />
                                 </span>
                               </span>
-                              <input
+                              <!-- <input
                                 type="range"
                                 min="16"
                                 max="320"
@@ -241,7 +255,7 @@
                                 is="ui-input"
                                 bind:model="scope.settings.audioBitsPerSecond.value"
                                 set:disabled="!scope.settings.exportAudio.value"
-                              />
+                              /> -->
                             </div>
                           </div>
                         </div>
