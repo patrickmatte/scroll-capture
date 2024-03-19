@@ -86,7 +86,7 @@ html[data-sc-scrollbars='false'] {
       }
     }
     *:has(+ *:last-child[data-display='false']) {
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
     }
   }
 
@@ -105,7 +105,7 @@ html[data-sc-scrollbars='false'] {
       margin-bottom: $fieldMargin;
 
       &:last-child {
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
       }
     }
   }

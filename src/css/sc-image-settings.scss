@@ -1,11 +1,10 @@
 .sc-default {
-    sc-image-settings {
-        .sc-fixed-elements-list {
-            max-height: 12em;
-            overflow-y: auto;
-            overflow-x: hidden;
-            overscroll-behavior: contain;
-            margin-top: 0.75em;
-        }
+  sc-image-settings {
+    .sc-fixed-elements-list {
+      max-height: 12em;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
     }
+  }
 }
