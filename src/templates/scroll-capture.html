@@ -149,18 +149,38 @@
                               </div>
                             </div>
                             <div class="sc-field">
-                              <label class="sc-input sc-radio sc-radio-check" title="Video Track">
+                              <!-- <label class="sc-input sc-radio sc-radio-check" title="Video Track">
                                 <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
                                 <span class="sc-radio-content">
                                   <span class="sc-icon fa-solid"></span>
                                   <span class="sc-radio-label">video</span>
                                 </span>
+                              </label> -->
+                              <label class="sc-input sc-radio" title="Video Track">
+                                <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
+                                <span class="sc-label">
+                                  <span class="sc-icon">
+                                    <span class="fa-solid fa-video" is="ui-component" data-display="{scope.settings.exportVideo.value}"></span>
+                                    <span class="fa-solid fa-video-slash" is="ui-component" data-display="{!scope.settings.exportVideo.value}"></span>
+                                  </span>
+                                  <span>video</span>
+                                </span>
                               </label>
-                              <label class="sc-input sc-radio sc-radio-check" title="Audio Track">
+                              <!-- <label class="sc-input sc-radio sc-radio-check" title="Audio Track">
                                 <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
                                 <span class="sc-radio-content">
                                   <span class="sc-icon fa-solid"></span>
                                   <span class="sc-radio-label">audio</span>
+                                </span>
+                              </label> -->
+                              <label class="sc-input sc-radio" title="Audio Track">
+                                <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
+                                <span class="sc-label">
+                                  <span class="sc-icon">
+                                    <span class="fa-solid fa-volume-high" is="ui-component" data-display="{scope.settings.exportAudio.value}"></span>
+                                    <span class="fa-solid fa-volume-xmark" is="ui-component" data-display="{!scope.settings.exportAudio.value}"></span>
+                                  </span>
+                                  <span>audio</span>
                                 </span>
                               </label>
                             </div>

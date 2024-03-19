@@ -13,11 +13,13 @@ import ObjectData from '../../lib/tsunami/data/ObjectData';
 export default class CaptureVideoModel {
   constructor() {
     const supportedFormats = getSupportedFormatsAndCodecs();
+    console.log('supportedFormats', supportedFormats);
     const mp4Format = supportedFormats.video.find((format) => {
       return format.ext == 'mp4';
     });
     if (!mp4Format) {
-      supportedFormats.video.unshift({ name: 'mp4', ext: 'mp4', video: ['h264', 'avc1', 'av1'], audio: ['aac'], ffmpeg: true });
+      supportedFormats.video.unshift({ name: 'mp4', ext: 'mp4', video: ['h264', 'avc1'], audio: ['aac', 'mp3'], ffmpeg: true });
+      supportedFormats.audio.unshift({ name: 'mp3', ext: 'mp3', video: [], audio: ['mp3'], ffmpeg: true });
       supportedFormats.audio.unshift({ name: 'm4a', ext: 'm4a', video: [], audio: ['aac'], ffmpeg: true });
     }
     // console.log('supportedFormats', JSON.stringify(supportedFormats));
@@ -93,7 +95,9 @@ export default class CaptureVideoModel {
     this.videoCodec = new StringData();
     this.videoCodecs = new ArrayData();
     this.videoCodecs.addEventListener('value', (event) => {
-      this.videoCodec.value = this.videoCodecs.value[0];
+      if (this.videoCodecs.value.indexOf(this.videoCodec.value) == -1) {
+        this.videoCodec.value = this.videoCodecs.value[0];
+      }
     });
 
     this.videoBitsPerSecond = new NumberData(16);
@@ -107,7 +111,9 @@ export default class CaptureVideoModel {
     this.audioCodec = new StringData();
     this.audioCodecs = new ArrayData();
     this.audioCodecs.addEventListener('value', (event) => {
-      this.audioCodec.value = this.audioCodecs.value[0];
+      if (this.audioCodecs.value.indexOf(this.audioCodec.value) == -1) {
+        this.audioCodec.value = this.audioCodecs.value[0];
+      }
     });
 
     this.audioBitsPerSecond = new NumberData(256);

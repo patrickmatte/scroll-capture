@@ -16,18 +16,18 @@ export function getSupportedFormatsAndCodecs() {
   const formats = [
     { name: 'mp4', ext: 'mp4' },
     { name: 'webm', ext: 'webm' },
-    { name: 'mkv', ext: 'mkv' },
+    { name: 'x-matroska', ext: 'mkv' },
     { name: 'ogg', ext: 'ogg' },
     { name: 'mp3', ext: 'mp3' },
-    { name: 'mp2t', ext: 'mp2t' },
+    { name: 'MP2T', ext: 'mp2t' },
     { name: '3gpp', ext: '3gpp' },
-    { name: 'mov', ext: 'mov' },
-    { name: 'msvideo', ext: 'msvideo' },
-    { name: 'wmv', ext: 'wmv' },
+    { name: 'quicktime', ext: 'mov' },
+    { name: 'x-msvideo', ext: 'msvideo' },
+    { name: 'x-ms-wmv', ext: 'wmv' },
     { name: 'mpeg', ext: 'mpeg' },
     { name: 'wav', ext: 'wav' },
   ];
-  const videoCodecs = ['vp9', 'vp8', 'h264', 'avc1', 'av1', 'h265', 'h263'];
+  const videoCodecs = ['vp8', 'vp9', 'h264', 'avc1', 'av1', 'h265', 'h263'];
   const audioCodecs = ['opus', 'pcm', 'aac', 'mpeg', 'mp4a', 'mp3'];
 
   function getSupportedFormatsAndCodecsForType(type) {

@@ -104,14 +104,21 @@ async function startRecording(message) {
     source.connect(output.destination);
   }
 
+  let format = message.format;
+  let audioCodec = message.audioCodec;
+  if (message.needsFFMPEG) {
+    format = 'webm';
+    audioCodec = 'pcm';
+  }
+
   let mimeType;
   if (message.exportVideo) {
-    mimeType = 'video/webm;codecs=h264';
+    mimeType = `video/${format};codecs=${message.videoCodec}`;
     if (message.exportAudio) {
-      mimeType += ',opus';
+      mimeType += `,${audioCodec}`;
     }
   } else {
-    mimeType = 'audio/webm;codecs=opus';
+    mimeType = `audio/${format};codecs=${audioCodec}`;
   }
 
   let videoBitsPerSecond = message.videoBitsPerSecond || 16;
@@ -160,10 +167,10 @@ function convertStreams(videoBlob, message) {
   var fileReader = new FileReader();
   fileReader.onload = async function () {
     let inputFileName = `sample_video.webm`;
-    let outputFileName = `sample_video.${message.format}`;
+    let outputFileName = `sample_video.${message.extension}`;
     let commandStr = `ffmpeg -i ${inputFileName}`;
     if (message.exportVideo) commandStr += ` -c:v copy`;
-    if (message.exportAudio) commandStr += ` -c:a ${message.audioCodec}`;
+    if (message.exportAudio) commandStr += ` -c:a ${message.audioCodec} -b:a ${message.audioBitsPerSecond}k`;
     commandStr += ` ${outputFileName}`;
 
     const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
@@ -183,12 +190,6 @@ function convertStreams(videoBlob, message) {
 }
 
 async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
-  console.log('runFFmpeg');
-  console.log('inputFileName', inputFileName);
-  console.log('outputFileName', outputFileName);
-  console.log('commandStr', commandStr);
-  console.log('file', file);
-
   if (ffmpeg.isLoaded()) {
     await ffmpeg.exit();
   }
@@ -216,9 +217,9 @@ function sendBlob(blob, message) {
   const videoURLMessage = {
     type: 'scrollCaptureVideoURLBackground',
     videoURL: URL.createObjectURL(blob),
-    fileName: createFilename(message.format),
+    fileName: createFilename(message.extension),
     tabId: message.tabId,
-    mimeType: message.exportVideo ? 'video' : 'audio' + '/' + message.format,
+    mimeType: message.exportVideo ? 'video' : 'audio' + '/' + message.extension,
   };
   chrome.runtime.sendMessage(videoURLMessage);
 }
