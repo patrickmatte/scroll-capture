@@ -78,11 +78,11 @@ html[data-sc-scrollbars='false'] {
 
     > * {
       padding: 0 0.75em;
-      margin-bottom: 0.75em;
+      margin-bottom: $fieldMargin;
       width: 100%;
 
       &:last-child {
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
       }
     }
     *:has(+ *:last-child[data-display='false']) {

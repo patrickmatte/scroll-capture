@@ -255,8 +255,9 @@
       width: 0;
     }
 
-    .sc-radio-label {
-      margin: 0;
+    .sc-radio-content {
+      display: inline-flex;
+      align-items: center;
     }
 
     &.sc-radio-visibility {
