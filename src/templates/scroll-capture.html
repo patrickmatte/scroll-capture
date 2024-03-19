@@ -149,30 +149,18 @@
                               </div>
                             </div> -->
                             <div class="sc-field" title="Media Tracks">
-                              <label class="sc-input sc-radio">
+                              <label class="sc-input sc-radio sc-radio-check">
                                 <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
-                                <span class="sc-label">
-                                  <span class="sc-icon">
-                                    <span class="fa-solid fa-video" is="ui-component" data-display="{scope.settings.exportVideo.value}"></span>
-                                    <span class="fa-solid fa-video-slash" is="ui-component" data-display="{!scope.settings.exportVideo.value}"></span>
-                                  </span>
-                                  <span>
-                                    <span is="ui-component" data-display="{scope.settings.exportVideo.value}">On</span>
-                                    <span is="ui-component" data-display="{!scope.settings.exportVideo.value}">Off</span>
-                                  </span>
+                                <span class="sc-radio-content">
+                                  <span class="sc-icon fa-solid"></span>
+                                  <span class="sc-radio-label">Video</span>
                                 </span>
                               </label>
-                              <label class="sc-input sc-radio">
+                              <label class="sc-input sc-radio sc-radio-check">
                                 <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
-                                <span class="sc-label">
-                                  <span class="sc-icon">
-                                    <span class="fa-solid fa-volume-high" is="ui-component" data-display="{scope.settings.exportAudio.value}"></span>
-                                    <span class="fa-solid fa-volume-xmark" is="ui-component" data-display="{!scope.settings.exportAudio.value}"></span>
-                                  </span>
-                                  <span>
-                                    <span is="ui-component" data-display="{scope.settings.exportAudio.value}">On</span>
-                                    <span is="ui-component" data-display="{!scope.settings.exportAudio.value}">Off</span>
-                                  </span>
+                                <span class="sc-radio-content">
+                                  <span class="sc-icon fa-solid"></span>
+                                  <span class="sc-radio-label">Audio</span>
                                 </span>
                               </label>
                             </div>

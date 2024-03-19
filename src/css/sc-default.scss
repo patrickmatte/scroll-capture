@@ -282,6 +282,7 @@
         .sc-icon {
           &::before {
             content: '\f111';
+            font-weight: 400;
           }
         }
       }
@@ -290,6 +291,7 @@
         .sc-icon {
           &::before {
             content: '\f058';
+            font-weight: 900;
           }
         }
       }

@@ -7,7 +7,7 @@ let currentTabId;
 
 const ffmpeg = FFmpeg.createFFmpeg({
   corePath: chrome.runtime.getURL('ffmpeg-core.js'),
-  log: true,
+  log: false,
   mainName: 'main',
 });
 // console.log('ffmpeg', ffmpeg);
@@ -49,6 +49,8 @@ chrome.runtime.onMessage.addListener((message) => {
 });
 
 async function startRecording(message) {
+  currentTabId = message.tabId;
+
   if (recorder?.state === 'recording') {
     throw new Error('Called startRecording while recording is in progress.');
   }
@@ -57,9 +59,9 @@ async function startRecording(message) {
   const pixelRatio = message.pixelRatio;
   const constraints = {};
   const constraintSizes = [
-    { width: size.x, height: size.y },
-    { width: size.x * message.zoomLevel, height: size.y * message.zoomLevel },
-    { width: size.x * pixelRatio, height: size.y * pixelRatio },
+    { width: Math.floor(size.x), height: Math.floor(size.y) },
+    { width: Math.floor(size.x * message.zoomLevel), height: Math.floor(size.y * message.zoomLevel) },
+    { width: Math.floor(size.x * pixelRatio), height: Math.floor(size.y * pixelRatio) },
   ];
   constraintSizes.sort((a, b) => {
     return a.width * a.height - b.width * b.height;
@@ -132,7 +134,13 @@ async function startRecording(message) {
     blob = new Blob(data, { type: blobFormat });
     // console.log('blob=', blob);
 
-    convertStreams(blob, message);
+    const transcodedCodecs = ['aac', 'mp3'];
+
+    if (message.needsFFMPEG) {
+      convertStreams(blob, message);
+    } else {
+      sendBlob(blob, message);
+    }
 
     data = [];
   };
@@ -149,54 +157,37 @@ function stopRecording(message) {
 }
 
 function convertStreams(videoBlob, message) {
-  currentTabId = message.tabId;
   var fileReader = new FileReader();
   fileReader.onload = async function () {
-    // var blob = new File([result.data], 'test.mp4', {
-    //   type: 'video/mp4',
-    // });
-
-    let inputFileName = 'sample_video.webm';
-    let outputFileName = 'sample_video.mp4';
-    let downloadExtension = 'mp4';
-    let commandStr;
-
-    if (message.exportVideo) {
-      if (message.exportAudio) {
-        commandStr = `ffmpeg -i ${inputFileName} -c:v copy -c:a aac ${outputFileName}`;
-      } else {
-        commandStr = `ffmpeg -i ${inputFileName} -c:v copy ${outputFileName}`;
-      }
-    } else {
-      downloadExtension = 'm4a';
-      outputFileName = `sample_video.m4a`;
-      commandStr = `ffmpeg -i ${inputFileName} -c:a aac ${outputFileName}`;
-    }
-
-    const fileName = createFilenameOnly();
-    const downloadFileName = `${fileName}.${downloadExtension}`;
+    let inputFileName = `sample_video.webm`;
+    let outputFileName = `sample_video.${message.format}`;
+    let commandStr = `ffmpeg -i ${inputFileName}`;
+    if (message.exportVideo) commandStr += ` -c:v copy`;
+    if (message.exportAudio) commandStr += ` -c:a ${message.audioCodec}`;
+    commandStr += ` ${outputFileName}`;
 
     const blob = await runFFmpeg(inputFileName, outputFileName, commandStr, new Uint8Array(this.result));
-    // console.log('runFFmpeg blob', blob);
-    // var file = new File([blob], downloadFileName, {
-    //   type: `video/${downloadExtension}`,
-    // });
-    // console.log('runFFmpeg file', file);
-    const videoURLMessage = {
-      type: 'scrollCaptureVideoURLBackground',
-      videoURL: URL.createObjectURL(blob),
-      fileName: downloadFileName,
-      tabId: message.tabId,
-      mimeType: `video/${downloadExtension}`,
-    };
-    // console.log('videoURLMessage', videoURLMessage);
-    chrome.runtime.sendMessage(videoURLMessage);
+
+    sendBlob(blob, message);
+
+    // const videoURLMessage = {
+    //   type: 'scrollCaptureVideoURLBackground',
+    //   videoURL: URL.createObjectURL(blob),
+    //   fileName: downloadFileName,
+    //   tabId: message.tabId,
+    //   mimeType: `video/${downloadExtension}`,
+    // };
+    // chrome.runtime.sendMessage(videoURLMessage);
   };
   fileReader.readAsArrayBuffer(videoBlob);
 }
 
 async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
-  // console.log('runFFmpeg commandStr', commandStr);
+  console.log('runFFmpeg');
+  console.log('inputFileName', inputFileName);
+  console.log('outputFileName', outputFileName);
+  console.log('commandStr', commandStr);
+  console.log('file', file);
 
   if (ffmpeg.isLoaded()) {
     await ffmpeg.exit();
@@ -221,6 +212,16 @@ async function runFFmpeg(inputFileName, outputFileName, commandStr, file) {
   // downloadFile(blob, outputFileName);
 }
 
+function sendBlob(blob, message) {
+  const videoURLMessage = {
+    type: 'scrollCaptureVideoURLBackground',
+    videoURL: URL.createObjectURL(blob),
+    fileName: createFilename(message.format),
+    tabId: message.tabId,
+    mimeType: message.exportVideo ? 'video' : 'audio' + '/' + message.format,
+  };
+  chrome.runtime.sendMessage(videoURLMessage);
+}
 function downloadFile(blob, fileName) {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);

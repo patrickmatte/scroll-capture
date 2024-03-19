@@ -220,19 +220,18 @@ function changeIcon(color = '') {
   });
 }
 
-async function startRecording(data) {
+async function startRecording(msg) {
   changeIcon('_red');
 
   const streamId = await chrome.tabCapture.getMediaStreamId({
-    targetTabId: data.tabId,
+    targetTabId: msg.tabId,
   });
 
-  const message = Object.assign({}, data);
+  const message = Object.assign({}, msg);
   Object.assign(message, {
     type: 'scrollCaptureStartOffscreenRecording',
     target: 'offscreen',
     streamId,
-    tabId: data.tabId,
   });
   chrome.runtime.sendMessage(message);
 }

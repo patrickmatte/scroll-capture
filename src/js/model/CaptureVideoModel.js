@@ -17,8 +17,8 @@ export default class CaptureVideoModel {
       return format.ext == 'mp4';
     });
     if (!mp4Format) {
-      supportedFormats.video.unshift({ name: 'mp4', ext: 'mp4', video: ['h264', 'avc1', 'av1'], audio: ['aac'], needsTranscode: true });
-      supportedFormats.audio.unshift({ name: 'm4a', ext: 'm4a', video: [], audio: ['aac'], needsTranscode: true });
+      supportedFormats.video.unshift({ name: 'mp4', ext: 'mp4', video: ['h264', 'avc1', 'av1'], audio: ['aac'], ffmpeg: true });
+      supportedFormats.audio.unshift({ name: 'm4a', ext: 'm4a', video: [], audio: ['aac'], ffmpeg: true });
     }
     // console.log('supportedFormats', JSON.stringify(supportedFormats));
 
@@ -44,26 +44,29 @@ export default class CaptureVideoModel {
 
     window.addEventListener('resize', this.windowResizeHandler);
 
-    this.transcodedCodecs = ['aac', 'mp3'];
-
-    this.format = new StringData();
     this.formats = new ArrayData();
     this.formats.addEventListener('value', (event) => {
       if (this.formats.value.indexOf(this.format.value) == -1) {
         this.format.value = this.formats[0];
       }
     });
+    this.format = new StringData();
     this.format.addEventListener('value', (event) => {
+      setCodecs();
+    });
+
+    this.mediaTrackIcon = new StringData();
+
+    const setCodecs = () => {
       let formats = this.exportVideo.value ? supportedFormats.video : supportedFormats.audio;
       const format = formats.find((supportedFormat) => {
         return supportedFormat.name == this.format.value;
       });
       this.extension = format.ext;
+      this.needsFFMPEG = format.ffmpeg == true;
       this.videoCodecs.value = format.video;
       this.audioCodecs.value = format.audio;
-    });
-
-    this.mediaTrackIcon = new StringData();
+    };
 
     const setFormats = () => {
       this.mediaTrackIcon.value = this.exportVideo.value ? 'fa-file-video' : 'fa-file-audio';
@@ -76,6 +79,7 @@ export default class CaptureVideoModel {
 
     const mediaChangeHandler = (event) => {
       setFormats();
+      setCodecs();
     };
 
     this.exportVideo = new BooleanData(true);
@@ -106,7 +110,7 @@ export default class CaptureVideoModel {
 
     this.audioBitsPerSecond = new NumberData(256);
 
-    setFormats();
+    mediaChangeHandler();
 
     this.darkModeMatchMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -226,6 +230,7 @@ export default class CaptureVideoModel {
       exportVideo: this.exportVideo.value,
       zoomLevel: window.outerWidth / window.innerWidth,
       tabId: app.model.tabId.value,
+      needsFFMPEG: this.needsFFMPEG,
     };
     return settings;
   }

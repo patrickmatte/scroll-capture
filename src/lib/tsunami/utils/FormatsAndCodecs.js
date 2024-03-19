@@ -27,7 +27,7 @@ export function getSupportedFormatsAndCodecs() {
     { name: 'mpeg', ext: 'mpeg' },
     { name: 'wav', ext: 'wav' },
   ];
-  const videoCodecs = ['h264', 'avc1', 'av1', 'h265', 'h263', 'vp8', 'vp9'];
+  const videoCodecs = ['vp9', 'vp8', 'h264', 'avc1', 'av1', 'h265', 'h263'];
   const audioCodecs = ['opus', 'pcm', 'aac', 'mpeg', 'mp4a', 'mp3'];
 
   function getSupportedFormatsAndCodecsForType(type) {
