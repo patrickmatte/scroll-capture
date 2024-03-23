@@ -206,13 +206,13 @@
                           <div class="sc-field-group" title="File Format">
                             <div class="sc-field">
                               <div class="sc-space">
-                                <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}" is="ui-component"></span>
+                                <span class="sc-icon fa-solid fa-file" is="ui-component"></span>
                                 <span class="sc-label" is="ui-text">Format</span>
                               </div>
                             </div>
                             <div class="sc-field">
                               <div class="sc-input sc-select">
-                                <!-- <span class="sc-icon fa-solid" is="ui-component"></span> -->
+                                <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}" is="ui-component"></span>
                                 <select is="ui-select" set:provider="scope.settings.formats" bind:value="scope.settings.format.value">
                                   <template>
                                     <option is="ui-text" value="{scope.data}">${scope.data}</option>

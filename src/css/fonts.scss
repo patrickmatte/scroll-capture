@@ -1,21 +1,21 @@
-@font-face {
-	font-family: Menlo;
-	font-weight: 400;
-	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Menlo-Regular.woff");
-}
-@font-face {
-	font-family: Menlo;
-	font-weight: 700;
-	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Menlo-Bold.woff");
-}
+// @font-face {
+// 	font-family: Menlo;
+// 	font-weight: 400;
+// 	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Menlo-Regular.woff");
+// }
+// @font-face {
+// 	font-family: Menlo;
+// 	font-weight: 700;
+// 	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/Menlo-Bold.woff");
+// }
 
 @font-face {
-	font-family: SFMono;
-	font-weight: 400;
-	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/SFMono-Regular.woff");
+  font-family: SFMono;
+  font-weight: 400;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/SFMono-Regular.woff');
 }
 @font-face {
-	font-family: SFMono;
-	font-weight: 700;
-	src: url("chrome-extension://__MSG_@@extension_id__/assets/fonts/SFMono-Bold.woff");
+  font-family: SFMono;
+  font-weight: 700;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/SFMono-Bold.woff');
 }

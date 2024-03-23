@@ -43,7 +43,7 @@
                 <div class="sc-field" title="Scroll Target">
                   <div class="sc-space">
                     <span class="sc-icon fa-solid fa-location-crosshairs"></span>
-                    <span class="sc-label">Scroll Target</span>
+                    <span class="sc-label">Target</span>
                   </div>
                   <div class="sc-input sc-select">
                     <!-- <span class="sc-icon fa-solid fa-location-crosshairs"></span> -->
@@ -51,10 +51,10 @@
                   </div>
                 </div>
 
-                <div class="sc-field" title="Image Format">
+                <div class="sc-field" title="File Format">
                   <div class="sc-space">
                     <span class="sc-icon fa-solid fa-file"></span>
-                    <span class="sc-label">Image Format</span>
+                    <span class="sc-label">Format</span>
                   </div>
                   <div class="sc-input sc-select">
                     <select is="ui-select" set:provider="scope.imgCapSettings.formats" bind:value="scope.imgCapSettings.format">
@@ -65,12 +65,12 @@
                   </div>
                 </div>
 
-                <div class="sc-field-group" data-display="{scope.imgCapSettings.format != 'png'}" is="ui-component">
+                <div class="sc-field-group" data-display="{scope.imgCapSettings.format != 'png'}" is="ui-component" title="Quality">
                   <div class="sc-space">
                     <span class="sc-icon fa-solid fa-file-zipper"></span>
-                    <span class="sc-label">JPEG Quality</span>
+                    <span class="sc-label">Quality</span>
                   </div>
-                  <div class="sc-field" title="Quality">
+                  <div class="sc-field">
                     <span class="sc-input">
                       <span class="sc-input-group">
                         <span class="sc-input-unit" is="ui-text" data-unit="%">${scope.imgCapSettings.compression}</span>
@@ -81,12 +81,12 @@
                   </div>
                 </div>
 
-                <div class="sc-field">
+                <div class="sc-field" title="Scroll Interval">
                   <span class="sc-space">
                     <span class="sc-icon fa-solid fa-hourglass-half"></span>
-                    <span class="sc-label">Scroll interval</span>
+                    <span class="sc-label">Scroll Interval</span>
                   </span>
-                  <span class="sc-input" title="Scroll Interval">
+                  <span class="sc-input">
                     <!-- <span class="sc-icon fa-solid fa-hourglass-half"></span> -->
                     <span class="sc-input-group">
                       <span class="sc-input-unit" is="ui-text" data-unit="s">${scope.imgCapSettings.delay}</span>
