@@ -5,10 +5,11 @@
 	"description": "Record your websites and automate scrolling and mouse actions for your portfolio screen captures.",
 	"permissions": [
 		"activeTab",
-		"storage",
-		"tabCapture",
+		"desktopCapture",
+		"offscreen",
 		"scripting",
-		"offscreen"
+		"storage",
+		"tabCapture"
 	],
 	"background": {
 		"service_worker": "background.js"

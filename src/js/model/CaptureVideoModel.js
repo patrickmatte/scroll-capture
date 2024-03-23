@@ -9,11 +9,11 @@ import Point from '../../lib/tsunami/geom/Point';
 import { decimalToPlace } from '../../lib/tsunami/utils/number';
 import StringData from '../../lib/tsunami/data/StringData';
 import ObjectData from '../../lib/tsunami/data/ObjectData';
+import { ChangeEvent } from '../../lib/tsunami/ChangeEvent';
 
 export default class CaptureVideoModel {
   constructor() {
     const supportedFormats = getSupportedFormatsAndCodecs();
-    console.log('supportedFormats', supportedFormats);
     const mp4Format = supportedFormats.video.find((format) => {
       return format.ext == 'mp4';
     });
@@ -45,6 +45,20 @@ export default class CaptureVideoModel {
     this.diffSize = new Point();
 
     window.addEventListener('resize', this.windowResizeHandler);
+
+    this.mediaSources = [
+      { name: 'tab', text: 'tab', icon: 'fa-brands fa-chrome' },
+      { name: 'desktop', text: 'desktop', icon: 'fa-solid fa-desktop' },
+    ];
+    this.mediaSourceIcon = new StringData();
+    this.mediaSource = new StringData();
+    ChangeEvent.addEventListener(this.mediaSource, 'value', (event) => {
+      const selectedMedia = this.mediaSources.find((source) => {
+        return source.name == this.mediaSource.value;
+      });
+      this.mediaSourceIcon.value = selectedMedia.icon;
+    });
+    this.mediaSource.value = this.mediaSources[0].name;
 
     this.formats = new ArrayData();
     this.formats.addEventListener('value', (event) => {
@@ -203,6 +217,7 @@ export default class CaptureVideoModel {
       exportAudio: this.exportAudio.serialize(),
       exportVideo: this.exportVideo.serialize(),
       windowSize: this.windowSize.serialize(),
+      mediaSource: this.mediaSource.serialize(),
     };
   }
 
@@ -220,6 +235,7 @@ export default class CaptureVideoModel {
     if (data.hasOwnProperty('exportAudio')) this.exportAudio.deserialize(data.exportAudio);
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
     if (data.hasOwnProperty('format')) this.format.deserialize(data.format);
+    if (data.hasOwnProperty('mediaSource')) this.mediaSource.deserialize(data.mediaSource);
     // if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
   }
 
@@ -239,6 +255,7 @@ export default class CaptureVideoModel {
       zoomLevel: window.outerWidth / window.innerWidth,
       tabId: app.model.tabId.value,
       needsFFMPEG: this.needsFFMPEG,
+      mediaSource: this.mediaSource.value,
     };
     return settings;
   }

@@ -144,6 +144,24 @@
                           <div class="sc-field-group" title="Media Tracks">
                             <div class="sc-field">
                               <div class="sc-space">
+                                <span class="sc-icon fa-solid fa-server"></span>
+                                <span class="sc-label">Media Source</span>
+                              </div>
+                            </div>
+                            <div class="sc-field">
+                              <div class="sc-input sc-select">
+                                <span class="sc-icon {scope.settings.mediaSourceIcon.value}" is="ui-component"></span>
+                                <select is="ui-select" set:provider="scope.settings.mediaSources" bind:value="scope.settings.mediaSource.value">
+                                  <template>
+                                    <option is="ui-text" value="{scope.data.name}">${scope.data.text}</option>
+                                  </template>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="sc-field-group" title="Media Tracks">
+                            <div class="sc-field">
+                              <div class="sc-space">
                                 <span class="sc-icon fa-solid fa-layer-group"></span>
                                 <span class="sc-label">Media Tracks</span>
                               </div>
@@ -281,8 +299,8 @@
                         </div>
                       </div>
                     </div>
-                    <div is="general-settings"></div>
-                    <sc-actions-view data-display="{scope.actions.length.value > 0}" set:provider="scope.actions">
+                    <div is="general-settings" set:added="scope.settings.mediaSource.value == 'tab'"></div>
+                    <sc-actions-view set:added="(scope.actions.length.value > 0) * (scope.settings.mediaSource.value == 'tab')" set:provider="scope.actions">
                       <template>
                         <sc-action
                           class="sc-window ui-list-element"
@@ -550,7 +568,7 @@
                       </div>
                     </div> -->
                   </sc-video-scrollpane>
-                  <sc-action-buttons>
+                  <sc-action-buttons is="ui-component" data-display="{scope.settings.mediaSource.value == 'tab'}">
                     <div class="sc-buttons" is="ui-list" set:provider="scope.actions.types">
                       <template>
                         <button

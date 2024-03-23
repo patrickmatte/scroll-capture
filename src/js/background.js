@@ -49,10 +49,10 @@ function onMessageHandler(msg, sender, sendResponse) {
       sendResponse({ mainPanel: true });
       break;
     case 'scrollCaptureStartRecording':
-      startRecording(msg);
+      startRecording(msg, sender);
       break;
     case 'scrollCaptureStopRecording':
-      stopRecording();
+      stopRecording(msg, sender);
       break;
     case 'scrollCaptureResizeWindow':
       resizeWindow(msg.width, msg.height);
@@ -220,20 +220,31 @@ function changeIcon(color = '') {
   });
 }
 
-async function startRecording(msg) {
+async function startRecording(msg, sender) {
   changeIcon('_red');
 
-  const streamId = await chrome.tabCapture.getMediaStreamId({
-    targetTabId: msg.tabId,
-  });
+  let promise;
+  switch (msg.mediaSource) {
+    case 'tab':
+      promise = chrome.tabCapture.getMediaStreamId({
+        targetTabId: msg.tabId,
+      });
+      break;
+    case 'desktop':
+    default:
+      promise = Promise.resolve();
+      break;
+  }
 
-  const message = Object.assign({}, msg);
-  Object.assign(message, {
-    type: 'scrollCaptureStartOffscreenRecording',
-    target: 'offscreen',
-    streamId,
+  promise.then((streamId) => {
+    const message = Object.assign({}, msg);
+    Object.assign(message, {
+      type: 'scrollCaptureStartOffscreenRecording',
+      target: 'offscreen',
+      streamId,
+    });
+    chrome.runtime.sendMessage(message);
   });
-  chrome.runtime.sendMessage(message);
 }
 
 function stopRecording() {

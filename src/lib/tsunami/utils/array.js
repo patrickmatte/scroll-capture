@@ -1,4 +1,4 @@
-import { randomInt } from "./number";
+import { randomInt } from './number';
 
 export function shuffleArray(o) {
   for (let j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -12,9 +12,4 @@ export function sample(array) {
 
 export function nodeListToArray(nodeList) {
   return Array.prototype.slice.call(nodeList);
-  // let array = new Array();
-  // for (let i = 0; i < nodeList.length; i++) {
-  // 	array.push(nodeList.item(i));
-  // }
-  // return array;
 }

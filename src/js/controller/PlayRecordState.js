@@ -19,9 +19,10 @@ export default class PlayRecordState extends PlayState {
     if (index == 0) {
       const message = app.model.settings.getSettingsForRecording();
       message.type = 'scrollCaptureStartRecording';
+      message.tabId = app.model.tabId.value;
       app.model.sendMessage(message);
     }
-    if (app.model.actions.value.length > 0) {
+    if (app.model.actions.value.length > 0 && app.model.settings.mediaSource.value == 'tab') {
       return super.startActions(index);
     }
   }

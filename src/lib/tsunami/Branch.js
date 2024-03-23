@@ -18,7 +18,7 @@ export default class Branch extends EventDispatcher {
     }
 
     this._defaultChild = defaultChild;
-    this._parent = null;
+    this._addedParent = null;
     this._path = null;
     this._router = null;
     this._slug = null;
@@ -58,11 +58,11 @@ export default class Branch extends EventDispatcher {
   }
 
   get parent() {
-    return this._parent;
+    return this._addedParent;
   }
 
   set parent(value) {
-    this._parent = value;
+    this._addedParent = value;
   }
 
   get path() {

@@ -163,6 +163,33 @@ export default class UIComponent extends Branch {
     return isAdded;
   }
 
+  set added(value) {
+    if (this.element) {
+      if (value) {
+        if (this._addedParent && !isNaN(this._addedIndex)) {
+          // this._addedParent.appendChildAt(this.element, this._addedIndex);
+          // if(child.parentNode) {
+          // 	child.parentNode.removeChild(child);
+          // }
+          let children = nodeListToArray(this._addedParent.children);
+          if (this._addedIndex >= children.length) {
+            this._addedParent.appendChild(this.element);
+          } else {
+            let beforeChild = children[this._addedIndex];
+            this._addedParent.insertBefore(this.element, beforeChild);
+          }
+        }
+      } else {
+        const parent = this.element.parentNode;
+        if (parent) {
+          this._addedIndex = Array.prototype.indexOf.call(parent.children, this.element);
+          this._addedParent = parent;
+          parent.removeChild(this.element);
+        }
+      }
+    }
+  }
+
   get children() {
     let array = [];
     if (this.element) {

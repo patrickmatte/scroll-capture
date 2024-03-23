@@ -57,51 +57,100 @@ async function startRecording(message) {
   console.log('startRecording', JSON.stringify(message));
   const size = { x: message.tabWidth, y: message.tabHeight };
   const pixelRatio = message.pixelRatio;
-  const constraints = {};
-  const constraintSizes = [
-    { width: Math.floor(size.x), height: Math.floor(size.y) },
-    { width: Math.floor(size.x * message.zoomLevel), height: Math.floor(size.y * message.zoomLevel) },
-    { width: Math.floor(size.x * pixelRatio), height: Math.floor(size.y * pixelRatio) },
-  ];
-  constraintSizes.sort((a, b) => {
-    return a.width * a.height - b.width * b.height;
-  });
-  console.log('constraintSizes', constraintSizes);
-  if (message.exportVideo) {
-    constraints.video = {
-      mandatory: {
-        chromeMediaSource: 'tab',
-        chromeMediaSourceId: message.streamId,
-        minWidth: constraintSizes[0].width,
-        minHeight: constraintSizes[0].height,
-        maxWidth: constraintSizes[2].width,
-        maxHeight: constraintSizes[2].height,
-        minFrameRate: 30,
-        maxFrameRate: 60,
-      },
-    };
-  }
-  if (message.exportAudio) {
-    constraints.audio = {
-      mandatory: {
-        chromeMediaSource: 'tab',
-        chromeMediaSourceId: message.streamId,
-      },
-    };
-  }
-  console.log('navigator.mediaDevices.getUserMedia', JSON.stringify(constraints));
+  let constraints = {};
   let media;
-  try {
-    media = await navigator.mediaDevices.getUserMedia(constraints);
-  } catch (error) {
-    console.log('navigator.mediaDevices.getUserMedia error', error);
-  }
-  console.log('media=', media);
 
-  if (message.exportAudio) {
+  switch (message.mediaSource) {
+    case 'tab':
+      const constraintSizes = [
+        { width: Math.floor(size.x), height: Math.floor(size.y) },
+        { width: Math.floor(size.x * message.zoomLevel), height: Math.floor(size.y * message.zoomLevel) },
+        { width: Math.floor(size.x * pixelRatio), height: Math.floor(size.y * pixelRatio) },
+      ];
+      constraintSizes.sort((a, b) => {
+        return a.width * a.height - b.width * b.height;
+      });
+      console.log('constraintSizes', constraintSizes);
+
+      if (message.exportVideo) {
+        constraints.video = {
+          mandatory: {
+            chromeMediaSource: message.mediaSource,
+            chromeMediaSourceId: message.streamId,
+            // minWidth: constraintSizes[0].width,
+            // minHeight: constraintSizes[0].height,
+            maxWidth: constraintSizes[2].width,
+            maxHeight: constraintSizes[2].height,
+            minFrameRate: 30,
+            maxFrameRate: 60,
+          },
+        };
+      }
+      if (message.exportAudio) {
+        constraints.audio = {
+          mandatory: {
+            chromeMediaSource: message.mediaSource,
+            chromeMediaSourceId: message.streamId,
+          },
+        };
+      }
+      console.log('navigator.mediaDevices.getUserMedia', JSON.stringify(constraints));
+      try {
+        media = await navigator.mediaDevices.getUserMedia(constraints);
+      } catch (error) {
+        console.log('navigator.mediaDevices.getUserMedia error', error);
+      }
+
+      break;
+    case 'desktop':
+    default:
+      // message.exportAudio = false;
+      constraints = {
+        video: {
+          displaySurface: 'monitor',
+        },
+        audio: {
+          suppressLocalAudioPlayback: true,
+          autoGainControl: false,
+          echoCancellation: false,
+          gooAutoGainControl: false,
+          noiseSuppression: false,
+        },
+        preferCurrentTab: false,
+        selfBrowserSurface: 'exclude',
+        systemAudio: 'include',
+        surfaceSwitching: 'include',
+        monitorTypeSurfaces: 'include',
+      };
+      console.log('navigator.mediaDevices.getDisplayMedia', JSON.stringify(constraints));
+      try {
+        media = await navigator.mediaDevices.getDisplayMedia(constraints);
+      } catch (error) {
+        console.log('navigator.mediaDevices.getDisplayMedia error', error);
+      }
+      break;
+  }
+
+  console.log('media=', media);
+  if (!media) {
+    console.log('!!!!No media');
+    recordingError(message.tabId);
+    return;
+  }
+
+  const tracks = media.getAudioTracks();
+
+  if (message.exportAudio && tracks.length > 0) {
     const output = new AudioContext();
     const source = output.createMediaStreamSource(media);
     source.connect(output.destination);
+  }
+
+  if (!message.exportVideo && message.exportAudio && tracks.length < 1) {
+    console.log('!!!!No audio track');
+    media.getTracks().forEach((track) => track.stop());
+    recordingError(message.tabId);
+    return;
   }
 
   let format = message.format;
@@ -141,8 +190,6 @@ async function startRecording(message) {
     blob = new Blob(data, { type: blobFormat });
     // console.log('blob=', blob);
 
-    const transcodedCodecs = ['aac', 'mp3'];
-
     if (message.needsFFMPEG) {
       convertStreams(blob, message);
     } else {
@@ -154,6 +201,16 @@ async function startRecording(message) {
   recorder.start();
 
   window.location.hash = 'recording';
+}
+
+function recordingError(tabId) {
+  const errorMsg = {
+    type: 'scrollCaptureShowMainPanel',
+    tabId,
+  };
+  chrome.runtime.sendMessage(errorMsg, (errorResponse) => {
+    console.log('errorResponse', errorResponse);
+  });
 }
 
 function stopRecording(message) {
