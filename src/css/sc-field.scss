@@ -63,6 +63,12 @@
       }
     }
 
+    .sc-trash-button {
+      flex-grow: 0;
+      width: auto;
+      height: 2em;
+    }
+
     .sc-auto {
       width: auto !important;
       flex-grow: 0 !important;
