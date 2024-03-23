@@ -26,16 +26,16 @@
 
         .sc-white-block {
           position: absolute;
-          width: 4em;
-          height: 3em;
+          width: 3em;
+          height: 2em;
           background-color: white;
-          left: calc(50% - 2em);
-          top: calc(50% - 1.5em);
+          left: calc(50% - 1.5em);
+          top: calc(50% - 1em);
           border-radius: 1.5em;
         }
 
         span {
-          font-size: 5em;
+          font-size: 3em;
           color: #eb3323;
         }
       }

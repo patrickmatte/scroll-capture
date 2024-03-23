@@ -33,6 +33,8 @@ export default class AppModel extends DataModel {
     this.tabId = new NumberData();
     this.test = new TestModel();
     this.ffmpegLogs = new ArrayData();
+    var manifestData = chrome.runtime.getManifest();
+    this.version = new StringData(manifestData.version);
 
     // this.addEventListener("selectedAction", (event) => {
     //     console.log("selectedAction change", this.selectedAction);

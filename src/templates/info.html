@@ -3,24 +3,22 @@
     <div class="sc-window-content" is="ui-component">
       <div class="sc-fields" is="ui-component">
         <div class="sc-field" title="Tutorial">
-          <a class="sc-tutorial" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
-            <div class="sc-tutorial-icon">
-              <div class="sc-white-block"></div>
-              <span class="fa-brands fa-youtube"></span>
-            </div>
-          </a>
-        </div>
-        <div class="sc-field" title="Tutorial">
           <span class="sc-space">
             <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
-              <span class="sc-icon fa-solid fa-circle-info"></span>
+              <span class="sc-icon fa-brands fa-youtube"></span>
               <span>Tutorial</span>
             </a>
           </span>
-          <span class="sc-input">
-            <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
+          <span>
+            <!-- <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
               <span class="sc-icon fa-brands fa-youtube"></span>
               <span>youtube.com</span>
+            </a> -->
+            <a class="sc-tutorial" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
+              <div class="sc-tutorial-icon">
+                <div class="sc-white-block"></div>
+                <span class="fa-brands fa-youtube"></span>
+              </div>
             </a>
           </span>
         </div>
@@ -30,6 +28,17 @@
   <div class="sc-window" is="ui-component">
     <div class="sc-window-content" is="ui-component">
       <div class="sc-fields" is="ui-component">
+        <div class="sc-field" title="Version">
+          <div class="sc-space">
+            <span class="sc-icon fa-solid fa-code-commit"></span>
+            <span>Version</span>
+          </div>
+          <div class="sc-input">
+            <span class="sc-icon fa-solid fa-hashtag"></span>
+            <span is="ui-text">${scope.version.value}</span>
+          </div>
+        </div>
+
         <div class="sc-field" title="Developer">
           <div class="sc-space">
             <a href="https://www.patrickmatte.com" target="_blank">

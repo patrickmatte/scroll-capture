@@ -95,7 +95,7 @@ html[data-sc-scrollbars='false'] {
       margin-bottom: $fieldMargin;
 
       &:last-child {
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
       }
     }
   }
