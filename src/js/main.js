@@ -7,9 +7,9 @@ export let app;
 export default class Main {
   constructor() {
     app = this;
+    this.controller = new AppController();
     this.model = new AppModel();
     this.view = new AppView();
-    this.controller = new AppController();
 
     chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       switch (msg.type) {

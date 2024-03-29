@@ -18,7 +18,6 @@ export default class AppController extends Branch {
     this.router.addEventListener(Router.COMPLETE, this.trackRouterLocation);
 
     this.branches = {
-      'scroll-capture': app.view.scrollCapture,
       play: new PlayState(),
       record: new PlayRecordState(),
       closed: new CloseState(),
@@ -27,6 +26,11 @@ export default class AppController extends Branch {
     };
 
     this.defaultChild = 'scroll-capture';
+  }
+
+  getBranch(slug) {
+    this.branches['scroll-capture'] = app.view.scrollCapture;
+    return super.getBranch(slug);
   }
 
   trackRouterLocation(e) {
