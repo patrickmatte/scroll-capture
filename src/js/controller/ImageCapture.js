@@ -1,5 +1,5 @@
 import Branch from '../../lib/tsunami/Branch';
-import { awaitTimeout } from '../../lib/tsunami/await';
+import { awaitAnimationFrame, awaitTimeout } from '../../lib/tsunami/await';
 import Point from '../../lib/tsunami/geom/Point';
 import { app } from '../main';
 
@@ -81,11 +81,11 @@ export class ImageCapture extends Branch {
     const img = new Image();
 
     const captureStep = () => {
-      if (captureIndex == 1) {
-        this.hideElements();
-      }
       const scrollPromise = scroll();
-      const capturePromise = scrollPromise.then(() => {
+      const hidePromise = scrollPromise.then(() => {
+        return this.hideElements();
+      });
+      const capturePromise = hidePromise.then(() => {
         return capture();
       });
       capturePromise.then((img) => {
@@ -146,6 +146,7 @@ export class ImageCapture extends Branch {
         });
       }
     });
+    return awaitAnimationFrame(2);
   }
 
   showElements() {

@@ -115,7 +115,7 @@
     }
 
     .sc-title + .sc-window-content {
-      border-radius: 0 $borderRadius $borderRadius $borderRadius;
+      border-radius: 0 $borderRadius $borderRadius $borderRadius !important;
     }
 
     &[data-selected='true'] {
