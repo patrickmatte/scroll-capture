@@ -244,16 +244,14 @@
                               data-visibility="{scope.settings.exportVideo.value}">
                               <span class="sc-input sc-select" title="Video Codec">
                                 <select is="ui-select" set:provider="scope.settings.videoCodecs"
-                                  bind:value="scope.settings.videoCodec.value"
-                                  disabled="{!scope.settings.exportVideo.value}"></select>
+                                  bind:value="scope.settings.videoCodec.value"></select>
                               </span>
                               <span class="sc-input">
                                 <span class="sc-input-group">
                                   <span class="sc-input-unit" is="ui-text"
                                     data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
                                   <input type="number" min="1" max="32" step="1" placeholder="24" is="ui-input"
-                                    bind:model="scope.settings.videoBitsPerSecond.value"
-                                    set:disabled="!scope.settings.exportVideo.value" />
+                                    bind:model="scope.settings.videoBitsPerSecond.value" />
                                 </span>
                               </span>
                               <!-- <input
@@ -296,16 +294,14 @@
                               data-visibility="{scope.settings.exportAudio.value}">
                               <div class="sc-input sc-select" is="ui-component">
                                 <select is="ui-select" set:provider="scope.settings.audioCodecs"
-                                  bind:value="scope.settings.audioCodec.value"
-                                  disabled="{!scope.settings.exportAudio.value}"></select>
+                                  bind:value="scope.settings.audioCodec.value"></select>
                               </div>
                               <span class="sc-input">
                                 <span class="sc-input-group">
                                   <span class="sc-input-unit" is="ui-text"
                                     data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
                                   <input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input"
-                                    bind:model="scope.settings.audioBitsPerSecond.value"
-                                    set:disabled="!scope.settings.exportAudio.value" />
+                                    bind:model="scope.settings.audioBitsPerSecond.value" />
                                 </span>
                               </span>
                               <!-- <input
