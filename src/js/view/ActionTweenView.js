@@ -14,6 +14,7 @@ export default class ActionTweenView extends UIComponent {
 
   set scope(value) {
     super.scope = value;
+    if (!value) return;
     this.easing = tsunami.importTemplate(easingTemplate, value);
     this.appendChild(this.easing);
   }

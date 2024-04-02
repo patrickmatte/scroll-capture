@@ -2,13 +2,18 @@
   <div class="sc-window sc-window-sections" is="ui-component">
     <div class="sc-title">
       <span class="sc-tabs">
-        <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/settings'" set:location="scope.location">
+        <span class="sc-drag-area"></span>
+        <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/settings'"
+          set:location="scope.location">
+          <span class="sc-drag-area"></span>
           <button is="router-button" data-path="scroll-capture/image/settings" title="Settings">
             <span class="sc-icon fa-solid fa-sliders"></span>
             <span class="sc-label">Settings</span>
           </button>
         </span>
-        <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/download'" set:location="scope.location">
+        <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/download'"
+          set:location="scope.location">
+          <span class="sc-drag-area"></span>
           <button is="router-button" data-path="image-capture" title="Capture">
             <span class="sc-icon fa-solid fa-video"></span>
             <span class="sc-label">Capture</span>
@@ -16,6 +21,7 @@
         </span>
       </span>
       <span class="sc-tabs" is="ui-component">
+        <span class="sc-drag-area"></span>
         <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/info'" set:location="scope.location">
           <span class="sc-drag-area"></span>
           <button is="router-button" data-path="scroll-capture/image/info" title="Info">
@@ -47,7 +53,8 @@
                   </div>
                   <div class="sc-input sc-select">
                     <!-- <span class="sc-icon fa-solid fa-location-crosshairs"></span> -->
-                    <select is="ui-select" set:provider="scope.imgCapSettings.targets" bind:value="scope.imgCapSettings.target"></select>
+                    <select is="ui-select" set:provider="scope.imgCapSettings.targets"
+                      bind:value="scope.imgCapSettings.target"></select>
                   </div>
                 </div>
 
@@ -57,7 +64,8 @@
                     <span class="sc-label">File Format</span>
                   </div>
                   <div class="sc-input sc-select">
-                    <select is="ui-select" set:provider="scope.imgCapSettings.formats" bind:value="scope.imgCapSettings.format">
+                    <select is="ui-select" set:provider="scope.imgCapSettings.formats"
+                      bind:value="scope.imgCapSettings.format">
                       <template>
                         <option is="ui-text" value="{scope.data.type}">${scope.data.ext}</option>
                       </template>
@@ -65,7 +73,8 @@
                   </div>
                 </div>
 
-                <div class="sc-field-group" data-display="{scope.imgCapSettings.format != 'png'}" is="ui-component" title="Quality">
+                <div class="sc-field-group" data-display="{scope.imgCapSettings.format != 'png'}" is="ui-component"
+                  title="Quality">
                   <div class="sc-space">
                     <span class="sc-icon fa-solid fa-file-zipper"></span>
                     <span class="sc-label">Quality</span>
@@ -73,11 +82,14 @@
                   <div class="sc-field">
                     <span class="sc-input">
                       <span class="sc-input-group">
-                        <span class="sc-input-unit" is="ui-text" data-unit="%">${scope.imgCapSettings.compression}</span>
-                        <input type="number" min="0" max="100" step="5" placeholder="100" is="ui-input" bind:model="scope.imgCapSettings.compression" />
+                        <span class="sc-input-unit" is="ui-text"
+                          data-unit="%">${scope.imgCapSettings.compression}</span>
+                        <input type="number" min="0" max="100" step="5" placeholder="100" is="ui-input"
+                          bind:model="scope.imgCapSettings.compression" />
                       </span>
                     </span>
-                    <input type="range" min="0" max="100" step="5" is="ui-input" bind:model="scope.imgCapSettings.compression" />
+                    <input type="range" min="0" max="100" step="5" is="ui-input"
+                      bind:model="scope.imgCapSettings.compression" />
                   </div>
                 </div>
 
@@ -90,7 +102,8 @@
                     <!-- <span class="sc-icon fa-solid fa-hourglass-half"></span> -->
                     <span class="sc-input-group">
                       <span class="sc-input-unit" is="ui-text" data-unit="s">${scope.imgCapSettings.delay}</span>
-                      <input type="number" step="0.25" min="0.5" placeholder="0" is="ui-input" bind:model="scope.imgCapSettings.delay" />
+                      <input type="number" step="0.25" min="0.5" placeholder="0" is="ui-input"
+                        bind:model="scope.imgCapSettings.delay" />
                     </span>
                   </span>
                 </div>
@@ -121,34 +134,36 @@
                   </span>
                   <span class="sc-input-group">
                     <span class="sc-input sc-select">
-                      <select is="ui-select" set:provider="scope.imgCapSettings.hiddenTypes" bind:value="scope.imgCapSettings.hiddenType.value">
+                      <select is="ui-select" set:provider="scope.imgCapSettings.hiddenTypes"
+                        bind:value="scope.imgCapSettings.hiddenType.value">
                         <template>
                           <option is="ui-text" value="{scope.data.type}">${scope.data.name}</option>
                         </template>
                       </select>
                     </span>
-                    <button class="sc-trash-button" is="ui-button" on:click="scope.imgCapSettings.addHiddenElement()" title="Add">
+                    <button class="sc-trash-button" is="ui-button" on:click="scope.imgCapSettings.addHiddenElement()"
+                      title="Add">
                       <span class="sc-icon fa-solid fa-square-plus"></span>
                     </button>
                   </span>
                 </div>
 
-                <div
-                  class="sc-fixed-elements-list sc-field-column"
-                  is="ui-list"
+                <div class="sc-fixed-elements-list sc-field-column" is="ui-list"
                   data-display="{scope.imgCapSettings.hiddenElements.length.value > 0}"
-                  set:provider="scope.imgCapSettings.hiddenElements"
-                >
+                  set:provider="scope.imgCapSettings.hiddenElements">
                   <template>
                     <div class="sc-field">
-                      <span class="sc-input {scope.data.type == 'fixed' ? 'sc-select' : ''}" title="Element Selector" is="ui-component">
+                      <span class="sc-input {scope.data.type == 'fixed' ? 'sc-select' : ''}" title="Element Selector"
+                        is="ui-component">
                         <span class="sc-icon fa-solid fa-location-crosshairs"></span>
                         <span is="ui-list" set:provider="[scope.data]">
                           <template data-type="query">
-                            <input type="text" is="ui-input" placeholder="Enter element selector" bind:model="scope.data.selector" />
+                            <input type="text" is="ui-input" placeholder="Enter element selector"
+                              bind:model="scope.data.selector" />
                           </template>
                           <template data-type="fixed">
-                            <select is="ui-select" set:provider="scope.root.imgCapSettings.fixedSelectors" bind:value="scope.data.selector">
+                            <select is="ui-select" set:provider="scope.root.imgCapSettings.fixedSelectors"
+                              bind:value="scope.data.selector">
                               <template>
                                 <option is="ui-text" value="{scope.data.value}">${scope.data.name}</option>
                               </template>
@@ -156,7 +171,8 @@
                           </template>
                         </span>
                       </span>
-                      <button class="sc-trash-button" is="ui-button" set:model="scope.data" on:click="scope.root.imgCapSettings.removeHiddenElement(scope.data)" title="Delete">
+                      <button class="sc-trash-button" is="ui-button" set:model="scope.data"
+                        on:click="scope.root.imgCapSettings.removeHiddenElement(scope.data)" title="Delete">
                         <span class="sc-icon fa-solid fa-trash-alt"></span>
                       </button>
                     </div>

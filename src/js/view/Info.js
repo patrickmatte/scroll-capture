@@ -20,7 +20,7 @@ export default class Info extends Section {
 
   set scope(value) {
     super.scope = value;
-
+    if (!value) return;
     this.childContainer = importTemplate(template, value);
     this.appendChild(this.childContainer);
   }

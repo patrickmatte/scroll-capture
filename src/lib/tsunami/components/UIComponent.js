@@ -205,6 +205,7 @@ export default class UIComponent extends Branch {
   set scope(value) {
     this._scope = value;
     if (this.debug) this.log('UIComponent.scope', value);
+    if (!value) return;
     attributeDirective(this, this.debug);
     onDirective(this, this.debug);
     setDirective(this, this.debug);
