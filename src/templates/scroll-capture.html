@@ -402,7 +402,7 @@
                                     </div>
                                     <div class="sc-field">
                                       <div class="sc-input sc-select" title="Animation Timing">
-                                        <span class="sc-icon fa-solid fa-shuffle"></span>
+                                        <span class="sc-icon fa-solid fa-road"></span>
                                         <select is="ui-select" set:provider="scope.data.tweenTypes"
                                           bind:value="scope.data.tweenType.id">
                                           <template>
@@ -631,6 +631,7 @@
                     </div> -->
                   </sc-video-scrollpane>
                   <sc-action-buttons is="ui-component" data-display="{scope.settings.mediaSource.value == 'tab'}">
+                    <span class="sc-drag-area"></span>
                     <div class="sc-buttons" is="ui-list" set:provider="scope.actions.types">
                       <template>
                         <button class="sc-action-button" data-type="{scope.data.type}" is="ui-button"
