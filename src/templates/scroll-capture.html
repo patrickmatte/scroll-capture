@@ -22,15 +22,15 @@
 			<option is="ui-text" value="{scope.data.name.value}">${scope.data.name.value}</option>
 		</template>
 	</select> -->
-  <sc-resize-area>
-    <span class="side h left"></span>
-    <span class="side h right"></span>
-    <span class="side v top"></span>
-    <span class="side v bottom"></span>
-    <span class="corner top left"></span>
-    <span class="corner top right"></span>
-    <span class="corner bottom left"></span>
-    <span class="corner bottom right"></span>
+  <sc-resize-area set:position="scope.settings.position" set:size="scope.settings.size">
+    <span data-class="side" data-h="left"></span>
+    <span data-class="side" data-h="right"></span>
+    <span data-class="side" data-v="top"></span>
+    <span data-class="side" data-v="bottom"></span>
+    <span data-class="corner" data-h="left" data-v="top"></span>
+    <span data-class="corner" data-h="right" data-v="top"></span>
+    <span data-class="corner" data-h="left" data-v="bottom"></span>
+    <span data-class="corner" data-h="right" data-v="bottom"></span>
   </sc-resize-area>
   <div>
     <div class="sc-window sc-window-main" is="ui-component">

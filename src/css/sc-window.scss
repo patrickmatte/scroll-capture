@@ -24,59 +24,60 @@
       position: absolute;
     }
 
-    .side {
-      background-color: yellow !important;
-      &.h {
+    [data-class='side'] {
+      background-color: transparent !important;
+      &[data-h] {
         width: 8px;
         height: 100%;
         top: 0;
         cursor: ew-resize;
 
-        &.left {
+        &[data-h='left'] {
           left: 0;
         }
-        &.right {
+        &[data-h='right'] {
           right: 0;
         }
       }
-      &.v {
+      &[data-v] {
         width: 100%;
         height: 8px;
         left: 0;
         cursor: ns-resize;
 
-        &.top {
+        &[data-v='top'] {
           top: 0;
         }
-        &.bottom {
+        &[data-v='bottom'] {
           bottom: 0;
         }
       }
     }
-    .corner {
+
+    [data-class='corner'] {
       width: 8px;
       height: 8px;
-      background-color: green !important;
+      background-color: transparent !important;
 
-      &.top {
+      &[data-v='top'] {
         top: 0;
-        &.left {
+        &[data-h='left'] {
           left: 0;
           cursor: nwse-resize;
         }
-        &.right {
+        &[data-h='right'] {
           right: 0;
           cursor: nesw-resize;
         }
       }
 
-      &.bottom {
+      &[data-v='bottom'] {
         bottom: 0;
-        &.left {
+        &[data-h='left'] {
           left: 0;
           cursor: nesw-resize;
         }
-        &.right {
+        &[data-h='right'] {
           right: 0;
           cursor: nwse-resize;
         }
