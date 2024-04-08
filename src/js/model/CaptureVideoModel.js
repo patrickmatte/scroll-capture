@@ -30,7 +30,7 @@ export default class CaptureVideoModel {
     this.showCursor = new BooleanData(true);
 
     this.position = new Vector2Data(50, 50);
-    this.size = new Vector2Data(420, 275);
+    this.size = new Vector2Data(414, 266);
     this.devicePixelRatio = new NumberData(decimalToPlace(window.devicePixelRatio, 2, Math.floor));
 
     this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
@@ -208,6 +208,7 @@ export default class CaptureVideoModel {
       showCursor: this.showCursor.serialize(),
       showScrollbars: this.showScrollbars.serialize(),
       position: this.position.serialize(),
+      size: this.size.serialize(),
       format: this.format.serialize(),
       videoBitsPerSecond: this.videoBitsPerSecond.serialize(),
       videoCodec: this.videoCodec.serialize(),
@@ -227,6 +228,7 @@ export default class CaptureVideoModel {
     if (data.hasOwnProperty('showCursor')) this.showCursor.deserialize(data.showCursor);
     if (data.hasOwnProperty('showScrollbars')) this.showScrollbars.deserialize(data.showScrollbars);
     if (data.hasOwnProperty('position')) this.position.deserialize(data.position);
+    if (data.hasOwnProperty('size')) this.size.deserialize(data.size);
     if (data.hasOwnProperty('videoBitsPerSecond')) this.videoBitsPerSecond.deserialize(data.videoBitsPerSecond);
     if (data.hasOwnProperty('videoCodec')) this.videoCodec.deserialize(data.videoCodec);
     if (data.hasOwnProperty('audioBitsPerSecond')) this.audioBitsPerSecond.deserialize(data.audioBitsPerSecond);

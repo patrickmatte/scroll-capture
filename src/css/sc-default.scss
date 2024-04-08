@@ -322,7 +322,7 @@
   .sc-icon {
     display: inline-block;
     vertical-align: middle;
-    min-width: 1.2em;
+    width: 1.2em;
 
     .sc-icon-shape {
       fill: $textColorDark;
@@ -345,7 +345,7 @@
 
   .sc-space {
     display: inline-flex;
-    padding: 0.5em;
+    padding: 0.5em 0;
 
     .sc-icon,
     .sc-unit {
@@ -367,6 +367,11 @@
   }
 
   .sc-input,
+  .sc-select {
+    padding: 0.5em;
+  }
+
+  .sc-input,
   .sc-space,
   .sc-select {
     height: 2em;
@@ -375,7 +380,6 @@
     align-items: center;
     font-family: SFMono, 'Courier New', Courier, monospace !important;
     font-weight: 700;
-    padding: 0.5em;
 
     .sc-icon {
       // width: 1em;
@@ -564,6 +568,7 @@
     overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
+    border-radius: $borderRadius;
 
     > * {
       margin-bottom: 0.75em;

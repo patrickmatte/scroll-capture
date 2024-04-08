@@ -157,7 +157,7 @@ html[data-sc-scrollbars='false'] {
   }
 
   &[is='scroll-capture'] {
-    font-size: 16.46px;
+    font-size: 16px;
     position: fixed !important;
     right: 4px;
     top: 4px;
@@ -173,6 +173,22 @@ html[data-sc-scrollbars='false'] {
 
     &[data-state='show'] {
       display: flex;
+    }
+
+    &[data-size='small'] {
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type='number'] {
+        -moz-appearance: textfield;
+      }
+
+      .hide-small {
+        display: none;
+      }
     }
   }
 
