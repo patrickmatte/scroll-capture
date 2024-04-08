@@ -444,14 +444,14 @@ export default class UIComponent extends Branch {
   scrollToElement(element, duration) {
     let pos = new Point();
 
+    const localToGlobalPos = localToGlobal(element, this.element, null, true);
+
     let maxScroll = new Point();
     maxScroll.x = this.element.scrollWidth - this.element.clientWidth;
     maxScroll.y = this.element.scrollHeight - this.element.clientHeight;
 
-    let elementRect = new Rectangle(element.offsetLeft, element.offsetTop, element.offsetWidth, element.offsetHeight);
-
-    pos.x = Math.min(elementRect.x, maxScroll.x);
-    pos.y = Math.min(elementRect.y, maxScroll.y);
+    pos.x = Math.min(localToGlobalPos.x, maxScroll.x);
+    pos.y = Math.min(localToGlobalPos.y + element.offsetHeight - this.element.offsetHeight, maxScroll.y);
 
     return this.scrollTo(pos.x, pos.y, duration);
   }

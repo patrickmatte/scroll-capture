@@ -1,6 +1,6 @@
 <div class="sc-default" is="scroll-capture" data-theme-light="{scope.settings.isColorThemeLight.value}"
   set:position="scope.settings.position"
-  style="right:{scope.settings.position.x.value}px; top:{scope.settings.position.y.value}px;">
+  style="right:{scope.settings.position.x.value}px; top:{scope.settings.position.y.value}px; width:{scope.settings.size.x.value}px;">
   <!-- <ul is="ui-list" set:provider="scope.actions">
 		<template>
 			<label>
@@ -22,7 +22,16 @@
 			<option is="ui-text" value="{scope.data.name.value}">${scope.data.name.value}</option>
 		</template>
 	</select> -->
-  <span class="sc-drag-area"></span>
+  <sc-resize-area>
+    <span class="side h left"></span>
+    <span class="side h right"></span>
+    <span class="side v top"></span>
+    <span class="side v bottom"></span>
+    <span class="corner top left"></span>
+    <span class="corner top right"></span>
+    <span class="corner bottom left"></span>
+    <span class="corner bottom right"></span>
+  </sc-resize-area>
   <div>
     <div class="sc-window sc-window-main" is="ui-component">
       <div class="sc-title">
@@ -131,7 +140,8 @@
               </div>
               <div class="sc-window-content" is="ui-component">
                 <sc-scenario class="sc-section sc-fields">
-                  <sc-video-scrollpane class="sc-scrollpane" set:actions="scope.actions">
+                  <sc-video-scrollpane class="sc-scrollpane" set:actions="scope.actions"
+                    style="height:{scope.settings.size.y.value}px;">
                     <div class="sc-window">
                       <!-- <div class="sc-title">
                         <span class="sc-tabs">

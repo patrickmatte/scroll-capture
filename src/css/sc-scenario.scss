@@ -1,22 +1,5 @@
 .sc-default {
   sc-scenario {
-    .sc-scrollpane {
-      max-height: 50vh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      overscroll-behavior: contain;
-      display: flex;
-      flex-direction: column;
-
-      > * {
-        margin-bottom: 0.75em;
-      }
-
-      > *:last-child {
-        margin-bottom: 0;
-      }
-    }
-
     sc-actions-view {
       width: 100%;
       display: flex;

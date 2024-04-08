@@ -34,6 +34,7 @@ export default class SectionVideo extends Section {
     player.setAttribute('autoplay', 'true');
     player.setAttribute('playsinline', 'true');
     player.setAttribute('controls', '1');
+    // player.setAttribute('controlsList', 'nodownload');
     player.addEventListener('canplay', () => {
       this.element.setAttribute('data-show-video', true);
     });
@@ -52,6 +53,9 @@ export default class SectionVideo extends Section {
         const file = new File([blob], videoFileName, {
           type: message.mimeType,
         });
+        console.log('message', message);
+        console.log('message.fileName', message.fileName);
+        console.log('message.mimeType', message.mimeType);
         const videoURL = URL.createObjectURL(file);
         player.src = videoURL;
         player.setAttribute('download', videoFileName);

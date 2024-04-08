@@ -161,11 +161,10 @@ html[data-sc-scrollbars='false'] {
     position: fixed !important;
     right: 4px;
     top: 4px;
-    width: 420px;
     display: none;
     flex-direction: column;
     line-height: 1;
-    padding: 3px;
+    padding: 8px;
     z-index: 200000000;
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);

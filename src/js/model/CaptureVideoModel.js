@@ -30,6 +30,7 @@ export default class CaptureVideoModel {
     this.showCursor = new BooleanData(true);
 
     this.position = new Vector2Data(50, 50);
+    this.size = new Vector2Data(420, 275);
     this.devicePixelRatio = new NumberData(decimalToPlace(window.devicePixelRatio, 2, Math.floor));
 
     this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);

@@ -557,4 +557,20 @@
     line-height: 1.2;
     padding: 0.5em;
   }
+
+  .sc-scrollpane {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      margin-bottom: 0.75em;
+    }
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

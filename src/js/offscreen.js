@@ -276,8 +276,9 @@ function sendBlob(blob, message) {
     videoURL: URL.createObjectURL(blob),
     fileName: createFilename(message.extension),
     tabId: message.tabId,
-    mimeType: message.exportVideo ? 'video' : 'audio' + '/' + message.extension,
+    mimeType: (message.exportVideo ? 'video' : 'audio') + '/' + message.extension,
   };
+  console.log('!!!!!!! sendBlob', videoURLMessage);
   chrome.runtime.sendMessage(videoURLMessage);
 }
 function downloadFile(blob, fileName) {
