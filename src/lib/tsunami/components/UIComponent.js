@@ -1,6 +1,6 @@
 import { awaitTimeout } from '../await';
 import Rectangle from '../geom/Rectangle';
-import { isTouch, localToGlobal } from '../window';
+import { localToGlobal } from '../window';
 import Branch from '../Branch';
 import Point from '../geom/Point';
 import { nodeListToArray } from '../utils/array';
@@ -430,11 +430,7 @@ export default class UIComponent extends Branch {
   }
 
   getTouchPoint(event) {
-    let touch = event;
-    if (isTouch) {
-      touch = event.touches[0];
-    }
-    return new Point(touch.pageX, touch.pageY);
+    return Point.getTouchPoint(event);
   }
 
   dispatchResizeEvent() {

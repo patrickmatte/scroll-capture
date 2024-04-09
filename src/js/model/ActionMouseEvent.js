@@ -1,9 +1,7 @@
 import Action from './Action';
 import NumberData from '../../lib/tsunami/data/NumberData';
-import { isTouch } from '../../lib/tsunami/window';
 import Point from '../../lib/tsunami/geom/Point';
 import ArrayData from '../../lib/tsunami/data/ArrayData';
-import StringData from '../../lib/tsunami/data/StringData';
 import { events } from '../../lib/tsunami/events';
 
 export default class ActionMouseEvent extends Action {
@@ -124,11 +122,7 @@ export default class ActionMouseEvent extends Action {
     if (event.stopPropagation) {
       event.stopPropagation();
     }
-    let touch = event;
-    if (isTouch) {
-      touch = event.touches[0];
-    }
-    let point = new Point(touch.pageX, touch.pageY);
+    let point = Point.getTouchPoint(event);
     this.x.value = point.x;
     this.y.value = point.y;
   }
@@ -143,6 +137,9 @@ export default class ActionMouseEvent extends Action {
     if (event.stopPropagation) {
       event.stopPropagation();
     }
+    let point = Point.getTouchPoint(event);
+    this.x.value = point.x;
+    this.y.value = point.y;
     document.body.removeEventListener(events.mousemove, this.mouseEventHandler);
     document.body.removeEventListener('click', this.captureMouseEventHandler);
     document.body.removeEventListener('keydown', this.captureMouseEventHandler);

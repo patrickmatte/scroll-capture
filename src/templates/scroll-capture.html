@@ -1,6 +1,6 @@
 <div class="sc-default" is="scroll-capture" data-theme-light="{scope.settings.isColorThemeLight.value}"
   set:position="scope.settings.position"
-  style="right:{scope.settings.position.x.value}px; top:{scope.settings.position.y.value}px; width:{scope.settings.size.x.value}px;"
+  style="right:{scope.settings.position.x.value}px; top:{scope.settings.position.y.value}px; width:{scope.settings.size.x.value}px; font-size:{scope.settings.size.x.value / 414 * 16}px"
   data-size="{scope.settings.size.x.value<414?'small':'normal'}">
   <!-- <ul is="ui-list" set:provider="scope.actions">
 		<template>

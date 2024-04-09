@@ -33,6 +33,14 @@ export default class Point {
     p.y = y;
   }
 
+  static getTouchPoint(event) {
+    let touch = event;
+    if ('ontouchend' in window && !(event instanceof PointerEvent)) {
+      touch = event.touches[0] || event.changedTouches[0];
+    }
+    return new Point(touch.pageX, touch.pageY);
+  }
+
   add(p) {
     return new Point(this.x + p.x, this.y + p.y);
   }

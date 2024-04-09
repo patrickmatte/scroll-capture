@@ -1,5 +1,5 @@
 import NumberData from '../../lib/tsunami/data/NumberData';
-import { getElementSelector, isTouch } from '../../lib/tsunami/window';
+import { getElementSelector } from '../../lib/tsunami/window';
 import StringData from '../../lib/tsunami/data/StringData';
 import Easing from '../../lib/tsunami/animation/Easing';
 import Action from './Action';

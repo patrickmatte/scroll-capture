@@ -2,11 +2,10 @@ import Point from '../../lib/tsunami/geom/Point';
 import ActionTween from './ActionTween';
 import ArrayData from '../../lib/tsunami/data/ArrayData';
 import Vector2Data from '../../lib/tsunami/data/Vector2Data';
-import { isTouch } from '../../lib/tsunami/window';
 
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { events } from '../../lib/tsunami/events';
-import { decimalToPlace } from '../../lib/tsunami/utils/number';
+import { decimalToPlace, round1 } from '../../lib/tsunami/utils/number';
 import { Vector3 } from 'three/src/math/Vector3';
 import { CatmullRomCurve3 } from 'three/src/extras/curves/CatmullRomCurve3';
 
@@ -72,7 +71,7 @@ export default class ActionSwipe extends ActionTween {
     });
     this.curve = new CatmullRomCurve3(points, false, 'chordal', 0.75);
 
-    this.dispatchMouseEvent('mousedown', 0);
+    this.dispatchMouseEvent(events.mousedown, 0);
     return super.trigger();
   }
 
@@ -106,11 +105,11 @@ export default class ActionSwipe extends ActionTween {
   // }
 
   tweenUpdateHandler() {
-    this.dispatchMouseEvent('mousemove', this.pos.x);
+    this.dispatchMouseEvent(events.mousemove, this.pos.x);
   }
 
   tweenCompleteHandler(e) {
-    this.dispatchMouseEvent('mouseup', 1);
+    this.dispatchMouseEvent(events.mouseup, 1);
   }
 
   capture() {
@@ -119,11 +118,8 @@ export default class ActionSwipe extends ActionTween {
   }
 
   captureDownHandler(event) {
-    let touch = event;
-    if (isTouch) {
-      touch = event.touches[0];
-    }
-    let point = new Point(touch.pageX, touch.pageY);
+    console.log('captureDownHandler', event);
+    let point = Point.getTouchPoint(event).math(round1);
     this.capturedPoints = [new Vector2Data(point.x, point.y)];
 
     this.lastPoint = point;
@@ -135,11 +131,7 @@ export default class ActionSwipe extends ActionTween {
   }
 
   captureMoveHandler(event) {
-    let touch = event;
-    if (isTouch) {
-      touch = event.touches[0];
-    }
-    let point = new Point(touch.pageX, touch.pageY);
+    let point = Point.getTouchPoint(event).math(round1);
     let distance = Point.distance(this.lastPoint, point);
     if (distance > this.smoothness.value) {
       this.lastPoint = point;
@@ -148,11 +140,7 @@ export default class ActionSwipe extends ActionTween {
   }
 
   captureUpHandler(event) {
-    let touch = event;
-    if (isTouch) {
-      touch = event.touches[0];
-    }
-    let point = new Point(touch.pageX, touch.pageY);
+    let point = Point.getTouchPoint(event).math(round1);
     let distance = Point.distance(this.lastPoint, point);
     if (distance > 0) {
       this.capturedPoints.push(new Vector2Data(point.x, point.y));

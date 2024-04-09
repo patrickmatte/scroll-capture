@@ -28,7 +28,7 @@ export class ResizeArea extends UIComponent {
   dragMove(event) {
     let point = this.getTouchPoint(event);
     let diff = point.subtract(this.startPoint);
-    const minWidth = 375;
+    const minWidth = 240;
     const minHeight = 100;
 
     switch (this.resizeH) {
