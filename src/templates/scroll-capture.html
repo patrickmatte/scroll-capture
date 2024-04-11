@@ -1,6 +1,6 @@
 <div class="sc-default" is="scroll-capture" data-theme-light="{scope.settings.isColorThemeLight.value}"
   set:position="scope.settings.position"
-  style="right:{scope.settings.position.x.value}px; top:{scope.settings.position.y.value}px; width:{scope.settings.size.x.value}px; font-size:{scope.settings.size.x.value / 414 * 16}px"
+  style="right:{scope.settings.position.x.value}px; top:{scope.settings.position.y.value}px; width:{scope.settings.size.x.value}px; height:{scope.settings.size.y.value}px; font-size:{scope.settings.fontSize.value}px"
   data-size="{scope.settings.size.x.value<414?'small':'normal'}">
   <!-- <ul is="ui-list" set:provider="scope.actions">
 		<template>
@@ -33,7 +33,7 @@
     <span data-class="corner" data-h="left" data-v="bottom"></span>
     <span data-class="corner" data-h="right" data-v="bottom"></span>
   </sc-resize-area>
-  <div>
+  <div class="sc-container">
     <div class="sc-window sc-window-main" is="ui-component">
       <div class="sc-title">
         <span class="sc-tabs">
@@ -98,7 +98,7 @@
           </div>
         </sc-test>
         <sc-capture-video class="sc-section sc-fields">
-          <div is="ui-component">
+          <div is="ui-component" class="sc-container">
             <div class="sc-window sc-window-sections" is="ui-component">
               <div class="sc-title">
                 <span class="sc-tabs">
@@ -141,40 +141,40 @@
               </div>
               <div class="sc-window-content" is="ui-component">
                 <sc-scenario class="sc-section sc-fields">
-                  <sc-video-scrollpane class="sc-scrollpane" set:actions="scope.actions"
-                    style="height:{scope.settings.size.y.value}px;">
-                    <div class="sc-window">
-                      <!-- <div class="sc-title">
-                        <span class="sc-tabs">
-                          <span class="sc-tab sc-title-tab">
-                            <span class="sc-icon fa-solid fa-gear"></span>
-                            <span class="sc-label">Configuration</span>
+                  <sc-video-scrollpane class="sc-scrollpane" set:actions="scope.actions">
+                    <div>
+                      <div class="sc-window">
+                        <!-- <div class="sc-title">
+                          <span class="sc-tabs">
+                            <span class="sc-tab sc-title-tab">
+                              <span class="sc-icon fa-solid fa-gear"></span>
+                              <span class="sc-label">Configuration</span>
+                            </span>
                           </span>
-                        </span>
-                        <span class="sc-tabs"></span>
-                      </div> -->
-                      <div class="sc-window-content" is="ui-component">
-                        <div class="sc-fields" is="ui-component">
-                          <div class="sc-field-group" title="Media Source">
-                            <div class="sc-field">
-                              <div class="sc-space">
-                                <span class="sc-icon fa-solid fa-server"></span>
-                                <span class="sc-label">Media Source</span>
+                          <span class="sc-tabs"></span>
+                        </div> -->
+                        <div class="sc-window-content" is="ui-component">
+                          <div class="sc-fields" is="ui-component">
+                            <div class="sc-field-group" title="Media Source">
+                              <div class="sc-field">
+                                <div class="sc-space">
+                                  <span class="sc-icon fa-solid fa-server"></span>
+                                  <span class="sc-label">Media Source</span>
+                                </div>
+                              </div>
+                              <div class="sc-field">
+                                <div class="sc-input sc-select">
+                                  <span class="sc-icon {scope.settings.mediaSourceIcon.value}" is="ui-component"></span>
+                                  <select is="ui-select" set:provider="scope.settings.mediaSources"
+                                    bind:value="scope.settings.mediaSource.value">
+                                    <template>
+                                      <option is="ui-text" value="{scope.data.name}">${scope.data.text}</option>
+                                    </template>
+                                  </select>
+                                </div>
                               </div>
                             </div>
-                            <div class="sc-field">
-                              <div class="sc-input sc-select">
-                                <span class="sc-icon {scope.settings.mediaSourceIcon.value}" is="ui-component"></span>
-                                <select is="ui-select" set:provider="scope.settings.mediaSources"
-                                  bind:value="scope.settings.mediaSource.value">
-                                  <template>
-                                    <option is="ui-text" value="{scope.data.name}">${scope.data.text}</option>
-                                  </template>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- <div class="sc-field-group" title="Media Tracks">
+                            <!-- <div class="sc-field-group" title="Media Tracks">
                             <div class="sc-field">
                               <div class="sc-space">
                                 <span class="sc-icon fa-solid fa-layer-group"></span>
@@ -210,65 +210,65 @@
                               </label>
                             </div>
                           </div> -->
-                          <div class="sc-field-group" title="File Format">
-                            <div class="sc-field">
-                              <div class="sc-space">
-                                <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
-                                  is="ui-component"></span>
-                                <span class="sc-label" is="ui-text">File Format</span>
+                            <div class="sc-field-group" title="File Format">
+                              <div class="sc-field">
+                                <div class="sc-space">
+                                  <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
+                                    is="ui-component"></span>
+                                  <span class="sc-label" is="ui-text">File Format</span>
+                                </div>
+                              </div>
+                              <div class="sc-field">
+                                <div class="sc-input sc-select">
+                                  <!-- <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}" is="ui-component"></span> -->
+                                  <select is="ui-select" set:provider="scope.settings.formats"
+                                    bind:value="scope.settings.format.value">
+                                    <template>
+                                      <option is="ui-text" value="{scope.data}">${scope.data}</option>
+                                    </template>
+                                  </select>
+                                </div>
                               </div>
                             </div>
-                            <div class="sc-field">
-                              <div class="sc-input sc-select">
-                                <!-- <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}" is="ui-component"></span> -->
-                                <select is="ui-select" set:provider="scope.settings.formats"
-                                  bind:value="scope.settings.format.value">
-                                  <template>
-                                    <option is="ui-text" value="{scope.data}">${scope.data}</option>
-                                  </template>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="sc-field-group" is="ui-component">
-                            <div class="sc-field" title="Video Track">
-                              <label class="sc-space sc-radio">
-                                <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
-                                <span class="sc-label">
-                                  <span class="sc-icon">
-                                    <span class="fa-solid fa-video" is="ui-component"
-                                      data-display="{scope.settings.exportVideo.value}"></span>
-                                    <span class="fa-solid fa-video-slash" is="ui-component"
-                                      data-display="{!scope.settings.exportVideo.value}"></span>
+                            <div class="sc-field-group" is="ui-component">
+                              <div class="sc-field" title="Video Track">
+                                <label class="sc-space sc-radio">
+                                  <input type="checkbox" bind:model="scope.settings.exportVideo.value" is="ui-input" />
+                                  <span class="sc-label">
+                                    <span class="sc-icon">
+                                      <span class="fa-solid fa-video" is="ui-component"
+                                        data-display="{scope.settings.exportVideo.value}"></span>
+                                      <span class="fa-solid fa-video-slash" is="ui-component"
+                                        data-display="{!scope.settings.exportVideo.value}"></span>
+                                    </span>
+                                    <span>
+                                      <span is="ui-component" data-display="{scope.settings.exportVideo.value}">Video
+                                        On</span>
+                                      <span is="ui-component" data-display="{!scope.settings.exportVideo.value}">Video
+                                        Off</span>
+                                    </span>
                                   </span>
-                                  <span>
-                                    <span is="ui-component" data-display="{scope.settings.exportVideo.value}">Video
-                                      On</span>
-                                    <span is="ui-component" data-display="{!scope.settings.exportVideo.value}">Video
-                                      Off</span>
-                                  </span>
-                                </span>
-                              </label>
-                              <!-- <span class="sc-space">
+                                </label>
+                                <!-- <span class="sc-space">
                                 <span class="sc-icon fa-solid fa-video"></span>
                                 <span class="sc-label" is="ui-text">Video</span>
                               </span> -->
-                            </div>
-                            <div class="sc-field" is="ui-component" title="Video Bitrate"
-                              data-visibility="{scope.settings.exportVideo.value}">
-                              <span class="sc-input sc-select" title="Video Codec">
-                                <select is="ui-select" set:provider="scope.settings.videoCodecs"
-                                  bind:value="scope.settings.videoCodec.value"></select>
-                              </span>
-                              <span class="sc-input">
-                                <span class="sc-input-group">
-                                  <span class="sc-input-unit" is="ui-text"
-                                    data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
-                                  <input type="number" min="1" max="32" step="1" placeholder="24" is="ui-input"
-                                    bind:model="scope.settings.videoBitsPerSecond.value" />
+                              </div>
+                              <div class="sc-field" is="ui-component" title="Video Bitrate"
+                                data-visibility="{scope.settings.exportVideo.value}">
+                                <span class="sc-input sc-select" title="Video Codec">
+                                  <select is="ui-select" set:provider="scope.settings.videoCodecs"
+                                    bind:value="scope.settings.videoCodec.value"></select>
                                 </span>
-                              </span>
-                              <!-- <input
+                                <span class="sc-input">
+                                  <span class="sc-input-group">
+                                    <span class="sc-input-unit" is="ui-text"
+                                      data-unit="Mbps">${scope.settings.videoBitsPerSecond.value}</span>
+                                    <input type="number" min="1" max="32" step="1" placeholder="24" is="ui-input"
+                                      bind:model="scope.settings.videoBitsPerSecond.value" />
+                                  </span>
+                                </span>
+                                <!-- <input
                                 type="range"
                                 min="1"
                                 max="32"
@@ -277,48 +277,48 @@
                                 bind:model="scope.settings.videoBitsPerSecond.value"
                                 set:disabled="!scope.settings.exportVideo.value"
                               /> -->
+                              </div>
                             </div>
-                          </div>
 
-                          <div class="sc-field-group" is="ui-component">
-                            <div class="sc-field" title="Audio Track">
-                              <label class="sc-space sc-radio">
-                                <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
-                                <span class="sc-label">
-                                  <span class="sc-icon">
-                                    <span class="fa-solid fa-volume-high" is="ui-component"
-                                      data-display="{scope.settings.exportAudio.value}"></span>
-                                    <span class="fa-solid fa-volume-xmark" is="ui-component"
-                                      data-display="{!scope.settings.exportAudio.value}"></span>
+                            <div class="sc-field-group" is="ui-component">
+                              <div class="sc-field" title="Audio Track">
+                                <label class="sc-space sc-radio">
+                                  <input type="checkbox" bind:model="scope.settings.exportAudio.value" is="ui-input" />
+                                  <span class="sc-label">
+                                    <span class="sc-icon">
+                                      <span class="fa-solid fa-volume-high" is="ui-component"
+                                        data-display="{scope.settings.exportAudio.value}"></span>
+                                      <span class="fa-solid fa-volume-xmark" is="ui-component"
+                                        data-display="{!scope.settings.exportAudio.value}"></span>
+                                    </span>
+                                    <span>
+                                      <span is="ui-component" data-display="{scope.settings.exportAudio.value}">Audio
+                                        On</span>
+                                      <span is="ui-component" data-display="{!scope.settings.exportAudio.value}">Audio
+                                        Off</span>
+                                    </span>
                                   </span>
-                                  <span>
-                                    <span is="ui-component" data-display="{scope.settings.exportAudio.value}">Audio
-                                      On</span>
-                                    <span is="ui-component" data-display="{!scope.settings.exportAudio.value}">Audio
-                                      Off</span>
-                                  </span>
-                                </span>
-                              </label>
-                              <!-- <span class="sc-space">
+                                </label>
+                                <!-- <span class="sc-space">
                                 <span class="sc-icon fa-solid fa-volume-high"></span>
                                 <span class="sc-label" is="ui-text">Audio</span>
                               </span> -->
-                            </div>
-                            <div class="sc-field" title="Audio Bitrate" is="ui-component"
-                              data-visibility="{scope.settings.exportAudio.value}">
-                              <div class="sc-input sc-select" is="ui-component">
-                                <select is="ui-select" set:provider="scope.settings.audioCodecs"
-                                  bind:value="scope.settings.audioCodec.value"></select>
                               </div>
-                              <span class="sc-input">
-                                <span class="sc-input-group">
-                                  <span class="sc-input-unit" is="ui-text"
-                                    data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
-                                  <input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input"
-                                    bind:model="scope.settings.audioBitsPerSecond.value" />
+                              <div class="sc-field" title="Audio Bitrate" is="ui-component"
+                                data-visibility="{scope.settings.exportAudio.value}">
+                                <div class="sc-input sc-select" is="ui-component">
+                                  <select is="ui-select" set:provider="scope.settings.audioCodecs"
+                                    bind:value="scope.settings.audioCodec.value"></select>
+                                </div>
+                                <span class="sc-input">
+                                  <span class="sc-input-group">
+                                    <span class="sc-input-unit" is="ui-text"
+                                      data-unit="kbps">${scope.settings.audioBitsPerSecond.value}</span>
+                                    <input type="number" min="16" max="320" step="16" placeholder="256" is="ui-input"
+                                      bind:model="scope.settings.audioBitsPerSecond.value" />
+                                  </span>
                                 </span>
-                              </span>
-                              <!-- <input
+                                <!-- <input
                                 type="range"
                                 min="16"
                                 max="320"
@@ -327,314 +327,317 @@
                                 bind:model="scope.settings.audioBitsPerSecond.value"
                                 set:disabled="!scope.settings.exportAudio.value"
                               /> -->
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div is="general-settings" set:added="scope.settings.mediaSource.value == 'tab'"></div>
-                    <sc-actions-view
-                      set:added="(scope.actions.length.value > 0) * (scope.settings.mediaSource.value == 'tab')"
-                      set:provider="scope.actions">
-                      <template>
-                        <sc-action class="sc-window ui-list-element" is="sc-action-view" data-type="{scope.data.type}"
-                          set:model="scope.data" data-selected="{scope.data.isSelectedItem.value}"
-                          data-id="{scope.data.id}">
-                          <div class="sc-title">
-                            <span class="sc-tabs">
-                              <div class="ui-list-drag-area"></div>
-                              <span class="sc-tab sc-title-tab" title="{scope.data.name.value}" is="ui-component">
+                      <div is="general-settings" class="sc-window"
+                        set:added="scope.settings.mediaSource.value == 'tab'"></div>
+                      <sc-actions-view
+                        set:added="(scope.actions.length.value > 0) * (scope.settings.mediaSource.value == 'tab')"
+                        set:provider="scope.actions">
+                        <template>
+                          <sc-action class="sc-window ui-list-element" is="sc-action-view" data-type="{scope.data.type}"
+                            set:model="scope.data" data-selected="{scope.data.isSelectedItem.value}"
+                            data-id="{scope.data.id}">
+                            <div class="sc-title">
+                              <span class="sc-tabs">
                                 <div class="ui-list-drag-area"></div>
-                                <span class="sc-tab-wrapper">
-                                  <span class="sc-icon {scope.data.icon.value}" is="ui-component"></span>
-                                  <span class="sc-label">
-                                    <input size="{scope.data.name.length.value}" is="ui-input"
-                                      bind:model="scope.data.name.value" />
+                                <span class="sc-tab sc-title-tab" title="{scope.data.name.value}" is="ui-component">
+                                  <div class="ui-list-drag-area"></div>
+                                  <span class="sc-tab-wrapper">
+                                    <span class="sc-icon {scope.data.icon.value}" is="ui-component"></span>
+                                    <span class="sc-label">
+                                      <input size="{scope.data.name.length.value}" is="ui-input"
+                                        bind:model="scope.data.name.value" />
+                                    </span>
                                   </span>
                                 </span>
                               </span>
-                            </span>
-                            <span class="sc-tabs">
-                              <span class="sc-tab" data-display="{scope.data.isDuplicateable.value}" is="ui-component">
-                                <div class="ui-list-drag-area"></div>
-                                <button class="sc-set-button" is="ui-button"
-                                  on:click="scope.root.actions.duplicateAction(scope.data)" title="Duplicate">
-                                  <span class="sc-icon fa-regular fa-clone"></span>
-                                </button>
+                              <span class="sc-tabs">
+                                <span class="sc-tab" data-display="{scope.data.isDuplicateable.value}"
+                                  is="ui-component">
+                                  <div class="ui-list-drag-area"></div>
+                                  <button class="sc-set-button" is="ui-button"
+                                    on:click="scope.root.actions.duplicateAction(scope.data)" title="Duplicate">
+                                    <span class="sc-icon fa-regular fa-clone"></span>
+                                  </button>
+                                </span>
+                                <span class="sc-tab" data-display="{scope.data.isCaptureable.value}" is="ui-component">
+                                  <div class="ui-list-drag-area"></div>
+                                  <button class="sc-set-button" is="ui-button"
+                                    data-is-capturing="{scope.data.isCapturing.value}" on:click="scope.data.reCapture()"
+                                    title="Set Value">
+                                    <span class="sc-icon fa-solid fa-bullseye"></span>
+                                  </button>
+                                </span>
+                                <span class="sc-tab" data-display="{scope.data.isTestable.value}" is="ui-component">
+                                  <div class="ui-list-drag-area"></div>
+                                  <button class="sc-test-button" is="ui-button" on:click="scope.data.play()"
+                                    data-is-playing="{scope.data.isPlaying.value}" title="Play">
+                                    <span class="sc-icon fa-solid fa-circle-play"></span>
+                                  </button>
+                                </span>
+                                <span class="sc-tab">
+                                  <div class="ui-list-drag-area"></div>
+                                  <button class="sc-trash-button" is="ui-button"
+                                    on:click="scope.root.actions.removeAction(scope.data)" title="Delete">
+                                    <span class="sc-icon fa-solid fa-trash-alt"></span>
+                                  </button>
+                                </span>
                               </span>
-                              <span class="sc-tab" data-display="{scope.data.isCaptureable.value}" is="ui-component">
-                                <div class="ui-list-drag-area"></div>
-                                <button class="sc-set-button" is="ui-button"
-                                  data-is-capturing="{scope.data.isCapturing.value}" on:click="scope.data.reCapture()"
-                                  title="Set Value">
-                                  <span class="sc-icon fa-solid fa-bullseye"></span>
-                                </button>
-                              </span>
-                              <span class="sc-tab" data-display="{scope.data.isTestable.value}" is="ui-component">
-                                <div class="ui-list-drag-area"></div>
-                                <button class="sc-test-button" is="ui-button" on:click="scope.data.play()"
-                                  data-is-playing="{scope.data.isPlaying.value}" title="Play">
-                                  <span class="sc-icon fa-solid fa-circle-play"></span>
-                                </button>
-                              </span>
-                              <span class="sc-tab">
-                                <div class="ui-list-drag-area"></div>
-                                <button class="sc-trash-button" is="ui-button"
-                                  on:click="scope.root.actions.removeAction(scope.data)" title="Delete">
-                                  <span class="sc-icon fa-solid fa-trash-alt"></span>
-                                </button>
-                              </span>
-                            </span>
-                          </div>
-                          <div class="sc-window-content" is="ui-component">
-                            <div class="sc-fields" is="ui-component">
-                              <div class="sc-action-fields" is="ui-list" set:provider="scope.data.array">
-                                <template data-type="ActionScroll">
-                                  <div class="sc-action sc-fields-list" is="action-tween">
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="ScrollLeft">
-                                        <span class="sc-icon fa-solid fa-left-right"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="px">${scope.data.unitX.value}</span>
-                                          <input type="number" placeholder="0" min="0" is="ui-input"
-                                            bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
-                                        </span>
-                                      </span>
-                                      <span class="sc-input" title="ScrollTop">
-                                        <span class="sc-icon fa-solid fa-up-down"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="px">${scope.data.unitY.value}</span>
-                                          <input type="number" placeholder="0" min="0" is="ui-input"
-                                            bind:model="scope.data.unitY.value" on:focus="scope.data.doScroll()" />
-                                        </span>
-                                      </span>
-                                    </div>
-                                    <div class="sc-field">
-                                      <div class="sc-input sc-select" title="Animation Timing">
-                                        <span class="sc-icon fa-solid fa-road"></span>
-                                        <select is="ui-select" set:provider="scope.data.tweenTypes"
-                                          bind:value="scope.data.tweenType.id">
-                                          <template>
-                                            <option is="ui-text" value="{scope.data.id}">${scope.data.option}</option>
-                                          </template>
-                                        </select>
-                                      </div>
-                                      <div class="sc-input sc-select" title="Target Selector">
-                                        <span class="sc-icon fa-solid fa-location-crosshairs"></span>
-                                        <select is="ui-select" set:provider="scope.data.targets"
-                                          bind:value="scope.data.target.value"></select>
-                                      </div>
-                                    </div>
-                                    <div class="sc-field" title="Get Scroll" is="ui-component"
-                                      data-display="{scope.data.isCustomJSMethod.value}">
-                                      <span class="sc-input sc-textarea">
-                                        <span class="sc-icon fa-solid fa-reply"></span>
-                                        <textarea rows="3" is="ui-input"
-                                          bind:model="scope.data.getScroll.value"></textarea>
-                                      </span>
-                                    </div>
-                                    <div class="sc-field" title="Set Scroll" is="ui-component"
-                                      data-display="{scope.data.isCustomJSMethod.value}">
-                                      <span class="sc-input sc-textarea">
-                                        <span class="sc-icon fa-solid fa-share"></span>
-                                        <textarea rows="3" is="ui-input"
-                                          bind:model="scope.data.setScroll.value"></textarea>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionSwipe">
-                                  <div class="sc-action sc-fields-list" is="action-tween">
-                                    <div class="sc-points-list sc-field-column" is="ui-list"
-                                      set:provider="scope.data.points">
-                                      <template>
-                                        <div class="sc-field">
-                                          <span class="sc-input" title="PageX">
-                                            <span class="sc-icon fa-solid fa-left-right"></span>
-                                            <span class="sc-input-group">
-                                              <span class="sc-input-unit" is="ui-text"
-                                                data-unit="px">${scope.data.x.value}</span>
-                                              <input type="number" min="0" placeholder="0" step="1" is="ui-input"
-                                                bind:model="scope.data.x.value" />
-                                            </span>
+                            </div>
+                            <div class="sc-window-content" is="ui-component">
+                              <div class="sc-fields" is="ui-component">
+                                <div class="sc-action-fields" is="ui-list" set:provider="scope.data.array">
+                                  <template data-type="ActionScroll">
+                                    <div class="sc-action sc-fields-list" is="action-tween">
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="ScrollLeft">
+                                          <span class="sc-icon fa-solid fa-left-right"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="px">${scope.data.unitX.value}</span>
+                                            <input type="number" placeholder="0" min="0" is="ui-input"
+                                              bind:model="scope.data.unitX.value" on:focus="scope.data.doScroll()" />
                                           </span>
-                                          <span class="sc-input" title="PageY">
-                                            <span class="sc-icon fa-solid fa-up-down"></span>
-                                            <span class="sc-input-group">
-                                              <span class="sc-input-unit" is="ui-text"
-                                                data-unit="px">${scope.data.y.value}</span>
-                                              <input type="number" min="0" placeholder="0" step="1" is="ui-input"
-                                                bind:model="scope.data.y.value" />
-                                            </span>
+                                        </span>
+                                        <span class="sc-input" title="ScrollTop">
+                                          <span class="sc-icon fa-solid fa-up-down"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="px">${scope.data.unitY.value}</span>
+                                            <input type="number" placeholder="0" min="0" is="ui-input"
+                                              bind:model="scope.data.unitY.value" on:focus="scope.data.doScroll()" />
                                           </span>
+                                        </span>
+                                      </div>
+                                      <div class="sc-field">
+                                        <div class="sc-input sc-select" title="Animation Timing">
+                                          <span class="sc-icon fa-solid fa-road"></span>
+                                          <select is="ui-select" set:provider="scope.data.tweenTypes"
+                                            bind:value="scope.data.tweenType.id">
+                                            <template>
+                                              <option is="ui-text" value="{scope.data.id}">${scope.data.option}</option>
+                                            </template>
+                                          </select>
                                         </div>
-                                      </template>
-                                    </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionMouseEvent">
-                                  <div class="sc-action sc-fields-list">
-                                    <div class="sc-field">
-                                      <span class="sc-input">
-                                        <span class="sc-icon fa-solid fa-left-right"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="px">${scope.data.x.value}</span>
-                                          <input type="number" step="1" min="0" placeholder="0" title="PageX"
-                                            is="ui-input" bind:model="scope.data.x.value" />
+                                        <div class="sc-input sc-select" title="Target Selector">
+                                          <span class="sc-icon fa-solid fa-location-crosshairs"></span>
+                                          <select is="ui-select" set:provider="scope.data.targets"
+                                            bind:value="scope.data.target.value"></select>
+                                        </div>
+                                      </div>
+                                      <div class="sc-field" title="Get Scroll" is="ui-component"
+                                        data-display="{scope.data.isCustomJSMethod.value}">
+                                        <span class="sc-input sc-textarea">
+                                          <span class="sc-icon fa-solid fa-reply"></span>
+                                          <textarea rows="3" is="ui-input"
+                                            bind:model="scope.data.getScroll.value"></textarea>
                                         </span>
-                                      </span>
-                                      <span class="sc-input">
-                                        <span class="sc-icon fa-solid fa-up-down"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="px">${scope.data.y.value}</span>
-                                          <input type="number" step="1" min="0" placeholder="0" title="PageY"
-                                            is="ui-input" bind:model="scope.data.y.value" />
+                                      </div>
+                                      <div class="sc-field" title="Set Scroll" is="ui-component"
+                                        data-display="{scope.data.isCustomJSMethod.value}">
+                                        <span class="sc-input sc-textarea">
+                                          <span class="sc-icon fa-solid fa-share"></span>
+                                          <textarea rows="3" is="ui-input"
+                                            bind:model="scope.data.setScroll.value"></textarea>
                                         </span>
-                                      </span>
+                                      </div>
                                     </div>
-                                    <div class="sc-field">
-                                      <span class="sc-input sc-select" title="MouseEvent Type">
-                                        <span class="sc-icon fa-solid fa-mouse-pointer"></span>
-                                        <select is="ui-select" set:provider="scope.data.eventTypes"
-                                          bind:value="scope.data.eventTypes.selectedItem.value"></select>
-                                      </span>
-                                      <span class="sc-input" title="Delay">
-                                        <span class="sc-icon fa-solid fa-hourglass-half"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.delay.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.delay.value" />
+                                  </template>
+                                  <template data-type="ActionSwipe">
+                                    <div class="sc-action sc-fields-list" is="action-tween">
+                                      <div class="sc-points-list sc-field-column" is="ui-list"
+                                        set:provider="scope.data.points">
+                                        <template>
+                                          <div class="sc-field">
+                                            <span class="sc-input" title="PageX">
+                                              <span class="sc-icon fa-solid fa-left-right"></span>
+                                              <span class="sc-input-group">
+                                                <span class="sc-input-unit" is="ui-text"
+                                                  data-unit="px">${scope.data.x.value}</span>
+                                                <input type="number" min="0" placeholder="0" step="1" is="ui-input"
+                                                  bind:model="scope.data.x.value" />
+                                              </span>
+                                            </span>
+                                            <span class="sc-input" title="PageY">
+                                              <span class="sc-icon fa-solid fa-up-down"></span>
+                                              <span class="sc-input-group">
+                                                <span class="sc-input-unit" is="ui-text"
+                                                  data-unit="px">${scope.data.y.value}</span>
+                                                <input type="number" min="0" placeholder="0" step="1" is="ui-input"
+                                                  bind:model="scope.data.y.value" />
+                                              </span>
+                                            </span>
+                                          </div>
+                                        </template>
+                                      </div>
+                                    </div>
+                                  </template>
+                                  <template data-type="ActionMouseEvent">
+                                    <div class="sc-action sc-fields-list">
+                                      <div class="sc-field">
+                                        <span class="sc-input">
+                                          <span class="sc-icon fa-solid fa-left-right"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="px">${scope.data.x.value}</span>
+                                            <input type="number" step="1" min="0" placeholder="0" title="PageX"
+                                              is="ui-input" bind:model="scope.data.x.value" />
+                                          </span>
                                         </span>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionWait">
-                                  <div class="sc-action sc-fields-list">
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="Duration">
-                                        <span class="sc-icon fa-solid fa-clock"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.delay.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.delay.value" />
+                                        <span class="sc-input">
+                                          <span class="sc-icon fa-solid fa-up-down"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="px">${scope.data.y.value}</span>
+                                            <input type="number" step="1" min="0" placeholder="0" title="PageY"
+                                              is="ui-input" bind:model="scope.data.y.value" />
+                                          </span>
                                         </span>
-                                      </span>
-                                      <span class="sc-space"></span>
-                                    </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionURL">
-                                  <div class="sc-action sc-fields-list">
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="URL">
-                                        <span class="sc-icon fa-solid fa-link"></span>
-                                        <input type="text" placeholder="window" is="ui-input"
-                                          bind:model="scope.data.url.value" />
-                                      </span>
-                                    </div>
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="Delay">
-                                        <span class="sc-icon fa-solid fa-hourglass-half"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.delay.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.delay.value" />
+                                      </div>
+                                      <div class="sc-field">
+                                        <span class="sc-input sc-select" title="MouseEvent Type">
+                                          <span class="sc-icon fa-solid fa-mouse-pointer"></span>
+                                          <select is="ui-select" set:provider="scope.data.eventTypes"
+                                            bind:value="scope.data.eventTypes.selectedItem.value"></select>
                                         </span>
-                                      </span>
-                                      <span class="sc-space"></span>
-                                    </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionEval">
-                                  <div class="sc-action sc-fields-list">
-                                    <div class="sc-field">
-                                      <textarea rows="6" is="ui-input" bind:model="scope.data.code.value"></textarea>
-                                    </div>
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="Delay">
-                                        <span class="sc-icon fa-solid fa-hourglass-half"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.delay.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.delay.value" />
+                                        <span class="sc-input" title="Delay">
+                                          <span class="sc-icon fa-solid fa-hourglass-half"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.delay.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.delay.value" />
+                                          </span>
                                         </span>
-                                      </span>
-                                      <span class="sc-space"></span>
+                                      </div>
                                     </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionCSS">
-                                  <div class="sc-action sc-fields-list">
-                                    <div class="sc-field">
-                                      <textarea rows="6" is="ui-input" bind:model="scope.data.code.value"></textarea>
-                                    </div>
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="Delay">
-                                        <span class="sc-icon fa-solid fa-hourglass-half"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.delay.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.delay.value" />
+                                  </template>
+                                  <template data-type="ActionWait">
+                                    <div class="sc-action sc-fields-list">
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="Duration">
+                                          <span class="sc-icon fa-solid fa-clock"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.delay.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.delay.value" />
+                                          </span>
                                         </span>
-                                      </span>
-                                      <span class="sc-space"></span>
+                                        <span class="sc-space"></span>
+                                      </div>
                                     </div>
-                                  </div>
-                                </template>
-                                <template data-type="ActionTextInput">
-                                  <div class="sc-action sc-fields-list">
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="target">
-                                        <span class="sc-icon fa-solid fa-location-crosshairs"></span>
-                                        <input type="text" placeholder="Input selector" is="ui-input"
-                                          bind:model="scope.data.target.value" />
-                                      </span>
-                                    </div>
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="Value">
-                                        <span class="sc-icon fa-solid fa-dollar-sign"></span>
-                                        <input type="text" placeholder="Input value" is="ui-input"
-                                          bind:model="scope.data.text.value" />
-                                      </span>
-                                    </div>
-                                    <div class="sc-field">
-                                      <span class="sc-input" title="Duration">
-                                        <span class="sc-icon fa-solid fa-clock"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.duration.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.duration.value" />
+                                  </template>
+                                  <template data-type="ActionURL">
+                                    <div class="sc-action sc-fields-list">
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="URL">
+                                          <span class="sc-icon fa-solid fa-link"></span>
+                                          <input type="text" placeholder="window" is="ui-input"
+                                            bind:model="scope.data.url.value" />
                                         </span>
-                                      </span>
-                                      <span class="sc-input" title="Delay">
-                                        <span class="sc-icon fa-solid fa-hourglass-half"></span>
-                                        <span class="sc-input-group">
-                                          <span class="sc-input-unit" is="ui-text"
-                                            data-unit="s">${scope.data.delay.value}</span>
-                                          <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
-                                            bind:model="scope.data.delay.value" />
+                                      </div>
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="Delay">
+                                          <span class="sc-icon fa-solid fa-hourglass-half"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.delay.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.delay.value" />
+                                          </span>
                                         </span>
-                                      </span>
+                                        <span class="sc-space"></span>
+                                      </div>
                                     </div>
-                                  </div>
-                                </template>
+                                  </template>
+                                  <template data-type="ActionEval">
+                                    <div class="sc-action sc-fields-list">
+                                      <div class="sc-field">
+                                        <textarea rows="6" is="ui-input" bind:model="scope.data.code.value"></textarea>
+                                      </div>
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="Delay">
+                                          <span class="sc-icon fa-solid fa-hourglass-half"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.delay.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.delay.value" />
+                                          </span>
+                                        </span>
+                                        <span class="sc-space"></span>
+                                      </div>
+                                    </div>
+                                  </template>
+                                  <template data-type="ActionCSS">
+                                    <div class="sc-action sc-fields-list">
+                                      <div class="sc-field">
+                                        <textarea rows="6" is="ui-input" bind:model="scope.data.code.value"></textarea>
+                                      </div>
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="Delay">
+                                          <span class="sc-icon fa-solid fa-hourglass-half"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.delay.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.delay.value" />
+                                          </span>
+                                        </span>
+                                        <span class="sc-space"></span>
+                                      </div>
+                                    </div>
+                                  </template>
+                                  <template data-type="ActionTextInput">
+                                    <div class="sc-action sc-fields-list">
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="target">
+                                          <span class="sc-icon fa-solid fa-location-crosshairs"></span>
+                                          <input type="text" placeholder="Input selector" is="ui-input"
+                                            bind:model="scope.data.target.value" />
+                                        </span>
+                                      </div>
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="Value">
+                                          <span class="sc-icon fa-solid fa-dollar-sign"></span>
+                                          <input type="text" placeholder="Input value" is="ui-input"
+                                            bind:model="scope.data.text.value" />
+                                        </span>
+                                      </div>
+                                      <div class="sc-field">
+                                        <span class="sc-input" title="Duration">
+                                          <span class="sc-icon fa-solid fa-clock"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.duration.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.duration.value" />
+                                          </span>
+                                        </span>
+                                        <span class="sc-input" title="Delay">
+                                          <span class="sc-icon fa-solid fa-hourglass-half"></span>
+                                          <span class="sc-input-group">
+                                            <span class="sc-input-unit" is="ui-text"
+                                              data-unit="s">${scope.data.delay.value}</span>
+                                            <input type="number" step="0.25" min="0" placeholder="0" is="ui-input"
+                                              bind:model="scope.data.delay.value" />
+                                          </span>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </template>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </sc-action>
-                      </template>
-                    </sc-actions-view>
+                          </sc-action>
+                        </template>
+                      </sc-actions-view>
+                    </div>
                     <!-- <div class="sc-window">
                       <div class="sc-window-content">
                         <div class="sc-fields"></div>
@@ -664,36 +667,32 @@
                     </div>
                   </sc-action-buttons>
                 </sc-scenario>
-                <sc-video-settings class="sc-section sc-fields">
-                  <div></div>
-                </sc-video-settings>
-                <sc-video class="sc-section sc-fields">
-                  <div>
+                <sc-video class="sc-section sc-fields no-flex-grow">
+                  <div class="sc-container">
                     <div class="sc-window" is="ui-component">
-                      <!-- <div class="sc-title">
+                      <div class="sc-title">
                         <div class="sc-tabs">
                           <span class="sc-tab sc-title-tab">
-                            <a class="sc-download-button" title="Download">
-                              <span class="sc-icon fa-solid fa-download"></span>
-                              <span class="sc-label">Download</span>
-                            </a>
+                            <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
+                              is="ui-component"></span>
+                            <span class="sc-label" is="ui-text">${scope.settings.format.value.toUpperCase()}
+                              ${scope.settings.mediaTrackName.value}</span>
                           </span>
                         </div>
                         <div class="sc-tabs">
-                          <span class="sc-tab"> </span>
+                          <span class="sc-tab sc-video-filename">
+                            <a class="sc-download-button" title="Download">
+                              <span class="sc-label">Download</span>
+                              <span class="sc-icon fa-solid fa-download"></span>
+                            </a>
+                          </span>
                         </div>
-                      </div> -->
+                      </div>
                       <div class="sc-window-content" is="ui-component">
                         <div class="sc-fields">
-                          <div class="sc-video-filename">
-                            <a class="sc-download-button">
-                              <span class="sc-icon fa-solid fa-circle-arrow-down"></span>
-                              <span class="sc-label"></span>
-                            </a>
-                          </div>
-                          <div class="sc-video-player-container">
-                            <div class="sc-logger-container">
-                              <sc-logger>
+                          <div class="sc-scrollpane">
+                            <div>
+                              <div class="sc-logger-container">
                                 <ol class="sc-logger-list" is="ui-list" set:provider="scope.ffmpegLogs">
                                   <template>
                                     <li>
@@ -702,9 +701,12 @@
                                     </li>
                                   </template>
                                 </ol>
-                              </sc-logger>
+                                <!-- <sc-logger></sc-logger> -->
+                              </div>
+                              <div class="sc-video-player-container">
+                                <video class="sc-video-player" controls muted></video>
+                              </div>
                             </div>
-                            <video class="sc-video-player" controls muted></video>
                           </div>
                         </div>
                       </div>

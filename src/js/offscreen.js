@@ -77,8 +77,8 @@ async function startRecording(message) {
           mandatory: {
             chromeMediaSource: message.mediaSource,
             chromeMediaSourceId: message.streamId,
-            // minWidth: constraintSizes[0].width,
-            // minHeight: constraintSizes[0].height,
+            minWidth: constraintSizes[0].width,
+            minHeight: constraintSizes[0].height,
             maxWidth: constraintSizes[2].width,
             maxHeight: constraintSizes[2].height,
             minFrameRate: 30,

@@ -1,169 +1,167 @@
 .sc-default {
-    &[data-theme-light="true"] {
-        color: $textColorLight;
+  &[data-theme-light='true'] {
+    color: $textColorLight;
 
-        &[is="scroll-capture"] {
-            background-color: $backgroundColorLight;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background-color: $windowBorderLight;
-        }
-    
-
-        .sc-window {
-            background-color: $windowColorLight;
-
-            .sc-title {
-                .sc-tabs {
-
-                    &:nth-child(1) {
-                        .sc-tab {
-                            background-color: $windowColorLight;
-                            &.sc-title-tab {
-                                background-color: $windowColorFrontLight;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            .sc-window-content {
-                background-color: $windowColorFrontLight;
-            }
-            
-            &[data-selected="true"] {			
-                &:after {
-                    box-shadow: inset 0 0 0 1px $windowBorderLight;
-                }
-            }
-        }
-
-        .sc-icon {
-            .sc-icon-shape {
-                fill: $textColorLight;
-            }
-        }
-
-        .easing-graph-container {
-            background-color: $inputColorLight;
-        }
-
-        [is="easing-graph"] {
-            border-left: 1px dotted rgba(0, 0, 0, 0.5);
-            border-bottom: 1px dotted rgba(0, 0, 0, 0.5);
-           
-            [is="control-point-lines"] {
-                [is="control-point-line"] {
-                    background-color: $textColorLight;
-                }
-            }
-
-            .control-points {
-                .control-point { 
-                    .shape {
-                        background-color: $textColorLight;
- 					    color: $textColorDark;
-                   }
-                }
-            }
-            
-            .curve {
-                polyline {
-                    stroke: $textColorLight;
-                }
-            }
-            
-            .points {
-                point {
-                    &:after {
-                        background-color: $textColorLight;
-                    }
-                }
-            }
-        }
-
-        input, textarea {
-            background: transparent !important;
-            background-color: transparent !important;
-        }
-
-        .sc-input, textarea {
-            background: $inputColorLight;
-            background-color: $inputColorLight;
-        }
-
-        .sc-input,
-        .sc-space {
-
-            input {
-                background: transparent;
-                background-color: transparent;
-            }
-
-            .sc-input-unit {
-                &:after {
-                    color: $textColorLight;
-                }
-            }
-        }
-
-        label.sc-radio {
-            .box {
-                background-color: $inputColorLight;
-            }
-        }
-        
-        
-        input[type=range] {
-		    background: transparent;
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            background: $inputColorLight;
-            border-radius: $borderRadius;
-        }
-        
-        input[type=range]::-webkit-slider-thumb {
-            border: 1px solid $inputColorLight;
-            background: $textColorLight;
-            opacity: 0.1;
-        }
-        
-        input[type=range]:focus::-webkit-slider-runnable-track {
-            background: $inputColorLight;
-        }
-        
-        input[type=range]::-moz-range-track {
-            background: $inputColorLight;
-        }
-        
-        input[type=range]::-moz-range-thumb {
-            border: 1px solid $inputColorLight;
-            background: $textColorLight;
-            opacity: 0.1;
-        }
-                
-        input[type=range]::-ms-fill-lower {
-            background: $inputColorLight;
-        }
-        
-        input[type=range]::-ms-fill-upper {
-            background: $inputColorLight;
-        }
-        
-        input[type=range]::-ms-thumb {
-            border: 1px solid $inputColorLight;
-            background: $textColorLight;
-            opacity: 0.1;
-        }
-        
-        input[type=range]:focus::-ms-fill-lower {
-            background: $inputColorLight;
-        }
-        
-        input[type=range]:focus::-ms-fill-upper {
-            background: $inputColorLight;
-        }
+    &[is='scroll-capture'] {
+      background-color: $backgroundColorLight;
     }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: $windowBorderLight;
+    }
+
+    .sc-window {
+      background-color: $windowColorLight;
+
+      .sc-title {
+        .sc-tabs {
+          &:nth-child(1) {
+            .sc-tab {
+              background-color: $windowColorLight;
+              &.sc-title-tab {
+                background-color: $windowColorFrontLight;
+              }
+            }
+          }
+        }
+      }
+
+      .sc-window-content {
+        background-color: $windowColorFrontLight;
+      }
+
+      &[data-selected='true'] {
+        &:after {
+          box-shadow: inset 0 0 0 1px $windowBorderLight;
+        }
+      }
+    }
+
+    .sc-icon {
+      .sc-icon-shape {
+        fill: $textColorLight;
+      }
+    }
+
+    .easing-graph-container {
+      background-color: $inputColorLight;
+    }
+
+    [is='easing-graph'] {
+      border-left: 1px dotted rgba(0, 0, 0, 0.5);
+      border-bottom: 1px dotted rgba(0, 0, 0, 0.5);
+
+      [is='control-point-lines'] {
+        [is='control-point-line'] {
+          background-color: $textColorLight;
+        }
+      }
+
+      .control-points {
+        .control-point {
+          .shape {
+            background-color: $textColorLight;
+            color: $textColorDark;
+          }
+        }
+      }
+
+      .curve {
+        polyline {
+          stroke: $textColorLight;
+        }
+      }
+
+      .points {
+        point {
+          &:after {
+            background-color: $textColorLight;
+          }
+        }
+      }
+    }
+
+    input,
+    textarea {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+
+    .sc-input,
+    textarea {
+      background: $inputColorLight;
+      background-color: $inputColorLight;
+    }
+
+    .sc-input,
+    .sc-space {
+      input {
+        background: transparent;
+        background-color: transparent;
+      }
+
+      .sc-input-unit {
+        &:after {
+          color: $textColorLight;
+        }
+      }
+    }
+
+    label.sc-radio {
+      .box {
+        background-color: $inputColorLight;
+      }
+    }
+
+    input[type='range'] {
+      background: transparent;
+    }
+
+    input[type='range']::-webkit-slider-runnable-track {
+      background: $inputColorLight;
+      border-radius: $borderRadius;
+    }
+
+    input[type='range']::-webkit-slider-thumb {
+      border: 1px solid $inputColorLight;
+      background: $textColorLight;
+      opacity: 0.1;
+    }
+
+    input[type='range']:focus::-webkit-slider-runnable-track {
+      background: $inputColorLight;
+    }
+
+    input[type='range']::-moz-range-track {
+      background: $inputColorLight;
+    }
+
+    input[type='range']::-moz-range-thumb {
+      border: 1px solid $inputColorLight;
+      background: $textColorLight;
+      opacity: 0.1;
+    }
+
+    input[type='range']::-ms-fill-lower {
+      background: $inputColorLight;
+    }
+
+    input[type='range']::-ms-fill-upper {
+      background: $inputColorLight;
+    }
+
+    input[type='range']::-ms-thumb {
+      border: 1px solid $inputColorLight;
+      background: $textColorLight;
+      opacity: 0.1;
+    }
+
+    input[type='range']:focus::-ms-fill-lower {
+      background: $inputColorLight;
+    }
+
+    input[type='range']:focus::-ms-fill-upper {
+      background: $inputColorLight;
+    }
+  }
 }

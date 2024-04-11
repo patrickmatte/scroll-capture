@@ -46,4 +46,10 @@ export default class Vector2Data extends DataModel {
     this.x.value = data.x;
     this.y.value = data.y;
   }
+
+  math(callback) {
+    this.x.value = callback(this.x.value);
+    this.y.value = callback(this.y.value);
+    return this;
+  }
 }

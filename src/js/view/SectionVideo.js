@@ -53,9 +53,6 @@ export default class SectionVideo extends Section {
         const file = new File([blob], videoFileName, {
           type: message.mimeType,
         });
-        console.log('message', message);
-        console.log('message.fileName', message.fileName);
-        console.log('message.mimeType', message.mimeType);
         const videoURL = URL.createObjectURL(file);
         player.src = videoURL;
         player.setAttribute('download', videoFileName);
@@ -68,8 +65,8 @@ export default class SectionVideo extends Section {
             sendTrackEventMessage('download', { media: 'video' });
           });
         }
-        let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button  span.sc-label');
-        fileNameButton.textContent = videoFileName;
+        // let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button  span.sc-label');
+        // fileNameButton.textContent = videoFileName;
       });
     });
   }
@@ -79,7 +76,7 @@ export default class SectionVideo extends Section {
     let promise = super.showDelayComplete();
     app.model.sendMessage({ type: 'scrollCaptureShowVideo' });
 
-    this.querySelector('.sc-logger-container').style.paddingTop = `${(window.innerHeight / window.innerWidth) * 100}%`;
+    // this.querySelector('.sc-logger-container').style.paddingTop = `${(window.innerHeight / window.innerWidth) * 100}%`;
     return promise;
   }
 

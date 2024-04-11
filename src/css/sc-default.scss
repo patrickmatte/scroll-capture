@@ -566,9 +566,10 @@
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     border-radius: $borderRadius;
+    flex-grow: 1;
 
     > * {
       margin-bottom: 0.75em;
@@ -577,5 +578,10 @@
     > *:last-child {
       margin-bottom: 0;
     }
+  }
+
+  .no-flex-grow {
+    flex-grow: 0 !important;
+    // flex-shrink: 0 !important;
   }
 }

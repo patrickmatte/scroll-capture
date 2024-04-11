@@ -7,6 +7,7 @@ import Tween from '../animation/Tween';
 import TweenProperty from '../animation/TweenProperty';
 import Easing from '../animation/Easing';
 import BooleanData from '../data/BooleanData';
+import { round1 } from '../utils/number';
 
 export default class UIScrollPane extends UIComponent {
   constructor(element, listSelector = '.panel') {
@@ -335,7 +336,7 @@ export default class UIScrollPane extends UIComponent {
     this.isDragging = false;
 
     this.scrollStart = this.scroll.clone();
-    this.touchStart = this.getTouchPoint(event);
+    this.touchStart = this.getTouchPoint(event).math(round1);
     this.touchPrevious = this.touchStart;
 
     window.addEventListener(events.mousemove, this.mousemoveHandler);
@@ -372,7 +373,7 @@ export default class UIScrollPane extends UIComponent {
     event.preventDefault();
     // }
 
-    let touchNew = this.getTouchPoint(event);
+    let touchNew = this.getTouchPoint(event).math(round1);
 
     let distance = Point.distance(touchNew, this.touchStart);
 

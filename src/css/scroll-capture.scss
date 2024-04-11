@@ -73,7 +73,11 @@ html[data-sc-scrollbars='false'] {
   }
 
   .sc-fields {
-    display: block;
+    display: inline-flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: clip;
     padding: 0.75em 0;
 
     > * {
@@ -161,7 +165,7 @@ html[data-sc-scrollbars='false'] {
     position: fixed !important;
     right: 4px;
     top: 4px;
-    display: none;
+    display: none !important;
     flex-direction: column;
     line-height: 1;
     padding: 8px;
@@ -170,9 +174,10 @@ html[data-sc-scrollbars='false'] {
     backdrop-filter: blur(15px);
     // mix-blend-mode: luminosity;
     background-color: $backgroundColorDark;
+    overflow: clip;
 
     &[data-state='show'] {
-      display: flex;
+      display: inline-flex !important;
     }
 
     &[data-size='small'] {
@@ -196,7 +201,7 @@ html[data-sc-scrollbars='false'] {
     display: none;
 
     &[data-state='show'] {
-      display: block;
+      display: inline-flex;
     }
 
     // &:last-child {
@@ -237,16 +242,6 @@ html[data-sc-scrollbars='false'] {
 
     .sc-logger-container {
       display: block;
-    }
-
-    sc-logger {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow-y: scroll;
-      display: block;
 
       ul,
       ol {
@@ -269,6 +264,15 @@ html[data-sc-scrollbars='false'] {
       }
     }
 
+    sc-logger {
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      display: block;
+    }
+
     &[data-show-video='true'] {
       video.sc-video-player {
         display: block;
@@ -283,12 +287,6 @@ html[data-sc-scrollbars='false'] {
   }
 
   sc-image-download {
-    .img-panel {
-      width: 100%;
-      overflow: auto;
-      max-height: 400px;
-    }
-
     .img-container {
       width: 100%;
 
@@ -304,7 +302,7 @@ html[data-sc-scrollbars='false'] {
     }
 
     .sc-video-filename {
-      display: none;
+      display: none !important;
     }
 
     .img-panel-container {
@@ -316,11 +314,19 @@ html[data-sc-scrollbars='false'] {
         display: block;
       }
       .sc-video-filename {
-        display: block;
+        display: inline-flex !important;
       }
       .sc-wait {
         display: none;
       }
     }
+  }
+
+  .sc-container {
+    display: inline-flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: clip;
   }
 }

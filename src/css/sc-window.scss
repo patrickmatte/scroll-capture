@@ -93,7 +93,11 @@
     font-size: 0.9em !important;
     // margin: 0.75em 0;
     margin-bottom: 0.75em;
-    display: block;
+    display: inline-flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow: clip;
 
     &:first-child {
       margin-top: 0;
@@ -105,8 +109,10 @@
 
     .sc-title {
       font-weight: bold;
-      display: flex;
+      display: inline-flex;
       justify-content: space-between;
+      flex-grow: 0;
+      flex-shrink: 0;
 
       .ui-list-drag-area {
         position: absolute;
@@ -185,7 +191,11 @@
     }
 
     .sc-window-content {
-      display: block;
+      display: inline-flex;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-direction: column;
+      overflow: clip;
       background-color: $windowColorFrontDark;
       transition: background-color 0.3s ease 0s;
       border-radius: $borderRadius;

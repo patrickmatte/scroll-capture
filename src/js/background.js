@@ -105,7 +105,6 @@ function onMessageHandler(msg, sender, sendResponse) {
       break;
     case 'scrollCaptureVideoURLBackground':
       msg.type = 'scrollCaptureVideoURL';
-      console.log('!!!!!! background', msg);
       chrome.tabs.sendMessage(tabId, msg);
       break;
     case 'scrollCaptureFFmpegLogToSW':

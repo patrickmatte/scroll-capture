@@ -1,5 +1,6 @@
 import { events } from '../events';
 import Point from '../geom/Point';
+import { round1 } from '../utils/number';
 import UIListBase from './UIListBase';
 
 export default class UIList extends UIListBase {
@@ -43,7 +44,7 @@ export default class UIList extends UIListBase {
       // if(this.debug) this.log("isDragElement", isDragElement);
       if (isDragElement) {
         event.preventDefault();
-        this.dragStartPoint = this.getTouchPoint(event);
+        this.dragStartPoint = this.getTouchPoint(event).math(round1);
         this.dragIndex = NaN;
         // this.dragElement = this.children.find((child, index) => {
         // 	let match = (event.target == child.querySelector(".ui-list-drag-area"));
@@ -64,7 +65,7 @@ export default class UIList extends UIListBase {
   }
 
   _dragMove(event) {
-    let point = this.getTouchPoint(event);
+    let point = this.getTouchPoint(event).math(round1);
     let distance = Point.distance(point, this.dragStartPoint);
     if (distance > 0) {
       document.body.removeEventListener(events.mousemove, this._dragMove);
@@ -81,7 +82,7 @@ export default class UIList extends UIListBase {
 
   _dragElementMove(event) {
     event.preventDefault();
-    let point = this.getTouchPoint(event);
+    let point = this.getTouchPoint(event).math(round1);
     let dragDiff = point.subtract(this.dragStartPoint);
     let originOffset = dragDiff.add(this.dragElementStartPos);
     let children = this.children;

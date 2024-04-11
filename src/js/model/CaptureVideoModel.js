@@ -6,7 +6,7 @@ import { app } from '../main';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { getSupportedFormatsAndCodecs } from '../../lib/tsunami/utils/FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
-import { decimalToPlace } from '../../lib/tsunami/utils/number';
+import { decimalToPlace, round1 } from '../../lib/tsunami/utils/number';
 import StringData from '../../lib/tsunami/data/StringData';
 import ObjectData from '../../lib/tsunami/data/ObjectData';
 import { ChangeEvent } from '../../lib/tsunami/ChangeEvent';
@@ -29,8 +29,17 @@ export default class CaptureVideoModel {
     this.showScrollbars = new BooleanData(false);
     this.showCursor = new BooleanData(true);
 
+    this.fontSize = new NumberData();
     this.position = new Vector2Data(50, 50);
-    this.size = new Vector2Data(414, 266);
+    this.size = new Vector2Data(414, 460);
+    this.size.addEventListener('value', () => {
+      sizeChangeHandler();
+    });
+    const sizeChangeHandler = () => {
+      this.fontSize.value = round1((this.size.x.value / 414) * 16);
+    };
+    sizeChangeHandler();
+
     this.devicePixelRatio = new NumberData(decimalToPlace(window.devicePixelRatio, 2, Math.floor));
 
     this.windowSizeChangeHandler = this.windowSizeChangeHandler.bind(this);
@@ -239,6 +248,8 @@ export default class CaptureVideoModel {
     if (data.hasOwnProperty('exportVideo')) this.exportVideo.deserialize(data.exportVideo);
     if (data.hasOwnProperty('format')) this.format.deserialize(data.format);
     if (data.hasOwnProperty('mediaSource')) this.mediaSource.deserialize(data.mediaSource);
+    this.position.math(Math.round);
+    this.size.math(Math.round);
     // if (data.hasOwnProperty('windowSize')) this.windowSize.deserialize(data.windowSize);
   }
 

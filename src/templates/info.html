@@ -1,116 +1,117 @@
-<div is="ui-component">
-  <div class="sc-window" is="ui-component">
-    <div class="sc-window-content" is="ui-component">
-      <div class="sc-fields" is="ui-component">
-        <div class="sc-field" title="Version">
-          <div class="sc-space">
-            <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk"
-              target="_blank">
-              <span class="sc-icon fa-solid fa-code-commit"></span>
-              <span>Version</span>
-            </a>
+<div class="sc-scrollpane">
+  <div>
+    <div class="sc-window" is="ui-component">
+      <div class="sc-window-content" is="ui-component">
+        <div class="sc-fields" is="ui-component">
+          <div class="sc-field" title="Version">
+            <div class="sc-space">
+              <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk"
+                target="_blank">
+                <span class="sc-icon fa-solid fa-code-commit"></span>
+                <span>Version</span>
+              </a>
+            </div>
+            <div class="sc-input">
+              <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk"
+                target="_blank">
+                <span class="sc-icon fa-solid fa-hashtag"></span>
+                <span is="ui-text">${scope.version.value}</span>
+              </a>
+            </div>
           </div>
-          <div class="sc-input">
-            <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk"
-              target="_blank">
-              <span class="sc-icon fa-solid fa-hashtag"></span>
-              <span is="ui-text">${scope.version.value}</span>
-            </a>
-          </div>
-        </div>
 
-        <div class="sc-field" title="Developer">
-          <div class="sc-space">
-            <a href="https://www.patrickmatte.com" target="_blank">
-              <span class="sc-icon fa-solid fa-user"></span>
-              <span>Developer</span>
-            </a>
+          <div class="sc-field" title="Developer">
+            <div class="sc-space">
+              <a href="https://www.patrickmatte.com" target="_blank">
+                <span class="sc-icon fa-solid fa-user"></span>
+                <span>Developer</span>
+              </a>
+            </div>
+            <div class="sc-input">
+              <a href="https://www.patrickmatte.com" target="_blank">
+                <span class="sc-icon fa-solid fa-link"></span>
+                <span>patrickmatte.com</span>
+              </a>
+            </div>
           </div>
-          <div class="sc-input">
-            <a href="https://www.patrickmatte.com" target="_blank">
-              <span class="sc-icon fa-solid fa-link"></span>
-              <span>patrickmatte.com</span>
-            </a>
+          <div class="sc-field" title="Support">
+            <span class="sc-space">
+              <a class="support" href="https://github.com/sponsors/patrickmatte/?frequency=one-time&amount=15"
+                target="_blank">
+                <span class="sc-icon fa-solid fa-heart"></span>
+                <span>Sponsor</span>
+              </a>
+            </span>
+            <span class="sc-input">
+              <a class="support" href="https://github.com/sponsors/patrickmatte/?frequency=one-time&amount=15"
+                target="_blank">
+                <span class="sc-icon fa-brands fa-github"></span>
+                <span>github sponsors</span>
+              </a>
+            </span>
           </div>
-        </div>
-        <div class="sc-field" title="Support">
-          <span class="sc-space">
-            <a class="support" href="https://github.com/sponsors/patrickmatte/?frequency=one-time&amount=15"
-              target="_blank">
-              <span class="sc-icon fa-solid fa-heart"></span>
-              <span>Sponsor</span>
-            </a>
-          </span>
-          <span class="sc-input">
-            <a class="support" href="https://github.com/sponsors/patrickmatte/?frequency=one-time&amount=15"
-              target="_blank">
-              <span class="sc-icon fa-brands fa-github"></span>
-              <span>github sponsors</span>
-            </a>
-          </span>
-        </div>
-        <div class="sc-field" title="Report an Issue">
-          <span class="sc-space">
-            <a class="support" href="https://github.com/patrickmatte/scroll-capture/issues" target="_blank">
-              <span class="sc-icon fa-solid fa-comment"></span>
-              <span>Report Issues</span>
-            </a>
-          </span>
-          <span class="sc-input">
-            <a class="support" href="https://github.com/patrickmatte/scroll-capture/issues" target="_blank">
-              <span class="sc-icon fa-brands fa-github"></span>
-              <span>github issues</span>
-            </a>
-          </span>
-        </div>
-        <div class="sc-field" title="Rate & Review">
-          <div class="sc-space">
-            <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk/reviews"
-              target="_blank">
-              <span class="sc-icon fa-solid fa-star"></span>
-              <span>Rate & Review</span>
-            </a>
+          <div class="sc-field" title="Report an Issue">
+            <span class="sc-space">
+              <a class="support" href="https://github.com/patrickmatte/scroll-capture/issues" target="_blank">
+                <span class="sc-icon fa-solid fa-comment"></span>
+                <span>Report Issues</span>
+              </a>
+            </span>
+            <span class="sc-input">
+              <a class="support" href="https://github.com/patrickmatte/scroll-capture/issues" target="_blank">
+                <span class="sc-icon fa-brands fa-github"></span>
+                <span>github issues</span>
+              </a>
+            </span>
           </div>
-          <div class="sc-input" is="ui-component">
-            <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk/reviews"
-              target="_blank" is="sc-rating">
-              <template>
-                <sc-star class="{scope.data.value}"></sc-star>
-              </template>
-            </a>
+          <div class="sc-field" title="Rate & Review">
+            <div class="sc-space">
+              <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk/reviews"
+                target="_blank">
+                <span class="sc-icon fa-solid fa-star"></span>
+                <span>Rate & Review</span>
+              </a>
+            </div>
+            <div class="sc-input" is="ui-component">
+              <a href="https://chromewebstore.google.com/detail/scroll-capture/egmhoeaacclmanaimofoooiamhpkimkk/reviews"
+                target="_blank" is="sc-rating">
+                <template>
+                  <sc-star class="{scope.data.value}"></sc-star>
+                </template>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="sc-window sc-window-sections" is="ui-component">
-    <div class="sc-window-content" is="ui-component">
-      <div class="sc-fields" is="ui-component">
-        <div class="sc-field" title="Tutorial">
-          <span class="sc-space">
-            <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
-              <span class="sc-icon fa-brands fa-youtube"></span>
-              <span>Tutorial</span>
-            </a>
-          </span>
-          <span>
-            <!-- <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
+    <div class="sc-window sc-window-sections" is="ui-component">
+      <div class="sc-window-content" is="ui-component">
+        <div class="sc-fields" is="ui-component">
+          <div class="sc-field" title="Tutorial">
+            <span class="sc-space">
+              <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
+                <span class="sc-icon fa-brands fa-youtube"></span>
+                <span>Tutorial</span>
+              </a>
+            </span>
+            <span>
+              <!-- <a class="support" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
               <span class="sc-icon fa-brands fa-youtube"></span>
               <span>youtube.com</span>
             </a> -->
-            <a class="sc-tutorial" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
-              <div class="sc-tutorial-icon">
-                <div class="sc-white-block"></div>
-                <span class="fa-brands fa-youtube"></span>
-              </div>
-            </a>
-          </span>
+              <a class="sc-tutorial" href="https://youtu.be/ydT4-mwsfyI" target="_blank">
+                <div class="sc-tutorial-icon">
+                  <div class="sc-white-block"></div>
+                  <span class="fa-brands fa-youtube"></span>
+                </div>
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="sc-window">
-    <!-- <div class="sc-title">
+    <div class="sc-window">
+      <!-- <div class="sc-title">
       <span class="sc-tabs">
         <span class="sc-tab sc-title-tab">
           <span class="sc-icon fa-solid fa-window-maximize"></span>
@@ -119,10 +120,10 @@
       </span>
       <span class="sc-tabs"></span>
     </div> -->
-    <div class="sc-window-content" is="ui-component">
-      <div class="sc-fields" is="ui-component">
-        <div class="sc-field">
-          <!-- <div class="sc-color-themes" is="ui-list" set:provider="scope.settings.colorThemes">
+      <div class="sc-window-content" is="ui-component">
+        <div class="sc-fields" is="ui-component">
+          <div class="sc-field">
+            <!-- <div class="sc-color-themes" is="ui-list" set:provider="scope.settings.colorThemes">
             <template>
               <label class="sc-radio">
                 <input type="radio" name="color-theme" value="{scope.data}" is="ui-input" set:model="scope.parent.settings.colorThemes.selectedItem" />
@@ -131,15 +132,16 @@
               </label>
             </template>
           </div> -->
-          <div class="sc-space">
-            <span class="sc-icon fa-solid fa-adjust"></span>
-            <span class="sc-label">Color theme</span>
-          </div>
-          <div class="sc-input sc-select">
-            <span class="sc-icon fa-solid" data-theme="{scope.settings.colorThemes.selectedItem.value}"
-              is="ui-component"></span>
-            <select is="ui-select" set:provider="scope.settings.colorThemes"
-              bind:value="scope.settings.colorThemes.selectedItem.value"></select>
+            <div class="sc-space">
+              <span class="sc-icon fa-solid fa-adjust"></span>
+              <span class="sc-label">Color theme</span>
+            </div>
+            <div class="sc-input sc-select">
+              <span class="sc-icon fa-solid" data-theme="{scope.settings.colorThemes.selectedItem.value}"
+                is="ui-component"></span>
+              <select is="ui-select" set:provider="scope.settings.colorThemes"
+                bind:value="scope.settings.colorThemes.selectedItem.value"></select>
+            </div>
           </div>
         </div>
       </div>

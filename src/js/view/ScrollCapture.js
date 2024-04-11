@@ -10,6 +10,7 @@ import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
 import CaptureTest from './CaptureTest';
 import { ResizeArea } from './ResizeArea';
+import { round1 } from '../../lib/tsunami/utils/number';
 // import evaluate from 'simple-evaluate';
 // import { parseExpressionAt } from 'acorn';
 // import { evaluate } from '../../lib/tsunami/utils/estree-eval';
@@ -69,14 +70,14 @@ export default class ScrollCapture extends UIComponent {
     if (event.target.classList.contains('sc-drag-area')) {
       event.preventDefault();
       this.startPosition = this.position.serialize();
-      this.startPoint = this.getTouchPoint(event);
+      this.startPoint = this.getTouchPoint(event).math(Math.round);
       document.body.addEventListener(events.mousemove, this.dragMove);
       document.body.addEventListener(events.mouseup, this.dragEnd);
     }
   }
 
   dragMove(event) {
-    let point = this.getTouchPoint(event);
+    let point = this.getTouchPoint(event).math(Math.round);
     let diff = this.startPoint.subtract(point);
     this.position.x.value = this.startPosition.x + diff.x;
     this.position.y.value = this.startPosition.y - diff.y;

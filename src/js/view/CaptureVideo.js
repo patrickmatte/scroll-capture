@@ -12,12 +12,12 @@ export default class CaptureVideo extends Section {
 
     // this.windowContent = this.element.querySelector(".sc-window-content[is='sc-window-content-main']").component;
 
-    this.settings = this.element.querySelector('sc-video-settings').component;
+    // this.settings = this.element.querySelector('sc-video-settings').component;
     this.scenario = this.element.querySelector('sc-scenario').component;
     this.video = this.element.querySelector('sc-video').component;
     this.info = this.element.querySelector('sc-info').component;
 
-    this.branches['settings'] = this.settings;
+    // this.branches['settings'] = this.settings;
     this.branches['scenario'] = this.scenario;
     this.branches['video'] = this.video;
     this.branches['info'] = this.info;
@@ -37,4 +37,4 @@ export default class CaptureVideo extends Section {
 tsunami.define('sc-actions-view', ActionsView);
 tsunami.define('sc-scenario', SectionScenario);
 tsunami.define('sc-video', SectionVideo);
-tsunami.define('sc-video-settings', CaptureVideoSettings);
+// tsunami.define('sc-video-settings', CaptureVideoSettings);

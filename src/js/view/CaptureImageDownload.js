@@ -40,8 +40,8 @@ export class CaptureImageDownload extends Section {
             sendTrackEventMessage('download', { media: 'image' });
           });
         }
-        let fileNameButton = this.querySelector('.sc-video-filename a.sc-download-button span.sc-label');
-        fileNameButton.textContent = videoFileName;
+        // let fileNameButton = this.querySelector('.sc-video-filename a.sc-download-button span.sc-label');
+        // fileNameButton.textContent = videoFileName;
       });
       img.src = dataURL;
     };

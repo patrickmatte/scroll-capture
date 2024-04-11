@@ -1,5 +1,6 @@
 import UIComponent from '../../lib/tsunami/components/UIComponent';
 import { events } from '../../lib/tsunami/events';
+import { round1 } from '../../lib/tsunami/utils/number';
 import { app } from '../main';
 
 export class ResizeArea extends UIComponent {
@@ -20,16 +21,16 @@ export class ResizeArea extends UIComponent {
     this.resizeV = event.target.getAttribute('data-v');
     this.startPosition = this.position.serialize();
     this.startSize = this.size.serialize();
-    this.startPoint = this.getTouchPoint(event);
+    this.startPoint = this.getTouchPoint(event).math(Math.round);
     document.body.addEventListener(events.mousemove, this.dragMove);
     document.body.addEventListener(events.mouseup, this.dragEnd);
   }
 
   dragMove(event) {
-    let point = this.getTouchPoint(event);
+    let point = this.getTouchPoint(event).math(Math.round);
     let diff = point.subtract(this.startPoint);
     const minWidth = 240;
-    const minHeight = 100;
+    const minHeight = 240;
 
     switch (this.resizeH) {
       case 'left':
