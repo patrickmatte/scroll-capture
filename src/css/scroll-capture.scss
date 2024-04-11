@@ -237,7 +237,7 @@ html[data-sc-scrollbars='false'] {
     }
 
     .sc-video-filename {
-      display: none;
+      visibility: hidden !important;
     }
 
     .sc-logger-container {
@@ -278,7 +278,7 @@ html[data-sc-scrollbars='false'] {
         display: block;
       }
       .sc-video-filename {
-        display: block;
+        visibility: visible !important;
       }
       .sc-logger-container {
         display: none;
@@ -302,7 +302,7 @@ html[data-sc-scrollbars='false'] {
     }
 
     .sc-video-filename {
-      display: none !important;
+      visibility: hidden !important;
     }
 
     .img-panel-container {
@@ -314,7 +314,7 @@ html[data-sc-scrollbars='false'] {
         display: block;
       }
       .sc-video-filename {
-        display: inline-flex !important;
+        visibility: visible !important;
       }
       .sc-wait {
         display: none;

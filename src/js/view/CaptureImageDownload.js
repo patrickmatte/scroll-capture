@@ -31,7 +31,7 @@ export class CaptureImageDownload extends Section {
         this.imageLoaded = true;
         imgContainer.appendChild(img);
 
-        let buttons = this.querySelectorAll('a.sc-download-button');
+        let buttons = this.element.querySelectorAll('a.sc-download-button');
         for (let i = 0; i < buttons.length; i++) {
           let button = buttons[i];
           button.href = dataURL;
@@ -77,7 +77,6 @@ export class CaptureImageDownload extends Section {
     const imgContainer = this.querySelector('.img-container');
     const img = this.querySelector('.img-container img');
     if (img) imgContainer.removeChild(img);
-    this.element.setAttribute('data-loaded', false);
     this.imageLoaded = false;
   }
 }

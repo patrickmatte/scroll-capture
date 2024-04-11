@@ -24,7 +24,7 @@ export default class CaptureImage extends Section {
 
     this.branches['settings'] = this.element.querySelector('sc-image-settings').component;
     this.branches['download'] = this.element.querySelector('sc-image-download').component;
-    this.branches['info'] = this.element.querySelector('sc-info').component;
+    // this.branches['info'] = this.element.querySelector('sc-info').component;
   }
 }
 

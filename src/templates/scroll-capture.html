@@ -61,6 +61,13 @@
           </span> -->
         </span>
         <span class="sc-tabs">
+          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/info'" set:location="scope.location">
+            <span class="sc-drag-area"></span>
+            <button is="router-button" data-path="scroll-capture/info" title="Info">
+              <!-- <span class="sc-label">Info</span> -->
+              <span class="sc-icon fa-solid fa-circle-question"></span>
+            </button>
+          </span>
           <span class="sc-tab">
             <span class="sc-drag-area"></span>
             <button is="router-button" data-path="closed" title="Close">
@@ -72,7 +79,7 @@
       <div class="sc-window-content" is="ui-component">
         <sc-test class="sc-section sc-fields" is="ui-component">
           <div is="ui-component">
-            <div class="sc-window sc-window-sections" is="ui-component">
+            <div class="sc-window" is="ui-component">
               <div class="sc-window-content" is="ui-component">
                 <div>
                   <div is="ui-list" set:provider="scope.test.list">
@@ -99,7 +106,7 @@
         </sc-test>
         <sc-capture-video class="sc-section sc-fields">
           <div is="ui-component" class="sc-container">
-            <div class="sc-window sc-window-sections" is="ui-component">
+            <div class="sc-window" is="ui-component">
               <div class="sc-title">
                 <span class="sc-tabs">
                   <span class="sc-drag-area"></span>
@@ -129,14 +136,14 @@
                   </span>
                 </span>
                 <span class="sc-tabs" is="ui-component">
-                  <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/info'"
+                  <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/info'"
                     set:location="scope.location">
                     <span class="sc-drag-area"></span>
                     <button is="router-button" data-path="scroll-capture/video/info" title="Info">
                       <span class="sc-label">Info</span>
                       <span class="sc-icon fa-solid fa-circle-question"></span>
                     </button>
-                  </span>
+                  </span> -->
                 </span>
               </div>
               <div class="sc-window-content" is="ui-component">
@@ -714,13 +721,14 @@
                     </div>
                   </div>
                 </sc-video>
-                <sc-info class="sc-section sc-fields"></sc-info>
+                <!-- <sc-info class="sc-section sc-fields"></sc-info> -->
               </div>
             </div>
           </div>
         </sc-capture-video>
 
         <sc-capture-image class="sc-section sc-fields"></sc-capture-image>
+        <sc-info class="sc-section sc-fields"></sc-info>
 
         <!-- <div class="sc-footer" is="ui-component">
           <sc-credits>
