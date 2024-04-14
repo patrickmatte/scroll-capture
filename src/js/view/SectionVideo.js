@@ -57,7 +57,6 @@ export default class SectionVideo extends Section {
         player.src = videoURL;
         player.setAttribute('download', videoFileName);
         let buttons = this.element.querySelectorAll('a.sc-download-button');
-        console.log('buttons', buttons);
         for (let i = 0; i < buttons.length; i++) {
           let button = buttons[i];
           button.href = videoURL;

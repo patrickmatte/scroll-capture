@@ -34,24 +34,14 @@
     <span data-class="corner" data-h="right" data-v="bottom"></span>
   </sc-resize-area>
   <div class="sc-container">
-    <div class="sc-window sc-window-main" is="ui-component">
+    <div class="sc-window" is="ui-component">
       <div class="sc-title">
         <span class="sc-tabs">
           <span class="sc-drag-area"></span>
-          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video'" set:location="scope.location">
+          <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/test'" set:location="scope.location">
             <span class="sc-drag-area"></span>
-            <button is="router-button" data-path="scroll-capture/video" title="Video Capture">
-              <span class="sc-icon fa-solid fa-film"></span>
-              <span class="sc-label">Video Capture</span>
-            </button>
-          </span>
-          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image'" set:location="scope.location">
-            <span class="sc-drag-area"></span>
-            <button is="router-button" data-path="scroll-capture/image" title="Image Capture">
-              <span class="sc-icon fa-solid fa-image"></span>
-              <span class="sc-label">Image Capture</span>
-            </button>
-          </span>
+            <span class="sc-label">Scroll Capture</span>
+          </span> -->
           <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/test'" set:location="scope.location">
             <span class="sc-drag-area"></span>
             <button is="router-button" data-path="scroll-capture/test" title="test Capture">
@@ -61,6 +51,21 @@
           </span> -->
         </span>
         <span class="sc-tabs">
+          <span class="sc-drag-area"></span>
+          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video'" set:location="scope.location">
+            <span class="sc-drag-area"></span>
+            <button is="router-button" data-path="scroll-capture/video" title="Video Capture">
+              <span class="sc-icon fa-solid fa-film"></span>
+              <!-- <span class="sc-label">Video Capture</span> -->
+            </button>
+          </span>
+          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image'" set:location="scope.location">
+            <span class="sc-drag-area"></span>
+            <button is="router-button" data-path="scroll-capture/image" title="Image Capture">
+              <span class="sc-icon fa-solid fa-image"></span>
+              <!-- <span class="sc-label">Image Capture</span> -->
+            </button>
+          </span>
           <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/info'" set:location="scope.location">
             <span class="sc-drag-area"></span>
             <button is="router-button" data-path="scroll-capture/info" title="Info">
@@ -110,14 +115,14 @@
               <div class="sc-title">
                 <span class="sc-tabs">
                   <span class="sc-drag-area"></span>
-                  <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/scenario'"
+                  <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video'"
                     set:location="scope.location">
                     <span class="sc-drag-area"></span>
                     <button is="router-button" data-path="scroll-capture/video/scenario" title="Settings">
-                      <span class="sc-icon fa-solid fa-sliders"></span>
+                      <!-- <span class="sc-icon fa-solid fa-sliders"></span> -->
                       <!-- <span class="sc-icon fa-solid fa-clapperboard"></span> -->
                       <!-- <span class="sc-label">Timeline</span> -->
-                      <span class="sc-label">Settings</span>
+                      <span class="sc-label">Video Capture</span>
                     </button>
                   </span>
                   <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/settings'" set:location="scope.location">
@@ -126,16 +131,23 @@
                       <span class="sc-label">Settings</span>
                     </button>
                   </span> -->
-                  <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/video'"
+                </span>
+                <span class="sc-tabs" is="ui-component">
+                  <span class="sc-tab">
+                    <span class="sc-drag-area"></span>
+                    <button is="router-button" data-path="record" title="Capture">
+                      <span class="sc-icon fa-solid fa-video"></span>
+                      <!-- <span class="sc-label">Capture</span> -->
+                    </button>
+                  </span>
+                  <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/video'"
                     set:location="scope.location">
                     <span class="sc-drag-area"></span>
                     <button is="router-button" data-path="record" title="Capture">
                       <span class="sc-icon fa-solid fa-video"></span>
                       <span class="sc-label">Capture</span>
                     </button>
-                  </span>
-                </span>
-                <span class="sc-tabs" is="ui-component">
+                  </span> -->
                   <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/info'"
                     set:location="scope.location">
                     <span class="sc-drag-area"></span>
@@ -661,13 +673,11 @@
                         </button>
                       </template>
                     </div>
+                    <div style="opacity: 0.25;">·······</div>
                     <div class="sc-buttons">
-                      <!-- <span class="sc-tab" is="sc-section-tab" set:path="'play'" set:location="scope.location"> -->
                       <button is="router-button" data-path="play" title="Play All">
                         <span class="sc-icon fa-solid fa-circle-play"></span>
-                        <!-- <span class="sc-label">Play</span> -->
                       </button>
-                      <!-- </span> -->
                       <button is="ui-button" on:click="scope.clearActions()" title="Delete All">
                         <span class="sc-icon fa-solid fa-trash-alt"></span>
                       </button>
@@ -676,12 +686,12 @@
                 </sc-scenario>
                 <sc-video class="sc-section sc-fields no-flex-grow">
                   <div class="sc-container">
-                    <div class="sc-window" is="ui-component">
+                    <div class="sc-window sc-download-video" is="ui-component">
                       <div class="sc-title">
                         <div class="sc-tabs">
                           <span class="sc-tab sc-title-tab">
-                            <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
-                              is="ui-component"></span>
+                            <!-- <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
+                              is="ui-component"></span> -->
                             <span class="sc-label" is="ui-text">${scope.settings.format.value.toUpperCase()}
                               ${scope.settings.mediaTrackName.value}</span>
                           </span>
@@ -690,7 +700,7 @@
                           <span class="sc-tab sc-video-filename">
                             <a class="sc-download-button" title="Download {scope.settings.format.value.toUpperCase()}"
                               is="ui-component">
-                              <span class="sc-label">Download</span>
+                              <!-- <span class="sc-label">Download</span> -->
                               <span class="sc-icon fa-solid fa-download"></span>
                             </a>
                           </span>

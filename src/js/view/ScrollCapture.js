@@ -49,7 +49,6 @@ export default class ScrollCapture extends UIComponent {
     this.dragMove = this.dragMove.bind(this);
     this.dragEnd = this.dragEnd.bind(this);
 
-    // let title = this.element.querySelector('.sc-window.sc-window-main > .sc-title');
     this.element.addEventListener(events.mousedown, this.dragStart);
 
     this.test = this.element.querySelector('sc-test').component;
