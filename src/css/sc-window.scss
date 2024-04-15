@@ -132,6 +132,10 @@
           .sc-tab {
             background-color: $windowColorDark;
 
+            &.sc-no-bg {
+              background-color: transparent !important;
+            }
+
             &.sc-title-tab {
               background-color: $windowColorFrontDark;
               transition: background-color 0.3s ease 0s;

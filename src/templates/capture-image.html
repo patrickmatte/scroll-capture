@@ -7,7 +7,7 @@
           <span class="sc-drag-area"></span>
           <button is="router-button" data-path="scroll-capture/image/settings" title="Settings">
             <!-- <span class="sc-icon fa-solid fa-sliders"></span> -->
-            <span class="sc-label">Image Capture</span>
+            <span class="sc-label">Image</span>
           </button>
         </span>
       </span>
@@ -184,39 +184,6 @@
           </div>
         </div>
       </sc-image-settings>
-      <sc-image-download class="sc-section sc-fields no-flex-grow" data-imageloaded="{imageLoaded}">
-        <div class="sc-container">
-          <div class="sc-window" is="ui-component">
-            <div class="sc-title">
-              <div class="sc-tabs">
-                <span class="sc-tab sc-title-tab">
-                  <span class="sc-icon fa-solid fa-file-image"></span>
-                  <span class="sc-label" is="ui-text">${scope.imgCapSettings.format.toUpperCase()} Image</span>
-                </span>
-              </div>
-              <div class="sc-tabs">
-                <div class="sc-tab sc-video-filename">
-                  <a class="sc-download-button" title="Download {scope.imgCapSettings.format.toUpperCase()}"
-                    is="ui-component">
-                    <!-- <span class="sc-label" is="ui-text">Download</span> -->
-                    <span class="sc-icon fa-solid fa-download"></span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="sc-window-content" is="ui-component">
-              <div class="sc-fields">
-                <div class="sc-wait">The image should be ready in a few seconds...</div>
-                <div class="sc-scrollpane">
-                  <div class="img-panel-container">
-                    <a class="sc-download-button img-container" title="Download Image"></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </sc-image-download>
       <!-- <sc-info class="sc-section sc-fields"></sc-info> -->
     </div>
   </div>

@@ -38,10 +38,10 @@
       <div class="sc-title">
         <span class="sc-tabs">
           <span class="sc-drag-area"></span>
-          <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/test'" set:location="scope.location">
+          <span class="sc-tab sc-no-bg">
             <span class="sc-drag-area"></span>
             <span class="sc-label">Scroll Capture</span>
-          </span> -->
+          </span>
           <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/test'" set:location="scope.location">
             <span class="sc-drag-area"></span>
             <button is="router-button" data-path="scroll-capture/test" title="test Capture">
@@ -52,16 +52,18 @@
         </span>
         <span class="sc-tabs">
           <span class="sc-drag-area"></span>
-          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video'" set:location="scope.location">
+          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/scenario'"
+            set:location="scope.location">
             <span class="sc-drag-area"></span>
-            <button is="router-button" data-path="scroll-capture/video" title="Video Capture">
+            <button is="router-button" data-path="scroll-capture/video/scenario" title="Video Capture">
               <span class="sc-icon fa-solid fa-film"></span>
               <!-- <span class="sc-label">Video Capture</span> -->
             </button>
           </span>
-          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image'" set:location="scope.location">
+          <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/image/settings'"
+            set:location="scope.location">
             <span class="sc-drag-area"></span>
-            <button is="router-button" data-path="scroll-capture/image" title="Image Capture">
+            <button is="router-button" data-path="scroll-capture/image/settings" title="Image Capture">
               <span class="sc-icon fa-solid fa-image"></span>
               <!-- <span class="sc-label">Image Capture</span> -->
             </button>
@@ -122,7 +124,7 @@
                       <!-- <span class="sc-icon fa-solid fa-sliders"></span> -->
                       <!-- <span class="sc-icon fa-solid fa-clapperboard"></span> -->
                       <!-- <span class="sc-label">Timeline</span> -->
-                      <span class="sc-label">Video Capture</span>
+                      <span class="sc-label">Video</span>
                     </button>
                   </span>
                   <!-- <span class="sc-tab" is="sc-section-tab" set:path="'scroll-capture/video/settings'" set:location="scope.location">
@@ -673,7 +675,7 @@
                         </button>
                       </template>
                     </div>
-                    <div style="opacity: 0.25;">·······</div>
+                    <div style="opacity: 0.25;">::</div>
                     <div class="sc-buttons">
                       <button is="router-button" data-path="play" title="Play All">
                         <span class="sc-icon fa-solid fa-circle-play"></span>
@@ -684,59 +686,93 @@
                     </div>
                   </sc-action-buttons>
                 </sc-scenario>
-                <sc-video class="sc-section sc-fields no-flex-grow">
-                  <div class="sc-container">
-                    <div class="sc-window sc-download-video" is="ui-component">
-                      <div class="sc-title">
-                        <div class="sc-tabs">
-                          <span class="sc-tab sc-title-tab">
-                            <!-- <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
-                              is="ui-component"></span> -->
-                            <span class="sc-label" is="ui-text">${scope.settings.format.value.toUpperCase()}
-                              ${scope.settings.mediaTrackName.value}</span>
-                          </span>
-                        </div>
-                        <div class="sc-tabs">
-                          <span class="sc-tab sc-video-filename">
-                            <a class="sc-download-button" title="Download {scope.settings.format.value.toUpperCase()}"
-                              is="ui-component">
-                              <!-- <span class="sc-label">Download</span> -->
-                              <span class="sc-icon fa-solid fa-download"></span>
-                            </a>
-                          </span>
-                        </div>
-                      </div>
-                      <div class="sc-window-content" is="ui-component">
-                        <div class="sc-fields">
-                          <div class="sc-scrollpane">
-                            <div>
-                              <div class="sc-logger-container">
-                                <ol class="sc-logger-list" is="ui-list" set:provider="scope.ffmpegLogs">
-                                  <template>
-                                    <li>
-                                      <span is="ui-text" class="num">${scope.index + 1}</span>
-                                      <span is="ui-text" set:model="scope.data"></span>
-                                    </li>
-                                  </template>
-                                </ol>
-                                <!-- <sc-logger></sc-logger> -->
-                              </div>
-                              <div class="sc-video-player-container">
-                                <video class="sc-video-player" controls muted></video>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </sc-video>
+
                 <!-- <sc-info class="sc-section sc-fields"></sc-info> -->
               </div>
             </div>
           </div>
         </sc-capture-video>
 
+        <sc-video class="sc-section sc-fields no-flex-grow">
+          <div class="sc-container">
+            <div class="sc-window sc-download-video" is="ui-component">
+              <div class="sc-title">
+                <div class="sc-tabs">
+                  <span class="sc-tab sc-title-tab">
+                    <!-- <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}"
+                      is="ui-component"></span> -->
+                    <span class="sc-label" is="ui-text">${scope.settings.format.value.toUpperCase()}
+                      ${scope.settings.mediaTrackName.value}</span>
+                  </span>
+                </div>
+                <div class="sc-tabs">
+                  <span class="sc-tab sc-video-filename">
+                    <a class="sc-download-button" title="Download {scope.settings.format.value.toUpperCase()}"
+                      is="ui-component">
+                      <!-- <span class="sc-label">Download</span> -->
+                      <span class="sc-icon fa-solid fa-download"></span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+              <div class="sc-window-content" is="ui-component">
+                <div class="sc-fields">
+                  <div class="sc-scrollpane">
+                    <div>
+                      <div class="sc-logger-container">
+                        <ol class="sc-logger-list" is="ui-list" set:provider="scope.ffmpegLogs">
+                          <template>
+                            <li>
+                              <span is="ui-text" class="num">${scope.index + 1}</span>
+                              <span is="ui-text" set:model="scope.data"></span>
+                            </li>
+                          </template>
+                        </ol>
+                        <!-- <sc-logger></sc-logger> -->
+                      </div>
+                      <div class="sc-video-player-container">
+                        <video class="sc-video-player" controls muted></video>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-video>
+        <sc-image-download class="sc-section sc-fields no-flex-grow" data-imageloaded="{imageLoaded}">
+          <div class="sc-container">
+            <div class="sc-window" is="ui-component">
+              <div class="sc-title">
+                <div class="sc-tabs">
+                  <span class="sc-tab sc-title-tab">
+                    <span class="sc-icon fa-solid fa-file-image"></span>
+                    <span class="sc-label" is="ui-text">${scope.imgCapSettings.format.toUpperCase()} Image</span>
+                  </span>
+                </div>
+                <div class="sc-tabs">
+                  <div class="sc-tab sc-video-filename">
+                    <a class="sc-download-button" title="Download {scope.imgCapSettings.format.toUpperCase()}"
+                      is="ui-component">
+                      <!-- <span class="sc-label" is="ui-text">Download</span> -->
+                      <span class="sc-icon fa-solid fa-download"></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="sc-window-content" is="ui-component">
+                <div class="sc-fields">
+                  <div class="sc-wait">The image should be ready in a few seconds...</div>
+                  <div class="sc-scrollpane">
+                    <div class="img-panel-container">
+                      <a class="sc-download-button img-container" title="Download Image"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-image-download>
         <sc-capture-image class="sc-section sc-fields"></sc-capture-image>
         <sc-info class="sc-section sc-fields"></sc-info>
 

@@ -33,7 +33,8 @@ export default class Point {
     p.y = y;
   }
 
-  static getTouchPoint(event) {
+  static getTouchPoint(event, debug = false) {
+    if (debug) console.log('getTouchPoint', event);
     let touch = event;
     if ('ontouchend' in window && !(event instanceof PointerEvent)) {
       touch = event.touches[0] || event.changedTouches[0];

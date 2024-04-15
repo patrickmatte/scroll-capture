@@ -1,6 +1,5 @@
 import * as tsunami from '../../lib/tsunami/tsunami';
 import CaptureVideoSettings from './CaptureVideoSettings';
-import SectionVideo from './SectionVideo';
 import SectionScenario from './SectionScenario';
 import ActionsView from './ActionsView';
 import { app } from '../main';
@@ -14,12 +13,12 @@ export default class CaptureVideo extends Section {
 
     // this.settings = this.element.querySelector('sc-video-settings').component;
     this.scenario = this.element.querySelector('sc-scenario').component;
-    this.video = this.element.querySelector('sc-video').component;
+    // this.video = this.element.querySelector('sc-video').component;
     // this.info = this.element.querySelector('sc-info').component;
 
     // this.branches['settings'] = this.settings;
     this.branches['scenario'] = this.scenario;
-    this.branches['video'] = this.video;
+    // this.branches['video'] = this.video;
     // this.branches['info'] = this.info;
 
     this.defaultChild = 'scenario';
@@ -36,5 +35,4 @@ export default class CaptureVideo extends Section {
 
 tsunami.define('sc-actions-view', ActionsView);
 tsunami.define('sc-scenario', SectionScenario);
-tsunami.define('sc-video', SectionVideo);
 // tsunami.define('sc-video-settings', CaptureVideoSettings);

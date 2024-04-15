@@ -9,7 +9,7 @@ export default class Tween extends EventDispatcher {
       throw new Error('Tween startTime must be greater than or equal to 0');
     }
     if (duration <= 0) {
-      throw new Error('Tween duration must be greater than 0');
+      // throw new Error('Tween duration must be greater than 0');
     }
     this.tick = this.tick.bind(this);
     this._startTime = startTime;

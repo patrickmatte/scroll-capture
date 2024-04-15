@@ -1,5 +1,5 @@
 import UIComponent from '../../lib/tsunami/components/UIComponent';
-import * as tsunami from '../../lib/tsunami/tsunami';
+import { define } from '../../lib/tsunami/tsunami';
 import { events } from '../../lib/tsunami/events';
 import { app } from '../main';
 import template from '../../templates/scroll-capture.html';
@@ -10,7 +10,9 @@ import SectionTab from './SectionTab';
 import { hackHoverStates } from './hackHoverStates';
 import CaptureTest from './CaptureTest';
 import { ResizeArea } from './ResizeArea';
-import { round1 } from '../../lib/tsunami/utils/number';
+import SectionVideo from './SectionVideo';
+import { CaptureImageDownload } from './CaptureImageDownload';
+
 // import evaluate from 'simple-evaluate';
 // import { parseExpressionAt } from 'acorn';
 // import { evaluate } from '../../lib/tsunami/utils/estree-eval';
@@ -60,6 +62,8 @@ export default class ScrollCapture extends UIComponent {
     this.branches['video'] = this.video;
     this.branches['image'] = this.image;
     this.branches['info'] = this.info;
+    this.branches['video-download'] = this.element.querySelector('sc-video').component;
+    this.branches['image-download'] = this.element.querySelector('sc-image-download').component;
 
     this.defaultChild = 'video';
   }
@@ -91,9 +95,11 @@ export default class ScrollCapture extends UIComponent {
 
 ScrollCapture.template = template;
 
-tsunami.define('sc-test', CaptureTest);
-tsunami.define('sc-capture-video', CaptureVideo);
-tsunami.define('sc-capture-image', CaptureImage);
-tsunami.define('sc-info', Info);
-tsunami.define('sc-section-tab', SectionTab);
-tsunami.define('sc-resize-area', ResizeArea);
+define('sc-test', CaptureTest);
+define('sc-capture-video', CaptureVideo);
+define('sc-capture-image', CaptureImage);
+define('sc-info', Info);
+define('sc-section-tab', SectionTab);
+define('sc-resize-area', ResizeArea);
+define('sc-video', SectionVideo);
+define('sc-image-download', CaptureImageDownload);

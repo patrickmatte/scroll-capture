@@ -33,6 +33,7 @@ export default class ActionMouseEvent extends Action {
 
     this.captureMouseEventHandler = this.captureMouseEventHandler.bind(this);
     this.mouseEventHandler = this.mouseEventHandler.bind(this);
+    this.keydownHandler = this.keydownHandler.bind(this);
     this.icon.value = 'fa-solid fa-hand-pointer';
   }
 
@@ -108,7 +109,7 @@ export default class ActionMouseEvent extends Action {
       if (activeElement) activeElement.blur();
       document.body.addEventListener(events.mousemove, this.mouseEventHandler);
       document.body.addEventListener('click', this.captureMouseEventHandler);
-      document.body.addEventListener('keydown', this.captureMouseEventHandler);
+      document.body.addEventListener('keydown', this.keydownHandler);
     }, 33);
   }
 
@@ -127,6 +128,11 @@ export default class ActionMouseEvent extends Action {
     this.y.value = point.y;
   }
 
+  keydownHandler(event) {
+    console.log('keydownHandler', event);
+    this.captureMouseEventHandler(event);
+  }
+
   captureMouseEventHandler(event) {
     if (event.preventDefaut) {
       event.preventDefaut();
@@ -137,12 +143,14 @@ export default class ActionMouseEvent extends Action {
     if (event.stopPropagation) {
       event.stopPropagation();
     }
-    let point = Point.getTouchPoint(event);
-    this.x.value = point.x;
-    this.y.value = point.y;
+    if ((!event) instanceof KeyboardEvent) {
+      let point = Point.getTouchPoint(event);
+      this.x.value = point.x;
+      this.y.value = point.y;
+    }
     document.body.removeEventListener(events.mousemove, this.mouseEventHandler);
     document.body.removeEventListener('click', this.captureMouseEventHandler);
-    document.body.removeEventListener('keydown', this.captureMouseEventHandler);
+    document.body.removeEventListener('keydown', this.keydownHandler);
     this.captureComplete();
   }
 

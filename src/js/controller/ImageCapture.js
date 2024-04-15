@@ -106,7 +106,7 @@ export class ImageCapture extends Branch {
           } else {
             this.showElements();
             this.isCapturing = false;
-            this.router.location = 'scroll-capture/image/download';
+            this.router.location = 'scroll-capture/image-download';
           }
         }
       });

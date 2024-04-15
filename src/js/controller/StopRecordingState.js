@@ -8,6 +8,6 @@ export default class StopRecordingState extends Branch {
 
   show() {
     app.model.sendMessage({ type: 'scrollCaptureStopRecording' });
-    this.router.location = 'scroll-capture/video/video';
+    this.router.location = 'scroll-capture/video-download';
   }
 }
