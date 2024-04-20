@@ -22,7 +22,9 @@ export default class ActionMouseEvent extends Action {
       'contextmenu',
       'touchstart',
       'touchmove',
-      'touchend'
+      'touchend',
+      'pointerdown',
+      'pointerup'
     );
     this.eventTypes.selectedItem.value = this.eventTypes.value[0];
 

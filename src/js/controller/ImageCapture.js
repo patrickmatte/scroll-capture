@@ -82,9 +82,12 @@ export class ImageCapture extends Branch {
 
     const captureStep = () => {
       const scrollPromise = scroll();
-      const hidePromise = scrollPromise.then(() => {
-        return this.hideElements();
-      });
+      let hidePromise = Promise.resolve();
+      if (captureIndex != 0) {
+        hidePromise = scrollPromise.then(() => {
+          return this.hideElements();
+        });
+      }
       const capturePromise = hidePromise.then(() => {
         return capture();
       });

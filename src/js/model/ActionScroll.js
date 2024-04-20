@@ -40,6 +40,7 @@ document.documentElement.scrollTop = y;`;
     this.units = new ArrayData('%', 'px');
     this.units.selectedItem.value = units;
     this.isCaptureable.value = true;
+    this.isDuplicateable.value = true;
     this.isTestable.value = true;
     this.icon.value = 'fa-solid fa-scroll';
     this.targetStyle = '';
