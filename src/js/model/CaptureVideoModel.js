@@ -36,7 +36,7 @@ export default class CaptureVideoModel {
       sizeChangeHandler();
     });
     const sizeChangeHandler = () => {
-      this.fontSize.value = round1((this.size.x.value / 414) * 16);
+      this.fontSize.value = round1((this.size.x.value / 414) * 15);
     };
     sizeChangeHandler();
 
@@ -162,7 +162,7 @@ export default class CaptureVideoModel {
       this.switchColorTheme();
     });
 
-    this.pixelRatio = new NumberData(this.devicePixelRatio);
+    this.pixelRatio = new NumberData(1);
 
     this.windowResizeHandler();
   }
