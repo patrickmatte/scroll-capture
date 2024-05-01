@@ -9,10 +9,10 @@ export default class Info extends Section {
     super(element);
   }
 
-  // showDelayComplete() {
-  //   app.model.setDefaultLocation(this.path);
-  //   return super.showDelayComplete();
-  // }
+  showDelayComplete() {
+    app.model.setDefaultLocation(this.path);
+    return super.showDelayComplete();
+  }
 
   get scope() {
     return this._scope;
