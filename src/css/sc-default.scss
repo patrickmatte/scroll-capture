@@ -163,7 +163,7 @@
       opacity: 0.5;
     }
 
-    &:hover {
+    &:not([disabled]):hover {
       background: transparent;
       .sc-icon {
         opacity: 1;
@@ -307,15 +307,17 @@
     visibility: hidden !important;
   }
 
+  *[disabled],
   *[data-enabled='false'],
   *[data-disabled='true'] {
     opacity: 0.33;
     pointer-events: none;
-    user-select: false;
+    user-select: none;
+    cursor: default;
 
     * {
       pointer-events: none;
-      user-select: false;
+      user-select: none;
     }
   }
 

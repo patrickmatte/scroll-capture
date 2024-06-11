@@ -460,6 +460,14 @@ export default class UIComponent extends Branch {
     return this.scrollTween.start();
   }
 
+  get disabled() {
+    return this.element.disabled;
+  }
+
+  set disabled(value) {
+    this.element.disabled = value;
+  }
+
   log() {
     const array = [...arguments];
     if (this.debug && this.element) array.unshift(this.element.getAttribute('data-component-id'));

@@ -115,7 +115,7 @@
 
   .sc-field-group {
     display: flex;
-    margin-bottom: $fieldMargin;
+    margin-bottom: $fieldMargin !important;
 
     &:last-child {
       // margin-bottom: 0;

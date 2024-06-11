@@ -130,15 +130,15 @@
           flex-grow: 1;
 
           .sc-tab {
-            background-color: $windowColorDark;
+            // background-color: $windowColorDark;
 
             &.sc-no-bg {
               background-color: transparent !important;
             }
 
             &.sc-title-tab {
-              background-color: $windowColorFrontDark;
-              transition: background-color 0.3s ease 0s;
+              // background-color: $windowColorFrontDark;
+              // transition: background-color 0.3s ease 0s;
             }
           }
         }
@@ -147,7 +147,7 @@
       .sc-tab {
         display: inline-flex;
         border-radius: $borderRadius $borderRadius 0 0;
-        padding: 0.75em;
+        padding: 0.75em 0.55em;
         font-weight: bold;
         align-items: center;
 
@@ -206,7 +206,7 @@
     }
 
     .sc-title + .sc-window-content {
-      border-radius: 0 $borderRadius $borderRadius $borderRadius !important;
+      border-radius: $borderRadius !important;
     }
 
     &[data-selected='true'] {

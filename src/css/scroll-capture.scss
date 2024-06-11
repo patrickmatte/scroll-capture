@@ -96,7 +96,7 @@ html[data-sc-scrollbars='false'] {
 
   .sc-fields-list {
     > * {
-      margin-bottom: $fieldMargin;
+      margin-bottom: $fieldMargin !important;
 
       &:last-child {
         margin-bottom: 0 !important;
@@ -106,7 +106,7 @@ html[data-sc-scrollbars='false'] {
 
   .sc-field-column {
     > * {
-      margin-bottom: $fieldMargin;
+      margin-bottom: $fieldMargin !important;
 
       &:last-child {
         margin-bottom: 0 !important;
