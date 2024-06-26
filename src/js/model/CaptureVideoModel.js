@@ -14,13 +14,23 @@ import { ChangeEvent } from '../../lib/tsunami/ChangeEvent';
 export default class CaptureVideoModel {
   constructor() {
     const supportedFormats = getSupportedFormatsAndCodecs();
-    const mp4Format = supportedFormats.video.find((format) => {
+    console.log('supportedFormats', JSON.parse(JSON.stringify(supportedFormats)));
+    let mp4Format = supportedFormats.video.find((format) => {
       return format.ext == 'mp4';
     });
+    console.log('mp4Format', mp4Format);
     if (!mp4Format) {
       supportedFormats.video.unshift({ name: 'mp4', ext: 'mp4', video: ['h264', 'avc1'], audio: ['aac', 'mp3'], ffmpeg: true });
       supportedFormats.audio.unshift({ name: 'mp3', ext: 'mp3', video: [], audio: ['mp3'], ffmpeg: true });
       supportedFormats.audio.unshift({ name: 'm4a', ext: 'm4a', video: [], audio: ['aac'], ffmpeg: true });
+    } else {
+      mp4Format.video = ['avc1'];
+      mp4Format.audio = ['aac', 'mp3'];
+      mp4Format.ffmpeg = true;
+      mp4Format = supportedFormats.audio.find((format) => {
+        return format.ext == 'mp4';
+      });
+      if (mp4Format) mp4Format.ffmpeg = true;
     }
     // console.log('supportedFormats', JSON.stringify(supportedFormats));
 

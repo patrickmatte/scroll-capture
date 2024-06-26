@@ -78,7 +78,7 @@ html[data-sc-scrollbars='false'] {
     flex-grow: 1;
     flex-shrink: 1;
     min-height: 0;
-    flex-basis: 100%;
+    flex-basis: content;
     padding: 0.75em 0;
 
     > * {
