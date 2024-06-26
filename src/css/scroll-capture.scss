@@ -77,7 +77,8 @@ html[data-sc-scrollbars='false'] {
     flex-direction: column;
     flex-grow: 1;
     flex-shrink: 1;
-    overflow: clip;
+    min-height: 0;
+    flex-basis: 100%;
     padding: 0.75em 0;
 
     > * {
@@ -325,8 +326,9 @@ html[data-sc-scrollbars='false'] {
   .sc-container {
     display: inline-flex;
     flex-direction: column;
-    flex-grow: 1;
-    flex-shrink: 1;
-    overflow: clip;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;
+    min-height: 0;
   }
 }

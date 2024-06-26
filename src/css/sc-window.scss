@@ -97,7 +97,8 @@
     flex-direction: column;
     flex-grow: 1;
     flex-shrink: 1;
-    overflow: clip;
+    flex-basis: 100%;
+    min-height: 0;
 
     &:first-child {
       margin-top: 0;
@@ -113,6 +114,7 @@
       justify-content: space-between;
       flex-grow: 0;
       flex-shrink: 0;
+      flex-basis: 0;
 
       .ui-list-drag-area {
         position: absolute;
@@ -199,10 +201,11 @@
       flex-grow: 1;
       flex-shrink: 1;
       flex-direction: column;
-      overflow: clip;
       background-color: $windowColorFrontDark;
       transition: background-color 0.3s ease 0s;
       border-radius: $borderRadius;
+      flex-basis: 100%;
+    min-height: 0;
     }
 
     .sc-title + .sc-window-content {
