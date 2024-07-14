@@ -36,46 +36,62 @@ export default class SectionVideo extends Section {
     player.setAttribute('controls', '1');
     // player.setAttribute('controlsList', 'nodownload');
     player.addEventListener('canplay', () => {
-      this.element.setAttribute('data-show-video', true);
+      this.showVideo();
     });
   }
 
-  updateVideo(message) {
-    let player = this.querySelector('.sc-video-player');
+  showVideo() {
+    this.element.setAttribute('data-show-video', true);
+  }
 
-    fetch(message.videoURL).then((req) => {
-      req.arrayBuffer().then((buf) => {
-        // const { headers, statusText, status } = req;
-        // const bufInit = { headers: Object.fromEntries(headers), status, statusText };
-        // const result = [buf, bufInit];
+  updateVideo(message) {
+    this.updateButtons(message.videoURL, message.fileName);
+    const fetchPromise = fetch(message.videoURL);
+    fetchPromise.then((req) => {
+      const bufferPromise = req.arrayBuffer();
+      bufferPromise.then((buf) => {
         const blob = new Blob([buf]);
-        let videoFileName = message.fileName;
-        const file = new File([blob], videoFileName, {
+        const file = new File([blob], message.fileName, {
           type: message.mimeType,
         });
         const videoURL = URL.createObjectURL(file);
-        player.src = videoURL;
-        player.setAttribute('download', videoFileName);
-        let buttons = this.element.querySelectorAll('a.sc-download-button');
-        for (let i = 0; i < buttons.length; i++) {
-          let button = buttons[i];
-          button.href = videoURL;
-          button.download = videoFileName;
-          button.addEventListener('click', () => {
-            sendTrackEventMessage('download', { media: 'video' });
-          });
+        let player = this.querySelector('.sc-video-player');
+        player.setAttribute('download', message.fileName);
+        try {
+          player.src = videoURL;
+        } catch (error) {
+          console.log('player.src', error);
         }
-        // let fileNameButton = document.querySelector('.sc-video-filename a.sc-download-button  span.sc-label');
-        // fileNameButton.textContent = videoFileName;
+        this.showVideo();
+      });
+      bufferPromise.catch((error) => {
+        console.log('bufferPromise.catch', error);
+        this.showVideo();
       });
     });
+    fetchPromise.catch((error) => {
+      console.log('fetchPromise.catch', error);
+      this.showVideo();
+    });
+  }
+
+  updateButtons(videoURL, videoFileName) {
+    console.log('updateButtons', videoURL, videoFileName);
+    let buttons = this.element.querySelectorAll('a.sc-download-button');
+    for (let i = 0; i < buttons.length; i++) {
+      let button = buttons[i];
+      button.href = videoURL;
+      button.download = videoFileName;
+      button.addEventListener('click', () => {
+        sendTrackEventMessage('download', { media: 'video' });
+      });
+    }
   }
 
   showDelayComplete() {
     app.model.ffmpegLogs.value = [];
     let promise = super.showDelayComplete();
     app.model.sendMessage({ type: 'scrollCaptureShowVideo' });
-
     // this.querySelector('.sc-logger-container').style.paddingTop = `${(window.innerHeight / window.innerWidth) * 100}%`;
     return promise;
   }
