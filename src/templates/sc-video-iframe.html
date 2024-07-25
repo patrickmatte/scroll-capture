@@ -1,0 +1,46 @@
+<div is="sc-download-video" style="font-size:{scope.settings.fontSize.value}px">
+    <div class="sc-container">
+        <div class="sc-window">
+            <div class="sc-title">
+                <div class="sc-tabs">
+                    <span class="sc-tab sc-title-tab">
+                        <!-- <span class="sc-icon fa-solid {scope.settings.mediaTrackIcon.value}" is="ui-component"></span> -->
+                        <span class="sc-label" is="ui-text">${scope.settings.format.value.toUpperCase()}
+                            ${scope.settings.mediaTrackName.value}</span>
+                    </span>
+                </div>
+                <div class="sc-tabs">
+                    <span class="sc-tab sc-video-filename">
+                        <a class="sc-download-button" title="Download {scope.settings.format.value.toUpperCase()}"
+                            is="ui-component">
+                            <!-- <span class="sc-label">Download</span> -->
+                            <span class="sc-icon fa-solid fa-download"></span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="sc-window-content" is="ui-component">
+                <div class="sc-fields">
+                    <div class="sc-scrollpane">
+                        <div>
+                            <div class="sc-logger-container">
+                                <ol class="sc-logger-list" is="ui-list" set:provider="scope.ffmpegLogs">
+                                    <template>
+                                        <li>
+                                            <span is="ui-text" class="num">${scope.index + 1}</span>
+                                            <span is="ui-text" set:model="scope.data"></span>
+                                        </li>
+                                    </template>
+                                </ol>
+                                <!-- <sc-logger></sc-logger> -->
+                            </div>
+                            <div class="sc-video-player-container">
+                                <video class="sc-video-player" controls muted></video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

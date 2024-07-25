@@ -225,8 +225,11 @@ html[data-sc-scrollbars='false'] {
   sc-video {
     iframe {
       width: 100%;
+      height: 100%;
     }
+  }
 
+  *[is="sc-download-video"] {
     .sc-video-player-container {
       width: 100%;
     }
@@ -330,5 +333,6 @@ html[data-sc-scrollbars='false'] {
     flex-shrink: 0;
     flex-basis: 100%;
     min-height: 0;
+    min-width: 100%;
   }
 }

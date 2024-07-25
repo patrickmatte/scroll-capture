@@ -27,12 +27,11 @@ export default class AppModel extends DataModel {
     // this.isPlayingSelected = new BooleanData();
     // this.isCapturingSelected = new BooleanData();
 
-    this.settings = new CaptureVideoModel();
+    this.settings = new CaptureVideoModel(this);
     this.actions = new Actions();
     this.imgCapSettings = new CaptureImageModel();
     this.tabId = new NumberData();
     this.test = new TestModel();
-    this.ffmpegLogs = new ArrayData();
     var manifestData = chrome.runtime.getManifest();
     this.version = new StringData(manifestData.version);
 

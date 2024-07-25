@@ -28,6 +28,7 @@ module.exports = (env, argv) => {
       content: ['./js/main.js', './css/content.scss'],
       background: [`./js/background-${argv.mode}.js`],
       offscreen: ['./js/offscreen.js'],
+      SectionVideoIFrame: ['./js/SectionVideoIFrame.js'],
     },
     target: 'web',
     watch: isDev,

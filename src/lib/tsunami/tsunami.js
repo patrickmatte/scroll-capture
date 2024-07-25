@@ -85,13 +85,18 @@ export function define(name, classReference) {
 // 	classes[name] = classReference;
 // }
 
-export function createComponent(element, scope) {
+export function createComponent(element, scope, debug) {
+  if (debug) console.log('createComponent');
   let className = element.nodeName.toLowerCase();
+  if (debug) console.log('className', className);
   let classReference = classes[className];
+  if (debug) console.log('classReference', classReference);
   if (!classReference) {
     className = element.getAttribute('is');
+    if (debug) console.log('className', className);
     if (className) {
       classReference = classes[className];
+      if (debug) console.log('classReference', classReference);
     }
   }
   if (classReference) {
@@ -108,7 +113,8 @@ export function setScope(element, scope) {
 
 export const directives = [createComponent, setScope];
 
-export function applyDirectives(element, scope) {
+export function applyDirectives(element, scope, debug) {
+  if (debug) console.log('applyDirectives', classes);
   const array = [element];
   const elements = getAllObjects(element, array);
   for (let j = 0; j < directives.length; j++) {
@@ -116,7 +122,7 @@ export function applyDirectives(element, scope) {
     for (let i = elements.length - 1; i > -1; i--) {
       //for (let i = 0; i < elements.length; i++) {
       const el = elements[i];
-      directive(el, scope);
+      directive(el, scope, debug);
     }
   }
 }
@@ -153,7 +159,7 @@ export function importTemplate(template, scope = {}, debug = false) {
     child = factory.children.item(0);
   }
   // scope.scopeElement = child;
-  applyDirectives(child, scope);
+  applyDirectives(child, scope, debug);
   return child;
 }
 

@@ -2,17 +2,18 @@ import Vector2Data from '../../lib/tsunami/data/Vector2Data';
 import ArrayData from '../../lib/tsunami/data/ArrayData';
 import BooleanData from '../../lib/tsunami/data/BooleanData';
 import Data from '../../lib/tsunami/data/Data';
-import { app } from '../main';
 import NumberData from '../../lib/tsunami/data/NumberData';
 import { getSupportedFormatsAndCodecs } from '../../lib/tsunami/utils/FormatsAndCodecs';
 import Point from '../../lib/tsunami/geom/Point';
 import { decimalToPlace, round1 } from '../../lib/tsunami/utils/number';
 import StringData from '../../lib/tsunami/data/StringData';
-import ObjectData from '../../lib/tsunami/data/ObjectData';
 import { ChangeEvent } from '../../lib/tsunami/ChangeEvent';
 
 export default class CaptureVideoModel {
-  constructor() {
+  constructor(appModel, baseFontSize = 15, debug = false) {
+    this.appModel = appModel;
+    this.baseFontSize = baseFontSize;
+    this.debug = debug;
     const supportedFormats = getSupportedFormatsAndCodecs();
     // console.log('supportedFormats', JSON.parse(JSON.stringify(supportedFormats)));
 
@@ -46,7 +47,7 @@ export default class CaptureVideoModel {
       sizeChangeHandler();
     });
     const sizeChangeHandler = () => {
-      this.fontSize.value = round1((this.size.x.value / 414) * 15);
+      this.fontSize.value = round1((this.size.x.value / 414) * this.baseFontSize);
     };
     sizeChangeHandler();
 
@@ -162,7 +163,7 @@ export default class CaptureVideoModel {
         type: 'scrollCaptureColorTheme',
         isColorThemeLight: event.data,
       };
-      app.model.sendMessage(msg);
+      if (this.appModel) this.appModel.sendMessage(msg);
     });
 
     this.colorThemes = new ArrayData('Dark', 'Light', 'Auto');
@@ -199,7 +200,7 @@ export default class CaptureVideoModel {
       width: this.windowSize.x.value + this.diffSize.x,
       height: this.windowSize.y.value + this.diffSize.y,
     };
-    app.model.sendMessage(msg);
+    if (this.appModel) this.appModel.sendMessage(msg);
   }
 
   switchColorTheme() {
@@ -277,7 +278,7 @@ export default class CaptureVideoModel {
       exportAudio: this.exportAudio.value,
       exportVideo: this.exportVideo.value,
       zoomLevel: window.outerWidth / window.innerWidth,
-      tabId: app.model.tabId.value,
+      tabId: this.appModel.tabId.value,
       needsFFMPEG: this.needsFFMPEG,
       mediaSource: this.mediaSource.value,
     };
