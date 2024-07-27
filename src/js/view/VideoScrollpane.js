@@ -10,7 +10,7 @@ export class VideoScrollpane extends UIComponent {
       const actionId = event.data.value[0].id;
       const selector = `sc-action[data-id='${actionId}']`;
       let element = this.querySelector(selector).element;
-      this.scrollToElement(element, 0.5);
+      this.scrollToElement(element, 0.5, true);
     });
   }
 

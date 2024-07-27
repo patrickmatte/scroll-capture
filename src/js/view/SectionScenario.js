@@ -1,6 +1,8 @@
 import Section from './Section';
 import { app } from '../main';
 import EventHandler from '../../lib/tsunami/components/EventHandler';
+import { VideoScrollpane } from './VideoScrollpane';
+import { define } from '../../lib/tsunami/tsunami';
 
 export default class SectionScenario extends Section {
   constructor(element) {
@@ -47,3 +49,5 @@ export default class SectionScenario extends Section {
     return super.hideDelayComplete();
   }
 }
+
+define('sc-video-scrollpane', VideoScrollpane);

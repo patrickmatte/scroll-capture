@@ -3,22 +3,24 @@ import { sendTrackEventMessage } from '../model/GABridge';
 import { define } from '../../lib/tsunami/tsunami';
 import { VideoScrollpane } from './VideoScrollpane';
 import UIComponent from '../../lib/tsunami/components/UIComponent';
-import ArrayData from '../../lib/tsunami/data/ArrayData';
 
 export default class DownloadVideo extends UIComponent {
   constructor(element) {
     super(element);
-    console.log('DownloadVideo');
-    this.ffmpegLogs = new ArrayData();
 
     chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       switch (msg.type) {
+        case 'scrollCaptureShowVideo':
+          this.scrollCaptureShowVideo();
+          break;
+        case 'scrollCaptureUnloadVideo':
+          this.scrollCaptureUnloadVideo();
+          break;
         case 'scrollCaptureVideoURL':
           this.updateVideo(msg);
           break;
         case 'scrollCaptureFFmpegLogToCC':
-          console.log('this.ffmpegLogs.push', msg.message);
-          this.ffmpegLogs.push(msg.message);
+          app.model.ffmpegLogs.push(msg.message);
           sendResponse({ gotIt: true });
           break;
       }
@@ -41,7 +43,6 @@ export default class DownloadVideo extends UIComponent {
   }
 
   updateVideo(message) {
-    console.log('updateVideo', message);
     this.updateButtons(message.videoURL, message.fileName);
     const fetchPromise = fetch(message.videoURL);
     fetchPromise.then((req) => {
@@ -56,24 +57,19 @@ export default class DownloadVideo extends UIComponent {
         player.setAttribute('download', message.fileName);
         try {
           player.src = videoURL;
-        } catch (error) {
-          console.log('player.src', error);
-        }
+        } catch (error) {}
         this.showVideo();
       });
       bufferPromise.catch((error) => {
-        console.log('bufferPromise.catch', error);
         this.showVideo();
       });
     });
     fetchPromise.catch((error) => {
-      console.log('fetchPromise.catch', error);
       this.showVideo();
     });
   }
 
   updateButtons(videoURL, videoFileName) {
-    console.log('updateButtons', videoURL, videoFileName);
     let buttons = this.element.querySelectorAll('a.sc-download-button');
     for (let i = 0; i < buttons.length; i++) {
       let button = buttons[i];
@@ -85,21 +81,16 @@ export default class DownloadVideo extends UIComponent {
     }
   }
 
-  showDelayComplete() {
+  scrollCaptureShowVideo() {
     app.model.ffmpegLogs.value = [];
-    let promise = super.showDelayComplete();
-    app.model.sendMessage({ type: 'scrollCaptureShowVideo' });
-    return promise;
   }
 
-  hideComplete() {
+  scrollCaptureUnloadVideo() {
+    app.model.ffmpegLogs.value = [];
     let player = this.querySelector('.sc-video-player');
     player.pause();
     player.removeAttribute('src');
     player.load();
     this.element.setAttribute('data-show-video', false);
-    return super.hideComplete();
   }
 }
-
-define('sc-video-scrollpane', VideoScrollpane);

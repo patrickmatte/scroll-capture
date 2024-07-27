@@ -8,12 +8,10 @@ import { loadStyle } from '../lib/tsunami/load/loadStyle';
 class SectionVideoIFrame extends App {
   constructor(element) {
     super(element);
-    console.log('SectionVideoIFrame');
     this.model = new SectionVideoIFrameModel();
     this.load();
     this.model.load().then(() => {
       this.scVideoIframe = importTemplate(template, this.model);
-      console.log(this.scVideoIframe);
       this.appendChild(this.scVideoIframe);
     });
   }
@@ -29,6 +27,4 @@ class SectionVideoIFrame extends App {
 
 define('sc-download-video', DownloadVideo);
 
-export let app;
-app = new SectionVideoIFrame(document.body);
-console.log('app', app);
+export const app = new SectionVideoIFrame(document.body);

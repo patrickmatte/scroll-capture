@@ -1,8 +1,10 @@
 import CaptureVideoModel from './CaptureVideoModel';
+import ArrayData from '../../lib/tsunami/data/ArrayData';
 
 export default class SectionVideoIFrameModel {
   constructor() {
     this.settings = new CaptureVideoModel({ sendMessage() {} }, 13.5);
+    this.ffmpegLogs = new ArrayData();
 
     this.resizeHandler = this.resizeHandler.bind(this);
     window.addEventListener('resize', this.resizeHandler);

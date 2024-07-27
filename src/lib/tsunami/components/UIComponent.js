@@ -437,17 +437,21 @@ export default class UIComponent extends Branch {
     this.element.dispatchEvent(new Event('ui-resize', { bubbles: true, cancelable: true }));
   }
 
-  scrollToElement(element, duration) {
+  scrollToElement(element, duration, debug = false) {
+    if (debug) console.log('scrollToElement', element);
+
     let pos = new Point();
 
     const localToGlobalPos = localToGlobal(element, this.element);
-
+    if (debug) console.log('localToGlobalPos', localToGlobalPos);
     let maxScroll = new Point();
     maxScroll.x = this.element.scrollWidth - this.element.clientWidth;
     maxScroll.y = this.element.scrollHeight - this.element.clientHeight;
+    if (debug) console.log('maxScroll', maxScroll);
 
     pos.x = Math.min(localToGlobalPos.x, maxScroll.x);
     pos.y = Math.min(localToGlobalPos.y + element.offsetHeight - this.element.offsetHeight, maxScroll.y);
+    if (debug) console.log('pos', pos);
 
     return this.scrollTo(pos.x, pos.y, duration);
   }
